@@ -1,0 +1,80 @@
+---
+title: "exploration"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{exploration}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(fxtas)
+```
+
+## plotly
+
+```{r}
+
+library(plotly)
+
+gp34 |> 
+  nest_by(Study) |> 
+  mutate(
+    p = 
+      plot_ly(data,
+              type = "scatter",
+              mode = "lines+markers",
+              color = ~`FXS ID`,
+              x = ~`Event Name`,
+              y = ~`Age at visit`,
+              showlegend = FALSE
+      ) |> 
+      plotly::layout(
+        xaxis = list(title = ""),
+        # title = "banana"
+      ) |> 
+      list()
+  ) |> 
+  pull(p) |> 
+  plotly::subplot(
+    subplot_titles = c("a", "b"),
+    nrows = 1, shareX = TRUE, shareY = TRUE)
+
+```
+
+## ggplot
+
+```{r}
+
+library(ggplot2)
+
+plot1 = gp34 |> 
+  ggplot(
+    data = _,
+    mapping = aes(
+      color = `FXS ID`,
+      group = `FXS ID`,
+      x = `Event Name`,
+      y = `Age at visit`
+    )) +
+  geom_point() + 
+  geom_line() +
+  theme_bw() +
+  facet_grid(rows = vars(Gender)) +
+  theme(legend.position="none")
+
+print(plot1)
+
+plot1 |> plotly::ggplotly()
+
+
+```
+
+
