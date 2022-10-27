@@ -4,7 +4,7 @@ graphics.off()
 #Load Hmisc library
 library(Hmisc)
 #Read Data
-data=read.csv('CTSC3704GP4GenotypeP-FXTASEventSequence10_DATA_2022-10-27_0848.csv')
+data=read.csv('inst/extdata/CTSC3704GP4GenotypeP-FXTASEventSequence10_DATA_2022-10-27_0848.csv')
 #Setting Labels
 
 label(data$subj_id)="Subject ID (FXS ID)"
@@ -196,3 +196,5 @@ levels(data$mri_peri_wm_hyper.factor)=c("None","Mild","Moderate","Severe","Missi
 levels(data$mri_splen_wm_hyper.factor)=c("None","Mild","Moderate","Severe","Missing/Refused")
 levels(data$mri_genu_wm_hyper.factor)=c("No","Yes","Missing/Refused")
 levels(data$mri_corp_call_thick.factor)=c("Normal","Thin","Missing/Refused")
+gp4 = tibble(data)
+use_data(gp4, overwrite = TRUE)

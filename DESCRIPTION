@@ -1,19 +1,22 @@
 Package: fxtas
-Title: An Amazing Shiny App
+Title: FXTAS
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "firstname",
-           family = "lastname",
-           role = c("aut", "cre"),
-           email = "your@email.com")
-Description: What the package does (one paragraph).
-License: What license is it under?
+    person("Douglas Ezra", "Morrison", , "demorrison@ucdavis.edu", role = c("cre", "aut"))
+Description: PKG_DESC.
+License: MIT + file LICENSE
+URL: https://github.com/d-morrison/fxtas
+BugReports: https://github.com/d-morrison/fxtas/issues
 Imports: 
     config (>= 0.3.1),
     golem (>= 0.3.4),
     shiny (>= 1.7.2)
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
 Encoding: UTF-8
+Language: en-US
 LazyData: true
-RoxygenNote: 7.1.1
-URL: https://github.com/d-morrison/fxtas
-BugReports: https://github.com/d-morrison/fxtas/issues
+RoxygenNote: 7.2.1
+Depends: 
+    R (>= 2.10)
