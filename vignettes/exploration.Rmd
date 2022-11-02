@@ -23,7 +23,7 @@ library(fxtas)
 ```{r}
 
 library(plotly)
-
+library(dplyr)
 gp34 |> 
   nest_by(Study) |> 
   mutate(
@@ -37,14 +37,13 @@ gp34 |>
               showlegend = FALSE
       ) |> 
       plotly::layout(
-        xaxis = list(title = ""),
+        xaxis = list(title = "")
         # title = "banana"
       ) |> 
       list()
   ) |> 
   pull(p) |> 
   plotly::subplot(
-    subplot_titles = c("a", "b"),
     nrows = 1, shareX = TRUE, shareY = TRUE)
 
 ```
@@ -61,8 +60,8 @@ plot1 = gp34 |>
     mapping = aes(
       color = `FXS ID`,
       group = `FXS ID`,
-      x = `Event Name`,
-      y = `Age at visit`
+      y = `Event Name`,
+      x = `Age at visit`
     )) +
   geom_point() + 
   geom_line() +
@@ -77,4 +76,28 @@ plot1 |> plotly::ggplotly()
 
 ```
 
+## demographics
+
+```{r}
+
+participants = 
+  gp34 |> 
+  arrange(`Age at visit`) |> 
+  group_by(`FXS ID`) |> 
+  filter(n_distinct(`Age of onset`, na.rm = TRUE) != 1) |> 
+  print()
+  
+
+```
+
+
+## Table 1
+```{r}
+
+library(table1)
+table1(
+  ~ Age + AgeGroup + RaceDesc + 
+    LanguageSpoken + `Year Card Issued` | `Initial Load`, 
+  data = gp34)
+```
 

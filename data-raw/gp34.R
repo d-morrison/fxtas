@@ -24,4 +24,15 @@ trans =
 
 if(nrow(trans) != 0) browser(message('some values of Gender are inconsistent; valid?'))
 
+decreased_age =
+  gp34 |>
+  group_by(`FXS ID`) |>
+  filter(any(diff(`Age at visit`) < 0)) |>
+  select(`FXS ID`, `Event Name`, `Age at visit`) |>
+  group_by(`FXS ID`) |>
+  mutate(
+    `diff age` = c(NA, diff(`Age at visit`)),
+    `decreased age` = `diff age` < 0)
+readr::write_csv(decreased_age, "inst/extdata/decreased_age.csv")
+
 usethis::use_data(gp34, overwrite = TRUE)
