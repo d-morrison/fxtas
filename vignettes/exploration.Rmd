@@ -80,13 +80,23 @@ plot1 |> plotly::ggplotly()
 
 ```{r}
 
-participants = 
+pts = 
   gp34 |> 
-  arrange(`Age at visit`) |> 
+  arrange(
+    `Age at visit`
+  ) |> 
   group_by(`FXS ID`) |> 
-  filter(n_distinct(`Age of onset`, na.rm = TRUE) != 1) |> 
-  print()
-  
+  slice_head(n = 1) |>
+  rename(
+    `Age at first visit` = `Age at visit`,
+    `Recruited in study phase` = Study
+  ) |> 
+  left_join(
+    gp34 |> count(`FXS ID`, name = "# visits"),
+    by = "FXS ID"
+  ) |> 
+  mutate(`# visits` = factor(`# visits`, levels = 1:6))
+
 
 ```
 
@@ -94,10 +104,25 @@ participants =
 ## Table 1
 ```{r}
 
+vars = c(
+  "Age at first visit",
+  "# visits",
+  "Recruited in study phase",
+  "Primary Ethnicity",
+  "Primary Race",
+  "ApoE",
+  # "Floras Non-Sortable Allele Size (CGG) Results", # too many levels
+  "Drug use",
+  "Marijuana use",
+  "Alcohol use"
+  # "# of drinks per day now"
+  # "Thyroid Cancer",
+  
+)
+
 library(table1)
 table1(
-  ~ Age + AgeGroup + RaceDesc + 
-    LanguageSpoken + `Year Card Issued` | `Initial Load`, 
-  data = gp34)
+  formula(paste("~", paste(formulaic::add.backtick(vars), collapse = " + "), "| Gender")),
+  data = pts)
 ```
 

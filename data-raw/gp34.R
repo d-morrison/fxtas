@@ -1,5 +1,6 @@
 load_all()
 library(Hmisc)
+conflict_prefer("label", "Hmisc")
 library(tidyr)
 # dupes = gp3 |> semi_join(gp4, by = c("subj_id", "redcap_event_name"))
 # if(nrow(dupes) != 0) browser(message("why are there duplicate records?"))
@@ -17,12 +18,14 @@ shared[label(gp4[, shared]) != label(gp3[,shared])]
 
 gp34 = bind_rows("GP3" = gp3, "GP4" = gp4, .id = "Study") |>
   arrange(`FXS ID`, `Event Name`) |>
-  tidyr::fill(Gender, .direction = "down")
+  tidyr::fill(`Primary Race`, `Primary Ethnicity`, Gender, .direction = "downup")
 
 trans =
   gp34 |> group_by(`FXS ID`) |> filter(n_distinct(Gender |> setdiff(NA)) > 1)
 
 if(nrow(trans) != 0) browser(message('some values of Gender are inconsistent; valid?'))
+
+gp34 |>  filter(if_any(where(is.character), .fn = ~ . == "NA")) # couldn't find any of these; there might be some in factors
 
 decreased_age =
   gp34 |>

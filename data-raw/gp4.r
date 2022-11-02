@@ -6,8 +6,10 @@ library(Hmisc)
 library(dplyr)
 library(vroom)
 #Read Data
-dataset=vroom::vroom('inst/extdata/CTSC3704GP4GenotypeP-FXTASEventSequence10_DATA_2022-10-27_0848.csv',
+dataset=vroom::vroom('inst/extdata/CTSC3704GP4GenotypeP-FXTASEventSequence10_DATA_2022-11-01_2027.csv',
                   col_types = cols(
+                    dem_date = col_date(),
+                    # dob = col_date(), # auto-removed
                     subj_id = col_character(),
                     redcap_event_name = col_character(),
                     sex = col_double(),
@@ -154,6 +156,10 @@ dataset$mri_peri_wm_hyper = factor(dataset$mri_peri_wm_hyper,levels=c("0","1","3
 dataset$mri_splen_wm_hyper = factor(dataset$mri_splen_wm_hyper,levels=c("0","1","3","4","999"))
 dataset$mri_genu_wm_hyper = factor(dataset$mri_genu_wm_hyper,levels=c("0","1","999"))
 dataset$mri_corp_call_thick = factor(dataset$mri_corp_call_thick,levels=c("0","1","999"))
+dataset$dem_race = factor(dataset$dem_race,levels=c("1","2","3","4","5","8","6","7"))
+dataset$dem_eth = factor(dataset$dem_eth,levels=c("1","2","3"))
+dataset$new_mds_psy_dri = factor(dataset$new_mds_psy_dri)
+# levels(dataset$new_mds_psy_dri) = levels(dataset$new_mds_psy_dri) |> sub(pattern = "888", "")
 
 levels(dataset$redcap_event_name)=c("GP4 - Visit 1","GP4 - Visit 2","GP4 - Visit 3","GP4 - Visit 4","GP4 - Single Visit","GP4 - Participant Survey")
 levels(dataset$sex)=c("Female","Male")
@@ -198,6 +204,8 @@ levels(dataset$mri_peri_wm_hyper)=c("None","Mild","Moderate","Severe","Missing/R
 levels(dataset$mri_splen_wm_hyper)=c("None","Mild","Moderate","Severe","Missing/Refused")
 levels(dataset$mri_genu_wm_hyper)=c("No","Yes","Missing/Refused")
 levels(dataset$mri_corp_call_thick)=c("Normal","Thin","Missing/Refused")
+levels(dataset$dem_race)=c("American Indian/Alaska Native","Asian","Black or African American","Native Hawaiian or Other Pacific Islander","White","Australian Aborigine","More Than One Race","Unknown / Not Reported")
+levels(dataset$dem_eth)=c("Hispanic or Latino","NOT Hispanic or Latino","Unknown / Not Reported")
 
 #Setting Labels
 
@@ -211,7 +219,7 @@ labels = c(subj_id = "FXS ID",
            new_mds_psy_drug_notes = "Drugs used",
            new_mds_psy_drug_marij = "Marijuana use",
            new_mds_psy_alco = "Alcohol abuse",
-           new_mds_psy_dri = "# of drinks per day now",
+           new_mds_psy_dri = "# of drinks per day now", #range= 0-20; -2= < 1/day; 999= no response
            new_mds_med_thyca = "Thyroid Cancer",
            new_mds_med_skin = "Skin Cancer",
            new_mds_med_mela = "Melanoma",
@@ -265,7 +273,11 @@ labels = c(subj_id = "FXS ID",
            new_ds_crx3 = "Current Medications 3", new_ds_crx4 = "Current Medications 4",
            new_ds_crx5 = "Current Medications 5", new_ds_crx6 = "Current Medications 6",
            new_ds_crx7 = "Current Medications 7", new_ds_crx8 = "Current Medications 8",
-           new_ds_crx9 = "Current Medications 9", new_ds_crx10 = "Current Medications 10"
+           new_ds_crx9 = "Current Medications 9", new_ds_crx10 = "Current Medications 10",
+           dem_date = "Visit Date",
+           dem_race ="Primary Race",
+           dem_eth ="Primary Ethnicity"
+
 )
 
 if(!isTRUE(all.equal(names(dataset), names(labels)))) browser(message('why is there a mismatch?'))
@@ -373,6 +385,9 @@ names(dataset) = labels[names(dataset)]
 # label(data$new_ds_crx8)="Current Medications 8"
 # label(data$new_ds_crx9)="Current Medications 9"
 # label(data$new_ds_crx10)="Current Medications 10"
+# label(data$dem_date)="Date of Study Enrollment - GP-4"
+  # label(data$dem_race)="Primary Race"
+  # label(data$dem_eth)="Primary Ethnicity"
 
 }
 
