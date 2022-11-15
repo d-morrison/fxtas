@@ -267,7 +267,7 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            ds_crx10 = "Current Medications 10",
            dem_race="Primary Race",
            dem_eth="Primary Ethnicity",
-           dem_date="Date of Study Enrollment")
+           dem_date="Visit Date")
 
 if(!isTRUE(all.equal(names(dataset), names(labels)))) browser(message('why is there a mismatch?'))
 
@@ -374,7 +374,7 @@ if(FALSE)
   # label(data$ds_crx10)="Current Medications 10"
   # label(data$dem_race)="Primary Race"
   # label(data$dem_eth)="Primary Ethnicity"
-  # label(data$dem_date)="Date of Study Enrollment"
+  # label(data$dem_date)="Visit Date"
 }
 #Setting Units
 

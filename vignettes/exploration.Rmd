@@ -8,7 +8,7 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(
+knitr::ovisit1_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
@@ -80,7 +80,7 @@ plot1 |> plotly::ggplotly()
 
 ```{r}
 
-pts = 
+visit1 = 
   gp34 |> 
   arrange(
     `Age at visit`
@@ -97,6 +97,25 @@ pts =
   ) |> 
   mutate(`# visits` = factor(`# visits`, levels = 1:6))
 
+
+```
+
+## Missing visit date
+
+```{r}
+
+gp34 |> filter(is.na(`Visit Date`)) |> 
+  select(Study:`Visit Date`)
+
+```
+
+## Duplicate visit date
+
+```{r}
+
+gp34 |> 
+  group_by(`FXS ID`) |> 
+  filter(any(duplicated(`Visit Date`)))
 
 ```
 
@@ -123,6 +142,6 @@ vars = c(
 library(table1)
 table1(
   formula(paste("~", paste(formulaic::add.backtick(vars), collapse = " + "), "| Gender")),
-  data = pts)
+  data = visit1)
 ```
 

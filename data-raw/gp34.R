@@ -17,8 +17,9 @@ shared[label(gp4[, shared]) != label(gp3[,shared])]
 
 
 gp34 = bind_rows("GP3" = gp3, "GP4" = gp4, .id = "Study") |>
-  arrange(`FXS ID`, `Event Name`) |>
-  tidyr::fill(`Primary Race`, `Primary Ethnicity`, Gender, .direction = "downup")
+  arrange(`FXS ID`, `Visit Date`, `Event Name`) |>
+  tidyr::fill(`Primary Race`, `Primary Ethnicity`, Gender, .direction = "downup") |>
+  relocate(`Visit Date`, .after = `Event Name`)
 
 trans =
   gp34 |> group_by(`FXS ID`) |> filter(n_distinct(Gender |> setdiff(NA)) > 1)
@@ -30,12 +31,27 @@ gp34 |>  filter(if_any(where(is.character), .fn = ~ . == "NA")) # couldn't find 
 decreased_age =
   gp34 |>
   group_by(`FXS ID`) |>
-  filter(any(diff(`Age at visit`) < 0)) |>
-  select(`FXS ID`, `Event Name`, `Age at visit`) |>
+  mutate(
+    `diff age` = c(NA, diff(`Age at visit`)),
+    `decreased age` = `diff age` < 0) |>
+  filter(any(`decreased age`, na.rm = TRUE)) |>
+  ungroup() |>
+  select(`FXS ID`, `Event Name`, `Visit Date`, `Age at visit`, `diff age`, `decreased age`)
+
+readr::write_csv(decreased_age, "inst/extdata/decreased_age.csv")
+
+decreased_age2 =
+  gp34 |>
+  arrange(`FXS ID`, `Visit Date`) |>
   group_by(`FXS ID`) |>
   mutate(
     `diff age` = c(NA, diff(`Age at visit`)),
-    `decreased age` = `diff age` < 0)
-readr::write_csv(decreased_age, "inst/extdata/decreased_age.csv")
+    `decreased age` = `diff age` < 0) |>
+  filter(any(`decreased age`, na.rm = TRUE)) |>
+  ungroup() |>
+  select(`FXS ID`, `Event Name`, `Visit Date`, `Age at visit`, `diff age`, `decreased age`)
+
+
+readr::write_csv(decreased_age2, "inst/extdata/decreased_age2.csv")
 
 usethis::use_data(gp34, overwrite = TRUE)
