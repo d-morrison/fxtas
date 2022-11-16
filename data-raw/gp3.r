@@ -45,7 +45,7 @@ dataset=vroom::vroom('inst/extdata/GPGenotypePhenotypeR-FXTASEventSequence10_DAT
                        mds_neu_atax_age = col_double(),
                        mds_neu_atax_sev = col_character(),
                        new_mds_ne_ga = col_skip(),
-                       new_mds_med_park = col_logical(),
+                       new_mds_med_park = col_double(),
                        mds_ne_pf = col_double(),
                        mds_ne_pfmf = col_double(),
                        mds_ne_pfit = col_double(),
@@ -202,9 +202,9 @@ levels(dataset$mds_ne_pfmf)=c("No","Yes","No Response (999)","Question not asked
 levels(dataset$mds_ne_pfit)=c("No","Yes","No Response (999)","Question not asked at time of data entry; check records (777)")
 levels(dataset$mds_ne_pfprt)=c("No","Yes","No Response (999)","Question not asked at time of data entry; check records (777)")
 levels(dataset$mds_ne_pfsg)=c("No","Yes","No Response (999)","Question not asked at time of data entry; check records (777)")
-levels(dataset$scid_dxcode1)=c("Bipolar I Disorder (MD01)","Bipolar II Disorder (MD02)","Other Bipolar Disorder (MD03)","Major Depressive Disorder (MD04)","Dysthymic Disorder (MD05)","Depressive Disorder NOS (MD06)","Mood Disorder Due to GMC (MD07)","Substance-Induced Mood Disorder (MD08)","Primary Psychotic Symptom (PS01)","Alcohol (SUD17)","Sedative-Hypnotic-Anxioly (SUD18)","Cannabis (SUD19)","Stimulants (SUD20)","Opiod (SUD21)","Cocaine (SUD22)","Hallucinogenics/ PCP (SUD23)","Poly Drug (SUD24)","Substance Abuse Other (SUD25)","Panic Disorder (ANX26)","Agoraphobia without Panic (ANX27)","Social Phobia (ANX28)","Specific Phobia (ANX29)","Obsessive Compulsive (ANX30)","Posttraumatic Stress (ANX31)","Generalized Anxiety (ANX32)","Anxiety Due To GMC (ANX33)","Substance-Induced Anxiety (ANX34)","Anxiety Disorder NOS (ANX35)","Somatization Disorder (SOM36)","Pain Disorder (SOM37)","Undifferentiated Somatoform (SOM38)","Hypochondriasis (SOM39)","Body Dysmorphic (SOM40)","Adjustment Disorder (ADJ44)","Other Dx Not Listed","Not Applicable","None Listed or Incomplete Data")
-levels(dataset$scid_dxcode2)=c("Bipolar I Disorder (MD01)","Bipolar II Disorder (MD02)","Other Bipolar Disorder (MD03)","Major Depressive Disorder (MD04)","Dysthymic Disorder (MD05)","Depressive Disorder NOS (MD06)","Mood Disorder Due to GMC (MD07)","Substance-Induced Mood Disorder (MD08)","Primary Psychotic Symptom (PS01)","Alcohol (SUD17)","Sedative-Hypnotic-Anxioly (SUD18)","Cannabis (SUD19)","Stimulants (SUD20)","Opiod (SUD21)","Cocaine (SUD22)","Hallucinogenics/ PCP (SUD23)","Poly Drug (SUD24)","Substance Abuse Other (SUD25)","Panic Disorder (ANX26)","Agoraphobia without Panic (ANX27)","Social Phobia (ANX28)","Specific Phobia (ANX29)","Obsessive Compulsive (ANX30)","Posttraumatic Stress (ANX31)","Generalized Anxiety (ANX32)","Anxiety Due To GMC (ANX33)","Substance-Induced Anxiety (ANX34)","Anxiety Disorder NOS (ANX35)","Somatization Disorder (SOM36)","Pain Disorder (SOM37)","Undifferentiated Somatoform (SOM38)","Hypochondriasis (SOM39)","Body Dysmorphic (SOM40)","Adjustment Disorder (ADJ44)","Other Dx Not Listed","Not Applicable","None Listed or Incomplete Data")
-levels(dataset$scid_dxcode3)=c("Bipolar I Disorder (MD01)","Bipolar II Disorder (MD02)","Other Bipolar Disorder (MD03)","Major Depressive Disorder (MD04)","Dysthymic Disorder (MD05)","Depressive Disorder NOS (MD06)","Mood Disorder Due to GMC (MD07)","Substance-Induced Mood Disorder (MD08)","Primary Psychotic Symptom (PS01)","Alcohol (SUD17)","Sedative-Hypnotic-Anxioly (SUD18)","Cannabis (SUD19)","Stimulants (SUD20)","Opiod (SUD21)","Cocaine (SUD22)","Hallucinogenics/ PCP (SUD23)","Poly Drug (SUD24)","Substance Abuse Other (SUD25)","Panic Disorder (ANX26)","Agoraphobia without Panic (ANX27)","Social Phobia (ANX28)","Specific Phobia (ANX29)","Obsessive Compulsive (ANX30)","Posttraumatic Stress (ANX31)","Generalized Anxiety (ANX32)","Anxiety Due To GMC (ANX33)","Substance-Induced Anxiety (ANX34)","Anxiety Disorder NOS (ANX35)","Somatization Disorder (SOM36)","Pain Disorder (SOM37)","Undifferentiated Somatoform (SOM38)","Hypochondriasis (SOM39)","Body Dysmorphic (SOM40)","Adjustment Disorder (ADJ44)","Other Dx Not Listed","Not Applicable","None Listed or Incomplete Data")
+levels(dataset$scid_dxcode1)=c("Bipolar I Disorder (MD01)","Bipolar II Disorder (MD02)","Other Bipolar Disorder (MD03)","Major Depressive Disorder (MD04)","Dysthymic Disorder (MD05)","Depressive Disorder NOS (MD06)","Mood Disorder Due to GMC (MD07)","Substance-Induced Mood Disorder (MD08)","Primary Psychotic Symptom (PS01)","Alcohol (SUD17)","Sedative-Hypnotic-Anxioly (SUD18)","Cannabis (SUD19)","Stimulants (SUD20)","Opiod (SUD21)","Cocaine (SUD22)","Hallucinogenics/ PCP (SUD23)","Poly Drug (SUD24)","Substance Abuse Other (SUD25)","Panic Disorder (ANX26)","Agoraphobia without Panic (ANX27)","Social Phobia (ANX28)","Specific Phobia (ANX29)","Obsessive Compulsive (ANX30)","Posttraumatic Stress (ANX31)","Generalized Anxiety (ANX32)","Anxiety Due To GMC (ANX33)","Substance-Induced Anxiety (ANX34)","Anxiety Disorder NOS (ANX35)","Somatization Disorder (SOM36)","Pain Disorder (SOM37)","Undifferentiated Somatoform (SOM38)","Hypochondriasis (SOM39)","Body Dysmorphic (SOM40)","Adjustment Disorder (ADJ44)","Other Dx Not Listed (777)","Not Applicable (888)","None Listed or Incomplete Data (999)")
+levels(dataset$scid_dxcode2)=c("Bipolar I Disorder (MD01)","Bipolar II Disorder (MD02)","Other Bipolar Disorder (MD03)","Major Depressive Disorder (MD04)","Dysthymic Disorder (MD05)","Depressive Disorder NOS (MD06)","Mood Disorder Due to GMC (MD07)","Substance-Induced Mood Disorder (MD08)","Primary Psychotic Symptom (PS01)","Alcohol (SUD17)","Sedative-Hypnotic-Anxioly (SUD18)","Cannabis (SUD19)","Stimulants (SUD20)","Opiod (SUD21)","Cocaine (SUD22)","Hallucinogenics/ PCP (SUD23)","Poly Drug (SUD24)","Substance Abuse Other (SUD25)","Panic Disorder (ANX26)","Agoraphobia without Panic (ANX27)","Social Phobia (ANX28)","Specific Phobia (ANX29)","Obsessive Compulsive (ANX30)","Posttraumatic Stress (ANX31)","Generalized Anxiety (ANX32)","Anxiety Due To GMC (ANX33)","Substance-Induced Anxiety (ANX34)","Anxiety Disorder NOS (ANX35)","Somatization Disorder (SOM36)","Pain Disorder (SOM37)","Undifferentiated Somatoform (SOM38)","Hypochondriasis (SOM39)","Body Dysmorphic (SOM40)","Adjustment Disorder (ADJ44)","Other Dx Not Listed (777)","Not Applicable (888)","None Listed or Incomplete Data (999)")
+levels(dataset$scid_dxcode3)=c("Bipolar I Disorder (MD01)","Bipolar II Disorder (MD02)","Other Bipolar Disorder (MD03)","Major Depressive Disorder (MD04)","Dysthymic Disorder (MD05)","Depressive Disorder NOS (MD06)","Mood Disorder Due to GMC (MD07)","Substance-Induced Mood Disorder (MD08)","Primary Psychotic Symptom (PS01)","Alcohol (SUD17)","Sedative-Hypnotic-Anxioly (SUD18)","Cannabis (SUD19)","Stimulants (SUD20)","Opiod (SUD21)","Cocaine (SUD22)","Hallucinogenics/ PCP (SUD23)","Poly Drug (SUD24)","Substance Abuse Other (SUD25)","Panic Disorder (ANX26)","Agoraphobia without Panic (ANX27)","Social Phobia (ANX28)","Specific Phobia (ANX29)","Obsessive Compulsive (ANX30)","Posttraumatic Stress (ANX31)","Generalized Anxiety (ANX32)","Anxiety Due To GMC (ANX33)","Substance-Induced Anxiety (ANX34)","Anxiety Disorder NOS (ANX35)","Somatization Disorder (SOM36)","Pain Disorder (SOM37)","Undifferentiated Somatoform (SOM38)","Hypochondriasis (SOM39)","Body Dysmorphic (SOM40)","Adjustment Disorder (ADJ44)","Other Dx Not Listed (777)","Not Applicable (888)","None Listed or Incomplete Data (999)")
 levels(dataset$mds_med_lup)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
 levels(dataset$mds_med_ra)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
 levels(dataset$mds_med_mswk)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
@@ -241,20 +241,21 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            new_mds_med_sur1 = "Surgery: Type/Age", new_mds_med_sur2 = "Surgery 2: Type/Age",
            new_mds_med_sur3 = "Surgery 3: Type/Age", mds_ne_it = "Intention tremor",
            mds_ne_rt = "Resting tremor", mds_ne_pt = "Postural tremor",
-           mds_neu_trem_irm = "Intermittent Tremor", mds_neu_trem_age = "Tremor Age of onset",
-           new_mds_neu_trem_head = "Head tremor", new_mds_neu_trem_age2 = "Head tremor age of onset",
+           mds_neu_trem_irm = "Intermittent Tremor", mds_neu_trem_age = "Tremor: Age of onset",
+           new_mds_neu_trem_head = "Head tremor", new_mds_neu_trem_age2 = "Head Tremor: Age of onset",
            mds_neu_atax = "Ataxia",
            mds_neu_atax_age = "Ataxia: Age of onset",
            mds_neu_atax_sev = "Ataxia: severity",
            # new_mds_ne_ga = "Ataxia",
-           new_mds_med_park = "Parkinsons", mds_ne_pf = "Parkinsonian features:",
-           mds_ne_pfmf = "Parkinsonian features: masked facies", mds_ne_pfit = "Parkinsonian features: increased tone",
-           mds_ne_pfprt = "Parkinsonian features: pill rolling tremor",
-           mds_ne_pfsg = "Parkinsonian features: stiff gait", mds_fxtas_stage = "FXTAS Stage (0-5)",
-           bds2_score = "BDS-2 Total Score", mmse_totalscore = "Total Score",
-           scid_dxcode1 = "Interviewers Diagnosis 1, by Code", scid_dx1age = "Interviewers Diagnosis 1, Age of Onset",
-           scid_dxcode2 = "Interviewers Diagnosis 2, by Code", scid_dx2age = "Interviewers Diagnosis 2, Age of Onset",
-           scid_dxcode3 = "Interviewers Diagnosis 3, by Code", scid_dx3age = "Interviewers Diagnosis 3, Age of Onset",
+           new_mds_med_park = "Parkinsons",
+           mds_ne_pf = "Parkinsonian features",
+           mds_ne_pfmf = "Parkinsonian features: Masked faces", mds_ne_pfit = "Parkinsonian features: Increased tone",
+           mds_ne_pfprt = "Parkinsonian features: Pill rolling tremor",
+           mds_ne_pfsg = "Parkinsonian features: Stiff gait", mds_fxtas_stage = "FXTAS Stage (0-5)",
+           bds2_score = "BDS-2 Total Score", mmse_totalscore = "MMSE Total Score",
+           scid_dxcode1 = "Interviewers Diagnosis 1,  by Code", scid_dx1age = "Interviewers Diagnosis 1, Age of Onset",
+           scid_dxcode2 = "Interviewers Diagnosis 2,  by Code", scid_dx2age = "Interviewers Diagnosis 2, Age of Onset",
+           scid_dxcode3 = "Interviewers Diagnosis 3,  by Code", scid_dx3age = "Interviewers Diagnosis 3, Age of Onset",
            scl_s_som_ts = "Somatization (T-score: Nonpatient)", scl_s_oc_ts = "Obsessive-Compulsive (T-score: Nonpatient)",
            scl_s_is_ts = "Interpersonal Sensitivity T-score: Nonpatient",
            scl_s_dep_ts = "Depression(T-score: Nonpatient)", scl_s_anx_ts = "Anxiety (T-score: Nonpatient)",
@@ -319,27 +320,27 @@ if(FALSE)
   # label(data$mds_ne_rt)="Resting tremor"
   # label(data$mds_ne_pt)="Postural tremor"
   # label(data$mds_neu_trem_irm)="Intermittent Tremor"
-  # label(data$mds_neu_trem_age)="Tremor Age of onset"
+  # label(data$mds_neu_trem_age)="Tremor: Age of onset"
   # label(data$new_mds_neu_trem_head)="Head tremor"
-  # label(data$new_mds_neu_trem_age2)="Head tremor age of onset"
+  # label(data$new_mds_neu_trem_age2)="Head Tremor: Age of onset"
   # label(data$mds_neu_atax)="Problem with walking/ataxia"
   # label(data$mds_neu_atax_age)="Ataxia: Age of onset"
   # label(data$mds_neu_atax_sev)="Ataxia: severity"
   # label(data$new_mds_ne_ga)="Ataxia"
   # label(data$new_mds_med_park)="Parkinsons"
   # label(data$mds_ne_pf)="Parkinsonian features:"
-  # label(data$mds_ne_pfmf)="Parkinsonian features: masked facies"
-  # label(data$mds_ne_pfit)="Parkinsonian features: increased tone"
+  # label(data$mds_ne_pfmf)="Parkinsonian features: Masked faces"
+  # label(data$mds_ne_pfit)="Parkinsonian features: Increased tone"
   # label(data$mds_ne_pfprt)="Parkinsonian features: pill rolling tremor"
   # label(data$mds_ne_pfsg)="Parkinsonian features: stiff gait"
   # label(data$mds_fxtas_stage)="FXTAS Stage (0-5)"
   # label(data$bds2_score)="BDS-2 Total Score"
   # label(data$mmse_totalscore)="Total Score"
-  # label(data$scid_dxcode1)="Interviewers Diagnosis 1, by Code"
+  # label(data$scid_dxcode1)="Interviewers Diagnosis 1,  by Code"
   # label(data$scid_dx1age)="Interviewers Diagnosis 1, Age of Onset"
-  # label(data$scid_dxcode2)="Interviewers Diagnosis 2, by Code"
+  # label(data$scid_dxcode2)="Interviewers Diagnosis 2,  by Code"
   # label(data$scid_dx2age)="Interviewers Diagnosis 2, Age of Onset"
-  # label(data$scid_dxcode3)="Interviewers Diagnosis 3, by Code"
+  # label(data$scid_dxcode3)="Interviewers Diagnosis 3,  by Code"
   # label(data$scid_dx3age)="Interviewers Diagnosis 3, Age of Onset"
   # label(data$scl_s_som_ts)="Somatization (T-score: Nonpatient)"
   # label(data$scl_s_oc_ts)="Obsessive-Compulsive (T-score: Nonpatient)"

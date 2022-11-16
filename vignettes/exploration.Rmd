@@ -138,6 +138,7 @@ vars = c(
   "Marijuana use",
   "Alcohol use",
   "# of drinks per day now",
+  "# of drinks per day now: missingness",
   "Thyroid Cancer",
   "Skin Cancer",
   "Melanoma",
@@ -156,16 +157,27 @@ vars = c(
   "Resting tremor",
    "Postural tremor",
   "Intermittent Tremor",
-  "Tremor Age of onset",
+  "Tremor: Age of onset",
+  "Tremor: Age of onset: missingness",
   
   "Head tremor",
-  "Head tremor age of onset",
+  "Head Tremor: Age of onset",
+  "Head Tremor: Age of onset: missingness",
   
   "Ataxia",
+  "Ataxia: severity",
   "Ataxia: Age of onset",
-  "Ataxia: Age of onset missingness",
-  "Ataxia: severity"
+  "Ataxia: Age of onset: missingness",
   
+  grep("Parkinson", value = TRUE, names(gp34)),
+  
+  "FXTAS Stage (0-5)",
+  
+  grep("BDS-2 Total Score", value = TRUE, names(gp34), fixed = TRUE),
+  grep("MMSE Total Score", value = TRUE, names(gp34), fixed = TRUE),
+  
+  grep("Interviewers Diagnosis", value = TRUE, names(gp34), fixed = TRUE) |> sort(),
+  grep("score", value = TRUE, names(gp34), ignore.case = TRUE) |> sort(),
   
   
 )

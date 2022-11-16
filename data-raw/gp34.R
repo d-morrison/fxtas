@@ -16,6 +16,20 @@ temp2[temp1 != temp2]
 
 shared[label(gp4[, shared]) != label(gp3[,shared])]
 
+time_range_codes = c(
+  99 ,
+  555,
+  444,
+  130,
+  200,
+  300,
+  400,
+  500,
+  600,
+  700,
+  800,
+  900
+)
 
 gp34 =
   bind_rows("GP3" = gp3, "GP4" = gp4, .id = "Study") |>
@@ -23,23 +37,57 @@ gp34 =
   tidyr::fill(`Primary Race`, `Primary Ethnicity`, Gender, .direction = "downup") |>
   relocate(`Visit Date`, .after = `Event Name`) |>
   mutate(
-    `Ataxia: Age of onset missingness` =
-      missingness_reasons(`Ataxia: Age of onset`),
-    `Ataxia: Age of onset` =
-      clean_numeric(`Ataxia: Age of onset`),
+    # `Ataxia: Age of onset missingness` =
+    #   missingness_reasons(`Ataxia: Age of onset`),
+    # `Ataxia: Age of onset` =
+    #   clean_numeric(`Ataxia: Age of onset`),
+
+    across(
+      ends_with("Age of onset"),
+      list(
+        missingness = ~missingness_reasons(.x, extra_codes = time_range_codes),
+        tmp = ~clean_numeric(.x, extra_codes = time_range_codes)),
+      .names = "{.col}{if_else(.fn != 'tmp', paste0(': ', .fn), '')}"
+    ),
+
+    across(
+      contains("score", ignore.case = TRUE),
+      # c(
+      #   `BDS-2 Total Score`,
+      #   `MMSE Total Score`),
+      list(
+        missingness = missingness_reasons,
+        tmp = clean_numeric),
+      .names = "{.col}{if_else(.fn != 'tmp', paste0(': ', .fn), '')}"
+    ),
+
     `Ataxia: severity` =
       `Ataxia: severity` |>
       factor(levels = sort(unique(`Ataxia: severity`))) |>
       relabel_factor_missing_codes(),
+
+    across(c(`FXTAS Stage (0-5)`), numeric_as_factor),
+
+    # `Tremor: Age of onset: missingness` =
+    #   missingness_reasons(`Tremor: Age of onset`),
+    #
+    # `Tremor: Age of onset` =
+    #   clean_numeric(`Tremor: Age of onset`),
+
+    # `Head Tremor: Age of onset: missingness` =
+    #   `Head Tremor: Age of onset` |> missingness_reasons,
+
+    `# of drinks per day now: missingness` =
+      missingness_reasons(`# of drinks per day now`, extra_codes = "-2") |>
+      forcats::fct_recode("<1/day" = "-2"),
+
     `# of drinks per day now` =
-      `# of drinks per day now` |>
-      factor(levels = sort(unique(`# of drinks per day now`))) |>
-      relabel_factor_missing_codes() |>
-      dplyr::recode_factor("-2" = "<1/day"),
-    # `Head tremor age of onset` =
-    #   `Head tremor age of onset` |>
+      `# of drinks per day now` |> clean_numeric(extra_codes = "-2"),
+
+    # `Head Tremor: Age of onset` =
+    #   `Head Tremor: Age of onset` |>
     #   factor(levels =
-    #            `Head tremor age of onset` |>
+    #            `Head Tremor: Age of onset` |>
     #            unique() |>
     #            sort()) |>
     #   relabel_factor_missing_codes(),

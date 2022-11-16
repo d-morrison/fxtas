@@ -4,10 +4,17 @@
 \alias{missingness_reasons}
 \title{Title}
 \usage{
-missingness_reasons(x)
+missingness_reasons(x, ...)
 }
 \arguments{
-\item{x}{}
+\item{x}{a numeric vector}
+
+\item{...}{
+  Arguments passed on to \code{\link[=clean_numeric]{clean_numeric}}
+  \describe{
+    \item{\code{NA_codes}}{numeric values that should be turned into to NAs}
+    \item{\code{extra_codes}}{codes besides 777, 888, 999 to turn into NAs}
+  }}
 }
 \description{
 Title

@@ -4,16 +4,14 @@
 \alias{clean_numeric}
 \title{Title}
 \usage{
-clean_numeric(x, ...)
+clean_numeric(x, NA_codes = c(777, 888, 999, extra_codes), extra_codes = NULL)
 }
 \arguments{
 \item{x}{a numeric vector}
 
-\item{...}{
-  Arguments passed on to \code{\link[=missing_codes_to_NA]{missing_codes_to_NA}}
-  \describe{
-    \item{\code{NA_codes}}{numeric values that should be turned into to NAs}
-  }}
+\item{NA_codes}{numeric values that should be turned into to NAs}
+
+\item{extra_codes}{codes besides 777, 888, 999 to turn into NAs}
 }
 \description{
 Title
