@@ -8,7 +8,7 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-knitr::ovisit1_chunk$set(
+knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
@@ -82,11 +82,10 @@ plot1 |> plotly::ggplotly()
 
 visit1 = 
   gp34 |> 
-  arrange(
-    `Age at visit`
-  ) |> 
+  arrange(`FXS ID`, `Visit Date`) |> 
   group_by(`FXS ID`) |> 
   slice_head(n = 1) |>
+  ungroup() |> 
   rename(
     `Age at first visit` = `Age at visit`,
     `Recruited in study phase` = Study
@@ -114,8 +113,9 @@ gp34 |> filter(is.na(`Visit Date`)) |>
 ```{r}
 
 gp34 |> 
-  group_by(`FXS ID`) |> 
-  filter(any(duplicated(`Visit Date`)))
+  group_by(`FXS ID`, `Visit Date`) |> 
+  filter(n() > 1) |> 
+  select(Study:`Visit Date`) |> print(n = Inf)
 
 ```
 
@@ -126,22 +126,29 @@ gp34 |>
 vars = c(
   "Age at first visit",
   "# visits",
-  "Recruited in study phase",
+  # "Recruited in study phase",
+  "Gender",
   "Primary Ethnicity",
   "Primary Race",
+  
   "ApoE",
   # "Floras Non-Sortable Allele Size (CGG) Results", # too many levels
   "Drug use",
   "Marijuana use",
-  "Alcohol use"
-  # "# of drinks per day now"
-  # "Thyroid Cancer",
+  "Alcohol use",
+  "# of drinks per day now",
+  "Thyroid Cancer",
+  "Skin Cancer",
+  "Melanoma",
+  "Prostate Cancer",
+  "Other Cancer"
+  
   
 )
 
 library(table1)
 table1(
-  formula(paste("~", paste(formulaic::add.backtick(vars), collapse = " + "), "| Gender")),
+  formula(paste("~", paste(formulaic::add.backtick(vars), collapse = " + "), "| `Recruited in study phase`")),
   data = visit1)
 ```
 

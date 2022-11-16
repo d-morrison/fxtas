@@ -6,9 +6,10 @@ library(Hmisc)
 library(dplyr)
 library(vroom)
 #Read Data
-dataset=vroom::vroom('inst/extdata/CTSC3704GP4GenotypeP-FXTASEventSequence10_DATA_2022-11-01_2027.csv',
+dataset=vroom::vroom('inst/extdata/CTSC3704GP4GenotypeP-FXTASEventSequence10_DATA_2022-11-15_2041.csv',
                   col_types = cols(
                     dem_date = col_date(),
+                    new_mds_med_can_other = col_double(),
                     # dob = col_date(), # auto-removed
                     subj_id = col_character(),
                     redcap_event_name = col_character(),
@@ -115,6 +116,7 @@ dataset=vroom::vroom('inst/extdata/CTSC3704GP4GenotypeP-FXTASEventSequence10_DAT
 #Setting Factors
 dataset$redcap_event_name = factor(dataset$redcap_event_name,levels=c("gp4__visit_1_arm_1","gp4__visit_2_arm_1","gp4__visit_3_arm_1","gp4__visit_4_arm_1","gp4__single_visit_arm_1","gp4__participant_s_arm_1"))
 dataset$sex = factor(dataset$sex,levels=c("0","1"))
+dataset$new_mds_med_can_other = factor(dataset$new_mds_med_can_other,levels=c("0","1","999","888","777"))
 dataset$new_mds_psy_drug = factor(dataset$new_mds_psy_drug,levels=c("0","1","2","999","888","777"))
 dataset$new_mds_psy_drug_marij = factor(dataset$new_mds_psy_drug_marij,levels=c("0","1","2","999","888","777"))
 dataset$new_mds_psy_alco = factor(dataset$new_mds_psy_alco,levels=c("0","1","2","999","888","777"))
@@ -158,41 +160,42 @@ dataset$mri_genu_wm_hyper = factor(dataset$mri_genu_wm_hyper,levels=c("0","1","9
 dataset$mri_corp_call_thick = factor(dataset$mri_corp_call_thick,levels=c("0","1","999"))
 dataset$dem_race = factor(dataset$dem_race,levels=c("1","2","3","4","5","8","6","7"))
 dataset$dem_eth = factor(dataset$dem_eth,levels=c("1","2","3"))
-dataset$new_mds_psy_dri = factor(dataset$new_mds_psy_dri)
+# dataset$new_mds_psy_dri = factor(dataset$new_mds_psy_dri)
 # levels(dataset$new_mds_psy_dri) = levels(dataset$new_mds_psy_dri) |> sub(pattern = "888", "")
 
 levels(dataset$redcap_event_name)=c("GP4 - Visit 1","GP4 - Visit 2","GP4 - Visit 3","GP4 - Visit 4","GP4 - Single Visit","GP4 - Participant Survey")
 levels(dataset$sex)=c("Female","Male")
-levels(dataset$new_mds_psy_drug)=c("None","Past Only","Present","no response","NA","question not asked at time of data entry; check records")
-levels(dataset$new_mds_psy_drug_marij)=c("None","Past Only","Present","no response","NA","question not asked at time of data entry; check records")
-levels(dataset$new_mds_psy_alco)=c("None","Past Only","Present","no response","NA","question not asked at time of data entry; check records")
-levels(dataset$new_mds_med_thyca)=c("No","Yes","No Response","NA","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_med_skin)=c("No","Yes","No Response","NA","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_med_mela)=c("No","Yes","No Response","NA","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_med_proca)=c("No","Yes","No Response","NA","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_neu_trem_int)=c("No","Yes","No Response","NA","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_neu_trem_rest)=c("No","Yes","No Response","NA","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_neu_trem_pos)=c("No","Yes","No Response","NA","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_neu_trem_irm)=c("No","Yes","No Response","NA","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_neu_trem_head)=c("No","Yes","No Response","NA","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_neu_atax)=c("No","Yes","No Response","NA","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_ne_ga)=c("No","Yes","No Response","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_med_park)=c("No","Yes","No Response","NA","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_ne_pf)=c("No","Yes","No Response","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_ne_pfmf)=c("No","Yes","No Response","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_ne_pfit)=c("No","Yes","No Response","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_ne_pfprt)=c("No","Yes","No Response","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_ne_pfsg)=c("No","Yes","No Response","Question not asked at time of data entry; check records")
+levels(dataset$new_mds_psy_drug)=c("None","Past Only","Present","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_psy_drug_marij)=c("None","Past Only","Present","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_psy_alco)=c("None","Past Only","Present","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_med_thyca)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_med_skin)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_med_mela)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_med_proca)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_med_can_other)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_neu_trem_int)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_neu_trem_rest)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_neu_trem_pos)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_neu_trem_irm)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_neu_trem_head)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_neu_atax)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_ne_ga)=c("No","Yes","No Response (999)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_med_park)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_ne_pf)=c("No","Yes","No Response (999)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_ne_pfmf)=c("No","Yes","No Response (999)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_ne_pfit)=c("No","Yes","No Response (999)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_ne_pfprt)=c("No","Yes","No Response (999)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_ne_pfsg)=c("No","Yes","No Response (999)","Question not asked at time of data entry; check records (777)")
 levels(dataset$scid_dxcode1)=c("Bipolar I Disorder (MD01)","Bipolar II Disorder (MD02)","Other Bipolar Disorder (MD03)","Major Depressive Disorder (MD04)","Dysthymic Disorder (MD05)","Depressive Disorder NOS (MD06)","Mood Disorder Due to GMC (MD07)","Substance-Induced Mood Disorder (MD08)","Primary Psychotic Symptom (PS01)","Alcohol (SUD17)","Sedative-Hypnotic-Anxioly (SUD18)","Cannabis (SUD19)","Stimulants (SUD20)","Opiod (SUD21)","Cocaine (SUD22)","Hallucinogenics/ PCP (SUD23)","Poly Drug (SUD24)","Substance Abuse Other (SUD25)","Panic Disorder (ANX26)","Agoraphobia without Panic (ANX27)","Social Phobia (ANX28)","Specific Phobia (ANX29)","Obsessive Compulsive (ANX30)","Posttraumatic Stress (ANX31)","Generalized Anxiety (ANX32)","Anxiety Due To GMC (ANX33)","Substance-Induced Anxiety (ANX34)","Anxiety Disorder NOS (ANX35)","Somatization Disorder (SOM36)","Pain Disorder (SOM37)","Undifferentiated Somatoform (SOM38)","Hypochondriasis (SOM39)","Body Dysmorphic (SOM40)","Adjustment Disorder (ADJ44)","Other Dx Not Listed","Not Applicable","None Listed or Incomplete Data")
 levels(dataset$scid_dxcode2)=c("Bipolar I Disorder (MD01)","Bipolar II Disorder (MD02)","Other Bipolar Disorder (MD03)","Major Depressive Disorder (MD04)","Dysthymic Disorder (MD05)","Depressive Disorder NOS (MD06)","Mood Disorder Due to GMC (MD07)","Substance-Induced Mood Disorder (MD08)","Primary Psychotic Symptom (PS01)","Alcohol (SUD17)","Sedative-Hypnotic-Anxioly (SUD18)","Cannabis (SUD19)","Stimulants (SUD20)","Opiod (SUD21)","Cocaine (SUD22)","Hallucinogenics/ PCP (SUD23)","Poly Drug (SUD24)","Substance Abuse Other (SUD25)","Panic Disorder (ANX26)","Agoraphobia without Panic (ANX27)","Social Phobia (ANX28)","Specific Phobia (ANX29)","Obsessive Compulsive (ANX30)","Posttraumatic Stress (ANX31)","Generalized Anxiety (ANX32)","Anxiety Due To GMC (ANX33)","Substance-Induced Anxiety (ANX34)","Anxiety Disorder NOS (ANX35)","Somatization Disorder (SOM36)","Pain Disorder (SOM37)","Undifferentiated Somatoform (SOM38)","Hypochondriasis (SOM39)","Body Dysmorphic (SOM40)","Adjustment Disorder (ADJ44)","Other Dx Not Listed","Not Applicable","None Listed or Incomplete Data")
 levels(dataset$scid_dxcode3)=c("Bipolar I Disorder (MD01)","Bipolar II Disorder (MD02)","Other Bipolar Disorder (MD03)","Major Depressive Disorder (MD04)","Dysthymic Disorder (MD05)","Depressive Disorder NOS (MD06)","Mood Disorder Due to GMC (MD07)","Substance-Induced Mood Disorder (MD08)","Primary Psychotic Symptom (PS01)","Alcohol (SUD17)","Sedative-Hypnotic-Anxioly (SUD18)","Cannabis (SUD19)","Stimulants (SUD20)","Opiod (SUD21)","Cocaine (SUD22)","Hallucinogenics/ PCP (SUD23)","Poly Drug (SUD24)","Substance Abuse Other (SUD25)","Panic Disorder (ANX26)","Agoraphobia without Panic (ANX27)","Social Phobia (ANX28)","Specific Phobia (ANX29)","Obsessive Compulsive (ANX30)","Posttraumatic Stress (ANX31)","Generalized Anxiety (ANX32)","Anxiety Due To GMC (ANX33)","Substance-Induced Anxiety (ANX34)","Anxiety Disorder NOS (ANX35)","Somatization Disorder (SOM36)","Pain Disorder (SOM37)","Undifferentiated Somatoform (SOM38)","Hypochondriasis (SOM39)","Body Dysmorphic (SOM40)","Adjustment Disorder (ADJ44)","Other Dx Not Listed","Not Applicable","None Listed or Incomplete Data")
-levels(dataset$new_mds_med_lup)=c("No","Yes","No Response","NA","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_med_ra)=c("No","Yes","No Response","NA","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_med_mswk)=c("No","Yes","No Response","NA","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_med_ana)=c("No","Yes","Unknown","No Response","NA","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_med_sjo)=c("No","Yes","No Response","NA","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_med_ray)=c("No","Yes","No Response","NA","Question not asked at time of data entry; check records")
-levels(dataset$new_mds_med_pulm)=c("No","Yes","No Response","NA","Question not asked at time of data entry; check records")
+levels(dataset$new_mds_med_lup)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_med_ra)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_med_mswk)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_med_ana)=c("No","Yes","Unknown","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_med_sjo)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_med_ray)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_med_pulm)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
 levels(dataset$mri_cere_atr)=c("None","Mild","Moderate","Severe","Missing/Refused")
 levels(dataset$mri_cerebel_atr)=c("None","Mild","Moderate","Severe","Missing/Refused")
 levels(dataset$mri_cere_wm_hyper)=c("None","Mild","Moderate","Severe","Missing/Refused")
@@ -224,6 +227,7 @@ labels = c(subj_id = "FXS ID",
            new_mds_med_skin = "Skin Cancer",
            new_mds_med_mela = "Melanoma",
            new_mds_med_proca = "Prostate Cancer",
+           new_mds_med_can_other="Other Cancer",
            new_mds_med_sur1 = "Surgery: Type/Age",
            new_mds_med_sur2 = "Surgery 2: Type/Age",
            new_mds_med_sur3 = "Surgery 3: Type/Age",
@@ -280,7 +284,7 @@ labels = c(subj_id = "FXS ID",
 
 )
 
-if(!isTRUE(all.equal(names(dataset), names(labels)))) browser(message('why is there a mismatch?'))
+if(!isTRUE(setequal(names(dataset), names(labels)))) browser(message('why is there a mismatch?'))
 
 names(dataset) = labels[names(dataset)]
 
