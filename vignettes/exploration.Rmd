@@ -122,6 +122,8 @@ gp34 |>
 
 
 ## Table 1
+
+
 ```{r}
 
 vars = c(
@@ -155,7 +157,7 @@ vars = c(
   
   "Intention tremor",
   "Resting tremor",
-   "Postural tremor",
+  "Postural tremor",
   "Intermittent Tremor",
   "Tremor: Age of onset",
   "Tremor: Age of onset: missingness",
@@ -177,13 +179,86 @@ vars = c(
   grep("MMSE Total Score", value = TRUE, names(gp34), fixed = TRUE),
   
   grep("Interviewers Diagnosis", value = TRUE, names(gp34), fixed = TRUE) |> sort(),
-  grep("score", value = TRUE, names(gp34), ignore.case = TRUE) |> sort(),
+  # grep("score", value = TRUE, names(gp34), ignore.case = TRUE) |> sort(),
+  
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Somatization (T-score: Nonpatient)"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Obsessive-Compulsive (T-score: Nonpatient)"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Interpersonal Sensitivity T-score: Nonpatient"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Depression (T-score: Nonpatient)"), 
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Anxiety (T-score: Nonpatient)"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Hostility (T-score: Nonpatient)"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Phobia (T-score: Nonpatient)"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Paranoid Ideation (T-score: Nonpatient)",),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Psychoticism (T-score: Nonpatient)"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Global Severity Index (T-score: Nonpatient)"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Positive Symptom Distress Index (T-score: Nonpatient)"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Positive Symptom Total (T-score: Nonpatient)"),
+  
+  "Cerebral Atrophy",
+  "Cerebellar Atrophy",
+  "Cerebral WM Hyperintensity",
+  "Cerebellar WM Hyperintensity",
+  "MCP-WM Hyperintensity",
+  "Pons-WM Hyperintensity",
+  "Sub-Insular WM Hyperintensity",
+  "Periventricular WM Hyperintensity",
+  "Splenium (CC)-WM Hyperintensity",
+  "Genu (CC)-WM Hyperintensity",
+  "Corpus Callosum-Thickness",
+  
+  "Verbal: IQ Score",
+  "Verbal Comprehension: Composite Score (VCI)",
+  
+  "Perceptual Reasoning: Composite Score (PRI)",
+  "Working Memory: Composite Score (WMI)", 
+  "Processing Speed: Composite Score (PSI)",
+  
+  "Full Scale: Composite Score FSIQ)", 
+  "Full Scale: IQ Score",
+  
+  "Drugs used",
+  
+  "SWM Between errors",
+  "SST Median correct RT on GO trials",
+  "RVP A",
+  "OTS Problems solved on first choice",
+  "PAL Total errors (adjusted)",
+  "RTI Five-choice movement time",
+  
+  "Lupus",
+  "Rheumatoid arthritis",
+  "Multiple Sclerosis: Workup",
+  "ANA positive",
+  "Sjogrens Syndrome",
+  "Raynauds Syndrome",
+  "Pulmonary Fibrosis",
+  # "Immunological Notes"
+  grep(pattern = "surgery", ignore.case = TRUE, x = names(gp34), value = TRUE)
+  
   
   
 )
 
 library(table1)
 table1(
+  NA.label = "missingno",
+  formula(paste("~", paste(formulaic::add.backtick(vars), collapse = " + "), "| `Recruited in study phase`")),
+  data = visit1)
+```
+
+### Surgery
+
+```{r}
+
+vars = c(
+  
+  grep(pattern = "surgery", ignore.case = TRUE, x = names(gp34), value = TRUE)
+  
+)
+
+library(table1)
+table1(
+  NA.label = "missingno",
   formula(paste("~", paste(formulaic::add.backtick(vars), collapse = " + "), "| `Recruited in study phase`")),
   data = visit1)
 ```

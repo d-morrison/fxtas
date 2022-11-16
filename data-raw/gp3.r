@@ -237,7 +237,9 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            new_mds_psy_drug_marij = "Marijuana use", mds_psy_alco = "Alcohol use",
            mds_psy_dri = "# of drinks per day now", mds_med_thyca = "Thyroid Cancer",
            new_mds_med_skin = "Skin Cancer", new_mds_med_mela = "Melanoma",
-           mds_med_proca = "Prostate Cancer", mds_med_sur = "Surgery", mds_med_sur_notes = "Surgery type",
+           mds_med_proca = "Prostate Cancer",
+           mds_med_sur = "Surgery",
+           mds_med_sur_notes = "Surgery type",
            new_mds_med_sur1 = "Surgery: Type/Age", new_mds_med_sur2 = "Surgery 2: Type/Age",
            new_mds_med_sur3 = "Surgery 3: Type/Age", mds_ne_it = "Intention tremor",
            mds_ne_rt = "Resting tremor", mds_ne_pt = "Postural tremor",
@@ -258,14 +260,18 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            scid_dxcode3 = "Interviewers Diagnosis 3,  by Code", scid_dx3age = "Interviewers Diagnosis 3, Age of Onset",
            scl_s_som_ts = "Somatization (T-score: Nonpatient)", scl_s_oc_ts = "Obsessive-Compulsive (T-score: Nonpatient)",
            scl_s_is_ts = "Interpersonal Sensitivity T-score: Nonpatient",
-           scl_s_dep_ts = "Depression(T-score: Nonpatient)", scl_s_anx_ts = "Anxiety (T-score: Nonpatient)",
+           scl_s_dep_ts = "Depression (T-score: Nonpatient)", scl_s_anx_ts = "Anxiety (T-score: Nonpatient)",
            scl_s_hos_ts = "Hostility (T-score: Nonpatient)", scl_s_phob_ts = "Phobia (T-score: Nonpatient)",
            scl_s_par_ts = "Paranoid Ideation (T-score: Nonpatient)", scl_s_psy_ts = "Psychoticism (T-score: Nonpatient)",
            scl_s_gsi_ts = "Global Severity Index (T-score: Nonpatient)",
            scl_s_psdi_ts = "Positive Symptom Distress Index (T-score: Nonpatient)",
            scl_s_pst_ts = "Positive Symptom Total (T-score: Nonpatient)",
-           wais_verb_iq = "Verbal: IQ Score", wais_perf_iq = "Performance: IQ Score",
-           wais_fullscale_iq = "Full Scale: IQ Score", cantab_ots_probsolvedfirstchoice_ = "OTS Problems solved on first choice",
+
+           wais_verb_iq = "Verbal: IQ Score",
+           wais_perf_iq = "Performance: IQ Score",
+           wais_fullscale_iq = "Full Scale: IQ Score",
+
+           cantab_ots_probsolvedfirstchoice_ = "OTS Problems solved on first choice",
            cantab_pal_toterrors_adjusted = "PAL Total errors (adjusted)",
            cantab_sst_medianrt_gotrials = "SST Median correct RT on GO trials",
            cantab_rvp_a = "RVP A", cantab_rti_5choice_movement = "RTI Five-choice movement time",
@@ -277,7 +283,7 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            mri_cere_atr = "Cerebral Atrophy", mri_cerebel_atr = "Cerebellar Atrophy",
            mri_cere_wm_hyper = "Cerebral WM Hyperintensity", mri_cerebel_wm_hyper = "Cerebellar WM Hyperintensity",
            mri_mcp_wm_hyper = "MCP-WM Hyperintensity", mri_pons_wm_hyper = "Pons-WM Hyperintensity",
-           mri_subins_wm_hyper = "Sub-Insular WM Hyperintensity", mri_peri_wm_hyper = "Periventricular WM Hyperintensity",
+           mri_subins_wm_hyper = "Sub-Insular WM Hyperintensity", mri_peri_wm_hyper = "Periventricular WM Hyperintensity",C
            mri_splen_wm_hyper = "Splenium (CC)-WM Hyperintensity", mri_genu_wm_hyper = "Genu (CC)-WM Hyperintensity",
            mri_corp_call_thick = "Corpus Callosum-Thickness", ds_crx1 = "Current Medications 1",
            ds_crx2 = "Current Medications 2", ds_crx3 = "Current Medications 3",
@@ -345,7 +351,7 @@ if(FALSE)
   # label(data$scl_s_som_ts)="Somatization (T-score: Nonpatient)"
   # label(data$scl_s_oc_ts)="Obsessive-Compulsive (T-score: Nonpatient)"
   # label(data$scl_s_is_ts)="Interpersonal Sensitivity T-score: Nonpatient"
-  # label(data$scl_s_dep_ts)="Depression(T-score: Nonpatient)"
+  # label(data$scl_s_dep_ts)="Depression (T-score: Nonpatient)"
   # label(data$scl_s_anx_ts)="Anxiety (T-score: Nonpatient)"
   # label(data$scl_s_hos_ts)="Hostility (T-score: Nonpatient)"
   # label(data$scl_s_phob_ts)="Phobia (T-score: Nonpatient)"

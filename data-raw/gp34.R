@@ -61,10 +61,13 @@ gp34 =
       .names = "{.col}{if_else(.fn != 'tmp', paste0(': ', .fn), '')}"
     ),
 
-    `Ataxia: severity` =
-      `Ataxia: severity` |>
-      factor(levels = sort(unique(`Ataxia: severity`))) |>
-      relabel_factor_missing_codes(),
+    across(
+      c(`Ataxia: severity`, `Drugs used`),
+      ~ .x |>
+        factor(levels = sort(unique(.x))) |>
+        relabel_factor_missing_codes()
+    ),
+
 
     across(c(`FXTAS Stage (0-5)`), numeric_as_factor),
 
