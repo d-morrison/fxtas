@@ -41,7 +41,7 @@ dataset=vroom::vroom('inst/extdata/CTSC3704GP4GenotypeP-FXTASEventSequence10_DAT
                     new_mds_neu_atax = col_double(),
                     new_mds_neu_atax_age = col_double(),
                     new_mds_ne_ga = col_double(),
-                    new_mds_ne_gas = col_double(),
+                    new_mds_ne_gas = col_character(),
                     new_mds_med_park = col_double(),
                     new_mds_ne_pf = col_double(),
                     new_mds_ne_pfmf = col_double(),
@@ -114,7 +114,15 @@ dataset=vroom::vroom('inst/extdata/CTSC3704GP4GenotypeP-FXTASEventSequence10_DAT
 
 
 #Setting Factors
+# dataset =
+#   dataset |>
+#   mutate(
+#     new_mds_neu_trem_age2 = factor(new_mds_neu_trem_age2,
+#                                    levels = sort(unique(new_mds_neu_trem_age2 |> )))
+#   )
+
 dataset$redcap_event_name = factor(dataset$redcap_event_name,levels=c("gp4__visit_1_arm_1","gp4__visit_2_arm_1","gp4__visit_3_arm_1","gp4__visit_4_arm_1","gp4__single_visit_arm_1","gp4__participant_s_arm_1"))
+
 dataset$sex = factor(dataset$sex,levels=c("0","1"))
 dataset$new_mds_med_can_other = factor(dataset$new_mds_med_can_other,levels=c("0","1","999","888","777"))
 dataset$new_mds_psy_drug = factor(dataset$new_mds_psy_drug,levels=c("0","1","2","999","888","777"))
@@ -240,7 +248,7 @@ labels = c(subj_id = "FXS ID",
            new_mds_neu_trem_age2 = "Head tremor age of onset", new_mds_neu_atax = "Walking/ataxia Problems",
            new_mds_neu_atax_age = "Ataxia: Age of onset",
            new_mds_ne_ga = "Ataxia",
-           new_mds_ne_gas = "Ataxia severity", new_mds_med_park = "Parkinsons",
+           new_mds_ne_gas = "Ataxia: severity", new_mds_med_park = "Parkinsons",
            new_mds_ne_pf = "Parkinsonian features", new_mds_ne_pfmf = "Masked facies",
            new_mds_ne_pfit = "Increased tone", new_mds_ne_pfprt = "Pill rolling tremor",
            new_mds_ne_pfsg = "Stiff gait", new_mds_fxtas_stage = "FXTAS Stage (0-5)",

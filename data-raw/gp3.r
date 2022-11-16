@@ -43,8 +43,8 @@ dataset=vroom::vroom('inst/extdata/GPGenotypePhenotypeR-FXTASEventSequence10_DAT
                        new_mds_neu_trem_age2 = col_character(),
                        mds_neu_atax = col_double(),
                        mds_neu_atax_age = col_double(),
-                       mds_neu_atax_sev = col_double(),
-                       new_mds_ne_ga = col_logical(),
+                       mds_neu_atax_sev = col_character(),
+                       new_mds_ne_ga = col_skip(),
                        new_mds_med_park = col_logical(),
                        mds_ne_pf = col_double(),
                        mds_ne_pfmf = col_double(),
@@ -116,6 +116,14 @@ dataset=vroom::vroom('inst/extdata/GPGenotypePhenotypeR-FXTASEventSequence10_DAT
 
 #Setting Factors(will create new variable for factors)
 dataset$new_mds_med_can_other = factor(dataset$new_mds_med_can_other,levels=c("0","1","999","888","777"))
+
+# dataset =
+#   dataset |>
+#   mutate(
+#
+#     new_mds_neu_trem_age2 = factor(new_mds_neu_trem_age2,
+#                                    levels = sort(unique(new_mds_neu_trem_age2)))
+#   )
 dataset$redcap_event_name = factor(dataset$redcap_event_name,levels=c("gp1_visit_1_arm_1","gp1_visit_2_arm_1","gp1_visit_3_arm_1","gp2_visit_1_arm_1","gp2_visit_2_arm_1","gp2__visit_3_arm_1","gp3__visit_1_arm_1","gp3__visit_2_arm_1","gp3__visit_3_arm_1","gp3__visit_4_arm_1","gp4_arm_1"))
 dataset$sex = factor(dataset$sex,levels=c("0","1"))
 dataset$mds_psy_drug = factor(dataset$mds_psy_drug,levels=c("1","2","0","999","888","777"))
@@ -132,7 +140,7 @@ dataset$mds_ne_pt = factor(dataset$mds_ne_pt,levels=c("0","1","999","777"))
 dataset$mds_neu_trem_irm = factor(dataset$mds_neu_trem_irm,levels=c("0","1","999","888","777"))
 dataset$new_mds_neu_trem_head = factor(dataset$new_mds_neu_trem_head,levels=c("0","1","999","888","777"))
 dataset$mds_neu_atax = factor(dataset$mds_neu_atax,levels=c("0","1","999","888","777"))
-dataset$new_mds_ne_ga = factor(dataset$new_mds_ne_ga,levels=c("0","1","999","777"))
+# dataset$new_mds_ne_ga = factor(dataset$new_mds_ne_ga,levels=c("0","1","999","777"))
 dataset$new_mds_med_park = factor(dataset$new_mds_med_park,levels=c("0","1","999","888","777"))
 dataset$mds_ne_pf = factor(dataset$mds_ne_pf,levels=c("0","1","999","777"))
 dataset$mds_ne_pfmf = factor(dataset$mds_ne_pfmf,levels=c("0","1","999","777"))
@@ -187,7 +195,7 @@ levels(dataset$mds_ne_pt)=c("No","Yes","No Response (999)","Question not asked a
 levels(dataset$mds_neu_trem_irm)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
 levels(dataset$new_mds_neu_trem_head)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
 levels(dataset$mds_neu_atax)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
-levels(dataset$new_mds_ne_ga)=c("No","Yes","No Response (999)","Question not asked at time of data entry; check records (777)")
+# levels(dataset$new_mds_ne_ga)=c("No","Yes","No Response (999)","Question not asked at time of data entry; check records (777)")
 levels(dataset$new_mds_med_park)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
 levels(dataset$mds_ne_pf)=c("Yes","No","No Response (999)","Question not asked at time of data entry; check records (777)")
 levels(dataset$mds_ne_pfmf)=c("No","Yes","No Response (999)","Question not asked at time of data entry; check records (777)")
@@ -235,9 +243,10 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            mds_ne_rt = "Resting tremor", mds_ne_pt = "Postural tremor",
            mds_neu_trem_irm = "Intermittent Tremor", mds_neu_trem_age = "Tremor Age of onset",
            new_mds_neu_trem_head = "Head tremor", new_mds_neu_trem_age2 = "Head tremor age of onset",
-           mds_neu_atax = "Problem with walking/ataxia",
+           mds_neu_atax = "Ataxia",
            mds_neu_atax_age = "Ataxia: Age of onset",
-           mds_neu_atax_sev = "Ataxia: severity", new_mds_ne_ga = "Ataxia",
+           mds_neu_atax_sev = "Ataxia: severity",
+           # new_mds_ne_ga = "Ataxia",
            new_mds_med_park = "Parkinsons", mds_ne_pf = "Parkinsonian features:",
            mds_ne_pfmf = "Parkinsonian features: masked facies", mds_ne_pfit = "Parkinsonian features: increased tone",
            mds_ne_pfprt = "Parkinsonian features: pill rolling tremor",

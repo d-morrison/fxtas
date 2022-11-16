@@ -15,7 +15,8 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(fxtas)
+# library(fxtas)
+load_all()
 ```
 
 ## plotly
@@ -141,7 +142,30 @@ vars = c(
   "Skin Cancer",
   "Melanoma",
   "Prostate Cancer",
-  "Other Cancer"
+  "Other Cancer",
+  # "Other Cancer (detailed)", # don't include in table
+  # "Surgery",
+  # "Surgery type",
+  # "Surgery: Type/Age",
+  # "Surgery 2: Type/Age",
+  # "Surgery 3: Type/Age",
+  # "Surgery 4: Type/Age",
+  # "Surgery 5: Type/Age",
+  
+  "Intention tremor",
+  "Resting tremor",
+   "Postural tremor",
+  "Intermittent Tremor",
+  "Tremor Age of onset",
+  
+  "Head tremor",
+  "Head tremor age of onset",
+  
+  "Ataxia",
+  "Ataxia: Age of onset",
+  "Ataxia: Age of onset missingness",
+  "Ataxia: severity"
+  
   
   
 )

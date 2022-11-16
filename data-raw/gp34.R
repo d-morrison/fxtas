@@ -1,5 +1,6 @@
 load_all()
 library(Hmisc)
+library(forcats)
 conflict_prefer("label", "Hmisc")
 library(tidyr)
 # dupes = gp3 |> semi_join(gp4, by = c("subj_id", "redcap_event_name"))
@@ -22,16 +23,31 @@ gp34 =
   tidyr::fill(`Primary Race`, `Primary Ethnicity`, Gender, .direction = "downup") |>
   relocate(`Visit Date`, .after = `Event Name`) |>
   mutate(
+    `Ataxia: Age of onset missingness` =
+      missingness_reasons(`Ataxia: Age of onset`),
+    `Ataxia: Age of onset` =
+      clean_numeric(`Ataxia: Age of onset`),
+    `Ataxia: severity` =
+      `Ataxia: severity` |>
+      factor(levels = sort(unique(`Ataxia: severity`))) |>
+      relabel_factor_missing_codes(),
     `# of drinks per day now` =
       `# of drinks per day now` |>
       factor(levels = sort(unique(`# of drinks per day now`))) |>
-      dplyr::recode_factor(
-      "-2" = "<1/day",
-      "888" = "888 (not defined in codebook)",
-      "999" = "no response (999)"
-    ),
-    `Birth Date` = date(`Visit Date` - days(round(`Age at visit` * 365.25))) # causes problems for eg 	100399-100
-  )
+      relabel_factor_missing_codes() |>
+      dplyr::recode_factor("-2" = "<1/day"),
+    # `Head tremor age of onset` =
+    #   `Head tremor age of onset` |>
+    #   factor(levels =
+    #            `Head tremor age of onset` |>
+    #            unique() |>
+    #            sort()) |>
+    #   relabel_factor_missing_codes(),
+
+    `Birth Date` = date(`Visit Date` - days(round(`Age at visit` * 365.25))), # causes problems for eg 	100399-100
+    across(where(is.factor), relabel_factor_missing_codes)
+  ) |>
+  droplevels()
 
 # levels(gp34$`# of drinks per day now`) =
 
