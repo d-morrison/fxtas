@@ -1,17 +1,22 @@
 #' Title
 #'
-#' @param x a numeric vector
+#' @param x the original vector to be turned into a numeric
+#' @param x.clean the cleaned vector
 #' @param ...
+#'
 #' @inheritDotParams clean_numeric
 #' @return
 #' @export
 #'
-missingness_reasons = function(x, ...)
+missingness_reasons = function(
+    x,
+    x.clean = x |> clean_numeric(...),
+    ...)
 {
-  x2 = x |> clean_numeric(...)
+
   b =
     if_else(
-      x2 |> is.na(),
+      x.clean |> is.na(),
       x |> as.character(),
       "[Valid numeric data recorded]") |>
     replace_na("Field empty in RedCap")

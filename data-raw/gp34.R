@@ -68,6 +68,28 @@ gp34 =
         relabel_factor_missing_codes()
     ),
 
+    ApoE =
+      ApoE |>
+      strsplit(", ") |>
+      sapply(sort) |>
+      sapply(paste, collapse = ", ") |>
+      na_if(""),
+
+    ApoE = factor(ApoE, levels = sort(unique(ApoE))),
+
+    CGG =
+      `Floras Non-Sortable Allele Size (CGG) Results` |>
+      strsplit(" *(-|,) *") |>
+      sapply(F = function(x) gsub(x = x, fixed = TRUE, "?*", "")) |>
+      sapply(F = as.numeric) |>
+      suppressWarnings() |>
+      sapply(F = max),
+
+    `CGG: missingness` =
+      missingness_reasons(
+        x = `Floras Non-Sortable Allele Size (CGG) Results`,
+        x.clean = CGG
+      ),
 
     across(c(`FXTAS Stage (0-5)`), numeric_as_factor),
 

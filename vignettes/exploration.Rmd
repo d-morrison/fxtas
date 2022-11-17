@@ -10,13 +10,18 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  comment = "#>",
+  fig.width = 7.5,
+  fig.height = 4
 )
 ```
 
 ```{r setup}
-# library(fxtas)
-load_all()
+library(fxtas)
+# load_all()
 ```
 
 ## plotly
@@ -123,7 +128,7 @@ gp34 |>
 
 ## Table 1
 
-
+### Demographics
 ```{r}
 
 vars = c(
@@ -132,10 +137,47 @@ vars = c(
   # "Recruited in study phase",
   "Gender",
   "Primary Ethnicity",
-  "Primary Race",
+  "Primary Race"
   
-  "ApoE",
-  # "Floras Non-Sortable Allele Size (CGG) Results", # too many levels
+)
+
+library(table1)
+NA.label = "Missing (blank)"
+table1(
+  NA.label = NA.label,
+  formula(paste("~", paste(formulaic::add.backtick(vars), collapse = " + "), "| `Recruited in study phase`")),
+  data = visit1)
+```
+
+### APOE
+
+```{r}
+
+table1(
+  NA.label = NA.label,
+  formula(paste("~", paste(formulaic::add.backtick("ApoE"), collapse = " + "), "| `Recruited in study phase`")),
+  data = visit1)
+```
+
+### CGG
+
+
+```{r}
+
+vars = grep("^CGG", names(gp34), value = TRUE)
+
+library(table1)
+table1(
+  NA.label = NA.label,
+  formula(paste("~", paste(formulaic::add.backtick(vars), collapse = " + "), "| `Recruited in study phase`")),
+  data = visit1)
+```
+
+### everything else
+
+```{r}
+
+vars = c(
   "Drug use",
   "Marijuana use",
   "Alcohol use",
@@ -231,9 +273,9 @@ vars = c(
   "ANA positive",
   "Sjogrens Syndrome",
   "Raynauds Syndrome",
-  "Pulmonary Fibrosis",
+  "Pulmonary Fibrosis"
   # "Immunological Notes"
-  grep(pattern = "surgery", ignore.case = TRUE, x = names(gp34), value = TRUE)
+  
   
   
   
@@ -241,10 +283,11 @@ vars = c(
 
 library(table1)
 table1(
-  NA.label = "missingno",
+  NA.label = NA.label,
   formula(paste("~", paste(formulaic::add.backtick(vars), collapse = " + "), "| `Recruited in study phase`")),
   data = visit1)
 ```
+
 
 ### Surgery
 
@@ -258,7 +301,7 @@ vars = c(
 
 library(table1)
 table1(
-  NA.label = "missingno",
+  NA.label = NA.label,
   formula(paste("~", paste(formulaic::add.backtick(vars), collapse = " + "), "| `Recruited in study phase`")),
   data = visit1)
 ```
