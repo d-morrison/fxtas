@@ -8,6 +8,8 @@
 #' @return
 #' @export
 #'
+#' @importFrom forcats fct_relevel
+#' @importFrom tidyr replace_na
 missingness_reasons = function(
     x,
     x.clean = x |> clean_numeric(...),
@@ -19,7 +21,7 @@ missingness_reasons = function(
       x.clean |> is.na(),
       x |> as.character(),
       "[Valid numeric data recorded]") |>
-    replace_na("Field empty in RedCap")
+    tidyr::replace_na("Field empty in RedCap")
 
   b = b |>
     factor(levels = b |> unique() |> sort() |> union(c(777, 888, 999))) |>

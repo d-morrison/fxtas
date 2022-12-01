@@ -4,10 +4,12 @@
 \alias{missingness_reasons}
 \title{Title}
 \usage{
-missingness_reasons(x, ...)
+missingness_reasons(x, x.clean = clean_numeric(x, ...), ...)
 }
 \arguments{
-\item{x}{a numeric vector}
+\item{x}{the original vector to be turned into a numeric}
+
+\item{x.clean}{the cleaned vector}
 
 \item{...}{
   Arguments passed on to \code{\link[=clean_numeric]{clean_numeric}}

@@ -14,6 +14,7 @@ Imports:
     shiny (>= 1.7.2)
 Suggests: 
     knitr,
+    pander,
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
