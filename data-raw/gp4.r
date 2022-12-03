@@ -6,10 +6,12 @@ library(Hmisc)
 library(dplyr)
 library(vroom)
 #Read Data
-dataset=vroom::vroom('inst/extdata/CTSC3704GP4GenotypeP-FXTASEventSequence10_DATA_2022-11-15_2041.csv',
+dataset=vroom::vroom('inst/extdata/CTSC3704GP4GenotypeP-FXTASEventSequence10_DATA_2022-12-02_1307.csv',
                   col_types = cols(
                     dem_date = col_date(),
                     new_mds_med_can_other = col_double(),
+                    new_mds_med_anes1 = col_character(),
+                    medic_surg_anes = col_character(),
                     # dob = col_date(), # auto-removed
                     subj_id = col_character(),
                     redcap_event_name = col_character(),
@@ -218,10 +220,18 @@ levels(dataset$mri_corp_call_thick)=c("Normal","Thin","Missing/Refused")
 levels(dataset$dem_race)=c("American Indian/Alaska Native","Asian","Black or African American","Native Hawaiian or Other Pacific Islander","White","Australian Aborigine","More Than One Race","Unknown / Not Reported")
 levels(dataset$dem_eth)=c("Hispanic or Latino","NOT Hispanic or Latino","Unknown / Not Reported")
 
+dataset$new_mds_med_anes1 = factor(dataset$new_mds_med_anes1,levels=c("2","3","0","999","888","777"))
+dataset$medic_surg_anes  = factor(dataset$medic_surg_anes,levels=c("0","1","2","3","999"))
+levels(dataset$new_mds_med_anes1)=c("Local","General","None","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$medic_surg_anes)=c("None","Local","General","Other","Missing/Refused (999)")
+
 #Setting Labels
 
 labels = c(subj_id = "FXS ID",
            redcap_event_name = "Event Name",
+           new_mds_med_anes1="Anesthesia (new_mds_med_anes1)",
+           medic_surg_anes="Anesthesia (medic_surg_anes)",
+
            sex = "Gender",
            visit_age = "Age at visit",
            mol_apoe = "ApoE",
@@ -229,7 +239,7 @@ labels = c(subj_id = "FXS ID",
            new_mds_psy_drug = "Drug use",
            new_mds_psy_drug_notes = "Drugs used",
            new_mds_psy_drug_marij = "Marijuana use",
-           new_mds_psy_alco = "Alcohol abuse",
+           new_mds_psy_alco = "Alcohol use/abuse",
            new_mds_psy_dri = "# of drinks per day now", #range= 0-20; -2= < 1/day; 999= no response
            new_mds_med_thyca = "Thyroid Cancer",
            new_mds_med_skin = "Skin Cancer",

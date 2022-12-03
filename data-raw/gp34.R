@@ -16,20 +16,7 @@ temp2[temp1 != temp2]
 
 shared[label(gp4[, shared]) != label(gp3[,shared])]
 
-time_range_codes = c(
-  99 ,
-  555,
-  444,
-  130,
-  200,
-  300,
-  400,
-  500,
-  600,
-  700,
-  800,
-  900
-)
+
 
 gp34 =
   bind_rows("GP3" = gp3, "GP4" = gp4, .id = "Study") |>
@@ -42,11 +29,16 @@ gp34 =
     # `Ataxia: Age of onset` =
     #   clean_numeric(`Ataxia: Age of onset`),
 
+    `Head Tremor: Age of onset` =
+      `Head Tremor: Age of onset` |> dplyr::recode("68-67" = "67.5"),
+    # "68-67" |> strsplit("-") |> sapply(F = function(x) median(as.numeric(x)))
+
     across(
       ends_with("Age of onset"),
       list(
-        missingness = ~missingness_reasons(.x, extra_codes = time_range_codes),
-        tmp = ~clean_numeric(.x, extra_codes = time_range_codes)),
+        missingness = ~missingness_reasons(.x, extra_codes = 99),
+        tmp = ~ .x |> age_range_medians() |> clean_numeric(extra_codes = 99)
+      ),
       .names = "{.col}{if_else(.fn != 'tmp', paste0(': ', .fn), '')}"
     ),
 
@@ -103,11 +95,14 @@ gp34 =
     #   `Head Tremor: Age of onset` |> missingness_reasons,
 
     `# of drinks per day now: missingness` =
-      missingness_reasons(`# of drinks per day now`, extra_codes = "-2") |>
-      forcats::fct_recode("<1/day" = "-2"),
+      missingness_reasons(`# of drinks per day now`),
 
     `# of drinks per day now` =
-      `# of drinks per day now` |> clean_numeric(extra_codes = "-2"),
+      if_else(
+        `# of drinks per day now` == -2,
+        0,
+        `# of drinks per day now`) |>
+      clean_numeric(),
 
     # `Head Tremor: Age of onset` =
     #   `Head Tremor: Age of onset` |>
