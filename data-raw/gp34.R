@@ -16,7 +16,12 @@ temp2[temp1 != temp2]
 
 shared[label(gp4[, shared]) != label(gp3[,shared])]
 
-
+tremor_types = c(
+  "Intention tremor",
+  "Resting tremor",
+  "Postural tremor",
+  "Intermittent tremor"
+)
 
 gp34 =
   bind_rows("GP3" = gp3, "GP4" = gp4, .id = "Study") |>
@@ -36,11 +41,17 @@ gp34 =
     across(
       ends_with("Age of onset"),
       list(
-        missingness = ~missingness_reasons(.x, extra_codes = 99),
-        tmp = ~ .x |> age_range_medians() |> clean_numeric(extra_codes = 99)
+        missingness = ~missingness_reasons(.x, extra_codes = c(99, 555)),
+        tmp = ~ .x |> age_range_medians() |> clean_numeric(extra_codes = c(99, 555))
       ),
       .names = "{.col}{if_else(.fn != 'tmp', paste0(': ', .fn), '')}"
     ),
+
+    "Any tremor" = dplyr::if_any(
+      .cols = all_of(tremor_types),
+      .fns = ~ . %in% "Yes") |>
+      if_else("Tremors Recorded", "No Tremors Recorded"),
+
 
     across(
       contains("score", ignore.case = TRUE),

@@ -15,7 +15,7 @@ time_range_codes = c(
 
 all_codes = c(
   "asked by clinician, but no answer from subject" = "99" ,
-  "lifelong" = "555",
+  "lifelong (555)" = "555",
   "childhood" = "444",
   "teens" = "130",
   "20s" = "200",

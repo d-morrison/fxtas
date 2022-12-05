@@ -253,7 +253,7 @@ labels = c(subj_id = "FXS ID",
            new_mds_med_sur5 = "Surgery 5: Type/Age",
            new_mds_neu_trem_int = "Intention tremor",
            new_mds_neu_trem_rest = "Resting tremor",
-           new_mds_neu_trem_pos = "Postural tremor", new_mds_neu_trem_irm = "Intermittent Tremor",
+           new_mds_neu_trem_pos = "Postural tremor", new_mds_neu_trem_irm = "Intermittent tremor",
            new_mds_neu_trem_age = "Tremor: Age of onset", new_mds_neu_trem_head = "Head tremor",
            new_mds_neu_trem_age2 = "Head Tremor: Age of onset", new_mds_neu_atax = "Walking/ataxia Problems",
            new_mds_neu_atax_age = "Ataxia: Age of onset",
@@ -351,7 +351,7 @@ names(dataset) = labels[names(dataset)]
 # label(data$new_mds_neu_trem_int)="Intention tremor"
 # label(data$new_mds_neu_trem_rest)="Resting tremor"
 # label(data$new_mds_neu_trem_pos)="Postural tremor"
-# label(data$new_mds_neu_trem_irm)="Intermittent Tremor"
+# label(data$new_mds_neu_trem_irm)="Intermittent tremor"
 # label(data$new_mds_neu_trem_age)="Tremor: Age of onset"
 # label(data$new_mds_neu_trem_head)="Head tremor"
 # label(data$new_mds_neu_trem_age2)="Head Tremor: Age of onset"

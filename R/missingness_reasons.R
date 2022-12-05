@@ -19,9 +19,8 @@ missingness_reasons = function(
   b =
     if_else(
       x.clean |> is.na(),
-      x |> as.character(),
-      "[Valid numeric data recorded]") |>
-    tidyr::replace_na("Field empty in RedCap")
+      x |> as.character() |> tidyr::replace_na("Field empty in RedCap"),
+      "[Valid numeric data recorded]")
 
   b = b |>
     factor(levels = b |> unique() |> sort() |> union(c(777, 888, 999))) |>

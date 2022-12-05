@@ -293,7 +293,7 @@ table1(
 
 **Question:** Can we categorize anesthesia into a binary variable (yes/no), summarizing across all fields in GP4 (`new_mds_med_anes1`, `new_mds_med_anes2`, etc.)?
 
-**Question:** What should we do with codes 777, 888, 999? Can we fill in any of the missing (empty in RedCap) values?
+**Question:** What should we do with missing codes and blanks?
 
 ```{r}
 
@@ -322,51 +322,176 @@ table1(
 
 ### Tremors
 
+**Question:** What should we do with missing codes and blanks?
+
 ```{r}
 vars = c(
   
   "Intention tremor",
   "Resting tremor",
   "Postural tremor",
-  "Intermittent Tremor",
-  "Tremor: Age of onset",
-  "Tremor: Age of onset: missingness",
-  
+  "Intermittent tremor",
+  "Any tremor",
+  "Tremor: Age of onset"
+  # "Tremor: Age of onset: missingness"
+)
+table1(
+  NA.label = NA.label,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+#### Age of onset missingness reasons where any of the four above tremor types = "Yes":
+
+```{r}
+
+table1(
+  NA.label = NA.label,
+  stratified_formula("Tremor: Age of onset: missingness", "Recruited in study phase"),
+  data = visit1 |> filter(`Any tremor` == "Tremors Recorded"))
+
+```
+
+### Head tremors
+
+**Question:** Can we get any data on head tremor for GP3?
+
+```{r}
+vars = c(
   "Head tremor",
-  "Head Tremor: Age of onset",
-  "Head Tremor: Age of onset: missingness"
+  "Head Tremor: Age of onset"
   
 )
 table1(
   NA.label = NA.label,
   stratified_formula(vars, "Recruited in study phase"),
   data = visit1)
+
 ```
 
+Missingness reasons where "Head tremor" = "Yes":
+
+```{r}
+
+table1(
+  NA.label = NA.label,
+  stratified_formula("Head Tremor: Age of onset: missingness", "Recruited in study phase"),
+  data = visit1 |> filter(`Head tremor` == "Yes"))
+
+```
+
+
+
+### Ataxia
+
+**Question:** What should we do with missing codes and blanks?
 
 ```{r}
 
 vars = c(
-  
-  
   "Ataxia",
   "Ataxia: severity",
   "Ataxia: Age of onset",
-  "Ataxia: Age of onset: missingness",
-  
-  grep("Parkinson", value = TRUE, names(gp34)),
-  
-  "FXTAS Stage (0-5)",
-  
-  grep("BDS-2 Total Score", value = TRUE, names(gp34), fixed = TRUE),
-  grep("MMSE Total Score", value = TRUE, names(gp34), fixed = TRUE),
-  
-  grep("Interviewers Diagnosis", value = TRUE, names(gp34), fixed = TRUE) |> sort(),
+  "Ataxia: Age of onset: missingness"
+)
+
+table1(
+  NA.label = NA.label,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+### Parkinsons
+
+**Question:** Can we fill in Parkinsons (formal diagnosis) for GP3?
+
+**Question:** What should we do with missing codes and blanks?
+
+```{r}
+
+vars = grep("Parkinson", value = TRUE, names(gp34))
+
+table1(
+  NA.label = NA.label,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+### FXTAS Stage
+
+**Question:** What should we do with missing codes and blanks?
+
+```{r}
+
+vars = "FXTAS Stage (0-5)"
+
+table1(
+  NA.label = NA.label,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+### BDS2
+
+**Question:** What should we do with missing codes and blanks?
+
+```{r}
+
+vars = grep("BDS-2 Total Score", value = TRUE, names(gp34), fixed = TRUE)
+
+table1(
+  NA.label = NA.label,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+### MMSE
+
+**Question:** What should we do with blanks?
+
+```{r}
+
+vars = grep("MMSE Total Score", value = TRUE, names(gp34), fixed = TRUE)
+
+table1(
+  NA.label = NA.label,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+### SCID
+
+**Question:** What should we do with missing codes and blanks?
+
+```{r}
+
+vars = grep("Interviewers Diagnosis \\d+,  by Code", value = TRUE, names(gp34)) |> sort()
+
+table1(
+  NA.label = NA.label,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+#### SCL90
+
+**Question:** What should we do with missing codes and blanks?
+
+**Question:** Do we want to include "Interpersonal Sensitivity T-score" (was included in data extract, wasn't on Word doc list)?
+
+```{r}
+
+vars = c(
   # grep("score", value = TRUE, names(gp34), ignore.case = TRUE) |> sort(),
-  
   grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Somatization (T-score: Nonpatient)"),
   grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Obsessive-Compulsive (T-score: Nonpatient)"),
-  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Interpersonal Sensitivity T-score: Nonpatient"),
   grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Depression (T-score: Nonpatient)"), 
   grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Anxiety (T-score: Nonpatient)"),
   grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Hostility (T-score: Nonpatient)"),
@@ -374,9 +499,27 @@ vars = c(
   grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Paranoid Ideation (T-score: Nonpatient)",),
   grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Psychoticism (T-score: Nonpatient)"),
   grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Global Severity Index (T-score: Nonpatient)"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Interpersonal Sensitivity T-score: Nonpatient"),
   grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Positive Symptom Distress Index (T-score: Nonpatient)"),
-  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Positive Symptom Total (T-score: Nonpatient)"),
-  
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Positive Symptom Total (T-score: Nonpatient)")
+)
+
+table1(
+  NA.label = NA.label,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+### MRI
+
+**Question:** What should we do with missing codes and blanks?
+
+**Question:** Do we want to include "Interpersonal Sensitivity T-score" (was included in data extract, wasn't on Word doc list)?
+
+```{r}
+
+vars = c(
   "Cerebral Atrophy",
   "Cerebellar Atrophy",
   "Cerebral WM Hyperintensity",
@@ -387,7 +530,21 @@ vars = c(
   "Periventricular WM Hyperintensity",
   "Splenium (CC)-WM Hyperintensity",
   "Genu (CC)-WM Hyperintensity",
-  "Corpus Callosum-Thickness",
+  "Corpus Callosum-Thickness"
+)
+
+table1(
+  NA.label = NA.label,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+```{r}
+
+vars = c(
+  
+  
   
   "Verbal: IQ Score",
   "Verbal Comprehension: Composite Score (VCI)",
@@ -451,3 +608,5 @@ table1(
   stratified_formula(vars, "Recruited in study phase"),
   data = visit1)
 ```
+
+**Question:** For `age of onset` = "lifelong (555)", what numeric value should we use? Age 0?

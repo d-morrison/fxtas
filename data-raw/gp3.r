@@ -90,17 +90,17 @@ dataset=vroom::vroom('inst/extdata/GPGenotypePhenotypeR-FXTASEventSequence10_DAT
                        mds_med_ray = col_double(),
                        new_mds_med_pulm = col_logical(),
                        mds_med_ido_notes = col_character(),
-                       mri_cere_atr = col_logical(),
-                       mri_cerebel_atr = col_logical(),
-                       mri_cere_wm_hyper = col_logical(),
-                       mri_cerebel_wm_hyper = col_logical(),
-                       mri_mcp_wm_hyper = col_logical(),
-                       mri_pons_wm_hyper = col_logical(),
-                       mri_subins_wm_hyper = col_logical(),
-                       mri_peri_wm_hyper = col_logical(),
-                       mri_splen_wm_hyper = col_logical(),
-                       mri_genu_wm_hyper = col_logical(),
-                       mri_corp_call_thick = col_logical(),
+                       mri_cere_atr = col_double(),
+                       mri_cerebel_atr = col_double(),
+                       mri_cere_wm_hyper = col_double(),
+                       mri_cerebel_wm_hyper = col_double(),
+                       mri_mcp_wm_hyper = col_double(),
+                       mri_pons_wm_hyper = col_double(),
+                       mri_subins_wm_hyper = col_double(),
+                       mri_peri_wm_hyper = col_double(),
+                       mri_splen_wm_hyper = col_double(),
+                       mri_genu_wm_hyper = col_double(),
+                       mri_corp_call_thick = col_double(),
                        ds_crx1 = col_character(),
                        ds_crx2 = col_character(),
                        ds_crx3 = col_character(),
@@ -254,7 +254,7 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            new_mds_med_sur1 = "Surgery: Type/Age", new_mds_med_sur2 = "Surgery 2: Type/Age",
            new_mds_med_sur3 = "Surgery 3: Type/Age", mds_ne_it = "Intention tremor",
            mds_ne_rt = "Resting tremor", mds_ne_pt = "Postural tremor",
-           mds_neu_trem_irm = "Intermittent Tremor", mds_neu_trem_age = "Tremor: Age of onset",
+           mds_neu_trem_irm = "Intermittent tremor", mds_neu_trem_age = "Tremor: Age of onset",
            new_mds_neu_trem_head = "Head tremor", new_mds_neu_trem_age2 = "Head Tremor: Age of onset",
            mds_neu_atax = "Ataxia",
            mds_neu_atax_age = "Ataxia: Age of onset",
@@ -336,7 +336,7 @@ if(FALSE)
   # label(data$mds_ne_it)="Intention tremor"
   # label(data$mds_ne_rt)="Resting tremor"
   # label(data$mds_ne_pt)="Postural tremor"
-  # label(data$mds_neu_trem_irm)="Intermittent Tremor"
+  # label(data$mds_neu_trem_irm)="Intermittent tremor"
   # label(data$mds_neu_trem_age)="Tremor: Age of onset"
   # label(data$new_mds_neu_trem_head)="Head tremor"
   # label(data$new_mds_neu_trem_age2)="Head Tremor: Age of onset"

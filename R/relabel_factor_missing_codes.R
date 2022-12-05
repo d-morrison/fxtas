@@ -31,9 +31,9 @@ relabel_factor_missing_codes = function(x)
       after = Inf) |>
     forcats::fct_recode(
       "asked by clinician, but no answer from subject" = "99" ,
-      "lifelong" = "555",
-      "childhood" = "444",
-      "teens" = "130",
+      "lifelong (555)" = "555",
+      "childhood (444)" = "444",
+      "teens (130)" = "130",
       "20s" = "200",
       "30s" = "300",
       "40s" = "400",
