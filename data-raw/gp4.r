@@ -281,12 +281,12 @@ labels = c(subj_id = "FXS ID",
            wais4_percorg_cs   = "Perceptual Reasoning: Composite Score (PRI)",
            wais4_workmem_cs   = "Working Memory: Composite Score (WMI)",
            wais4_procspeed_cs = "Processing Speed: Composite Score (PSI)",
-           wais4_fullscale_cs = "Full Scale: Composite Score FSIQ)",
+           wais4_fullscale_cs = "Full Scale: Composite Score (FSIQ)",
 
            cantab_ots_probsolvedfirstchoice_ = "OTS Problems solved on first choice",
            cantab_pal_toterrors_adjusted = "PAL Total errors (adjusted)",
            cantab_sst_medianrt_gotrials = "SST Median correct RT on GO trials",
-           cantab_rvp_a = "RVP A",
+           cantab_rvp_a = "RVP A signal detection",
            cantab_rti_5choice_movement = "RTI Five-choice movement time",
            cantab_swm_between_errors = "SWM Between errors",
 
@@ -390,11 +390,11 @@ names(dataset) = labels[names(dataset)]
 # label(data$wais4_percorg_cs)="Perceptual Reasoning: Composite Score (PRI)"
 # label(data$wais4_workmem_cs)="Working Memory: Composite Score (WMI)"
 # label(data$wais4_procspeed_cs)="Processing Speed: Composite Score (PSI)"
-# label(data$wais4_fullscale_cs)="Full Scale: Composite Score FSIQ)"
+# label(data$wais4_fullscale_cs)="Full Scale: Composite Score (FSIQ)"
 # label(data$cantab_ots_probsolvedfirstchoice_)="OTS Problems solved on first choice"
 # label(data$cantab_pal_toterrors_adjusted)="PAL Total errors (adjusted)"
 # label(data$cantab_sst_medianrt_gotrials)="SST Median correct RT on GO trials"
-# label(data$cantab_rvp_a)="RVP A"
+# label(data$cantab_rvp_a)="RVP A signal detection"
 # label(data$cantab_rti_5choice_movement)="RTI Five-choice movement time"
 # label(data$cantab_swm_between_errors)="SWM Between errors"
 # label(data$new_mds_med_lup)="Lupus"

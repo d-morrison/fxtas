@@ -4,10 +4,14 @@
 \alias{missing_pattern_by_ID}
 \title{Title}
 \usage{
-missing_pattern_by_ID(data = gp34, variable = "ApoE")
+missing_pattern_by_ID(
+  data = gp34,
+  variable = "ApoE",
+  missing_values = c(NA, "Missing (empty in RedCap)")
+)
 }
 \arguments{
-\item{variable}{}
+\item{missing_label}{}
 }
 \description{
 Title

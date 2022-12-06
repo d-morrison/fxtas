@@ -1,13 +1,12 @@
 ---
-title: "exploration"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{exploration}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+title: "Questions about FXTAS Sequence Data"
+output: 
+  word_document:
+    number_sections: true
 ---
 
 ```{r, include = FALSE}
+
 knitr::opts_chunk$set(
   collapse = TRUE,
   echo = FALSE,
@@ -17,76 +16,19 @@ knitr::opts_chunk$set(
   fig.width = 7.5,
   fig.height = 4
 )
+
 ```
 
 ```{r setup}
 library(fxtas)
 library(pander)
 library(table1)
-NA.label = "Missing (empty in RedCap)"
+library(dplyr)
+library(magrittr)
+NA.label1 = "Missing (see breakdown below)"
 
 # load_all()
 ```
-
-## plotly
-
-```{r}
-
-library(plotly)
-library(dplyr)
-gp34 |> 
-  nest_by(Study) |> 
-  mutate(
-    p = 
-      plot_ly(data,
-              type = "scatter",
-              mode = "lines+markers",
-              color = ~`FXS ID`,
-              x = ~`Event Name`,
-              y = ~`Age at visit`,
-              showlegend = FALSE
-      ) |> 
-      plotly::layout(
-        xaxis = list(title = "")
-        # title = "banana"
-      ) |> 
-      list()
-  ) |> 
-  pull(p) |> 
-  plotly::subplot(
-    nrows = 1, shareX = TRUE, shareY = TRUE)
-
-```
-
-## ggplot
-
-```{r}
-
-library(ggplot2)
-
-plot1 = gp34 |> 
-  ggplot(
-    data = _,
-    mapping = aes(
-      color = `FXS ID`,
-      group = `FXS ID`,
-      y = `Event Name`,
-      x = `Age at visit`
-    )) +
-  geom_point() + 
-  geom_line() +
-  theme_bw() +
-  facet_grid(rows = vars(Gender)) +
-  theme(legend.position="none")
-
-print(plot1)
-
-plot1 |> plotly::ggplotly()
-
-
-```
-
-## demographics
 
 ```{r}
 
@@ -109,44 +51,12 @@ visit1 =
 
 ```
 
-## Missing visit date
-
-```{r}
-
-tab = gp34 |> filter(is.na(`Visit Date`)) |> 
-  select(Study:`Visit Date`)
-
-```
-
-There are `r nrow(tab)` records with missing visit dates:
-
-```{r}
-pander(tab)
-```
-
-## Duplicate visit date
-
-```{r}
-
-tab = gp34 |> 
-  group_by(`FXS ID`, `Visit Date`) |> 
-  filter(n() > 1) |> 
-  select(Study:`Visit Date`) |> print(n = Inf)
-
-```
-
-There are `r nrow(tab)` duplicate visit dates:
-
-```{r}
-pander(tab)
-```
-
-## Data from first visits
+# Data from first visits
 
 Here, we review the data from the first visits by each participant, stratified by 
-the study phase in which they first enrolled (GP3 vs GP4).
+the first study phase in which the participant enrolled (GP3 vs GP4).
 
-### APOE
+## APOE
 
 ```{r}
 apoe.n = gp34 |> missing_pattern_by_ID(variable = "ApoE")
@@ -158,14 +68,14 @@ Many participants (`r sum(apoe.n$first_missing)` of `r nrow(apoe.n)`) have ApoE 
 ```{r}
 
 table1(
-  NA.label = NA.label,
+  NA.label = NA.label1,
   formula(paste("~", paste(formulaic::add.backtick("ApoE"), collapse = " + "), "| `Recruited in study phase`")),
   # render.missing=c("Empty in RedCap"="FREQ (PCT%)"),
   data = visit1)
 ```
 
 
-`r apoe.n |> filter(first_missing) |> pull(any_nonmissing) |> sum()` of these individuals have later visits with ApoE results; for example:
+`r apoe.n |> filter(first_missing) |> pull(any_nonmissing) |> sum()` of these individuals have later visits with non-missing ApoE results; for example:
 
 ```{r}
 
@@ -183,14 +93,14 @@ gp34 |> filter(
 ```{r, "multiple ApoE values"}
 
 gp34 |> 
-  semi_join(apoe.n |> filter(n_vals > 1, first_missing)) |> 
+  semi_join(apoe.n |> filter(n_vals > 1, first_missing), by = "FXS ID") |> 
   select(`FXS ID`, `Visit Date`, `Event Name` ,ApoE) |> 
   arrange(`FXS ID`) |> 
   pander()
 
 ```
 
-### CGG
+## CGG
 
 ```{r}
 cgg.n = gp34 |> missing_pattern_by_ID(variable = "CGG")
@@ -203,7 +113,7 @@ There's a lot of missing data in CGG as well:
 vars = grep("^CGG", names(gp34), value = TRUE)
 
 table1(
-  NA.label = NA.label,
+  NA.label = NA.label1,
   formula(paste(
     "~", paste(formulaic::add.backtick(vars), collapse = " + "), 
     "| `Recruited in study phase`")),
@@ -215,7 +125,7 @@ table1(
 ```{r, "multiple CGG values", include = FALSE}
 
 gp34 |> 
-  semi_join(cgg.n |> filter(n_vals > 1, first_missing)) |> 
+  semi_join(cgg.n |> filter(n_vals > 1, first_missing), by = "FXS ID") |> 
   select(`FXS ID`, `Visit Date`, `Event Name` , CGG) |> 
   arrange(`FXS ID`) |> 
   pander()
@@ -224,45 +134,34 @@ gp34 |>
 
 **Question:** can we fill in the earlier values using later values?
 
-### Lifestyle
+## Lifestyle
 
-**Question:** Alcohol is labeled "Alcohol Abuse" in GP3 vs. "Alcohol Use" in GP4; ok to combine?
+**Question:** Alcohol is labeled "Alcohol Abuse" in GP3 (`mds_psy_alco`) vs. "Alcohol Use" in GP4 (`new_mds_psy_alco`); ok to combine?
 
 **Question:** I didn't find any marijuana use data in GP3; is there anything we can do to fill it in?
 
-**Question:** What should we do with codes 888 and 999 for these variables? Should they be treated as "Never used" or as actual missing values? What about missing data (field empty in RedCap)?
+**Question:** What should we do with codes 888 and 999 for these variables? Should they be treated as "Never used" or as actual missing values? What about missing data (field empty in RedCap)? Can we fill in any data using the unstructured data in  "Drugs used" (`mds_psy_drug_notes`)?
 
 
 ```{r}
 vars = c("Drug use",
          "Marijuana use",
-         "Alcohol use/abuse")
-
-table1(
-  NA.label = NA.label,
-  stratified_formula(vars, "Recruited in study phase"),
-  data = visit1)
-
-```
-
-```{r}
-
-vars = c(
-  "# of drinks per day now",
+         "Alcohol use/abuse",
+         "# of drinks per day now",
   "# of drinks per day now: missingness")
 
 table1(
-  NA.label = "Missing (see breakdown below)",
+  NA.label = NA.label1,
   stratified_formula(vars, "Recruited in study phase"),
   data = visit1)
 
 ```
 
-### Cancer
+## Cancer
 
 **Question:** Can we fill in any data for Skin Cancer, Melanoma, or "Other Cancer"?
 
-**Question:** What should we do with codes 888 and 999 for these variables? Should they be treated as "Never used" or as actual missing values? What about missing data (field empty in RedCap)?
+**Question:** What should we do with codes 888 and 999 for these variables? Should they be treated as "Never used" or as actual missing values? What about blank entries (empty fields in RedCap)?
 
 ```{r}
 vars = c(
@@ -275,19 +174,19 @@ vars = c(
 )
 
 table1(
-  NA.label = NA.label,
+  NA.label = NA.label1,
   stratified_formula(vars, "Recruited in study phase"),
   data = visit1)
 ```
 
 
-### Surgery
+## Surgery
 
 **Question:** Can we categorize the surgery data into a binary variable for GP4? (There are currently multiple surgery variables, `new_mds_med_sur1`, `new_mds_med_sur2`, etc., all with unstructured data.)
 
 **Question:** Can we categorize surgery types into a small set of indicator variables?
 
-**Question:** Can we extract age at surgery and/or surgery date from the unstructured text?
+**Question:** Can we extract age at surgery and surgery dates from the unstructured text?
 
 **Question:** Do we have a source of anesthesia data for GP3?
 
@@ -315,12 +214,12 @@ vars =
 
 library(table1)
 table1(
-  NA.label = NA.label,
+  NA.label = NA.label1,
   stratified_formula(vars, "Recruited in study phase"),
   data = visit1)
 ```
 
-### Tremors
+## Tremors
 
 **Question:** What should we do with missing codes and blanks?
 
@@ -336,24 +235,24 @@ vars = c(
   # "Tremor: Age of onset: missingness"
 )
 table1(
-  NA.label = NA.label,
+  NA.label = NA.label1,
   stratified_formula(vars, "Recruited in study phase"),
   data = visit1)
 
 ```
 
-#### Age of onset missingness reasons where any of the four above tremor types = "Yes":
+Age of onset missingness reasons where any of the four above tremor types = "Yes":
 
 ```{r}
 
 table1(
-  NA.label = NA.label,
+  NA.label = NA.label1,
   stratified_formula("Tremor: Age of onset: missingness", "Recruited in study phase"),
-  data = visit1 |> filter(`Any tremor` == "Tremors Recorded"))
+  data = visit1 |> filter(`Any tremor` == "Some Tremors Recorded"))
 
 ```
 
-### Head tremors
+## Head tremors
 
 **Question:** Can we get any data on head tremor for GP3?
 
@@ -364,18 +263,18 @@ vars = c(
   
 )
 table1(
-  NA.label = NA.label,
+  NA.label = NA.label1,
   stratified_formula(vars, "Recruited in study phase"),
   data = visit1)
 
 ```
 
-Missingness reasons where "Head tremor" = "Yes":
+Age of onset missingness reasons where "Head tremor" = "Yes":
 
 ```{r}
 
 table1(
-  NA.label = NA.label,
+  NA.label = NA.label1,
   stratified_formula("Head Tremor: Age of onset: missingness", "Recruited in study phase"),
   data = visit1 |> filter(`Head tremor` == "Yes"))
 
@@ -383,7 +282,7 @@ table1(
 
 
 
-### Ataxia
+## Ataxia
 
 **Question:** What should we do with missing codes and blanks?
 
@@ -397,13 +296,13 @@ vars = c(
 )
 
 table1(
-  NA.label = NA.label,
+  NA.label = NA.label1,
   stratified_formula(vars, "Recruited in study phase"),
   data = visit1)
 
 ```
 
-### Parkinsons
+## Parkinsons
 
 **Question:** Can we fill in Parkinsons (formal diagnosis) for GP3?
 
@@ -414,13 +313,13 @@ table1(
 vars = grep("Parkinson", value = TRUE, names(gp34))
 
 table1(
-  NA.label = NA.label,
+  NA.label = NA.label1,
   stratified_formula(vars, "Recruited in study phase"),
   data = visit1)
 
 ```
 
-### FXTAS Stage
+## FXTAS Stage
 
 **Question:** What should we do with missing codes and blanks?
 
@@ -429,13 +328,13 @@ table1(
 vars = "FXTAS Stage (0-5)"
 
 table1(
-  NA.label = NA.label,
+  NA.label = NA.label1,
   stratified_formula(vars, "Recruited in study phase"),
   data = visit1)
 
 ```
 
-### BDS2
+## BDS2
 
 **Question:** What should we do with missing codes and blanks?
 
@@ -444,13 +343,13 @@ table1(
 vars = grep("BDS-2 Total Score", value = TRUE, names(gp34), fixed = TRUE)
 
 table1(
-  NA.label = NA.label,
+  NA.label = NA.label1,
   stratified_formula(vars, "Recruited in study phase"),
   data = visit1)
 
 ```
 
-### MMSE
+## MMSE
 
 **Question:** What should we do with blanks?
 
@@ -459,28 +358,32 @@ table1(
 vars = grep("MMSE Total Score", value = TRUE, names(gp34), fixed = TRUE)
 
 table1(
-  NA.label = NA.label,
+  NA.label = NA.label1,
   stratified_formula(vars, "Recruited in study phase"),
   data = visit1)
 
 ```
 
-### SCID
+## SCID
 
 **Question:** What should we do with missing codes and blanks?
+
+**Question:** Should we interpret "lifelong" age of onset (code 555) as since age 0?
+
 
 ```{r}
 
 vars = grep("Interviewers Diagnosis \\d+,  by Code", value = TRUE, names(gp34)) |> sort()
+vars = grep("Interviewers Diagnosis", value = TRUE, names(gp34)) |> sort()
 
 table1(
-  NA.label = NA.label,
+  NA.label = NA.label1,
   stratified_formula(vars, "Recruited in study phase"),
   data = visit1)
 
 ```
 
-#### SCL90
+## SCL90
 
 **Question:** What should we do with missing codes and blanks?
 
@@ -505,17 +408,17 @@ vars = c(
 )
 
 table1(
-  NA.label = NA.label,
+  NA.label = NA.label1,
   stratified_formula(vars, "Recruited in study phase"),
   data = visit1)
 
 ```
 
-### MRI
+## MRI
 
-**Question:** What should we do with missing codes and blanks?
+**Question:** What should we do with missing codes and blanks? Can we use results from subsequent visits to fill in earlier visits?
 
-**Question:** Do we want to include "Interpersonal Sensitivity T-score" (was included in data extract, wasn't on Word doc list)?
+**Question:** Do we want to include "Interpersonal Sensitivity T-score" in the analysis? (It was included in data extract but wasn't in the Word document "FXTAS event sequence RH.docx").
 
 ```{r}
 
@@ -534,18 +437,23 @@ vars = c(
 )
 
 table1(
-  NA.label = NA.label,
+  NA.label = NA.label1,
   stratified_formula(vars, "Recruited in study phase"),
   data = visit1)
 
 ```
 
+## WAIS 3/4
+
+**Question:** Can we combine "Verbal: IQ Score" (`wais_verb_iq`) and "Verbal Comprehension: Composite Score (VCI)" (`wais4_verbcomp_cs`)?
+
+**Question:** Can we combine "Full Scale: IQ Score" (`wais_fullscale_iq`) and "Full Scale: Composite Score (FSIQ)" (`wais4_fullscale_cs`)?
+
+**Question:** Do we have any data for perceptual reasoning, working memory, or processing speed for GP3?
+
 ```{r}
 
 vars = c(
-  
-  
-  
   "Verbal: IQ Score",
   "Verbal Comprehension: Composite Score (VCI)",
   
@@ -553,17 +461,66 @@ vars = c(
   "Working Memory: Composite Score (WMI)", 
   "Processing Speed: Composite Score (PSI)",
   
-  "Full Scale: Composite Score FSIQ)", 
   "Full Scale: IQ Score",
-  
-  "Drugs used",
-  
+  "Full Scale: Composite Score (FSIQ)"
+) |> sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> as.vector()
+
+table1(
+  NA.label = NA.label1,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+## CANTAB
+
+**Question:** All of these scores are completely missing in GP4 and almost entirely missing in GP3; do we have a way to fill in the missing data?
+
+**Question:** The score "WMS Letter-Number Sequencing" is listed in the word document, but I didn't find it in the RedCap report. I saw a few seemingly-relevant variables in RedCap, but I wasn't sure which one to use?
+
+
+```{r}
+
+# table1(
+#   NA.label = NA.label1,
+#   stratified_formula("Drugs used", "Recruited in study phase"),
+#   data = visit1)
+
+
+cantab_vars = c(
   "SWM Between errors",
   "SST Median correct RT on GO trials",
-  "RVP A",
+  "RVP A signal detection",
   "OTS Problems solved on first choice",
   "PAL Total errors (adjusted)",
-  "RTI Five-choice movement time",
+  "RTI Five-choice movement time") 
+# |> 
+#   sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> 
+  # as.vector()
+
+table1(
+  NA.label = "Missing (empty in RedCap)",
+  stratified_formula(cantab_vars, "Recruited in study phase"),
+  data = visit1)
+```
+
+## Thyroid and other autoimmune diseases
+
+**Question:** "Medical history of thyroid disease and age of onset" is listed in the word doc, but I wasn't sure which corresponding variables to analyze.
+
+**Question:** "ANA positive", "Raynauds Syndrome", and "Pulmonary Fibrosis" are completely missing in GP3; can we fill these in somehow?
+
+**Question:** What should we do with the NA codes and blanks?
+
+```{r}
+
+# table1(
+#   NA.label = NA.label1,
+#   stratified_formula("Drugs used", "Recruited in study phase"),
+#   data = visit1)
+
+
+vars = c(
   
   "Lupus",
   "Rheumatoid arthritis",
@@ -575,22 +532,27 @@ vars = c(
   # "Immunological Notes"
   
   
-  
-  
 )
 
 table1(
-  NA.label = NA.label,
+  NA.label = NA.label1,
   stratified_formula(vars, "Recruited in study phase"),
   data = visit1)
 ```
 
+## Other variables
 
+**Question:** I didn't see any variables for:
+* "Kinesia One score for Rt and Lt hands for all types of tremor." 
+* "Purdue pegboard for reaction time"
+* "MOCA"
 
-### Demographics
+Do we have variables for these scores?
 
-There is substantial missingness in both `Primary Ethnicity` and `Primary Race`. 
-Not sure if we will need these variables.
+## Demographics
+
+There is substantial missingness in both `Primary Ethnicity` and `Primary Race`; not sure if we will need these variables:
+
 ```{r}
 
 vars = c(
@@ -604,9 +566,76 @@ vars = c(
 )
 
 table1(
-  NA.label = NA.label,
+  NA.label = NA.label1,
   stratified_formula(vars, "Recruited in study phase"),
   data = visit1)
 ```
 
 **Question:** For `age of onset` = "lifelong (555)", what numeric value should we use? Age 0?
+
+# Visit dates
+
+We also started looking at the longitudinal data, and had some questions about the visit dates:
+
+## Missing visit dates
+
+```{r}
+
+tab = gp34 |> filter(is.na(`Visit Date`)) |> 
+  select(Study:`Visit Date`)
+
+```
+
+There are `r nrow(tab)` records with missing visit dates.
+
+**Question:** Can these missing dates be filled in?
+
+```{r}
+pander(tab)
+```
+
+
+
+## Duplicate visit dates
+
+```{r}
+
+tab = gp34 |> 
+  group_by(`FXS ID`, `Visit Date`) |> 
+  filter(n() > 1, !is.na(`Visit Date`[1])) |> 
+  select(Study:`Visit Date`) |> 
+  split(~`FXS ID`)
+
+```
+
+There are `r length(tab)` duplicate visit dates.
+
+**Question:** Are these duplicate values correct?
+
+```{r, results = "asis"}
+pander(tab)
+```
+
+
+
+## Visits out of event sequence
+
+```{r}
+ooo = gp34 |>
+  select(`FXS ID`, `Visit Date`, `Event Name`) |>
+  group_by(`FXS ID`) |>
+  filter(is.unsorted(`Event Name`[`Event Name` != "GP4 - Single Visit"])) |>
+  # filter(any(`decreased age`, na.rm = TRUE)) |>
+  # ungroup() |>
+  split(~`FXS ID`)
+```
+
+`r length(ooo)` participants have visits occurring out of chronological order (e.g., GP4 Visit1 before GP3 Visit 1).
+
+**Question:** Are these records correct?
+
+```{r, results = "asis"}
+
+pander(ooo)
+```
+

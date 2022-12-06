@@ -285,13 +285,21 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            cantab_ots_probsolvedfirstchoice_ = "OTS Problems solved on first choice",
            cantab_pal_toterrors_adjusted = "PAL Total errors (adjusted)",
            cantab_sst_medianrt_gotrials = "SST Median correct RT on GO trials",
-           cantab_rvp_a = "RVP A", cantab_rti_5choice_movement = "RTI Five-choice movement time",
-           cantab_swm_between_errors = "SWM Between errors", mds_med_lup = "Lupus",
-           mds_med_ra = "Rheumatoid arthritis", mds_med_mswk = "Multiple Sclerosis: Workup",
-           new_mds_med_ana = "ANA positive", mds_med_sjo = "Sjogrens Syndrome",
-           mds_med_ray = "Raynauds disease", new_mds_med_pulm = "Pulmonary Fibrosis",
+           cantab_rvp_a = "RVP A signal detection",
+           cantab_rti_5choice_movement = "RTI Five-choice movement time",
+           cantab_swm_between_errors = "SWM Between errors",
+
+           mds_med_lup = "Lupus",
+           mds_med_ra = "Rheumatoid arthritis",
+           mds_med_mswk = "Multiple Sclerosis: Workup",
+           new_mds_med_ana = "ANA positive",
+           mds_med_sjo = "Sjogrens Syndrome",
+           mds_med_ray = "Raynauds disease",
+           new_mds_med_pulm = "Pulmonary Fibrosis",
            mds_med_ido_notes = "Other immunological disease & other symptoms: list",
-           mri_cere_atr = "Cerebral Atrophy", mri_cerebel_atr = "Cerebellar Atrophy",
+
+           mri_cere_atr = "Cerebral Atrophy",
+           mri_cerebel_atr = "Cerebellar Atrophy",
            mri_cere_wm_hyper = "Cerebral WM Hyperintensity", mri_cerebel_wm_hyper = "Cerebellar WM Hyperintensity",
            mri_mcp_wm_hyper = "MCP-WM Hyperintensity", mri_pons_wm_hyper = "Pons-WM Hyperintensity",
            mri_subins_wm_hyper = "Sub-Insular WM Hyperintensity", mri_peri_wm_hyper = "Periventricular WM Hyperintensity",
@@ -377,7 +385,7 @@ if(FALSE)
   # label(data$cantab_ots_probsolvedfirstchoice_)="OTS Problems solved on first choice"
   # label(data$cantab_pal_toterrors_adjusted)="PAL Total errors (adjusted)"
   # label(data$cantab_sst_medianrt_gotrials)="SST Median correct RT on GO trials"
-  # label(data$cantab_rvp_a)="RVP A"
+  # label(data$cantab_rvp_a)="RVP A signal detection"
   # label(data$cantab_rti_5choice_movement)="RTI Five-choice movement time"
   # label(data$cantab_swm_between_errors)="SWM Between errors"
   # label(data$mds_med_lup)="Lupus"

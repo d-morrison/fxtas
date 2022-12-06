@@ -23,12 +23,17 @@ tremor_types = c(
   "Intermittent tremor"
 )
 
+
 gp34 =
   bind_rows("GP3" = gp3, "GP4" = gp4, .id = "Study") |>
   arrange(`FXS ID`, `Visit Date`, `Event Name`) |>
+  group_by(`FXS ID`) |>
+  mutate(`Recruited in study phase` = Study[1]) |>
+  ungroup() |>
   tidyr::fill(`Primary Race`, `Primary Ethnicity`, Gender, .direction = "downup") |>
   relocate(`Visit Date`, .after = `Event Name`) |>
   mutate(
+
     # `Ataxia: Age of onset missingness` =
     #   missingness_reasons(`Ataxia: Age of onset`),
     # `Ataxia: Age of onset` =
@@ -39,7 +44,7 @@ gp34 =
     # "68-67" |> strsplit("-") |> sapply(F = function(x) median(as.numeric(x)))
 
     across(
-      ends_with("Age of onset"),
+      .cols = ends_with("Age of onset"),
       list(
         missingness = ~missingness_reasons(.x, extra_codes = c(99, 555)),
         tmp = ~ .x |> age_range_medians() |> clean_numeric(extra_codes = c(99, 555))
@@ -50,7 +55,7 @@ gp34 =
     "Any tremor" = dplyr::if_any(
       .cols = all_of(tremor_types),
       .fns = ~ . %in% "Yes") |>
-      if_else("Tremors Recorded", "No Tremors Recorded"),
+      if_else("Some Tremors Recorded", "No Tremors Recorded"),
 
 
     across(
@@ -124,7 +129,9 @@ gp34 =
     #   relabel_factor_missing_codes(),
 
     `Birth Date` = date(`Visit Date` - days(round(`Age at visit` * 365.25))), # causes problems for eg 	100399-100
-    across(where(is.factor), relabel_factor_missing_codes)
+    across(where(is.factor), relabel_factor_missing_codes),
+
+    across(where(is.factor), ~ . |> forcats::fct_explicit_na(na_level = "Missing (empty in RedCap)"))
   ) |>
   droplevels()
 
@@ -150,6 +157,19 @@ decreased_age =
   select(`FXS ID`, `Event Name`, `Visit Date`, `Age at visit`, `diff age`, `decreased age`)
 
 readr::write_csv(decreased_age, "inst/extdata/decreased_age.csv")
+
+# out of order:
+
+gp34 |>
+  select(`FXS ID`, `Visit Date`, `Event Name`) |>
+  group_by(`FXS ID`) |>
+  filter(is.unsorted(`Event Name`)) |>
+  # filter(any(`decreased age`, na.rm = TRUE)) |>
+  # ungroup() |>
+  group_split() |>
+  pander()
+
+  # split(f = ~`FXS ID`, drop = TRUE)
 
 decreased_age2 =
   gp34 |>

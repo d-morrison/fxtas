@@ -11,6 +11,7 @@ Imports:
     config (>= 0.3.1),
     forcats,
     golem (>= 0.3.4),
+    magrittr,
     shiny (>= 1.7.2)
 Suggests: 
     knitr,
