@@ -12,7 +12,8 @@ Imports:
     forcats,
     golem (>= 0.3.4),
     magrittr,
-    shiny (>= 1.7.2)
+    shiny (>= 1.7.2),
+    tidyr
 Suggests: 
     knitr,
     pander,

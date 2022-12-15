@@ -39,8 +39,7 @@ visit1 =
   slice_head(n = 1) |>
   ungroup() |> 
   rename(
-    `Age at first visit` = `Age at visit`,
-    `Recruited in study phase` = Study
+    `Age at first visit` = `Age at visit`
   ) |> 
   left_join(
     gp34 |> count(`FXS ID`, name = "# visits"),
@@ -66,10 +65,15 @@ apoe.n = gp34 |> missing_pattern_by_ID(variable = "ApoE")
 Many participants (`r sum(apoe.n$first_missing)` of `r nrow(apoe.n)`) have ApoE missing in their first visit records:
 
 ```{r}
-
+vars = grep("^ApoE", names(gp34), value = TRUE)
 table1(
   NA.label = NA.label1,
-  formula(paste("~", paste(formulaic::add.backtick("ApoE"), collapse = " + "), "| `Recruited in study phase`")),
+  
+  
+  paste("~", 
+        paste(formulaic::add.backtick(vars), collapse = " + "), 
+        "| `Recruited in study phase`") |> 
+    formula(),
   # render.missing=c("Empty in RedCap"="FREQ (PCT%)"),
   data = visit1)
 ```
@@ -90,12 +94,13 @@ gp34 |> filter(
 
 **QUESTION:** Is it reasonable to use the next non-missing ApoE result to impute the ApoE results for the earlier visit? Note that in some cases, the ApoE value changes between visits:
 
-```{r, "multiple ApoE values"}
+```{r, "multiple ApoE values", results = "asis"}
 
 gp34 |> 
-  semi_join(apoe.n |> filter(n_vals > 1, first_missing), by = "FXS ID") |> 
+  semi_join(apoe.n |> filter(n_vals > 1), by = "FXS ID") |> 
   select(`FXS ID`, `Visit Date`, `Event Name` ,ApoE) |> 
-  arrange(`FXS ID`) |> 
+  arrange(`FXS ID`, `Visit Date`) |> 
+  split(~`FXS ID`) |> 
   pander()
 
 ```
@@ -122,15 +127,28 @@ table1(
 
 `r cgg.n |> filter(first_missing) |> pull(any_nonmissing) |> sum()` of these participants have later records with non-missing CGG values.
 
-```{r, "multiple CGG values", include = FALSE}
+```{r, "multiple CGG values", include = TRUE, results = "asis"}
 
 gp34 |> 
-  semi_join(cgg.n |> filter(n_vals > 1, first_missing), by = "FXS ID") |> 
+  semi_join(cgg.n |> filter(n_vals > 1), by = "FXS ID") |> 
+  filter(!is.na(CGG)) |> 
   select(`FXS ID`, `Visit Date`, `Event Name` , CGG) |> 
-  arrange(`FXS ID`) |> 
+  arrange(`FXS ID`, `Visit Date`) |> 
+  split(~`FXS ID`) |> 
   pander()
 
 ```
+
+```{r}
+
+gp34 |> 
+  filter(is.na(`CGG`)) |> 
+  select(`FXS ID`, `Event Name`, CGG, `FXTAS Stage (0-5)`) |> 
+  pander()
+
+```
+
+
 
 **Question:** can we fill in the earlier values using later values?
 
@@ -148,7 +166,7 @@ vars = c("Drug use",
          "Marijuana use",
          "Alcohol use/abuse",
          "# of drinks per day now",
-  "# of drinks per day now: missingness")
+         "# of drinks per day now: missingness")
 
 table1(
   NA.label = NA.label1,
@@ -332,6 +350,12 @@ table1(
   stratified_formula(vars, "Recruited in study phase"),
   data = visit1)
 
+# gp34 |> 
+#   filter(`FXTAS Stage (0-5)` %in% c(NA, "No Response (999)", "Missing (empty in RedCap)")) |> 
+#   select(`FXS ID`, `Event Name`, `Visit Date`) |> 
+#   arrange() |> 
+#   readr::write_csv("inst/extdata/missing_FXTAS_stage.csv")
+
 ```
 
 ## BDS2
@@ -496,7 +520,7 @@ cantab_vars = c(
   "RTI Five-choice movement time") 
 # |> 
 #   sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> 
-  # as.vector()
+# as.vector()
 
 table1(
   NA.label = "Missing (empty in RedCap)",

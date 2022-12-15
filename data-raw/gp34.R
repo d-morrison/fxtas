@@ -27,10 +27,6 @@ tremor_types = c(
 gp34 =
   bind_rows("GP3" = gp3, "GP4" = gp4, .id = "Study") |>
   arrange(`FXS ID`, `Visit Date`, `Event Name`) |>
-  group_by(`FXS ID`) |>
-  mutate(`Recruited in study phase` = Study[1]) |>
-  ungroup() |>
-  tidyr::fill(`Primary Race`, `Primary Ethnicity`, Gender, .direction = "downup") |>
   relocate(`Visit Date`, .after = `Event Name`) |>
   mutate(
 
@@ -129,9 +125,24 @@ gp34 =
     #   relabel_factor_missing_codes(),
 
     `Birth Date` = date(`Visit Date` - days(round(`Age at visit` * 365.25))), # causes problems for eg 	100399-100
+    `ApoE (backfilled)` = ApoE,
+    `CGG (backfilled)` = CGG
+  ) |>
+  group_by(`FXS ID`) |>
+  mutate(`Recruited in study phase` = first(Study)) |>
+  tidyr::fill(
+    `Primary Race`,
+    `Primary Ethnicity`,
+    Gender,
+    `ApoE (backfilled)`,
+    `CGG (backfilled)`,
+    .direction = "downup") |>
+  ungroup() |>
+  mutate(
     across(where(is.factor), relabel_factor_missing_codes),
-
-    across(where(is.factor), ~ . |> forcats::fct_explicit_na(na_level = "Missing (empty in RedCap)"))
+    across(
+      where(is.factor),
+      ~ . |> forcats::fct_explicit_na(na_level = "Missing (empty in RedCap)"))
   ) |>
   droplevels()
 
@@ -169,7 +180,7 @@ gp34 |>
   group_split() |>
   pander()
 
-  # split(f = ~`FXS ID`, drop = TRUE)
+# split(f = ~`FXS ID`, drop = TRUE)
 
 decreased_age2 =
   gp34 |>

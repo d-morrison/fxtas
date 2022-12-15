@@ -1,0 +1,115 @@
+---
+title: "Questions about FXTAS Sequence Data - Genetics"
+output: 
+  word_document:
+    number_sections: true
+---
+
+```{r, include = FALSE}
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  comment = "#>",
+  fig.width = 7.5,
+  fig.height = 4
+)
+
+```
+
+```{r setup}
+library(fxtas)
+library(pander)
+library(table1)
+library(dplyr)
+library(magrittr)
+NA.label1 = "Missing (see breakdown below)"
+panderOptions("table.split.table", Inf)
+# load_all()
+```
+
+```{r}
+
+visit1 = 
+  gp34 |> 
+  arrange(`FXS ID`, `Visit Date`, `Event Name`) |> 
+  group_by(`FXS ID`) |> 
+  slice_head(n = 1) |>
+  ungroup() |> 
+  rename(
+    `Age at first visit` = `Age at visit`
+  ) |> 
+  left_join(
+    gp34 |> count(`FXS ID`, name = "# visits"),
+    by = "FXS ID"
+  ) |> 
+  mutate(`# visits` = factor(`# visits`, levels = 1:6))
+
+
+```
+
+```{r}
+apoe.n = gp34 |> missing_pattern_by_ID(variable = "ApoE")
+
+```
+
+# inconsistent ApoE values
+
+```{r, "multiple ApoE values", results = "asis"}
+
+gp34 |> 
+  semi_join(apoe.n |> filter(n_vals > 1), by = "FXS ID") |> 
+  select(`FXS ID`, `Visit Date`, `Event Name` ,ApoE) |> 
+  arrange(`FXS ID`, `Visit Date`) |> 
+  split(~`FXS ID`) |> 
+  pander()
+
+```
+
+```{r}
+cgg.n = gp34 |> missing_pattern_by_ID(variable = "CGG")
+```
+
+# inconsistent CGG values
+
+```{r, "multiple CGG values", include = TRUE, results = "asis"}
+
+gp34 |> 
+  semi_join(cgg.n |> filter(n_vals > 1), by = "FXS ID") |> 
+  filter(!is.na(CGG)) |> 
+  select(`FXS ID`, `Visit Date`, `Event Name` , CGG) |> 
+  arrange(`FXS ID`, `Visit Date`) |> 
+  split(~`FXS ID`) |> 
+  pander()
+
+```
+
+# Missing CGG values, compared with FXTAS Stage
+
+```{r, results = "asis"}
+
+visit1 |> 
+  mutate(
+    across(
+      c(
+        ApoE,
+        `FXTAS Stage (0-5)`),
+      ~na_if(.x, "Missing (empty in RedCap)")
+    )
+  ) |> 
+  filter(
+    # is.na(ApoE) | 
+    is.na(`CGG`) 
+  ) |> 
+  select(`FXS ID`, `Event Name`, 
+         # ApoE,
+         CGG, 
+         # `Floras Non-Sortable Allele Size (CGG) Results`,
+         `FXTAS Stage (0-5)`) |> 
+  # arrange(`FXTAS Stage (0-5)`) |> 
+  pander()
+
+```
+

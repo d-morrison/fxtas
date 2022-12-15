@@ -24,7 +24,8 @@ missing_pattern_by_ID = function(
           list(
             first_missing = ~ first(.x) %in% missing_values,
             any_missing = ~ any(.x %in% missing_values),
-            any_nonmissing = ~ any(magrittr::not(.x %in% missing_values)),
+            all_missing = ~ all(.x %in% missing_values),
+            any_nonmissing = ~ !all(.x %in% missing_values),
             n_vals = ~ .x |> setdiff(missing_values) |> length()
           ),
         .names = "{.fn}"
