@@ -1,6 +1,8 @@
 load_all()
 library(Hmisc)
 library(forcats)
+library(lubridate)
+library(dplyr)
 conflict_prefer("label", "Hmisc")
 library(tidyr)
 # dupes = gp3 |> semi_join(gp4, by = c("subj_id", "redcap_event_name"))
@@ -27,6 +29,11 @@ tremor_types = c(
 gp34 =
   bind_rows("GP3" = gp3, "GP4" = gp4, .id = "Study") |>
   arrange(`FXS ID`, `Visit Date`, `Event Name`) |>
+  filter(
+    not(`FXS ID` == "100429-700" & `Event Name` == "GP3 - Visit 1"),
+    `FXS ID` != "500011-190" # note from Ellery Santos, 2022-12-19, in word doc
+  ) |>
+  # duplicate of GP4 visit 1; note from Ellery Santos, 2022-12-19, in word doc
   relocate(`Visit Date`, .after = `Event Name`) |>
   mutate(
 
@@ -42,8 +49,18 @@ gp34 =
     across(
       .cols = ends_with("Age of onset"),
       list(
-        missingness = ~missingness_reasons(.x, extra_codes = c(99, 555)),
-        tmp = ~ .x |> age_range_medians() |> clean_numeric(extra_codes = c(99, 555))
+        missingness =
+          ~missingness_reasons(
+            .x,
+            extra_codes = c(
+              # 555, # lifelong - now handled as min(10, min(numeric_vals))
+              99)),
+        tmp =
+          ~ .x |>
+          age_range_medians() |>
+          clean_numeric(extra_codes = c(
+            # 555, # lifelong - now handled as min(10, min(numeric_vals))
+            99))
       ),
       .names = "{.col}{if_else(.fn != 'tmp', paste0(': ', .fn), '')}"
     ),
@@ -128,6 +145,14 @@ gp34 =
     `ApoE (backfilled)` = ApoE,
     `CGG (backfilled)` = CGG
   ) |>
+  relocate(
+    `ApoE (backfilled)`, .after = "ApoE"
+  ) |>
+  relocate(
+    `CGG (backfilled)`, .after = "CGG"
+  ) |>
+  relocate(contains("CGG"), .after = contains("ApoE")) |>
+
   group_by(`FXS ID`) |>
   mutate(`Recruited in study phase` = first(Study)) |>
   tidyr::fill(
@@ -177,8 +202,7 @@ gp34 |>
   filter(is.unsorted(`Event Name`)) |>
   # filter(any(`decreased age`, na.rm = TRUE)) |>
   # ungroup() |>
-  group_split() |>
-  pander()
+  group_split()
 
 # split(f = ~`FXS ID`, drop = TRUE)
 

@@ -8,7 +8,7 @@
 age_range_medians = function(x)
 {
   case_when(
-      # x == "555" ~ x |> as.numeric() |> suppressWarnings() |> min(na.rm = TRUE), # lifelong
+      x == "555" ~ x |> as.numeric() |> suppressWarnings() |> c(10) |> min(na.rm = TRUE), # lifelong
       # x == "555" ~ 0, # lifelong
       x == "444" ~ 5, # childhood
       x == "130" ~ 15, # teens
