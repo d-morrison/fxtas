@@ -4,6 +4,7 @@ library(forcats)
 library(lubridate)
 library(dplyr)
 conflict_prefer("label", "Hmisc")
+conflict_prefer("not", "magrittr")
 library(tidyr)
 # dupes = gp3 |> semi_join(gp4, by = c("subj_id", "redcap_event_name"))
 # if(nrow(dupes) != 0) browser(message("why are there duplicate records?"))
@@ -154,7 +155,6 @@ gp34 =
   relocate(contains("CGG"), .after = contains("ApoE")) |>
 
   group_by(`FXS ID`) |>
-  mutate(`Recruited in study phase` = first(Study)) |>
   tidyr::fill(
     `Primary Race`,
     `Primary Ethnicity`,
@@ -162,12 +162,16 @@ gp34 =
     `ApoE (backfilled)`,
     `CGG (backfilled)`,
     .direction = "downup") |>
+  mutate(
+    `Recruited in study phase` = first(Study),
+    `CGG (backfilled)` = `CGG (backfilled)` |> last() # more recent assays may be more accurate
+  ) |>
   ungroup() |>
   mutate(
     across(where(is.factor), relabel_factor_missing_codes),
     across(
       where(is.factor),
-      ~ . |> forcats::fct_explicit_na(na_level = "Missing (empty in RedCap)"))
+      ~ . |> forcats::fct_na_value_to_level(level = "Missing (empty in RedCap)"))
   ) |>
   droplevels()
 
@@ -221,3 +225,20 @@ decreased_age2 =
 readr::write_csv(decreased_age2, "inst/extdata/decreased_age2.csv")
 
 usethis::use_data(gp34, overwrite = TRUE)
+
+visit1 =
+  gp34 |>
+  arrange(`FXS ID`, `Visit Date`, `Event Name`) |>
+  group_by(`FXS ID`) |>
+  slice_head(n = 1) |>
+  ungroup() |>
+  rename(
+    `Age at first visit` = `Age at visit`
+  ) |>
+  left_join(
+    gp34 |> count(`FXS ID`, name = "# visits"),
+    by = "FXS ID"
+  ) |>
+  mutate(`# visits` = factor(`# visits`, levels = 1:6))
+
+usethis::use_data(visit1, overwrite = TRUE)

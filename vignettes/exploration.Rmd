@@ -30,26 +30,6 @@ NA.label1 = "Missing (see breakdown below)"
 # load_all()
 ```
 
-```{r}
-
-visit1 = 
-  gp34 |> 
-  arrange(`FXS ID`, `Visit Date`, `Event Name`) |> 
-  group_by(`FXS ID`) |> 
-  slice_head(n = 1) |>
-  ungroup() |> 
-  rename(
-    `Age at first visit` = `Age at visit`
-  ) |> 
-  left_join(
-    gp34 |> count(`FXS ID`, name = "# visits"),
-    by = "FXS ID"
-  ) |> 
-  mutate(`# visits` = factor(`# visits`, levels = 1:6))
-
-
-```
-
 # Data from first visits
 
 Here, we review the data from the first visits by each participant, stratified by 
@@ -68,7 +48,6 @@ Many participants (`r sum(apoe.n$first_missing)` of `r nrow(apoe.n)`) have ApoE 
 vars = grep("^ApoE", names(gp34), value = TRUE)
 table1(
   NA.label = NA.label1,
-  
   
   paste("~", 
         paste(formulaic::add.backtick(vars), collapse = " + "), 
