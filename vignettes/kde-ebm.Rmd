@@ -144,25 +144,40 @@ kde_mixtures = fit_all_kde_models(
 
 ## Methods
 
-Following the Event-Based Model (EBM) analysis developed in Fonteijn et al 2012, Firth et al 2020, Oxtoby et al 2021, etc., we consider a set of $p$ biomarkers, $X_1$ ... $X_p$, measured on a cross-sectional case-control survey of $n$ patients and $m$ controls. We imagine that the distribution of each biomarker $X_j$ depends on an corresponding unobserved binary event, $E_j$.
+Following the Event-Based Model (EBM) analysis developed in Fonteijn et al 2012, Firth et al 2020, Oxtoby et al 2021, etc., we consider a set of $p$ biomarkers, $X_1$ ... $X_p$, measured on a cross-sectional case-control survey of $n$ patients and $m$ controls. We assume that the distribution of each biomarker $X_j$ depends on an corresponding unobserved binary event, $E_j$. We further assume that all patients are progressing along the same ordering sequence $S\in \{1:p\}!$ of events $E_1$ - $E_p$, where $\{1:p\}!$ represents the set of all $p!$ orderings of the numbers $1:p$. We assume that each patient is at a particular position $K\in 1:p$ within that sequence, such that $E_{S(j)}=1,\ j \leq K$ and $E_{S(j)}=0,\ j>K$. We assume that the prior distribution of $K$ given $S$ is uniform; i.e., $p(K=k|S=s)=1/p$, $k \in \{1:p\}$. We further assume a uniform Bayesian prior over the possible values of $S$; i.e., $p(S=s)=1/p!$, $s\in \{1:p\}!$.
 
-This analysis has two phases.
+We estimate $S$ using a two-step procedure:
 
-### Analysis Phase 1: Biomarker Mixture Modeling
+### Analysis Step 1: Estimate biomarker distribution models conditional on corresponding events
 
-In the first analysis phase, we analyze each biomarker separately, and we model the distribution of $X_j$ conditional on whether $E_j$ has occurred; i.e., we model $p(x_j|E_j=0)$ and $p(x_j | E_j=1)$, using nonparametric kernel density estimation. To fit these models, we begin by assuming that all controls are pre-event ($E_j=0$) and all cases are post-event ($E_j=1$), and then iteratively reassign some of the cases and controls to the opposite groups, re-estimating $p(x_j|E_j=1)$ and $p(x_j \mid E_j=0)$ accordingly.
+In the first analysis phase, we analyze each biomarker separately, and we model the distribution of each biomarker $X_j$ conditional on the corresponding event $E_j$; i.e., we model $p(x_j|E_j=0)$ and $p(x_j | E_j=1)$, using nonparametric kernel density estimation. To fit these models, we begin by assuming that all controls are pre-event ($E_j=0$) and all cases are post-event ($E_j=1$), and then iteratively reassign some of the cases and controls to the opposite groups, re-estimating $p(x_j|E_j=1)$ and $p(x_j \mid E_j=0)$ accordingly.
 
-### Analysis Phase 2: Event Sequence Estimation
+### Analysis Step 2: Estimate event sequence
 
-In the second analysis phase, we assume that all patients are progressing along the same sequence $S\in \{1:p\}!$ of events $E_1$ - $E_p$, with current position $K$, such that:
+In the second analysis phase, we compute the the Bayesian posterior distribution of $S$ given the observed data $X$, i.e., $p(S \mid X)=p(X \mid S)p(S)/p(X)$, using a Markov-Chain Monte Carlo (MCMC) algorithm. To do so, we compute $p(X|S=s)$ using the following decomposition:
+
+$$
+p(\mathbf X|S=s) = \prod_{i=1}^n p(\tilde X_i | S = s)
+$$
+
+(assuming independence between patients)
+
+$$ 
+\begin{align}
+p(\tilde X_i \mid S =s) &= \sum_{k=0}^p p(\tilde X_i= \tilde x \mid S=s,\ K_i=k) * p(K_i = k \mid S=s)\\
+&= \sum_{k=0}^p p(\tilde X_i= \tilde x \mid S=s,\ K_i=k) * (1/p!)\\
+&= (1/p!) * \sum_{k=0}^p p(\tilde X_i= \tilde x \mid S=s,\ K_i=k)\\
+&\propto \sum_{k=0}^p p(\tilde X_i= \tilde x \mid S=s,\ K_i=k)
+\end{align}
+$$
 
 $$
 p(\tilde X= \tilde x \mid S=s,\ K_i=k) =
-\left(\prod_{j=1}^k p(X_{j}=x_j \mid E_{s(j)}=1)\right)
-\times \left(\prod_{j=k+1}^p p(X_{j}=x_j \mid  E_{s(j)=0})\right)
+\left(\prod_{j=1}^k \hat p(X_{j}=x_j \mid E_{s(j)}=1)\right)
+\times \left(\prod_{j=k+1}^p \hat p(X_{j}=x_j \mid  E_{s(j)}=0)\right)
 $$
 
-We use the estimated models $\hat p(x_j|\neg E_j)$ and $\hat p(x_j|E_j)$ from phase 1 to estimate $S$ using the value $\hat s$ that maximizes the likelihood $p(\tilde X \mid S =s)=\prod_{i=1}^N{p(\tilde X_i \mid S =s)}$ We consider all $p!$ possible sequences of these events, and assume a uniform prior distribution; i.e., letting $\{1:p\}!$ represent the set of all $p!$ orderings of the numbers $1:p$, we assume that $p(S=s)=\frac{1}{p!}$, $\forall s \in \{1:p\}!$. We further assume that conditional on a given sequence $S=s$, the number of events that a patient has experienced, $K$, is also uniformly distributed; i.e., we assume that $p(K=k|S=s)=1/p$, $\forall k \in 1:p$.
+In the last expression, we plug in the estimated models $\hat p(x_j|\neg E_j)$ and $\hat p(x_j|E_j)$ from phase 1 to estimate $S$ using the value $\hat s$ that maximizes the likelihood $p(\tilde X \mid S =s)=\prod_{i=1}^N{p(\tilde X_i \mid S =s)}$ We consider all $p!$ possible sequences of these events, and assume a uniform prior distribution; i.e., letting , we assume that $p(S=s)=\frac{1}{p!}$, $\forall s \in \{1:p\}!$. 
 
 Then for patient $i\in 1:n$, $$
 p(\tilde X_i= \tilde x \mid S=s,\ K_i=k) =
@@ -172,10 +187,7 @@ $$
 
 and
 
-$$ 
-p(\tilde X_i \mid S =s) = \sum_{k=0}^p p(\tilde X_i= \tilde x \mid S=s,\ K_i=k) * p(K_i = k \mid S=s)
-= \sum_{k=0}^p p(\tilde X_i= \tilde x \mid S=s,\ K_i=k) * (1/p!)
-$$
+
 
 # Results
 
