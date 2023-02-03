@@ -1,0 +1,222 @@
+---
+title: "kde-ebm"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{kde-ebm}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo = FALSE,
+  comment = "#>",
+  fig.width = 6, 
+  fig.height = 6
+)
+```
+
+```{r setup}
+library(fxtas)
+library(dplyr)
+library(magrittr)
+
+categorical_biomarker_directions = c(
+    "Cerebral Atrophy" = 1,
+    "Cerebellar Atrophy" = 1,
+    "Cerebral WM Hyperintensity" = 1,
+    "Cerebellar WM Hyperintensity" = 1,
+    "MCP-WM Hyperintensity" = 1)
+
+biomarker_directions = 
+  c(
+    "MMSE Total Score" = -1,
+    "BDS-2 Total Score" = -1,
+    "Somatization (T-score)" = 1,
+    "Obsessive-Compulsive (T-score)" = 1,
+    "Anxiety (T-score)" = 1,
+    "Depression (T-score)" = 1,
+    "Hostility (T-score)" = 1,
+    "Phobia (T-score)" = 1,
+    "Paranoid Ideation (T-score)" = 1,
+    "Psychoticism (T-score)" = 1,
+    "Global Severity Index (T-score)" = 1,
+    "Interpersonal Sensitivity T-score" = 1,
+    "Positive Symptom Distress Index (T-score)" = 1,
+    "Positive Symptom Total (T-score)" = 1,
+    "Verbal: IQ Score" = -1,
+    "Verbal Comprehension: Composite Score (VCI)" = -1,
+    "Perceptual Reasoning: Composite Score (PRI)" = -1,
+    "Working Memory: Composite Score (WMI)" = -1,
+    "Processing Speed: Composite Score (PSI)" = -1,
+    "Full Scale: IQ Score" = -1,
+    "Full Scale: Composite Score (FSIQ)" = -1,
+    # cantab measures not available for controls:
+    # "SWM Between errors" = -1,
+    # "SST Median correct RT on GO trials" = -1,
+    # "RVP A signal detection" = -1,
+    # "OTS Problems solved on first choice" = -1,
+    # "PAL Total errors (adjusted)" = -1,
+    # "RTI Five-choice movement time" = -1,
+    # "FXTAS Stage (0-5)" = 1, # doesn't work, because there's no variation among controls
+    NULL
+  )
+biomarkers = names(biomarker_directions)
+cur_data = 
+  visit1 |> 
+  select(
+    all_of(biomarkers),
+    `CGG (backfilled)`
+  ) |> 
+  mutate(
+    FX = `CGG (backfilled)` >= 55
+  ) |> 
+  filter(!is.na(FX))
+
+### Mann-Whitney tests
+# ```{r, "Mann-Whitney tests"}
+# for (cur_biomarker in biomarkers)
+# {
+#   cat("### ", cur_biomarker)
+#   wilcox.test(
+#   formula = formulaic::create.formula(cur_biomarker, "FX", dat = cur_data)$formula, 
+#   data = cur_data,
+#   na.action = na.exclude) |> print()
+# }
+
+# ```{r, "prepare for python"}
+
+X = 
+  cur_data |> 
+  select(all_of(biomarkers)) |> 
+  as.matrix()
+
+X_cases = 
+  cur_data |> 
+  filter(FX) |> 
+  select(all_of(biomarkers)) |> 
+  as.matrix()
+
+y = cur_data |> pull(FX) |> as.integer() |> as.matrix()
+
+if(FALSE)
+{
+library(ggplot2)
+for (cur in biomarkers)
+{
+  
+temp = ggplot(data = cur_data, aes(x = get(cur), group = FX)) + 
+    geom_histogram() + 
+    facet_wrap(~FX, ncol = 1) +
+    ggtitle(cur)
+  
+print(cur)
+print(temp)
+}
+
+}
+
+```
+
+```{python}
+
+from kde_ebm.mixture_model import fit_all_kde_models, fit_all_gmm_models, get_prob_mat
+
+from kde_ebm.plotting import mixture_model_grid, mcmc_uncert_mat, mcmc_trace, stage_histogram
+
+from kde_ebm.mcmc import mcmc, parallel_bootstrap, bootstrap_ebm, bootstrap_ebm_fixedMM, bootstrap_ebm_return_mixtures
+
+X = r.X
+y = r.y.flatten().astype(int)
+e_disease_direction = r.biomarker_directions
+e_labels = r.biomarkers
+
+kde_mixtures = fit_all_kde_models(
+    X,
+    y,
+    implement_fixed_controls = True,
+    patholog_dirn_array      = e_disease_direction,
+    verbose = False
+)
+
+```
+
+## Methods
+
+Following the Event-Based Model (EBM) analysis developed in Fonteijn et al 2012, Firth et al 2020, Oxtoby et al 2021, etc., we consider a set of $p$ biomarkers, $X_1$ ... $X_p$, measured on a cross-sectional case-control survey of $n$ patients and $m$ controls. We imagine that the distribution of each biomarker $X_j$ depends on an corresponding unobserved binary event, $E_j$.
+
+This analysis has two phases.
+
+### Analysis Phase 1: Biomarker Mixture Modeling
+
+In the first analysis phase, we analyze each biomarker separately, and we model the distribution of $X_j$ conditional on whether $E_j$ has occurred; i.e., we model $p(x_j|E_j=0)$ and $p(x_j | E_j=1)$, using nonparametric kernel density estimation. To fit these models, we begin by assuming that all controls are pre-event ($E_j=0$) and all cases are post-event ($E_j=1$), and then iteratively reassign some of the cases and controls to the opposite groups, re-estimating $p(x_j|E_j=1)$ and $p(x_j \mid E_j=0)$ accordingly.
+
+### Analysis Phase 2: Event Sequence Estimation
+
+In the second analysis phase, we assume that all patients are progressing along the same sequence $S\in \{1:p\}!$ of events $E_1$ - $E_p$, with current position $K$, such that:
+
+$$
+p(\tilde X= \tilde x \mid S=s,\ K_i=k) =
+\left(\prod_{j=1}^k p(X_{j}=x_j \mid E_{s(j)}=1)\right)
+\times \left(\prod_{j=k+1}^p p(X_{j}=x_j \mid  E_{s(j)=0})\right)
+$$
+
+We use the estimated models $\hat p(x_j|\neg E_j)$ and $\hat p(x_j|E_j)$ from phase 1 to estimate $S$ using the value $\hat s$ that maximizes the likelihood $p(\tilde X \mid S =s)=\prod_{i=1}^N{p(\tilde X_i \mid S =s)}$ We consider all $p!$ possible sequences of these events, and assume a uniform prior distribution; i.e., letting $\{1:p\}!$ represent the set of all $p!$ orderings of the numbers $1:p$, we assume that $p(S=s)=\frac{1}{p!}$, $\forall s \in \{1:p\}!$. We further assume that conditional on a given sequence $S=s$, the number of events that a patient has experienced, $K$, is also uniformly distributed; i.e., we assume that $p(K=k|S=s)=1/p$, $\forall k \in 1:p$.
+
+Then for patient $i\in 1:n$, $$
+p(\tilde X_i= \tilde x \mid S=s,\ K_i=k) =
+\left(\prod_{j=1}^k p(X_{ij}=x_j \mid E_{s(i)})\right)
+\times \left(\prod_{j=k+1}^p p(X_{ij}=x_j \mid \neg E_{s(i)})\right)
+$$
+
+and
+
+$$ 
+p(\tilde X_i \mid S =s) = \sum_{k=0}^p p(\tilde X_i= \tilde x \mid S=s,\ K_i=k) * p(K_i = k \mid S=s)
+= \sum_{k=0}^p p(\tilde X_i= \tilde x \mid S=s,\ K_i=k) * (1/p!)
+$$
+
+# Results
+
+```{python}
+import matplotlib.pyplot as plt
+mixture_model_grid(
+    X,
+    y,
+    kde_mixtures,
+    score_names=r.biomarkers,
+    class_names=['Controls','Patients'],
+    max_cols = 3
+)
+plt.show()
+```
+
+```{python}
+#* MCMC sequencing
+mcmc_samples = mcmc(r.X_cases, kde_mixtures)
+#* Maximum Likelihood sequence over all samples
+seq_ml = mcmc_samples[0].ordering
+# print('ML sequence: {0}'.format(seq_ml))
+print('ML order   : %s' % ', '.join([e_labels[k] for k in seq_ml]))
+plt.show()      
+```
+
+## View the ML posterior
+
+```{python}
+f,a = mcmc_uncert_mat(mcmc_samples, ml_order=None, score_names=e_labels)
+plt.show()
+```
+
+# Discussion
+
+## Questions about Analysis
+
+-   In Analysis Phase 2 (event sequencing) should we use the data from cases only or both cases and controls? Oxtoby's tutorial uses both, but that doesn't make much sense; controls aren't expected to follow the same event sequence.
+
+-   Are the assumptions valid?
+
+-   Is the mixture-modeling step (Analysis Phase 1) reasonable?
+
+    -   Should it be separate from the sequencing step (phase 2)?

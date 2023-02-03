@@ -113,7 +113,11 @@ gp34 =
         x.clean = CGG
       ),
 
-    across(c(`FXTAS Stage (0-5)`), numeric_as_factor),
+    `FXTAS Stage (0-5)*` =  `FXTAS Stage (0-5)` |>  numeric_as_factor(),
+
+    `FXTAS Stage (0-5)` = `FXTAS Stage (0-5)` |> clean_numeric(),
+
+    # across(c(`FXTAS Stage (0-5)`), numeric_as_factor),
 
     # `Tremor: Age of onset: missingness` =
     #   missingness_reasons(`Tremor: Age of onset`),
