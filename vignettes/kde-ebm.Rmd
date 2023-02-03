@@ -1,6 +1,9 @@
 ---
-title: "kde-ebm"
-output: rmarkdown::html_vignette
+title: "Event-Based Modeling of FXTAS Symptoms Progression"
+output: 
+  word_document: default
+  rmarkdown::html_vignette:
+    toc: true
 vignette: >
   %\VignetteIndexEntry{kde-ebm}
   %\VignetteEngine{knitr::rmarkdown}
@@ -12,15 +15,24 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   echo = FALSE,
   comment = "#>",
-  fig.width = 6, 
-  fig.height = 6
+  fig.width = 4, 
+  fig.height = 6,
+  include = FALSE
 )
 ```
+
+
+# Methods
 
 ```{r setup}
 library(fxtas)
 library(dplyr)
 library(magrittr)
+library(pander)
+
+```
+
+```{r biomarker list, include = FALSE}
 
 categorical_biomarker_directions = c(
     "Cerebral Atrophy" = 1,
@@ -46,12 +58,12 @@ biomarker_directions =
     "Positive Symptom Distress Index (T-score)" = 1,
     "Positive Symptom Total (T-score)" = 1,
     "Verbal: IQ Score" = -1,
-    "Verbal Comprehension: Composite Score (VCI)" = -1,
+    # "Verbal Comprehension: Composite Score (VCI)" = -1,
     "Perceptual Reasoning: Composite Score (PRI)" = -1,
     "Working Memory: Composite Score (WMI)" = -1,
     "Processing Speed: Composite Score (PSI)" = -1,
     "Full Scale: IQ Score" = -1,
-    "Full Scale: Composite Score (FSIQ)" = -1,
+    # "Full Scale: Composite Score (FSIQ)" = -1, # not enough controls
     # cantab measures not available for controls:
     # "SWM Between errors" = -1,
     # "SST Median correct RT on GO trials" = -1,
@@ -62,7 +74,12 @@ biomarker_directions =
     # "FXTAS Stage (0-5)" = 1, # doesn't work, because there's no variation among controls
     NULL
   )
+
 biomarkers = names(biomarker_directions)
+
+```
+
+```{R data processing}
 cur_data = 
   visit1 |> 
   select(
@@ -119,7 +136,26 @@ print(temp)
 
 ```
 
-```{python}
+## Notation
+
+Following the Event-Based Model (EBM) analysis developed in Fonteijn et al 2012, Firth et al 2020, Oxtoby et al 2021, etc., we consider a set of $p$ biomarkers, $X_1$ ... $X_p$, measured on a cross-sectional case-control survey of $n$ patients and $m$ controls.
+
+## Assumptions
+
+We make the following assumptions:
+
+1.  Biomarker measurements from different individuals are mutually independent.
+2.  The distribution of each biomarker $X_j$ depends on an corresponding unobserved binary event, $E_j$.
+3.  All patients are progressing along the same ordering sequence $\boldsymbol S\in \{1:p\}!$ of events $E_1$ - $E_p$, where $\{1:p\}!$ represents the set of all $p!$ orderings of the numbers $1:p$.
+4.  Each patient is at a particular position $K\in 1:p$ within that sequence, such that $E_{S(j)}=1,\ j \leq K$ and $E_{S(j)}=0,\ j>K$.
+5.  The prior distribution of $K$ given $S$ is uniform; i.e., $p(K=k|\boldsymbol S = \boldsymbol s)=1/p$, $k \in \{1:p\}$.
+6.  The Bayesian prior distribution over the possible values of $\boldsymbol S$ is uniform; i.e., $p(\boldsymbol S = \boldsymbol s)=1/p!,\ \boldsymbol s\in \{1:p\}!$.
+
+We estimate $S$ using a two-step procedure:
+
+## Analysis Step 1: Estimate biomarker distribution models conditional on corresponding events
+
+```{python densities, include = FALSE}
 
 from kde_ebm.mixture_model import fit_all_kde_models, fit_all_gmm_models, get_prob_mat
 
@@ -142,56 +178,74 @@ kde_mixtures = fit_all_kde_models(
 
 ```
 
-## Methods
+In the first analysis phase, we analyze each biomarker separately, and we model the distribution of each biomarker $X_j$ conditional on the corresponding event $E_j$; i.e., we model $p(x_j|E_j=0)$ and $p(x_j | E_j=1)$, using nonparametric kernel density estimation. To fit these models, we begin by labeling all controls as pre-event ($E_j=0$) and all cases as post-event ($E_j=1$), and then iteratively relabel some of the cases and controls, re-estimating $p(x_j|E_j=1)$ and $p(x_j \mid E_j=0)$ accordingly. [This step isn't given much detail in the published articles, and the code implementation is convoluted; I intend to do a deeper dive and write out all the details.]
 
-Following the Event-Based Model (EBM) analysis developed in Fonteijn et al 2012, Firth et al 2020, Oxtoby et al 2021, etc., we consider a set of $p$ biomarkers, $X_1$ ... $X_p$, measured on a cross-sectional case-control survey of $n$ patients and $m$ controls. We assume that the distribution of each biomarker $X_j$ depends on an corresponding unobserved binary event, $E_j$. We further assume that all patients are progressing along the same ordering sequence $S\in \{1:p\}!$ of events $E_1$ - $E_p$, where $\{1:p\}!$ represents the set of all $p!$ orderings of the numbers $1:p$. We assume that each patient is at a particular position $K\in 1:p$ within that sequence, such that $E_{S(j)}=1,\ j \leq K$ and $E_{S(j)}=0,\ j>K$. We assume that the prior distribution of $K$ given $S$ is uniform; i.e., $p(K=k|S=s)=1/p$, $k \in \{1:p\}$. We further assume a uniform Bayesian prior over the possible values of $S$; i.e., $p(S=s)=1/p!$, $s\in \{1:p\}!$.
+## Analysis Step 2: Estimate event sequence
 
-We estimate $S$ using a two-step procedure:
+```{python mcmc, include = FALSE}
+#* MCMC sequencing
+mcmc_samples = mcmc(r.X_cases, kde_mixtures)
+#* Maximum Likelihood sequence over all samples
+seq_ml = mcmc_samples[0].ordering
+# print('ML sequence: {0}'.format(seq_ml))
+#print('ML order   : %s' % ', '.join([e_labels[k] for k in seq_ml]))
+```
 
-### Analysis Step 1: Estimate biomarker distribution models conditional on corresponding events
-
-In the first analysis phase, we analyze each biomarker separately, and we model the distribution of each biomarker $X_j$ conditional on the corresponding event $E_j$; i.e., we model $p(x_j|E_j=0)$ and $p(x_j | E_j=1)$, using nonparametric kernel density estimation. To fit these models, we begin by assuming that all controls are pre-event ($E_j=0$) and all cases are post-event ($E_j=1$), and then iteratively reassign some of the cases and controls to the opposite groups, re-estimating $p(x_j|E_j=1)$ and $p(x_j \mid E_j=0)$ accordingly.
-
-### Analysis Step 2: Estimate event sequence
-
-In the second analysis phase, we compute the the Bayesian posterior distribution of $S$ given the observed data $X$, i.e., $p(S \mid X)=p(X \mid S)p(S)/p(X)$, using a Markov-Chain Monte Carlo (MCMC) algorithm. To do so, we compute $p(X|S=s)$ using the following decomposition:
+In the second analysis phase, we compute the the Bayesian posterior distribution of $\boldsymbol S$ given the observed data $\mathbf X$, i.e., $p(\boldsymbol S \mid \mathbf X)=p(\mathbf X \mid \boldsymbol S)p(\boldsymbol  S)/p(\mathbf X)$, using a Markov-Chain Monte Carlo (MCMC) algorithm. To do so, we compute $p(\mathbf X \mid \boldsymbol S = \boldsymbol s)$ using the following decomposition:
 
 $$
-p(\mathbf X|S=s) = \prod_{i=1}^n p(\tilde X_i | S = s)
+p(\mathbf X|\boldsymbol S = \boldsymbol s) = \prod_{i=1}^n p(\boldsymbol X_i | \boldsymbol S = \boldsymbol s)
 $$
 
-(assuming independence between patients)
+(using the assumption of independence between patients)
 
 $$ 
 \begin{align}
-p(\tilde X_i \mid S =s) &= \sum_{k=0}^p p(\tilde X_i= \tilde x \mid S=s,\ K_i=k) * p(K_i = k \mid S=s)\\
-&= \sum_{k=0}^p p(\tilde X_i= \tilde x \mid S=s,\ K_i=k) * (1/p!)\\
-&= (1/p!) * \sum_{k=0}^p p(\tilde X_i= \tilde x \mid S=s,\ K_i=k)\\
-&\propto \sum_{k=0}^p p(\tilde X_i= \tilde x \mid S=s,\ K_i=k)
+p(\boldsymbol X_i \mid \boldsymbol S = \boldsymbol s) &= \sum_{k=0}^p p(\boldsymbol X_i= \boldsymbol x_i \mid \boldsymbol S = \boldsymbol s,\ K_i=k) * p(K_i = k \mid \boldsymbol S = \boldsymbol s)\\
+&= \sum_{k=0}^p p(\boldsymbol X_i= \boldsymbol x_i \mid \boldsymbol S = \boldsymbol s,\ K_i=k) * (1/p!)\\
+&= (1/p!) * \sum_{k=0}^p p(\boldsymbol X_i= \boldsymbol x_i \mid \boldsymbol S = \boldsymbol s,\ K_i=k)\\
+&\propto \sum_{k=0}^p p(\boldsymbol X_i= \boldsymbol x_i \mid \boldsymbol S = \boldsymbol s,\ K_i=k)
 \end{align}
 $$
 
-$$
-p(\tilde X= \tilde x \mid S=s,\ K_i=k) =
-\left(\prod_{j=1}^k \hat p(X_{j}=x_j \mid E_{s(j)}=1)\right)
-\times \left(\prod_{j=k+1}^p \hat p(X_{j}=x_j \mid  E_{s(j)}=0)\right)
-$$
+(using the assumption that $p(K_i = k \mid \boldsymbol S = \boldsymbol s$ is uniformly distributed)
 
-In the last expression, we plug in the estimated models $\hat p(x_j|\neg E_j)$ and $\hat p(x_j|E_j)$ from phase 1 to estimate $S$ using the value $\hat s$ that maximizes the likelihood $p(\tilde X \mid S =s)=\prod_{i=1}^N{p(\tilde X_i \mid S =s)}$ We consider all $p!$ possible sequences of these events, and assume a uniform prior distribution; i.e., letting , we assume that $p(S=s)=\frac{1}{p!}$, $\forall s \in \{1:p\}!$. 
-
-Then for patient $i\in 1:n$, $$
-p(\tilde X_i= \tilde x \mid S=s,\ K_i=k) =
-\left(\prod_{j=1}^k p(X_{ij}=x_j \mid E_{s(i)})\right)
-\times \left(\prod_{j=k+1}^p p(X_{ij}=x_j \mid \neg E_{s(i)})\right)
+$$
+p(\boldsymbol X_i= \boldsymbol x_i \mid \boldsymbol S = \boldsymbol s,\ K_i=k) =
+\left(\prod_{j=1}^k \hat p(X_{ij}=x_{ij} \mid E_{s(j)}=1)\right)
+\times \left(\prod_{j=k+1}^p \hat p(X_{ij}=x_{ij} \mid  E_{s(j)}=0)\right)
 $$
 
-and
+(using the assumption that all patients follow the same sequence of events)
 
+In the last expression, we plug in the estimated models $\hat p(x_j|E_j=0)$ and $\hat p(x_j|E_j=1)$ from phase 1.
+
+The MCMC sampling algorithm is as follows:
+
+1.  Let $\boldsymbol s_t$ be the current sampled value of $\boldsymbol S$.
+2.  Construct a new sequence $\boldsymbol s'$ by randomly permuting two elements of $s_t$.
+3.  Calculate $a = p(\mathbf X \mid \boldsymbol S = \boldsymbol s') / p(\mathbf X \mid \boldsymbol S = \boldsymbol s_t)$
+4.  Set $\boldsymbol s_{t+1} \leftarrow \boldsymbol s'$ with probability $\min(a, 1)$; otherwise set $\boldsymbol s_{t+1} \leftarrow \boldsymbol s_{t}$.
+
+## Biomarkers analyzed
+
+The analysis implemented in Oxtoby et al 2021 can only handle biomarkers which are measured as continuous variables and which vary for both cases and controls. So far, we have included the following variables:
+
+
+```{r, include = TRUE}
+
+tibble(biomarkers) |> pander()
+
+```
 
 
 # Results
 
-```{python}
+## Biomarker distribution models
+
+Here, we show the estimated distributions $\hat p(X_j | E_j =1)$ and $\hat p(X_j | E_j =0)$ for each biomarker (orange = patients, blue = controls, purple is the probability that the event has occurred given the biomarker value (i.e., $p(E_j = 1 | X_j = x)$):
+
+```{python, include = FALSE}
 import matplotlib.pyplot as plt
 mixture_model_grid(
     X,
@@ -199,24 +253,22 @@ mixture_model_grid(
     kde_mixtures,
     score_names=r.biomarkers,
     class_names=['Controls','Patients'],
-    max_cols = 3
+    max_cols = 2
 )
+
+```
+
+```{python, include = TRUE, fig.width = 4, fig.height = 9}
+
 plt.show()
+
 ```
 
-```{python}
-#* MCMC sequencing
-mcmc_samples = mcmc(r.X_cases, kde_mixtures)
-#* Maximum Likelihood sequence over all samples
-seq_ml = mcmc_samples[0].ordering
-# print('ML sequence: {0}'.format(seq_ml))
-print('ML order   : %s' % ', '.join([e_labels[k] for k in seq_ml]))
-plt.show()      
-```
+## Event sequence
 
-## View the ML posterior
+Here, we show a heatmap of the estimated position of each biomarker event in the sequence $\boldsymbol S$:
 
-```{python}
+```{python, include = TRUE, fig.width = 5}
 f,a = mcmc_uncert_mat(mcmc_samples, ml_order=None, score_names=e_labels)
 plt.show()
 ```
@@ -227,7 +279,7 @@ plt.show()
 
 -   In Analysis Phase 2 (event sequencing) should we use the data from cases only or both cases and controls? Oxtoby's tutorial uses both, but that doesn't make much sense; controls aren't expected to follow the same event sequence.
 
--   Are the assumptions valid?
+-   Are the assumptions reasonable?
 
 -   Is the mixture-modeling step (Analysis Phase 1) reasonable?
 
