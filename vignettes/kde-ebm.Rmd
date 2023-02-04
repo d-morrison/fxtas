@@ -146,10 +146,10 @@ We make the following assumptions:
 
 1.  Biomarker measurements from different individuals are mutually independent.
 2.  The distribution of each biomarker $X_j$ depends on an corresponding unobserved binary event, $E_j$.
-3.  All patients are progressing along the same ordering sequence $\boldsymbol S\in \{1:p\}!$ of events $E_1$ - $E_p$, where $\{1:p\}!$ represents the set of all $p!$ orderings of the numbers $1:p$.
+3.  All patients are progressing along the same ordering sequence $\vec S\in \{1:p\}!$ of events $E_1$ - $E_p$, where $\{1:p\}!$ represents the set of all $p!$ orderings of the numbers $1:p$.
 4.  Each patient is at a particular position $K\in 1:p$ within that sequence, such that $E_{S(j)}=1,\ j \leq K$ and $E_{S(j)}=0,\ j>K$.
-5.  The prior distribution of $K$ given $S$ is uniform; i.e., $p(K=k|\boldsymbol S = \boldsymbol s)=1/p$, $k \in \{1:p\}$.
-6.  The Bayesian prior distribution over the possible values of $\boldsymbol S$ is uniform; i.e., $p(\boldsymbol S = \boldsymbol s)=1/p!,\ \boldsymbol s\in \{1:p\}!$.
+5.  The distribution of $K$ given $\vec S$ is uniform; i.e., $\mathrm{p}(K=k|\vec S = \vec s)=1/p$, $k \in \{1:p\}$.
+6.  The Bayesian prior distribution over the possible values of $\vec S$ is uniform; i.e., $\mathrm{p}(\vec S = \vec s)=1/p!,\ \vec s\in \{1:p\}!$.
 
 We estimate $S$ using a two-step procedure:
 
@@ -178,7 +178,7 @@ kde_mixtures = fit_all_kde_models(
 
 ```
 
-In the first analysis phase, we analyze each biomarker separately, and we model the distribution of each biomarker $X_j$ conditional on the corresponding event $E_j$; i.e., we model $p(x_j|E_j=0)$ and $p(x_j | E_j=1)$, using nonparametric kernel density estimation. To fit these models, we begin by labeling all controls as pre-event ($E_j=0$) and all cases as post-event ($E_j=1$), and then iteratively relabel some of the cases and controls, re-estimating $p(x_j|E_j=1)$ and $p(x_j \mid E_j=0)$ accordingly. [This step isn't given much detail in the published articles, and the code implementation is convoluted; I intend to do a deeper dive and write out all the details.]
+In the first analysis phase, we analyze each biomarker separately, and we model the distribution of each biomarker $X_j$ conditional on the corresponding event $E_j$; i.e., we model $\mathrm{p}(x_j|E_j=0)$ and $\mathrm{p}(x_j | E_j=1)$, using nonparametric kernel density estimation. To fit these models, we begin by labeling all controls as pre-event ($E_j=0$) and all cases as post-event ($E_j=1$), and then iteratively relabel some of the cases and controls, re-estimating $\mathrm{p}(x_j \mid E_j=1)$ and $\mathrm{p}(x_j \mid E_j=0)$ accordingly. [This step isn't given much detail in the published articles, and the code implementation is convoluted; I intend to do a deeper dive and write out all the details.]
 
 ## Analysis Step 2: Estimate event sequence
 
@@ -191,41 +191,41 @@ seq_ml = mcmc_samples[0].ordering
 #print('ML order   : %s' % ', '.join([e_labels[k] for k in seq_ml]))
 ```
 
-In the second analysis phase, we compute the the Bayesian posterior distribution of $\boldsymbol S$ given the observed data $\mathbf X$, i.e., $p(\boldsymbol S \mid \mathbf X)=p(\mathbf X \mid \boldsymbol S)p(\boldsymbol  S)/p(\mathbf X)$, using a Markov-Chain Monte Carlo (MCMC) algorithm. To do so, we compute $p(\mathbf X \mid \boldsymbol S = \boldsymbol s)$ using the following decomposition:
+In the second analysis phase, we compute the the Bayesian posterior distribution of $\vec S$ given the observed data $\mathbf X$, i.e., $\mathrm{p}(\vec S \mid \mathbf X)=\mathrm{p}(\mathbf X \mid \vec S)\mathrm{p}(\vec  S)/\mathrm{p}(\mathbf X)$, using a Markov-Chain Monte Carlo (MCMC) algorithm. To do so, we compute $\mathrm{p}(\mathbf X \mid \vec S = \vec s)$ using the following decomposition:
 
 $$
-p(\mathbf X|\boldsymbol S = \boldsymbol s) = \prod_{i=1}^n p(\boldsymbol X_i | \boldsymbol S = \boldsymbol s)
+\mathrm{p}(\mathbf X|\vec S = \vec s) = \prod_{i=1}^n \mathrm{p}(\vec X_i | \vec S = \vec s)
 $$
 
 (using the assumption of independence between patients)
 
 $$ 
 \begin{align}
-p(\boldsymbol X_i \mid \boldsymbol S = \boldsymbol s) &= \sum_{k=0}^p p(\boldsymbol X_i= \boldsymbol x_i \mid \boldsymbol S = \boldsymbol s,\ K_i=k) * p(K_i = k \mid \boldsymbol S = \boldsymbol s)\\
-&= \sum_{k=0}^p p(\boldsymbol X_i= \boldsymbol x_i \mid \boldsymbol S = \boldsymbol s,\ K_i=k) * (1/p!)\\
-&= (1/p!) * \sum_{k=0}^p p(\boldsymbol X_i= \boldsymbol x_i \mid \boldsymbol S = \boldsymbol s,\ K_i=k)\\
-&\propto \sum_{k=0}^p p(\boldsymbol X_i= \boldsymbol x_i \mid \boldsymbol S = \boldsymbol s,\ K_i=k)
+\mathrm{p}(\vec X_i \mid \vec S = \vec s) &= \sum_{k=0}^p \mathrm{p}(\vec X_i= \vec x_i \mid \vec S = \vec s,\ K_i=k) * \mathrm{p}(K_i = k \mid \vec S = \vec s)\\
+&= \sum_{k=0}^p \mathrm{p}(\vec X_i= \vec x_i \mid \vec S = \vec s,\ K_i=k) * (1/p!)\\
+&= (1/p!) * \sum_{k=0}^p \mathrm{p}(\vec X_i= \vec x_i \mid \vec S = \vec s,\ K_i=k)\\
+&\propto \sum_{k=0}^p \mathrm{p}(\vec X_i= \vec x_i \mid \vec S = \vec s,\ K_i=k)
 \end{align}
 $$
 
-(using the assumption that $p(K_i = k \mid \boldsymbol S = \boldsymbol s$ is uniformly distributed)
+(using the assumption that $\mathrm{p}(K_i = k \mid \vec S = \vec s$ is uniformly distributed)
 
 $$
-p(\boldsymbol X_i= \boldsymbol x_i \mid \boldsymbol S = \boldsymbol s,\ K_i=k) =
-\left(\prod_{j=1}^k \hat p(X_{ij}=x_{ij} \mid E_{s(j)}=1)\right)
-\times \left(\prod_{j=k+1}^p \hat p(X_{ij}=x_{ij} \mid  E_{s(j)}=0)\right)
+\mathrm{p}(\vec X_i= \vec x_i \mid \vec S = \vec s,K_i=k) =
+\left(\prod_{j=1}^k \hat{\mathrm{p}}(X_{ij}=x_{ij} | E_{s(j)}=1)\right)
+\left(\prod_{j=k+1}^p \hat{\mathrm{p}}(X_{ij}=x_{ij} | E_{s(j)}=0)\right)
 $$
 
 (using the assumption that all patients follow the same sequence of events)
 
-In the last expression, we plug in the estimated models $\hat p(x_j|E_j=0)$ and $\hat p(x_j|E_j=1)$ from phase 1.
+In the last expression, we plug in the estimated models $\hat{\mathrm{p}}(x_j|E_j=0)$ and $\hat{ \mathrm{p}}(x_j|E_j=1)$ from phase 1.
 
 The MCMC sampling algorithm is as follows:
 
-1.  Let $\boldsymbol s_t$ be the current sampled value of $\boldsymbol S$.
-2.  Construct a new sequence $\boldsymbol s'$ by randomly permuting two elements of $s_t$.
-3.  Calculate $a = p(\mathbf X \mid \boldsymbol S = \boldsymbol s') / p(\mathbf X \mid \boldsymbol S = \boldsymbol s_t)$
-4.  Set $\boldsymbol s_{t+1} \leftarrow \boldsymbol s'$ with probability $\min(a, 1)$; otherwise set $\boldsymbol s_{t+1} \leftarrow \boldsymbol s_{t}$.
+1.  Let $\vec s_t$ be the current sampled value of $\vec S$.
+2.  Construct a new sequence $\vec s'$ by randomly permuting two elements of $s_t$.
+3.  Calculate $a = \mathrm{p}(\mathbf X \mid \vec S = \vec s') / \mathrm{p}(\mathbf X \mid \vec S = \vec s_t)$
+4.  Set $\vec s_{t+1} \leftarrow \vec s'$ with probability $\min(a, 1)$; otherwise set $\vec s_{t+1} \leftarrow \vec s_{t}$.
 
 ## Biomarkers analyzed
 
@@ -243,7 +243,7 @@ tibble(biomarkers) |> pander()
 
 ## Biomarker distribution models
 
-Here, we show the estimated distributions $\hat p(X_j | E_j =1)$ and $\hat p(X_j | E_j =0)$ for each biomarker (orange = patients, blue = controls, purple is the probability that the event has occurred given the biomarker value (i.e., $p(E_j = 1 | X_j = x)$):
+Here, we show the estimated distributions $\hat{\mathrm{p}}(X_j | E_j =1)$ and $\hat{\mathrm{p}}(X_j | E_j =0)$ for each biomarker (orange = patients, blue = controls, purple is the probability that the event has occurred given the biomarker value (i.e., $\mathrm{p}(E_j = 1 | X_j = x)$):
 
 ```{python, include = FALSE}
 import matplotlib.pyplot as plt
@@ -266,7 +266,7 @@ plt.show()
 
 ## Event sequence
 
-Here, we show a heatmap of the estimated position of each biomarker event in the sequence $\boldsymbol S$:
+Here, we show a heatmap of the estimated position of each biomarker event in the sequence $\vec S$:
 
 ```{python, include = TRUE, fig.width = 5}
 f,a = mcmc_uncert_mat(mcmc_samples, ml_order=None, score_names=e_labels)
