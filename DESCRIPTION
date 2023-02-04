@@ -12,6 +12,7 @@ Imports:
     forcats,
     golem (>= 0.3.4),
     magrittr,
+    reticulate,
     shiny (>= 1.7.2),
     tidyr
 Suggests: 
