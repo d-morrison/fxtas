@@ -270,13 +270,13 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            scid_dxcode2 = "Interviewers Diagnosis 2,  by Code", scid_dx2age = "Interviewers Diagnosis 2, Age of Onset",
            scid_dxcode3 = "Interviewers Diagnosis 3,  by Code", scid_dx3age = "Interviewers Diagnosis 3, Age of Onset",
            scl_s_som_ts = "Somatization (T-score)", scl_s_oc_ts = "Obsessive-Compulsive (T-score)",
-           scl_s_is_ts = "Interpersonal Sensitivity T-score",
+           scl_s_is_ts = "SCL90: Interpersonal Sensitivity",
            scl_s_dep_ts = "Depression (T-score)", scl_s_anx_ts = "Anxiety (T-score)",
            scl_s_hos_ts = "Hostility (T-score)", scl_s_phob_ts = "Phobia (T-score)",
            scl_s_par_ts = "Paranoid Ideation (T-score)", scl_s_psy_ts = "Psychoticism (T-score)",
            scl_s_gsi_ts = "Global Severity Index (T-score)",
-           scl_s_psdi_ts = "Positive Symptom Distress Index (T-score)",
-           scl_s_pst_ts = "Positive Symptom Total (T-score)",
+           scl_s_psdi_ts = "SCL90: Positive Symptom Distress Index",
+           scl_s_pst_ts = "SCL90: Positive Symptom Total",
 
            wais_verb_iq = "Verbal: IQ Score",
            wais_perf_iq = "Performance: IQ Score",
@@ -369,7 +369,7 @@ if(FALSE)
   # label(data$scid_dx3age)="Interviewers Diagnosis 3, Age of Onset"
   # label(data$scl_s_som_ts)="Somatization (T-score)"
   # label(data$scl_s_oc_ts)="Obsessive-Compulsive (T-score)"
-  # label(data$scl_s_is_ts)="Interpersonal Sensitivity T-score"
+  # label(data$scl_s_is_ts)="SCL90: Interpersonal Sensitivity"
   # label(data$scl_s_dep_ts)="Depression (T-score)"
   # label(data$scl_s_anx_ts)="Anxiety (T-score)"
   # label(data$scl_s_hos_ts)="Hostility (T-score)"
@@ -377,8 +377,8 @@ if(FALSE)
   # label(data$scl_s_par_ts)="Paranoid Ideation (T-score)"
   # label(data$scl_s_psy_ts)="Psychoticism (T-score)"
   # label(data$scl_s_gsi_ts)="Global Severity Index (T-score)"
-  # label(data$scl_s_psdi_ts)="Positive Symptom Distress Index (T-score)"
-  # label(data$scl_s_pst_ts)="Positive Symptom Total (T-score)"
+  # label(data$scl_s_psdi_ts)="SCL90: Positive Symptom Distress Index"
+  # label(data$scl_s_pst_ts)="SCL90: Positive Symptom Total"
   # label(data$wais_verb_iq)="Verbal: IQ Score"
   # label(data$wais_perf_iq)="Performance: IQ Score"
   # label(data$wais_fullscale_iq)="Full Scale: IQ Score"

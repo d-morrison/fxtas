@@ -269,13 +269,13 @@ labels = c(subj_id = "FXS ID",
            scid_dxcode2 = "Interviewers Diagnosis 2,  by Code", scid_dx2age = "Interviewers Diagnosis 2, Age of Onset",
            scid_dxcode3 = "Interviewers Diagnosis 3,  by Code", scid_dx3age = "Interviewers Diagnosis 3, Age of Onset",
            scl_s_som_ts = "Somatization (T-score)", scl_s_oc_ts = "Obsessive-Compulsive (T-score)",
-           scl_s_is_ts = "Interpersonal Sensitivity T-score",
+           scl_s_is_ts = "SCL90: Interpersonal Sensitivity",
            scl_s_dep_ts = "Depression (T-score)", scl_s_anx_ts = "Anxiety (T-score)",
            scl_s_hos_ts = "Hostility (T-score)", scl_s_phob_ts = "Phobia (T-score)",
            scl_s_par_ts = "Paranoid Ideation (T-score)", scl_s_psy_ts = "Psychoticism (T-score)",
            scl_s_gsi_ts = "Global Severity Index (T-score)",
-           scl_s_psdi_ts = "Positive Symptom Distress Index (T-score)",
-           scl_s_pst_ts = "Positive Symptom Total (T-score)",
+           scl_s_psdi_ts = "SCL90: Positive Symptom Distress Index",
+           scl_s_pst_ts = "SCL90: Positive Symptom Total",
 
            wais4_verbcomp_cs  = "Verbal Comprehension: Composite Score (VCI)",
            wais4_percorg_cs   = "Perceptual Reasoning: Composite Score (PRI)",
@@ -376,7 +376,7 @@ names(dataset) = labels[names(dataset)]
 # label(data$scid_dx3age)="Interviewers Diagnosis 3, Age of Onset"
 # label(data$scl_s_som_ts)="Somatization (T-score)"
 # label(data$scl_s_oc_ts)="Obsessive-Compulsive (T-score)"
-# label(data$scl_s_is_ts)="Interpersonal Sensitivity T-score"
+# label(data$scl_s_is_ts)="SCL90: Interpersonal Sensitivity"
 # label(data$scl_s_dep_ts)="Depression (T-score)"
 # label(data$scl_s_anx_ts)="Anxiety (T-score)"
 # label(data$scl_s_hos_ts)="Hostility (T-score)"
@@ -384,8 +384,8 @@ names(dataset) = labels[names(dataset)]
 # label(data$scl_s_par_ts)="Paranoid Ideation (T-score)"
 # label(data$scl_s_psy_ts)="Psychoticism (T-score)"
 # label(data$scl_s_gsi_ts)="Global Severity Index (T-score)"
-# label(data$scl_s_psdi_ts)="Positive Symptom Distress Index (T-score)"
-# label(data$scl_s_pst_ts)="Positive Symptom Total (T-score)"
+# label(data$scl_s_psdi_ts)="SCL90: Positive Symptom Distress Index"
+# label(data$scl_s_pst_ts)="SCL90: Positive Symptom Total"
 # label(data$wais4_verbcomp_cs)="Verbal Comprehension: Composite Score (VCI)"
 # label(data$wais4_percorg_cs)="Perceptual Reasoning: Composite Score (PRI)"
 # label(data$wais4_workmem_cs)="Working Memory: Composite Score (WMI)"

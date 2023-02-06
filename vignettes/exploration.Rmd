@@ -390,7 +390,7 @@ table1(
 
 **Question:** What should we do with missing codes and blanks?
 
-**Question:** Do we want to include "Interpersonal Sensitivity T-score" (was included in data extract, wasn't on Word doc list)?
+**Question:** Do we want to include "SCL90: Interpersonal Sensitivity" (was included in data extract, wasn't on Word doc list)?
 
 ```{r}
 
@@ -405,9 +405,9 @@ vars = c(
   grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Paranoid Ideation (T-score)",),
   grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Psychoticism (T-score)"),
   grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Global Severity Index (T-score)"),
-  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Interpersonal Sensitivity T-score"),
-  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Positive Symptom Distress Index (T-score)"),
-  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "Positive Symptom Total (T-score)")
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90: Interpersonal Sensitivity"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90: Positive Symptom Distress Index"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90: Positive Symptom Total")
 )
 
 table1(
@@ -421,7 +421,7 @@ table1(
 
 **Question:** What should we do with missing codes and blanks? Can we use results from subsequent visits to fill in earlier visits?
 
-**Question:** Do we want to include "Interpersonal Sensitivity T-score" in the analysis? (It was included in data extract but wasn't in the Word document "FXTAS event sequence RH.docx").
+**Question:** Do we want to include "SCL90: Interpersonal Sensitivity" in the analysis? (It was included in data extract but wasn't in the Word document "FXTAS event sequence RH.docx").
 
 ```{r}
 

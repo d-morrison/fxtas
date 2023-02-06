@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
   echo = FALSE,
   comment = "#>",
   fig.width = 4, 
-  fig.height = 6,
+  fig.height = 7,
   include = FALSE
 )
 ```
@@ -55,9 +55,9 @@ biomarker_directions =
     "Paranoid Ideation (T-score)" = 1,
     "Psychoticism (T-score)" = 1,
     "Global Severity Index (T-score)" = 1,
-    "Interpersonal Sensitivity T-score" = 1,
-    "Positive Symptom Distress Index (T-score)" = 1,
-    "Positive Symptom Total (T-score)" = 1,
+    "SCL90: Interpersonal Sensitivity" = 1,
+    "SCL90: Positive Symptom Distress Index" = 1,
+    "SCL90: Positive Symptom Total" = 1,
     "Verbal: IQ Score" = -1,
     # "Verbal Comprehension: Composite Score (VCI)" = -1,
     "Perceptual Reasoning: Composite Score (PRI)" = -1,
@@ -192,20 +192,6 @@ seq_ml = mcmc_samples[0].ordering
 #print('ML order   : %s' % ', '.join([e_labels[k] for k in seq_ml]))
 ```
 
-```{r}
-a = py$mcmc_samples
-b = a |> sapply(X = _, F = function(x) x$ordering + 1)
-b2 = b |> apply(M = 1, F = table) |> bind_rows() |> as.matrix()
-b2[is.na(b2)] = 0
-b3 = sweep(b2, MARGIN = 2, FUN = "/", STATS = colSums(b2))
-colnames(b3) = biomarkers[as.numeric(colnames(b3))]
-b4 = b3 |> as_tibble() |> mutate(position = 1:nrow(b3))
-b5 = b4 |>  tidyr::pivot_longer(cols = biomarkers) |> 
-  mutate(name = factor(name, levels = ))
-ggplot(b5, aes(x = position, y = name, fill = value)) + geom_tile()
-```
-
-
 In the second analysis phase, we compute the the Bayesian posterior distribution of $\vec S$ given the observed data $\mathbf X$, i.e., $\mathrm{p}(\vec S \mid \mathbf X)=\mathrm{p}(\mathbf X \mid \vec S)\mathrm{p}(\vec  S)/\mathrm{p}(\mathbf X)$, using a Markov-Chain Monte Carlo (MCMC) algorithm. To do so, we compute $\mathrm{p}(\mathbf X \mid \vec S = \vec s)$ using the following decomposition:
 
 $$
@@ -286,7 +272,18 @@ Here, we show a heatmap of the estimated position of each biomarker event in the
 ```{python, include = TRUE, fig.width = 5}
 f,a = mcmc_uncert_mat(mcmc_samples, ml_order=None, score_names=e_labels)
 plt.show()
+
 ```
+
+```{r "heatmap in r", include = TRUE, fig.width = 7}
+mcmc_samples = py$mcmc_samples |> 
+  magrittr::set_attr("biomarker labels", biomarkers)
+
+mcmc_samples |> 
+  event_order_heatmap() |> 
+  print()
+```
+
 
 # Discussion
 

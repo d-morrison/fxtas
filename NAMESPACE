@@ -2,6 +2,7 @@
 
 export(age_range_medians)
 export(clean_numeric)
+export(event_order_heatmap)
 export(missing_pattern_by_ID)
 export(missingness_reasons)
 export(numeric_as_factor)
