@@ -43,3 +43,23 @@ gp34 |> filter(
   `Alcohol use/abuse` %in% c("Past Only", "None"))
 ```
 
+# Ataxia
+
+```{r}
+
+gp34 |> select(Ataxia, `Ataxia: severity`) |> table(useNA ='ifany')
+
+gp34 |> 
+  filter(`Ataxia: severity` == 0, !is.element(`Ataxia`,"No"))
+
+gp34 |> 
+  filter(Ataxia == "No", !is.element(`Ataxia: severity`, 0))
+
+gp34 |> 
+  filter(!(Ataxia %in% "Yes"), `Ataxia: severity` %in% 1:4) |> 
+  select(`FXS ID`, `Event Name`, Ataxia, `Ataxia: severity`) |> 
+  write.csv(file = "inst/extdata/inconsistent ataxia.csv")
+
+
+```
+

@@ -37,11 +37,6 @@ gp34 =
   relocate(`Visit Date`, .after = `Event Name`) |>
   mutate(
 
-    # `Ataxia: Age of onset missingness` =
-    #   missingness_reasons(`Ataxia: Age of onset`),
-    # `Ataxia: Age of onset` =
-    #   clean_numeric(`Ataxia: Age of onset`),
-
     `Head Tremor: Age of onset` =
       `Head Tremor: Age of onset` |> dplyr::recode("68-67" = "67.5"),
     # "68-67" |> strsplit("-") |> sapply(F = function(x) median(as.numeric(x)))
@@ -82,12 +77,13 @@ gp34 =
       .names = "{.col}{if_else(.fn != 'tmp', paste0(': ', .fn), '')}"
     ),
 
-    across(
-      c(`Ataxia: severity`, `Drugs used`),
-      ~ .x |>
-        factor(levels = sort(unique(.x))) |>
-        relabel_factor_missing_codes()
-    ),
+    # `Drugs used` is unstructured text, with typos; unusable
+    # across(
+    #   c(`Drugs used`),
+    #   ~ .x |>
+    #     factor(levels = sort(unique(.x))) |>
+    #     relabel_factor_missing_codes()
+    # ),
 
     ApoE =
       ApoE |>
@@ -188,7 +184,17 @@ gp34 =
         `# of drinks per day now`
       )
   ) |>
-droplevels()
+
+  # cases and controls
+  mutate(
+    FX = `CGG (backfilled)` >= 55 # TRUE = cases
+  ) |>
+  # Ataxia
+  clean_ataxia() |>
+
+  droplevels()
+
+
 
 # levels(gp34$`# of drinks per day now`) =
 

@@ -45,6 +45,7 @@ categorical_biomarker_directions = c(
 
 biomarker_directions = 
   c(
+    "Ataxia: severity" = 1,
     "MMSE Total Score" = -1,
     "BDS-2 Total Score" = -1,
     "SCL90: Somatization" = 1,
@@ -82,14 +83,12 @@ biomarkers = names(biomarker_directions)
 ```
 
 ```{R data processing}
+
 cur_data = 
   visit1 |> 
   select(
     all_of(biomarkers),
-    `CGG (backfilled)`
-  ) |> 
-  mutate(
-    FX = `CGG (backfilled)` >= 55
+    FX
   ) |> 
   filter(!is.na(FX))
 
@@ -147,7 +146,7 @@ Following the Event-Based Model (EBM) analysis developed in Fonteijn et al 2012,
 We make the following assumptions:
 
 1.  Biomarker measurements from different individuals are mutually independent.
-2.  The distribution of each biomarker $X_j$ depends on an corresponding unobserved binary event, $E_j$.
+2.  The distribution of each biomarker $X_j$ depends on a corresponding unobserved binary event, $E_j$.
 3.  All patients are progressing along the same ordering sequence $\vec S\in \{1:p\}!$ of events $E_1$ - $E_p$, where $\{1:p\}!$ represents the set of all $p!$ orderings of the numbers $1:p$.
 4.  Each patient is at a particular position $K\in 1:p$ within that sequence, such that $E_{S(j)}=1,\ j \leq K$ and $E_{S(j)}=0,\ j>K$.
 5.  The distribution of $K$ given $\vec S$ is uniform; i.e., $\mathrm{p}(K=k|\vec S = \vec s)=1/p$, $k \in \{1:p\}$.

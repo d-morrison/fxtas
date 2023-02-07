@@ -288,6 +288,7 @@ table1(
 vars = c(
   "Ataxia",
   "Ataxia: severity",
+  "Ataxia: severity*",
   "Ataxia: Age of onset",
   "Ataxia: Age of onset: missingness"
 )
