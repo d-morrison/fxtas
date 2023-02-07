@@ -1,0 +1,45 @@
+---
+title: "potential-data-cleaning"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{potential-data-cleaning}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(fxtas)
+```
+
+# Alcohol
+
+Can we fill in some zeros in drinks per day using alcohol use/abuse?
+
+```{r}
+
+gp34 |> filter(is.na(`# of drinks per day now`), `Alcohol use/abuse` %in% c("Past Only", "None"))
+
+```
+
+Maybe for GP3 only?
+
+```{r}
+gp34 |> filter(
+  Study == "GP3",
+  is.na(`# of drinks per day now`), 
+  `Alcohol use/abuse` %in% c("Past Only", "None"))
+
+# no strange cases:
+gp34 |> filter(
+  Study == "GP3",
+  `# of drinks per day now` > 0, 
+  `Alcohol use/abuse` %in% c("Past Only", "None"))
+```
+

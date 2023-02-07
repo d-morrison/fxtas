@@ -242,39 +242,58 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            new_mds_med_anes1="Anesthesia (new_mds_med_anes1)",
            medic_surg_anes="Anesthesia (medic_surg_anes)",
 
-           sex = "Gender", mol_apoe = "ApoE", mol_dna_result = "Floras Non-Sortable Allele Size (CGG) Results",
+           sex = "Gender", mol_apoe = "ApoE",
+           mol_dna_result = "Floras Non-Sortable Allele Size (CGG) Results",
            mds_psy_drug = "Drug use",
            mds_psy_drug_notes = "Drugs used",
-           new_mds_psy_drug_marij = "Marijuana use", mds_psy_alco = "Alcohol use/abuse",
-           mds_psy_dri = "# of drinks per day now", mds_med_thyca = "Thyroid Cancer",
-           new_mds_med_skin = "Skin Cancer", new_mds_med_mela = "Melanoma",
+           new_mds_psy_drug_marij = "Marijuana use",
+           mds_psy_alco = "Alcohol use/abuse",
+           mds_psy_dri = "# of drinks per day now",
+           mds_med_thyca = "Thyroid Cancer",
+           new_mds_med_skin = "Skin Cancer",
+           new_mds_med_mela = "Melanoma",
            mds_med_proca = "Prostate Cancer",
            mds_med_sur = "Surgery",
            mds_med_sur_notes = "Surgery type",
-           new_mds_med_sur1 = "Surgery: Type/Age", new_mds_med_sur2 = "Surgery 2: Type/Age",
-           new_mds_med_sur3 = "Surgery 3: Type/Age", mds_ne_it = "Intention tremor",
-           mds_ne_rt = "Resting tremor", mds_ne_pt = "Postural tremor",
-           mds_neu_trem_irm = "Intermittent tremor", mds_neu_trem_age = "Tremor: Age of onset",
-           new_mds_neu_trem_head = "Head tremor", new_mds_neu_trem_age2 = "Head Tremor: Age of onset",
+           new_mds_med_sur1 = "Surgery: Type/Age",
+           new_mds_med_sur2 = "Surgery 2: Type/Age",
+           new_mds_med_sur3 = "Surgery 3: Type/Age",
+           mds_ne_it = "Intention tremor",
+           mds_ne_rt = "Resting tremor",
+           mds_ne_pt = "Postural tremor",
+           mds_neu_trem_irm = "Intermittent tremor",
+           mds_neu_trem_age = "Tremor: Age of onset",
+           new_mds_neu_trem_head = "Head tremor",
+           new_mds_neu_trem_age2 = "Head Tremor: Age of onset",
            mds_neu_atax = "Ataxia",
            mds_neu_atax_age = "Ataxia: Age of onset",
            mds_neu_atax_sev = "Ataxia: severity",
            # new_mds_ne_ga = "Ataxia",
            new_mds_med_park = "Parkinsons",
            mds_ne_pf = "Parkinsonian features",
-           mds_ne_pfmf = "Parkinsonian features: Masked faces", mds_ne_pfit = "Parkinsonian features: Increased tone",
+           mds_ne_pfmf = "Parkinsonian features: Masked faces",
+           mds_ne_pfit = "Parkinsonian features: Increased tone",
            mds_ne_pfprt = "Parkinsonian features: Pill rolling tremor",
-           mds_ne_pfsg = "Parkinsonian features: Stiff gait", mds_fxtas_stage = "FXTAS Stage (0-5)",
-           bds2_score = "BDS-2 Total Score", mmse_totalscore = "MMSE Total Score",
-           scid_dxcode1 = "Interviewers Diagnosis 1,  by Code", scid_dx1age = "Interviewers Diagnosis 1, Age of Onset",
-           scid_dxcode2 = "Interviewers Diagnosis 2,  by Code", scid_dx2age = "Interviewers Diagnosis 2, Age of Onset",
-           scid_dxcode3 = "Interviewers Diagnosis 3,  by Code", scid_dx3age = "Interviewers Diagnosis 3, Age of Onset",
-           scl_s_som_ts = "Somatization (T-score)", scl_s_oc_ts = "Obsessive-Compulsive (T-score)",
+           mds_ne_pfsg = "Parkinsonian features: Stiff gait",
+           mds_fxtas_stage = "FXTAS Stage (0-5)",
+           bds2_score = "BDS-2 Total Score",
+           mmse_totalscore = "MMSE Total Score",
+           scid_dxcode1 = "Interviewers Diagnosis 1,  by Code",
+           scid_dx1age = "Interviewers Diagnosis 1, Age of Onset",
+           scid_dxcode2 = "Interviewers Diagnosis 2,  by Code",
+           scid_dx2age = "Interviewers Diagnosis 2, Age of Onset",
+           scid_dxcode3 = "Interviewers Diagnosis 3,  by Code",
+           scid_dx3age = "Interviewers Diagnosis 3, Age of Onset",
+           scl_s_som_ts = "SCL90: Somatization",
+           scl_s_oc_ts = "SCL90: Obsessive-Compulsive",
            scl_s_is_ts = "SCL90: Interpersonal Sensitivity",
-           scl_s_dep_ts = "Depression (T-score)", scl_s_anx_ts = "Anxiety (T-score)",
-           scl_s_hos_ts = "Hostility (T-score)", scl_s_phob_ts = "Phobia (T-score)",
-           scl_s_par_ts = "Paranoid Ideation (T-score)", scl_s_psy_ts = "Psychoticism (T-score)",
-           scl_s_gsi_ts = "Global Severity Index (T-score)",
+           scl_s_dep_ts = "SCL90: Depression",
+           scl_s_anx_ts = "SCL90: Anxiety",
+           scl_s_hos_ts = "SCL90: Hostility",
+           scl_s_phob_ts = "SCL90: Phobia",
+           scl_s_par_ts = "SCL90: Paranoid Ideation",
+           scl_s_psy_ts = "SCL90: Psychoticism",
+           scl_s_gsi_ts = "SCL90: Global Severity Index",
            scl_s_psdi_ts = "SCL90: Positive Symptom Distress Index",
            scl_s_pst_ts = "SCL90: Positive Symptom Total",
 
@@ -367,16 +386,16 @@ if(FALSE)
   # label(data$scid_dx2age)="Interviewers Diagnosis 2, Age of Onset"
   # label(data$scid_dxcode3)="Interviewers Diagnosis 3,  by Code"
   # label(data$scid_dx3age)="Interviewers Diagnosis 3, Age of Onset"
-  # label(data$scl_s_som_ts)="Somatization (T-score)"
-  # label(data$scl_s_oc_ts)="Obsessive-Compulsive (T-score)"
+  # label(data$scl_s_som_ts)="SCL90: Somatization"
+  # label(data$scl_s_oc_ts)="SCL90: Obsessive-Compulsive"
   # label(data$scl_s_is_ts)="SCL90: Interpersonal Sensitivity"
-  # label(data$scl_s_dep_ts)="Depression (T-score)"
-  # label(data$scl_s_anx_ts)="Anxiety (T-score)"
-  # label(data$scl_s_hos_ts)="Hostility (T-score)"
-  # label(data$scl_s_phob_ts)="Phobia (T-score)"
-  # label(data$scl_s_par_ts)="Paranoid Ideation (T-score)"
-  # label(data$scl_s_psy_ts)="Psychoticism (T-score)"
-  # label(data$scl_s_gsi_ts)="Global Severity Index (T-score)"
+  # label(data$scl_s_dep_ts)="SCL90: Depression"
+  # label(data$scl_s_anx_ts)="SCL90: Anxiety"
+  # label(data$scl_s_hos_ts)="SCL90: Hostility"
+  # label(data$scl_s_phob_ts)="SCL90: Phobia"
+  # label(data$scl_s_par_ts)="SCL90: Paranoid Ideation"
+  # label(data$scl_s_psy_ts)="SCL90: Psychoticism"
+  # label(data$scl_s_gsi_ts)="SCL90: Global Severity Index"
   # label(data$scl_s_psdi_ts)="SCL90: Positive Symptom Distress Index"
   # label(data$scl_s_pst_ts)="SCL90: Positive Symptom Total"
   # label(data$wais_verb_iq)="Verbal: IQ Score"

@@ -26,7 +26,6 @@ tremor_types = c(
   "Intermittent tremor"
 )
 
-
 gp34 =
   bind_rows("GP3" = gp3, "GP4" = gp4, .id = "Study") |>
   arrange(`FXS ID`, `Visit Date`, `Event Name`) |>
@@ -177,7 +176,19 @@ gp34 =
       where(is.factor),
       ~ . |> forcats::fct_na_value_to_level(level = "Missing (empty in RedCap)"))
   ) |>
-  droplevels()
+
+  # alcohol use per day
+  mutate(
+    `# of drinks per day now` =
+      if_else(
+        Study == "GP3" &
+          is.na(`# of drinks per day now`) &
+          `Alcohol use/abuse` %in% c("Past Only", "None"),
+        0,
+        `# of drinks per day now`
+      )
+  ) |>
+droplevels()
 
 # levels(gp34$`# of drinks per day now`) =
 

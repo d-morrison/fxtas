@@ -1,0 +1,36 @@
+---
+title: "python-rng-seed-test"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{python-rng-seed-test}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(fxtas)
+library(reticulate)
+```
+
+```{python}
+import numpy as np
+def test():
+  swap_bm = np.random.choice(19, 2, replace=False)
+  return swap_bm
+
+numpy.random.seed(0)
+# np.random.default_rng(seed=0) # doesn't work
+test()
+# np.random.default_rng(seed=0)
+np.random.seed(0)
+test()
+
+```
+
