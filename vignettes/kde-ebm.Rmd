@@ -213,7 +213,7 @@ $$
 \end{align}
 $$
 
-(using the assumption that $\mathrm{p}(K_i = k \mid \vec S = \vec s$ is uniformly distributed)
+(using the assumption that $\mathrm{p}(K_i = k \mid \vec S = \vec s)$ is uniformly distributed)
 
 $$
 \mathrm{p}(\vec X_i= \vec x_i \mid \vec S = \vec s,K_i=k) =
