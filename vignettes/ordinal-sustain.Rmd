@@ -1,0 +1,26 @@
+---
+title: "Ordinal SuStaIn"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Ordinal SuStaIn}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(fxtas)
+```
+
+```{r}
+
+plot(cluster_props(c = 1:10), type = "b", xlim = c(0,10), ylim = c(0, .2))
+
+```
+
