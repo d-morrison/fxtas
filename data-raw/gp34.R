@@ -187,7 +187,8 @@ gp34 =
 
   # cases and controls
   mutate(
-    FX = `CGG (backfilled)` >= 55 # TRUE = cases
+    FX = `CGG (backfilled)` >= 55, # TRUE = cases
+    `FX*` = if_else(FX, "CGG >= 55", "CGG < 55") |> factor() |> relevel(ref = "CGG < 55")
   ) |>
   # Ataxia
   clean_ataxia() |>

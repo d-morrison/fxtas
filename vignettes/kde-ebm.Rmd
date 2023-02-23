@@ -43,7 +43,7 @@ categorical_biomarker_directions = c(
     "Cerebellar WM Hyperintensity" = 1,
     "MCP-WM Hyperintensity" = 1)
 
-biomarker_directions = 
+continuous_biomarker_directions = 
   c(
     "Ataxia: severity" = 1,
     "MMSE Total Score" = -1,
@@ -66,17 +66,27 @@ biomarker_directions =
     "Working Memory: Composite Score (WMI)" = -1,
     "Processing Speed: Composite Score (PSI)" = -1,
     "Full Scale: IQ Score" = -1,
-    # "Full Scale: Composite Score (FSIQ)" = -1, # not enough controls
-    # cantab measures not available for controls:
-    # "SWM Between errors" = -1,
-    # "SST Median correct RT on GO trials" = -1,
-    # "RVP A signal detection" = -1,
-    # "OTS Problems solved on first choice" = -1,
-    # "PAL Total errors (adjusted)" = -1,
-    # "RTI Five-choice movement time" = -1,
-    # "FXTAS Stage (0-5)" = 1, # doesn't work, because there's no variation among controls
+    
     NULL
   )
+
+continuous_vars_that_dont_work = 
+  c(
+    "Full Scale: Composite Score (FSIQ)" = -1, # not enough controls
+    # cantab measures not available for controls:
+    "SWM Between errors" = -1,
+    "SST Median correct RT on GO trials" = -1,
+    "RVP A signal detection" = -1,
+    "OTS Problems solved on first choice" = -1,
+    "PAL Total errors (adjusted)" = -1,
+    "RTI Five-choice movement time" = -1,
+    "FXTAS Stage (0-5)" = 1, # doesn't work, because there's no variation among controls
+    NULL
+  )
+
+biomarker_directions = c(
+  continuous_biomarker_directions
+)
 
 biomarkers = names(biomarker_directions)
 
@@ -88,7 +98,10 @@ cur_data =
   visit1 |> 
   select(
     all_of(biomarkers),
-    FX
+    FX,
+    `FX*`,
+    `FXS ID`,
+    `Age at first visit`
   ) |> 
   filter(!is.na(FX))
 
@@ -194,6 +207,7 @@ mcmc_samples = mcmc(
   n_iter = 10**5, 
   greedy_n_init = 20,
   plot = False)
+  
 ```
 
 In the second analysis phase, we compute the the Bayesian posterior distribution of $\vec S$ given the observed data $\mathbf X$, i.e., $\mathrm{p}(\vec S \mid \mathbf X)=\mathrm{p}(\mathbf X \mid \vec S)\mathrm{p}(\vec  S)/\mathrm{p}(\mathbf X)$, using a Markov-Chain Monte Carlo (MCMC) algorithm. To do so, we compute $\mathrm{p}(\mathbf X \mid \vec S = \vec s)$ using the following decomposition:
@@ -289,6 +303,42 @@ heatmap_data |>
   # magrittr::add(theme_ipsum()) |> 
   print() 
 ```
+
+```{python}
+
+from kde_ebm.staging import ebm_staging
+#* Staging
+#* Maximum-likelihood model stage: could include longitudinal data, including followups not used to train the EBM
+prob_mat_ml, stages_long_ml, stage_likelihoods_long_ml, stages_long_ml_expected = ebm_staging(
+    x=X,
+    mixtures=kde_mixtures,
+    samples=mcmc_samples
+)
+stages_long = stages_long_ml
+
+```
+
+Distribution of stages by FX status (CGG $\ge$ 55):
+
+```{r, include = TRUE}
+
+cur_data$stages_ML = py$stages_long_ml_expected
+py$stage_likelihoods_long_ml[47,]
+library(ggplot2)
+
+plot1 = cur_data |> 
+  ggplot(aes(x = stages_ML)) +
+  facet_grid(~`FX*`) +
+  geom_histogram() + 
+  expand_limits(x = c(0, length(biomarkers)))
+
+print(plot1)
+```
+
+```{r}
+cur_data |> filter(!FX) |> select(stages_ML, `FXS ID`, `Age at first visit`) |> arrange(stages_ML) %$% plot(stages_ML  ~ `Age at first visit`)
+```
+
 
 
 # Discussion

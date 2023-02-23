@@ -9,9 +9,10 @@
 event_order_heatmap = function(
     samples,
     biomarkers = attr(samples, "biomarker labels"),
-    biomarker_order = NULL)
+    biomarker_order = NULL,
+    verbose = FALSE)
 {
-
+  if(verbose) cli::cli_alert("starting `event_order_heatmap()`")
   positions = paste0("P", 1:length(biomarkers))
 
   if(class(samples[[1]]$ordering) == "symbol") browser()
