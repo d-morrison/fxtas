@@ -26,6 +26,24 @@ tremor_types = c(
   "Intermittent tremor"
 )
 
+
+scid_vars = c(
+  "Bipolar I Disorder (MD01), Lifetime",
+  "Bipolar I Disorder (MD01), Current",
+  "Bipolar II Disorder (MD02), Lifetime",
+  "Bipolar II Disorder (MD02), Current",
+  "Other Bipolar Disorder (MD03), Current",
+  "Other Bipolar Disorder (MD03), Lifetime",
+  "Major Depressive Disorder (MD04), Lifetime",
+  "Major Depressive Disorder (MD04), Current",
+  "Mood Disorder Due to GMC (MD07), Lifetime",
+  "Mood Disorder Due to a GMC (MD07), Current",
+  "Substance-Induced Mood Dis. (MD08), Lifetime",
+  "Substance-Induced Mood Dis. (MD08), Current",
+  "Primary Psychotic Symptoms (PS01), Lifetime",
+  "Primary Psychotic Symptoms (PS01), Current"
+)
+
 gp34 =
   bind_rows("GP3" = gp3, "GP4" = gp4, .id = "Study") |>
   arrange(`FXS ID`, `Visit Date`, `Event Name`) |>
@@ -173,6 +191,21 @@ gp34 =
       ~ . |> forcats::fct_na_value_to_level(level = "Missing (empty in RedCap)"))
   ) |>
 
+  # SCID
+  mutate(
+    across(
+      all_of(scid_vars),
+      ~ if_else(
+        condition = `Was SCID completed?` %in% "No" &
+          . == "Missing (empty in RedCap)",
+        true =
+          factor(
+            "Missing (SCID not completed)",
+            levels = c(levels(.), "Missing (SCID not completed)")),
+        false = .)
+    )
+  ) |>
+
   # alcohol use per day
   mutate(
     `# of drinks per day now` =
@@ -261,6 +294,7 @@ visit1 =
     gp34 |> count(`FXS ID`, name = "# visits"),
     by = "FXS ID"
   ) |>
-  mutate(`# visits` = factor(`# visits`, levels = 1:6))
+  mutate(`# visits` = factor(`# visits`, levels = 1:6)) |>
+  droplevels()
 
 usethis::use_data(visit1, overwrite = TRUE)

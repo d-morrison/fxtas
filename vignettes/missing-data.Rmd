@@ -1,5 +1,5 @@
 ---
-title: "Questions about FXTAS Sequence Data"
+title: "Missing Data in FXTAS study"
 output:
   html_document:
     df_print: paged
@@ -31,67 +31,20 @@ library(pander)
 library(table1)
 library(dplyr)
 library(magrittr)
-NA.label1 = "Missing (see breakdown below)"
+library(scales)
 
+NA.label1 = "Missing (see breakdown below)"
+conflicts_prefer(scales::percent)
 # load_all()
 ```
 
-# Data from first visits
-
-Here, we review the data from the first visits by each participant, stratified by 
-the first study phase in which the participant enrolled (GP3 vs GP4).
-
-## APOE
+## ApoE
 
 ```{r}
 apoe.n = gp34 |> missing_pattern_by_ID(variable = "ApoE")
-
 ```
 
-Many participants (`r sum(apoe.n$first_missing)` of `r nrow(apoe.n)`) have ApoE missing in their first visit records:
-
-```{r}
-vars = grep("^ApoE", names(gp34), value = TRUE)
-table1(
-  NA.label = NA.label1,
-  
-  paste(
-    "~", 
-    paste(
-      formulaic::add.backtick(vars), 
-      collapse = " + "), 
-    "| `Recruited in study phase`") |> 
-    formula(),
-  # render.missing=c("Empty in RedCap"="FREQ (PCT%)"),
-  data = visit1)
-```
-
-
-`r apoe.n |> filter(first_missing) |> pull(any_nonmissing) |> sum()` of these individuals have later visits with non-missing ApoE results; for example:
-
-```{r}
-
-gp34 |> filter(
-  # `FXS ID` == "500011-122"
-  `FXS ID` == apoe.n |> filter(first_missing, any_nonmissing) |> head(1) |> pull(`FXS ID`)
-) |> 
-  select(`FXS ID`, `Event Name`, `Visit Date`, ApoE) |> 
-  pander()
-
-```
-
-**QUESTION:** Is it reasonable to use the next non-missing ApoE result to impute the ApoE results for the earlier visit? Note that in some cases, the ApoE value changes between visits:
-
-```{r, "multiple ApoE values", results = "asis"}
-
-gp34 |> 
-  semi_join(apoe.n |> filter(n_vals > 1), by = "FXS ID") |> 
-  select(`FXS ID`, `Visit Date`, `Event Name` ,ApoE) |> 
-  arrange(`FXS ID`, `Visit Date`) |> 
-  split(~`FXS ID`) |> 
-  pander()
-
-```
+Many participants (`r sum(apoe.n$all_missing)` of `r nrow(apoe.n)`, `r apoe.n$all_missing |> mean() |> percent(.1)`) have no ApoE results.
 
 ## CGG
 
@@ -99,52 +52,9 @@ gp34 |>
 cgg.n = gp34 |> missing_pattern_by_ID(variable = "CGG")
 ```
 
-There's a lot of missing data in CGG as well:
-
-```{r}
-
-vars = grep("^CGG", names(gp34), value = TRUE)
-
-table1(
-  NA.label = NA.label1,
-  formula(paste(
-    "~", paste(formulaic::add.backtick(vars), collapse = " + "), 
-    "| `Recruited in study phase`")),
-  data = visit1)
-```
-
-`r cgg.n |> filter(first_missing) |> pull(any_nonmissing) |> sum()` of these participants have later records with non-missing CGG values.
-
-```{r, "multiple CGG values", include = TRUE, results = "asis"}
-
-gp34 |> 
-  semi_join(cgg.n |> filter(n_vals > 1), by = "FXS ID") |> 
-  filter(!is.na(CGG)) |> 
-  select(`FXS ID`, `Visit Date`, `Event Name` , CGG) |> 
-  arrange(`FXS ID`, `Visit Date`) |> 
-  split(~`FXS ID`) |> 
-  pander()
-
-```
-
-```{r}
-
-gp34 |> 
-  filter(is.na(`CGG`)) |> 
-  select(`FXS ID`, `Event Name`, CGG, `FXTAS Stage (0-5)`) |> 
-  pander()
-
-```
-
-
-
-**Question:** can we fill in the earlier values using later values?
+Many participants (`r sum(cgg.n$all_missing)` of `r nrow(cgg.n)`, `r cgg.n$all_missing |> mean() |> percent(.1)`) have no CGG results.
 
 ## Lifestyle
-
-**Question:** Alcohol is labeled "Alcohol Abuse" in GP3 (`mds_psy_alco`) vs. "Alcohol Use" in GP4 (`new_mds_psy_alco`); ok to combine?
-
-**Question:** I didn't find any marijuana use data in GP3; is there anything we can do to fill it in?
 
 **Question:** What should we do with codes 888 and 999 for these variables? Should they be treated as "Never used" or as actual missing values? What about missing data (field empty in RedCap)? Can we fill in any data using the unstructured data in  "Drugs used" (`mds_psy_drug_notes`)?
 
@@ -392,8 +302,8 @@ vars = c(
   "Bipolar I Disorder (MD01), Current",
   "Bipolar II Disorder (MD02), Lifetime",
   "Bipolar II Disorder (MD02), Current",
-  "Other Bipolar Disorder (MD03), Lifetime",
   "Other Bipolar Disorder (MD03), Current",
+  "Other Bipolar Disorder (MD03), Lifetime",
   "Major Depressive Disorder (MD04), Lifetime",
   "Major Depressive Disorder (MD04), Current",
   "Mood Disorder Due to GMC (MD07), Lifetime",
@@ -549,9 +459,7 @@ table1(
 
 
 vars = c(
-  "Hypothyroid",
-  "Hyperthyroid",
-  "Thyroid problems",
+  
   "Lupus",
   "Rheumatoid arthritis",
   "Multiple Sclerosis: Workup",
