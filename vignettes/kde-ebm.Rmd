@@ -336,7 +336,11 @@ print(plot1)
 ```
 
 ```{r}
-cur_data |> filter(!FX) |> select(stages_ML, `FXS ID`, `Age at first visit`) |> arrange(stages_ML) %$% plot(stages_ML  ~ `Age at first visit`)
+cur_data |> 
+  filter(!FX) |> 
+  select(stages_ML, `FXS ID`, `Age at first visit`) |> 
+  arrange(stages_ML) %$% 
+  plot(stages_ML  ~ `Age at first visit`)
 ```
 
 

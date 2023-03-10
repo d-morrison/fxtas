@@ -95,6 +95,17 @@ gp34 =
       .names = "{.col}{if_else(.fn != 'tmp', paste0(': ', .fn), '')}"
     ),
 
+    across(
+      contains("SCL90"),
+      # c(
+      #   `BDS-2 Total Score`,
+      #   `MMSE Total Score`),
+      list(
+        missingness = missingness_reasons,
+        tmp = clean_numeric),
+      .names = "{.col}{if_else(.fn != 'tmp', paste0(': ', .fn), '')}"
+    ),
+
     # `Drugs used` is unstructured text, with typos; unusable
     # across(
     #   c(`Drugs used`),
