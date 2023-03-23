@@ -42,7 +42,7 @@ Ps should be non-zero.
 
 ```{r}
 
-ModelScores = DataScores = 0:3
+ModelScores = DataScores = as.character(0:3)
 
 control_data = df |> filter(Category == "Control") |> select(all_of(biomarkers))
 patient_data = df |> filter(Category == "Patient") |> select(all_of(biomarkers))
@@ -52,8 +52,11 @@ prob_correct =
   df |> 
   filter(Category == "Control") |> 
   summarize(
-    across(all_of_biomarkers, ~ mean(.x == 0))
-  )
+    across(
+      .cols = biomarkers, 
+      .fn = ~ mean(.x == 0))
+  ) |> 
+  unlist()
 
 prob_dist = 
   biomarkers |> 
@@ -64,18 +67,74 @@ prob_dist =
     }
   )
 
-prob_dist = 
-  expand_grid(
+prob_dist_dims = 
+  list(
     modelscore = ModelScores,
     datascore = DataScores,
-    biomarker = biomarkers) |> 
-  mutate(
-    prob_dist = if_else(
-      modelscore == datascore,
-      prob_correct[biomarker],
-      (1 - prob_correct[biomarker]) / (length(DataScores) - 1)
-    )
-  )
+    biomarker = biomarkers)
+
+prob_dist = array(
+  NA,
+  dim = sapply(length, X = prob_dist_dims),
+  dimnames = prob_dist_dims)
+
+for (biomarker in biomarkers)
+{
+  for (datascore in DataScores)
+  {
+    for (modelscore in ModelScores)
+    {
+      if(datascore == modelscore)
+      {
+        prob_dist[modelscore, datascore, biomarker] = prob_correct[biomarker] 
+      } else
+      {
+        prob_dist[modelscore, datascore, biomarker] = 
+          (1 - prob_correct[biomarker] ) / (length(DataScores) - 1)
+      }
+    }
+  }
+}
+
+prob_nl_dist = prob_dist[1, , ]
+prob_score_dist = prob_dist[-1, , ]
+
+```
+
+```{r}
+
+prob_score_dims = 
+  list(
+  ID = df |> filter(Category == "Patient") |> pull(Index),
+  Biomarker = biomarkers,
+  model = ModelScores
+)
+  
+prob_score0 = array(
+  NA,
+  dim = prob_score_dims |> sapply(length),
+  dimnames = prob_score_dims
+)
+
+for (biomarker in biomarkers)
+{
+  for (datascore in DataScores)
+  {
+    for (modelscore in ModelScores)
+    {
+      prob_score0[patient_data[[biomarker]] == datascore, biomarker, modelscore] = 
+        prob_dist[modelscore, datascore, biomarker]
+    }
+    
+  }
+}
+
+prob_nl = prob_score0[,,"0"]
+prob_score = prob_score0[,,-1]
+
+```
+
+```{r}
 
 prob_nl = 
   patient_data |> 
