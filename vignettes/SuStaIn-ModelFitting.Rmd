@@ -1,0 +1,90 @@
+---
+title: "SuStaIn-ModelFitting"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{SuStaIn-ModelFitting}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(fxtas)
+library(tidyverse)
+```
+
+
+# Import data
+
+```{r}
+
+df = system.file("extdata", "synthetic_data.xlsx", package = "fxtas") |> readxl::read_excel()
+
+biomarkers = c('Biomarker 1', 'Biomarker 2', 'Biomarker 3',
+               'Biomarker 4', 'Biomarker 5')
+
+
+```
+
+# Set up data for new version of SuStaIn
+The objective here is two create to variables:
+
+* `p_NL` -- a subject x region matrix indicating the p that a region is normal for a subject.
+* `p_score` -- a subject x (region * score) matrix indicating p that a region is a given score.
+
+Ps should be non-zero. 
+
+```{r}
+
+ModelScores = DataScores = 0:3
+
+control_data = df |> filter(Category == "Control") |> select(all_of(biomarkers))
+patient_data = df |> filter(Category == "Patient") |> select(all_of(biomarkers))
+
+# prob_correct = (control_data == 0) |> colMeans()
+prob_correct = 
+  df |> 
+  filter(Category == "Control") |> 
+  summarize(
+    across(all_of_biomarkers, ~ mean(.x == 0))
+  )
+
+prob_dist = 
+  biomarkers |> 
+  lapply(
+    F = function(x) 
+    {
+      array()
+    }
+  )
+
+prob_dist = 
+  expand_grid(
+    modelscore = ModelScores,
+    datascore = DataScores,
+    biomarker = biomarkers) |> 
+  mutate(
+    prob_dist = if_else(
+      modelscore == datascore,
+      prob_correct[biomarker],
+      (1 - prob_correct[biomarker]) / (length(DataScores) - 1)
+    )
+  )
+
+prob_nl = 
+  patient_data |> 
+  mutate(
+    `P(X|C=0)` = 
+  )
+left_join(
+  prob_dist |> filter(modelscore == 0) |> select()
+)
+
+```
+
