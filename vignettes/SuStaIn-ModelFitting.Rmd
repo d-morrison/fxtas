@@ -187,12 +187,89 @@ sustain_input = pySuStaIn.OrdinalSustain(
 [samples_sequence, samples_f, 
 ml_subtype, prob_ml_subtype, ml_stage, 
 prob_ml_stage, prob_subtype_stage, 
-samples_likelihood] = sustain_input.run_sustain_algorithm(plot=True)
+samples_likelihood, 
+fig0] = sustain_input.run_sustain_algorithm(plot=True)
+
+```
+
+
+```{r}
+
+likelihoods = as_tibble(py$samples_likelihood) |> 
+  setNames(paste(1:ncol(likelihoods), "subtype(s)")) |> 
+  mutate(Iteration = row_number())
+
+alpha = 0.5
+ggplot() +
+  geom_line(
+    alpha = alpha,
+    aes(
+    x = 1:nrow(likelihoods), 
+    y = likelihoods[[1]],
+    col = "One subtype"
+    )
+  ) +
+  geom_line(
+    alpha = alpha,
+    aes(
+    x = 1:nrow(likelihoods), 
+    y = likelihoods[[2]],
+    col = "Two subtypes"
+    )
+  ) +
+  geom_line(
+    alpha = alpha,
+    aes(
+    x = 1:nrow(likelihoods), 
+    y = likelihoods[[3]],
+    col = "Three subtypes"
+    )
+  )
+
+
+
+```
+
+```{r}
+
+likelihoods2 = 
+  likelihoods  |> 
+  tidyr::pivot_longer(cols = paste(1:ncol(py$samples_likelihood), "subtype(s)"))
+
+likelihoods2 |> 
+  ggplot(
+       aes(
+    x = Iteration, 
+    y = value,
+    col = name
+    )) +
+  geom_line(alpha = alpha) +
+  facet_wrap(~name) +
+  ylab("log-likelihood")
+
+```
+
+
+```{python}
+fig0.show()
+```
+
+### trying `plt.show()`
+
+```{python, fig.width = 8, fig.height = 9}
+plt.show()
+```
+
+
+### attempting to call the plot function to get the heatmaps
+
+```{python}
+n_samples = r.prob_nl.shape[0]
 
 ```
 
 ```{python, include = TRUE, fig.width = 8, fig.height = 9}
-plt.show()
+# plt.show()
 
 ```
 
@@ -203,9 +280,35 @@ plt.show()
 ```
 
 
-```{r}
+```{python}
+
+figs, ax = sustain_input.plot_positional_var(
+  samples_sequence=samples_sequence,
+  samples_f=samples_f,
+  n_samples= n_samples,
+  score_vals = r.score_vals,
+  biomarker_labels=r.biomarkers,
+  save_path=r.output_folder)
+```
+
+
+
+```{python, "show figs"}
+for fig in figs:
+  fig.show()
 
 # py$samples_sequence
 
 ```
 
+```{python}
+from numpy  import *   
+A = matrix('1.0 2.0; 3.0 4.0')    
+B = matrix('5.0 6.0')
+C = matrix('1.0 2.0; 3.0 4.0; 5.0 6.0')
+print("A=",A)
+print("B=",B)
+print("C=",C)
+np.hstack((A,B))
+
+```

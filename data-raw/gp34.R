@@ -232,7 +232,12 @@ gp34 =
   # cases and controls
   mutate(
     FX = `CGG (backfilled)` >= 55, # TRUE = cases
-    `FX*` = if_else(FX, "CGG >= 55", "CGG < 55") |> factor() |> relevel(ref = "CGG < 55")
+    `FX*` =
+      if_else(FX, "CGG >= 55", "CGG < 55") |>
+      factor() |>
+      relevel(ref = "CGG < 55"),
+
+    `FX**` = `FX*` |> forcats::fct_explicit_na()
   ) |>
   # Ataxia
   clean_ataxia() |>
