@@ -1,6 +1,8 @@
 ---
 title: "SuStaIn-ModelFitting"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
 vignette: >
   %\VignetteIndexEntry{SuStaIn-ModelFitting}
   %\VignetteEngine{knitr::rmarkdown}
@@ -10,6 +12,7 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
+  echo = FALSE,
   comment = "#>"
 )
 ```
@@ -17,6 +20,7 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(fxtas)
 library(tidyverse)
+library(reticulate)
 ```
 
 
@@ -26,9 +30,8 @@ library(tidyverse)
 
 df = system.file("extdata", "synthetic_data.xlsx", package = "fxtas") |> readxl::read_excel()
 
-biomarkers = c('Biomarker 1', 'Biomarker 2', 'Biomarker 3',
+SuStaInLabels = biomarkers = c('Biomarker 1', 'Biomarker 2', 'Biomarker 3',
                'Biomarker 4', 'Biomarker 5')
-
 
 ```
 
@@ -53,19 +56,10 @@ prob_correct =
   filter(Category == "Control") |> 
   summarize(
     across(
-      .cols = biomarkers, 
+      .cols = all_of(biomarkers), 
       .fn = ~ mean(.x == 0))
   ) |> 
   unlist()
-
-prob_dist = 
-  biomarkers |> 
-  lapply(
-    F = function(x) 
-    {
-      array()
-    }
-  )
 
 prob_dist_dims = 
   list(
@@ -134,16 +128,84 @@ prob_score = prob_score0[,,-1]
 
 ```
 
+```{r "score_vals"}
+
+score_vals = matrix(
+  ModelScores[-1] |> as.numeric(),
+  byrow = TRUE,
+  nrow = length(biomarkers),
+  ncol = length(ModelScores) - 1)
+
+
+
+```
+
+# Run SuStaIn model
+
+```{r "set run parameters"}
+
+N_startpoints = 10L
+N_S_max = 3L
+N_iterations_MCMC = 1e5L
+dataset_name = 'sample_data'
+output_folder = "output" |> fs::dir_create()
+print(output_folder)
+```
+
+```{python "initialize-model"}
+
+import pandas
+import numpy as np
+import numpy.matlib
+import matplotlib.pyplot as plt
+import seaborn as sns
+import sys
+import scipy
+from glob import glob
+import pySuStaIn
+import os
+
+os.getcwd()
+
+sustain_input = pySuStaIn.OrdinalSustain(
+    r.prob_nl,
+    r.prob_score,
+    r.score_vals,
+    r.SuStaInLabels,
+    r.N_startpoints,
+    r.N_S_max, 
+    r.N_iterations_MCMC, 
+    r.output_folder, 
+    r.dataset_name, 
+    False,
+    1)
+
+```
+
+```{python "fit-model", fig.width = 8, fig.height = 9}
+
+[samples_sequence, samples_f, 
+ml_subtype, prob_ml_subtype, ml_stage, 
+prob_ml_stage, prob_subtype_stage, 
+samples_likelihood] = sustain_input.run_sustain_algorithm(plot=True)
+
+```
+
+```{python, include = TRUE, fig.width = 8, fig.height = 9}
+plt.show()
+
+```
+
+```{python}
+
+# plot_positional_var()
+
+```
+
+
 ```{r}
 
-prob_nl = 
-  patient_data |> 
-  mutate(
-    `P(X|C=0)` = 
-  )
-left_join(
-  prob_dist |> filter(modelscore == 0) |> select()
-)
+# py$samples_sequence
 
 ```
 
