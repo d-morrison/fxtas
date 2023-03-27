@@ -25,8 +25,10 @@ gp34 =
   arrange(`FXS ID`, `Visit Date`, `Event Name`) |>
   remove_unneeded_records() |>
   relocate(`Visit Date`, .after = `Event Name`) |>
-  clean_head_tremor() |>
+  clean_head_tremor_onset() |>
   fix_onset_age_vars() |>
+  # not sure why disabled:
+  # fix_tremors() |>
   create_any_tremor() |>
   make_vars_numeric(regex = "score", ignore.case = TRUE) |>
   make_vars_numeric(regex = "SCL90") |>
@@ -45,32 +47,18 @@ gp34 =
 
   fix_FXTAS_stage() |>
 
-  # not sure why disabled:
-  # fix_tremors() |>
 
   fix_demographics() |>
-  mutate(
-    across(where(is.factor), relabel_factor_missing_codes),
-    across(
-      where(is.factor),
-      ~ . |> forcats::fct_na_value_to_level(level = "Missing (empty in RedCap)"))
-  ) |>
 
-  # SCID
+  fix_factors() |>
+
   clean_SCID() |>
 
   fix_drinks_per_day() |>
 
   # cases and controls
-  mutate(
-    FX = `CGG (backfilled)` >= 55, # TRUE = cases
-    `FX*` =
-      if_else(FX, "CGG >= 55", "CGG < 55") |>
-      factor() |>
-      relevel(ref = "CGG < 55"),
 
-    `FX**` = `FX*` |> forcats::fct_explicit_na()
-  ) |>
+
   # Ataxia
   clean_ataxia() |>
 

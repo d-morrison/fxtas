@@ -10,7 +10,7 @@ fix_tremors = function(dataset)
         clean_numeric(`Tremor: Age of onset`),
 
       `Head Tremor: Age of onset: missingness` =
-        `Head Tremor: Age of onset` |> missingness_reasons,
+        `Head Tremor: Age of onset` |> missingness_reasons(),
 
       `Head Tremor: Age of onset` =
         `Head Tremor: Age of onset` |>

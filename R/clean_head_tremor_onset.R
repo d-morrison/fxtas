@@ -1,4 +1,4 @@
-clean_head_tremor = function(dataset)
+clean_head_tremor_onset = function(dataset)
 {
   dataset |>
     mutate(

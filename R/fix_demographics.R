@@ -3,7 +3,9 @@ fix_demographics = function(dataset)
   dataset |>
     mutate(
 
-      `Birth Date` = date(`Visit Date` - days(round(`Age at visit` * 365.25))), # causes problems for eg 	100399-100
+      `Birth Date` =
+        (`Visit Date` - days(round(`Age at visit` * 365.25))) |>
+        lubridate::date(), # causes problems for eg 	100399-100
 
 
     ) |>
