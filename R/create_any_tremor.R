@@ -13,6 +13,8 @@ create_any_tremor = function(
       "Any tremor" = dplyr::if_any(
         .cols = all_of(tremor_types),
         .fns = ~ . %in% "Yes") |>
-        if_else("Some Tremors Recorded", "No Tremors Recorded")
+        if_else("Some Tremors Recorded", "No Tremors Recorded") |>
+        factor() |>
+        relevel(ref = "No Tremors Recorded")
     )
 }

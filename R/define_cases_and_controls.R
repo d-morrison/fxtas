@@ -8,6 +8,6 @@ define_cases_and_controls = function(dataset)
         factor() |>
         relevel(ref = "CGG < 55"),
 
-      `FX**` = `FX*` |> forcats::fct_explicit_na()
+      `FX**` = `FX*` |> forcats::fct_na_value_to_level()
     )
 }

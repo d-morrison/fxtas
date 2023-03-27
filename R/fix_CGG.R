@@ -13,7 +13,9 @@ fix_CGG = function(dataset)
   dataset |>
     left_join(
       missingCGG |> select(-Study),
-      by = "FXS ID"
+      by = "FXS ID",
+      multiple = "error",
+      unmatched = "error"
     ) |>
     mutate(
       `Floras Non-Sortable Allele Size (CGG) Results` =

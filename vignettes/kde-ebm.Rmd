@@ -36,12 +36,21 @@ library(reticulate)
 
 ```{r biomarker list, include = FALSE}
 
+tremors = c(
+  "Intention tremor" = 1,
+  "Resting tremor" = 1,
+  "Postural tremor" = 1,
+  "Intermittent tremor" = 1,
+  "Any tremor" = 1
+)
+
 categorical_biomarker_directions = c(
-    "Cerebral Atrophy" = 1,
-    "Cerebellar Atrophy" = 1,
-    "Cerebral WM Hyperintensity" = 1,
-    "Cerebellar WM Hyperintensity" = 1,
-    "MCP-WM Hyperintensity" = 1)
+  
+  "Cerebral Atrophy" = 1,
+  "Cerebellar Atrophy" = 1,
+  "Cerebral WM Hyperintensity" = 1,
+  "Cerebellar WM Hyperintensity" = 1,
+  "MCP-WM Hyperintensity" = 1)
 
 continuous_biomarker_directions = 
   c(
@@ -85,6 +94,7 @@ continuous_vars_that_dont_work =
   )
 
 biomarker_directions = c(
+  tremors,
   continuous_biomarker_directions
 )
 
@@ -121,6 +131,9 @@ cur_data =
 X = 
   cur_data |> 
   select(all_of(biomarkers)) |> 
+  mutate(
+    across(where(is.factor), as.numeric)
+  ) |> 
   as.matrix()
 
 X_cases = 
@@ -131,21 +144,26 @@ X_cases =
 
 y = cur_data |> pull(FX) |> as.integer() |> as.matrix()
 
+```
+
+
+```{r "ggplot graphs"}
+
 if(FALSE)
 {
-library(ggplot2)
-for (cur in biomarkers)
-{
+  library(ggplot2)
+  for (cur in biomarkers)
+  {
+    
+    temp = ggplot(data = cur_data, aes(x = get(cur), group = FX)) + 
+      geom_histogram() + 
+      facet_wrap(~FX, ncol = 1) +
+      ggtitle(cur)
+    
+    print(cur)
+    print(temp)
+  }
   
-temp = ggplot(data = cur_data, aes(x = get(cur), group = FX)) + 
-    geom_histogram() + 
-    facet_wrap(~FX, ncol = 1) +
-    ggtitle(cur)
-  
-print(cur)
-print(temp)
-}
-
 }
 
 ```
@@ -169,6 +187,7 @@ We estimate $S$ using a two-step procedure:
 
 ## Analysis Step 1: Estimate biomarker distribution models conditional on corresponding events
 
+
 ```{python densities, include = FALSE}
 
 from kde_ebm.mixture_model import fit_all_kde_models, fit_all_gmm_models, get_prob_mat
@@ -182,13 +201,13 @@ y = r.y.flatten().astype(int)
 e_disease_direction = r.biomarker_directions
 e_labels = r.biomarkers
 
-kde_mixtures = fit_all_kde_models(
-    X,
-    y,
-    implement_fixed_controls = True,
-    patholog_dirn_array      = e_disease_direction,
-    verbose = False
-)
+
+kde_mixtures = fit_all_kde_models(X, 
+y,
+implement_fixed_controls = True,
+patholog_dirn_array      = e_disease_direction,
+verbose = False)
+
 
 ```
 
@@ -201,13 +220,12 @@ In the first analysis phase, we analyze each biomarker separately. We model the 
 import numpy
 numpy.random.seed(0)
 
-mcmc_samples = mcmc(
-  r.X_cases, 
-  kde_mixtures, 
-  n_iter = 10**5, 
-  greedy_n_init = 20,
-  plot = False)
-  
+mcmc_samples = mcmc(r.X_cases, 
+kde_mixtures, 
+n_iter = 10**5, 
+greedy_n_init = 20,
+plot = False)
+
 ```
 
 In the second analysis phase, we compute the the Bayesian posterior distribution of $\vec S$ given the observed data $\mathbf X$, i.e., $\mathrm{p}(\vec S \mid \mathbf X)=\mathrm{p}(\mathbf X \mid \vec S)\mathrm{p}(\vec  S)/\mathrm{p}(\mathbf X)$, using a Markov-Chain Monte Carlo (MCMC) algorithm. To do so, we compute $\mathrm{p}(\mathbf X \mid \vec S = \vec s)$ using the following decomposition:
@@ -265,18 +283,16 @@ Here, we show the estimated distributions $\hat{\mathrm{p}}(X_j | E_j =1)$ and $
 
 ```{python, include = FALSE}
 import matplotlib.pyplot as plt
-mixture_model_grid(
-    X,
-    y,
-    kde_mixtures,
-    score_names=r.biomarkers,
-    class_names=['Controls','Patients'],
-    max_cols = 2
-)
+mixture_model_grid(X,
+y,
+kde_mixtures,
+score_names=r.biomarkers,
+class_names=['Controls','Patients'],
+max_cols = 2)
 
 ```
 
-```{python, include = TRUE, fig.width = 4, fig.height = 9}
+```{python "mixture model graphs", include = TRUE, fig.width = 4, fig.height = 9}
 
 plt.show()
 
@@ -309,11 +325,15 @@ heatmap_data |>
 from kde_ebm.staging import ebm_staging
 #* Staging
 #* Maximum-likelihood model stage: could include longitudinal data, including followups not used to train the EBM
-prob_mat_ml, stages_long_ml, stage_likelihoods_long_ml, stages_long_ml_expected = ebm_staging(
-    x=X,
-    mixtures=kde_mixtures,
-    samples=mcmc_samples
+
+[prob_mat_ml, 
+stages_long_ml, 
+stage_likelihoods_long_ml, 
+stages_long_ml_expected] = ebm_staging(x=X,
+mixtures=kde_mixtures,
+samples=mcmc_samples
 )
+
 stages_long = stages_long_ml
 
 ```
@@ -355,4 +375,9 @@ cur_data |>
 
 -   Is the mixture-modeling step (Analysis Phase 1) reasonable?
 
-    -   Should it be separate from the sequencing step (phase 2)?
+-   Should it be separate from the sequencing step (phase 2)?
+
+
+
+
+

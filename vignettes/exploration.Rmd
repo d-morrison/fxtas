@@ -26,12 +26,13 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(fxtas)
+# library(fxtas)
+devtools::load_all()
 library(pander)
 library(table1)
 library(dplyr)
 library(magrittr)
-NA.label1 = "Missing (see breakdown below)"
+NA.label1 = "Missing"
 column_var = "Recruited in study phase"
 column_var = "FX**"
 # load_all()
@@ -179,7 +180,6 @@ vars = c(
   "Melanoma",
   "Prostate Cancer",
   "Other Cancer"
-  
 )
 
 table1(
@@ -335,7 +335,9 @@ table1(
 
 ```{r}
 
-vars = "FXTAS Stage (0-5)"
+vars = c(
+  "FXTAS Stage (0-5)",
+  "FXTAS Stage (0-5)*")
 
 table1(
   NA.label = NA.label1,

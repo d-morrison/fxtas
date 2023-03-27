@@ -7,11 +7,10 @@
 #' @return
 #' @export
 #'
-clean_numeric = function(x,
-                         NA_codes = c(
-                           777, 888, 999,
-                           extra_codes),
-                         extra_codes = NULL)
+clean_numeric = function(
+    x,
+    NA_codes = c(777, 888, 999, extra_codes),
+    extra_codes = NULL)
 {
 
   if_else(

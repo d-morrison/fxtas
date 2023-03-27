@@ -1,8 +1,10 @@
 ---
 title: "Ordinal SuStaIn"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
 vignette: >
-  %\VignetteIndexEntry{Ordinal SuStaIn}
+  %\VignetteIndexEntry{SuStaIn-ModelFitting}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -10,17 +12,334 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  echo = FALSE,
+  comment = "#>",
+  fig.width = 4, 
+  fig.height = 7,
+  include = FALSE
 )
 ```
 
 ```{r setup}
 library(fxtas)
+library(tidyverse)
+library(reticulate)
+```
+
+
+# Import data
+
+```{r}
+
+tremors = c(
+  "Intention tremor" = 1,
+  "Resting tremor" = 1,
+  "Postural tremor" = 1,
+  "Intermittent tremor" = 1,
+  "Any tremor" = 1
+)
+
+mri_vars = c(
+  "Cerebral Atrophy",
+  "Cerebellar Atrophy",
+  "Cerebral WM Hyperintensity",
+  "Cerebellar WM Hyperintensity",
+  "MCP-WM Hyperintensity",
+  "Pons-WM Hyperintensity",
+  "Sub-Insular WM Hyperintensity",
+  "Periventricular WM Hyperintensity",
+  "Splenium (CC)-WM Hyperintensity",
+  "Genu (CC)-WM Hyperintensity",
+  "Corpus Callosum-Thickness"
+)
+
+SuStaInLabels = 
+  biomarkers =
+  mri_vars
+
+df = 
+  visit1 |> 
+  select(
+    `FXS ID`,
+    `FX*`,
+    all_of(biomarkers)) |> 
+  filter(
+    !is.na(`FX*`)) |> 
+  mutate(
+    across(all_of(biomarkers), ~ as.numeric(.x) - 1)
+  ) |> 
+  na.omit()
+
+```
+
+# Set up data for new version of SuStaIn
+The objective here is two create to variables:
+
+* `p_NL` -- a subject x region matrix indicating the p that a region is normal for a subject.
+* `p_score` -- a subject x (region * score) matrix indicating p that a region is a given score.
+
+Ps should be non-zero. 
+
+```{r}
+
+ModelScores = DataScores = 
+  df[,biomarkers] |> unlist() |> unique(na.rm = TRUE) |> sort() |> as.character()
+  # unique(df[,biomarkers], na.rm = TRUE) |> as.character()
+
+control_data = df |> filter(`FX*` == "CGG < 55") |> select(all_of(biomarkers))
+patient_data = df |> filter(`FX*` == "CGG >= 55") |> select(all_of(biomarkers))
+
+# prob_correct = (control_data == 0) |> colMeans()
+prob_correct = 
+  control_data |> 
+  summarize(
+    across(
+      .cols = all_of(biomarkers), 
+      .fn = ~ mean(.x == DataScores[1], na.rm = TRUE))
+  ) |> 
+  unlist()
+
+prob_correct[] = .95
+
+prob_dist_dims = 
+  list(
+    modelscore = ModelScores,
+    datascore = DataScores,
+    biomarker = biomarkers)
+
+prob_dist = array(
+  NA,
+  dim = sapply(length, X = prob_dist_dims),
+  dimnames = prob_dist_dims)
+
+for (biomarker in biomarkers)
+{
+  for (datascore in DataScores)
+  {
+    for (modelscore in ModelScores)
+    {
+      if(datascore == modelscore)
+      {
+        prob_dist[modelscore, datascore, biomarker] = prob_correct[biomarker] 
+      } else
+      {
+        prob_dist[modelscore, datascore, biomarker] = 
+          (1 - prob_correct[biomarker] ) / (length(DataScores) - 1)
+      }
+    }
+  }
+}
+
+prob_nl_dist = prob_dist[1, , ]
+prob_score_dist = prob_dist[-1, , ]
+
 ```
 
 ```{r}
 
-plot(cluster_props(c = 1:10), type = "b", xlim = c(0,10), ylim = c(0, .2))
+prob_score_dims = 
+  list(
+    ID = df |> filter(`FX*` == "CGG >= 55") |> pull(`FXS ID`),
+    Biomarker = biomarkers,
+    model = ModelScores
+  )
+
+prob_score0 = array(
+  NA,
+  dim = prob_score_dims |> sapply(length),
+  dimnames = prob_score_dims
+)
+
+for (biomarker in biomarkers)
+{
+  for (datascore in DataScores)
+  {
+    for (modelscore in ModelScores)
+    {
+      prob_score0[patient_data[[biomarker]] == datascore, biomarker, modelscore] = 
+        prob_dist[modelscore, datascore, biomarker]
+    }
+    
+  }
+}
+
+prob_nl = prob_score0[,,1]
+prob_score = prob_score0[,,-1, drop = FALSE]
 
 ```
+
+```{r "score_vals"}
+
+score_vals = matrix(
+  ModelScores[-1] |> as.numeric(),
+  byrow = TRUE,
+  nrow = length(biomarkers),
+  ncol = length(ModelScores) - 1)
+
+
+
+```
+
+# Run SuStaIn model
+
+```{r "set run parameters"}
+
+N_startpoints = 10L
+N_S_max = 3L
+N_iterations_MCMC = 1e5L
+dataset_name = 'sample_data'
+output_folder = "output.FXTAS" |> fs::dir_create()
+print(output_folder)
+```
+
+```{python "initialize-model"}
+
+import pandas
+import numpy as np
+import numpy.matlib
+import matplotlib.pyplot as plt
+import seaborn as sns
+import sys
+import scipy
+from glob import glob
+import pySuStaIn
+import os
+
+os.getcwd()
+
+sustain_input = pySuStaIn.OrdinalSustain(r.prob_nl,
+r.prob_score,
+r.score_vals,
+r.SuStaInLabels,
+r.N_startpoints,
+r.N_S_max, 
+r.N_iterations_MCMC, 
+r.output_folder, 
+r.dataset_name, 
+False,
+1,
+True)
+
+```
+
+```{python "fit-model", fig.width = 8, fig.height = 9}
+
+[samples_sequence, samples_f, 
+ml_subtype, prob_ml_subtype, ml_stage, 
+prob_ml_stage, prob_subtype_stage, 
+samples_likelihood, 
+fig0] = sustain_input.run_sustain_algorithm(plot=True)
+
+```
+
+
+```{r}
+
+likelihoods = as_tibble(py$samples_likelihood) |> 
+  setNames(paste(1:ncol(likelihoods), "subtype(s)")) |> 
+  mutate(Iteration = row_number())
+
+alpha = 0.5
+ggplot() +
+  geom_line(
+    alpha = alpha,
+    aes(
+      x = 1:nrow(likelihoods), 
+      y = likelihoods[[1]],
+      col = "One subtype"
+    )
+  ) +
+  geom_line(
+    alpha = alpha,
+    aes(
+      x = 1:nrow(likelihoods), 
+      y = likelihoods[[2]],
+      col = "Two subtypes"
+    )
+  ) +
+  geom_line(
+    alpha = alpha,
+    aes(
+      x = 1:nrow(likelihoods), 
+      y = likelihoods[[3]],
+      col = "Three subtypes"
+    )
+  )
+
+
+
+```
+
+```{r}
+
+likelihoods2 = 
+  likelihoods  |> 
+  tidyr::pivot_longer(cols = paste(1:ncol(py$samples_likelihood), "subtype(s)"))
+
+likelihoods2 |> 
+  ggplot(
+    aes(
+      x = Iteration, 
+      y = value,
+      col = name
+    )) +
+  geom_line(alpha = alpha) +
+  facet_wrap(~name) +
+  ylab("log-likelihood")
+
+```
+
+
+```{python}
+fig0.show()
+```
+
+### trying `plt.show()`
+
+```{python, fig.width = 8, fig.height = 9}
+plt.show()
+```
+
+
+### attempting to call the plot function to get the heatmaps
+
+```{python}
+n_samples = r.prob_nl.shape[0]
+
+```
+
+```{python, include = TRUE, fig.width = 8, fig.height = 9}
+# plt.show()
+
+```
+
+```{python}
+
+# plot_positional_var()
+
+```
+
+
+```{python}
+
+figs, ax = sustain_input.plot_positional_var(
+samples_sequence=samples_sequence,
+samples_f=samples_f,
+n_samples= n_samples,
+score_vals = r.score_vals,
+biomarker_labels=r.biomarkers,
+save_path=r.output_folder)
+```
+
+
+
+```{python, "show figs"}
+for fig in figs:
+fig.show()
+
+# py$samples_sequence
+
+```
+
+
 

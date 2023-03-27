@@ -26,7 +26,6 @@ clean_data = function(dataset)
 
     fix_FXTAS_stage() |>
 
-
     fix_demographics() |>
 
     fix_factors() |>
@@ -36,7 +35,7 @@ clean_data = function(dataset)
     fix_drinks_per_day() |>
 
     # cases and controls
-
+    define_cases_and_controls() |>
 
     # Ataxia
     clean_ataxia() |>
