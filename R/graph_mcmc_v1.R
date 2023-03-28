@@ -3,11 +3,7 @@ graph_mcmc_v1 = function(likelihoods, alpha = 0.5)
 
   likelihoods =
     likelihoods |>
-    as_tibble() |>
-    setNames(
-      paste(1:ncol(py$samples_likelihood), "subtype(s)")
-    ) |>
-    mutate(Iteration = row_number())
+    format_likelihoods()
 
 
   ggplot() +

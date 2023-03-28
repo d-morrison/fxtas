@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.width = 7, 
   fig.height = 7,
-  include = FALSE
+  include = TRUE
 )
 ```
 
@@ -84,52 +84,32 @@ Ps should be non-zero.
 ```{r}
 
 ModelScores = DataScores = 
-  df[,biomarkers] |> unlist() |> unique(na.rm = TRUE) |> sort() |> as.character()
-# unique(df[,biomarkers], na.rm = TRUE) |> as.character()
+  df[,biomarkers] |> compute_score_levels()
 
-control_data = df |> filter(`FX*` == "CGG < 55") |> select(all_of(biomarkers))
-patient_data = df |> filter(`FX*` == "CGG >= 55") |> select(all_of(biomarkers))
+control_data = 
+  df |> 
+  filter(`FX*` == "CGG < 55") |> 
+  select(all_of(biomarkers))
 
-# prob_correct = (control_data == 0) |> colMeans()
+patient_data = 
+  df |> 
+  filter(`FX*` == "CGG >= 55") |> 
+  select(all_of(biomarkers))
+
 prob_correct = 
   control_data |> 
-  summarize(
-    across(
-      .cols = all_of(biomarkers), 
-      .fn = ~ mean(.x == DataScores[1], na.rm = TRUE))
-  ) |> 
-  unlist()
+  compute_prob_correct(
+    biomarkers = biomarkers,
+    DataScores = DataScores)
 
 # prob_correct[] = .95
 
-prob_dist_dims = 
-  list(
-    modelscore = ModelScores,
-    datascore = DataScores,
-    biomarker = biomarkers)
-
-prob_dist = array(
-  NA,
-  dim = sapply(length, X = prob_dist_dims),
-  dimnames = prob_dist_dims)
-
-for (biomarker in biomarkers)
-{
-  for (datascore in DataScores)
-  {
-    for (modelscore in ModelScores)
-    {
-      if(datascore == modelscore)
-      {
-        prob_dist[modelscore, datascore, biomarker] = prob_correct[biomarker] 
-      } else
-      {
-        prob_dist[modelscore, datascore, biomarker] = 
-          (1 - prob_correct[biomarker] ) / (length(DataScores) - 1)
-      }
-    }
-  }
-}
+prob_dist = compute_prob_dist(
+  ModelScores,
+  DataScores,
+  biomarkers,
+  prob_correct
+)
 
 prob_nl_dist = prob_dist[1, , ]
 prob_score_dist = prob_dist[-1, , ]
@@ -138,31 +118,13 @@ prob_score_dist = prob_dist[-1, , ]
 
 ```{r}
 
-prob_score_dims = 
-  list(
-    ID = df |> filter(`FX*` == "CGG >= 55") |> pull(`FXS ID`),
-    Biomarker = biomarkers,
-    model = ModelScores
-  )
-
-prob_score0 = array(
-  NA,
-  dim = prob_score_dims |> sapply(length),
-  dimnames = prob_score_dims
+prob_score0 = compute_prob_scores(
+  df,
+  biomarkers,
+  ModelScores,
+  DataScores,
+  prob_dist
 )
-
-for (biomarker in biomarkers)
-{
-  for (datascore in DataScores)
-  {
-    for (modelscore in ModelScores)
-    {
-      prob_score0[patient_data[[biomarker]] == datascore, biomarker, modelscore] = 
-        prob_dist[modelscore, datascore, biomarker]
-    }
-    
-  }
-}
 
 prob_nl = prob_score0[,,1]
 prob_score = prob_score0[,,-1, drop = FALSE]
@@ -176,8 +138,6 @@ score_vals = matrix(
   byrow = TRUE,
   nrow = length(biomarkers),
   ncol = length(ModelScores) - 1)
-
-
 
 ```
 
@@ -223,42 +183,35 @@ True)
 
 ```
 
+# fitting model
+
+
 ```{python "fit-model", fig.width = 8, fig.height = 9}
 
 [samples_sequence, samples_f, 
 ml_subtype, prob_ml_subtype, ml_stage, 
 prob_ml_stage, prob_subtype_stage, 
-samples_likelihood] = sustain_input.run_sustain_algorithm(plot=False)
+samples_likelihood] = sustain_input.run_sustain_algorithm(plot=True)
 
-```
-
-```{python}
-sustain_input._plot_sustain_model(
-  samples_sequence = samples_sequence,
-  samples_f = samples_f,
-  n_samples = r.df.shape[0],
-  biomarker_labels = r.SuStaInLabels)
-_ = plt.suptitle('SuStaIn output')
 plt.show()
 ```
 
+# calling plot function explicitly
 
-```{r}
+```{python,  fig.width = 8, fig.height = 9}
+sustain_input._plot_sustain_model(samples_sequence = samples_sequence,
+samples_f = samples_f,
+n_samples = r.df.shape[0],
+biomarker_labels = r.SuStaInLabels)
+_ = plt.suptitle('SuStaIn output')
 
-likelihoods2 = 
-  likelihoods  |> 
-  tidyr::pivot_longer(cols = paste(1:ncol(py$samples_likelihood), "subtype(s)"))
+```
 
-likelihoods2 |> 
-  ggplot(
-    aes(
-      x = Iteration, 
-      y = value,
-      col = name
-    )) +
-  geom_line(alpha = alpha) +
-  facet_wrap(~name) +
-  ylab("log-likelihood")
+# graph likelihoods in R
+
+```{r, fig.width = 8, fig.height = 9}
+py$samples_likelihood |>
+  graph_likelihoods_v2(alpha = 0.5)
 
 ```
 
@@ -268,47 +221,3 @@ likelihoods2 |>
 plt.show()
 ```
 
-
-### attempting to call the plot function to get the heatmaps
-
-```{python}
-n_samples = r.prob_nl.shape[0]
-
-```
-
-```{python, include = TRUE, fig.width = 8, fig.height = 9}
-# plt.show()
-
-```
-
-```{python}
-
-# plot_positional_var()
-
-```
-
-
-```{python}
-
-figs, ax = sustain_input.plot_positional_var(
-  samples_sequence=samples_sequence,
-  samples_f=samples_f,
-  n_samples= n_samples,
-  score_vals = r.score_vals,
-  biomarker_labels=r.biomarkers,
-  save_path=r.output_folder)
-  ```
-  
-  
-  
-  ```{python, "show figs"}
-  for fig in figs:
-    fig.show()
-    
-    # py$samples_sequence
-    
-    ```
-    
-    
-    
-    

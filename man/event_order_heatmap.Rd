@@ -4,7 +4,12 @@
 \alias{event_order_heatmap}
 \title{Event order heatmap}
 \usage{
-event_order_heatmap(samples, biomarkers = attr(samples, "biomarker labels"))
+event_order_heatmap(
+  samples,
+  biomarkers = attr(samples, "biomarker labels"),
+  biomarker_order = NULL,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{samples}{a list of orderings}

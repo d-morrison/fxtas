@@ -2,7 +2,13 @@
 
 export(age_range_medians)
 export(clean_numeric)
+export(compute_prob_correct)
+export(compute_prob_dist)
+export(compute_prob_scores)
+export(compute_score_levels)
 export(event_order_heatmap)
+export(format_likelihoods)
+export(graph_likelihoods_v2)
 export(missing_pattern_by_ID)
 export(missingness_reasons)
 export(numeric_as_factor)
