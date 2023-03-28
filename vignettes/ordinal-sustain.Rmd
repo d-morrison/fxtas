@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   echo = FALSE,
   comment = "#>",
-  fig.width = 4, 
+  fig.width = 7, 
   fig.height = 7,
   include = FALSE
 )
@@ -55,7 +55,8 @@ mri_vars = c(
 
 SuStaInLabels = 
   biomarkers =
-  mri_vars
+  # mri_vars
+  names(tremors)
 
 df = 
   visit1 |> 
@@ -84,7 +85,7 @@ Ps should be non-zero.
 
 ModelScores = DataScores = 
   df[,biomarkers] |> unlist() |> unique(na.rm = TRUE) |> sort() |> as.character()
-  # unique(df[,biomarkers], na.rm = TRUE) |> as.character()
+# unique(df[,biomarkers], na.rm = TRUE) |> as.character()
 
 control_data = df |> filter(`FX*` == "CGG < 55") |> select(all_of(biomarkers))
 patient_data = df |> filter(`FX*` == "CGG >= 55") |> select(all_of(biomarkers))
@@ -99,7 +100,7 @@ prob_correct =
   ) |> 
   unlist()
 
-prob_correct[] = .95
+# prob_correct[] = .95
 
 prob_dist_dims = 
   list(
@@ -188,7 +189,7 @@ N_startpoints = 10L
 N_S_max = 3L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
-output_folder = "output.FXTAS" |> fs::dir_create()
+output_folder = "output.FXTAS2" |> fs::dir_create()
 print(output_folder)
 ```
 
@@ -227,48 +228,20 @@ True)
 [samples_sequence, samples_f, 
 ml_subtype, prob_ml_subtype, ml_stage, 
 prob_ml_stage, prob_subtype_stage, 
-samples_likelihood, 
-fig0] = sustain_input.run_sustain_algorithm(plot=True)
+samples_likelihood] = sustain_input.run_sustain_algorithm(plot=False)
 
 ```
 
-
-```{r}
-
-likelihoods = as_tibble(py$samples_likelihood) |> 
-  setNames(paste(1:ncol(likelihoods), "subtype(s)")) |> 
-  mutate(Iteration = row_number())
-
-alpha = 0.5
-ggplot() +
-  geom_line(
-    alpha = alpha,
-    aes(
-      x = 1:nrow(likelihoods), 
-      y = likelihoods[[1]],
-      col = "One subtype"
-    )
-  ) +
-  geom_line(
-    alpha = alpha,
-    aes(
-      x = 1:nrow(likelihoods), 
-      y = likelihoods[[2]],
-      col = "Two subtypes"
-    )
-  ) +
-  geom_line(
-    alpha = alpha,
-    aes(
-      x = 1:nrow(likelihoods), 
-      y = likelihoods[[3]],
-      col = "Three subtypes"
-    )
-  )
-
-
-
+```{python}
+sustain_input._plot_sustain_model(
+  samples_sequence = samples_sequence,
+  samples_f = samples_f,
+  n_samples = r.df.shape[0],
+  biomarker_labels = r.SuStaInLabels)
+_ = plt.suptitle('SuStaIn output')
+plt.show()
 ```
+
 
 ```{r}
 
@@ -287,11 +260,6 @@ likelihoods2 |>
   facet_wrap(~name) +
   ylab("log-likelihood")
 
-```
-
-
-```{python}
-fig0.show()
 ```
 
 ### trying `plt.show()`
@@ -323,23 +291,24 @@ n_samples = r.prob_nl.shape[0]
 ```{python}
 
 figs, ax = sustain_input.plot_positional_var(
-samples_sequence=samples_sequence,
-samples_f=samples_f,
-n_samples= n_samples,
-score_vals = r.score_vals,
-biomarker_labels=r.biomarkers,
-save_path=r.output_folder)
-```
-
-
-
-```{python, "show figs"}
-for fig in figs:
-fig.show()
-
-# py$samples_sequence
-
-```
-
-
-
+  samples_sequence=samples_sequence,
+  samples_f=samples_f,
+  n_samples= n_samples,
+  score_vals = r.score_vals,
+  biomarker_labels=r.biomarkers,
+  save_path=r.output_folder)
+  ```
+  
+  
+  
+  ```{python, "show figs"}
+  for fig in figs:
+    fig.show()
+    
+    # py$samples_sequence
+    
+    ```
+    
+    
+    
+    
