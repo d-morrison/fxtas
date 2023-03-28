@@ -35,8 +35,8 @@ tremors = c(
   "Intention tremor" = 1,
   "Resting tremor" = 1,
   "Postural tremor" = 1,
-  "Intermittent tremor" = 1,
-  "Any tremor" = 1
+  "Intermittent tremor" = 1
+  # "Any tremor" = 1
 )
 
 mri_vars = c(
