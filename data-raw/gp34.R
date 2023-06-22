@@ -1,10 +1,11 @@
-load_all()
+devtools::load_all()
 library(Hmisc)
 library(forcats)
 library(lubridate)
 library(dplyr)
-conflict_prefer("label", "Hmisc")
-conflict_prefer("not", "magrittr")
+conflicted::conflict_prefer("label", "Hmisc")
+conflicted::conflict_prefer("not", "magrittr")
+conflicted::conflicts_prefer(dplyr::filter)
 library(tidyr)
 # dupes = gp3 |> semi_join(gp4, by = c("subj_id", "redcap_event_name"))
 # if(nrow(dupes) != 0) browser(message("why are there duplicate records?"))
@@ -19,6 +20,8 @@ temp2[temp1 != temp2]
 
 shared[label(gp4[, shared]) != label(gp3[,shared])]
 
+setdiff(names(gp3), names(gp4))
+setdiff(names(gp4), names(gp3))
 
 gp34 =
   bind_rows("GP3" = gp3, "GP4" = gp4, .id = "Study") |>

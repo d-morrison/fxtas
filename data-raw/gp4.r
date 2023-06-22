@@ -7,7 +7,7 @@ library(dplyr)
 library(vroom)
 #Read Data
 dataset=vroom::vroom(
-  'inst/extdata/CTSC3704GP4GenotypeP-FXTASEventSequence10_DATA_2023-03-08_1047.csv',
+  'inst/extdata/CTSC3704GP4GenotypeP-FXTASEventSequence10_DATA_2023-05-23_1002.csv',
   col_types = cols(
     dem_date = col_date(),
     new_mds_med_can_other = col_integer(),
@@ -114,6 +114,13 @@ dataset=vroom::vroom(
     new_ds_crx8 = col_character(),
     new_ds_crx9 = col_character(),
     new_ds_crx10 = col_character(),
+    # cantab_conn variables
+    otspsfc = col_double(),
+    paltea28 = col_double(),
+    sstmrtg = col_double(),
+    rvpa = col_double(),
+    rtifmdmt = col_double(),
+    swmbe468 = col_double(),
     .delim = ","
   ))
 
@@ -125,6 +132,15 @@ dataset=vroom::vroom(
 #     new_mds_neu_trem_age2 = factor(new_mds_neu_trem_age2,
 #                                    levels = sort(unique(new_mds_neu_trem_age2 |> )))
 #   )
+
+# remove old cantab variables
+dataset <- dataset |>
+  dplyr::select(-c(cantab_ots_probsolvedfirstchoice_,
+                   cantab_pal_toterrors_adjusted,
+                   cantab_sst_medianrt_gotrials,
+                   cantab_rvp_a,
+                   cantab_rti_5choice_movement,
+                   cantab_swm_between_errors))
 
 dataset$redcap_event_name = factor(dataset$redcap_event_name,levels=c("gp4__visit_1_arm_1","gp4__visit_2_arm_1","gp4__visit_3_arm_1","gp4__visit_4_arm_1","gp4__single_visit_arm_1","gp4__participant_s_arm_1"))
 
@@ -195,6 +211,8 @@ dataset$scid_ps01lif = factor(dataset$scid_ps01lif,levels=c("777","1","2","3"))
 dataset$scid_ps01cur = factor(dataset$scid_ps01cur,levels=c("1","3","777"))
 # dataset$new_mds_psy_dri = factor(dataset$new_mds_psy_dri)
 # levels(dataset$new_mds_psy_dri) = levels(dataset$new_mds_psy_dri) |> sub(pattern = "888", "")
+
+
 
 levels(dataset$redcap_event_name)=c("GP4 - Visit 1","GP4 - Visit 2","GP4 - Visit 3","GP4 - Visit 4","GP4 - Single Visit","GP4 - Participant Survey")
 levels(dataset$sex)=c("Female","Male")
@@ -356,12 +374,13 @@ labels = c(subj_id = "FXS ID",
            wais4_procspeed_cs = "Processing Speed: Composite Score (PSI)",
            wais4_fullscale_cs = "Full Scale: Composite Score (FSIQ)",
 
-           cantab_ots_probsolvedfirstchoice_ = "OTS Problems solved on first choice",
-           cantab_pal_toterrors_adjusted = "PAL Total errors (adjusted)",
-           cantab_sst_medianrt_gotrials = "SST Median correct RT on GO trials",
-           cantab_rvp_a = "RVP A signal detection",
-           cantab_rti_5choice_movement = "RTI Five-choice movement time",
-           cantab_swm_between_errors = "SWM Between errors",
+           # old cantab vars
+           # cantab_ots_probsolvedfirstchoice_ = "OTS Problems solved on first choice",
+           # cantab_pal_toterrors_adjusted = "PAL Total errors (adjusted)",
+           # cantab_sst_medianrt_gotrials = "SST Median correct RT on GO trials",
+           # cantab_rvp_a = "RVP A signal detection",
+           # cantab_rti_5choice_movement = "RTI Five-choice movement time",
+           # cantab_swm_between_errors = "SWM Between errors",
 
            new_mds_med_lup = "Lupus",
            new_mds_med_ra = "Rheumatoid arthritis",
@@ -390,7 +409,15 @@ labels = c(subj_id = "FXS ID",
            new_ds_crx9 = "Current Medications 9", new_ds_crx10 = "Current Medications 10",
            dem_date = "Visit Date",
            dem_race ="Primary Race",
-           dem_eth ="Primary Ethnicity"
+           dem_eth ="Primary Ethnicity",
+
+           # cantab_conn
+           otspsfc = "OTS Problems solved on first choice",
+           paltea28 = "PAL Total errors (adjusted)",
+           sstmrtg = "SST Median correct RT on GO trials",
+           rvpa = "RVP A signal detection",
+           rtifmdmt = "RTI Five-choice movement time",
+           swmbe468 = "SWM Between errors"
 
 )
 
@@ -510,4 +537,4 @@ names(dataset) = labels[names(dataset)]
 
 gp4 = tibble(dataset)
 
-use_data(gp4, overwrite = TRUE)
+usethis::use_data(gp4, overwrite = TRUE)
