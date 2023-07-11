@@ -4,7 +4,7 @@
 \alias{compute_prob_correct}
 \title{Title}
 \usage{
-compute_prob_correct(dataset, biomarkers, DataScores)
+compute_prob_correct(dataset, biomarkers, DataScores, max_prob = 1)
 }
 \arguments{
 \item{dataset}{Should be just the control data?}
