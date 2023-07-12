@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(fxtas)
+load_all()
 library(tidyverse)
 library(reticulate)
 ```
@@ -96,7 +96,7 @@ Ps should be non-zero.
 
 ModelScores = DataScores = 
   df |> 
-  select(biomarker_varnames) |> 
+  select(all_of(biomarker_varnames)) |> 
   # lapply(F = levels)
   compute_score_levels()
 
@@ -133,7 +133,7 @@ prob_score_dist = prob_dist[-1, , ]
 ```{r}
 
 prob_score0 = compute_prob_scores(
-  patient_data |> na.omit(),
+  dataset = patient_data |> na.omit(),
   biomarker_varnames,
   ModelScores,
   DataScores,
@@ -208,7 +208,7 @@ False,
 
 
 ```{python "fit-model"}
-
+breakpoint()
 [samples_sequence, samples_f, 
 ml_subtype, prob_ml_subtype, ml_stage, 
 prob_ml_stage, prob_subtype_stage, 

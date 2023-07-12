@@ -107,8 +107,7 @@ plot_positional_var = function(
     }
   } else
   {
-    stop(
-  "Note for future self/others: The use of any arbitrary colourmap is problematic, as when the same stage can have the same biomarker with different z-scores of different certainties, the colours need to mix in a visually informative way and there can be issues with RGB mixing/interpolation, particulary if there are >2 z-scores for the same biomarker at the same stage. It may be possible, but the end result may no longer be useful to look at.")
+    stop()
   }
 
   # Check biomarker label colours
@@ -191,19 +190,20 @@ plot_positional_var = function(
 
   confus_matrix = this_samples_sequence |>
     apply(F = order, M = 1) |>
-    apply(F = function(x) factor(x, levels = 1:N) |> table(), MARGIN = 1) |>
+    apply(F = function(x) factor(x, levels = 1:N) |> table() |> proportions(), M = 1) |>
     t()
 
   # Define the confusion matrix to insert the colours
   # Use 1s to start with all white
-  confus_matrix_c = np.ones((N_bio, N, 3))
+  confus_matrix_c = array(1, dim = c(N_bio, N, 3))
 
   # Loop over each z-score event
-  for j, z in enumerate(num_scores):
+  for (j in 1:N_z)
+  {
     # Determine which colours to alter
     # I.e. red (1,0,0) means removing green & blue channels
     # according to the certainty of red (representing z-score 1)
-    alter_level = colour_mat[j] == 0
+    alter_level = colour_mat[j,] == 0
   # Extract the uncertainties for this score
   confus_matrix_score = confus_matrix[(stage_score==z)[0]]
   # Subtract the certainty for this colour
@@ -221,6 +221,7 @@ plot_positional_var = function(
     confus_matrix_score.reshape(N_bio, N, 1),
     (1, 1, alter_level.sum())
   )
+  }
   if subtype_titles is not None:
     title_i = subtype_titles[i]
   else:
