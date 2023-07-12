@@ -45,20 +45,20 @@ tremors = c(
 
 mri_vars = c(
   "Cerebral Atrophy",
-  "Cerebellar Atrophy",
-  "Cerebral WM Hyperintensity",
-  "Cerebellar WM Hyperintensity",
-  "MCP-WM Hyperintensity",
-  "Pons-WM Hyperintensity",
-  "Sub-Insular WM Hyperintensity",
-  "Periventricular WM Hyperintensity",
-  "Splenium (CC)-WM Hyperintensity",
-  "Genu (CC)-WM Hyperintensity",
-  "Corpus Callosum-Thickness"
+  "Cerebellar Atrophy"
+  # "Cerebral WM Hyperintensity",
+  # "Cerebellar WM Hyperintensity",
+  # "MCP-WM Hyperintensity",
+  # "Pons-WM Hyperintensity",
+  # "Sub-Insular WM Hyperintensity",
+  # "Periventricular WM Hyperintensity",
+  # "Splenium (CC)-WM Hyperintensity",
+  # "Genu (CC)-WM Hyperintensity",
+  # "Corpus Callosum-Thickness"
 )
 
 SuStaInLabels = 
-  biomarkers =
+  biomarker_varnames =
   c(
     names(tremors),
     mri_vars
@@ -69,17 +69,17 @@ df =
   select(
     `FXS ID`,
     `FX*`,
-    all_of(biomarkers)) |> 
+    all_of(biomarker_varnames)) |> 
   filter(
     !is.na(`FX*`))
 
 nlevs = sapply(
-  X = df[,biomarkers], 
+  X = df[,biomarker_varnames], 
   F = function(x) length(levels(x)))
 
 df = df |>
   mutate(
-    across(all_of(biomarkers), ~ as.numeric(.x) - 1)
+    across(all_of(biomarker_varnames), ~ as.numeric(.x) - 1)
   )
 
 ```
@@ -95,32 +95,33 @@ Ps should be non-zero.
 ```{r}
 
 ModelScores = DataScores = 
-  df[,biomarkers] |> 
+  df |> 
+  select(biomarker_varnames) |> 
   # lapply(F = levels)
   compute_score_levels()
 
 control_data = 
   df |> 
   filter(`FX*` == "CGG < 55") |> 
-  select(all_of(biomarkers))
+  select(all_of(biomarker_varnames))
 
 patient_data = 
   df |> 
   na.omit() |> 
   filter(`FX*` == "CGG >= 55") |> 
-  select(all_of(biomarkers))
+  select(all_of(biomarker_varnames))
 
 prob_correct = 
   control_data |> 
   compute_prob_correct(
     max_prob = .95,
-    biomarkers = biomarkers,
+    biomarkers = biomarker_varnames,
     DataScores = DataScores)
 
 prob_dist = compute_prob_dist(
   ModelScores,
   DataScores,
-  biomarkers,
+  biomarker_varnames,
   prob_correct
 )
 
@@ -132,8 +133,8 @@ prob_score_dist = prob_dist[-1, , ]
 ```{r}
 
 prob_score0 = compute_prob_scores(
-  df |> na.omit(),
-  biomarkers,
+  patient_data |> na.omit(),
+  biomarker_varnames,
   ModelScores,
   DataScores,
   prob_dist
@@ -146,16 +147,16 @@ prob_score = prob_score0[,,-1, drop = FALSE]
 
 ```{r "score_vals"}
 
-sapply(X = biomarkers, F = function(x) 1:nlevs[x])
+sapply(X = biomarker_varnames, F = function(x) 1:nlevs[x])
 
 score_vals = matrix(
   ModelScores[-1] |> as.numeric(),
   byrow = TRUE,
-  nrow = length(biomarkers),
+  nrow = length(biomarker_varnames),
   ncol = length(ModelScores) - 1,
-  dimnames = list(biomarkers, ModelScores[-1]))
+  dimnames = list(biomarker_varnames, ModelScores[-1]))
 
-# for (i in biomarkers)
+# for (i in biomarker_varnames)
 # {
 #   score_vals[i,score_vals[i,] > nlevs[i]-1] = 0
 # }
@@ -170,7 +171,7 @@ N_startpoints = 10L
 N_S_max = 3L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
-output_folder = "output.mri3" |> fs::dir_create()
+output_folder = "output.mri4" |> fs::dir_create()
 print(output_folder)
 ```
 

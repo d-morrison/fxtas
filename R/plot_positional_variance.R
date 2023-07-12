@@ -35,13 +35,17 @@ plot_positional_var = function(
   {
     # Determine order if info given
     if (!is.null(ml_f_EM))
+    {
       subtype_order = ml_f_EM |> order(decreasing = TRUE)
-  # Otherwise determine order from samples_f
-  } else
-  {
-    subtype_order = samples_f |> colMeans() |> order(decreasing = TRUE)
-    # np.argsort(np.mean(samples_f, 1))[::-1]
+
+      # Otherwise determine order from samples_f
+    } else
+    {
+      subtype_order = samples_f |> rowMeans() |> order(decreasing = TRUE)
+      # np.argsort(np.mean(samples_f, 1))[::-1]
+    }
   }
+
   # Unravel the stage scores from score_vals
   stage_score = score_vals |> as.vector()
   IX_select = which(stage_score != 0)
@@ -120,55 +124,75 @@ plot_positional_var = function(
     biomarker_colours = rep("black", length(biomarker_labels))
   }
   # Flag to plot subtypes separately
-  if separate_subtypes:
-    nrows, ncols = 1, 1
-  else:
+  if (separate_subtypes)
+    {
+    nrows = ncols = 1
+  } else
+  {
     # Determine number of rows and columns (rounded up)
-    if N_S == 1:
-    nrows, ncols = 1, 1
-  elif N_S < 3:
-    nrows, ncols = 1, N_S
-  elif N_S < 7:
-    nrows, ncols = 2, int(np.ceil(N_S / 2))
-  else:
-    nrows, ncols = 3, int(np.ceil(N_S / 3))
+    if(N_S == 1)
+    {
+      nrows = ncols = 1
+    } else if(N_S < 3)
+    {
+    nrows = 1; ncols = N_S;
+    } else if (N_S < 7)
+    {
+    nrows = 2; ncols = int(np.ceil(N_S / 2))
+    } else
+    {
+    nrows = 3; ncols = int(np.ceil(N_S / 3))
+    }
+  }
+
   # Total axes used to loop over
   total_axes = nrows * ncols
   # Create list of single figure object if not separated
-  if separate_subtypes:
+  if(separate_subtypes)
+  {
     subtype_loops = N_S
-  else:
+  } else
+  {
     subtype_loops = 1
-  # Container for all figure objects
-  figs = []
-  # Loop over figures (only makes a diff if separate_subtypes=True)
-  for i in range(subtype_loops):
-    # Create the figure and axis for this subtype loop
-    fig, axs = plt.subplots(nrows, ncols, figsize=figsize)
-  figs.append(fig)
-  # Loop over each axis
-  for j in range(total_axes):
-    # Normal functionality (all subtypes on one plot)
-    if not separate_subtypes:
-    i = j
-  # Handle case of a single array
-  if isinstance(axs, np.ndarray):
-    ax = axs.flat[i]
-  else:
-    ax = axs
-  # Check if i is superfluous
-  if i not in range(N_S):
-    ax.set_axis_off()
-  continue
+  }
 
-  this_samples_sequence = samples_sequence[subtype_order[i],:,:].T
-  N = this_samples_sequence.shape[1]
+  # Container for all figure objects
+  figs = list()
+  # Loop over figures (only makes a diff if separate_subtypes=True)
+  for (i in 1:subtype_loops)
+  {
+    # Create the figure and axis for this subtype loop
+  figs[i] = list()
+
+  # Loop over each axis
+  for (j in 1:total_axes)
+  {
+    # Normal functionality (all subtypes on one plot)
+    if (!separate_subtypes) i = j
+  # Handle case of a single array
+
+  #   if(is.array(axs, np.ndarray):
+  #   ax = axs.flat[i]
+  # else:
+  #   ax = axs
+  # # Check if i is superfluous
+  # if i not in range(N_S):
+  #   ax.set_axis_off()
+  # continue
+
+  this_samples_sequence = samples_sequence[subtype_order[i],,] |> t()
+  N = ncol(this_samples_sequence)
 
   # Construct confusion matrix (vectorized)
   # We compare `this_samples_sequence` against each position
   # Sum each time it was observed at that point in the sequence
   # And normalize for number of samples/sequences
-  confus_matrix = (this_samples_sequence==np.arange(N)[:, None, None]).sum(1) / this_samples_sequence.shape[0]
+  # confus_matrix = (this_samples_sequence==np.arange(N)[:, None, None]).sum(1) / this_samples_sequence.shape[0]
+
+  confus_matrix = this_samples_sequence |>
+    apply(F = order, M = 1) |>
+    apply(F = function(x) factor(x, levels = 1:N) |> table(), MARGIN = 1) |>
+    t()
 
   # Define the confusion matrix to insert the colours
   # Use 1s to start with all white
@@ -235,6 +259,8 @@ plot_positional_var = function(
   # Make the event label slightly bigger than the ticks
   ax.set_xlabel(stage_label, fontsize=stage_font_size+2)
   ax.set_title(title_i, fontsize=title_font_size)
+}
+
   # Tighten up the figure
   fig.tight_layout()
   # Save if a path is given
