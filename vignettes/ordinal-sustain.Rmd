@@ -73,14 +73,14 @@ df =
   filter(
     !is.na(`FX*`))
 
-nlevs = sapply(X = df[,biomarkers], F = function(x) length(levels(x)))
+nlevs = sapply(
+  X = df[,biomarkers], 
+  F = function(x) length(levels(x)))
 
 df = df |>
-mutate(
-  across(all_of(biomarkers), ~ as.numeric(.x) - 1)
-)
-# |> 
-  # na.omit()
+  mutate(
+    across(all_of(biomarkers), ~ as.numeric(.x) - 1)
+  )
 
 ```
 
@@ -106,13 +106,14 @@ control_data =
 
 patient_data = 
   df |> 
+  na.omit() |> 
   filter(`FX*` == "CGG >= 55") |> 
   select(all_of(biomarkers))
 
 prob_correct = 
   control_data |> 
   compute_prob_correct(
-    max_prob = .99,
+    max_prob = .95,
     biomarkers = biomarkers,
     DataScores = DataScores)
 
@@ -145,8 +146,7 @@ prob_score = prob_score0[,,-1, drop = FALSE]
 
 ```{r "score_vals"}
 
-sapply(X = biomarkers,
-       F = function(x) 1:nlevs[x])
+sapply(X = biomarkers, F = function(x) 1:nlevs[x])
 
 score_vals = matrix(
   ModelScores[-1] |> as.numeric(),
@@ -155,10 +155,10 @@ score_vals = matrix(
   ncol = length(ModelScores) - 1,
   dimnames = list(biomarkers, ModelScores[-1]))
 
-for (i in biomarkers)
-{
-  score_vals[i,score_vals[i,]> nlevs[i]-1] = 0
-}
+# for (i in biomarkers)
+# {
+#   score_vals[i,score_vals[i,] > nlevs[i]-1] = 0
+# }
 
 ```
 
@@ -170,7 +170,7 @@ N_startpoints = 10L
 N_S_max = 3L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
-output_folder = "output.FXTAS1" |> fs::dir_create()
+output_folder = "output.mri3" |> fs::dir_create()
 print(output_folder)
 ```
 
@@ -206,13 +206,16 @@ False,
 # fitting model
 
 
-```{python "fit-model", fig.width = 8, fig.height = 9}
+```{python "fit-model"}
 
 [samples_sequence, samples_f, 
 ml_subtype, prob_ml_subtype, ml_stage, 
 prob_ml_stage, prob_subtype_stage, 
-samples_likelihood, fig0] = sustain_input.run_sustain_algorithm(plot=True)
+samples_likelihood] = sustain_input.run_sustain_algorithm(plot=True)
 
+```
+
+```{python "show plot", fig.width = 8, fig.height = 9}
 plt.show()
 ```
 

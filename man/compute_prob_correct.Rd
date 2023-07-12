@@ -9,7 +9,7 @@ compute_prob_correct(dataset, biomarkers, DataScores, max_prob = 1)
 \arguments{
 \item{dataset}{Should be just the control data?}
 
-\item{DataScores}{}
+\item{max_prob}{}
 }
 \description{
 Title

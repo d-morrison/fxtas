@@ -3,11 +3,16 @@
 #' @param dataset Should be just the control data?
 #' @param biomarkers
 #' @param DataScores
+#' @param max_prob
 #'
 #' @return
 #' @export
 #'
-compute_prob_correct = function(dataset, biomarkers, DataScores, max_prob = 1)
+compute_prob_correct = function(
+    dataset,
+    biomarkers,
+    DataScores,
+    max_prob = 1)
 {
 
   # sapply(biomarkers,
