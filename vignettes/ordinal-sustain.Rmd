@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-load_all()
+library(fxtas)
 library(tidyverse)
 library(reticulate)
 ```
@@ -132,7 +132,7 @@ prob_score_dist = prob_dist[-1, , ]
 ```{r}
 
 prob_score0 = compute_prob_scores(
-  dataset = patient_data |> na.omit(),
+  dataset = patient_data,
   biomarker_varnames,
   ModelScores,
   DataScores,
@@ -146,7 +146,7 @@ prob_score = prob_score0[,,-1, drop = FALSE]
 
 ```{r "score_vals"}
 
-sapply(X = biomarker_varnames, F = function(x) 1:nlevs[x])
+# sapply(X = biomarker_varnames, F = function(x) 1:nlevs[x])
 
 score_vals = matrix(
   ModelScores[-1] |> as.numeric(),
@@ -221,7 +221,7 @@ plt.show()
 ```{python,  fig.width = 8, fig.height = 9}
 sustain_input._plot_sustain_model(samples_sequence = samples_sequence,
 samples_f = samples_f,
-n_samples = r.df.shape[0],
+n_samples = r.patient_data.shape[0],
 biomarker_labels = r.SuStaInLabels)
 _ = plt.suptitle('SuStaIn output')
 
@@ -234,10 +234,3 @@ py$samples_likelihood |>
   graph_likelihoods_v2(alpha = 0.5)
 
 ```
-
-### trying `plt.show()`
-
-```{python, fig.width = 8, fig.height = 9}
-plt.show()
-```
-
