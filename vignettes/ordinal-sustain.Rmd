@@ -45,16 +45,16 @@ tremors = c(
 
 mri_vars = c(
   "Cerebral Atrophy",
-  "Cerebellar Atrophy"
-  # "Cerebral WM Hyperintensity",
-  # "Cerebellar WM Hyperintensity",
-  # "MCP-WM Hyperintensity",
-  # "Pons-WM Hyperintensity",
-  # "Sub-Insular WM Hyperintensity",
-  # "Periventricular WM Hyperintensity",
-  # "Splenium (CC)-WM Hyperintensity",
-  # "Genu (CC)-WM Hyperintensity",
-  # "Corpus Callosum-Thickness"
+  "Cerebellar Atrophy",
+  "Cerebral WM Hyperintensity",
+  "Cerebellar WM Hyperintensity",
+  "MCP-WM Hyperintensity",
+  "Pons-WM Hyperintensity",
+  "Sub-Insular WM Hyperintensity",
+  "Periventricular WM Hyperintensity",
+  "Splenium (CC)-WM Hyperintensity",
+  "Genu (CC)-WM Hyperintensity",
+  "Corpus Callosum-Thickness"
 )
 
 SuStaInLabels = 
@@ -170,7 +170,7 @@ N_startpoints = 10L
 N_S_max = 3L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
-output_folder = "output.mri5" |> fs::dir_create()
+output_folder = "output.more" |> fs::dir_create()
 print(output_folder)
 ```
 
@@ -226,6 +226,18 @@ biomarker_labels = r.SuStaInLabels)
 _ = plt.suptitle('SuStaIn output')
 
 ```
+
+# graph confusion matrices in R
+
+```{r}
+plot_positional_var(
+    samples_sequence = py$samples_sequence,
+    samples_f = py$samples_f,
+    n_samples = nrow(patient_data),
+    score_vals = score_vals,
+    biomarker_labels = SuStaInLabels)
+```
+
 
 # graph likelihoods in R
 
