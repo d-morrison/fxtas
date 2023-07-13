@@ -190,69 +190,14 @@ plot_positional_var = function(
     # Create the figure and axis for this subtype loop
     figs[i] = list()
 
-    this_samples_sequence = samples_sequence[subtype_order[i],,] |> t()
-    N_events = ncol(this_samples_sequence)
+    this_samples_sequence =
 
-    # Construct confusion matrix (vectorized)
-    # We compare `this_samples_sequence` against each position
-    # Sum each time it was observed at that point in the sequence
-    # And normalize for number of samples/sequences
-    # confus_matrix = (this_samples_sequence==np.arange(N_events)[:, None, None]).sum(1) / this_samples_sequence.shape[0]
-
-    confus_matrix = this_samples_sequence |>
-      apply(F = order, M = 1) |>
-      apply(F = function(x)
-        factor(x, levels = 1:N_events) |>
-          table() |>
-          proportions(), M = 1) |>
-      t()
-
-    # Define the confusion matrix to insert the colours
-    # Use 1s to start with all white
-    confus_matrix_c = array(
-      data = 1,
-      dim = c(N_bio, N_events, 3),
-      dimnames = list(
-        biomarker = biomarker_labels,
-        `SuStaIn Stage` = 1:N_events,
-        color = c("R","G","B")
-      ))
-
-    # Loop over each z-score event
-    for (j in 1:N_z)
-    {
-      z = num_scores[j]
-      # Determine which colours to alter
-      # I.e. red (1,0,0) means removing green & blue channels
-      # according to the certainty of red (representing z-score 1)
-      alter_level = colour_mat[j,] == 0
-      # Extract the uncertainties for this score
-      confus_matrix_score = confus_matrix[(stage_score == z), ]
-      # Subtract the certainty for this colour
-      subtractand1 =
-        confus_matrix_score |>
-        array(dim = c(dim(confus_matrix_score), sum(alter_level)))
-
-      confus_matrix_c[
-        stage_biomarker_index[stage_score==z],
-        ,
-        alter_level
-
-      ] = confus_matrix_c[
-        stage_biomarker_index[stage_score==z],
-        ,
-        alter_level,
-        drop = FALSE
-      ] - subtractand1
-
-      # # Subtract the certainty for this colour
-      # confus_matrix_c[, , alter_level] =
-      #   confus_matrix_c[, , alter_level] -  np.tile(
-      #   confus_matrix_score.reshape(N_bio, N_events, 1),
-      #   (1, 1, alter_level.sum())
-      # )
-    }
-
+    confus_matrix_c =
+      samples_sequence[subtype_order[i],,] |>
+      t() |>
+      compute_heatmap(
+        biomarker_labels = biomarker_labels
+      )
 
     if (!is.null(subtype_titles))
     {
