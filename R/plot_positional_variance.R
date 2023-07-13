@@ -76,7 +76,10 @@ plot_positional_var = function(
   }
 
   # Unravel the stage scores from score_vals
-  stage_score = score_vals |> unravel_stage_score()
+  stage_score = score_vals |> as.vector()
+  IX_select = which(stage_score != 0)
+  stage_score = stage_score[IX_select]
+
   # Get the scores and their number
   num_scores = unique(stage_score)
   N_z = length(num_scores)
@@ -86,7 +89,8 @@ plot_positional_var = function(
   # Warn user of reordering if labels and order given
   if (!is.null(biomarker_labels) & !is.null(biomarker_order))
     warning(
-      "Both labels and an order have been given. The labels will be reordered according to the given order!"
+      "Both labels and an order have been given.\n",
+      "The labels will be reordered according to the given order!"
     )
   if (!is.null(biomarker_order))
   {
@@ -149,54 +153,22 @@ plot_positional_var = function(
   } else{
     biomarker_colours = rep("black", length(biomarker_labels))
   }
-  # Flag to plot subtypes separately
-  if (separate_subtypes)
-  {
-    nrows = ncols = 1
-  } else
-  {
-    # Determine number of rows and columns (rounded up)
-    if(N_S == 1)
-    {
-      nrows = ncols = 1
-    } else if(N_S < 3)
-    {
-      nrows = 1; ncols = N_S;
-    } else if (N_S < 7)
-    {
-      nrows = 2; ncols = as.integer(ceiling(N_S / 2))
-    } else
-    {
-      nrows = 3; ncols = as.integer(ceiling(N_S / 3))
-    }
-  }
-
-  # Total axes used to loop over
-  total_axes = nrows * ncols
-  # Create list of single figure object if not separated
-  if(separate_subtypes)
-  {
-    subtype_loops = N_S
-  } else
-  {
-    subtype_loops = 1
-  }
 
   # Container for all figure objects
   figs = list()
-  # Loop over figures (only makes a diff if separate_subtypes=True)
-  for (i in 1:subtype_loops)
+  # Loop over figures
+  for (i in 1:N_S)
   {
     # Create the figure and axis for this subtype loop
-    figs[i] = list()
-
-    this_samples_sequence =
 
     confus_matrix_c =
       samples_sequence[subtype_order[i],,] |>
       t() |>
       compute_heatmap(
-        biomarker_labels = biomarker_labels
+        biomarker_labels = biomarker_labels,
+        colour_mat = colour_mat,
+        stage_biomarker_index = stage_biomarker_index,
+        stage_score = stage_score
       )
 
     if (!is.null(subtype_titles))
@@ -207,7 +179,7 @@ plot_positional_var = function(
       # Add axis title
       if (!cval)
       {
-        temp_mean_f = colMeans(samples_f)
+        temp_mean_f = rowMeans(samples_f)
 
         # Shuffle vals according to subtype_order
         # This defaults to previous method if custom order not given
@@ -215,15 +187,15 @@ plot_positional_var = function(
 
         if (!is.infinite(n_samples))
         {
-          title_i = glue::glue("Subtype {i+1} (f={vals[i] |> round(2)}, n={round(vals[i] * n_samples)})")
+          title_i = glue::glue("Subtype {i} (f={vals[i] |> round(2)}, n={round(vals[i] * n_samples)})")
         } else
         {
-          title_i = glue::glue("Subtype {i+1} (f={vals[i] |> round(2)})")
+          title_i = glue::glue("Subtype {i} (f={vals[i] |> round(2)})")
         }
 
       } else
       {
-        title_i = glue::glue("Subtype {i+1} cross-validated")
+        title_i = glue::glue("Subtype {i} cross-validated")
       }
 
     }
@@ -260,8 +232,7 @@ plot_positional_var = function(
       geom_raster(show.legend = FALSE) +
       theme_bw()
 
-
-    figs[[i]][j] = plot1
+    figs[[i]] = plot1
     #https://medium.com/@tobias.stalder.geo/plot-rgb-satellite-imagery-in-true-color-with-ggplot2-in-r-10bdb0e4dd1f
 
   }

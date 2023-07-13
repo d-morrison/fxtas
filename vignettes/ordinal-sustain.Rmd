@@ -230,12 +230,15 @@ _ = plt.suptitle('SuStaIn output')
 # graph confusion matrices in R
 
 ```{r}
-plot_positional_var(
+figs = plot_positional_var(
     samples_sequence = py$samples_sequence,
     samples_f = py$samples_f,
     n_samples = nrow(patient_data),
     score_vals = score_vals,
     biomarker_labels = SuStaInLabels)
+print(figs[[1]])
+print(figs[[2]])
+print(figs[[3]])
 ```
 
 

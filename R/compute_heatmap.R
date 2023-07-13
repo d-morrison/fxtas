@@ -1,11 +1,12 @@
 compute_heatmap = function(
     samples_sequence,
     biomarker_labels,
-    num_scores,
     colour_mat,
     stage_biomarker_index,
     stage_score,
-    N_z = length(num_scores))
+    N_z = length(num_scores),
+    N_bio = length(biomarker_labels),
+    num_scores = unique(stage_score))
 {
   N_events = ncol(samples_sequence)
 
@@ -69,4 +70,5 @@ compute_heatmap = function(
     # )
   }
 
+  return(confus_matrix_c)
 }
