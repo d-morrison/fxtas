@@ -76,9 +76,7 @@ plot_positional_var = function(
   }
 
   # Unravel the stage scores from score_vals
-  stage_score = score_vals |> as.vector()
-  IX_select = which(stage_score != 0)
-  stage_score = stage_score[IX_select]
+  stage_score = score_vals |> unravel_stage_score()
   # Get the scores and their number
   num_scores = unique(stage_score)
   N_z = length(num_scores)
@@ -203,7 +201,10 @@ plot_positional_var = function(
 
     confus_matrix = this_samples_sequence |>
       apply(F = order, M = 1) |>
-      apply(F = function(x) factor(x, levels = 1:N_events) |> table() |> proportions(), M = 1) |>
+      apply(F = function(x)
+        factor(x, levels = 1:N_events) |>
+          table() |>
+          proportions(), M = 1) |>
       t()
 
     # Define the confusion matrix to insert the colours
@@ -281,37 +282,42 @@ plot_positional_var = function(
       }
 
     }
+
     heatmap_table =
-    confus_matrix_c |> as.data.frame.table() |> pivot_wider(id_cols = c("biomarker","SuStaIn.Stage"), names_from = "color", values_from = "Freq") |>
+      confus_matrix_c |>
+      as.data.frame.table() |>
+      pivot_wider(
+        id_cols = c("biomarker","SuStaIn.Stage"),
+        names_from = "color",
+        values_from = "Freq") |>
       arrange(biomarker, SuStaIn.Stage)
 
     # Plot the colourized matrix
-    imshow <- function(x,col=palette(gray(0:255/255)),useRaster = TRUE,...){
-      image(t(x)[,nrow(x):1],col=col,useRaster=useRaster,xaxt='n',yaxt='n',...)
-    }
-    browser()
-    figs[[i]][j] = imshow()
-    # ax.imshow(
-    #   confus_matrix_c[biomarker_order, :, :],
-    #   interpolation='nearest'
-    # )
-    # Add the xticks and labels
-    # stage_ticks = np.arange(0, N_events, stage_interval)
-    # ax.set_xticks(stage_ticks)
-    # ax.set_xticklabels(stage_ticks+1, fontsize=stage_font_size, rotation=stage_rot)
-    # # Add the yticks and labels
-    # ax.set_yticks(np.arange(N_bio))
-    # # Add biomarker labels to LHS of every row only
-    # if (i % ncols) == 0:
-    #   ax.set_yticklabels(biomarker_labels, ha='right', fontsize=label_font_size, rotation=label_rot)
-    # # Set biomarker label colours
-    # for tick_label in ax.get_yticklabels():
-    #   tick_label.set_color(biomarker_colours[tick_label.get_text()])
-    # else:
-    #   ax.set_yticklabels([])
-    # # Make the event label slightly bigger than the ticks
-    # ax.set_xlabel(stage_label, fontsize=stage_font_size+2)
-    # ax.set_title(title_i, fontsize=title_font_size)
+
+    plot1 =
+      ggplot(
+        heatmap_table,
+        aes(
+          x = SuStaIn.Stage,
+          y = biomarker,
+          fill =
+            rgb(
+              r = R,              #Specify Bands
+              g = G,
+              b = B,
+              maxColorValue = 1),
+        )) +
+      scale_fill_identity() +
+      scale_y_discrete(limits = rev) +
+      xlab('SuStaIn Stage') +
+      ylab(NULL) +
+      ggtitle(title_i) +
+      geom_raster(show.legend = FALSE) +
+      theme_bw()
+
+
+    figs[[i]][j] = plot1
+    #https://medium.com/@tobias.stalder.geo/plot-rgb-satellite-imagery-in-true-color-with-ggplot2-in-r-10bdb0e4dd1f
 
   }
   return(figs)
