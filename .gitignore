@@ -8,3 +8,5 @@ output
 output.FXTAS
 output*
 vignettes/output*
+*.rmarkdown
+*_files/

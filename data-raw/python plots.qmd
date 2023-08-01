@@ -1,0 +1,246 @@
+---
+title: "python plots"
+format: html
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo = FALSE,
+  comment = "#>",
+  fig.width = 7, 
+  fig.height = 7,
+  include = TRUE
+)
+```
+
+```{r setup}
+library(fxtas)
+library(tidyverse)
+library(reticulate)
+```
+
+```{r}
+reticulate::use_condaenv(condaenv = "fxtas")
+```
+
+
+# Import data
+
+```{r}
+
+tremors = c(
+  "Intention tremor" = 1,
+  "Resting tremor" = 1,
+  "Postural tremor" = 1,
+  "Intermittent tremor" = 1
+  # "Any tremor" = 1
+)
+
+mri_vars = c(
+  "Cerebral Atrophy",
+  "Cerebellar Atrophy",
+  "Cerebral WM Hyperintensity",
+  "Cerebellar WM Hyperintensity",
+  "MCP-WM Hyperintensity",
+  "Pons-WM Hyperintensity",
+  "Sub-Insular WM Hyperintensity",
+  "Periventricular WM Hyperintensity",
+  "Splenium (CC)-WM Hyperintensity",
+  "Genu (CC)-WM Hyperintensity",
+  "Corpus Callosum-Thickness"
+)
+
+SuStaInLabels = 
+  biomarker_varnames =
+  c(
+    names(tremors),
+    mri_vars
+  )
+
+df = 
+  visit1 |> 
+  select(
+    `FXS ID`,
+    `FX*`,
+    all_of(biomarker_varnames)) |> 
+  filter(
+    !is.na(`FX*`))
+
+nlevs = sapply(
+  X = df[,biomarker_varnames], 
+  F = function(x) length(levels(x)))
+
+df = df |>
+  mutate(
+    across(all_of(biomarker_varnames), ~ as.numeric(.x) - 1)
+  )
+
+```
+
+# Set up data for new version of SuStaIn
+The objective here is two create to variables:
+
+* `p_NL` -- a subject x region matrix indicating the p that a region is normal for a subject.
+* `p_score` -- a subject x (region * score) matrix indicating p that a region is a given score.
+
+Ps should be non-zero. 
+
+```{r}
+
+ModelScores = DataScores = 
+  df |> 
+  select(all_of(biomarker_varnames)) |> 
+  # lapply(F = levels)
+  compute_score_levels()
+
+control_data = 
+  df |> 
+  filter(`FX*` == "CGG < 55") |> 
+  select(all_of(biomarker_varnames))
+
+patient_data = 
+  df |> 
+  na.omit() |> 
+  filter(`FX*` == "CGG >= 55")
+
+prob_correct = 
+  control_data |> 
+  compute_prob_correct(
+    max_prob = .95,
+    biomarkers = biomarker_varnames,
+    DataScores = DataScores)
+
+prob_dist = compute_prob_dist(
+  ModelScores,
+  DataScores,
+  biomarker_varnames,
+  prob_correct
+)
+
+prob_nl_dist = prob_dist[1, , ]
+prob_score_dist = prob_dist[-1, , ]
+
+```
+
+```{r}
+
+prob_score0 = compute_prob_scores(
+  dataset = patient_data,
+  biomarker_varnames,
+  ModelScores,
+  DataScores,
+  prob_dist
+)
+
+prob_nl = prob_score0[,,1]
+prob_score = prob_score0[,,-1, drop = FALSE]
+
+```
+
+```{r "score_vals"}
+
+# sapply(X = biomarker_varnames, F = function(x) 1:nlevs[x])
+
+score_vals = matrix(
+  ModelScores[-1] |> as.numeric(),
+  byrow = TRUE,
+  nrow = length(biomarker_varnames),
+  ncol = length(ModelScores) - 1,
+  dimnames = list(biomarker_varnames, ModelScores[-1]))
+
+for (i in biomarker_varnames)
+{
+  score_vals[i,score_vals[i,] > nlevs[i]-1] = 0
+}
+
+```
+
+# Run SuStaIn model
+
+```{r "set run parameters"}
+
+N_startpoints = 10L
+N_S_max = 3L
+N_iterations_MCMC = 1e5L
+dataset_name = 'sample_data'
+output_folder = "output.more" |> fs::dir_create()
+print(output_folder)
+```
+
+```{python "initialize-model"}
+
+import pandas
+import numpy as np
+import numpy.matlib
+import matplotlib.pyplot as plt
+import seaborn as sns
+import sys
+import scipy
+from glob import glob
+import pySuStaIn
+import os
+
+os.getcwd()
+
+sustain_input = pySuStaIn.OrdinalSustain(r.prob_nl,
+r.prob_score,
+r.score_vals,
+r.SuStaInLabels,
+r.N_startpoints,
+r.N_S_max, 
+r.N_iterations_MCMC, 
+r.output_folder, 
+r.dataset_name, 
+False,
+1)
+
+```
+
+# fitting model
+
+```{python "fit-model"}
+[samples_sequence, samples_f, 
+ml_subtype, prob_ml_subtype, ml_stage, 
+prob_ml_stage, prob_subtype_stage, 
+samples_likelihood] = sustain_input.run_sustain_algorithm(plot=True)
+
+```
+
+```{python "show plot", fig.width = 8, fig.height = 9}
+plt.show()
+```
+
+# calling plot function explicitly
+
+```{python,  fig.width = 8, fig.height = 9}
+sustain_input._plot_sustain_model(samples_sequence = samples_sequence,
+samples_f = samples_f,
+n_samples = r.patient_data.shape[0],
+biomarker_labels = r.SuStaInLabels)
+_ = plt.suptitle('SuStaIn output')
+
+```
+
+# graph confusion matrices in R
+
+```{r}
+figs = plot_positional_var(
+    samples_sequence = py$samples_sequence,
+    samples_f = py$samples_f,
+    n_samples = nrow(patient_data),
+    score_vals = score_vals,
+    biomarker_labels = SuStaInLabels)
+print(figs[[1]])
+print(figs[[2]])
+print(figs[[3]])
+```
+
+
+# graph likelihoods in R
+
+```{r, fig.width = 8, fig.height = 9}
+py$samples_likelihood |>
+  graph_likelihoods_v2(alpha = 0.5)
+
+```

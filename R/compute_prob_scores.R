@@ -45,6 +45,16 @@ compute_prob_scores = function(
       }
 
     }
+
+    if(any(dataset[[biomarker]] |> is.na()))
+    {
+      prob_score0[
+        dataset[[biomarker]] |> is.na(),
+        biomarker,
+
+      ] = 1/length(ModelScores)
+    }
+
   }
   return(prob_score0)
 }

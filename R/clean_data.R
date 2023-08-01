@@ -6,9 +6,9 @@ clean_data = function(dataset)
     relocate(`Visit Date`, .after = `Event Name`) |>
     clean_head_tremor_onset() |>
     fix_onset_age_vars() |>
-    # not sure why disabled:
-    # fix_tremors() |>
+
     create_any_tremor() |>
+    fix_tremor_onsets() |>
     make_vars_numeric(regex = "score", ignore.case = TRUE) |>
     make_vars_numeric(regex = "SCL90") |>
 

@@ -1,18 +1,16 @@
 ---
 title: "Ordinal SuStaIn"
-output: 
-  rmarkdown::html_vignette:
+format: 
+  html: 
     toc: true
-vignette: >
-  %\VignetteIndexEntry{SuStaIn-ModelFitting}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+    cap-location: top
+    number-sections: true
+    code-fold: true
 ---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  echo = FALSE,
   comment = "#>",
   fig.width = 7, 
   fig.height = 7,
@@ -57,11 +55,18 @@ mri_vars = c(
   "Corpus Callosum-Thickness"
 )
 
+other_biomarkers = c(
+  "Ataxia",
+  "Ataxia: severity*"
+  # grep("Parkinson", value = TRUE, names(visit1))
+)
+
 SuStaInLabels = 
   biomarker_varnames =
   c(
-    names(tremors),
-    mri_vars
+    other_biomarkers,
+    names(tremors)
+    # mri_vars
   )
 
 df = 
@@ -79,7 +84,9 @@ nlevs = sapply(
 
 df = df |>
   mutate(
-    across(all_of(biomarker_varnames), ~ as.numeric(.x) - 1)
+    across(
+      all_of(biomarker_varnames), 
+      ~ as.numeric(.x) - 1)
   )
 
 ```
@@ -107,7 +114,7 @@ control_data =
 
 patient_data = 
   df |> 
-  na.omit() |> 
+  # na.omit() |>
   filter(`FX*` == "CGG >= 55")
 
 prob_correct = 
@@ -164,13 +171,13 @@ for (i in biomarker_varnames)
 
 # Run SuStaIn model
 
-```{r "set run parameters"}
-
+```{r}
+#| label: "set run parameters"
 N_startpoints = 10L
 N_S_max = 3L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
-output_folder = "output.more" |> fs::dir_create()
+output_folder = "output.long2" |> fs::dir_create()
 print(output_folder)
 ```
 
@@ -212,40 +219,82 @@ prob_ml_stage, prob_subtype_stage,
 samples_likelihood] = sustain_input.run_sustain_algorithm(plot=True)
 ```
 
-```{python "show plot", fig.width = 8, fig.height = 9}
-plt.show()
-```
-
-# calling plot function explicitly
-
-```{python,  fig.width = 8, fig.height = 9}
-sustain_input._plot_sustain_model(samples_sequence = samples_sequence,
-samples_f = samples_f,
-n_samples = r.patient_data.shape[0],
-biomarker_labels = r.SuStaInLabels)
-_ = plt.suptitle('SuStaIn output')
-
-```
-
 # graph confusion matrices in R
 
+## one group
+
 ```{r}
-figs = plot_positional_var(
-    samples_sequence = py$samples_sequence,
-    samples_f = py$samples_f,
-    n_samples = nrow(patient_data),
-    score_vals = score_vals,
-    biomarker_labels = SuStaInLabels)
+#| label: "confusion matrices - 1 group"
+#| layout-ncol: 1
+#| fig-height: 3
+#| fig-cap: "Confusion Matrices: 1 group"
+
+figs = extract_figs_from_pickle(
+  n_s = 1,
+  dataset_name = dataset_name,
+  output_folder = output_folder,
+  score_vals = score_vals,
+  SuStaInLabels = SuStaInLabels)
 print(figs[[1]])
-print(figs[[2]])
+
+```
+
+## two groups
+
+```{r}
+#| label: "confusion matrices - 2 groups"
+#| layout-ncol: 1
+#| fig-height: 3
+#| fig-cap: "Confusion Matrices: 2 subgroups"
+#| fig-subcap: 
+#|   - "Group 1"
+#|   - "Group 2"
+
+figs = extract_figs_from_pickle(
+  n_s = 2,
+  dataset_name = dataset_name,
+  output_folder = output_folder,
+  score_vals = score_vals,
+  SuStaInLabels = SuStaInLabels)
+print(figs[[1]])
+print(suppressMessages(figs[[2]]))
+
+```
+
+## three groups
+
+```{r}
+figs = extract_figs_from_pickle(
+  n_s = 3,
+  dataset_name = dataset_name,
+  output_folder = output_folder,
+  score_vals = score_vals,
+  SuStaInLabels = SuStaInLabels)
+```
+
+```{r}
+#| label: "confusion matrices"
+#| layout-ncol: 1
+#| fig-height: 3
+#| fig-cap: "Confusion Matrices: 3 subgroups"
+#| fig-subcap: 
+#|   - "Group 1"
+#|   - "Group 2"
+#|   - "Group 3"
+library(ggplot2)
+
+print(figs[[1]])
+print(suppressMessages(figs[[2]]))
+ # + scale_y_discrete(breaks = NULL, limits = rev)
 print(figs[[3]])
 ```
 
-
 # graph likelihoods in R
 
-```{r, fig.width = 8, fig.height = 9}
+```{r}
+#| fig-height: 4
 py$samples_likelihood |>
-  graph_likelihoods_v2(alpha = 0.5)
+  graph_likelihoods_v2(alpha = 0.5) |> 
+  suppressWarnings()
 
 ```
