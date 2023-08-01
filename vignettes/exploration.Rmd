@@ -117,13 +117,33 @@ table1(
   data = visit1)
 ```
 
-`r cgg.n |> filter(first_missing) |> pull(any_nonmissing) |> sum()` of these participants have later records with non-missing CGG values.
+`r cgg.n |> filter(first_missing) |> pull(any_nonmissing) |> sum()` of these participants have later records with non-missing CGG values:
+
+```{r}
+
+gp34 |> 
+  semi_join(
+    cgg.n |> 
+      filter(
+        first_missing,
+        any_nonmissing), 
+    by = "FXS ID") |> 
+  select(`FXS ID`, `Visit Date`, `Event Name` , CGG) |> 
+  arrange(`FXS ID`, `Visit Date`) |> 
+  split(~`FXS ID`) |> 
+  pander()
+```
+
+Some participants have multiple CGG values:
 
 ```{r, "multiple CGG values", include = TRUE, results = "asis"}
 
 gp34 |> 
-  semi_join(cgg.n |> filter(n_vals > 1), by = "FXS ID") |> 
-  filter(!is.na(CGG)) |> 
+  semi_join(
+    cgg.n |> 
+      filter(
+        n_vals > 1), 
+    by = "FXS ID") |> 
   select(`FXS ID`, `Visit Date`, `Event Name` , CGG) |> 
   arrange(`FXS ID`, `Visit Date`) |> 
   split(~`FXS ID`) |> 
@@ -131,8 +151,10 @@ gp34 |>
 
 ```
 
-```{r}
+We decided to use the most recent CGG value.
 
+```{r, include = FALSE}
+# check fxtas stage where CGG is missing
 gp34 |> 
   filter(is.na(`CGG`)) |> 
   select(`FXS ID`, `Event Name`, CGG, `FXTAS Stage (0-5)`) |> 

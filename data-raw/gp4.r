@@ -7,7 +7,7 @@ library(dplyr)
 library(vroom)
 #Read Data
 dataset=vroom::vroom(
-  'inst/extdata/CTSC3704GP4GenotypeP-FXTASEventSequence10_DATA_2023-05-23_1002.csv',
+  'inst/extdata/CTSC3704GP4GenotypeP-FXTASEventSequence10_DATA_2023-07-31_1958.csv',
   col_types = cols(
     dem_date = col_date(),
     new_mds_med_can_other = col_integer(),
@@ -135,12 +135,13 @@ dataset=vroom::vroom(
 
 # remove old cantab variables
 dataset <- dataset |>
-  dplyr::select(-c(cantab_ots_probsolvedfirstchoice_,
-                   cantab_pal_toterrors_adjusted,
-                   cantab_sst_medianrt_gotrials,
-                   cantab_rvp_a,
-                   cantab_rti_5choice_movement,
-                   cantab_swm_between_errors))
+  dplyr::select(
+    -c(cantab_ots_probsolvedfirstchoice_,
+       cantab_pal_toterrors_adjusted,
+       cantab_sst_medianrt_gotrials,
+       cantab_rvp_a,
+       cantab_rti_5choice_movement,
+       cantab_swm_between_errors))
 
 dataset$redcap_event_name = factor(dataset$redcap_event_name,levels=c("gp4__visit_1_arm_1","gp4__visit_2_arm_1","gp4__visit_3_arm_1","gp4__visit_4_arm_1","gp4__single_visit_arm_1","gp4__participant_s_arm_1"))
 
