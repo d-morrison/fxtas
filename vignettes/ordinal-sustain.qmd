@@ -64,9 +64,9 @@ other_biomarkers = c(
 SuStaInLabels = 
   biomarker_varnames =
   c(
+    names(tremors),
     other_biomarkers,
-    names(tremors)
-    # mri_vars
+    mri_vars
   )
 
 df = 
@@ -177,7 +177,7 @@ N_startpoints = 10L
 N_S_max = 3L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
-output_folder = "output.long2" |> fs::dir_create()
+output_folder = "output.long3" |> fs::dir_create()
 print(output_folder)
 ```
 

@@ -44,23 +44,26 @@ compute_heatmap = function(
     # according to the certainty of red (representing z-score 1)
     alter_level = colour_mat[j,] == 0
     # Extract the uncertainties for this score
-    confus_matrix_score = confus_matrix[(stage_score == z), ]
+    confus_matrix_score = confus_matrix[(stage_score == z), ,drop = FALSE]
     # Subtract the certainty for this colour
     subtractand1 =
       confus_matrix_score |>
       array(dim = c(dim(confus_matrix_score), sum(alter_level)))
+
+    old_vals = confus_matrix_c[
+      stage_biomarker_index[stage_score==z],
+      ,
+      alter_level,
+      drop = FALSE
+    ]
+    new_vals = old_vals - subtractand1
 
     confus_matrix_c[
       stage_biomarker_index[stage_score==z],
       ,
       alter_level
 
-    ] = confus_matrix_c[
-      stage_biomarker_index[stage_score==z],
-      ,
-      alter_level,
-      drop = FALSE
-    ] - subtractand1
+    ] = new_vals
 
     # # Subtract the certainty for this colour
     # confus_matrix_c[, , alter_level] =

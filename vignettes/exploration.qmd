@@ -1,14 +1,13 @@
 ---
 title: "Questions about FXTAS Sequence Data"
-output:
-  html_document:
-    df_print: paged
+format:
+  html:
     toc: true
-    toc_depth: 4
-    toc_float: true
-    number_sections: true
-  word_document:
-    number_sections: yes
+    toc-depth: 4
+    toc-float: true
+    number-sections: true
+  docx:
+    number-sections: true
 ---
 
 ```{r, include = FALSE}
@@ -26,8 +25,8 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-# library(fxtas)
-devtools::load_all()
+library(fxtas)
+# devtools::load_all()
 library(pander)
 library(table1)
 library(dplyr)
@@ -153,10 +152,10 @@ gp34 |>
 
 We decided to use the most recent CGG value.
 
-```{r, include = FALSE}
+```{r, include = TRUE}
 # check fxtas stage where CGG is missing
 gp34 |> 
-  filter(is.na(`CGG`)) |> 
+  filter(is.na(`FXTAS Stage (0-5)`)) |> 
   select(`FXS ID`, `Event Name`, CGG, `FXTAS Stage (0-5)`) |> 
   pander()
 
