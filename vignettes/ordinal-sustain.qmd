@@ -78,9 +78,11 @@ df =
   filter(
     !is.na(`FX*`))
 
-nlevs = sapply(
-  X = df[,biomarker_varnames], 
-  F = function(x) length(levels(x)))
+biomarker_levels = 
+  lapply(df[,biomarker_varnames], F = levels)
+
+nlevs = 
+  sapply(biomarker_levels, length)
 
 df = df |>
   mutate(
@@ -177,7 +179,7 @@ N_startpoints = 10L
 N_S_max = 3L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
-output_folder = "output.long3" |> fs::dir_create()
+output_folder = "output/output1" |> fs::dir_create()
 print(output_folder)
 ```
 
@@ -216,7 +218,7 @@ False,
 [samples_sequence, samples_f, 
 ml_subtype, prob_ml_subtype, ml_stage, 
 prob_ml_stage, prob_subtype_stage, 
-samples_likelihood] = sustain_input.run_sustain_algorithm(plot=True)
+samples_likelihood] = sustain_input.run_sustain_algorithm(plot=False)
 ```
 
 # graph confusion matrices in R
@@ -234,7 +236,8 @@ figs = extract_figs_from_pickle(
   dataset_name = dataset_name,
   output_folder = output_folder,
   score_vals = score_vals,
-  SuStaInLabels = SuStaInLabels)
+  SuStaInLabels = SuStaInLabels,
+  biomarker_levels = biomarker_levels)
 print(figs[[1]])
 
 ```

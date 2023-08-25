@@ -20,14 +20,14 @@ extract_figs_from_pickle = function(
     picklename = paste0(dataset_name, "_subtype", n_s - 1, ".pickle"),
     results =
       fs::path(output_folder, "pickle_files", picklename) |>
-      py_load_object())
+      py_load_object(),
+    ...)
 {
 
   figs = plot_positional_var(
-    samples_sequence = results$samples_sequence,
-    samples_f = results$samples_f,
-    n_samples = results$ml_subtype |> nrow(),
+    results = results,
     score_vals = score_vals,
-    biomarker_labels = SuStaInLabels)
+    biomarker_labels = SuStaInLabels,
+    ...)
 
 }

@@ -16,13 +16,7 @@ compute_heatmap = function(
   # And normalize for number of samples/sequences
   # confus_matrix = (samples_sequence==np.arange(N_events)[:, None, None]).sum(1) / samples_sequence.shape[0]
 
-  confus_matrix = samples_sequence |>
-    apply(F = order, M = 1) |>
-    apply(F = function(x)
-      factor(x, levels = 1:N_events) |>
-        table() |>
-        proportions(), M = 1) |>
-    t()
+  confus_matrix = samples_sequence |> compute_confus_matrix()
 
   # Define the confusion matrix to insert the colours
   # Use 1s to start with all white

@@ -28,11 +28,13 @@
 #' @export
 #'
 plot_positional_var = function(
-    samples_sequence,
-    samples_f,
-    n_samples,
+    results,
+    samples_sequence = results$samples_sequence,
+    samples_f = results$samples_f,
+    n_samples = results$ml_subtype |> nrow(),
     score_vals,
     biomarker_labels=NULL,
+    biomarker_levels = NULL,
     ml_f_EM=NULL,
     cval=FALSE,
     subtype_order=NULL,
@@ -104,6 +106,7 @@ plot_positional_var = function(
   {
     biomarker_order = 1:N_bio
   }
+
   # If no labels given, set dummy defaults
   if (is.null(biomarker_labels))
   {
@@ -119,34 +122,15 @@ plot_positional_var = function(
     stopifnot(length(subtype_titles) == N_S)
   }
   # Z-score colour definition
-  if(cmap == "original")
-  {
-    # Hard-coded colours: hooray!
-    colour_mat = rbind(
-      c(1, 0, 0),
-      c(1, 0, 1),
-      c(0, 0, 1),
-      c(0.5, 0, 1),
-      c(0, 1, 1),
-      c(0, 1, 0.5)) |>
-      head(N_z)
-
-    # We only have up to 5 default colours, so double-check
-    if (nrow(colour_mat) < N_z)
-    {
-      stop(paste("Colours are only defined for", nrow(colour_mat), " z-scores!"))
-    }
-  } else
-  {
-    stop()
-  }
+  colour_mat = get_colour_mat(cmap,N_z)
 
   # Check biomarker label colours
   # If custom biomarker text colours are given
   if(!is.null(biomarker_colours))
   {
     biomarker_colours = check_biomarker_colours(
-      biomarker_colours, biomarker_labels
+      biomarker_colours,
+      biomarker_labels
     )
     # Default case of all-black colours
     # Unnecessary, but skips a check later
@@ -164,6 +148,9 @@ plot_positional_var = function(
     confus_matrix_c =
       samples_sequence[subtype_order[i],,] |>
       t() |>
+      structure(
+        biomarker_levels = biomarker_levels
+      ) |>
       compute_heatmap(
         biomarker_labels = biomarker_labels,
         colour_mat = colour_mat,
@@ -171,34 +158,13 @@ plot_positional_var = function(
         stage_score = stage_score
       )
 
-    if (!is.null(subtype_titles))
-    {
-      title_i = subtype_titles[i]
-    } else
-    {
-      # Add axis title
-      if (!cval)
-      {
-        temp_mean_f = rowMeans(samples_f)
-
-        # Shuffle vals according to subtype_order
-        # This defaults to previous method if custom order not given
-        vals = temp_mean_f[subtype_order]
-
-        if (!is.infinite(n_samples))
-        {
-          title_i = glue::glue("Subtype {i} (f={vals[i] |> round(2)}, n={round(vals[i] * n_samples)})")
-        } else
-        {
-          title_i = glue::glue("Subtype {i} (f={vals[i] |> round(2)})")
-        }
-
-      } else
-      {
-        title_i = glue::glue("Subtype {i} cross-validated")
-      }
-
-    }
+    title_i = get_title_i(
+      subtype_titles,
+      samples_f,
+      subtype_order,
+      n_samples,
+      cval
+    )
 
     heatmap_table =
       confus_matrix_c |>
@@ -212,25 +178,10 @@ plot_positional_var = function(
     # Plot the colourized matrix
 
     plot1 =
-      ggplot(
-        heatmap_table,
-        aes(
-          x = SuStaIn.Stage,
-          y = biomarker,
-          fill =
-            rgb(
-              r = R,              #Specify Bands
-              g = G,
-              b = B,
-              maxColorValue = 1),
-        )) +
-      scale_fill_identity() +
-      scale_y_discrete(limits = rev) +
-      xlab('SuStaIn Stage') +
-      ylab(NULL) +
-      ggtitle(title_i) +
-      geom_raster(show.legend = FALSE) +
-      theme_bw()
+      heatmap_table |>
+      heatmap_table_to_plot() +
+      ggtitle(title_i)
+
 
     figs[[i]] = plot1
     #https://medium.com/@tobias.stalder.geo/plot-rgb-satellite-imagery-in-true-color-with-ggplot2-in-r-10bdb0e4dd1f
