@@ -15,3 +15,10 @@ get_biomarker_events_table = function(biomarker_levels)
     arrange(level, biomarker)
 
 }
+
+get_biomarker_event_names = function(
+    biomarker_levels,
+    biomarker_events_table = get_biomarker_events_table(biomarker_levels))
+{
+  biomarker_events_table |>  pull(biomarker_level)
+}

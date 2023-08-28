@@ -11,7 +11,8 @@ extract_figs_from_pickle(
   score_vals,
   SuStaInLabels,
   picklename = paste0(dataset_name, "_subtype", n_s - 1, ".pickle"),
-  results = py_load_object(fs::path(output_folder, "pickle_files", picklename))
+  results = py_load_object(fs::path(output_folder, "pickle_files", picklename)),
+  ...
 )
 }
 \arguments{

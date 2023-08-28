@@ -236,7 +236,6 @@ figs = extract_figs_from_pickle(
   dataset_name = dataset_name,
   output_folder = output_folder,
   score_vals = score_vals,
-  SuStaInLabels = SuStaInLabels,
   biomarker_levels = biomarker_levels)
 print(figs[[1]])
 
@@ -258,7 +257,7 @@ figs = extract_figs_from_pickle(
   dataset_name = dataset_name,
   output_folder = output_folder,
   score_vals = score_vals,
-  SuStaInLabels = SuStaInLabels)
+  biomarker_levels = biomarker_levels)
 print(figs[[1]])
 print(suppressMessages(figs[[2]]))
 
@@ -272,7 +271,7 @@ figs = extract_figs_from_pickle(
   dataset_name = dataset_name,
   output_folder = output_folder,
   score_vals = score_vals,
-  SuStaInLabels = SuStaInLabels)
+  biomarker_levels = biomarker_levels)
 ```
 
 ```{r}

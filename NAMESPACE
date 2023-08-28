@@ -2,6 +2,7 @@
 
 export(age_range_medians)
 export(clean_numeric)
+export(compute_confus_matrix)
 export(compute_prob_correct)
 export(compute_prob_correct2)
 export(compute_prob_dist)

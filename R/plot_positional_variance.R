@@ -23,18 +23,24 @@
 #' @param separate_subtypes
 #' @param save_path
 #' @param save_kwargs
+#' @param results
+#' @param biomarker_levels
 #'
 #' @return
 #' @export
 #'
 plot_positional_var = function(
     results,
-    samples_sequence = results$samples_sequence,
+    samples_sequence =
+      format_samples_sequence(
+        results = results,
+        biomarker_levels = biomarker_levels),
     samples_f = results$samples_f,
     n_samples = results$ml_subtype |> nrow(),
     score_vals,
-    biomarker_labels=NULL,
+    biomarker_labels = names(biomarker_levels),
     biomarker_levels = NULL,
+    biomarker_event_names = get_all_events(biomarker_levels),
     ml_f_EM=NULL,
     cval=FALSE,
     subtype_order=NULL,

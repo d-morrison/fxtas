@@ -5,11 +5,13 @@
 \title{Title}
 \usage{
 plot_positional_var(
-  samples_sequence,
-  samples_f,
-  n_samples,
+  results,
+  samples_sequence = results$samples_sequence,
+  samples_f = results$samples_f,
+  n_samples = nrow(results$ml_subtype),
   score_vals,
   biomarker_labels = NULL,
+  biomarker_levels = NULL,
   ml_f_EM = NULL,
   cval = FALSE,
   subtype_order = NULL,
@@ -31,7 +33,7 @@ plot_positional_var(
 )
 }
 \arguments{
-\item{save_kwargs}{}
+\item{biomarker_levels}{}
 }
 \description{
 Title
