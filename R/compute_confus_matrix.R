@@ -1,23 +1,43 @@
+#' Title
+#'
+#' @param samples_sequence
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' samples_sequence = matrix(
+#`    nrow = 2,
+#`    byrow = TRUE,
+#`    dimnames = list(
+#`      iteration = NULL,
+#`      position = paste("Event #", 1:10)),
+#`    data = paste(
+#`      "biomarker",
+#`      c(0,2,4,6,8,9,7,5,3,1,
+#`        0,1,2,3,4,5,6,7,8,9)))
+#' compute_confus_matrix(samples_sequence)
 compute_confus_matrix = function(
-    samples_sequence,
-    N_events = ncol(samples_sequence),
-    biomarker_levels =
-      samples_sequence |>
-      attr("biomarker_levels"),
-    event_names =
-      biomarker_levels |>
-      get_biomarker_events_table() |>
-      pull(biomarker_level))
+    samples_sequence)
 {
-  samples_sequence |>
-    apply(F = order, M = 1) |>
-    apply(F = function(x)
-      factor(x, levels = 1:N_events) |>
-        table() |>
-        proportions(), M = 1) |>
-    t() |>
-    set_rownames(event_names) |>
-    set_colnames(
-      paste("Event #", 1:N_events)
-    )
+  output =
+    samples_sequence |>
+    as_tibble() |>
+    pivot_longer(
+      names_to = "position",
+      values_to = "event name",
+      col = everything()) |>
+    count(`event name`, position) |>
+    mutate(
+      proportion = n / nrow(samples_sequence)) |>
+  pivot_wider(
+    id_cols = "event name",
+    values_from = proportion,
+    names_from = position,
+    values_fill = 0) |>
+    column_to_rownames("event name") |>
+    select(colnames(samples_sequence)) |>
+    as.matrix()
+  names(dimnames(output)) = c("event name", "position")
+  return(output)
 }

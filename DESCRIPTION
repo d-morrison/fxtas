@@ -17,6 +17,7 @@ Imports:
     readxl,
     reticulate,
     shiny (>= 1.7.2),
+    tibble,
     tidyr
 Suggests: 
     formulaic,
