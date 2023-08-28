@@ -7,21 +7,15 @@ format_samples_sequence = function(
     biomarker_levels =
       results$biomarker_levels)
 {
-
-  new_dimnames =
+  samples_sequence[] = biomarker_event_names[samples_sequence + 1]
+  dimnames(samples_sequence) =
+    # dim(samples_sequence) |>
+    # lapply(seq_len) |>
+    # set_names(c("subgroup", "position", "iteration"))
     list(
-      subgroup = dim(samples_sequence)[1] |> seq_len(),
-      position = dim(samples_sequence)[2] |> seq_len(),
-      iteration = dim(samples_sequence)[3] |> seq_len())
-
-  samples_sequence2 =
-    # +1 b/c python is 0-indexed:
-    biomarker_event_names[samples_sequence + 1] |>
-    array(
-      dimnames = new_dimnames,
-      dim = new_dimnames |> sapply(length))
-
-
-
+    "subgroup" = NULL,
+    "position" = seq_len(dim(samples_sequence)[2]) |> as.character(),
+    "iteration" = NULL)
+  return(samples_sequence)
 
 }

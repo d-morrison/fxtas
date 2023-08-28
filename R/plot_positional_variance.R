@@ -34,13 +34,13 @@ plot_positional_var = function(
     samples_sequence =
       format_samples_sequence(
         results = results,
-        biomarker_levels = biomarker_levels),
+        biomarker_event_names = biomarker_event_names),
     samples_f = results$samples_f,
     n_samples = results$ml_subtype |> nrow(),
     score_vals,
     biomarker_labels = names(biomarker_levels),
     biomarker_levels = NULL,
-    biomarker_event_names = get_all_events(biomarker_levels),
+    biomarker_event_names = get_biomarker_event_names(biomarker_levels),
     ml_f_EM=NULL,
     cval=FALSE,
     subtype_order=NULL,
@@ -60,8 +60,9 @@ plot_positional_var = function(
     save_path=NULL,
     save_kwargs=NULL)
 {
+
   # Get the number of subtypes
-  N_S = samples_sequence |> nrow()
+  N_S = dim(samples_sequence)[1]
   # Get the number of features/biomarkers
   N_bio = score_vals |> nrow()
   # Check that the number of labels given match
@@ -151,12 +152,17 @@ plot_positional_var = function(
   {
     # Create the figure and axis for this subtype loop
 
+    PFs =
+      samples_sequence[subtype_order[i],,] |>
+      t() |>
+      compute_position_frequencies()
+
+
+
+
     confus_matrix_c =
       samples_sequence[subtype_order[i],,] |>
       t() |>
-      structure(
-        biomarker_levels = biomarker_levels
-      ) |>
       compute_heatmap(
         biomarker_labels = biomarker_labels,
         colour_mat = colour_mat,
@@ -175,6 +181,7 @@ plot_positional_var = function(
     heatmap_table =
       confus_matrix_c |>
       as.data.frame.table() |>
+      as_tibble() |>
       pivot_wider(
         id_cols = c("biomarker","SuStaIn.Stage"),
         names_from = "color",

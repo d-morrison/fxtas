@@ -6,12 +6,14 @@
 \usage{
 plot_positional_var(
   results,
-  samples_sequence = results$samples_sequence,
+  samples_sequence = format_samples_sequence(results = results, biomarker_event_names =
+    biomarker_event_names),
   samples_f = results$samples_f,
   n_samples = nrow(results$ml_subtype),
   score_vals,
-  biomarker_labels = NULL,
+  biomarker_labels = names(biomarker_levels),
   biomarker_levels = NULL,
+  biomarker_event_names = get_biomarker_event_names(biomarker_levels),
   ml_f_EM = NULL,
   cval = FALSE,
   subtype_order = NULL,

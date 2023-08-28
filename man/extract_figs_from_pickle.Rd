@@ -8,15 +8,13 @@ extract_figs_from_pickle(
   n_s = 1,
   dataset_name = "sample_data",
   output_folder = "output",
-  score_vals,
-  SuStaInLabels,
   picklename = paste0(dataset_name, "_subtype", n_s - 1, ".pickle"),
   results = py_load_object(fs::path(output_folder, "pickle_files", picklename)),
   ...
 )
 }
 \arguments{
-\item{results}{}
+\item{...}{}
 }
 \description{
 Title

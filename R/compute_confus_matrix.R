@@ -22,6 +22,24 @@ compute_confus_matrix = function(
 {
   output =
     samples_sequence |>
+    compute_position_frequencies() |>
+    pivot_wider(
+      id_cols = "event name",
+      values_from = proportion,
+      names_from = position,
+      values_fill = 0) |>
+    column_to_rownames("event name") |>
+    select(colnames(samples_sequence)) |>
+    as.matrix()
+
+  names(dimnames(output)) = c("event name", "position")
+
+  return(output)
+}
+
+compute_position_frequencies = function(samples_sequence)
+{
+  samples_sequence |>
     as_tibble() |>
     pivot_longer(
       names_to = "position",
@@ -30,14 +48,5 @@ compute_confus_matrix = function(
     count(`event name`, position) |>
     mutate(
       proportion = n / nrow(samples_sequence)) |>
-  pivot_wider(
-    id_cols = "event name",
-    values_from = proportion,
-    names_from = position,
-    values_fill = 0) |>
-    column_to_rownames("event name") |>
-    select(colnames(samples_sequence)) |>
-    as.matrix()
-  names(dimnames(output)) = c("event name", "position")
-  return(output)
+    select(-n)
 }

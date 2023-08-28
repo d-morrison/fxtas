@@ -3,10 +3,9 @@
 #' @param n_s
 #' @param dataset_name
 #' @param output_folder
-#' @param score_vals
-#' @param SuStaInLabels
 #' @param picklename
 #' @param results
+#' @param ...
 #'
 #' @return
 #' @export
