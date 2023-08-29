@@ -8,4 +8,7 @@ output
 output.FXTAS
 output*
 vignettes/output*
+fxtas.Rcheck/
+fxtas*.tar.gz
+fxtas*.tgz
 .Rhistory
