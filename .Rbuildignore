@@ -9,3 +9,6 @@ $run_dev.*
 ^CODE_OF_CONDUCT\.md$
 ^misc$
 ^output*
+^fxtas\.Rcheck$
+^fxtas.*\.tar\.gz$
+^fxtas.*\.tgz$
