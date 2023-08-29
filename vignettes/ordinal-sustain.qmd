@@ -19,13 +19,16 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(fxtas)
+# library(fxtas)
+load_all()
 library(tidyverse)
+library(conflicted)
+conflicts_prefer(dplyr::filter)
 library(reticulate)
 ```
 
 ```{r}
-reticulate::use_condaenv(condaenv = "fxtas")
+# reticulate::use_condaenv(condaenv = "fxtas", conda = "./miniconda/bin/conda")
 ```
 
 
