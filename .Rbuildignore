@@ -8,3 +8,6 @@ $run_dev.*
 ^README\.Rmd$
 ^CODE_OF_CONDUCT\.md$
 ^misc$
+^fxtas\.Rcheck$
+^fxtas.*\.tar\.gz$
+^fxtas.*\.tgz$
