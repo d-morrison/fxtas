@@ -20,6 +20,7 @@ plot.PF = function(PFs)
     theme(
       legend.position = "bottom"
     ) +
-    labs(fill = "Pr(stage)")
+    labs(fill = "Pr(stage)") +
+    theme(axis.text.y = element_text(hjust=0))
 }
 

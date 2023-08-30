@@ -237,8 +237,9 @@ figs = extract_figs_from_pickle(
   dataset_name = dataset_name,
   output_folder = output_folder,
   score_vals = score_vals,
+  biomarker_plot_order = NULL,
   biomarker_levels = biomarker_levels)
-print(figs[[1]])
+print(figs[[1]] |> attr("alt_plot"))
 
 ```
 

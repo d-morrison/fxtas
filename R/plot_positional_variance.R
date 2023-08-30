@@ -42,6 +42,7 @@ plot_positional_var = function(
     biomarker_levels = NULL,
     biomarker_event_names =
       get_biomarker_event_names(biomarker_levels),
+    biomarker_plot_order = biomarker_event_names |> sort(),
     ml_f_EM=NULL,
     cval=FALSE,
     subtype_order=NULL,
@@ -201,7 +202,12 @@ plot_positional_var = function(
       t() |>
       compute_position_frequencies()
 
-    PF.plot = PFs |> plot.PF()
+    PF.plot =
+      PFs |>
+      arrange_position_frequencies(
+        biomarker_order = biomarker_plot_order
+      ) |>
+      plot.PF()
 
 
     figs[[i]] = structure(

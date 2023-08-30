@@ -23,6 +23,7 @@ compute_confus_matrix = function(
   output =
     samples_sequence |>
     compute_position_frequencies() |>
+    arrange_position_frequencies() |>
     pivot_wider(
       id_cols = "event name",
       values_from = proportion,
@@ -52,18 +53,35 @@ compute_position_frequencies = function(samples_sequence)
       proportion = n / nrow(samples_sequence)) |>
     select(-n)
 
-   order =
-     results |>
-     arrange(`event name`, position) |>
-     slice_head(by = `event name`) |>
-     arrange(position, desc(proportion), `event name`)
+  return(results)
+}
 
-   results =
-     results |>
-     mutate(
-       `event name` =
-         factor(`event name`, levels = order$`event name`)) |>
-     arrange(`event name`)
+order_biomarkers = function(position_frequencies)
+{
 
-   return(results)
+  order =
+    position_frequencies |>
+    arrange(`event name`, position) |>
+    slice_head(by = `event name`) |>
+    arrange(position, desc(proportion), `event name`)
+
+}
+
+arrange_position_frequencies = function(
+    position_frequencies,
+    biomarker_order = NULL)
+{
+  if(biomarker_order |> is.null())
+  {
+    biomarker_order =
+      position_frequencies |>
+      order_biomarkers() |>
+      pull(`event name`)
+  }
+
+  position_frequencies |>
+    mutate(
+      `event name` =
+        factor(`event name`, levels = biomarker_order)) |>
+    arrange(`event name`)
 }
