@@ -23,14 +23,15 @@ compute_prob_correct = function(
   #            mean(dataset[[x]] == DataScores[[x]][1], na.rm = TRUE))
   #        })
 
-  prob_correct = (dataset == 0) |> colMeans() # old version
+  # prob_correct = (dataset == 0) |> colMeans() # old version
   dataset |>
     summarize(
       across(
         .cols = all_of(biomarkers),
         .fn = ~ min(
           max_prob,
-          mean(.x == DataScores[1], na.rm = TRUE)))
+          mean(.x == DataScores[1], na.rm = TRUE)) |>
+          replace_na(max_prob))
     ) |>
     unlist()
 }

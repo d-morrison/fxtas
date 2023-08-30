@@ -1,3 +1,10 @@
+#' Title
+#'
+#' @param biomarker_levels
+#'
+#' @return
+#' @export
+#'
 get_biomarker_events_table = function(biomarker_levels)
 {
   biomarker_levels |>
@@ -9,7 +16,7 @@ get_biomarker_events_table = function(biomarker_levels)
     relocate(biomarker, .before = everything()) |>
     mutate(
       biomarker = factor(biomarker, levels = names(biomarker_levels)),
-      # level = level |> str_replace("Yes", "Present"),
+      # level = level |> str_replace("Yes", "Present"), # this might cause issues
       biomarker_level =
         if_else(
           level == "Yes",

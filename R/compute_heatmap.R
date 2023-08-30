@@ -17,6 +17,10 @@ compute_heatmap = function(
   # And normalize for number of samples/sequences
   # confus_matrix = (samples_sequence==np.arange(N_events)[:, None, None]).sum(1) / samples_sequence.shape[0]
 
+  biomarker_event_names =
+    intersect(biomarker_event_names,
+         colnames(compute_confus_matrix(samples_sequence)))
+
   confus_matrix =
     compute_confus_matrix(samples_sequence)[biomarker_event_names,]
 

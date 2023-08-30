@@ -35,6 +35,8 @@ relabel_factor_missing_codes = function(x)
       "None" = "Missing/Refused (999)"
 
     ) |>
+    fct_na_level_to_value() |>
+    droplevels() |>
     suppressWarnings()
 
 }

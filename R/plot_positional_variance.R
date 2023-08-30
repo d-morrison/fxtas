@@ -157,17 +157,17 @@ plot_positional_var = function(
   {
     # Create the figure and axis for this subtype loop
 
-    confus_matrix_c =
-      samples_sequence[subtype_order[i],,] |>
-      t() |>
-      compute_heatmap(
-        biomarker_labels = biomarker_labels,
-        colour_mat = colour_mat,
-        stage_biomarker_index = stage_biomarker_index,
-        stage_score = stage_score,
-        biomarker_event_names =
-          biomarker_event_names
-      )
+    # confus_matrix_c =
+    #   samples_sequence[subtype_order[i],,] |>
+    #   t() |>
+    #   compute_heatmap(
+    #     biomarker_labels = biomarker_labels,
+    #     colour_mat = colour_mat,
+    #     stage_biomarker_index = stage_biomarker_index,
+    #     stage_score = stage_score,
+    #     biomarker_event_names =
+    #       biomarker_event_names
+    #   )
 
     if (!is.null(subtype_titles))
     {
@@ -183,22 +183,22 @@ plot_positional_var = function(
       )
     }
 
-    heatmap_table =
-      confus_matrix_c |>
-      as.data.frame.table() |>
-      as_tibble() |>
-      pivot_wider(
-        id_cols = c("biomarker","SuStaIn.Stage"),
-        names_from = "color",
-        values_from = "Freq") |>
-      arrange(biomarker, SuStaIn.Stage)
-
-    # Plot the colourized matrix
-
-    plot1 =
-      heatmap_table |>
-      heatmap_table_to_plot() +
-      ggtitle(title_i)
+    # heatmap_table =
+    #   confus_matrix_c |>
+    #   as.data.frame.table() |>
+    #   as_tibble() |>
+    #   pivot_wider(
+    #     id_cols = c("biomarker","SuStaIn.Stage"),
+    #     names_from = "color",
+    #     values_from = "Freq") |>
+    #   arrange(biomarker, SuStaIn.Stage)
+    #
+    # # Plot the colourized matrix
+    #
+    # plot1 =
+    #   heatmap_table |>
+    #   heatmap_table_to_plot() +
+    #   ggtitle(title_i)
 
     PFs =
       samples_sequence[subtype_order[i],,] |>
@@ -225,12 +225,13 @@ plot_positional_var = function(
 
     PF.plot =
       PFs  |>
-      plot.PF()
+      plot.PF() +
+      ggtitle(title_i)
 
 
     figs[[i]] = structure(
       PF.plot,
-      alt_plot = plot1,
+      # alt_plot = plot1,
       title = title_i)
     #https://medium.com/@tobias.stalder.geo/plot-rgb-satellite-imagery-in-true-color-with-ggplot2-in-r-10bdb0e4dd1f
 
