@@ -80,7 +80,10 @@ biomarker_group_list =
 biomarker_group_colors = 
   tibble(
     biomarker_group = names(biomarker_group_list),
-    group_color = rainbow(length(biomarker_group_list))
+    # group_color = rainbow()
+    group_color = 
+      length(biomarker_group_list) |> 
+      RColorBrewer::brewer.pal(n = _, name = "Dark2")
   )
    
 biomarker_groups = 

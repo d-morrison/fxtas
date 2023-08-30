@@ -15,11 +15,13 @@ Imports:
     glue,
     golem (>= 0.3.4),
     magrittr,
+    RColorBrewer,
     readxl,
     reticulate,
     shiny (>= 1.7.2),
     tibble,
-    tidyr
+    tidyr,
+    viridis
 Suggests: 
     formulaic,
     knitr,
