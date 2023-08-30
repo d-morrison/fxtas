@@ -1,14 +1,13 @@
 ---
 title: "Questions about FXTAS Sequence Data"
-output:
-  html_document:
-    df_print: paged
+format:
+  html:
     toc: true
-    toc_depth: 4
-    toc_float: true
-    number_sections: true
-  word_document:
-    number_sections: yes
+    toc-depth: 4
+    toc-float: true
+    number-sections: true
+  docx:
+    number-sections: true
 ---
 
 ```{r, include = FALSE}
@@ -26,15 +25,15 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-# library(fxtas)
-devtools::load_all()
+library(fxtas)
+# devtools::load_all()
 library(pander)
 library(table1)
 library(dplyr)
 library(magrittr)
 NA.label1 = "Missing"
 column_var = "Recruited in study phase"
-# column_var = "FX**"
+column_var = "FX**"
 # load_all()
 ```
 
@@ -117,13 +116,33 @@ table1(
   data = visit1)
 ```
 
-`r cgg.n |> filter(first_missing) |> pull(any_nonmissing) |> sum()` of these participants have later records with non-missing CGG values.
+`r cgg.n |> filter(first_missing) |> pull(any_nonmissing) |> sum()` of these participants have later records with non-missing CGG values:
+
+```{r}
+
+gp34 |> 
+  semi_join(
+    cgg.n |> 
+      filter(
+        first_missing,
+        any_nonmissing), 
+    by = "FXS ID") |> 
+  select(`FXS ID`, `Visit Date`, `Event Name` , CGG) |> 
+  arrange(`FXS ID`, `Visit Date`) |> 
+  split(~`FXS ID`) |> 
+  pander()
+```
+
+Some participants have multiple CGG values:
 
 ```{r, "multiple CGG values", include = TRUE, results = "asis"}
 
 gp34 |> 
-  semi_join(cgg.n |> filter(n_vals > 1), by = "FXS ID") |> 
-  filter(!is.na(CGG)) |> 
+  semi_join(
+    cgg.n |> 
+      filter(
+        n_vals > 1), 
+    by = "FXS ID") |> 
   select(`FXS ID`, `Visit Date`, `Event Name` , CGG) |> 
   arrange(`FXS ID`, `Visit Date`) |> 
   split(~`FXS ID`) |> 
@@ -131,10 +150,12 @@ gp34 |>
 
 ```
 
-```{r}
+We decided to use the most recent CGG value.
 
+```{r, include = TRUE}
+# check fxtas stage where CGG is missing
 gp34 |> 
-  filter(is.na(`CGG`)) |> 
+  filter(is.na(`FXTAS Stage (0-5)`)) |> 
   select(`FXS ID`, `Event Name`, CGG, `FXTAS Stage (0-5)`) |> 
   pander()
 
@@ -331,7 +352,7 @@ table1(
 
 ## FXTAS Stage
 
-**Question:** What should we do with missing codes and blanks?
+For categorical analysis, we merged 2.5 into 2, 3.5 into 4, and 4.5 into 5.
 
 ```{r}
 
@@ -373,7 +394,11 @@ table1(
 
 ```{r}
 
-vars = grep("MMSE Total Score", value = TRUE, names(gp34), fixed = TRUE)
+vars = grep(
+  "MMSE Total Score", 
+  value = TRUE, 
+  names(gp34), 
+  fixed = TRUE)
 
 table1(
   NA.label = NA.label1,

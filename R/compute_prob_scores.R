@@ -1,10 +1,9 @@
 #' Title
 #'
 #' @param dataset
-#' @param biomarkers
+#' @param biomarker_varnames
 #' @param ModelScores
 #' @param DataScores
-#' @param patient_data
 #' @param prob_dist
 #'
 #' @return
@@ -12,20 +11,16 @@
 #'
 compute_prob_scores = function(
     dataset,
-    biomarkers,
+    biomarker_varnames,
     ModelScores,
     DataScores,
-    prob_dist,
-    patient_data =
-      dataset |>
-      filter(`FX*` == "CGG >= 55") |>
-      select(all_of(biomarkers))
+    prob_dist
 )
 {
   prob_score_dims =
     list(
-      ID = dataset |> filter(`FX*` == "CGG >= 55") |> pull(`FXS ID`),
-      Biomarker = biomarkers,
+      ID = dataset |> pull(`FXS ID`),
+      Biomarker = biomarker_varnames,
       model = ModelScores
     )
 
@@ -35,14 +30,14 @@ compute_prob_scores = function(
     dimnames = prob_score_dims
   )
 
-  for (biomarker in biomarkers)
+  for (biomarker in biomarker_varnames)
   {
     for (datascore in DataScores)
     {
       for (modelscore in ModelScores)
       {
         prob_score0[
-          patient_data[[biomarker]] == datascore,
+          dataset[[biomarker]] == datascore,
           biomarker,
           modelscore
         ] =
@@ -50,6 +45,16 @@ compute_prob_scores = function(
       }
 
     }
+
+    if(any(dataset[[biomarker]] |> is.na()))
+    {
+      prob_score0[
+        dataset[[biomarker]] |> is.na(),
+        biomarker,
+
+      ] = 1/length(ModelScores)
+    }
+
   }
   return(prob_score0)
 }

@@ -6,11 +6,10 @@
 \usage{
 compute_prob_scores(
   dataset,
-  biomarkers,
+  biomarker_varnames,
   ModelScores,
   DataScores,
-  prob_dist,
-  patient_data = select(filter(dataset, `FX*` == "CGG >= 55"), all_of(biomarkers))
+  prob_dist
 )
 }
 \arguments{

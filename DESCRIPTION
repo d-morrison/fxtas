@@ -10,15 +10,21 @@ BugReports: https://github.com/d-morrison/fxtas/issues
 Imports: 
     config (>= 0.3.1),
     forcats,
+    fs,
+    ggtext,
+    glue,
     golem (>= 0.3.4),
     magrittr,
+    plotly,
+    RColorBrewer,
     readxl,
     reticulate,
     shiny (>= 1.7.2),
-    tidyr
+    tibble,
+    tidyr,
+    viridis
 Suggests: 
     formulaic,
-    fs,
     knitr,
     pander,
     purrr,
@@ -33,3 +39,9 @@ RoxygenNote: 7.2.3
 Depends: 
     R (>= 2.10)
 VignetteBuilder: knitr
+Config/reticulate/autoconfigure:
+  list(
+    packages = list(
+      list(package = "scipy")
+    )
+  )

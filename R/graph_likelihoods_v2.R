@@ -22,6 +22,6 @@ graph_likelihoods_v2 = function(
         col = name
       )) +
     geom_line(alpha = alpha) +
-    facet_wrap(~name) +
+    # facet_wrap(~name) +
     ylab("log-likelihood")
 }
