@@ -83,5 +83,8 @@ arrange_position_frequencies = function(
     mutate(
       `event name` =
         factor(`event name`, levels = biomarker_order)) |>
-    arrange(`event name`)
+    arrange(`event name`) |>
+    structure(
+      biomarker_order = biomarker_order
+    )
 }

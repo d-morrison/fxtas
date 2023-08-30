@@ -258,7 +258,7 @@ for (i in biomarker_varnames)
 ```{r}
 #| label: "set run parameters"
 N_startpoints = 10L
-N_S_max = 3L
+N_S_max = 4L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
 root_dir = here::here()
@@ -314,10 +314,10 @@ samples_likelihood] = sustain_input.run_sustain_algorithm(plot=False)
 ## one group
 
 ```{r}
-#| label: "confusion matrices - 1 group v1"
+#| label: "confusion matrices - 1 group"
 #| layout-ncol: 1
 #| fig-height: 8
-#| fig-cap: "Confusion Matrices: 1 group version 1"
+#| fig-cap: "Confusion Matrices: 1 group"
 
 
 
@@ -333,28 +333,6 @@ figs = extract_figs_from_pickle(
 print(figs[[1]])
 ```
 
-
-```{r}
-#| label: "confusion matrices - 1 group v2"
-#| layout-ncol: 1
-#| fig-height: 8
-#| fig-cap: "Confusion Matrices: 1 group version 2"
-
-biomarker_plot_order2 = biomarker_plot_order
-
-figs = extract_figs_from_pickle(
-  n_s = 1,
-  dataset_name = dataset_name,
-  output_folder = output_folder,
-  score_vals = score_vals,
-  biomarker_plot_order = biomarker_plot_order2,
-    
-  biomarker_groups = biomarker_groups,
-  biomarker_levels = biomarker_levels) 
-print(figs[[1]])
-
-```
-
 ## two groups
 
 ```{r}
@@ -365,7 +343,7 @@ print(figs[[1]])
 #| fig-subcap: 
 #|   - "Group 1"
 #|   - "Group 2"
-
+biomarker_plot_order2 = NULL
 figs = extract_figs_from_pickle(
   n_s = 2,
   dataset_name = dataset_name,
@@ -408,6 +386,39 @@ print(suppressMessages(figs[[2]]))
 # + scale_y_discrete(breaks = NULL, limits = rev)
 print(figs[[3]])
 ```
+
+## four groups
+
+```{r}
+figs = extract_figs_from_pickle(
+  n_s = 4,
+  dataset_name = dataset_name,
+  output_folder = output_folder,
+  score_vals = score_vals,
+  biomarker_plot_order = biomarker_plot_order2,
+  biomarker_groups = biomarker_groups,
+  biomarker_levels = biomarker_levels)
+```
+
+```{r}
+#| label: "confusion matrices-4"
+#| layout-ncol: 2
+#| fig-height: 8
+#| fig-cap: "Confusion Matrices: 4 subgroups"
+#| fig-subcap:
+#|   - "Group 1"
+#|   - "Group 2"
+#|   - "Group 3"
+#|   - "Group 4"
+library(ggplot2)
+
+print(figs[[1]])
+print(suppressMessages(figs[[2]]))
+# + scale_y_discrete(breaks = NULL, limits = rev)
+print(figs[[3]])
+print(figs[[4]])
+```
+
 
 # graph likelihoods in R
 

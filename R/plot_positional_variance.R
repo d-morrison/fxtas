@@ -25,6 +25,11 @@
 #' @param save_kwargs
 #' @param results
 #' @param biomarker_levels
+#' @param biomarker_groups
+#' @param biomarker_events_table
+#' @param biomarker_event_names
+#' @param biomarker_plot_order
+#' @param synchronize_y_axes
 #'
 #' @return
 #' @export
@@ -63,7 +68,8 @@ plot_positional_var = function(
     subtype_titles=NULL,
     separate_subtypes=FALSE,
     save_path=NULL,
-    save_kwargs=NULL)
+    save_kwargs=NULL,
+    synchronize_y_axes = TRUE)
 {
 
   # Get the number of subtypes
@@ -223,6 +229,12 @@ plot_positional_var = function(
         `event name` = factor(`event name`, levels = `event name` |> unique())
       )
 
+
+    if(synchronize_y_axes)
+    {
+      biomarker_plot_order = PFs |> attr("biomarker_order")
+    }
+
     PF.plot =
       PFs  |>
       plot.PF() +
@@ -231,6 +243,7 @@ plot_positional_var = function(
 
     figs[[i]] = structure(
       PF.plot,
+      biomarker_order = PFs |> attr("biomarker_order"),
       # alt_plot = plot1,
       title = title_i)
     #https://medium.com/@tobias.stalder.geo/plot-rgb-satellite-imagery-in-true-color-with-ggplot2-in-r-10bdb0e4dd1f

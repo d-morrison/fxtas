@@ -34,11 +34,12 @@ plot_positional_var(
   subtype_titles = NULL,
   separate_subtypes = FALSE,
   save_path = NULL,
-  save_kwargs = NULL
+  save_kwargs = NULL,
+  synchronize_y_axes = TRUE
 )
 }
 \arguments{
-\item{biomarker_levels}{}
+\item{synchronize_y_axes}{}
 }
 \description{
 Title
