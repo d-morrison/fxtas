@@ -39,9 +39,12 @@ plot_positional_var = function(
     n_samples = results$ml_subtype |> nrow(),
     score_vals,
     biomarker_labels = names(biomarker_levels),
+    biomarker_groups = NULL,
     biomarker_levels = NULL,
+    biomarker_events_table =
+      biomarker_levels |> get_biomarker_events_table(),
     biomarker_event_names =
-      get_biomarker_event_names(biomarker_levels),
+      biomarker_events_table |>  pull(biomarker_level),
     biomarker_plot_order = biomarker_event_names |> sort(),
     ml_f_EM=NULL,
     cval=FALSE,
@@ -171,13 +174,13 @@ plot_positional_var = function(
       title_i = subtype_titles[i]
     } else
     {
-    title_i = get_title_i(
-      samples_f,
-      subtype_order,
-      n_samples,
-      cval,
-      i
-    )
+      title_i = get_title_i(
+        samples_f,
+        subtype_order,
+        n_samples,
+        cval,
+        i
+      )
     }
 
     heatmap_table =
@@ -200,13 +203,28 @@ plot_positional_var = function(
     PFs =
       samples_sequence[subtype_order[i],,] |>
       t() |>
-      compute_position_frequencies()
-
-    PF.plot =
-      PFs |>
+      compute_position_frequencies() |>
+      # get biomarker names
+      left_join(
+        biomarker_events_table,
+        by = c("event name" = "biomarker_level")
+      ) |>
+      # get biomarker groups and colors
+      left_join(
+        biomarker_groups,
+        by = c("biomarker")
+      ) |>
       arrange_position_frequencies(
         biomarker_order = biomarker_plot_order
       ) |>
+      mutate(
+        `event name` =
+          glue("<i style='color:{group_color}'>{`event name`}</i>"),
+        `event name` = factor(`event name`, levels = `event name` |> unique())
+      )
+
+    PF.plot =
+      PFs  |>
       plot.PF()
 
 

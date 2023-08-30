@@ -56,19 +56,49 @@ mri_vars = c(
   "Corpus Callosum-Thickness"
 )
 
+cancer_vars =  c(
+  "Thyroid Cancer",
+  "Skin Cancer",
+  "Melanoma",
+  "Prostate Cancer",
+  "Other Cancer"
+)
+
 other_biomarkers = c(
   "Ataxia",
   "Ataxia: severity*"
   # grep("Parkinson", value = TRUE, names(visit1))
 )
 
-SuStaInLabels = 
-  biomarker_varnames =
-  c(
-    names(tremors),
-    other_biomarkers,
-    mri_vars
+biomarker_group_list = 
+  list(
+    # cancer = cancer_vars,
+      tremors = names(tremors),
+      other = other_biomarkers,
+      mri = mri_vars)
+
+biomarker_group_colors = 
+  tibble(
+    biomarker_group = names(biomarker_group_list),
+    group_color = rainbow(length(biomarker_group_list))
   )
+   
+biomarker_groups = 
+  biomarker_group_list |> 
+  stack() |> 
+  rename(
+    biomarker  = values,
+    biomarker_group = ind) |> 
+  left_join(
+    biomarker_group_colors,
+    by = "biomarker_group"
+  )
+
+SuStaInLabels = 
+  biomarker_varnames = 
+  biomarker_groups |> 
+  pull("biomarker")
+  
 
 df = 
   visit1 |> 
@@ -238,7 +268,8 @@ figs = extract_figs_from_pickle(
   output_folder = output_folder,
   score_vals = score_vals,
   biomarker_plot_order = NULL,
-  biomarker_levels = biomarker_levels)
+  biomarker_groups = biomarker_groups,
+  biomarker_levels = biomarker_levels) 
 print(figs[[1]])
 
 ```
@@ -259,6 +290,7 @@ figs = extract_figs_from_pickle(
   dataset_name = dataset_name,
   output_folder = output_folder,
   score_vals = score_vals,
+  biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels)
 print(figs[[1]])
 print(suppressMessages(figs[[2]]))
@@ -273,6 +305,7 @@ figs = extract_figs_from_pickle(
   dataset_name = dataset_name,
   output_folder = output_folder,
   score_vals = score_vals,
+  biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels)
 ```
 

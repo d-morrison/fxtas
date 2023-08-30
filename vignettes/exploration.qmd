@@ -33,7 +33,7 @@ library(dplyr)
 library(magrittr)
 NA.label1 = "Missing"
 column_var = "Recruited in study phase"
-# column_var = "FX**"
+column_var = "FX**"
 # load_all()
 ```
 

@@ -18,9 +18,10 @@ plot.PF = function(PFs)
     ylab(NULL) +
     theme_bw() +
     theme(
-      legend.position = "bottom"
+      legend.position = "bottom",
+      axis.text.y =
+        element_markdown(hjust=0)
     ) +
-    labs(fill = "Pr(stage)") +
-    theme(axis.text.y = element_text(hjust=0))
+    labs(fill = "Pr(stage)")
 }
 

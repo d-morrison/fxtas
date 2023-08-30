@@ -3,6 +3,7 @@
 
 ## usethis namespace: start
 #' @importFrom fs path
+#' @importFrom ggtext element_markdown
 #' @importFrom glue glue
 #' @importFrom magrittr set_names
 #' @importFrom readxl read_excel
