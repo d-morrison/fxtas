@@ -15,5 +15,4 @@ fxtas*.tar.gz
 fxtas*.tgz
 miniconda
 .Rhistory
-
 /.quarto/
