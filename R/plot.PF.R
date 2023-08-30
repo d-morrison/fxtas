@@ -20,7 +20,9 @@ plot.PF = function(PFs)
     theme(
       legend.position = "bottom",
       axis.text.y =
-        element_markdown(hjust=0)
+        element_markdown(
+          hjust=0,
+          color = PFs |> distinct(`event name`, group_color) |> pull( "group_color"))
     ) +
     labs(fill = "Pr(stage)")
 }

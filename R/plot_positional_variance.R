@@ -207,20 +207,17 @@ plot_positional_var = function(
       # get biomarker names
       left_join(
         biomarker_events_table,
-        by = c("event name" = "biomarker_level")
+        by = c("event name" = "biomarker_level"),
+        relationship = "many-to-one"
       ) |>
       # get biomarker groups and colors
       left_join(
         biomarker_groups,
-        by = c("biomarker")
+        by = c("biomarker"),
+        relationship = "many-to-one"
       ) |>
       arrange_position_frequencies(
         biomarker_order = biomarker_plot_order
-      ) |>
-      mutate(
-        `event name` =
-          glue("<i style='color:{group_color}'>{`event name`}</i>"),
-        `event name` = factor(`event name`, levels = `event name` |> unique())
       )
 
     PF.plot =
