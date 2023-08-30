@@ -39,7 +39,8 @@ compute_confus_matrix = function(
 
 compute_position_frequencies = function(samples_sequence)
 {
-  samples_sequence |>
+  results =
+    samples_sequence |>
     as_tibble() |>
     pivot_longer(
       names_to = "position",
@@ -47,6 +48,22 @@ compute_position_frequencies = function(samples_sequence)
       col = everything()) |>
     count(`event name`, position) |>
     mutate(
+      position = position |> factor(levels = 1:ncol(samples_sequence)),
       proportion = n / nrow(samples_sequence)) |>
     select(-n)
+
+   order =
+     results |>
+     arrange(`event name`, position) |>
+     slice_head(by = `event name`) |>
+     arrange(position, desc(proportion), `event name`)
+
+   results =
+     results |>
+     mutate(
+       `event name` =
+         factor(`event name`, levels = order$`event name`)) |>
+     arrange(`event name`)
+
+   return(results)
 }

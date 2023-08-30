@@ -6,7 +6,8 @@ compute_heatmap = function(
     stage_score,
     N_z = length(num_scores),
     N_bio = length(biomarker_labels),
-    num_scores = unique(stage_score))
+    num_scores = unique(stage_score),
+    biomarker_event_names)
 {
   N_events = ncol(samples_sequence)
 
@@ -16,7 +17,8 @@ compute_heatmap = function(
   # And normalize for number of samples/sequences
   # confus_matrix = (samples_sequence==np.arange(N_events)[:, None, None]).sum(1) / samples_sequence.shape[0]
 
-  confus_matrix = samples_sequence |> compute_confus_matrix()
+  confus_matrix =
+    compute_confus_matrix(samples_sequence)[biomarker_event_names,]
 
   # Define the confusion matrix to insert the colours
   # Use 1s to start with all white

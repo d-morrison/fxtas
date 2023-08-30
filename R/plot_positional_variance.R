@@ -40,7 +40,8 @@ plot_positional_var = function(
     score_vals,
     biomarker_labels = names(biomarker_levels),
     biomarker_levels = NULL,
-    biomarker_event_names = get_biomarker_event_names(biomarker_levels),
+    biomarker_event_names =
+      get_biomarker_event_names(biomarker_levels),
     ml_f_EM=NULL,
     cval=FALSE,
     subtype_order=NULL,
@@ -152,14 +153,6 @@ plot_positional_var = function(
   {
     # Create the figure and axis for this subtype loop
 
-    PFs =
-      samples_sequence[subtype_order[i],,] |>
-      t() |>
-      compute_position_frequencies()
-
-
-
-
     confus_matrix_c =
       samples_sequence[subtype_order[i],,] |>
       t() |>
@@ -167,16 +160,24 @@ plot_positional_var = function(
         biomarker_labels = biomarker_labels,
         colour_mat = colour_mat,
         stage_biomarker_index = stage_biomarker_index,
-        stage_score = stage_score
+        stage_score = stage_score,
+        biomarker_event_names =
+          biomarker_event_names
       )
 
+    if (!is.null(subtype_titles))
+    {
+      title_i = subtype_titles[i]
+    } else
+    {
     title_i = get_title_i(
-      subtype_titles,
       samples_f,
       subtype_order,
       n_samples,
-      cval
+      cval,
+      i
     )
+    }
 
     heatmap_table =
       confus_matrix_c |>
@@ -195,8 +196,18 @@ plot_positional_var = function(
       heatmap_table_to_plot() +
       ggtitle(title_i)
 
+    PFs =
+      samples_sequence[subtype_order[i],,] |>
+      t() |>
+      compute_position_frequencies()
 
-    figs[[i]] = plot1
+    PF.plot = PFs |> plot.PF()
+
+
+    figs[[i]] = structure(
+      PF.plot,
+      alt_plot = plot1,
+      title = title_i)
     #https://medium.com/@tobias.stalder.geo/plot-rgb-satellite-imagery-in-true-color-with-ggplot2-in-r-10bdb0e4dd1f
 
   }
