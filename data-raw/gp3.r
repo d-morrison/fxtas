@@ -374,7 +374,7 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            mds_med_mswk = "Multiple Sclerosis: Workup",
            new_mds_med_ana = "ANA positive",
            mds_med_sjo = "Sjogrens Syndrome",
-           mds_med_ray = "Raynauds disease",
+           mds_med_ray = "Raynauds Syndrome",
            new_mds_med_pulm = "Pulmonary Fibrosis",
            mds_med_ido_notes = "Other immunological disease & other symptoms: list",
 
