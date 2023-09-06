@@ -33,7 +33,7 @@ library(dplyr)
 library(magrittr)
 NA.label1 = "Missing"
 column_var = "Recruited in study phase"
-# column_var = "FX**"
+column_var = "FX**"
 # load_all()
 ```
 
@@ -352,7 +352,7 @@ table1(
 
 ## FXTAS Stage
 
-**Question:** What should we do with missing codes and blanks?
+For categorical analysis, we merged 2.5 into 2, 3.5 into 4, and 4.5 into 5.
 
 ```{r}
 
@@ -394,7 +394,11 @@ table1(
 
 ```{r}
 
-vars = grep("MMSE Total Score", value = TRUE, names(gp34), fixed = TRUE)
+vars = grep(
+  "MMSE Total Score", 
+  value = TRUE, 
+  names(gp34), 
+  fixed = TRUE)
 
 table1(
   NA.label = NA.label1,
