@@ -10,3 +10,5 @@ output*
 vignettes/output*
 *.rmarkdown
 *_files/
+
+/.quarto/
