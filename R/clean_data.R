@@ -14,6 +14,7 @@ clean_data = function(dataset)
     make_vars_numeric(regex = "score", ignore.case = TRUE) |>
 
     make_vars_numeric(regex = "SCL90") |>
+    categorize_SCL90() |>
 
     categorize_BDS() |>
     # make_vars_numeric(regex = "BDS-2 Total Score") |>

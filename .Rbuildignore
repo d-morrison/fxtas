@@ -12,3 +12,4 @@ $run_dev.*
 ^fxtas\.Rcheck$
 ^fxtas.*\.tar\.gz$
 ^fxtas.*\.tgz$
+^vignettes/articles$
