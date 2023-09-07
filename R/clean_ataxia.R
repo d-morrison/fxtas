@@ -19,10 +19,6 @@ clean_ataxia = function(data)
           false = `Ataxia: severity`
         ),
 
-      `Ataxia: severity*` =
-        `Ataxia: severity` |>
-        numeric_as_factor(),
-
       `Ataxia: severity` =
         `Ataxia: severity` |>
         clean_numeric(),
@@ -37,7 +33,11 @@ clean_ataxia = function(data)
         Ataxia %in% "No" & is.na(`Ataxia: severity`),
         0,
         `Ataxia: severity`
-      )
+      ),
+
+      `Ataxia: severity*` =
+        `Ataxia: severity` |>
+        numeric_as_factor()
 
     )
 }

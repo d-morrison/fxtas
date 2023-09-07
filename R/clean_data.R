@@ -12,6 +12,8 @@ clean_data = function(dataset)
     make_vars_numeric(regex = "score", ignore.case = TRUE) |>
     make_vars_numeric(regex = "SCL90") |>
 
+    create_any_cancer() |>
+
     # make_vars_numeric(regex = "BDS-2 Total Score") |>
     # make_vars_numeric(regex = "MMSE Total Score") |>
 

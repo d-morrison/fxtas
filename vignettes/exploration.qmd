@@ -22,25 +22,50 @@ knitr::opts_chunk$set(
   fig.height = 4
 )
 
+# update 'asis' chunk to allow inline code
+knitr::knit_engines$set(asis = function(options) {
+  if (options$echo && options$eval) knitr::knit_child(text = options$code)
+})
 ```
 
 ```{r setup}
 library(fxtas)
-# devtools::load_all()
+devtools::load_all()
 library(pander)
 library(table1)
 library(dplyr)
 library(magrittr)
 NA.label1 = "Missing"
-column_var = "Recruited in study phase"
-# column_var = "FX**"
+# column_var = "Recruited in study phase"
+column_var = "FX**"
 # load_all()
+
+phase <- ifelse(column_var == "Recruited in study phase", TRUE, FALSE)
+cgg <- ifelse(column_var == "FX**", TRUE, FALSE)
 ```
 
 # Data from first visits
 
+```{asis, echo=phase}
 Here, we review the data from the first visits by each participant, stratified by 
 the first study phase in which the participant enrolled (GP3 vs GP4).
+```
+
+```{asis, echo=cgg}
+Here, we review the data from the first visits by each participant, stratified by CGG (`r paste0("<55 or", " \u2265", "55")`).
+```
+
+## Study
+
+```{r}
+table1(
+  NA.label = NA.label1,
+  formula(paste(
+    "~", paste(formulaic::add.backtick("Study"), collapse = " + "), 
+    "|",
+    column_var |> formulaic::add.backtick())),
+  data = visit1)
+```
 
 ## APOE
 
@@ -83,6 +108,8 @@ gp34 |> filter(
 ```
 
 **QUESTION:** Is it reasonable to use the next non-missing ApoE result to impute the ApoE results for the earlier visit? Note that in some cases, the ApoE value changes between visits:
+
+If they are missing, it is reasonable to use the next available result. The issue with differences between visits will need to be addressed with Flora; the samples may have been run differently between visit leading to different APoE values. 
 
 ```{r, "multiple ApoE values", results = "asis"}
 
@@ -165,13 +192,25 @@ gp34 |>
 
 **Question:** can we fill in the earlier values using later values?
 
+Yes this is reasonable. Shouldn’t change between visits.  
+From Randi: use later versions if inconsistent, might change due to improvements in assays. 
+
 ## Lifestyle
 
 **Question:** Alcohol is labeled "Alcohol Abuse" in GP3 (`mds_psy_alco`) vs. "Alcohol Use" in GP4 (`new_mds_psy_alco`); ok to combine?
 
-**Question:** I didn't find any marijuana use data in GP3; is there anything we can do to fill it in?
+Yes this is reasonable.  
 
-**Question:** What should we do with codes 888 and 999 for these variables? Should they be treated as "Never used" or as actual missing values? What about missing data (field empty in RedCap)? Can we fill in any data using the unstructured data in  "Drugs used" (`mds_psy_drug_notes`)?
+**Question:** I didn't find any marijuana use data in GP3; is there anything we can do to fill it in?  
+
+Unfortunately, the older Med data sheet in GP3 did not capture this value. However the new med data sheet was implemented in the later visits, thus some GP3 participants may have marijuana data. Maybe just use “drug use” and “alcohol use”. 
+
+**Question:** What should we do with codes 888 and 999 for these variables? Should they be treated as "Never used" or as actual missing values? What about missing data (field empty in RedCap)? Can we fill in any data using the unstructured data in  "Drugs used" (`mds_psy_drug_notes`)?  
+
+This is a difficult question to answer, as we don’t want to infer a response/answer. The missing data COULD be a result of poor record taking, as the med data sheet is treated much like a survey; (ie if “Yes”, it is marked). I feel that the 888, 999 can be combined to “none” and Missing data as “no data”. But I would double check with Kyoungmi on this. I think it is reasonable to fill in any drug use data using the unstructured data as you suggested. 
+
+
+note: Discussed with Randi; Ala will look into it. We might be able to get some data from # drinks or from SCID 
 
 
 ```{r}
@@ -190,9 +229,13 @@ table1(
 
 ## Cancer
 
-**Question:** Can we fill in any data for Skin Cancer, Melanoma, or "Other Cancer"?
+**Question:** Can we fill in any data for Skin Cancer, Melanoma, or "Other Cancer"?  
 
-**Question:** What should we do with codes 888 and 999 for these variables? Should they be treated as "Never used" or as actual missing values? What about blank entries (empty fields in RedCap)?
+Not sure I understand this question. 
+
+**Question:** What should we do with codes 888 and 999 for these variables? Should they be treated as "Never used" or as actual missing values? What about blank entries (empty fields in RedCap)?  
+
+Again I think 888 and 999 should be treated as “no” or “none” and missing values as “no data”. but will need to check with Kyoungmi. 
 
 ```{r}
 vars = c(
@@ -200,7 +243,8 @@ vars = c(
   "Skin Cancer",
   "Melanoma",
   "Prostate Cancer",
-  "Other Cancer"
+  "Other Cancer",
+  "Any Cancer"
 )
 
 table1(
@@ -212,17 +256,29 @@ table1(
 
 ## Surgery
 
-**Question:** Can we categorize the surgery data into a binary variable for GP4? (There are currently multiple surgery variables, `new_mds_med_sur1`, `new_mds_med_sur2`, etc., all with unstructured data.)
+**Question:** Can we categorize the surgery data into a binary variable for GP4? (There are currently multiple surgery variables, `new_mds_med_sur1`, `new_mds_med_sur2`, etc., all with unstructured data.)  
 
-**Question:** Can we categorize surgery types into a small set of indicator variables?
+Binary as in Surgery Yes or No? Yes I think that would be best. 
 
-**Question:** Can we extract age at surgery and surgery dates from the unstructured text?
+**Question:** Can we categorize surgery types into a small set of indicator variables?  
 
-**Question:** Do we have a source of anesthesia data for GP3?
+Yes, lets see what that will show.  
 
-**Question:** Can we categorize anesthesia into a binary variable (yes/no), summarizing across all fields in GP4 (`new_mds_med_anes1`, `new_mds_med_anes2`, etc.)?
+**Question:** Can we extract age at surgery and surgery dates from the unstructured text?  
 
-**Question:** What should we do with missing codes and blanks?
+We may, but this is really hit or miss and will take some time.  
+
+**Question:** Do we have a source of anesthesia data for GP3?  
+
+No.  
+
+**Question:** Can we categorize anesthesia into a binary variable (yes/no), summarizing across all fields in GP4 (`new_mds_med_anes1`, `new_mds_med_anes2`, etc.)?  
+
+Yes.  
+
+**Question:** What should we do with missing codes and blanks?  
+
+See my previous responses for 888, 999 and missing data.   
 
 ```{r}
 
@@ -251,7 +307,9 @@ table1(
 
 ## Tremors
 
-**Question:** What should we do with missing codes and blanks?
+**Question:** What should we do with missing codes and blanks?  
+
+See my previous responses on the matter.   
 
 ```{r}
 vars = c(
@@ -284,7 +342,9 @@ table1(
 
 ## Head tremors
 
-**Question:** Can we get any data on head tremor for GP3?
+**Question:** Can we get any data on head tremor for GP3?  
+
+Unfortunately head tremor was not collected in GP3   
 
 ```{r}
 vars = c(
@@ -314,7 +374,9 @@ table1(
 
 ## Ataxia
 
-**Question:** What should we do with missing codes and blanks?
+**Question:** What should we do with missing codes and blanks?  
+
+See my previous responses on the matter. 
 
 ```{r}
 
@@ -335,9 +397,13 @@ table1(
 
 ## Parkinsons
 
-**Question:** Can we fill in Parkinsons (formal diagnosis) for GP3?
+**Question:** Can we fill in Parkinsons (formal diagnosis) for GP3?  
 
-**Question:** What should we do with missing codes and blanks?
+No, because the question was not asked in GP3.    
+
+**Question:** What should we do with missing codes and blanks?  
+
+See my previous responses on the matter.  
 
 ```{r}
 
@@ -352,7 +418,9 @@ table1(
 
 ## FXTAS Stage
 
-**Question:** What should we do with missing codes and blanks?
+**Question:** What should we do with missing codes and blanks?  
+
+
 
 ```{r}
 
@@ -375,7 +443,9 @@ table1(
 
 ## BDS2
 
-**Question:** What should we do with missing codes and blanks?
+**Question:** What should we do with missing codes and blanks?  
+
+These should be treated as no data.  
 
 ```{r}
 
@@ -390,7 +460,9 @@ table1(
 
 ## MMSE
 
-**Question:** What should we do with blanks?
+**Question:** What should we do with blanks?  
+
+These should be treated as no data.  
 
 ```{r}
 
@@ -405,9 +477,15 @@ table1(
 
 ## SCID
 
-**Question:** What should we do with missing codes and blanks?
+**Question:** What should we do with missing codes and blanks?  
 
-**Question:** Should we interpret "lifelong" age of onset (code 555) as since age 0?
+These should be treated as no Diagnosis.  
+
+**Question:** Should we interpret "lifelong" age of onset (code 555) as since age 0?  
+
+hmm, I am not sure about this one. Todo: ask Randi 
+
+  -   decision: min(10, min(observed values)) 
 
 
 ```{r}
@@ -439,9 +517,20 @@ table1(
 
 ## SCL90
 
-**Question:** What should we do with missing codes and blanks?
+**Question:** What should we do with missing codes and blanks?  
 
-**Question:** Do we want to include "SCL90: Interpersonal Sensitivity" (was included in data extract, wasn't on Word doc list)?
+No data.  
+
+**Question:** Do we want to include "SCL90: Interpersonal Sensitivity" (was included in data extract, wasn't on Word doc list)?  
+
+Yes.  
+
+Ellery to look up scale cutoffs 
+
+Followup: Randi said: 
+
+  -   40-59 is average  
+  -   60+ is clinically elevated 
 
 ```{r}
 
@@ -457,9 +546,10 @@ table1(
 
 ## MRI
 
-**Question:** What should we do with missing codes and blanks? Can we use results from subsequent visits to fill in earlier visits?
+**Question:** What should we do with missing codes and blanks? Can we use results from subsequent visits to fill in earlier visits?  
 
-**Question:** Do we want to include "SCL90: Interpersonal Sensitivity" in the analysis? (It was included in data extract but wasn't in the Word document "FXTAS event sequence RH.docx").
+These should be treated as ‘no data’. We cannot use results from subsequent visits to fill earlier ones, as there may be significant MRI changes from visit to visit.  
+
 
 ```{r}
 
@@ -486,11 +576,17 @@ table1(
 
 ## WAIS 3/4
 
-**Question:** Can we combine "Verbal: IQ Score" (`wais_verb_iq`) and "Verbal Comprehension: Composite Score (VCI)" (`wais4_verbcomp_cs`)?
+**Question:** Can we combine "Verbal: IQ Score" (`wais_verb_iq`) and "Verbal Comprehension: Composite Score (VCI)" (`wais4_verbcomp_cs`)?  
 
-**Question:** Can we combine "Full Scale: IQ Score" (`wais_fullscale_iq`) and "Full Scale: Composite Score (FSIQ)" (`wais4_fullscale_cs`)?
+(wais_verb_iq) is from WAIS version 3 and (wais4_v, erbcomp_cs) is from WAIS version 4. so the answer is No, primarily because the norms used to set the scaled scores are different - so what it took to get a standard score of 7 may be different between the norms of WAIS III and IV, but also if the actual subtest has changed then it's certainly not a direct comparison as they are different tests.  
 
-**Question:** Do we have any data for perceptual reasoning, working memory, or processing speed for GP3?
+**Question:** Can we combine "Full Scale: IQ Score" (`wais_fullscale_iq`) and "Full Scale: Composite Score (FSIQ)" (`wais4_fullscale_cs`)?  
+
+See previous answer on VERBAL IQ  
+
+**Question:** Do we have any data for perceptual reasoning, working memory, or processing speed for GP3?  
+
+No, b/c WAIS 3 does not have these scores but the subsequent WAIS 4 does.  
 
 ```{r}
 
@@ -515,9 +611,16 @@ table1(
 
 ## CANTAB
 
-**Question:** All of these scores are completely missing in GP4 and almost entirely missing in GP3; do we have a way to fill in the missing data?
+**Question:** All of these scores are completely missing in GP4 and almost entirely missing in GP3; do we have a way to fill in the missing data?  
 
-**Question:** The score "WMS Letter-Number Sequencing" is listed in the word document, but I didn't find it in the RedCap report. I saw a few seemingly-relevant variables in RedCap, but I wasn't sure which one to use?
+Ahh yes, in GP4 the relevant instrument is “CANTAB CONN”. The variables should be found in that instrument if you query it.  
+
+**Question:** The score "WMS Letter-Number Sequencing" is listed in the word document, but I didn't find it in the RedCap report. I saw a few seemingly-relevant variables in RedCap, but I wasn't sure which one to use?  
+
+WMS III is another neurocognitive assessment that was used primarily in GP3 but dropped in GP4 because the WAIS 4 was implemented instead. We can leave this one out for now.   
+
+
+To ask Randi: are these categorizable? Can we do anything for the GP3 records?
 
 
 ```{r}
@@ -547,11 +650,17 @@ table1(
 
 ## Thyroid and other autoimmune diseases
 
-**Question:** "Medical history of thyroid disease and age of onset" is listed in the word doc, but I wasn't sure which corresponding variables to analyze.
+**Question:** "Medical history of thyroid disease and age of onset" is listed in the word doc, but I wasn't sure which corresponding variables to analyze.  
 
-**Question:** "ANA positive", "Raynauds Syndrome", and "Pulmonary Fibrosis" are completely missing in GP3; can we fill these in somehow?
+Analyze “thyroid problems” mds_med_thy  and/or new_mds_med_thy  
 
-**Question:** What should we do with the NA codes and blanks?
+**Question:** "ANA positive", "Raynauds Syndrome", and "Pulmonary Fibrosis" are completely missing in GP3; can we fill these in somehow?  
+
+These values were not collected for GP3. 
+
+**Question:** What should we do with the NA codes and blanks?  
+
+These should be 888 and 999: “No”. Missing is “no data”  
 
 ```{r}
 
@@ -592,9 +701,18 @@ table1(
 
 Do we have variables for these scores?
 
+-   Kinesia is an assessment that was done for GP4 only. The instrument can be queried in REDCAP 
+
+-   MOCA also not in GP3 – drop 
+
+-   Purdue – use pp_t1rlb_total; should be in both studies; not categorizable  
+
 ## Demographics
 
-There is substantial missingness in both `Primary Ethnicity` and `Primary Race`; not sure if we will need these variables:
+There is substantial missingness in both `Primary Ethnicity` and `Primary Race`; not sure if we will need these variables:  
+
+
+Primary ethnicity we can drop. Primary race we may be able to look on Randi’s cards for that or ask her. There are only 44 to look up. 
 
 ```{r}
 
@@ -631,7 +749,9 @@ tab = gp34 |> filter(is.na(`Visit Date`)) |>
 
 There are `r nrow(tab)` records with missing visit dates.
 
-**Question:** Can these missing dates be filled in?
+**Question:** Can these missing dates be filled in?  
+
+Yes I can fill these in.
 
 ```{r}
 pander(tab)
@@ -653,7 +773,9 @@ tab = gp34 |>
 
 There are `r length(tab)` duplicate visit dates.
 
-**Question:** Are these duplicate values correct?
+**Question:** Are these duplicate values correct?  
+
+I will need to check these.  
 
 ```{r, results = "asis"}
 pander(tab)
@@ -675,7 +797,9 @@ ooo = gp34 |>
 
 `r length(ooo)` participants have visits occurring out of chronological order (e.g., GP4 Visit1 before GP3 Visit 1).
 
-**Question:** Are these records correct?
+**Question:** Are these records correct?  
+
+I will need to check these.  
 
 ```{r, results = "asis"}
 
