@@ -16,7 +16,12 @@ clean_data = function(dataset)
     make_vars_numeric(regex = "SCL90") |>
     categorize_SCL90() |>
 
+
+    create_any_cancer() |>
+
+
     categorize_BDS() |>
+
     # make_vars_numeric(regex = "BDS-2 Total Score") |>
     # make_vars_numeric(regex = "MMSE Total Score") |>
 
