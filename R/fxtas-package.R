@@ -3,8 +3,10 @@
 
 ## usethis namespace: start
 #' @importFrom fs path
+#' @importFrom ggtext element_markdown
 #' @importFrom glue glue
 #' @importFrom magrittr set_names
+#' @importFrom plotly ggplotly
 #' @importFrom readxl read_excel
 #' @importFrom tibble column_to_rownames
 ## usethis namespace: end

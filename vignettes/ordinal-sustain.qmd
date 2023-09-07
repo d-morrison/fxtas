@@ -6,6 +6,8 @@ format:
     cap-location: top
     number-sections: true
     code-fold: true
+project:
+  execute-dir: project
 ---
 
 ```{r, include = FALSE}
@@ -19,13 +21,14 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(fxtas)
+
+devtools::load_all()
 library(tidyverse)
 library(reticulate)
 ```
 
 ```{r}
-reticulate::use_condaenv(condaenv = "fxtas")
+# reticulate::use_condaenv(condaenv = "fxtas")
 ```
 
 
@@ -34,12 +37,16 @@ reticulate::use_condaenv(condaenv = "fxtas")
 ```{r}
 
 tremors = c(
+  "Head tremor" = 1,
   "Intention tremor" = 1,
   "Resting tremor" = 1,
   "Postural tremor" = 1,
   "Intermittent tremor" = 1
   # "Any tremor" = 1
 )
+
+parkinsons_vars = 
+  vars = grep("Parkinson", value = TRUE, names(gp34))
 
 mri_vars = c(
   "Cerebral Atrophy",
@@ -55,19 +62,83 @@ mri_vars = c(
   "Corpus Callosum-Thickness"
 )
 
-other_biomarkers = c(
+cancer_vars =  c(
+  "Thyroid Cancer",
+  "Skin Cancer",
+  "Melanoma",
+  "Prostate Cancer",
+  "Other Cancer"
+)
+
+ataxia = c(
   "Ataxia",
   "Ataxia: severity*"
   # grep("Parkinson", value = TRUE, names(visit1))
 )
 
-SuStaInLabels = 
-  biomarker_varnames =
+scores = 
   c(
-    names(tremors),
-    other_biomarkers,
-    mri_vars
+    "MMSE Total Score*",
+    "BDS-2 Total Score*")
+
+thyroid_vars = c(
+  "Hypothyroid",
+  "Hyperthyroid",
+  "Thyroid problems",
+  "Lupus",
+  "Rheumatoid arthritis",
+  "Multiple Sclerosis: Workup",
+  "ANA positive",
+  "Sjogrens Syndrome",
+  "Raynauds Syndrome"
+  # "Pulmonary Fibrosis" # none
+  # "Immunological Notes"
+  
+  
+)
+
+biomarker_group_list = 
+  list(
+    tremors = names(tremors),
+    ataxia = ataxia,
+    stage = "FXTAS Stage (0-5)*",
+    parkinsons = parkinsons_vars,
+    cancer = cancer_vars,
+    mri = mri_vars,
+    scores = scores
+    
+    )
+
+biomarker_group_colors = 
+  tibble(
+    biomarker_group = names(biomarker_group_list),
+    # group_color = rainbow()
+    group_color = 
+      length(biomarker_group_list) |> 
+      RColorBrewer::brewer.pal(n = _, name = "Dark2")
   )
+
+biomarker_groups = 
+  biomarker_group_list |> 
+  stack() |> 
+  as_tibble() |> 
+  rename(
+    biomarker  = values,
+    biomarker_group = ind) |> 
+  left_join(
+    biomarker_group_colors,
+    by = "biomarker_group"
+  ) |> 
+  mutate(
+    biomarker_group = 
+      biomarker_group |> 
+      factor(levels = names(biomarker_group_list)))
+
+SuStaInLabels = 
+  biomarker_varnames = 
+  biomarker_groups |> 
+  pull("biomarker")
+
 
 df = 
   visit1 |> 
@@ -80,6 +151,17 @@ df =
 
 biomarker_levels = 
   lapply(df[,biomarker_varnames], F = levels)
+
+biomarker_events_table =
+  biomarker_levels |> 
+  get_biomarker_events_table() |> 
+  left_join(
+    biomarker_groups, 
+    by = "biomarker"
+  ) |> 
+  arrange(biomarker_group, biomarker, biomarker_level)
+biomarker_plot_order =
+  biomarker_events_table |>  pull(biomarker_level)
 
 nlevs = 
   sapply(biomarker_levels, length)
@@ -176,10 +258,12 @@ for (i in biomarker_varnames)
 ```{r}
 #| label: "set run parameters"
 N_startpoints = 10L
-N_S_max = 3L
+N_S_max = 4L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
-output_folder = "output/output1" |> fs::dir_create()
+root_dir = here::here()
+setwd(root_dir)
+output_folder = "output/output.long" |> fs::dir_create()
 print(output_folder)
 ```
 
@@ -196,7 +280,9 @@ from glob import glob
 import pySuStaIn
 import os
 
-os.getcwd()
+print(os.getcwd())
+os.chdir(r.root_dir)
+print(os.getcwd())
 
 sustain_input = pySuStaIn.OrdinalSustain(r.prob_nl,
 r.prob_score,
@@ -215,9 +301,11 @@ False,
 # fitting model
 
 ```{python "fit-model"}
-[samples_sequence, samples_f, 
-ml_subtype, prob_ml_subtype, ml_stage, 
-prob_ml_stage, prob_subtype_stage, 
+os.chdir(r.root_dir)
+print(os.getcwd())
+[samples_sequence, samples_f,
+ml_subtype, prob_ml_subtype, ml_stage,
+prob_ml_stage, prob_subtype_stage,
 samples_likelihood] = sustain_input.run_sustain_algorithm(plot=False)
 ```
 
@@ -228,17 +316,21 @@ samples_likelihood] = sustain_input.run_sustain_algorithm(plot=False)
 ```{r}
 #| label: "confusion matrices - 1 group"
 #| layout-ncol: 1
-#| fig-height: 3
+#| fig-height: 8
 #| fig-cap: "Confusion Matrices: 1 group"
+
+
 
 figs = extract_figs_from_pickle(
   n_s = 1,
   dataset_name = dataset_name,
   output_folder = output_folder,
   score_vals = score_vals,
-  biomarker_levels = biomarker_levels)
+  biomarker_plot_order = NULL,
+    
+  biomarker_groups = biomarker_groups,
+  biomarker_levels = biomarker_levels) 
 print(figs[[1]])
-
 ```
 
 ## two groups
@@ -246,17 +338,19 @@ print(figs[[1]])
 ```{r}
 #| label: "confusion matrices - 2 groups"
 #| layout-ncol: 1
-#| fig-height: 3
+#| fig-height: 8
 #| fig-cap: "Confusion Matrices: 2 subgroups"
 #| fig-subcap: 
 #|   - "Group 1"
 #|   - "Group 2"
-
+biomarker_plot_order2 = NULL
 figs = extract_figs_from_pickle(
   n_s = 2,
   dataset_name = dataset_name,
   output_folder = output_folder,
   score_vals = score_vals,
+  biomarker_plot_order = biomarker_plot_order2,
+  biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels)
 print(figs[[1]])
 print(suppressMessages(figs[[2]]))
@@ -271,15 +365,17 @@ figs = extract_figs_from_pickle(
   dataset_name = dataset_name,
   output_folder = output_folder,
   score_vals = score_vals,
+  biomarker_plot_order = biomarker_plot_order2,
+  biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels)
 ```
 
 ```{r}
 #| label: "confusion matrices"
 #| layout-ncol: 1
-#| fig-height: 3
+#| fig-height: 8
 #| fig-cap: "Confusion Matrices: 3 subgroups"
-#| fig-subcap: 
+#| fig-subcap:
 #|   - "Group 1"
 #|   - "Group 2"
 #|   - "Group 3"
@@ -287,16 +383,49 @@ library(ggplot2)
 
 print(figs[[1]])
 print(suppressMessages(figs[[2]]))
- # + scale_y_discrete(breaks = NULL, limits = rev)
+# + scale_y_discrete(breaks = NULL, limits = rev)
 print(figs[[3]])
 ```
+
+## four groups
+
+```{r}
+figs = extract_figs_from_pickle(
+  n_s = 4,
+  dataset_name = dataset_name,
+  output_folder = output_folder,
+  score_vals = score_vals,
+  biomarker_plot_order = biomarker_plot_order2,
+  biomarker_groups = biomarker_groups,
+  biomarker_levels = biomarker_levels)
+```
+
+```{r}
+#| label: "confusion matrices-4"
+#| layout-ncol: 2
+#| fig-height: 8
+#| fig-cap: "Confusion Matrices: 4 subgroups"
+#| fig-subcap:
+#|   - "Group 1"
+#|   - "Group 2"
+#|   - "Group 3"
+#|   - "Group 4"
+library(ggplot2)
+
+print(figs[[1]])
+print(suppressMessages(figs[[2]]))
+# + scale_y_discrete(breaks = NULL, limits = rev)
+print(figs[[3]])
+print(figs[[4]])
+```
+
 
 # graph likelihoods in R
 
 ```{r}
 #| fig-height: 4
 py$samples_likelihood |>
-  graph_likelihoods_v2(alpha = 0.5) |> 
+  graph_likelihoods_v2(alpha = 0.5) |>
   suppressWarnings()
 
 ```

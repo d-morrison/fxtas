@@ -25,6 +25,11 @@
 #' @param save_kwargs
 #' @param results
 #' @param biomarker_levels
+#' @param biomarker_groups
+#' @param biomarker_events_table
+#' @param biomarker_event_names
+#' @param biomarker_plot_order
+#' @param synchronize_y_axes
 #'
 #' @return
 #' @export
@@ -39,8 +44,13 @@ plot_positional_var = function(
     n_samples = results$ml_subtype |> nrow(),
     score_vals,
     biomarker_labels = names(biomarker_levels),
+    biomarker_groups = NULL,
     biomarker_levels = NULL,
-    biomarker_event_names = get_biomarker_event_names(biomarker_levels),
+    biomarker_events_table =
+      biomarker_levels |> get_biomarker_events_table(),
+    biomarker_event_names =
+      biomarker_events_table |>  pull(biomarker_level),
+    biomarker_plot_order = biomarker_event_names |> sort(),
     ml_f_EM=NULL,
     cval=FALSE,
     subtype_order=NULL,
@@ -58,7 +68,8 @@ plot_positional_var = function(
     subtype_titles=NULL,
     separate_subtypes=FALSE,
     save_path=NULL,
-    save_kwargs=NULL)
+    save_kwargs=NULL,
+    synchronize_y_axes = TRUE)
 {
 
   # Get the number of subtypes
@@ -152,51 +163,89 @@ plot_positional_var = function(
   {
     # Create the figure and axis for this subtype loop
 
+    # confus_matrix_c =
+    #   samples_sequence[subtype_order[i],,] |>
+    #   t() |>
+    #   compute_heatmap(
+    #     biomarker_labels = biomarker_labels,
+    #     colour_mat = colour_mat,
+    #     stage_biomarker_index = stage_biomarker_index,
+    #     stage_score = stage_score,
+    #     biomarker_event_names =
+    #       biomarker_event_names
+    #   )
+
+    if (!is.null(subtype_titles))
+    {
+      title_i = subtype_titles[i]
+    } else
+    {
+      title_i = get_title_i(
+        samples_f,
+        subtype_order,
+        n_samples,
+        cval,
+        i
+      )
+    }
+
+    # heatmap_table =
+    #   confus_matrix_c |>
+    #   as.data.frame.table() |>
+    #   as_tibble() |>
+    #   pivot_wider(
+    #     id_cols = c("biomarker","SuStaIn.Stage"),
+    #     names_from = "color",
+    #     values_from = "Freq") |>
+    #   arrange(biomarker, SuStaIn.Stage)
+    #
+    # # Plot the colourized matrix
+    #
+    # plot1 =
+    #   heatmap_table |>
+    #   heatmap_table_to_plot() +
+    #   ggtitle(title_i)
+
     PFs =
       samples_sequence[subtype_order[i],,] |>
       t() |>
-      compute_position_frequencies()
-
-
-
-
-    confus_matrix_c =
-      samples_sequence[subtype_order[i],,] |>
-      t() |>
-      compute_heatmap(
-        biomarker_labels = biomarker_labels,
-        colour_mat = colour_mat,
-        stage_biomarker_index = stage_biomarker_index,
-        stage_score = stage_score
+      compute_position_frequencies() |>
+      # get biomarker names
+      left_join(
+        biomarker_events_table,
+        by = c("event name" = "biomarker_level")
+      ) |>
+      # get biomarker groups and colors
+      left_join(
+        biomarker_groups,
+        by = c("biomarker")
+      ) |>
+      arrange_position_frequencies(
+        biomarker_order = biomarker_plot_order
+      ) |>
+      mutate(
+        `event name` =
+          glue("<i style='color:{group_color}'>{`event name`}</i>"),
+        `event name` = factor(`event name`, levels = `event name` |> unique())
       )
 
-    title_i = get_title_i(
-      subtype_titles,
-      samples_f,
-      subtype_order,
-      n_samples,
-      cval
-    )
 
-    heatmap_table =
-      confus_matrix_c |>
-      as.data.frame.table() |>
-      as_tibble() |>
-      pivot_wider(
-        id_cols = c("biomarker","SuStaIn.Stage"),
-        names_from = "color",
-        values_from = "Freq") |>
-      arrange(biomarker, SuStaIn.Stage)
+    if(synchronize_y_axes)
+    {
+      biomarker_plot_order = PFs |> attr("biomarker_order")
+    }
 
-    # Plot the colourized matrix
-
-    plot1 =
-      heatmap_table |>
-      heatmap_table_to_plot() +
+    PF.plot =
+      PFs  |>
+      plot.PF() +
       ggtitle(title_i)
 
 
-    figs[[i]] = plot1
+    figs[[i]] = structure(
+      PF.plot,
+      biomarker_order = PFs |> attr("biomarker_order"),
+      # alt_plot = plot1,
+      title = title_i)
     #https://medium.com/@tobias.stalder.geo/plot-rgb-satellite-imagery-in-true-color-with-ggplot2-in-r-10bdb0e4dd1f
 
   }
