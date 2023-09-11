@@ -126,10 +126,10 @@ compile_biomarker_group_list = function()
       cancer = cancer_vars,
       mri = mri_vars,
       scores = scores,
-      scid = scid_vars
-      # scl90 = scl90_vars,
-      # cantab = cantab_vars,
-      # thyroid = thyroid_vars,
+      scid = scid_vars,
+      scl90 = scl90_vars,
+      cantab = cantab_vars,
+      thyroid = thyroid_vars
       # kinesia = kinesia_vars
     )
 
