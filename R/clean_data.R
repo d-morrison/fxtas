@@ -11,9 +11,11 @@ clean_data = function(dataset)
 
     fix_onset_age_vars() |>
 
+    clean_kinesia() |>
     # includes BDS, MMSE
     make_vars_numeric(regex = "score", ignore.case = TRUE) |>
 
+    make_vars_numeric(regex = "Purdue pegboard") |>
     make_vars_numeric(regex = "SCL90") |>
     categorize_SCL90() |>
 

@@ -87,6 +87,14 @@ scid_vars =
     "Primary Psychotic Symptoms (PS01), Lifetime"
   )
 
+cantab_vars = c(
+  "SWM Between errors*",
+  # "SST Median correct RT on GO trials*",
+  "RVP A signal detection*",
+  # "OTS Problems solved on first choice*",
+  "PAL Total errors (adjusted)*",
+  "RTI Five-choice movement time*") 
+
 scores = 
   c(
     "MMSE Total Score*",
@@ -115,6 +123,30 @@ scl90_vars =
     pattern = "^SCL90.*\\*$") |> 
   sort()
 
+thyroid_vars = c(
+  "Hypothyroid",
+  "Hyperthyroid",
+  "Thyroid problems",
+  "Lupus",
+  "Rheumatoid arthritis",
+  "Multiple Sclerosis: Workup",
+  "ANA positive",
+  "Sjogrens Syndrome",
+  "Raynauds Syndrome",
+  "Pulmonary Fibrosis"
+  # "Immunological Notes"
+  
+  
+)
+kinesia_vars = c(
+      "Left: Rest Tremor",
+      "Left: Postural Tremor",
+      "Left: Kinetic Tremor",
+      "Right: Rest Tremor",
+      "Right: Postural Tremor",
+      "Right: Kinetic Tremor"
+    )
+
 biomarker_group_list = 
   list(
     tremors = names(tremors),
@@ -126,7 +158,9 @@ biomarker_group_list =
     scores = scores,
     scid = scid_vars,
     scl90 = scl90_vars,
-    
+    cantab = cantab_vars,
+    thyroid = thyroid_vars,
+    kinesia = kinesia_vars
   )
 
 biomarker_group_colors = 
@@ -135,7 +169,7 @@ biomarker_group_colors =
     # group_color = rainbow()
     group_color = 
       length(biomarker_group_list) |> 
-      RColorBrewer::brewer.pal(n = _, name = "Dark2")
+      RColorBrewer::brewer.pal(n = _, name = "Set3")
   )
 
 biomarker_groups = 
@@ -278,12 +312,12 @@ for (i in biomarker_varnames)
 ```{r}
 #| label: "set run parameters"
 N_startpoints = 10L
-N_S_max = 4L
+N_S_max = 5L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
 root_dir = here::here()
 setwd(root_dir)
-output_folder = "output/output.long" |> fs::dir_create()
+output_folder = "output/output.longer" |> fs::dir_create()
 print(output_folder)
 ```
 

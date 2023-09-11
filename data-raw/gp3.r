@@ -294,7 +294,7 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
 
            new_mds_med_anes1="Anesthesia (new_mds_med_anes1)",
            medic_surg_anes="Anesthesia (medic_surg_anes)",
-           pp_t1rlb_total ="1st Trial Total, R+L+B",
+           pp_t1rlb_total ="Purdue pegboard 1st Trial Total, R+L+B",
            mds_med_thy ="Thyroid problems",
            # new_mds_med_thy ="Thyroid problems",
            mds_med_hyothy ="Hypothyroid",
@@ -394,7 +394,6 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            dem_eth="Primary Ethnicity",
            dem_date="Visit Date",
 
-           pp_t1rlb_total = "1st Trial Total, R+L+B",
            mds_med_thy = "Thyroid problems",
            # new_mds_med_thy = "Thyroid problems",
            mds_med_hyothy = "Hypothyroid",

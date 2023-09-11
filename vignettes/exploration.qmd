@@ -704,20 +704,59 @@ table1(
   data = visit1)
 ```
 
-## Other variables
+## Kinesia
 
-**Question:** I didn't see any variables for:
-* "Kinesia One score for Rt and Lt hands for all types of tremor." 
-* "Purdue pegboard for reaction time"
-* "MOCA"
+```{r}
+kinesia_vars = c(
+      "Left: Rest Tremor",
+      "Left: Postural Tremor",
+      "Left: Kinetic Tremor",
+      "Right: Rest Tremor",
+      "Right: Postural Tremor",
+      "Right: Kinetic Tremor"
+    )
+kinesia_vars = 
+  c(kinesia_vars,
+    paste0(kinesia_vars, "*")) |> 
+  sort()
 
-Do we have variables for these scores?
+table1(
+  NA.label = NA.label1,
+  stratified_formula(kinesia_vars, column_var),
+  data = visit1)
 
--   Kinesia is an assessment that was done for GP4 only. The instrument can be queried in REDCAP 
+```
 
--   MOCA also not in GP3 – drop 
 
--   Purdue – use pp_t1rlb_total; should be in both studies; not categorizable  
+## Purdue pegboard for reaction time
+
+```{r}
+
+purdue_vars = c(
+  "Purdue pegboard 1st Trial Total, R+L+B",
+  "Purdue pegboard 1st Trial Total, R+L+B: missingness"
+)
+table1(
+  NA.label = NA.label1,
+  stratified_formula(purdue_vars, column_var),
+  data = visit1)
+```
+
+
+## MOCA total score
+
+```{r}
+
+moca_vars = c(
+  "MOCA Total score",
+  "MOCA Total score: missingness"
+)
+table1(
+  NA.label = NA.label1,
+  stratified_formula(moca_vars, column_var),
+  data = visit1)
+
+```
 
 ## Demographics
 

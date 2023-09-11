@@ -7,12 +7,18 @@ library(dplyr)
 library(vroom)
 #Read Data
 dataset=vroom::vroom(
-  'inst/extdata/CTSC3704GP4GenotypeP-FXTASEventSequence10_DATA_2023-09-11_0759.csv',
+  'inst/extdata/CTSC3704GP4GenotypeP-FXTASEventSequence10_DATA_2023-09-11_1030.csv',
   col_types = cols(
     dem_date = col_date(),
     new_mds_med_can_other = col_integer(),
     new_mds_med_anes1 = col_character(),
     medic_surg_anes = col_character(),
+    kin_l_resttrem = col_double(),
+    kin_l_posttrem = col_double(),
+    kin_l_kintrem  = col_double(),
+    kin_r_resttrem = col_double(),
+    kin_r_posttrem = col_double(),
+    kin_r_kintrem  = col_double(),
     # dob = col_date(), # auto-removed
     subj_id = col_character(),
     redcap_event_name = col_character(),
@@ -291,6 +297,7 @@ labels = c(subj_id = "FXS ID",
            redcap_event_name = "Event Name",
            new_mds_med_anes1="Anesthesia (new_mds_med_anes1)",
            medic_surg_anes="Anesthesia (medic_surg_anes)",
+           pp_t1rlb_total ="Purdue pegboard 1st Trial Total, R+L+B",
            new_mds_med_can_notes ="Cancer Notes",
            new_mds_med_thy ="Thyroid problems",
            new_mds_med_hyothy ="Hypothyroid",
@@ -418,8 +425,14 @@ labels = c(subj_id = "FXS ID",
            sstmrtg = "SST Median correct RT on GO trials",
            rvpa = "RVP A signal detection",
            rtifmdmt = "RTI Five-choice movement time",
-           swmbe468 = "SWM Between errors"
-
+           swmbe468 = "SWM Between errors",
+           kin_l_resttrem="Left: Rest Tremor",
+           kin_l_posttrem="Left: Postural Tremor",
+           kin_l_kintrem ="Left: Kinetic Tremor",
+           kin_r_resttrem="Right: Rest Tremor",
+           kin_r_posttrem="Right: Postural Tremor",
+           kin_r_kintrem ="Right: Kinetic Tremor",
+           moca_tot_score ="MOCA Total score"
 )
 
 if(!isTRUE(setequal(names(dataset), names(labels)))) browser(message('why is there a mismatch?'))
