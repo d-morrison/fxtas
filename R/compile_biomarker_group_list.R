@@ -32,12 +32,12 @@ compile_biomarker_group_list = function()
   )
 
   cancer_vars =  c(
-    "Any Cancer"
-    # "Thyroid Cancer",
-    # "Skin Cancer",
-    # "Melanoma",
-    # "Prostate Cancer",
-    # "Other Cancer"
+    # "Any Cancer"
+    "Thyroid Cancer",
+    "Skin Cancer",
+    "Melanoma",
+    "Prostate Cancer",
+    "Other Cancer"
   )
 
   ataxia = c(
@@ -125,11 +125,11 @@ compile_biomarker_group_list = function()
       parkinsons = parkinsons_vars,
       cancer = cancer_vars,
       mri = mri_vars,
-      scores = scores,
-      scid = scid_vars,
-      scl90 = scl90_vars,
-      cantab = cantab_vars,
-      thyroid = thyroid_vars
+      scores = scores
+      # scid = scid_vars,
+      # scl90 = scl90_vars,
+      # cantab = cantab_vars,
+      # thyroid = thyroid_vars
       # kinesia = kinesia_vars
     )
 

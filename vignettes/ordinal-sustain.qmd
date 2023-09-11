@@ -2,7 +2,7 @@
 title: "Ordinal SuStaIn"
 format: 
   html: 
-    toc: true
+    toc: false
     cap-location: top
     number-sections: true
     code-fold: true
@@ -34,13 +34,13 @@ library(reticulate)
 ```{r}
 #| label: "set run parameters"
 N_startpoints = 10L
-N_S_max = 5L
+N_S_max = 4L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
 root_dir = here::here()
 setwd(root_dir)
 output_folder = 
-  "output/output.longer" |> 
+  "output/output.long" |> 
   fs::dir_create()
 print(output_folder)
 ```
@@ -269,7 +269,7 @@ figs = extract_figs_from_pickle(
   
   biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels) 
-print(figs[[1]])
+print(figs[[1]] + theme(aspect.ratio = 2))
 ```
 
 ## two groups
@@ -314,6 +314,7 @@ figs = extract_figs_from_pickle(
 #| layout-ncol: 3
 #| fig-height: 8
 #| fig-cap: "Confusion Matrices: 3 subgroups"
+#| column: screen-inset
 #| fig-subcap:
 #|   - "Group 1"
 #|   - "Group 2"
@@ -342,6 +343,7 @@ figs = extract_figs_from_pickle(
 #| label: "confusion matrices-4"
 #| layout-ncol: 4
 #| fig-height: 8
+#| column: screen-inset
 #| fig-cap: "Confusion Matrices: 4 subgroups"
 #| fig-subcap:
 #|   - "Group 1"
