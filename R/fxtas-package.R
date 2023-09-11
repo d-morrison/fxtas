@@ -3,6 +3,7 @@
 
 ## usethis namespace: start
 #' @importFrom fs path
+#' @importFrom ggplot2 scale_y_discrete
 #' @importFrom ggtext element_markdown
 #' @importFrom glue glue
 #' @importFrom magrittr set_names

@@ -392,7 +392,7 @@ print(figs[[1]])
 
 ```{r}
 #| label: "confusion matrices - 2 groups"
-#| layout-ncol: 1
+#| layout-ncol: 2
 #| fig-height: 8
 #| fig-cap: "Confusion Matrices: 2 subgroups"
 #| fig-subcap: 
@@ -407,8 +407,8 @@ figs = extract_figs_from_pickle(
   biomarker_plot_order = biomarker_plot_order2,
   biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels)
-print(figs[[1]])
-print(suppressMessages(figs[[2]]))
+figs |> 
+  print_PVDs()
 
 ```
 
@@ -427,7 +427,7 @@ figs = extract_figs_from_pickle(
 
 ```{r}
 #| label: "confusion matrices"
-#| layout-ncol: 1
+#| layout-ncol: 3
 #| fig-height: 8
 #| fig-cap: "Confusion Matrices: 3 subgroups"
 #| fig-subcap:
@@ -436,10 +436,9 @@ figs = extract_figs_from_pickle(
 #|   - "Group 3"
 library(ggplot2)
 
-print(figs[[1]])
-print(suppressMessages(figs[[2]]))
-# + scale_y_discrete(breaks = NULL, limits = rev)
-print(figs[[3]])
+figs |> 
+  print_PVDs()
+
 ```
 
 ## four groups
@@ -457,7 +456,7 @@ figs = extract_figs_from_pickle(
 
 ```{r}
 #| label: "confusion matrices-4"
-#| layout-ncol: 2
+#| layout-ncol: 4
 #| fig-height: 8
 #| fig-cap: "Confusion Matrices: 4 subgroups"
 #| fig-subcap:
@@ -465,13 +464,8 @@ figs = extract_figs_from_pickle(
 #|   - "Group 2"
 #|   - "Group 3"
 #|   - "Group 4"
-library(ggplot2)
-
-print(figs[[1]])
-print(suppressMessages(figs[[2]]))
-# + scale_y_discrete(breaks = NULL, limits = rev)
-print(figs[[3]])
-print(figs[[4]])
+figs |> 
+  print_PVDs()
 ```
 
 

@@ -496,7 +496,7 @@ if(FALSE)
   # label(dataset$mds_med_mswk)="Multiple Sclerosis: Workup"
   # label(dataset$new_mds_med_ana)="ANA positive"
   # label(dataset$mds_med_sjo)="Sjogrens Syndrome"
-  # label(dataset$mds_med_ray)="Raynauds disease"
+  # label(dataset$mds_med_ray)="Raynauds Syndrome"
   # label(dataset$new_mds_med_pulm)="Pulmonary Fibrosis"
   # label(dataset$mds_med_ido_notes)="Other immunological disease & other symptoms: list"
   # label(dataset$mri_cere_atr)="Cerebral Atrophy"
