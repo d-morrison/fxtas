@@ -281,7 +281,8 @@ prob_score0 = compute_prob_scores(
   biomarker_varnames,
   ModelScores,
   DataScores,
-  prob_dist
+  prob_dist,
+  verbose = TRUE
 )
 
 prob_nl = prob_score0[,,1]

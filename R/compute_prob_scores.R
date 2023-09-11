@@ -14,7 +14,8 @@ compute_prob_scores = function(
     biomarker_varnames,
     ModelScores,
     DataScores,
-    prob_dist
+    prob_dist,
+    verbose = FALSE
 )
 {
   prob_score_dims =
@@ -32,6 +33,7 @@ compute_prob_scores = function(
 
   for (biomarker in biomarker_varnames)
   {
+    if(verbose) message('computing prob scores for ', biomarker, " at ", Sys.time())
     for (datascore in DataScores)
     {
       for (modelscore in ModelScores)
