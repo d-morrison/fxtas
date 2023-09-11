@@ -32,12 +32,12 @@ compile_biomarker_group_list = function()
   )
 
   cancer_vars =  c(
-    # "Any Cancer",
-    "Thyroid Cancer",
-    "Skin Cancer",
-    "Melanoma",
-    "Prostate Cancer",
-    "Other Cancer"
+    "Any Cancer"
+    # "Thyroid Cancer",
+    # "Skin Cancer",
+    # "Melanoma",
+    # "Prostate Cancer",
+    # "Other Cancer"
   )
 
   ataxia = c(
@@ -71,17 +71,17 @@ compile_biomarker_group_list = function()
       "BDS-2 Total Score*")
 
   thyroid_vars = c(
-    "Hypothyroid",
-    "Hyperthyroid",
-    "Thyroid problems",
-    "Lupus",
-    "Rheumatoid arthritis",
-    "Multiple Sclerosis: Workup",
-    "ANA positive",
-    "Sjogrens Syndrome",
-    "Raynauds Syndrome"
-    # "Pulmonary Fibrosis" # none
-    # "Immunological Notes"
+    # "Hypothyroid",
+    # "Hyperthyroid",
+    "Thyroid problems"
+    # "Lupus",
+    # "Rheumatoid arthritis",
+    # "Multiple Sclerosis: Workup",
+    # "ANA positive",
+    # "Sjogrens Syndrome",
+    # "Raynauds Syndrome"
+    ## "Pulmonary Fibrosis" # none
+    ## "Immunological Notes"
 
 
   )
@@ -98,23 +98,23 @@ compile_biomarker_group_list = function()
     "Hyperthyroid",
     "Thyroid problems",
     "Lupus",
-    "Rheumatoid arthritis",
-    "Multiple Sclerosis: Workup",
-    "ANA positive",
-    "Sjogrens Syndrome",
-    "Raynauds Syndrome",
-    "Pulmonary Fibrosis"
-    # "Immunological Notes"
+    "Rheumatoid arthritis"
+    # "Multiple Sclerosis: Workup",
+    # "ANA positive",
+    # "Sjogrens Syndrome",
+    # "Raynauds Syndrome",
+    # "Pulmonary Fibrosis"
+    ## "Immunological Notes"
 
 
   )
   kinesia_vars = c(
-    "Left: Rest Tremor",
-    "Left: Postural Tremor",
-    "Left: Kinetic Tremor",
-    "Right: Rest Tremor",
-    "Right: Postural Tremor",
-    "Right: Kinetic Tremor"
+    "Kinesia Left Rest Tremor*",
+    "Kinesia Left Postural Tremor*",
+    "Kinesia Left Kinetic Tremor*",
+    "Kinesia Right Rest Tremor*",
+    "Kinesia Right Postural Tremor*",
+    "Kinesia Right Kinetic Tremor*"
   )
 
   biomarker_group_list =
@@ -126,11 +126,11 @@ compile_biomarker_group_list = function()
       cancer = cancer_vars,
       mri = mri_vars,
       scores = scores,
-      scid = scid_vars,
-      scl90 = scl90_vars,
-      cantab = cantab_vars,
-      thyroid = thyroid_vars,
-      kinesia = kinesia_vars
+      scid = scid_vars
+      # scl90 = scl90_vars,
+      # cantab = cantab_vars,
+      # thyroid = thyroid_vars,
+      # kinesia = kinesia_vars
     )
 
 }

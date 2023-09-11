@@ -31,6 +31,19 @@ library(reticulate)
 # reticulate::use_condaenv(condaenv = "fxtas")
 ```
 
+```{r}
+#| label: "set run parameters"
+N_startpoints = 10L
+N_S_max = 5L
+N_iterations_MCMC = 1e5L
+dataset_name = 'sample_data'
+root_dir = here::here()
+setwd(root_dir)
+output_folder = 
+  "output/output.longer" |> 
+  fs::dir_create()
+print(output_folder)
+```
 
 # Import data
 
@@ -81,6 +94,9 @@ df =
 biomarker_levels = 
   lapply(df[,biomarker_varnames], F = levels)
 
+```
+
+```{r}
 biomarker_events_table =
   biomarker_levels |> 
   get_biomarker_events_table() |> 
@@ -89,6 +105,7 @@ biomarker_events_table =
     by = "biomarker"
   ) |> 
   arrange(biomarker_group, biomarker, biomarker_level)
+
 biomarker_plot_order =
   biomarker_events_table |>  pull(biomarker_level)
 
@@ -124,6 +141,7 @@ ModelScores = DataScores =
   # lapply(F = levels)
   compute_score_levels()
 
+
 control_data = 
   df |> 
   filter(`FX*` == "CGG < 55") |> 
@@ -156,14 +174,13 @@ prob_score_dist = prob_dist[-1, , ]
 ```{r}
 
 prob_score0 = compute_prob_scores(
-  dataset = patient_data,
-  biomarker_varnames,
-  ModelScores,
-  DataScores,
-  prob_dist,
-  verbose = TRUE
-)
-
+    dataset = patient_data,
+    biomarker_varnames,
+    ModelScores,
+    DataScores,
+    prob_dist
+  )
+ 
 prob_nl = prob_score0[,,1]
 prob_score = prob_score0[,,-1, drop = FALSE]
 
@@ -188,18 +205,6 @@ for (i in biomarker_varnames)
 ```
 
 # Run SuStaIn model
-
-```{r}
-#| label: "set run parameters"
-N_startpoints = 10L
-N_S_max = 5L
-N_iterations_MCMC = 1e5L
-dataset_name = 'sample_data'
-root_dir = here::here()
-setwd(root_dir)
-output_folder = "output/output.longer" |> fs::dir_create()
-print(output_folder)
-```
 
 ```{python "initialize-model"}
 

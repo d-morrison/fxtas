@@ -426,12 +426,12 @@ labels = c(subj_id = "FXS ID",
            rvpa = "RVP A signal detection",
            rtifmdmt = "RTI Five-choice movement time",
            swmbe468 = "SWM Between errors",
-           kin_l_resttrem="Left: Rest Tremor",
-           kin_l_posttrem="Left: Postural Tremor",
-           kin_l_kintrem ="Left: Kinetic Tremor",
-           kin_r_resttrem="Right: Rest Tremor",
-           kin_r_posttrem="Right: Postural Tremor",
-           kin_r_kintrem ="Right: Kinetic Tremor",
+           kin_l_resttrem="Kinesia Left Rest Tremor",
+           kin_l_posttrem="Kinesia Left Postural Tremor",
+           kin_l_kintrem ="Kinesia Left Kinetic Tremor",
+           kin_r_resttrem="Kinesia Right Rest Tremor",
+           kin_r_posttrem="Kinesia Right Postural Tremor",
+           kin_r_kintrem ="Kinesia Right Kinetic Tremor",
            moca_tot_score ="MOCA Total score"
 )
 

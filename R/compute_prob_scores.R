@@ -31,6 +31,12 @@ compute_prob_scores = function(
     dimnames = prob_score_dims
   )
 
+  if(verbose)
+  {
+    message("dim(prob_score0) = ")
+    print(dim(prob_score0))
+  }
+
   for (biomarker in biomarker_varnames)
   {
     if(verbose) message('computing prob scores for ', biomarker, " at ", Sys.time())

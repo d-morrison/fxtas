@@ -1,12 +1,12 @@
 clean_kinesia = function(
     data,
     kinesia_vars = c(
-      "Left: Rest Tremor",
-      "Left: Postural Tremor",
-      "Left: Kinetic Tremor",
-      "Right: Rest Tremor",
-      "Right: Postural Tremor",
-      "Right: Kinetic Tremor"
+      "Kinesia Left Rest Tremor",
+      "Kinesia Left Postural Tremor",
+      "Kinesia Left Kinetic Tremor",
+      "Kinesia Right Rest Tremor",
+      "Kinesia Right Postural Tremor",
+      "Kinesia Right Kinetic Tremor"
     ))
 {
   data |>
