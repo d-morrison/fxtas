@@ -4,7 +4,7 @@ format:
   html: 
     author: 
       - name: Ezra Morrison
-        email: <demorrison@ucdavis.edu>
+        email: demorrison@ucdavis.edu
       - Matt Ponzini
       - Kyoungmi Kim
     toc: false
@@ -14,13 +14,13 @@ format:
     echo: false
     date: last-modified
     date-format: "[Last modified:] YYYY-MM-DD: H:mm:ss (A)"
-    bibiliography: references.bib
+    bibliography: references.bib
 
 project:
   execute-dir: project
 ---
 
-Here, we apply the Ordinal SuStaIn (**Su**btype and **St**age **In**ference) algorithm (@young2021ordinal) to find event sequences for FXTAS patients.
+Here, we apply the Ordinal SuStaIn (**Su**btype and **St**age **In**ference) algorithm [@young2021ordinal] to find event sequences for FXTAS patients.
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
