@@ -5,10 +5,11 @@ clean_data = function(dataset)
     remove_unneeded_records() |>
     relocate(`Visit Date`, .after = `Event Name`) |>
     clean_head_tremor_onset() |>
-    fix_onset_age_vars() |>
 
     create_any_tremor() |>
     fix_tremor_onsets() |>
+
+    fix_onset_age_vars() |>
 
     # includes BDS, MMSE
     make_vars_numeric(regex = "score", ignore.case = TRUE) |>
@@ -41,6 +42,8 @@ clean_data = function(dataset)
     fix_demographics() |>
 
     clean_MRI_vars() |>
+
+    clean_cantab() |>
 
     fix_factors() |>
 

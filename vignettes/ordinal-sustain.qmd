@@ -76,6 +76,17 @@ ataxia = c(
   # grep("Parkinson", value = TRUE, names(visit1))
 )
 
+scid_vars = 
+  vars = c(
+    "Bipolar I Disorder (MD01), Lifetime",
+    "Bipolar II Disorder (MD02), Lifetime",
+    "Other Bipolar Disorder (MD03), Lifetime",
+    "Major Depressive Disorder (MD04), Lifetime",
+    "Mood Disorder Due to GMC (MD07), Lifetime",
+    "Substance-Induced Mood Dis. (MD08), Lifetime",
+    "Primary Psychotic Symptoms (PS01), Lifetime"
+  )
+
 scores = 
   c(
     "MMSE Total Score*",
@@ -97,6 +108,13 @@ thyroid_vars = c(
   
 )
 
+scl90_vars = 
+  grep(
+    value = TRUE, 
+    names(gp34), 
+    pattern = "^SCL90.*\\*$") |> 
+  sort()
+
 biomarker_group_list = 
   list(
     tremors = names(tremors),
@@ -105,9 +123,11 @@ biomarker_group_list =
     parkinsons = parkinsons_vars,
     cancer = cancer_vars,
     mri = mri_vars,
-    scores = scores
+    scores = scores,
+    scid = scid_vars,
+    scl90 = scl90_vars,
     
-    )
+  )
 
 biomarker_group_colors = 
   tibble(
@@ -327,7 +347,7 @@ figs = extract_figs_from_pickle(
   output_folder = output_folder,
   score_vals = score_vals,
   biomarker_plot_order = NULL,
-    
+  
   biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels) 
 print(figs[[1]])

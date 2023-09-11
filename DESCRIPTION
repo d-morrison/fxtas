@@ -22,6 +22,7 @@ Imports:
     shiny (>= 1.7.2),
     tibble,
     tidyr,
+    tidyselect,
     viridis
 Suggests: 
     formulaic,

@@ -5,7 +5,7 @@
 #' @return
 #' @export
 #'
-relabel_factor_missing_codes = function(x)
+relabel_numeric_missing_codes = function(x)
 {
 
   output =
@@ -23,21 +23,11 @@ relabel_factor_missing_codes = function(x)
       after = Inf) |>
     forcats::fct_recode(
       "Asked by clinician, but no answer from subject (99)" = "99" ,
-
-      # "Question not asked at time of data entry; check records (777)" = "777",
-      # "NA (888)" = "888",
-      # "No Response (999)" = "999"
-      "No" = "777",
-      "No" = "888",
-      "No" = "999",
-      "No" = "Question not asked at time of data entry; check records (777)",
-      "No" = "NA (888)",
-      "No" = "No Response (999)",
-      "None" = "Missing/Refused (999)"
-
+      "Question not asked at time of data entry; check records (777)" = "777",
+      "NA (888)" = "888",
+      "No Response (999)" = "999"
     ) |>
-    fct_na_level_to_value(
-      extra_levels = "Inadequate Info") |>
+    fct_na_level_to_value() |>
     droplevels() |>
     suppressWarnings()
 
