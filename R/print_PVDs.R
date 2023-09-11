@@ -15,7 +15,7 @@ print_PVDs = function(figs)
     for (i in 2:length(figs))
     {
       {
-        figs[[i]] + scale_y_discrete(breaks = NULL, limits = rev)
+        figs[[i]] #  + scale_y_discrete(breaks = NULL, limits = rev)
       } |>
         suppressMessages() |>
         print()

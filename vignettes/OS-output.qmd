@@ -41,7 +41,7 @@ dataset_name = 'sample_data'
 root_dir = here::here()
 setwd(root_dir)
 output_folder = 
-  "output/output.longest" |> 
+  "output/output.longer" |> 
   fs::dir_create()
 print(output_folder)
 ```
@@ -205,50 +205,6 @@ for (i in biomarker_varnames)
 
 ```
 
-# Run SuStaIn model
-
-```{python "initialize-model"}
-
-import pandas
-import numpy as np
-import numpy.matlib
-import matplotlib.pyplot as plt
-import seaborn as sns
-import sys
-import scipy
-from glob import glob
-import pySuStaIn
-import os
-
-print(os.getcwd())
-os.chdir(r.root_dir)
-print(os.getcwd())
-
-sustain_input = pySuStaIn.OrdinalSustain(r.prob_nl,
-r.prob_score,
-r.score_vals,
-r.SuStaInLabels,
-r.N_startpoints,
-r.N_S_max, 
-r.N_iterations_MCMC, 
-r.output_folder, 
-r.dataset_name, 
-False,
-1)
-
-```
-
-# fitting model
-
-```{python "fit-model"}
-os.chdir(r.root_dir)
-print(os.getcwd())
-[samples_sequence, samples_f,
-ml_subtype, prob_ml_subtype, ml_stage,
-prob_ml_stage, prob_subtype_stage,
-samples_likelihood] = sustain_input.run_sustain_algorithm(plot=False)
-```
-
 # graph confusion matrices in R
 
 ## one group
@@ -256,7 +212,7 @@ samples_likelihood] = sustain_input.run_sustain_algorithm(plot=False)
 ```{r}
 #| label: "confusion matrices - 1 group"
 #| column: screen-inset
-#| fig-height: 10
+#| fig-height: 15
 #| fig-cap: "Confusion Matrices: 1 subgroup"
 
 figs = extract_figs_from_pickle(
@@ -276,7 +232,7 @@ print(figs[[1]])
 ```{r}
 #| label: "confusion matrices - 2 groups"
 #| layout-ncol: 1
-#| fig-height: 10
+#| fig-height: 15
 #| fig-cap: "Confusion Matrices: 2 subgroups"
 #| column: screen-inset
 #| fig-subcap: 
@@ -293,74 +249,5 @@ figs = extract_figs_from_pickle(
   biomarker_levels = biomarker_levels)
 figs |> 
   print_PVDs()
-
-```
-
-## three groups
-
-```{r}
-figs = extract_figs_from_pickle(
-  n_s = 3,
-  dataset_name = dataset_name,
-  output_folder = output_folder,
-  score_vals = score_vals,
-  biomarker_plot_order = biomarker_plot_order2,
-  biomarker_groups = biomarker_groups,
-  biomarker_levels = biomarker_levels)
-```
-
-```{r}
-#| label: "confusion matrices"
-#| layout-ncol: 1
-#| fig-height: 10
-#| fig-cap: "Confusion Matrices: 3 subgroups"
-#| column: screen-inset
-#| fig-subcap:
-#|   - "Group 1"
-#|   - "Group 2"
-#|   - "Group 3"
-library(ggplot2)
-
-figs |> 
-  print_PVDs()
-
-```
-
-## four groups
-
-```{r}
-figs = extract_figs_from_pickle(
-  n_s = 4,
-  dataset_name = dataset_name,
-  output_folder = output_folder,
-  score_vals = score_vals,
-  biomarker_plot_order = biomarker_plot_order2,
-  biomarker_groups = biomarker_groups,
-  biomarker_levels = biomarker_levels)
-```
-
-```{r}
-#| label: "confusion matrices-4"
-#| layout-ncol: 1
-#| fig-height: 10
-#| column: screen-inset
-#| fig-cap: "Confusion Matrices: 4 subgroups"
-#| fig-subcap:
-#|   - "Group 1"
-#|   - "Group 2"
-#|   - "Group 3"
-#|   - "Group 4"
-figs |> 
-  print_PVDs()
-```
-
-
-# graph likelihoods in R
-
-```{r}
-#| fig-height: 4
-py$samples_likelihood |>
-  graph_likelihoods_v2(alpha = 0.5) |>
-  suppressWarnings()
 
 ```

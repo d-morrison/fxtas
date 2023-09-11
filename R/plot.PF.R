@@ -1,8 +1,8 @@
-plot.PF = function(PFs)
+plot.PF = function(PFs, size.y = 12)
 {
   PFs |>
     mutate(
-      position = factor(position, levels = 1:n_distinct(position))
+      # position = factor(position, levels = 1:n_distinct(position))
     ) |>
     ggplot(
       aes(
@@ -20,7 +20,7 @@ plot.PF = function(PFs)
     theme(
       legend.position = "bottom",
       axis.text.y =
-        element_markdown(hjust=0)
+        element_markdown(hjust=0, size = size.y)
     ) +
     labs(fill = "Pr(stage)")
 }

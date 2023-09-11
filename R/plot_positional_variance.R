@@ -69,7 +69,8 @@ plot_positional_var = function(
     separate_subtypes=FALSE,
     save_path=NULL,
     save_kwargs=NULL,
-    synchronize_y_axes = TRUE)
+    synchronize_y_axes = TRUE,
+    ...)
 {
 
   # Get the number of subtypes
@@ -237,7 +238,7 @@ plot_positional_var = function(
 
     PF.plot =
       PFs  |>
-      plot.PF() +
+      plot.PF(...) +
       ggtitle(title_i)
 
 
