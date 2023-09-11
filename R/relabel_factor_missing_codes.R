@@ -8,7 +8,8 @@
 relabel_factor_missing_codes = function(x)
 {
 
-  x |>
+  output =
+    x |>
     forcats::fct_relevel(
       "99" ,
       "777",
@@ -21,7 +22,7 @@ relabel_factor_missing_codes = function(x)
       "[Valid numeric data recorded]",
       after = Inf) |>
     forcats::fct_recode(
-      "asked by clinician, but no answer from subject" = "99" ,
+      "Asked by clinician, but no answer from subject (99)" = "99" ,
 
       # "Question not asked at time of data entry; check records (777)" = "777",
       # "NA (888)" = "888",
@@ -35,6 +36,9 @@ relabel_factor_missing_codes = function(x)
       "None" = "Missing/Refused (999)"
 
     ) |>
+    fct_na_level_to_value(
+      extra_levels = "Inadequate Info") |>
+    droplevels() |>
     suppressWarnings()
 
 }

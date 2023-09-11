@@ -8,7 +8,11 @@ output
 output.FXTAS
 output*
 vignettes/output*
+*.rmarkdown
+*_files/
 fxtas.Rcheck/
 fxtas*.tar.gz
 fxtas*.tgz
+miniconda
 .Rhistory
+/.quarto/

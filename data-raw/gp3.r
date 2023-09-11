@@ -7,7 +7,7 @@ library(dplyr)
 library(vroom)
 #Read Data
 dataset=vroom::vroom(
-  'inst/extdata/GPGenotypePhenotypeR-FXTASEventSequence10_DATA_2023-03-09_1125.csv',
+  'inst/extdata/GPGenotypePhenotypeR-FXTASEventSequence10_DATA_2023-09-11_0756.csv',
   col_types = cols(
     dem_date = col_date(),
     mds_med_ca_other = col_character(),
@@ -209,11 +209,11 @@ dataset$scid_ps01lif = factor(dataset$scid_ps01lif,levels=c("777","1","2","3"))
 levels(dataset$scid_admin)=c("No","Yes","Follow up","N/A")
 levels(dataset$new_mds_med_anes1)=c("Local","General","None","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
 levels(dataset$medic_surg_anes)=c("None","Local","General","Other","Missing/Refused (999)")
-levels(dataset$mds_med_thy)=c("No","Yes","No Response (999)","NA","Question not asked at time of data entry; check records")
+levels(dataset$mds_med_thy)=c("No","Yes","No Response (999)","NA","Question not asked at time of data entry; check records (777)")
 # levels(dataset$new_mds_med_thy)=c("No","Yes","No Response (999)","NA","Question not asked at time of data entry; check records")
-levels(dataset$mds_med_hyothy)=c("No","Yes","No Response (999)","NA","Question not asked at time of data entry; check records")
+levels(dataset$mds_med_hyothy)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
 # levels(dataset$new_mds_med_hyothy)=c("No","Yes","No Response (999)","NA","Question not asked at time of data entry; check records")
-levels(dataset$mds_med_hyethy)=c("No","Yes","No Response (999)","NA","Question not asked at time of data entry; check records")
+levels(dataset$mds_med_hyethy)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
 # levels(dataset$new_mds_med_hyethy)=c("No","Yes","No Response (999)","NA","Question not asked at time of data entry; check records")
 
 levels(dataset$scid_admin)=c("No","Yes","Follow up","N/A")
@@ -294,7 +294,7 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
 
            new_mds_med_anes1="Anesthesia (new_mds_med_anes1)",
            medic_surg_anes="Anesthesia (medic_surg_anes)",
-           pp_t1rlb_total ="1st Trial Total, R+L+B",
+           pp_t1rlb_total ="Purdue pegboard 1st Trial Total, R+L+B",
            mds_med_thy ="Thyroid problems",
            # new_mds_med_thy ="Thyroid problems",
            mds_med_hyothy ="Hypothyroid",
@@ -374,7 +374,7 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            mds_med_mswk = "Multiple Sclerosis: Workup",
            new_mds_med_ana = "ANA positive",
            mds_med_sjo = "Sjogrens Syndrome",
-           mds_med_ray = "Raynauds disease",
+           mds_med_ray = "Raynauds Syndrome",
            new_mds_med_pulm = "Pulmonary Fibrosis",
            mds_med_ido_notes = "Other immunological disease & other symptoms: list",
 
@@ -394,7 +394,6 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            dem_eth="Primary Ethnicity",
            dem_date="Visit Date",
 
-           pp_t1rlb_total = "1st Trial Total, R+L+B",
            mds_med_thy = "Thyroid problems",
            # new_mds_med_thy = "Thyroid problems",
            mds_med_hyothy = "Hypothyroid",
@@ -497,7 +496,7 @@ if(FALSE)
   # label(dataset$mds_med_mswk)="Multiple Sclerosis: Workup"
   # label(dataset$new_mds_med_ana)="ANA positive"
   # label(dataset$mds_med_sjo)="Sjogrens Syndrome"
-  # label(dataset$mds_med_ray)="Raynauds disease"
+  # label(dataset$mds_med_ray)="Raynauds Syndrome"
   # label(dataset$new_mds_med_pulm)="Pulmonary Fibrosis"
   # label(dataset$mds_med_ido_notes)="Other immunological disease & other symptoms: list"
   # label(dataset$mri_cere_atr)="Cerebral Atrophy"
