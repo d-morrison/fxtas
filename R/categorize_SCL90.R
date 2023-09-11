@@ -2,7 +2,8 @@ categorize_SCL90 = function(
     dataset)
 {
 
-  dataset |>
+  to_return =
+    dataset |>
     mutate(
       across(
         contains("SCL", ignore.case = FALSE) &
@@ -11,8 +12,12 @@ categorize_SCL90 = function(
           if_else(
             x >= 60,
             "60+",
-            "<60"),
+            "<60") |>
+          factor() |>
+          relevel(ref = "<60"),
         .names = "{.col}*")
     )
+
+  return(to_return)
 
 }

@@ -21,6 +21,8 @@ create_any_cancer = function(
           .fns = ~ is.na(.)
         ) ~ NA,
         TRUE ~ "No cancers recorded"
-      )
+      ) |>
+        factor() |>
+        relevel(ref = "No cancers recorded")
     )
 }

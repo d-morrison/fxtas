@@ -20,6 +20,8 @@ create_any_tremor = function(
           .fns = ~ is.na(.)
         ) ~ NA,
         TRUE ~ "No tremors recorded"
-      )
+      ) |>
+        factor() |>
+        relevel(ref = "No tremors recorded")
     )
 }

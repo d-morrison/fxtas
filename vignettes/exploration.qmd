@@ -523,20 +523,7 @@ table1(
 
 ## SCL90
 
-**Question:** What should we do with missing codes and blanks?  
-
-No data.  
-
-**Question:** Do we want to include "SCL90: Interpersonal Sensitivity" (was included in data extract, wasn't on Word doc list)?  
-
-Yes.  
-
-Ellery to look up scale cutoffs 
-
-Followup: Randi said: 
-
-  -   40-59 is average  
-  -   60+ is clinically elevated 
+For SCL90 scores, missing codes and blanks are treated as no data. For analysis with the Ordinal SuStaIn method, we dichotomized each score as clinically elevated (60+) vs not.
 
 ```{r}
 

@@ -95,6 +95,10 @@ biomarker_plot_order =
 nlevs = 
   sapply(biomarker_levels, length)
 
+```
+
+
+```{r "convert factors to numeric"}
 df = df |>
   mutate(
     across(

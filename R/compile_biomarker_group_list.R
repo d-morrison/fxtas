@@ -6,12 +6,12 @@
 compile_biomarker_group_list = function()
 {
   tremors = c(
-    "Head tremor" = 1,
-    "Intention tremor" = 1,
-    "Resting tremor" = 1,
-    "Postural tremor" = 1,
-    "Intermittent tremor" = 1
-    # "Any tremor" = 1
+    "Head tremor",
+    "Intention tremor",
+    "Resting tremor",
+    "Postural tremor",
+    "Intermittent tremor"
+    # "Any tremor"
   )
 
   parkinsons_vars =
@@ -32,6 +32,7 @@ compile_biomarker_group_list = function()
   )
 
   cancer_vars =  c(
+    # "Any Cancer",
     "Thyroid Cancer",
     "Skin Cancer",
     "Melanoma",
@@ -52,7 +53,7 @@ compile_biomarker_group_list = function()
       "Other Bipolar Disorder (MD03), Lifetime",
       "Major Depressive Disorder (MD04), Lifetime",
       "Mood Disorder Due to GMC (MD07), Lifetime",
-      "Substance-Induced Mood Dis. (MD08), Lifetime",
+      # "Substance-Induced Mood Dis. (MD08), Lifetime", # no positives
       "Primary Psychotic Symptoms (PS01), Lifetime"
     )
 
@@ -118,7 +119,7 @@ compile_biomarker_group_list = function()
 
   biomarker_group_list =
     list(
-      tremors = names(tremors),
+      tremors = tremors,
       ataxia = ataxia,
       stage = "FXTAS Stage (0-5)*",
       parkinsons = parkinsons_vars,
