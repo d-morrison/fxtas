@@ -35,7 +35,8 @@ plot_positional_var(
   separate_subtypes = FALSE,
   save_path = NULL,
   save_kwargs = NULL,
-  synchronize_y_axes = TRUE
+  synchronize_y_axes = TRUE,
+  ...
 )
 }
 \arguments{

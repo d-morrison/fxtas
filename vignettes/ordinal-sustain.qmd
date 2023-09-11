@@ -41,7 +41,7 @@ dataset_name = 'sample_data'
 root_dir = here::here()
 setwd(root_dir)
 output_folder = 
-  "output/output.longest" |> 
+  "output/output.longer" |> 
   fs::dir_create()
 print(output_folder)
 ```

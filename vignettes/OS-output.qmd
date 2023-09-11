@@ -1,15 +1,26 @@
 ---
-title: "Ordinal SuStaIn"
+title: "FXTAS sequence analysis"
 format: 
   html: 
+    author: 
+      - name: Ezra Morrison
+        email: <demorrison@ucdavis.edu>
+      - Matt Ponzini
+      - Kyoungmi Kim
     toc: false
     cap-location: top
     number-sections: true
     code-fold: true
     echo: false
+    date: last-modified
+    date-format: "[Last modified:] YYYY-MM-DD: H:mm:ss (A)"
+    bibiliography: references.bib
+
 project:
   execute-dir: project
 ---
+
+Here, we apply the Ordinal SuStaIn (**Su**btype and **St**age **In**ference) algorithm (@young2021ordinal) to find event sequences for FXTAS patients.
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -22,7 +33,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-
+#| message: false
 devtools::load_all()
 library(tidyverse)
 library(reticulate)
@@ -43,10 +54,9 @@ setwd(root_dir)
 output_folder = 
   "output/output.longer" |> 
   fs::dir_create()
-print(output_folder)
-```
 
-# Import data
+synchronize_y_axes = FALSE
+```
 
 ```{r}
 
@@ -126,14 +136,6 @@ df = df |>
 
 ```
 
-# Set up data for new version of SuStaIn
-The objective here is two create to variables:
-
-* `p_NL` -- a subject x region matrix indicating the p that a region is normal for a subject.
-* `p_score` -- a subject x (region * score) matrix indicating p that a region is a given score.
-
-Ps should be non-zero. 
-
 ```{r}
 
 ModelScores = DataScores = 
@@ -205,9 +207,9 @@ for (i in biomarker_varnames)
 
 ```
 
-# graph confusion matrices in R
+# positional variance diagrams (PVDs) by number of subgroups
 
-## one group
+## one subgroup
 
 ```{r}
 #| label: "confusion matrices - 1 group"
@@ -227,7 +229,7 @@ figs = extract_figs_from_pickle(
 print(figs[[1]])
 ```
 
-## two groups
+## two subgroups
 
 ```{r}
 #| label: "confusion matrices - 2 groups"
@@ -240,6 +242,7 @@ print(figs[[1]])
 #|   - "Group 2"
 biomarker_plot_order2 = NULL
 figs = extract_figs_from_pickle(
+  synchronize_y_axes = synchronize_y_axes,
   n_s = 2,
   dataset_name = dataset_name,
   output_folder = output_folder,
@@ -251,3 +254,8 @@ figs |>
   print_PVDs()
 
 ```
+
+## References{.unnumbered}
+
+::: {#refs}
+:::

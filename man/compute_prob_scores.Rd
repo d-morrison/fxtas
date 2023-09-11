@@ -9,7 +9,8 @@ compute_prob_scores(
   biomarker_varnames,
   ModelScores,
   DataScores,
-  prob_dist
+  prob_dist,
+  verbose = FALSE
 )
 }
 \arguments{
