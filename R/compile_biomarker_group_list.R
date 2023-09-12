@@ -32,12 +32,12 @@ compile_biomarker_group_list = function()
   )
 
   cancer_vars =  c(
-    # "Any Cancer"
-    "Thyroid Cancer",
-    "Skin Cancer",
-    "Melanoma",
-    "Prostate Cancer",
-    "Other Cancer"
+    "Any Cancer"
+    # "Thyroid Cancer",
+    # "Skin Cancer",
+    # "Melanoma",
+    # "Prostate Cancer",
+    # "Other Cancer"
   )
 
   ataxia = c(
@@ -60,7 +60,7 @@ compile_biomarker_group_list = function()
   cantab_vars = c(
     "SWM Between errors*",
     # "SST Median correct RT on GO trials*",
-    # "RVP A signal detection*", # all one way
+    "RVP A signal detection*", # all one way
     # "OTS Problems solved on first choice*",
     "PAL Total errors (adjusted)*",
     "RTI Five-choice movement time*")
