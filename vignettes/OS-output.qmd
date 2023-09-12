@@ -8,8 +8,19 @@ format:
       - Matt Ponzini
       - Kyoungmi Kim
     toc: false
+    theme:
+       light: 
+         - cosmo
+         - custom.scss
+       dark: 
+         - darkly
+         - custom.scss
     cap-location: top
+    css: custom.scss
     number-sections: true
+    number-depth: 3
+    html-math-method: mathjax
+    fig-cap-location: top
     code-fold: true
     echo: false
     date: last-modified
@@ -20,7 +31,7 @@ project:
   execute-dir: project
 ---
 
-Here, we apply the Ordinal SuStaIn (**Su**btype and **St**age **In**ference) algorithm [@young2021ordinal] to find event sequences for FXTAS patients.
+Here, we apply the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2021ordinal] to find event sequences for FXTAS patients.
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -68,7 +79,8 @@ biomarker_group_colors =
     # group_color = rainbow()
     group_color = 
       length(biomarker_group_list) |> 
-      RColorBrewer::brewer.pal(n = _, name = "Paired")
+      # RColorBrewer::brewer.pal(n = _, name = "Paired")
+      colorspace::qualitative_hcl(n = _, "Dark2")
   )
 
 biomarker_groups = 
@@ -213,9 +225,10 @@ for (i in biomarker_varnames)
 
 ```{r}
 #| label: "confusion matrices - 1 group"
-#| column: screen-inset
+#| column: screen
 #| fig-height: 15
 #| fig-cap: "Confusion Matrices: 1 subgroup"
+#| fig-cap-location: top
 
 figs = extract_figs_from_pickle(
   n_s = 1,
@@ -233,10 +246,11 @@ print(figs[[1]])
 
 ```{r}
 #| label: "confusion matrices - 2 groups"
-#| layout-ncol: 1
+#| layout-ncol: 2
 #| fig-height: 15
 #| fig-cap: "Confusion Matrices: 2 subgroups"
-#| column: screen-inset
+#| fig-cap-location: top
+#| column: screen
 #| fig-subcap: 
 #|   - "Group 1"
 #|   - "Group 2"
@@ -254,6 +268,38 @@ figs |>
   print_PVDs()
 
 ```
+
+## three groups
+
+```{r}
+figs = extract_figs_from_pickle(
+  n_s = 3,
+  dataset_name = dataset_name,
+  output_folder = output_folder,
+  score_vals = score_vals,
+  biomarker_plot_order = biomarker_plot_order2,
+  biomarker_groups = biomarker_groups,
+  biomarker_levels = biomarker_levels)
+```
+
+```{r}
+#| label: "confusion matrices - 3 groups"
+#| layout-ncol: 2
+#| fig-height: 15
+#| fig-cap: "Confusion Matrices: 3 subgroups"
+#| fig-cap-location: top
+#| column: screen
+#| fig-subcap:
+#|   - "Group 1"
+#|   - "Group 2"
+#|   - "Group 3"
+library(ggplot2)
+
+figs |> 
+  print_PVDs()
+
+```
+
 
 ## References{.unnumbered}
 

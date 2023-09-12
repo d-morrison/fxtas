@@ -2,6 +2,7 @@
 "_PACKAGE"
 
 ## usethis namespace: start
+#' @importFrom colorspace qualitative_hcl
 #' @importFrom fs path
 #' @importFrom ggplot2 scale_y_discrete
 #' @importFrom ggtext element_markdown
