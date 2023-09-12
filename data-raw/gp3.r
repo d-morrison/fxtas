@@ -6,6 +6,14 @@ library(Hmisc)
 library(dplyr)
 library(vroom)
 #Read Data
+library(conflicted)
+conflicts_prefer(vroom::cols)
+conflicts_prefer(vroom::col_date)
+conflicts_prefer(vroom::col_character)
+conflicts_prefer(vroom::col_integer)
+conflicts_prefer(vroom::col_double)
+conflicts_prefer(vroom::col_logical)
+conflicts_prefer(vroom::col_skip)
 dataset=vroom::vroom(
   'inst/extdata/GPGenotypePhenotypeR-FXTASEventSequence10_DATA_2023-09-11_0756.csv',
   col_types = cols(

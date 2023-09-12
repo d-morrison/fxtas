@@ -45,6 +45,16 @@ phase <- ifelse(column_var == "Recruited in study phase", TRUE, FALSE)
 cgg <- ifelse(column_var == "FX**", TRUE, FALSE)
 ```
 
+# General data processing notes
+
+## Missing codes
+
+The missing codes 777, 888, and 999 were converted to `NA` for all variables, unless noted otherwise below.
+
+## Age of onset
+
+In the RedCap database, the "age of onset" variables were recorded using a mix of precise ages and decade-long ranges (for example, "`130`" = "teens", "`200`" = "twenties", etc.). For analysis as numeric variables, the decade codes were replaced by their midpoints (for example, "`130`" was replaced with 15, "`200`" with 25, etc.). The exception is code "`555`" = "lifelong", which was replaced by the minimum of 10 years and the smallest observed value for that age-of-onset variable; for example, if the smallest observed value for "age of tremor onset" was 8, then "`555`" would be replaced by 9. If the smallest observed value were 11, then "`555`" would be replaced by 10.
+
 # Data from first visits
 
 ```{asis, echo=phase}
@@ -198,21 +208,7 @@ From Randi: use later versions if inconsistent, might change due to improvements
 
 ## Lifestyle
 
-**Question:** Alcohol is labeled "Alcohol Abuse" in GP3 (`mds_psy_alco`) vs. "Alcohol Use" in GP4 (`new_mds_psy_alco`); ok to combine?
-
-Yes this is reasonable.  
-
-**Question:** I didn't find any marijuana use data in GP3; is there anything we can do to fill it in?  
-
-Unfortunately, the older Med data sheet in GP3 did not capture this value. However the new med data sheet was implemented in the later visits, thus some GP3 participants may have marijuana data. Maybe just use “drug use” and “alcohol use”. 
-
-**Question:** What should we do with codes 888 and 999 for these variables? Should they be treated as "Never used" or as actual missing values? What about missing data (field empty in RedCap)? Can we fill in any data using the unstructured data in  "Drugs used" (`mds_psy_drug_notes`)?  
-
-This is a difficult question to answer, as we don’t want to infer a response/answer. The missing data COULD be a result of poor record taking, as the med data sheet is treated much like a survey; (ie if “Yes”, it is marked). I feel that the 888, 999 can be combined to “none” and Missing data as “no data”. But I would double check with Kyoungmi on this. I think it is reasonable to fill in any drug use data using the unstructured data as you suggested. 
-
-
-note: Discussed with Randi; Ala will look into it. We might be able to get some data from # drinks or from SCID 
-
+"Alcohol Abuse" in GP3 (`mds_psy_alco`) and "Alcohol Use" in GP4 (`new_mds_psy_alco`) were combined as "Alcohol use/abuse".
 
 ```{r}
 vars = c("Drug use",
@@ -446,9 +442,7 @@ table1(
 
 ## BDS2
 
-**Question:** What should we do with missing codes and blanks?  
-
-These should be treated as no data.  
+For `BDS2 Total Score`, codes `777`, `888`, and `999` are treated as NAs.
 
 ```{r}
 
@@ -463,9 +457,7 @@ table1(
 
 ## MMSE
 
-**Question:** What should we do with blanks?  
-
-These should be treated as no data.  
+For `MMSE Total Score`, codes `777`, `888`, and `999` are treated as NAs.
 
 ```{r}
 
@@ -483,17 +475,6 @@ table1(
 ```
 
 ## SCID
-
-**Question:** What should we do with missing codes and blanks?  
-
-These should be treated as no Diagnosis.  
-
-**Question:** Should we interpret "lifelong" age of onset (code 555) as since age 0?  
-
-hmm, I am not sure about this one. Todo: ask Randi 
-
-  -   decision: min(10, min(observed values)) 
-
 
 ```{r}
 
@@ -524,7 +505,7 @@ table1(
 
 ## SCL90
 
-For SCL90 scores, missing codes and blanks are treated as no data. For analysis with the Ordinal SuStaIn method, we dichotomized each score as clinically elevated (60+) vs not.
+For analysis with the Ordinal SuStaIn method, we dichotomized each SCL90 measure as clinically elevated (60+) vs not.
 
 ```{r}
 
@@ -539,11 +520,6 @@ table1(
 ```
 
 ## MRI
-
-**Question:** What should we do with missing codes and blanks? Can we use results from subsequent visits to fill in earlier visits?  
-
-These should be treated as ‘no data’. We cannot use results from subsequent visits to fill earlier ones, as there may be significant MRI changes from visit to visit.  
-
 
 ```{r}
 
@@ -568,9 +544,9 @@ table1(
 
 ```
 
-## WAIS 3/4
+## WAIS
 
-**Question:** Can we combine "Verbal: IQ Score" (`wais_verb_iq`) and "Verbal Comprehension: Composite Score (VCI)" (`wais4_verbcomp_cs`)?  
+We treated "Verbal: IQ Score" (`wais_verb_iq`) and "Verbal Comprehension: Composite Score (VCI)" (`wais4_verbcomp_cs`) as interchangeable. 
 
 (wais_verb_iq) is from WAIS version 3 and (wais4_v, erbcomp_cs) is from WAIS version 4. so the answer is No, primarily because the norms used to set the scaled scores are different - so what it took to get a standard score of 7 may be different between the norms of WAIS III and IV, but also if the actual subtest has changed then it's certainly not a direct comparison as they are different tests.  
 
@@ -604,17 +580,6 @@ table1(
 ```
 
 ## CANTAB
-
-**Question:** All of these scores are completely missing in GP4 and almost entirely missing in GP3; do we have a way to fill in the missing data?  
-
-Ahh yes, in GP4 the relevant instrument is “CANTAB CONN”. The variables should be found in that instrument if you query it.  
-
-**Question:** The score "WMS Letter-Number Sequencing" is listed in the word document, but I didn't find it in the RedCap report. I saw a few seemingly-relevant variables in RedCap, but I wasn't sure which one to use?  
-
-WMS III is another neurocognitive assessment that was used primarily in GP3 but dropped in GP4 because the WAIS 4 was implemented instead. We can leave this one out for now.   
-
-
-To ask Randi: are these categorizable? Can we do anything for the GP3 records?
 
 For now, we used cutoffs taken from https://www.sciencedirect.com/science/article/pii/S2211034820302480?via%3Dihub
 
@@ -650,25 +615,7 @@ table1(
 
 ## Thyroid and other autoimmune diseases
 
-**Question:** "Medical history of thyroid disease and age of onset" is listed in the word doc, but I wasn't sure which corresponding variables to analyze.  
-
-Analyze “thyroid problems” mds_med_thy  and/or new_mds_med_thy  
-
-**Question:** "ANA positive", "Raynauds Syndrome", and "Pulmonary Fibrosis" are completely missing in GP3; can we fill these in somehow?  
-
-These values were not collected for GP3. 
-
-**Question:** What should we do with the NA codes and blanks?  
-
-These should be 888 and 999: “No”. Missing is “no data”  
-
 ```{r}
-
-# table1(
-#   NA.label = NA.label1,
-#   stratified_formula("Drugs used", column_var),
-#   data = visit1)
-
 
 vars = c(
   "Hypothyroid",
@@ -681,8 +628,6 @@ vars = c(
   "Sjogrens Syndrome",
   "Raynauds Syndrome",
   "Pulmonary Fibrosis"
-  # "Immunological Notes"
-  
   
 )
 
@@ -693,6 +638,8 @@ table1(
 ```
 
 ## Kinesia
+
+We categorized each kinesia variable as "0-1", "1-2", "2-3", and "3-4".
 
 ```{r}
 kinesia_vars = c(
@@ -719,11 +666,10 @@ table1(
 ## Purdue pegboard for reaction time
 
 ```{r}
-
 purdue_vars = c(
   "Purdue pegboard 1st Trial Total, R+L+B",
-  "Purdue pegboard 1st Trial Total, R+L+B: missingness"
-)
+  "Purdue pegboard 1st Trial Total, R+L+B: missingness")
+
 table1(
   NA.label = NA.label1,
   stratified_formula(purdue_vars, column_var),
