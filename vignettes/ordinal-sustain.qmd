@@ -1,15 +1,37 @@
 ---
-title: "Ordinal SuStaIn"
+title: "FXTAS sequence analysis"
 format: 
   html: 
+    author: 
+      - name: Ezra Morrison
+        email: demorrison@ucdavis.edu
+      - Matt Ponzini
+      - Kyoungmi Kim
     toc: false
+    theme:
+       light: 
+         - cosmo
+         - custom.scss
+       dark: 
+         - darkly
+         - custom.scss
     cap-location: top
+    css: custom.scss
     number-sections: true
+    number-depth: 3
+    html-math-method: mathjax
+    fig-cap-location: top
     code-fold: true
     echo: false
+    date: last-modified
+    date-format: "[Last modified:] YYYY-MM-DD: H:mm:ss (A)"
+    bibliography: references.bib
+
 project:
   execute-dir: project
 ---
+
+Here, we apply the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2021ordinal] to find event sequences for FXTAS patients.
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -22,7 +44,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-
+#| message: false
 devtools::load_all()
 library(tidyverse)
 library(reticulate)
@@ -251,15 +273,17 @@ prob_ml_stage, prob_subtype_stage,
 samples_likelihood] = sustain_input.run_sustain_algorithm(plot=False)
 ```
 
-# graph confusion matrices in R
+# positional variance diagrams (PVDs) by number of subgroups
 
-## one group
+## one subgroup
 
 ```{r}
 #| label: "confusion matrices - 1 group"
-#| column: screen-inset
-#| fig-height: 10
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
 #| fig-cap: "Confusion Matrices: 1 subgroup"
+#| fig-cap-location: top
 
 figs = extract_figs_from_pickle(
   n_s = 1,
@@ -273,19 +297,22 @@ figs = extract_figs_from_pickle(
 print(figs[[1]])
 ```
 
-## two groups
+## two subgroups
 
 ```{r}
 #| label: "confusion matrices - 2 groups"
-#| layout-ncol: 1
-#| fig-height: 10
+#| layout-ncol: 2
+#| fig-height: 15
 #| fig-cap: "Confusion Matrices: 2 subgroups"
-#| column: screen-inset
+#| fig-cap-location: top
+#| fig-align: center
+#| column: screen
 #| fig-subcap: 
 #|   - "Group 1"
 #|   - "Group 2"
 biomarker_plot_order2 = NULL
 figs = extract_figs_from_pickle(
+  synchronize_y_axes = synchronize_y_axes,
   n_s = 2,
   dataset_name = dataset_name,
   output_folder = output_folder,
@@ -298,10 +325,11 @@ figs |>
 
 ```
 
-## three groups
+## three subgroups
 
 ```{r}
 figs = extract_figs_from_pickle(
+  synchronize_y_axes = synchronize_y_axes,
   n_s = 3,
   dataset_name = dataset_name,
   output_folder = output_folder,
@@ -312,11 +340,13 @@ figs = extract_figs_from_pickle(
 ```
 
 ```{r}
-#| label: "confusion matrices"
-#| layout-ncol: 1
-#| fig-height: 10
+#| label: "confusion matrices - 3 groups"
+#| layout-ncol: 3
+#| fig-height: 15
+#| fig-align: center
 #| fig-cap: "Confusion Matrices: 3 subgroups"
-#| column: screen-inset
+#| fig-cap-location: top
+#| column: screen
 #| fig-subcap:
 #|   - "Group 1"
 #|   - "Group 2"
@@ -328,10 +358,11 @@ figs |>
 
 ```
 
-## four groups
+## four subgroups
 
 ```{r}
 figs = extract_figs_from_pickle(
+  synchronize_y_axes = synchronize_y_axes,
   n_s = 4,
   dataset_name = dataset_name,
   output_folder = output_folder,
@@ -342,22 +373,26 @@ figs = extract_figs_from_pickle(
 ```
 
 ```{r}
-#| label: "confusion matrices-4"
-#| layout-ncol: 1
-#| fig-height: 10
-#| column: screen-inset
+#| label: "confusion matrices - 4 groups"
+#| layout-ncol: 4
+#| fig-height: 15
+#| fig-align: center
 #| fig-cap: "Confusion Matrices: 4 subgroups"
+#| fig-cap-location: top
+#| column: screen
 #| fig-subcap:
 #|   - "Group 1"
 #|   - "Group 2"
 #|   - "Group 3"
 #|   - "Group 4"
+library(ggplot2)
+
 figs |> 
   print_PVDs()
+
 ```
 
-
-# graph likelihoods in R
+# graph likelihoods
 
 ```{r}
 #| fig-height: 4
@@ -367,7 +402,8 @@ py$samples_likelihood |>
 
 ```
 
-```{r}
-save.image(file = fs::path(output_folder, "data.RData"))
-```
 
+## References{.unnumbered}
+
+::: {#refs}
+:::

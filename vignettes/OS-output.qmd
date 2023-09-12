@@ -338,16 +338,6 @@ figs |>
 
 ```
 
-# graph likelihoods in R
-
-```{r}
-#| fig-height: 4
-py$samples_likelihood |>
-  graph_likelihoods_v2(alpha = 0.5) |>
-  suppressWarnings()
-
-```
-
 
 ## References{.unnumbered}
 
