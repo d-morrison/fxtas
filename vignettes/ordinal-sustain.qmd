@@ -203,6 +203,8 @@ for (i in biomarker_varnames)
   score_vals[i,score_vals[i,] > nlevs[i]-1] = 0
 }
 
+save.image(file = fs::path(output_folder, "data.RData"))
+
 ```
 
 # Run SuStaIn model
@@ -364,3 +366,8 @@ py$samples_likelihood |>
   suppressWarnings()
 
 ```
+
+```{r}
+save.image(file = fs::path(output_folder, "data.RData"))
+```
+
