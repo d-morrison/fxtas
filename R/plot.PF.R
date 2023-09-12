@@ -1,8 +1,8 @@
-plot.PF = function(PFs)
+plot.PF = function(PFs, size.y = 12)
 {
   PFs |>
     mutate(
-      position = factor(position, levels = 1:n_distinct(position))
+      position = as.numeric(position)
     ) |>
     ggplot(
       aes(
@@ -12,7 +12,7 @@ plot.PF = function(PFs)
       )) +
     geom_tile() +
     # scale_fill_identity() +
-    scale_fill_gradient(low = "white", high = "red")+
+    scale_fill_gradient(low = "gray", high = "red")+
     scale_y_discrete(limits = rev) +
     xlab('SuStaIn Stage') +
     ylab(NULL) +
@@ -20,7 +20,7 @@ plot.PF = function(PFs)
     theme(
       legend.position = "bottom",
       axis.text.y =
-        element_markdown(hjust=0)
+        element_markdown(hjust=0, size = size.y)
     ) +
     labs(fill = "Pr(stage)")
 }

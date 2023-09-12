@@ -60,7 +60,7 @@ compile_biomarker_group_list = function()
   cantab_vars = c(
     "SWM Between errors*",
     # "SST Median correct RT on GO trials*",
-    "RVP A signal detection*",
+    # "RVP A signal detection*", # all one way
     # "OTS Problems solved on first choice*",
     "PAL Total errors (adjusted)*",
     "RTI Five-choice movement time*")
@@ -125,11 +125,11 @@ compile_biomarker_group_list = function()
       parkinsons = parkinsons_vars,
       cancer = cancer_vars,
       mri = mri_vars,
-      scores = scores
-      # scid = scid_vars,
-      # scl90 = scl90_vars,
-      # cantab = cantab_vars,
-      # thyroid = thyroid_vars
+      scores = scores,
+      scid = scid_vars,
+      scl90 = scl90_vars,
+      cantab = cantab_vars,
+      thyroid = thyroid_vars
       # kinesia = kinesia_vars
     )
 

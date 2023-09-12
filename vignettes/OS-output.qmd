@@ -1,15 +1,37 @@
 ---
-title: "Ordinal SuStaIn"
+title: "FXTAS sequence analysis"
 format: 
   html: 
+    author: 
+      - name: Ezra Morrison
+        email: demorrison@ucdavis.edu
+      - Matt Ponzini
+      - Kyoungmi Kim
     toc: false
+    theme:
+       light: 
+         - cosmo
+         - custom.scss
+       dark: 
+         - darkly
+         - custom.scss
     cap-location: top
+    css: custom.scss
     number-sections: true
+    number-depth: 3
+    html-math-method: mathjax
+    fig-cap-location: top
     code-fold: true
     echo: false
+    date: last-modified
+    date-format: "[Last modified:] YYYY-MM-DD: H:mm:ss (A)"
+    bibliography: references.bib
+
 project:
   execute-dir: project
 ---
+
+Here, we apply the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2021ordinal] to find event sequences for FXTAS patients.
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -22,7 +44,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-
+#| message: false
 devtools::load_all()
 library(tidyverse)
 library(reticulate)
@@ -43,10 +65,9 @@ setwd(root_dir)
 output_folder = 
   "output/output.longer" |> 
   fs::dir_create()
-print(output_folder)
-```
 
-# Import data
+synchronize_y_axes = FALSE
+```
 
 ```{r}
 
@@ -58,7 +79,8 @@ biomarker_group_colors =
     # group_color = rainbow()
     group_color = 
       length(biomarker_group_list) |> 
-      RColorBrewer::brewer.pal(n = _, name = "Paired")
+      # RColorBrewer::brewer.pal(n = _, name = "Paired")
+      colorspace::qualitative_hcl(n = _, "Dark2")
   )
 
 biomarker_groups = 
@@ -125,14 +147,6 @@ df = df |>
   )
 
 ```
-
-# Set up data for new version of SuStaIn
-The objective here is two create to variables:
-
-* `p_NL` -- a subject x region matrix indicating the p that a region is normal for a subject.
-* `p_score` -- a subject x (region * score) matrix indicating p that a region is a given score.
-
-Ps should be non-zero. 
 
 ```{r}
 
@@ -205,59 +219,17 @@ for (i in biomarker_varnames)
 
 ```
 
-# Run SuStaIn model
+# positional variance diagrams (PVDs) by number of subgroups
 
-```{python "initialize-model"}
-
-import pandas
-import numpy as np
-import numpy.matlib
-import matplotlib.pyplot as plt
-import seaborn as sns
-import sys
-import scipy
-from glob import glob
-import pySuStaIn
-import os
-
-print(os.getcwd())
-os.chdir(r.root_dir)
-print(os.getcwd())
-
-sustain_input = pySuStaIn.OrdinalSustain(r.prob_nl,
-r.prob_score,
-r.score_vals,
-r.SuStaInLabels,
-r.N_startpoints,
-r.N_S_max, 
-r.N_iterations_MCMC, 
-r.output_folder, 
-r.dataset_name, 
-False,
-1)
-
-```
-
-# fitting model
-
-```{python "fit-model"}
-os.chdir(r.root_dir)
-print(os.getcwd())
-[samples_sequence, samples_f,
-ml_subtype, prob_ml_subtype, ml_stage,
-prob_ml_stage, prob_subtype_stage,
-samples_likelihood] = sustain_input.run_sustain_algorithm(plot=False)
-```
-
-# graph confusion matrices in R
-
-## one group
+## one subgroup
 
 ```{r}
 #| label: "confusion matrices - 1 group"
-#| column: screen-inset
-#| fig-height: 10
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
 #| fig-cap: "Confusion Matrices: 1 subgroup"
+#| fig-cap-location: top
 
 figs = extract_figs_from_pickle(
   n_s = 1,
@@ -271,19 +243,22 @@ figs = extract_figs_from_pickle(
 print(figs[[1]])
 ```
 
-## two groups
+## two subgroups
 
 ```{r}
 #| label: "confusion matrices - 2 groups"
-#| layout-ncol: 1
-#| fig-height: 10
+#| layout-ncol: 2
+#| fig-height: 15
 #| fig-cap: "Confusion Matrices: 2 subgroups"
-#| column: screen-inset
+#| fig-cap-location: top
+#| fig-align: center
+#| column: screen
 #| fig-subcap: 
 #|   - "Group 1"
 #|   - "Group 2"
 biomarker_plot_order2 = NULL
 figs = extract_figs_from_pickle(
+  synchronize_y_axes = synchronize_y_axes,
   n_s = 2,
   dataset_name = dataset_name,
   output_folder = output_folder,
@@ -296,10 +271,11 @@ figs |>
 
 ```
 
-## three groups
+## three subgroups
 
 ```{r}
 figs = extract_figs_from_pickle(
+  synchronize_y_axes = synchronize_y_axes,
   n_s = 3,
   dataset_name = dataset_name,
   output_folder = output_folder,
@@ -310,11 +286,13 @@ figs = extract_figs_from_pickle(
 ```
 
 ```{r}
-#| label: "confusion matrices"
-#| layout-ncol: 1
-#| fig-height: 10
+#| label: "confusion matrices - 3 groups"
+#| layout-ncol: 3
+#| fig-height: 15
+#| fig-align: center
 #| fig-cap: "Confusion Matrices: 3 subgroups"
-#| column: screen-inset
+#| fig-cap-location: top
+#| column: screen
 #| fig-subcap:
 #|   - "Group 1"
 #|   - "Group 2"
@@ -326,41 +304,8 @@ figs |>
 
 ```
 
-## four groups
 
-```{r}
-figs = extract_figs_from_pickle(
-  n_s = 4,
-  dataset_name = dataset_name,
-  output_folder = output_folder,
-  score_vals = score_vals,
-  biomarker_plot_order = biomarker_plot_order2,
-  biomarker_groups = biomarker_groups,
-  biomarker_levels = biomarker_levels)
-```
+## References{.unnumbered}
 
-```{r}
-#| label: "confusion matrices-4"
-#| layout-ncol: 1
-#| fig-height: 10
-#| column: screen-inset
-#| fig-cap: "Confusion Matrices: 4 subgroups"
-#| fig-subcap:
-#|   - "Group 1"
-#|   - "Group 2"
-#|   - "Group 3"
-#|   - "Group 4"
-figs |> 
-  print_PVDs()
-```
-
-
-# graph likelihoods in R
-
-```{r}
-#| fig-height: 4
-py$samples_likelihood |>
-  graph_likelihoods_v2(alpha = 0.5) |>
-  suppressWarnings()
-
-```
+::: {#refs}
+:::

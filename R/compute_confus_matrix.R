@@ -61,7 +61,7 @@ order_biomarkers = function(position_frequencies)
 
   order =
     position_frequencies |>
-    arrange(`event name`, position) |>
+    arrange(`event name`, desc(proportion), position) |>
     slice_head(by = `event name`) |>
     arrange(position, desc(proportion), `event name`)
 

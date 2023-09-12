@@ -29,6 +29,7 @@ knitr::knit_engines$set(asis = function(options) {
 ```
 
 ```{r setup}
+#| message: false
 library(fxtas)
 devtools::load_all()
 library(pander)

@@ -8,6 +8,7 @@ License: MIT + file LICENSE
 URL: https://github.com/d-morrison/fxtas
 BugReports: https://github.com/d-morrison/fxtas/issues
 Imports: 
+    colorspace,
     config (>= 0.3.1),
     forcats,
     fs,

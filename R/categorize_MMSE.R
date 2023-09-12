@@ -1,10 +1,10 @@
 categorize_MMSE = function(
     dataset,
     levels = c(
-      "normal",
-      "mild impairment",
-      "moderate impairment",
-      "severe imparitment"
+      "normal (26-30)",
+      "mild impairment (20-25)",
+      "moderate impairment (10-19)",
+      "severe imparitment (0-9)"
     ))
 {
   dataset |>

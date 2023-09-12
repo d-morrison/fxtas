@@ -49,15 +49,15 @@ plot_positional_var = function(
     biomarker_events_table =
       biomarker_levels |> get_biomarker_events_table(),
     biomarker_event_names =
-      biomarker_events_table |>  pull(biomarker_level),
+      biomarker_events_table |> pull(biomarker_level),
     biomarker_plot_order = biomarker_event_names |> sort(),
-    ml_f_EM=NULL,
-    cval=FALSE,
-    subtype_order=NULL,
-    biomarker_order=NULL,
-    title_font_size=12,
-    stage_font_size=10,
-    stage_label='SuStaIn Stage',
+    ml_f_EM = NULL,
+    cval = FALSE,
+    subtype_order = NULL,
+    biomarker_order = NULL,
+    title_font_size = 12,
+    stage_font_size = 10,
+    stage_label = 'SuStaIn Stage',
     stage_rot=0,
     stage_interval=1,
     label_font_size=10,
@@ -69,7 +69,8 @@ plot_positional_var = function(
     separate_subtypes=FALSE,
     save_path=NULL,
     save_kwargs=NULL,
-    synchronize_y_axes = TRUE)
+    synchronize_y_axes = TRUE,
+    ...)
 {
 
   # Get the number of subtypes
@@ -237,7 +238,7 @@ plot_positional_var = function(
 
     PF.plot =
       PFs  |>
-      plot.PF() +
+      plot.PF(...) +
       ggtitle(title_i)
 
 
