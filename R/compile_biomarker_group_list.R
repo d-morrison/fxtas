@@ -70,22 +70,6 @@ compile_biomarker_group_list = function()
       "MMSE Total Score*",
       "BDS-2 Total Score*")
 
-  thyroid_vars = c(
-    # "Hypothyroid",
-    # "Hyperthyroid",
-    "Thyroid problems"
-    # "Lupus",
-    # "Rheumatoid arthritis",
-    # "Multiple Sclerosis: Workup",
-    # "ANA positive",
-    # "Sjogrens Syndrome",
-    # "Raynauds Syndrome"
-    ## "Pulmonary Fibrosis" # none
-    ## "Immunological Notes"
-
-
-  )
-
   scl90_vars =
     grep(
       value = TRUE,
@@ -96,7 +80,7 @@ compile_biomarker_group_list = function()
   thyroid_vars = c(
     "Hypothyroid",
     "Hyperthyroid",
-    "Thyroid problems",
+    # "Thyroid problems",
     "Lupus",
     "Rheumatoid arthritis"
     # "Multiple Sclerosis: Workup",
@@ -105,10 +89,9 @@ compile_biomarker_group_list = function()
     # "Raynauds Syndrome",
     # "Pulmonary Fibrosis"
     ## "Immunological Notes"
+)
 
-
-  )
-  kinesia_vars = c(
+kinesia_vars = c(
     "Kinesia Left Rest Tremor*",
     "Kinesia Left Postural Tremor*",
     "Kinesia Left Kinetic Tremor*",

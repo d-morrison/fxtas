@@ -18,6 +18,7 @@ Imports:
     golem (>= 0.3.4),
     magrittr,
     plotly,
+    rcartocolor,
     RColorBrewer,
     readxl,
     reticulate,

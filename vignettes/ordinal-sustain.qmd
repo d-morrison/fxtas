@@ -8,6 +8,7 @@ format:
       - Matt Ponzini
       - Kyoungmi Kim
     toc: false
+    embed-resources: true
     theme:
        light: 
          - cosmo
@@ -57,22 +58,23 @@ library(reticulate)
 ```{r}
 #| label: "set run parameters"
 N_startpoints = 10L
-N_S_max = 4L
+N_S_max = 6L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
 root_dir = here::here()
 setwd(root_dir)
 output_folder = 
-  "output/output.longer" |> 
+  "output/output.longest" |> 
   fs::dir_create()
-print(output_folder)
+synchronize_y_axes = FALSE
 ```
 
 # Import data
 
 ```{r}
 
-biomarker_group_list = compile_biomarker_group_list()
+biomarker_group_list = 
+  compile_biomarker_group_list()
 
 biomarker_group_colors = 
   tibble(
