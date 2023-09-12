@@ -141,6 +141,7 @@ table1(
     "~", paste(formulaic::add.backtick(vars), collapse = " + "), 
     "|",
     column_var |> formulaic::add.backtick())),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
   data = visit1)
 ```
 
@@ -224,6 +225,7 @@ vars = c("Drug use",
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
   data = visit1)
 
 ```
@@ -326,6 +328,7 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
   data = visit1)
 
 ```
@@ -356,6 +359,7 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
   data = visit1)
 
 ```
@@ -392,6 +396,7 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
   data = visit1)
 
 ```
@@ -434,6 +439,7 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
   data = visit1)
 
 # gp34 |> 
@@ -457,6 +463,7 @@ vars = grep("BDS-2 Total Score", value = TRUE, names(gp34), fixed = TRUE)
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
   data = visit1)
 
 ```
@@ -478,6 +485,7 @@ vars = grep(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
   data = visit1)
 
 ```
@@ -518,6 +526,7 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
   data = visit1)
 
 ```
@@ -533,6 +542,7 @@ vars = grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90") |> sort(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
   data = visit1)
 
 # visit1 |> ggplot(aes(x = `SCL90: Anxiety`, group = `FX*`)) + geom_histogram() + facet_wrap(~`FX*`, ncol = 1)
@@ -599,6 +609,7 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
   data = visit1)
 
 ```
@@ -645,6 +656,7 @@ cantab_vars = c(
 table1(
   NA.label = "Missing (empty in RedCap)",
   stratified_formula(cantab_vars, column_var),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
   data = visit1)
 ```
 
@@ -727,6 +739,7 @@ purdue_vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(purdue_vars, column_var),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
   data = visit1)
 ```
 
@@ -742,6 +755,7 @@ moca_vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(moca_vars, column_var),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
   data = visit1)
 
 ```
@@ -768,6 +782,7 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
   data = visit1)
 ```
 
