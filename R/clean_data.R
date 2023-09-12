@@ -47,8 +47,6 @@ clean_data = function(dataset)
 
     clean_cantab() |>
 
-    fix_factors() |>
-
     clean_SCID() |>
 
     fix_drinks_per_day() |>
@@ -58,6 +56,8 @@ clean_data = function(dataset)
 
     # Ataxia
     clean_ataxia() |>
+
+    fix_factors() |>
 
     droplevels()
 }
