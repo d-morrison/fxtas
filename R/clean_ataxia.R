@@ -3,7 +3,7 @@ clean_ataxia = function(data)
   data |>
     mutate(
 
-      `Ataxia severity: missingness` =
+      `Ataxia severity: missingness reasons` =
         missingness_reasons.numeric(`Ataxia: severity`),
 
       # setting missing codes as 0s:

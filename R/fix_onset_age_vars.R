@@ -5,7 +5,7 @@ fix_onset_age_vars = function(dataset)
       across(
         .cols = ends_with("Age of onset"),
         .fns = list(
-          missingness =
+          `missingness reasons` =
             ~missingness_reasons.numeric(
               .x,
               extra_codes = 99),

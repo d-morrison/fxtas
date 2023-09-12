@@ -4,7 +4,7 @@ fix_factors = function(dataset)
     mutate(
       across(
         where(is.factor) &
-          !contains(": missingness") &
+          !contains(": missingness reasons") &
           !contains("FX**"),
 
         list(
