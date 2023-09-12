@@ -4,7 +4,7 @@ fix_drinks_per_day = function(dataset)
   dataset |>
     mutate(
       `# of drinks per day now: missingness` =
-        missingness_reasons(`# of drinks per day now`),
+        missingness_reasons.numeric(`# of drinks per day now`),
 
       `# of drinks per day now` =
         if_else(

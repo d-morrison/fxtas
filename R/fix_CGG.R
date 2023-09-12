@@ -34,7 +34,7 @@ fix_CGG = function(dataset)
         sapply(F = max),
 
       `CGG: missingness` =
-        missingness_reasons(
+        missingness_reasons.numeric(
           x = `Floras Non-Sortable Allele Size (CGG) Results`,
           x.clean = CGG
         ),
