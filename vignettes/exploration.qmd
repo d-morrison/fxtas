@@ -208,21 +208,7 @@ From Randi: use later versions if inconsistent, might change due to improvements
 
 ## Lifestyle
 
-**Question:** Alcohol is labeled "Alcohol Abuse" in GP3 (`mds_psy_alco`) vs. "Alcohol Use" in GP4 (`new_mds_psy_alco`); ok to combine?
-
-Yes this is reasonable.  
-
-**Question:** I didn't find any marijuana use data in GP3; is there anything we can do to fill it in?  
-
-Unfortunately, the older Med data sheet in GP3 did not capture this value. However the new med data sheet was implemented in the later visits, thus some GP3 participants may have marijuana data. Maybe just use “drug use” and “alcohol use”. 
-
-**Question:** What should we do with codes 888 and 999 for these variables? Should they be treated as "Never used" or as actual missing values? What about missing data (field empty in RedCap)? Can we fill in any data using the unstructured data in  "Drugs used" (`mds_psy_drug_notes`)?  
-
-This is a difficult question to answer, as we don’t want to infer a response/answer. The missing data COULD be a result of poor record taking, as the med data sheet is treated much like a survey; (ie if “Yes”, it is marked). I feel that the 888, 999 can be combined to “none” and Missing data as “no data”. But I would double check with Kyoungmi on this. I think it is reasonable to fill in any drug use data using the unstructured data as you suggested. 
-
-
-note: Discussed with Randi; Ala will look into it. We might be able to get some data from # drinks or from SCID 
-
+"Alcohol Abuse" in GP3 (`mds_psy_alco`) and "Alcohol Use" in GP4 (`new_mds_psy_alco`) were combined as "Alcohol use/abuse".
 
 ```{r}
 vars = c("Drug use",
