@@ -227,6 +227,7 @@ for (i in biomarker_varnames)
 #| label: "confusion matrices - 1 group"
 #| column: screen
 #| fig-height: 15
+#| fig-align: center
 #| fig-cap: "Confusion Matrices: 1 subgroup"
 #| fig-cap-location: top
 
@@ -250,6 +251,7 @@ print(figs[[1]])
 #| fig-height: 15
 #| fig-cap: "Confusion Matrices: 2 subgroups"
 #| fig-cap-location: top
+#| fig-align: center
 #| column: screen
 #| fig-subcap: 
 #|   - "Group 1"
@@ -269,10 +271,11 @@ figs |>
 
 ```
 
-## three groups
+## three subgroups
 
 ```{r}
 figs = extract_figs_from_pickle(
+  synchronize_y_axes = synchronize_y_axes,
   n_s = 3,
   dataset_name = dataset_name,
   output_folder = output_folder,
@@ -284,8 +287,9 @@ figs = extract_figs_from_pickle(
 
 ```{r}
 #| label: "confusion matrices - 3 groups"
-#| layout-ncol: 2
+#| layout-ncol: 3
 #| fig-height: 15
+#| fig-align: center
 #| fig-cap: "Confusion Matrices: 3 subgroups"
 #| fig-cap-location: top
 #| column: screen
