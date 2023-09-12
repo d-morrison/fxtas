@@ -66,6 +66,7 @@ output_folder =
   "output/output.longer" |> 
   fs::dir_create()
 print(output_folder)
+synchronize_y_axes = FALSE
 ```
 
 # Import data
