@@ -27,17 +27,28 @@ relabel_factor_missing_codes = function(x)
       # "Question not asked at time of data entry; check records (777)" = "777",
       # "NA (888)" = "888",
       # "No Response (999)" = "999"
-      "No" = "777",
-      "No" = "888",
-      "No" = "999",
-      "No" = "Question not asked at time of data entry; check records (777)",
-      "No" = "NA (888)",
-      "No" = "No Response (999)",
-      "None" = "Missing/Refused (999)"
+      # "No"   = "777",
+      # "No"   = "888",
+      # "No"   = "999",
+      # "No"   = "Question not asked at time of data entry; check records (777)",
+      # "No"   = "NA (888)",
+      # "No"   = "No Response (999)",
+      # "None" = "Missing/Refused (999)"
 
     ) |>
-    fct_na_level_to_value(
-      extra_levels = "Inadequate Info") |>
+    forcats::fct_na_level_to_value(
+      extra_levels =
+        c(
+          "Missing (SCID not completed)",
+          "Inadequate Info",
+          "777",
+          "888",
+          "999",
+          "Question not asked at time of data entry; check records (777)",
+          "NA (888)",
+          "No Response (999)",
+          "Missing/Refused (999)"
+          )) |>
     droplevels() |>
     suppressWarnings()
 
