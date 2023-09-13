@@ -1,3 +1,5 @@
+#' Compute missingness reasons for a vector of factor variables
+#'
 #' @param x the original vector
 #' @param x.clean the cleaned vector
 #'
