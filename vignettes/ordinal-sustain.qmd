@@ -140,10 +140,11 @@ nlevs =
 
 ```
 
-We analyzed the following set of `r length(biomarker_levels)` biomarkers:
+We analyzed `r length(biomarker_levels)` biomarkers (@tbl-biomarker-list).
 
 ```{r}
 #| tbl-cap: "Biomarkers used in analysis"
+#| label: "tbl-biomarker-list"
 table_out =
   biomarker_events_table |> 
   select(category = biomarker_group, biomarker, levels) |> 
