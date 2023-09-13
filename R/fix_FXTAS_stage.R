@@ -12,11 +12,10 @@ fix_FXTAS_stage = function(dataset)
           4.5 ~ 5,
           .default = `FXTAS Stage (0-5)`) |>
         na_if(999) |>
-        numeric_as_factor(),
+        factor(),
 
-      `FXTAS Stage (0-5)` = `FXTAS Stage (0-5)` |> clean_numeric(),
+      `FXTAS Stage (0-5)` = `FXTAS Stage (0-5)` |> clean_numeric()
 
-      # across(c(`FXTAS Stage (0-5)`), numeric_as_factor)
     )
 
 }

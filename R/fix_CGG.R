@@ -28,12 +28,13 @@ fix_CGG = function(dataset)
         `Floras Non-Sortable Allele Size (CGG) Results` |>
         strsplit(" *(\\)|-|,| ) *\\(?") |>
         sapply(F = function(x) gsub(x = x, fixed = TRUE, "?*", "")) |>
+        sapply(F = function(x) gsub(x = x, fixed = TRUE, ">", "")) |>
         sapply(F = as.numeric) |>
         suppressWarnings() |>
         sapply(F = max),
 
-      `CGG: missingness` =
-        missingness_reasons(
+      `CGG: missingness reasons` =
+        missingness_reasons.numeric(
           x = `Floras Non-Sortable Allele Size (CGG) Results`,
           x.clean = CGG
         ),

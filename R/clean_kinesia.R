@@ -18,7 +18,7 @@ clean_kinesia = function(
               breaks = c(0,1,2,3,4),
               include.lowest = TRUE,
               right = TRUE,
-              labels = c("<=1", ">1", ">2", ">3")
+              labels = c("0-1", "1-2", "2-3", "3-4")
               ),
       .names = "{.col}*"
     )

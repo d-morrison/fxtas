@@ -4,12 +4,13 @@ fix_factors = function(dataset)
     mutate(
       across(
         where(is.factor) &
-          !contains(": missingness"),
+          !contains(": missingness reasons") &
+          !contains("FX**"),
 
-relabel_factor_missing_codes),
-      # across(
-      #   where(is.factor),
-      #   ~ . |> forcats::fct_na_value_to_level(level = "Missing (empty in RedCap)")
-      #   )
+        list(
+          tmp = replace_missing_codes_with_NAs,
+          `missingness reasons` = missingness_reasons.factor),
+        .names = "{.col}{if_else(.fn != 'tmp', paste0(': ', .fn), '')}"),
+
     )
 }
