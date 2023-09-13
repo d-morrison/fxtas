@@ -1,10 +1,13 @@
 #' Title
 #'
+#' @param dataset Dataset to extract names from
+#'
 #' @return
 #' @export
 #'
-compile_biomarker_group_list = function()
+compile_biomarker_group_list = function(dataset = gp34)
 {
+  missingness_vars = grep("missingness", names(dataset), value = TRUE)
   tremors = c(
     "Head tremor",
     "Intention tremor",
@@ -15,7 +18,7 @@ compile_biomarker_group_list = function()
   )
 
   parkinsons_vars =
-    vars = grep("Parkinson", value = TRUE, names(gp34))
+    grep("Parkinson", value = TRUE, names(dataset))
 
   mri_vars = c(
     "Cerebral Atrophy",
@@ -73,7 +76,7 @@ compile_biomarker_group_list = function()
   scl90_vars =
     grep(
       value = TRUE,
-      names(gp34),
+      names(dataset),
       pattern = "^SCL90.*\\*$") |>
     sort()
 
@@ -115,5 +118,9 @@ kinesia_vars = c(
       thyroid = thyroid_vars
       # kinesia = kinesia_vars
     )
+
+  biomarker_group_list =
+    biomarker_group_list |>
+    lapply(F = function(x) setdiff(x, missingness_vars))
 
 }

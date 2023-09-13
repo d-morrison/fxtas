@@ -58,7 +58,7 @@ library(reticulate)
 ```{r}
 #| label: "set run parameters"
 N_startpoints = 10L
-N_S_max = 6L
+N_S_max = 5L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
 root_dir = here::here()
@@ -387,6 +387,42 @@ figs = extract_figs_from_pickle(
 #|   - "Group 2"
 #|   - "Group 3"
 #|   - "Group 4"
+library(ggplot2)
+
+figs |> 
+  print_PVDs()
+
+```
+
+
+## five subgroups
+
+```{r}
+figs = extract_figs_from_pickle(
+  synchronize_y_axes = synchronize_y_axes,
+  n_s = 5,
+  dataset_name = dataset_name,
+  output_folder = output_folder,
+  score_vals = score_vals,
+  biomarker_plot_order = biomarker_plot_order2,
+  biomarker_groups = biomarker_groups,
+  biomarker_levels = biomarker_levels)
+```
+
+```{r}
+#| label: "confusion matrices - 5 groups"
+#| layout-ncol: 3
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap: "Confusion Matrices: 5 subgroups"
+#| fig-cap-location: top
+#| column: screen
+#| fig-subcap:
+#|   - "Group 1"
+#|   - "Group 2"
+#|   - "Group 3"
+#|   - "Group 4"
+#|   - "Group 5"
 library(ggplot2)
 
 figs |> 
