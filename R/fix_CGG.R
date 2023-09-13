@@ -28,6 +28,7 @@ fix_CGG = function(dataset)
         `Floras Non-Sortable Allele Size (CGG) Results` |>
         strsplit(" *(\\)|-|,| ) *\\(?") |>
         sapply(F = function(x) gsub(x = x, fixed = TRUE, "?*", "")) |>
+        sapply(F = function(x) gsub(x = x, fixed = TRUE, ">", "")) |>
         sapply(F = as.numeric) |>
         suppressWarnings() |>
         sapply(F = max),
