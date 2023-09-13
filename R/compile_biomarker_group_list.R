@@ -81,16 +81,16 @@ compile_biomarker_group_list = function(dataset = gp34)
     sort()
 
   thyroid_vars = c(
-    "Hypothyroid",
-    "Hyperthyroid",
-    # "Thyroid problems",
+    # "Hypothyroid", # removed after call 2023-09-13
+    # "Hyperthyroid", # removed after call 2023-09-13
+    "Thyroid problems",
     "Lupus",
     "Rheumatoid arthritis"
     # "Multiple Sclerosis: Workup",
     # "ANA positive",
     # "Sjogrens Syndrome",
     # "Raynauds Syndrome",
-    # "Pulmonary Fibrosis"
+    # "Pulmonary Fibrosis" # no events
     ## "Immunological Notes"
 )
 
