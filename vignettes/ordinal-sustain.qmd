@@ -83,7 +83,8 @@ biomarker_group_colors =
     # group_color = rainbow()
     group_color = 
       length(biomarker_group_list) |> 
-      RColorBrewer::brewer.pal(n = _, name = "Paired")
+      # RColorBrewer::brewer.pal(n = _, name = "Paired")
+      colorspace::qualitative_hcl(n = _, "Dark2")
   )
 
 biomarker_groups = 
