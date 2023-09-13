@@ -366,9 +366,15 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            scl_s_psdi_ts = "SCL90: Positive Symptom Distress Index",
            scl_s_pst_ts = "SCL90: Positive Symptom Total",
 
-           wais_verb_iq = "Verbal: IQ Score",
+           # update verbal and full scale IQ names to combine with gp4
+
+           # wais_verb_iq = "Verbal: IQ Score",
+           # update to WAIS 4 name: "Verbal Comprehension: Composite Score (VCI)"
+           wais_verb_iq = "Verbal Comprehension: Composite Score (VCI)",
            wais_perf_iq = "Performance: IQ Score",
-           wais_fullscale_iq = "Full Scale: IQ Score",
+           # wais_fullscale_iq = "Full Scale: IQ Score",
+           # update to WAIS 4 name:
+           wais_fullscale_iq = "Full Scale: Composite Score (FSIQ)",
 
            cantab_ots_probsolvedfirstchoice_ = "OTS Problems solved on first choice",
            cantab_pal_toterrors_adjusted = "PAL Total errors (adjusted)",

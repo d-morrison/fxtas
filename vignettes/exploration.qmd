@@ -151,7 +151,7 @@ table1(
     "~", paste(formulaic::add.backtick(vars), collapse = " + "), 
     "|",
     column_var |> formulaic::add.backtick())),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 ```
 
@@ -221,7 +221,7 @@ vars = c("Drug use",
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 
 ```
@@ -324,7 +324,7 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 
 ```
@@ -355,7 +355,7 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 
 ```
@@ -390,7 +390,7 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 
 ```
@@ -433,7 +433,7 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 
 # gp34 |> 
@@ -455,7 +455,7 @@ vars = grep("BDS-2 Total Score", value = TRUE, names(gp34), fixed = TRUE)
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 
 ```
@@ -475,7 +475,7 @@ vars = grep(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 
 ```
@@ -505,7 +505,7 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 
 ```
@@ -521,7 +521,7 @@ vars = grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90") |> sort(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 
 # visit1 |> ggplot(aes(x = `SCL90: Anxiety`, group = `FX*`)) + geom_histogram() + facet_wrap(~`FX*`, ncol = 1)
@@ -569,21 +569,21 @@ No, b/c WAIS 3 does not have these scores but the subsequent WAIS 4 does.
 ```{r}
 
 vars = c(
-  "Verbal: IQ Score",
+  # "Verbal: IQ Score",
   "Verbal Comprehension: Composite Score (VCI)",
   
   "Perceptual Reasoning: Composite Score (PRI)",
   "Working Memory: Composite Score (WMI)", 
   "Processing Speed: Composite Score (PSI)",
   
-  "Full Scale: IQ Score",
+  # "Full Scale: IQ Score",
   "Full Scale: Composite Score (FSIQ)"
 ) |> sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> as.vector()
 
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min, Max]"),
   data = visit1)
 
 ```
@@ -619,7 +619,7 @@ cantab_vars = c(
 table1(
   NA.label = "Missing (empty in RedCap)",
   stratified_formula(cantab_vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 ```
 
@@ -637,8 +637,8 @@ vars = c(
   "ANA positive",
   "Sjogrens Syndrome",
   "Raynauds Syndrome",
-  "Pulmonary Fibrosis"
-  
+  "Pulmonary Fibrosis",
+  "Any Autoimmune"
 )
 
 table1(
@@ -683,7 +683,7 @@ purdue_vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(purdue_vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 ```
 
@@ -699,7 +699,7 @@ moca_vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(moca_vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 
 ```
@@ -726,7 +726,7 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min. Max]"),
+  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 ```
 
