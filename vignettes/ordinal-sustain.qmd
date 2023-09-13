@@ -49,6 +49,7 @@ knitr::opts_chunk$set(
 devtools::load_all()
 library(tidyverse)
 library(reticulate)
+library(pander)
 ```
 
 ```{r}
@@ -69,7 +70,7 @@ output_folder =
 synchronize_y_axes = FALSE
 ```
 
-# Import data
+# Data
 
 ```{r}
 
@@ -138,6 +139,21 @@ nlevs =
   sapply(biomarker_levels, length)
 
 ```
+
+We analyzed the following set of biomarkers:
+
+```{r}
+#| tbl-cap: "Biomarkers used in analysis"
+table_out =
+  biomarker_events_table |> 
+  select(category = biomarker_group, biomarker, levels) |> 
+  slice_head(by = biomarker)
+
+table_out |> 
+  pander()
+
+```
+
 
 
 ```{r "convert factors to numeric"}
