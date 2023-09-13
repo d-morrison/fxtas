@@ -14,7 +14,7 @@ clean_numeric = function(
 {
 
   if_else(
-    x %in% NA_codes,
-    NA_real_,
-    x |> as.numeric() |> suppressWarnings())
+    condition = x %in% NA_codes,
+    true = NA_real_,
+    false = x |> as.numeric() |> suppressWarnings())
 }

@@ -15,7 +15,7 @@ conflicts_prefer(vroom::col_double)
 conflicts_prefer(vroom::col_logical)
 conflicts_prefer(vroom::col_skip)
 dataset=vroom::vroom(
-  'inst/extdata/GPGenotypePhenotypeR-FXTASEventSequence10_DATA_2023-09-11_0756.csv',
+  'inst/extdata/GPGenotypePhenotypeR-FXTASEventSequence10_DATA_2023-09-13_1001.csv',
   col_types = cols(
     dem_date = col_date(),
     mds_med_ca_other = col_character(),
@@ -266,7 +266,7 @@ levels(dataset$new_mds_neu_trem_head)=c("No","Yes","No Response (999)","NA (888)
 levels(dataset$mds_neu_atax)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
 # levels(dataset$new_mds_ne_ga)=c("No","Yes","No Response (999)","Question not asked at time of data entry; check records (777)")
 levels(dataset$new_mds_med_park)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
-levels(dataset$mds_ne_pf)=c("Yes","No","No Response (999)","Question not asked at time of data entry; check records (777)")
+levels(dataset$mds_ne_pf)=c("No","Yes","No Response (999)","Question not asked at time of data entry; check records (777)")
 levels(dataset$mds_ne_pfmf)=c("No","Yes","No Response (999)","Question not asked at time of data entry; check records (777)")
 levels(dataset$mds_ne_pfit)=c("No","Yes","No Response (999)","Question not asked at time of data entry; check records (777)")
 levels(dataset$mds_ne_pfprt)=c("No","Yes","No Response (999)","Question not asked at time of data entry; check records (777)")
