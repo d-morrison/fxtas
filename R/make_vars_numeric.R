@@ -11,8 +11,8 @@ make_vars_numeric = function(
         #   `BDS-2 Total Score`,
         #   `MMSE Total Score`),
         list(
-          missingness = missingness_reasons,
-          tmp = clean_numeric),
+          tmp = clean_numeric,
+          `missingness reasons` = missingness_reasons.numeric),
         .names = "{.col}{if_else(.fn != 'tmp', paste0(': ', .fn), '')}"
       )
     )
