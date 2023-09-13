@@ -140,7 +140,7 @@ nlevs =
 
 ```
 
-We analyzed the following set of biomarkers:
+We analyzed the following set of `r length(biomarker_levels)` biomarkers:
 
 ```{r}
 #| tbl-cap: "Biomarkers used in analysis"
