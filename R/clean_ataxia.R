@@ -3,13 +3,8 @@ clean_ataxia = function(data)
   data |>
     mutate(
 
-      # `Ataxia: Age of onset missingness` =
-      #   missingness_reasons(`Ataxia: Age of onset`),
-      # `Ataxia: Age of onset` =
-      #   clean_numeric(`Ataxia: Age of onset`),
-
-      `Ataxia severity: missingness` =
-        missingness_reasons(`Ataxia: severity`),
+      `Ataxia severity: missingness reasons` =
+        missingness_reasons.numeric(`Ataxia: severity`),
 
       # setting missing codes as 0s:
       `Ataxia: severity` =
@@ -23,21 +18,26 @@ clean_ataxia = function(data)
         `Ataxia: severity` |>
         clean_numeric(),
 
-      `Ataxia` = if_else(
-        `Ataxia: severity` %in% 0 & is.na(Ataxia),
-        "No",
-        `Ataxia`
-      ) |> factor(levels = c("No", "Yes")),
+      `Ataxia` =
+        if_else(
+          condition =
+            (`Ataxia: severity` %in% 0) & is.na(Ataxia),
+          true = "No",
+          false = `Ataxia`
+        ) |>
+        factor(levels = c("No", "Yes")),
 
-      `Ataxia: severity` = if_else(
-        Ataxia %in% "No" & is.na(`Ataxia: severity`),
-        0,
-        `Ataxia: severity`
+      `Ataxia: severity` =
+        if_else(
+        condition =
+          (Ataxia %in% "No") & is.na(`Ataxia: severity`),
+        true = 0,
+        false = `Ataxia: severity`
       ),
 
       `Ataxia: severity*` =
         `Ataxia: severity` |>
-        numeric_as_factor()
+        factor()
 
     )
 }

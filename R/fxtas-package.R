@@ -4,6 +4,7 @@
 ## usethis namespace: start
 #' @importFrom colorspace qualitative_hcl
 #' @importFrom forcats fct_na_level_to_value
+#' @importFrom forcats fct_other
 #' @importFrom fs path
 #' @importFrom ggplot2 scale_y_discrete
 #' @importFrom ggtext element_markdown

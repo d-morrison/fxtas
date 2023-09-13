@@ -215,7 +215,7 @@ vars = c("Drug use",
          "Marijuana use",
          "Alcohol use/abuse",
          "# of drinks per day now",
-         "# of drinks per day now: missingness")
+         "# of drinks per day now: missingness reasons")
 
 table1(
   NA.label = NA.label1,
@@ -317,7 +317,7 @@ vars = c(
   "Intermittent tremor",
   "Any tremor",
   "Tremor: Age of onset"
-  # "Tremor: Age of onset: missingness"
+  # "Tremor: Age of onset: missingness reasons"
 )
 table1(
   NA.label = NA.label1,
@@ -332,7 +332,7 @@ Age of onset missingness reasons where any of the four above tremor types = "Yes
 
 table1(
   NA.label = NA.label1,
-  stratified_formula("Tremor: Age of onset: missingness", column_var),
+  stratified_formula("Tremor: Age of onset: missingness reasons", column_var),
   data = visit1 |> filter(`Any tremor` == "Some tremors recorded"))
 
 ```
@@ -362,12 +362,10 @@ Age of onset missingness reasons where "Head tremor" = "Yes":
 
 table1(
   NA.label = NA.label1,
-  stratified_formula("Head Tremor: Age of onset: missingness", column_var),
+  stratified_formula("Head Tremor: Age of onset: missingness reasons", column_var),
   data = visit1 |> filter(`Head tremor` == "Yes"))
 
 ```
-
-
 
 ## Ataxia
 
@@ -382,7 +380,7 @@ vars = c(
   "Ataxia: severity",
   "Ataxia: severity*",
   "Ataxia: Age of onset",
-  "Ataxia: Age of onset: missingness"
+  "Ataxia: Age of onset: missingness reasons"
 )
 
 table1(
@@ -668,7 +666,7 @@ table1(
 ```{r}
 purdue_vars = c(
   "Purdue pegboard 1st Trial Total, R+L+B",
-  "Purdue pegboard 1st Trial Total, R+L+B: missingness")
+  "Purdue pegboard 1st Trial Total, R+L+B: missingness reasons")
 
 table1(
   NA.label = NA.label1,
@@ -683,7 +681,7 @@ table1(
 
 moca_vars = c(
   "MOCA Total score",
-  "MOCA Total score: missingness"
+  "MOCA Total score: missingness reasons"
 )
 table1(
   NA.label = NA.label1,

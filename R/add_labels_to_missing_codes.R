@@ -17,8 +17,9 @@ add_labels_to_missing_codes = function(x)
       "Missing/Refused (999)",
       "Missing (empty in RedCap)",
       after = Inf) |>
-    droplevels() |>
+    # previous two functions throw warnings if some codes aren't present:
+    suppressWarnings() |>
+    droplevels()
 
-    suppressWarnings()
 
 }

@@ -5,12 +5,10 @@ fix_onset_age_vars = function(dataset)
       across(
         .cols = ends_with("Age of onset"),
         .fns = list(
-          missingness =
-            ~missingness_reasons(
+          `missingness reasons` =
+            ~missingness_reasons.numeric(
               .x,
-              extra_codes = c(
-                # 555, # lifelong - now handled as min(10, min(numeric_vals))
-                99)),
+              extra_codes = 99),
           tmp = # note: gets renamed on line 21 below
             ~ .x |>
             age_range_medians() |>
