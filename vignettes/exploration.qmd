@@ -7,6 +7,7 @@ format:
     toc-float: true
     number-sections: true
     embed-resources: true
+    bibliography: references.bib
   docx:
     number-sections: true
 ---
@@ -763,8 +764,7 @@ table1(
 
 ## CANTAB
 
-For now, we used cutoffs taken from https://www.sciencedirect.com/science/article/pii/S2211034820302480?via%3Dihub
-
+For now, we used cutoffs taken from [@talebi2020cambridge].
 
 ```{r}
 
@@ -949,3 +949,7 @@ I will need to check these.
 pander(ooo)
 ```
 
+# References{.unnumbered}
+
+::: {#refs}
+:::

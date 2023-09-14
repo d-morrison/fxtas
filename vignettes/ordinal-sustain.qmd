@@ -113,11 +113,7 @@ biomarker_group_colors =
 
 biomarker_groups = 
   biomarker_group_list |> 
-  stack() |> 
-  as_tibble() |> 
-  rename(
-    biomarker  = values,
-    biomarker_group = ind) |> 
+  biomarker_group_list_to_table() |> 
   left_join(
     biomarker_group_colors,
     by = "biomarker_group"
@@ -180,7 +176,7 @@ table_out |>
 
 ```
 
-
+The trailing asterisk (*) indicates a numeric variable that has been categorized for use with Ordinal SusTaIn.
 
 ```{r "convert factors to numeric"}
 df = df |>
@@ -508,7 +504,7 @@ figs |>
 
 @fig-mcmc-loglik shows the distribution of log-likelihoods from the MCMC samples for each number of clusters. We can see that adding up to 6 clusters substantially improves the log-likelihood.
 
-We can choose an optimal number of clusters using the Cross-Validation Information Criterion (CVIC) [@young2018uncovering] (work in progress).
+We can choose an optimal number of clusters using the Cross-Validation Information Criterion (CVIC) [@young2018uncovering] (to be added to analysis).
 
 ```{r}
 #| fig-height: 4
