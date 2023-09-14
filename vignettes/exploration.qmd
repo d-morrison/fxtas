@@ -67,6 +67,34 @@ the first study phase in which the participant enrolled (GP3 vs GP4).
 Here, we review the data from the first visits by each participant, stratified by CGG (`r paste0("<55 or", " \u2265", "55")`).
 ```
 
+
+## Demographics
+
+There is substantial missingness in both `Primary Ethnicity` and `Primary Race`; not sure if we will need these variables:  
+
+
+Primary ethnicity we can drop. Primary race we may be able to look on Randi’s cards for that or ask her. There are only 44 to look up. 
+
+```{r}
+
+vars = c(
+  "Age at first visit",
+  "# visits",
+  # column_var,
+  "Gender",
+  "Primary Ethnicity",
+  "Primary Race"
+  
+)
+
+table1(
+  NA.label = NA.label1,
+  stratified_formula(vars, column_var),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  data = visit1)
+```
+
+
 ## Study
 
 ```{r}
@@ -152,7 +180,7 @@ table1(
     "~", paste(formulaic::add.backtick(vars), collapse = " + "), 
     "|",
     column_var |> formulaic::add.backtick())),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 ```
 
@@ -222,7 +250,7 @@ vars = c("Drug use",
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 
 ```
@@ -318,30 +346,93 @@ vars = c(
   "Resting tremor",
   "Postural tremor",
   "Intermittent tremor",
-  "Any tremor",
-  "Tremor: Age of onset"
+  "Any tremor (excluding Head Tremor)"
+  # "Tremor: Age of onset"
   # "Tremor: Age of onset: missingness reasons"
 )
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous=c(
-    .="N", 
-    .="Mean (SD)", 
-    .="Median [Min, Max]"),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 
+```
+
+```{r}
+vars = c(
+  "Tremor: Age of onset"
+)
+
+footnote <- paste0(
+  "Age of onset for those with 'Some tremors recorded'."
+)
+
+table1(
+  NA.label = NA.label1,
+  stratified_formula(vars, column_var),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  data = visit1 |> 
+    filter(`Any tremor (excluding Head Tremor)` == "Some tremors recorded"),
+  footnote = footnote)
 ```
 
 Age of onset missingness reasons where any of the four above tremor types = "Yes":
 
 ```{r}
+footnote <- paste0(
+  "Reason for missing age of onset in individuals with ",
+  "'Some tremor recorded'"
+)
 
 table1(
   NA.label = NA.label1,
   stratified_formula("Tremor: Age of onset: missingness reasons", column_var),
-  data = visit1 |> filter(`Any tremor` == "Some tremors recorded"))
+  data = visit1 |> 
+    filter(`Any tremor (excluding Head Tremor)` == "Some tremors recorded"),
+  footnote = footnote)
 
+```
+
+Do we have age of onset for those with 'No tremors recorded' or missing data?
+
+```{r}
+vars = c(
+  "Tremor: Age of onset"
+)
+
+footnote <- paste0(
+  "Age of onset for those with 'No tremors recorded' or missing data."
+)
+
+table1(
+  NA.label = NA.label1,
+  stratified_formula(vars, column_var),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  data = visit1 |> 
+    filter(`Any tremor (excluding Head Tremor)` == "No tremors recorded" |
+             is.na(`Any tremor (excluding Head Tremor)`)),
+  footnote = footnote)
+```
+
+```{r}
+# store number
+n_age_NoTremor <- visit1 |> 
+  filter((is.na(`Any tremor (excluding Head Tremor)`) | 
+            `Any tremor (excluding Head Tremor)` == "No tremors recorded") & 
+           !is.na(`Tremor: Age of onset`)) |> 
+  nrow()
+```
+
+The `r n_age_NoTremor` patients with Age of Onset without having any tremor recorded are listed below.
+
+```{r}
+gp34 |> 
+  filter((is.na(`Any tremor (excluding Head Tremor)`) | 
+            `Any tremor (excluding Head Tremor)` == "No tremors recorded") &
+           !is.na(`Tremor: Age of onset`)) |> 
+  dplyr::select(`FXS ID`, `Event Name`, `Any tremor (excluding Head Tremor)`, 
+                `Tremor: Age of onset`) |> 
+  pander()
 ```
 
 ## Head tremors
@@ -352,15 +443,40 @@ Unfortunately head tremor was not collected in GP3
 
 ```{r}
 vars = c(
-  "Head tremor",
-  "Head Tremor: Age of onset"
+  "Head tremor"
+  # "Head Tremor: Age of onset"
   
 )
+
+footnote <- paste0(
+  "Head tremor was not collected in GP3. Summaries provided are for GP4 only."
+)
+
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  data = visit1 |> filter(Study == "GP4"),
+  footnote = footnote)
+
+```
+
+```{r}
+vars = c(
+  "Head Tremor: Age of onset"
+  
+)
+
+footnote <- paste0(
+  "Age of onset for those with a head tremor recorded."
+)
+
+table1(
+  NA.label = NA.label1,
+  stratified_formula(vars, column_var),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  data = visit1 |> filter(Study == "GP4" & `Head tremor` == "Yes"),
+  footnote = footnote)
 
 ```
 
@@ -371,8 +487,42 @@ Age of onset missingness reasons where "Head tremor" = "Yes":
 table1(
   NA.label = NA.label1,
   stratified_formula("Head Tremor: Age of onset: missingness reasons", column_var),
-  data = visit1 |> filter(`Head tremor` == "Yes"))
+  data = visit1 |> filter(Study == "GP4" & `Head tremor` == "Yes"))
 
+```
+
+```{r}
+# store n for text
+n_age_NoHeadTremor <- visit1 |> 
+    filter((`Head tremor` == "No" |
+             is.na(`Head tremor`)) & 
+             Study == "GP4" &
+             !is.na(`Head Tremor: Age of onset`)) |>
+  nrow()
+```
+
+Do we have age of onset for those with 'No' head tremor or missing data?  
+
+There are `r n_age_NoHeadTremor` patients with age of onset without having a Head tremor.
+
+```{r}
+vars = c(
+  "Head Tremor: Age of onset"
+)
+
+footnote <- paste0(
+  "Age of onset for those with 'No' head tremor or missing data."
+)
+
+table1(
+  NA.label = NA.label1,
+  stratified_formula(vars, column_var),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  data = visit1 |> 
+    filter((`Head tremor` == "No" |
+             is.na(`Head tremor`)) & 
+             Study == "GP4"),
+  footnote = footnote)
 ```
 
 ## Ataxia
@@ -386,7 +536,24 @@ See my previous responses on the matter.
 vars = c(
   "Ataxia",
   "Ataxia: severity",
-  "Ataxia: severity*",
+  "Ataxia: severity*"
+  # "Ataxia: Age of onset",
+  # "Ataxia: Age of onset: missingness reasons"
+)
+
+table1(
+  NA.label = NA.label1,
+  stratified_formula(vars, column_var),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  data = visit1)
+
+```
+
+```{r}
+vars = c(
+  # "Ataxia",
+  # "Ataxia: severity",
+  # "Ataxia: severity*"
   "Ataxia: Age of onset",
   "Ataxia: Age of onset: missingness reasons"
 )
@@ -394,10 +561,12 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
-
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  data = visit1 |> filter(Ataxia == "Yes"))
 ```
+
+
+
 
 ## Parkinsons
 
@@ -437,7 +606,7 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 
 # gp34 |> 
@@ -459,7 +628,7 @@ vars = grep("BDS-2 Total Score", value = TRUE, names(gp34), fixed = TRUE)
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 
 ```
@@ -479,7 +648,7 @@ vars = grep(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 
 ```
@@ -509,7 +678,7 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 
 ```
@@ -525,7 +694,7 @@ vars = grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90") |> sort(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 
 # visit1 |> ggplot(aes(x = `SCL90: Anxiety`, group = `FX*`)) + geom_histogram() + facet_wrap(~`FX*`, ncol = 1)
@@ -623,7 +792,7 @@ cantab_vars = c(
 table1(
   NA.label = "Missing (empty in RedCap)",
   stratified_formula(cantab_vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 ```
 
@@ -687,7 +856,7 @@ purdue_vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(purdue_vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 ```
 
@@ -703,38 +872,10 @@ moca_vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(moca_vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 
 ```
-
-## Demographics
-
-There is substantial missingness in both `Primary Ethnicity` and `Primary Race`; not sure if we will need these variables:  
-
-
-Primary ethnicity we can drop. Primary race we may be able to look on Randi’s cards for that or ask her. There are only 44 to look up. 
-
-```{r}
-
-vars = c(
-  "Age at first visit",
-  "# visits",
-  # column_var,
-  "Gender",
-  "Primary Ethnicity",
-  "Primary Race"
-  
-)
-
-table1(
-  NA.label = NA.label1,
-  stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
-```
-
-**Question:** For `age of onset` = "lifelong (555)", what numeric value should we use? Age 0?
 
 # Visit dates
 

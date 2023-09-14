@@ -17,7 +17,7 @@ missing_pattern_by_ID = function(
 {
   data |>
     group_by(`FXS ID`) |>
-    summarize(
+    dplyr::summarize(
       across(
         .cols = variable,
         .fns =
