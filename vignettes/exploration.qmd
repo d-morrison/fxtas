@@ -1,11 +1,12 @@
 ---
-title: "Questions about FXTAS Sequence Data"
+title: "FXTAS Sequence Data Summary"
 format:
   html:
     toc: true
     toc-depth: 4
     toc-float: true
     number-sections: true
+    embed-resources: true
   docx:
     number-sections: true
 ---

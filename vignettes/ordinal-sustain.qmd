@@ -7,7 +7,7 @@ format:
         email: demorrison@ucdavis.edu
       - Matt Ponzini
       - Kyoungmi Kim
-    toc: false
+    toc: true
     embed-resources: true
     theme:
        light: 
@@ -28,9 +28,26 @@ format:
     date-format: "[Last modified:] YYYY-MM-DD: H:mm:ss (A)"
     bibliography: references.bib
 
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "#>" 
+    R.options:  
+      dev: svg
+
 project:
   execute-dir: project
 ---
+
+```{=html}
+<style>
+.quarto-figure-center > figure {
+  text-align: center;
+}
+</style>
+```
+
+# Introduction
 
 Here, we apply the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2021ordinal] to find event sequences for FXTAS patients.
 
@@ -70,7 +87,13 @@ output_folder =
 synchronize_y_axes = FALSE
 ```
 
-# Data
+# Methods
+
+## Data
+
+The data come from the GP and GP4 studies. We analyzed one visit record per participant, using the earliest visit available across the two studies with age at visit $\ge 40$ years, resulting in `r nrow(visit1)` observations in total. However, `r visit1$"FX*" |> is.na() |> sum()` individuals did not have CGG values available, so only `r visit1$"FX*" |> not_na() |> sum()` individuals 
+(`r (visit1$"FX**" == "CGG >= 55")|> sum()` cases and 
+`r (visit1$"FX**" == "CGG < 55")|> sum()` controls) were included in the event sequence analysis.
 
 ```{r}
 
@@ -83,7 +106,8 @@ biomarker_group_colors =
     # group_color = rainbow()
     group_color = 
       length(biomarker_group_list) |> 
-      RColorBrewer::brewer.pal(n = _, name = "Paired")
+      # RColorBrewer::brewer.pal(n = _, name = "Paired")
+      colorspace::qualitative_hcl(n = _, "Dark2")
   )
 
 biomarker_groups = 
@@ -140,7 +164,7 @@ nlevs =
 
 ```
 
-We analyzed `r length(biomarker_levels)` biomarkers (@tbl-biomarker-list).
+We analyzed `r length(biomarker_levels)` biomarkers (@tbl-biomarker-list) with a total of `r nrow(biomarker_events_table)` non-baseline levels; each level above baseline constitutes an outcome event in the disease progression modelling analysis (@sec-Statistical-analysis).
 
 ```{r}
 #| tbl-cap: "Biomarkers used in analysis"
@@ -167,13 +191,13 @@ df = df |>
 
 ```
 
-# Set up data for new version of SuStaIn
-The objective here is two create to variables:
+## Statistical analysis {#sec-Statistical-analysis}
 
-* `p_NL` -- a subject x region matrix indicating the p that a region is normal for a subject.
-* `p_score` -- a subject x (region * score) matrix indicating p that a region is a given score.
+We applied  the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2018uncovering; @young2021ordinal] to our dataset find event sequences and subgroupings for FXTAS patients. The Ordinal Subtype and Stage Inference (Ordinal SuStaIn) algorithm [@young2021ordinal] combines disease progression modelling [@fonteijn2012event] and unsupervised clustering to identify subgroups of individuals with distinct disease trajectories. SuStaIn simultaneously clusters individuals into subgroups and characterises the trajectory that
+best defines each subgroup, thus capturing heterogeneity in both
+disease subtype and disease stage.
 
-Ps should be non-zero. 
+Ordinal SuStaIn uses Markov Chain Monte Carlo (MCMC) sampling to estimate the Bayesian posterior probability of each subgroup progression pattern, assuming a uniform prior distribution over the set of all possible patterns. For each latent subgroup, we used   "positional variance diagrams" (@fig-pvd1 - @fig-pvd6) to display the the resulting marginal distributions of possible positions for each outcome event.
 
 ```{r}
 
@@ -248,8 +272,6 @@ save.image(file = fs::path(output_folder, "data.RData"))
 
 ```
 
-# Run SuStaIn model
-
 ```{python "initialize-model"}
 
 import pandas
@@ -263,9 +285,7 @@ from glob import glob
 import pySuStaIn
 import os
 
-print(os.getcwd())
 os.chdir(r.root_dir)
-print(os.getcwd())
 
 sustain_input = pySuStaIn.OrdinalSustain(r.prob_nl,
 r.prob_score,
@@ -281,9 +301,8 @@ False,
 
 ```
 
-# fitting model
-
 ```{python "fit-model"}
+#| include: false
 os.chdir(r.root_dir)
 print(os.getcwd())
 [samples_sequence, samples_f,
@@ -292,16 +311,19 @@ prob_ml_stage, prob_subtype_stage,
 samples_likelihood] = sustain_input.run_sustain_algorithm(plot=False)
 ```
 
-# positional variance diagrams (PVDs) by number of subgroups
+
+# Results
+
+We ran the analysis for 1-6 latent subgroups, each with their own ordering. @fig-pvd1 - @fig-pvd6 show positional variance diagrams (PVDs) indicating the probability that each outcome event (y-axis) occurs at each sequence position (x-axis). 
 
 ## one subgroup
 
 ```{r}
-#| label: "confusion matrices - 1 group"
+#| label: "fig-pvd1"
 #| column: screen
 #| fig-height: 15
 #| fig-align: center
-#| fig-cap: "Confusion Matrices: 1 subgroup"
+#| fig-cap: "positional variance diagram for 1 subgroup"
 #| fig-cap-location: top
 
 figs = extract_figs_from_pickle(
@@ -319,16 +341,16 @@ print(figs[[1]])
 ## two subgroups
 
 ```{r}
-#| label: "confusion matrices - 2 groups"
+#| label: "fig-pvd2"
 #| layout-ncol: 2
 #| fig-height: 15
-#| fig-cap: "Confusion Matrices: 2 subgroups"
+#| fig-cap: "positional variance diagrams for 2 subgroups"
 #| fig-cap-location: top
 #| fig-align: center
 #| column: screen
 #| fig-subcap: 
-#|   - "Group 1"
-#|   - "Group 2"
+#|   - "Subgroup 1"
+#|   - "Subgroup 2"
 biomarker_plot_order2 = NULL
 figs = extract_figs_from_pickle(
   synchronize_y_axes = synchronize_y_axes,
@@ -359,17 +381,17 @@ figs = extract_figs_from_pickle(
 ```
 
 ```{r}
-#| label: "confusion matrices - 3 groups"
+#| label: "fig-pvd3"
 #| layout-ncol: 3
 #| fig-height: 15
 #| fig-align: center
-#| fig-cap: "Confusion Matrices: 3 subgroups"
+#| fig-cap: "positional variance diagrams for 3 subgroups"
 #| fig-cap-location: top
 #| column: screen
 #| fig-subcap:
-#|   - "Group 1"
-#|   - "Group 2"
-#|   - "Group 3"
+#|   - "Subgroup 1"
+#|   - "Subgroup 2"
+#|   - "Subgroup 3"
 library(ggplot2)
 
 figs |> 
@@ -392,18 +414,18 @@ figs = extract_figs_from_pickle(
 ```
 
 ```{r}
-#| label: "confusion matrices - 4 groups"
+#| label: "fig-pvd4"
 #| layout-ncol: 4
 #| fig-height: 15
 #| fig-align: center
-#| fig-cap: "Confusion Matrices: 4 subgroups"
+#| fig-cap: "positional variance diagrams for 4 subgroups"
 #| fig-cap-location: top
 #| column: screen
 #| fig-subcap:
-#|   - "Group 1"
-#|   - "Group 2"
-#|   - "Group 3"
-#|   - "Group 4"
+#|   - "Subgroup 1"
+#|   - "Subgroup 2"
+#|   - "Subgroup 3"
+#|   - "Subgroup 4"
 library(ggplot2)
 
 figs |> 
@@ -427,19 +449,19 @@ figs = extract_figs_from_pickle(
 ```
 
 ```{r}
-#| label: "confusion matrices - 5 groups"
+#| label: "fig-pvd5"
 #| layout-ncol: 3
 #| fig-height: 15
 #| fig-align: center
-#| fig-cap: "Confusion Matrices: 5 subgroups"
+#| fig-cap: "positional variance diagrams for 5 subgroups"
 #| fig-cap-location: top
 #| column: screen
 #| fig-subcap:
-#|   - "Group 1"
-#|   - "Group 2"
-#|   - "Group 3"
-#|   - "Group 4"
-#|   - "Group 5"
+#|   - "Subgroup 1"
+#|   - "Subgroup 2"
+#|   - "Subgroup 3"
+#|   - "Subgroup 4"
+#|   - "Subgroup 5"
 library(ggplot2)
 
 figs |> 
@@ -449,7 +471,7 @@ figs |>
 
 ## six subgroups
 
-```{r}
+```{r "build-figs-6sg"}
 figs = extract_figs_from_pickle(
   synchronize_y_axes = synchronize_y_axes,
   n_s = 6,
@@ -462,20 +484,20 @@ figs = extract_figs_from_pickle(
 ```
 
 ```{r}
-#| label: "confusion matrices - 6 groups"
+#| label: "fig-pvd6"
 #| layout-ncol: 3
 #| fig-height: 15
 #| fig-align: center
-#| fig-cap: "Confusion Matrices: 6 subgroups"
+#| fig-cap: "positional variance diagrams for 6 subgroups"
 #| fig-cap-location: top
 #| column: screen
 #| fig-subcap:
-#|   - "Group 1"
-#|   - "Group 2"
-#|   - "Group 3"
-#|   - "Group 4"
-#|   - "Group 5"
-#|   - "Group 6"
+#|   - "Subgroup 1"
+#|   - "Subgroup 2"
+#|   - "Subgroup 3"
+#|   - "Subgroup 4"
+#|   - "Subgroup 5"
+#|   - "Subgroup 6"
 library(ggplot2)
 
 figs |> 
@@ -483,18 +505,21 @@ figs |>
 
 ```
 
-# graph likelihoods
+@fig-mcmc-loglik shows the distribution of log-likelihoods from the MCMC samples for each number of clusters. We can see that adding up to 6 clusters substantially improves the log-likelihood.
+
+We can choose an optimal number of clusters using the Cross-Validation Information Criterion (CVIC) [@young2018uncovering] (work in progress).
 
 ```{r}
 #| fig-height: 4
+#| label: fig-mcmc-loglik
+#| fig-cap: log-likelihoods of MCMC samples, by number of subtypes
 py$samples_likelihood |>
   graph_likelihoods_v2(alpha = 0.5) |>
   suppressWarnings()
 
 ```
 
-
-## References{.unnumbered}
+# References{.unnumbered}
 
 ::: {#refs}
 :::
