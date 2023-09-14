@@ -61,5 +61,7 @@ clean_data = function(dataset)
 
     fix_factors() |>
 
+    categorize_primary_race() |>
+
     droplevels()
 }

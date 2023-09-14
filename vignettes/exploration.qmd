@@ -357,9 +357,14 @@ table1(
 
 ```
 
+<br>
+
+Age of onset and missingness reasons where any of the four above tremor types = "Yes":
+
 ```{r}
 vars = c(
-  "Tremor: Age of onset"
+  "Tremor: Age of onset",
+  "Tremor: Age of onset: missingness reasons"
 )
 
 footnote <- paste0(
@@ -375,22 +380,7 @@ table1(
   footnote = footnote)
 ```
 
-Age of onset missingness reasons where any of the four above tremor types = "Yes":
-
-```{r}
-footnote <- paste0(
-  "Reason for missing age of onset in individuals with ",
-  "'Some tremor recorded'"
-)
-
-table1(
-  NA.label = NA.label1,
-  stratified_formula("Tremor: Age of onset: missingness reasons", column_var),
-  data = visit1 |> 
-    filter(`Any tremor (excluding Head Tremor)` == "Some tremors recorded"),
-  footnote = footnote)
-
-```
+<br>
 
 Do we have age of onset for those with 'No tremors recorded' or missing data?
 
@@ -460,9 +450,14 @@ table1(
 
 ```
 
+<br>
+
+Age of onset and missingness reasons where "Head tremor" = "Yes":
+
 ```{r}
 vars = c(
-  "Head Tremor: Age of onset"
+  "Head Tremor: Age of onset",
+  "Head Tremor: Age of onset: missingness reasons"
   
 )
 
@@ -476,17 +471,6 @@ table1(
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1 |> filter(Study == "GP4" & `Head tremor` == "Yes"),
   footnote = footnote)
-
-```
-
-Age of onset missingness reasons where "Head tremor" = "Yes":
-
-```{r}
-
-table1(
-  NA.label = NA.label1,
-  stratified_formula("Head Tremor: Age of onset: missingness reasons", column_var),
-  data = visit1 |> filter(Study == "GP4" & `Head tremor` == "Yes"))
 
 ```
 
@@ -548,6 +532,10 @@ table1(
 
 ```
 
+<br>
+
+Age of onset and missingness reasons where "Ataxia" = "Yes":
+
 ```{r}
 vars = c(
   # "Ataxia",
@@ -564,8 +552,52 @@ table1(
   data = visit1 |> filter(Ataxia == "Yes"))
 ```
 
+<br>
 
+```{r}
+# store n for text
+n_age_NoAtaxia <- visit1 |> 
+    filter((Ataxia == "No" |
+             is.na(Ataxia)) & 
+             !is.na(`Ataxia: Age of onset`)) |>
+  nrow()
+```
 
+Do we have age of onset for those with 'No' Ataxia or missing data?  
+
+```{r}
+vars = c(
+  # "Ataxia",
+  # "Ataxia: severity",
+  # "Ataxia: severity*"
+  "Ataxia: Age of onset",
+  "Ataxia: Age of onset: missingness reasons"
+)
+
+footnote = paste0(
+  "Age of onset for those with 'No' Ataxia or missing data."
+)
+
+table1(
+  NA.label = NA.label1,
+  stratified_formula(vars, column_var),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  footnote = footnote,
+  data = visit1 |> filter(Ataxia == "No" | is.na(Ataxia))
+)
+```
+
+There are `r n_age_NoAtaxia` patients with age of onset without having Ataxia. These records are listed below.
+
+```{r}
+gp34 |> 
+  filter((Ataxia == "No" |
+             is.na(Ataxia)) & 
+             !is.na(`Ataxia: Age of onset`)) |> 
+  dplyr::select(`FXS ID`, `Event Name`, Ataxia, 
+                `Ataxia: Age of onset`) |> 
+  pander()
+```
 
 ## Parkinsons
 
@@ -755,7 +787,7 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  render.continuous = c(.="N", .="Mean (SD)", .="Median [Min, Max]"),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min, Max]"),
   data = visit1)
 
 ```
