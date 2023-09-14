@@ -14,7 +14,7 @@ compile_biomarker_group_list = function(dataset = gp34)
     "Resting tremor",
     "Postural tremor",
     "Intermittent tremor"
-    # "Any tremor"
+    # "Any tremor (excluding Head Tremor)"
   )
 
   parkinsons_vars =
