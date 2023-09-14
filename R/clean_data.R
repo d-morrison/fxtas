@@ -22,6 +22,8 @@ clean_data = function(dataset)
 
     create_any_cancer() |>
 
+    create_any_autoimmune() |>
+
 
     categorize_BDS() |>
 

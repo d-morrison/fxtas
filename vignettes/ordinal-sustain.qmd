@@ -1,5 +1,5 @@
 ---
-title: "FXTAS sequence analysis"
+title: "Event sequences in Fragile X-associated tremor/ataxia syndrome"
 format: 
   html: 
     author: 
@@ -7,6 +7,7 @@ format:
         email: demorrison@ucdavis.edu
       - Matt Ponzini
       - Kyoungmi Kim
+      - (more to be added)
     toc: true
     embed-resources: true
     theme:
@@ -518,6 +519,10 @@ py$samples_likelihood |>
   suppressWarnings()
 
 ```
+
+# Discussion
+
+[to be added]
 
 # References{.unnumbered}
 

@@ -1,0 +1,141 @@
+---
+title: "variables list"
+format: html
+editor: visual
+---
+
+
+```{=html}
+<style>
+.quarto-figure-center > figure {
+  text-align: center;
+}
+</style>
+```
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo = FALSE,
+  comment = "#>",
+  # fig.width = 7, 
+  # fig.height = 10,
+  include = TRUE
+)
+```
+
+```{r setup}
+#| message: false
+devtools::load_all()
+library(tidyverse)
+library(reticulate)
+library(pander)
+```
+
+```{r}
+
+biomarker_group_list = 
+  all_potential_biomarkers()
+
+biomarker_group_colors = 
+  tibble(
+    biomarker_group = names(biomarker_group_list),
+    # group_color = rainbow()
+    group_color = 
+      length(biomarker_group_list) |> 
+      # RColorBrewer::brewer.pal(n = _, name = "Paired")
+      colorspace::qualitative_hcl(n = _, "Dark2")
+  )
+
+biomarker_groups = 
+  biomarker_group_list |> 
+  stack() |> 
+  as_tibble() |> 
+  rename(
+    biomarker  = values,
+    biomarker_group = ind) |> 
+  left_join(
+    biomarker_group_colors,
+    by = "biomarker_group"
+  ) |> 
+  mutate(
+    biomarker_group = 
+      biomarker_group |> 
+      factor(levels = names(biomarker_group_list)))
+
+SuStaInLabels = 
+  biomarker_varnames = 
+  biomarker_groups |> 
+  pull("biomarker")
+
+
+df = 
+  visit1 |> 
+  select(
+    `FXS ID`,
+    `FX*`,
+    all_of(biomarker_varnames)) |> 
+  filter(
+    !is.na(`FX*`))
+
+biomarker_levels = 
+  lapply(df[,biomarker_varnames], F = levels)
+
+```
+
+```{r}
+biomarker_events_table =
+  biomarker_levels |> 
+  get_biomarker_events_table() |> 
+  left_join(
+    biomarker_groups, 
+    by = "biomarker"
+  ) |> 
+  arrange(biomarker_group, biomarker, biomarker_level)
+
+biomarker_plot_order =
+  biomarker_events_table |>  pull(biomarker_level)
+
+nlevs = 
+  sapply(biomarker_levels, length)
+
+```
+
+@tbl-biomarker-list lists the potentially usable biomarkers.
+
+Notes: 
+
+- "Any Autoimmune" includes:
+  - "Lupus",
+  - "Rheumatoid arthritis",
+  - "Multiple Sclerosis: Workup",
+  - "ANA positive",
+  - "Sjogrens Syndrome",
+  - "Raynauds Syndrome",
+  - "Pulmonary Fibrosis"
+  
+- "Any tremor" includes:
+  - "Intention tremor",
+  - "Resting tremor",
+  - "Postural tremor",
+  - "Intermittent tremor"
+  
+- "Any cancer" includes:
+  - "Thyroid Cancer",
+  - "Skin Cancer",
+  - "Melanoma",
+  - "Prostate Cancer",
+  - "Other Cancer"
+
+```{r}
+#| tbl-cap: "Biomarkers used in analysis"
+#| label: "tbl-biomarker-list"
+table_out =
+  biomarker_events_table |> 
+  select(category = biomarker_group, biomarker) |> 
+  slice_head(by = biomarker)
+
+table_out |> 
+  pander()
+
+```
