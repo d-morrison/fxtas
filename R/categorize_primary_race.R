@@ -8,10 +8,10 @@ categorize_primary_race <- function(
 ){
   dataset |>
     mutate(
-      `Primary Race` = case_when(
-        `Primary Race` == "White" ~ "Caucasian",
-        `Primary Race` %in% other_races ~ "Other",
-        TRUE ~ `Primary Race`
-      )
+      `Primary Race` =
+        `Primary Race` |>
+        forcats::fct_recode("White" = "Caucasian") |>
+        forcats::fct_other(drop = other_races) |>
+        forcats::fct_relevel("White", "Black or African American", "Asian", "Other")
     )
 }
