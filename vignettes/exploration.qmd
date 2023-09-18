@@ -6,6 +6,7 @@ format:
     toc-depth: 4
     toc-float: true
     number-sections: true
+    embed-resources: true
   docx:
     number-sections: true
 ---

@@ -1,0 +1,136 @@
+---
+title: "Questions about FXTAS Sequence Data"
+format:
+  html:
+    toc: true
+    toc-depth: 4
+    toc-float: true
+    number-sections: true
+    embed-resources: true
+  docx:
+    number-sections: true
+---
+
+```{r, include = FALSE}
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  comment = "#>",
+  fig.width = 7.5,
+  fig.height = 4
+)
+
+# update 'asis' chunk to allow inline code
+knitr::knit_engines$set(asis = function(options) {
+  if (options$echo && options$eval) knitr::knit_child(text = options$code)
+})
+```
+
+```{r setup}
+#| message: false
+library(fxtas)
+devtools::load_all()
+library(pander)
+library(table1)
+library(dplyr)
+library(magrittr)
+NA.label1 = "Missing"
+column_var = "Recruited in study phase"
+column_var = "FX**"
+# load_all()
+
+phase <- ifelse(column_var == "Recruited in study phase", TRUE, FALSE)
+cgg <- ifelse(column_var == "FX**", TRUE, FALSE)
+```
+
+# General data processing notes
+
+## Missing codes
+
+The missing codes 777, 888, and 999 were converted to `NA` for all variables, unless noted otherwise below.
+
+## Age of onset
+
+In the RedCap database, the "age of onset" variables were recorded using a mix of precise ages and decade-long ranges (for example, "`130`" = "teens", "`200`" = "twenties", etc.). For analysis as numeric variables, the decade codes were replaced by their midpoints (for example, "`130`" was replaced with 15, "`200`" with 25, etc.). The exception is code "`555`" = "lifelong", which was replaced by the minimum of 10 years and the smallest observed value for that age-of-onset variable; for example, if the smallest observed value for "age of tremor onset" was 8, then "`555`" would be replaced by 9. If the smallest observed value were 11, then "`555`" would be replaced by 10.
+
+# Data from first visits
+
+```{asis, echo=phase}
+Here, we review the data from the first visits by each participant, stratified by 
+the first study phase in which the participant enrolled (GP3 vs GP4).
+```
+
+```{asis, echo=cgg}
+Here, we review the data from the first visits by each participant, stratified by CGG (`r paste0("<55 or", " \u2265", "55")`).
+```
+
+## Study
+
+```{r}
+table1(
+  NA.label = NA.label1,
+  formula(paste(
+    "~", paste(formulaic::add.backtick("Study"), collapse = " + "), 
+    "|",
+    column_var |> formulaic::add.backtick())),
+  data = visit1)
+```
+
+## SCL90
+
+For analysis with the Ordinal SuStaIn method, we dichotomized each SCL90 measure as clinically elevated (60+) vs not.
+
+```{r}
+
+vars = grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90") |> sort()
+
+table1(
+  NA.label = NA.label1,
+  stratified_formula(vars, column_var),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  data = visit1)
+
+# visit1 |> ggplot(aes(x = `SCL90: Anxiety`, group = `FX*`)) + geom_histogram() + facet_wrap(~`FX*`, ncol = 1)
+```
+
+List of patients with missing SCL90:  
+
+```{r}
+# want to exclude categorized and reason missing variables that we created
+excl_strings <- c("missingness", "\\*")
+na_vars <- vars[grep(paste(excl_strings, collapse = "|"), vars, invert= TRUE)]
+
+scl90_na <- visit1 |>
+  # select obs with any missing SCL90 variable
+  filter(
+    if_any(
+      .cols = all_of(na_vars),
+      .fns = ~ is.na(.)
+    )
+  ) |>
+  dplyr::select(
+    `FXS ID`, `Event Name`, all_of(na_vars)
+  )
+
+# create smaller dataset with just SCL90 overall variable
+scl90_na_print <- scl90_na |>
+  # create single indicator variable
+  mutate(
+    SCL90 = ifelse(
+      if_any(
+        .cols = all_of(na_vars),
+      .fns = ~ is.na(.)
+      ),
+      NA,
+      "Not Missing"
+    )
+  ) |>
+  dplyr::select(`FXS ID`, `Event Name`, SCL90)
+```
+
+```{r}
+display_DT(scl90_na, "GP3_GP4_SCL90", group = FALSE)
+```
