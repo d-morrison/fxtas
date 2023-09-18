@@ -10,8 +10,8 @@ categorize_primary_race <- function(
     mutate(
       `Primary Race` =
         `Primary Race` |>
-        forcats::fct_recode("White" = "Caucasian") |>
+        forcats::fct_recode("Caucasian" = "White") |>
         forcats::fct_other(drop = other_races) |>
-        forcats::fct_relevel("White", "Black or African American", "Asian", "Other")
+        forcats::fct_relevel("Caucasian", "Black or African American", "Asian", "Other")
     )
 }
