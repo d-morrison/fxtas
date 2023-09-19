@@ -63,54 +63,61 @@ the first study phase in which the participant enrolled (GP3 vs GP4).
 Here, we review the data from the first visits by each participant, stratified by CGG (`r paste0("<55 or", " \u2265", "55")`).
 ```
 
-## Study
 
-```{r}
-table1(
-  NA.label = NA.label1,
-  formula(paste(
-    "~", paste(formulaic::add.backtick("Study"), collapse = " + "), 
-    "|",
-    column_var |> formulaic::add.backtick())),
-  data = visit1)
-```
 
-## FXTAS Stage
+## MRI
 
-For categorical analysis, we merged 2.5 into 2, 3.5 into 4, and 4.5 into 5.
-
+The vast majority of the `MRI` data are missing. Due to this the data are summarized by `CGG` and `Study`. The `MRI` data are completely missing in GP3 and largely missing for those in GP4 who are not `CGG` $\ge55$.
 
 ```{r}
 
 vars = c(
-  "FXTAS Stage (0-5)",
-  "FXTAS Stage (0-5)*")
+  "Cerebral Atrophy",
+  "Cerebellar Atrophy",
+  "Cerebral WM Hyperintensity",
+  "Cerebellar WM Hyperintensity",
+  "MCP-WM Hyperintensity",
+  "Pons-WM Hyperintensity",
+  "Sub-Insular WM Hyperintensity",
+  "Periventricular WM Hyperintensity",
+  "Splenium (CC)-WM Hyperintensity",
+  "Genu (CC)-WM Hyperintensity",
+  "Corpus Callosum-Thickness"
+)
 
 table1(
   NA.label = NA.label1,
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  as.formula(
+    paste(
+      " ~ ",
+      paste(formulaic::add.backtick(vars), collapse = " + "), 
+      "|",
+      paste0("Study", " * ", formulaic::add.backtick(column_var)), 
+      sep = ""
+    )
+  ),
   data = visit1)
-
-# gp34 |> 
-#   filter(`FXTAS Stage (0-5)` %in% c(NA, "No Response (999)", "Missing (empty in RedCap)")) |> 
-#   select(`FXS ID`, `Event Name`, `Visit Date`) |> 
-#   arrange() |> 
-#   readr::write_csv("inst/extdata/missing_FXTAS_stage.csv")
 
 ```
 
 <br>
 
-List of patients with missing FXTAS Stage:  
+The list of patients in GP4 with completely missing `MRI` data are shown below:
 
 ```{r}
-fxtas_stage_na <- visit1 |>
-  dplyr::filter(is.na(`FXTAS Stage (0-5)`)) |>
-  dplyr::select(`FXS ID`, `Event Name`, `FXTAS Stage (0-5)`)
-  
+mri_gp4_na <- visit1 |>
+  filter(
+    Study == "GP4" & 
+      if_all(
+        vars,
+        is.na
+      )
+  ) |>
+  dplyr::select(
+    `FXS ID`, `Event Name`, all_of(vars)
+  )
 ```
 
 ```{r}
-display_DT(fxtas_stage_na, "GP3_GP4_FXTAS_Stage", group = FALSE)
+display_DT(mri_gp4_na, "GP4_MRI", group = FALSE)
 ```

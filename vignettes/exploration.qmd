@@ -75,6 +75,8 @@ There is substantial missingness in both `Primary Ethnicity` and `Primary Race`;
 
 Primary ethnicity we can drop. Primary race we may be able to look on Randi’s cards for that or ask her. There are only 44 to look up. 
 
+`Primary Race` was categorized to `Caucasian`, `Black or African American`, `Asian`, or `Other`.
+
 ```{r}
 
 vars = c(
@@ -147,9 +149,7 @@ gp34 |> filter(
 
 ```
 
-**QUESTION:** Is it reasonable to use the next non-missing ApoE result to impute the ApoE results for the earlier visit? Note that in some cases, the ApoE value changes between visits:
-
-If they are missing, it is reasonable to use the next available result. The issue with differences between visits will need to be addressed with Flora; the samples may have been run differently between visit leading to different APoE values. 
+If a patient is missing ApoE data at one visit, it is reasonable to use the next available result. The issue with differences between visits will need to be addressed with Flora; the samples may have been run differently between visit leading to different APoE values.  
 
 ```{r, "multiple ApoE values", results = "asis"}
 
@@ -230,11 +230,7 @@ gp34 |>
 ```
 
 
-
-**Question:** can we fill in the earlier values using later values?
-
-Yes this is reasonable. Shouldn’t change between visits.  
-From Randi: use later versions if inconsistent, might change due to improvements in assays. 
+We filled in the earlier missing values using later values. CGG shouldn’t change between visits, but if it did we used later versions (inconsistencies could be due to improvements in assays). 
 
 ## Lifestyle
 

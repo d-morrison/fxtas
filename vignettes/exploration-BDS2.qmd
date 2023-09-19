@@ -63,28 +63,14 @@ the first study phase in which the participant enrolled (GP3 vs GP4).
 Here, we review the data from the first visits by each participant, stratified by CGG (`r paste0("<55 or", " \u2265", "55")`).
 ```
 
-## Study
 
-```{r}
-table1(
-  NA.label = NA.label1,
-  formula(paste(
-    "~", paste(formulaic::add.backtick("Study"), collapse = " + "), 
-    "|",
-    column_var |> formulaic::add.backtick())),
-  data = visit1)
-```
+## BDS2
 
-## FXTAS Stage
-
-For categorical analysis, we merged 2.5 into 2, 3.5 into 4, and 4.5 into 5.
-
+For `BDS2 Total Score`, codes `777`, `888`, and `999` are treated as NAs.
 
 ```{r}
 
-vars = c(
-  "FXTAS Stage (0-5)",
-  "FXTAS Stage (0-5)*")
+vars = grep("BDS-2 Total Score", value = TRUE, names(gp34), fixed = TRUE)
 
 table1(
   NA.label = NA.label1,
@@ -92,25 +78,18 @@ table1(
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 
-# gp34 |> 
-#   filter(`FXTAS Stage (0-5)` %in% c(NA, "No Response (999)", "Missing (empty in RedCap)")) |> 
-#   select(`FXS ID`, `Event Name`, `Visit Date`) |> 
-#   arrange() |> 
-#   readr::write_csv("inst/extdata/missing_FXTAS_stage.csv")
-
 ```
 
 <br>
 
-List of patients with missing FXTAS Stage:  
+The following patients have missing BDS-2 data. Is it possible some of these patients have BDS-2 data stored outsite of REDCap?
 
 ```{r}
-fxtas_stage_na <- visit1 |>
-  dplyr::filter(is.na(`FXTAS Stage (0-5)`)) |>
-  dplyr::select(`FXS ID`, `Event Name`, `FXTAS Stage (0-5)`)
-  
+bds2_na <- visit1 |>
+  filter(is.na(`BDS-2 Total Score`)) |>
+  dplyr::select(`FXS ID`, `Event Name`, `BDS-2 Total Score`)
 ```
 
 ```{r}
-display_DT(fxtas_stage_na, "GP3_GP4_FXTAS_Stage", group = FALSE)
+display_DT(bds2_na, "GP3_GP4_BDS-2", group = FALSE)
 ```
