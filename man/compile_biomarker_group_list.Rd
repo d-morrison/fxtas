@@ -4,7 +4,10 @@
 \alias{compile_biomarker_group_list}
 \title{Title}
 \usage{
-compile_biomarker_group_list()
+compile_biomarker_group_list(dataset = gp34)
+}
+\arguments{
+\item{dataset}{Dataset to extract names from}
 }
 \description{
 Title
