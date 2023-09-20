@@ -17,7 +17,8 @@ extract_results_from_pickle = function(
     picklename = paste0(dataset_name, "_subtype", n_s - 1, ".pickle"),
     results =
       fs::path(output_folder, "pickle_files", picklename) |>
-      py_load_object(),
+      py_load_object() |>
+      format_results_list(...),
     ...)
 {
 

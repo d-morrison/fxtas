@@ -13,6 +13,7 @@
 #' @importFrom plotly ggplotly
 #' @importFrom rcartocolor carto_pal
 #' @importFrom readxl read_excel
+#' @importFrom reticulate py_load_object
 #' @importFrom tibble column_to_rownames
 #' @importFrom tidyselect contains
 ## usethis namespace: end

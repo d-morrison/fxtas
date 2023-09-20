@@ -74,32 +74,9 @@ synchronize_y_axes = FALSE
 
 biomarker_group_list = compile_biomarker_group_list()
 
-biomarker_group_colors = 
-  tibble(
-    biomarker_group = names(biomarker_group_list),
-    # group_color = rainbow()
-    group_color = 
-      length(biomarker_group_list) |> 
-      RColorBrewer::brewer.pal(n = _, name = "Paired")
-      # rcartocolor::carto_pal(n = _, "Safe")
-      # colorspace::qualitative_hcl(n = _, "Dark2")
-  )
-
 biomarker_groups = 
   biomarker_group_list |> 
-  stack() |> 
-  as_tibble() |> 
-  rename(
-    biomarker  = values,
-    biomarker_group = ind) |> 
-  left_join(
-    biomarker_group_colors,
-    by = "biomarker_group"
-  ) |> 
-  mutate(
-    biomarker_group = 
-      biomarker_group |> 
-      factor(levels = names(biomarker_group_list)))
+  biomarker_group_list_to_table()
 
 SuStaInLabels = 
   biomarker_varnames = 
@@ -233,16 +210,13 @@ for (i in biomarker_varnames)
 #| fig-cap: "positional variance diagrams: 1 subgroup"
 #| fig-cap-location: top
 
-figs = extract_figs_from_pickle(
+results = extract_results_from_pickle(
   n_s = 1,
   dataset_name = dataset_name,
   output_folder = output_folder,
-  score_vals = score_vals,
-  biomarker_plot_order = NULL,
-  
   biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels) 
-print(figs[[1]])
+
 ```
 
 ## two subgroups
