@@ -15,7 +15,7 @@
 #' @return
 #' @export
 #'
-run_SSA = function(
+run_OSA = function(
     prob_score,
     score_vals,
     SuStaInLabels,
@@ -33,7 +33,7 @@ run_SSA = function(
     prob_nl = prob_score[,,1],
     prob_score = prob_score[,,-1, drop = FALSE],
     score_vals = score_vals,
-    SuStaInLabels = SuStaInLabels,
+    biomarker_labels = SuStaInLabels,
     N_startpoints = N_startpoints,
     N_S_max = N_S_max,
     N_iterations_MCMC = N_iterations_MCMC,
@@ -51,8 +51,7 @@ run_SSA = function(
     "ml_stage",
     "prob_ml_stage",
     "prob_subtype_stage",
-    "samples_likelihoods",
-    "fig0"
+    "samples_likelihoods"
   )
 
   return(sus_output)

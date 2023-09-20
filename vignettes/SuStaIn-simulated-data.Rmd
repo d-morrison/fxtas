@@ -187,8 +187,7 @@ sustain_input = pySuStaIn.OrdinalSustain(
 [samples_sequence, samples_f, 
 ml_subtype, prob_ml_subtype, ml_stage, 
 prob_ml_stage, prob_subtype_stage, 
-samples_likelihood, 
-fig0] = sustain_input.run_sustain_algorithm(plot=True)
+samples_likelihood] = sustain_input.run_sustain_algorithm(plot=True)
 
 ```
 

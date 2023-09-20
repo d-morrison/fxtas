@@ -225,9 +225,9 @@ save.image(file = fs::path(output_folder, "data.RData"))
 
 ```
 
-```{r}
-pySuStaIn = import("pySuStaIn")
-sustain_input = run_SSA(
+```{r "run OSA from R}
+
+sustain_output = run_OSA(
   prob_score = prob_score0,
   score_vals = score_vals,
   SuStaInLabels = SuStaInLabels,
@@ -240,62 +240,32 @@ sustain_input = run_SSA(
   seed = 1,
   plot = FALSE)
 
-sus_output = sustain_input$run_sustain_algorithm(plot= FALSE)
-```
+sustain_output_males = run_OSA(
+  prob_score = prob_score0[patient_data$Gender %in% "Male",,],
+  score_vals = score_vals,
+  SuStaInLabels = SuStaInLabels,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max, 
+  N_iterations_MCMC = N_iterations_MCMC, 
+  output_folder = output_folder, 
+  dataset_name = "males", 
+  use_parallel_startpoints = FALSE,
+  seed = 1,
+  plot = FALSE)
 
+sustain_output_females = run_OSA(
+  prob_score = prob_score0[patient_data$Gender %in% "Female",,],
+  score_vals = score_vals,
+  SuStaInLabels = SuStaInLabels,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max, 
+  N_iterations_MCMC = N_iterations_MCMC, 
+  output_folder = output_folder, 
+  dataset_name = "females", 
+  use_parallel_startpoints = FALSE,
+  seed = 1,
+  plot = FALSE)
 
-```{python "initialize-model"}
-
-import pandas
-import numpy as np
-import numpy.matlib
-import matplotlib.pyplot as plt
-import seaborn as sns
-import sys
-import scipy
-from glob import glob
-import pySuStaIn
-import os
-import sklearn.model_selection
-
-os.chdir(r.root_dir)
-
-sustain_input = pySuStaIn.OrdinalSustain(r.prob_nl,
-r.prob_score,
-r.score_vals,
-r.SuStaInLabels,
-r.N_startpoints,
-r.N_S_max, 
-r.N_iterations_MCMC, 
-r.output_folder, 
-r.dataset_name, 
-False,
-1)
-
-sustain_input_males = pySuStaIn.OrdinalSustain(r.prob_nl,
-r.prob_score,
-r.score_vals,
-r.SuStaInLabels,
-r.N_startpoints,
-r.N_S_max, 
-r.N_iterations_MCMC, 
-r.output_folder, 
-r.dataset_name, 
-False,
-1)
-
-
-```
-
-```{python "fit-model"}
-#| eval: !expr fit_models
-#| include: false
-os.chdir(r.root_dir)
-print(os.getcwd())
-[samples_sequence, samples_f,
-ml_subtype, prob_ml_subtype, ml_stage,
-prob_ml_stage, prob_subtype_stage,
-samples_likelihood] = sustain_input.run_sustain_algorithm(plot=False)
 ```
 
 :::{.content-visible when-profile="cv"}
