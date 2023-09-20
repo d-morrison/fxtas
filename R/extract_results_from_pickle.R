@@ -10,7 +10,7 @@
 #' @return
 #' @export
 #'
-extract_figs_from_pickle = function(
+extract_results_from_pickle = function(
     n_s = 1,
     dataset_name = 'sample_data',
     output_folder = "output",
@@ -21,8 +21,6 @@ extract_figs_from_pickle = function(
     ...)
 {
 
-  figs = plot_positional_var(
-    results = results,
-    ...)
+  return(results)
 
 }
