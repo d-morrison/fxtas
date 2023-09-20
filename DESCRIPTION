@@ -23,6 +23,7 @@ Imports:
     readxl,
     reticulate,
     shiny (>= 1.7.2),
+    table1,
     tibble,
     tidyr,
     tidyselect,

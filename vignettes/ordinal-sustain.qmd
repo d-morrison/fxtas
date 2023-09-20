@@ -118,17 +118,18 @@ df =
 biomarker_levels = 
   lapply(df[,biomarker_varnames], F = levels)
 
-```
-
-```{r}
-biomarker_events_table =
-  biomarker_levels |> 
-  get_biomarker_events_table() |> 
-  left_join(
-    biomarker_groups, 
-    by = "biomarker"
+df = df |>
+  mutate(
+    across(
+      all_of(biomarker_varnames), 
+      ~ as.integer(.x) - 1)
   ) |> 
-  arrange(biomarker_group, biomarker, biomarker_level)
+  mutate(Diagnosis = as.integer(`FX*` == "CGG >= 55"))
+
+biomarker_events_table =
+  construct_biomarker_events_table(
+    biomarker_levels,
+    biomarker_groups)
 
 biomarker_plot_order =
   biomarker_events_table |>  pull(biomarker_level)
@@ -154,17 +155,6 @@ table_out |>
 ```
 
 The trailing asterisk (*) indicates a numeric variable that has been categorized for use with Ordinal SusTaIn.
-
-```{r "convert factors to numeric"}
-df = df |>
-  mutate(
-    across(
-      all_of(biomarker_varnames), 
-      ~ as.integer(.x) - 1)
-  ) |> 
-  mutate(Diagnosis = as.integer(`FX*` == "CGG >= 55"))
-
-```
 
 ## Statistical analysis {#sec-Statistical-analysis}
 
@@ -287,6 +277,8 @@ prob_ml_stage, prob_subtype_stage,
 samples_likelihood] = sustain_input.run_sustain_algorithm(plot=False)
 ```
 
+:::{.content-visible when-profile="cv"}
+
 ```{python "cv setup"}
 
 # choose the number of folds:
@@ -305,12 +297,13 @@ for train, test in cv_it:
 test_idxs = np.array(test_idxs,dtype='object')
 ```
 
+
 ```{python "perform CV"}
 # perform cross-validation and output the cross-validation information criterion and
 # log-likelihood on the test set for each subtypes model and fold combination
 CVIC, loglike_matrix     = sustain_input.cross_validate_sustain_model(test_idxs)
 ```
-
+:::
 
 # Results
 

@@ -14,6 +14,7 @@
 #' @importFrom rcartocolor carto_pal
 #' @importFrom readxl read_excel
 #' @importFrom reticulate py_load_object
+#' @importFrom table1 table1
 #' @importFrom tibble column_to_rownames
 #' @importFrom tidyselect contains
 ## usethis namespace: end

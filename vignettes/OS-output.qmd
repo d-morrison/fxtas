@@ -72,41 +72,32 @@ synchronize_y_axes = FALSE
 
 ```{r}
 
-biomarker_group_list = compile_biomarker_group_list()
-
-biomarker_groups = 
-  biomarker_group_list |> 
-  compile_biomarker_groups_table()
+biomarker_groups = compile_biomarker_groups_table()
 
 SuStaInLabels = 
   biomarker_varnames = 
   biomarker_groups |> 
   pull("biomarker")
 
-
 df = 
   visit1 |> 
-  select(
-    `FXS ID`,
-    `FX*`,
-    all_of(biomarker_varnames)) |> 
   filter(
     !is.na(`FX*`))
 
 biomarker_levels = 
   lapply(df[,biomarker_varnames], F = levels)
 
-```
+df = df |>
+  mutate(
+    across(
+      all_of(biomarker_varnames), 
+      ~ as.numeric(.x) - 1)
+  )
 
-```{r}
 biomarker_events_table =
-  biomarker_levels |> 
-  get_biomarker_events_table() |> 
-  left_join(
-    biomarker_groups, 
-    by = "biomarker"
-  ) |> 
-  arrange(biomarker_group, biomarker, biomarker_level)
+  construct_biomarker_events_table(
+    biomarker_levels,
+    biomarker_groups)
 
 biomarker_plot_order =
   biomarker_events_table |>  pull(biomarker_level)
@@ -114,16 +105,6 @@ biomarker_plot_order =
 nlevs = 
   sapply(biomarker_levels, length)
 
-```
-
-
-```{r "convert factors to numeric"}
-df = df |>
-  mutate(
-    across(
-      all_of(biomarker_varnames), 
-      ~ as.numeric(.x) - 1)
-  )
 
 ```
 
@@ -215,7 +196,9 @@ results = extract_results_from_pickle(
   dataset_name = dataset_name,
   output_folder = output_folder,
   biomarker_groups = biomarker_groups,
-  biomarker_levels = biomarker_levels) 
+  biomarker_levels = biomarker_levels)
+
+# figs = results |> plot_positional_var()
 
 ```
 
@@ -233,6 +216,26 @@ results = extract_results_from_pickle(
 #|   - "Group 1"
 #|   - "Group 2"
 biomarker_plot_order2 = NULL
+
+results = extract_results_from_pickle(
+  n_s = 2,
+  dataset_name = dataset_name,
+  output_folder = output_folder,
+  biomarker_groups = biomarker_groups,
+  biomarker_levels = biomarker_levels)
+
+patient_data2 = 
+  patient_data |> 
+  bind_cols(results$subtype_and_stage_table)
+
+library(table1)
+patient_data2 |> 
+  filter(ml_subtype != "Type 0") |> 
+  table1(
+    stratified_formula("Gender", "ml_subtype"),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  data = _)
+
 figs = extract_figs_from_pickle(
   synchronize_y_axes = synchronize_y_axes,
   n_s = 2,

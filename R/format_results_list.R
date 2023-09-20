@@ -15,4 +15,9 @@ format_results_list = function(
       results = results,
       biomarker_event_names = biomarker_event_names)
 
+  results$subtype_and_stage_table =
+    results |>
+    extract_subtype_and_stage_table()
+
+  return(results)
 }
