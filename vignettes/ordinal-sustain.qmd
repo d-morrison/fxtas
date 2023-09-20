@@ -191,26 +191,13 @@ prob_correct =
     biomarkers = biomarker_varnames,
     DataScores = DataScores)
 
-prob_dist = compute_prob_dist(
-  ModelScores,
-  DataScores,
-  biomarker_varnames,
-  prob_correct
-)
-
-prob_nl_dist = prob_dist[1, , ]
-prob_score_dist = prob_dist[-1, , ]
-
-```
-
-```{r}
-
 prob_score0 = compute_prob_scores(
     dataset = patient_data,
     biomarker_varnames,
     ModelScores,
     DataScores,
-    prob_dist
+    prob_dist,
+    prob_correct = prob_correct
   )
  
 prob_nl = prob_score0[,,1]
@@ -237,6 +224,25 @@ for (i in biomarker_varnames)
 save.image(file = fs::path(output_folder, "data.RData"))
 
 ```
+
+```{r}
+pySuStaIn = import("pySuStaIn")
+sustain_input = run_SSA(
+  prob_score = prob_score0,
+  score_vals = score_vals,
+  SuStaInLabels = SuStaInLabels,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max, 
+  N_iterations_MCMC = N_iterations_MCMC, 
+  output_folder = output_folder, 
+  dataset_name = dataset_name, 
+  use_parallel_startpoints = FALSE,
+  seed = 1,
+  plot = FALSE)
+
+sus_output = sustain_input$run_sustain_algorithm(plot= FALSE)
+```
+
 
 ```{python "initialize-model"}
 
@@ -392,7 +398,7 @@ results = extract_results_from_pickle(
   biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels)
 
-table_subtype_by_gender(
+table_subtype_by_demographics(
     patient_data,
     subtype_and_stage_table = results$subtype_and_stage_table
     )
@@ -447,7 +453,7 @@ results = extract_results_from_pickle(
   biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels)
 
-table_subtype_by_gender(
+table_subtype_by_demographics(
     patient_data,
     subtype_and_stage_table = results$subtype_and_stage_table
     )
@@ -503,7 +509,7 @@ results = extract_results_from_pickle(
   biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels)
 
-table_subtype_by_gender(
+table_subtype_by_demographics(
     patient_data,
     subtype_and_stage_table = results$subtype_and_stage_table
     )
@@ -560,7 +566,7 @@ results = extract_results_from_pickle(
   biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels)
 
-table_subtype_by_gender(
+table_subtype_by_demographics(
     patient_data,
     subtype_and_stage_table = results$subtype_and_stage_table
     )
@@ -618,7 +624,7 @@ results = extract_results_from_pickle(
   biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels)
 
-table_subtype_by_gender(
+table_subtype_by_demographics(
     patient_data,
     subtype_and_stage_table = results$subtype_and_stage_table
     )

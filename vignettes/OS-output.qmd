@@ -223,7 +223,7 @@ results = extract_results_from_pickle(
   biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels)
 
-table_subtype_by_gender(
+table_subtype_by_demographics(
     patient_data,
     subtype_and_stage_table = results$subtype_and_stage_table
     )

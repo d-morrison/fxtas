@@ -6,7 +6,7 @@
 #' @return
 #' @export
 #'
-table_subtype_by_gender = function(
+table_subtype_by_demographics = function(
     patient_data,
     subtype_and_stage_table
     )
@@ -19,7 +19,7 @@ table_subtype_by_gender = function(
   patient_data2 |>
     filter(ml_subtype != "Type 0") |>
     tableby(
-      ml_subtype ~ Gender,
+      ml_subtype ~ Gender + `Primary Race` + `Primary Ethnicity`,
       cat.stats="countrowpct",
       data = _) |>
     summary(pfootnote=TRUE)
