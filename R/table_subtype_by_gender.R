@@ -18,8 +18,9 @@ table_subtype_by_gender = function(
 
   patient_data2 |>
     filter(ml_subtype != "Type 0") |>
-    table1(
-      stratified_formula("Gender", "ml_subtype"),
-      # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-      data = _)
+    tableby(
+      ml_subtype ~ Gender,
+      cat.stats="countrowpct",
+      data = _) |>
+    summary(pfootnote=TRUE)
 }

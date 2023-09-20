@@ -2,6 +2,7 @@
 "_PACKAGE"
 
 ## usethis namespace: start
+#' @importFrom arsenal tableby
 #' @importFrom colorspace qualitative_hcl
 #' @importFrom forcats fct_na_level_to_value
 #' @importFrom forcats fct_other

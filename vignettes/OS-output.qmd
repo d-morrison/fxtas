@@ -119,8 +119,7 @@ ModelScores = DataScores =
 
 control_data = 
   df |> 
-  filter(`FX*` == "CGG < 55") |> 
-  select(all_of(biomarker_varnames))
+  filter(`FX*` == "CGG < 55")
 
 patient_data = 
   df |> 
@@ -224,17 +223,10 @@ results = extract_results_from_pickle(
   biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels)
 
-patient_data2 = 
-  patient_data |> 
-  bind_cols(results$subtype_and_stage_table)
-
-library(table1)
-patient_data2 |> 
-  filter(ml_subtype != "Type 0") |> 
-  table1(
-    stratified_formula("Gender", "ml_subtype"),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = _)
+table_subtype_by_gender(
+    patient_data,
+    subtype_and_stage_table = results$subtype_and_stage_table
+    )
 
 figs = extract_figs_from_pickle(
   synchronize_y_axes = synchronize_y_axes,

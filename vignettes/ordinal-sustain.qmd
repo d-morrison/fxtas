@@ -76,6 +76,9 @@ library(pander)
 
 ```{r}
 #| label: "set run parameters"
+fit_models = TRUE
+fit_models = FALSE
+run_CV = FALSE
 N_startpoints = 10L
 N_S_max = 6L
 N_iterations_MCMC = 1e5L
@@ -86,6 +89,8 @@ output_folder =
   "output/output.longest" |> 
   fs::dir_create()
 synchronize_y_axes = FALSE
+biomarker_plot_order2 = NULL
+
 ```
 
 # Methods
@@ -108,10 +113,6 @@ SuStaInLabels =
 
 df = 
   visit1 |> 
-  select(
-    `FXS ID`,
-    `FX*`,
-    all_of(biomarker_varnames)) |> 
   filter(
     !is.na(`FX*`))
 
@@ -265,9 +266,23 @@ r.dataset_name,
 False,
 1)
 
+sustain_input_males = pySuStaIn.OrdinalSustain(r.prob_nl,
+r.prob_score,
+r.score_vals,
+r.SuStaInLabels,
+r.N_startpoints,
+r.N_S_max, 
+r.N_iterations_MCMC, 
+r.output_folder, 
+r.dataset_name, 
+False,
+1)
+
+
 ```
 
 ```{python "fit-model"}
+#| eval: !expr fit_models
 #| include: false
 os.chdir(r.root_dir)
 print(os.getcwd())
@@ -280,7 +295,7 @@ samples_likelihood] = sustain_input.run_sustain_algorithm(plot=False)
 :::{.content-visible when-profile="cv"}
 
 ```{python "cv setup"}
-
+#| eval: !expr run_CV
 # choose the number of folds:
 N_folds = 10
 
@@ -299,6 +314,7 @@ test_idxs = np.array(test_idxs,dtype='object')
 
 
 ```{python "perform CV"}
+#| eval: !expr run_CV
 # perform cross-validation and output the cross-validation information criterion and
 # log-likelihood on the test set for each subtypes model and fold combination
 CVIC, loglike_matrix     = sustain_input.cross_validate_sustain_model(test_idxs)
@@ -327,11 +343,16 @@ figs = extract_figs_from_pickle(
   biomarker_plot_order = NULL,
   
   biomarker_groups = biomarker_groups,
-  biomarker_levels = biomarker_levels) 
+  biomarker_levels = biomarker_levels)
 print(figs[[1]])
 ```
 
 ## two subgroups
+
+```{r}
+n_s = 2
+```
+
 
 ```{r}
 #| label: "fig-pvd2"
@@ -344,7 +365,7 @@ print(figs[[1]])
 #| fig-subcap: 
 #|   - "Subgroup 1"
 #|   - "Subgroup 2"
-biomarker_plot_order2 = NULL
+
 figs = extract_figs_from_pickle(
   synchronize_y_axes = synchronize_y_axes,
   n_s = 2,
@@ -357,6 +378,28 @@ figs = extract_figs_from_pickle(
 figs |> 
   print_PVDs()
 
+```
+
+```{r}
+#| tbl-cap: !expr glue::glue("Subgroups by gender ({n_s} subgroups)")
+#| label: tbl-sg_by_sex_2
+#| results: asis
+
+results = extract_results_from_pickle(
+  n_s = n_s,
+  dataset_name = dataset_name,
+  output_folder = output_folder,
+  biomarker_groups = biomarker_groups,
+  biomarker_levels = biomarker_levels)
+
+table_subtype_by_gender(
+    patient_data,
+    subtype_and_stage_table = results$subtype_and_stage_table
+    )
+```
+
+```{r}
+n_s = 3
 ```
 
 ## three subgroups
@@ -390,6 +433,28 @@ library(ggplot2)
 figs |> 
   print_PVDs()
 
+```
+
+```{r}
+#| tbl-cap: !expr glue::glue("Subgroups by gender ({n_s} subgroups)")
+#| label: tbl-sg_by_sex_3
+#| results: asis
+
+results = extract_results_from_pickle(
+  n_s = n_s,
+  dataset_name = dataset_name,
+  output_folder = output_folder,
+  biomarker_groups = biomarker_groups,
+  biomarker_levels = biomarker_levels)
+
+table_subtype_by_gender(
+    patient_data,
+    subtype_and_stage_table = results$subtype_and_stage_table
+    )
+```
+
+```{r}
+n_s = 4
 ```
 
 ## four subgroups
@@ -426,6 +491,27 @@ figs |>
 
 ```
 
+```{r}
+#| tbl-cap: !expr glue::glue("Subgroups by gender ({n_s} subgroups)")
+#| label: tbl-sg_by_sex_4
+#| results: asis
+
+results = extract_results_from_pickle(
+  n_s = n_s,
+  dataset_name = dataset_name,
+  output_folder = output_folder,
+  biomarker_groups = biomarker_groups,
+  biomarker_levels = biomarker_levels)
+
+table_subtype_by_gender(
+    patient_data,
+    subtype_and_stage_table = results$subtype_and_stage_table
+    )
+```
+
+```{r}
+n_s = 5
+```
 
 ## five subgroups
 
@@ -460,6 +546,28 @@ library(ggplot2)
 figs |> 
   print_PVDs()
 
+```
+
+```{r}
+#| tbl-cap: !expr glue::glue("Subgroups by gender ({n_s} subgroups)")
+#| label: tbl-sg_by_sex_5
+#| results: asis
+
+results = extract_results_from_pickle(
+  n_s = n_s,
+  dataset_name = dataset_name,
+  output_folder = output_folder,
+  biomarker_groups = biomarker_groups,
+  biomarker_levels = biomarker_levels)
+
+table_subtype_by_gender(
+    patient_data,
+    subtype_and_stage_table = results$subtype_and_stage_table
+    )
+```
+
+```{r}
+n_s = 6
 ```
 
 ## six subgroups
@@ -498,6 +606,24 @@ figs |>
 
 ```
 
+```{r}
+#| tbl-cap: !expr glue::glue("Subgroups by gender ({n_s} subgroups)")
+#| label: tbl-sg_by_sex_6
+#| results: asis
+
+results = extract_results_from_pickle(
+  n_s = n_s,
+  dataset_name = dataset_name,
+  output_folder = output_folder,
+  biomarker_groups = biomarker_groups,
+  biomarker_levels = biomarker_levels)
+
+table_subtype_by_gender(
+    patient_data,
+    subtype_and_stage_table = results$subtype_and_stage_table
+    )
+```
+
 @fig-mcmc-loglik shows the distribution of log-likelihoods from the MCMC samples for each number of clusters. We can see that adding up to 6 clusters substantially improves the log-likelihood.
 
 We can choose an optimal number of clusters using the Cross-Validation Information Criterion (CVIC) [@young2018uncovering] (to be added to analysis).
@@ -506,6 +632,7 @@ We can choose an optimal number of clusters using the Cross-Validation Informati
 #| fig-height: 4
 #| label: fig-mcmc-loglik
 #| fig-cap: log-likelihoods of MCMC samples, by number of subtypes
+#| eval: !expr fit_models
 py$samples_likelihood |>
   graph_likelihoods_v2(alpha = 0.5) |>
   suppressWarnings()

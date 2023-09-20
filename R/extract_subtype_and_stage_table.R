@@ -12,6 +12,6 @@ extract_subtype_and_stage_table = function(results)
         0,
         ml_subtype
       ),
-      ml_subtype = paste("Type ")
+      ml_subtype = paste("Type", ml_subtype)
     )
 }
