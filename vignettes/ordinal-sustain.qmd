@@ -98,12 +98,7 @@ The data come from the GP and GP4 studies. We analyzed one visit record per part
 
 ```{r}
 
-biomarker_group_list = 
-  compile_biomarker_group_list()
-
-biomarker_groups = 
-  biomarker_group_list |> 
-  biomarker_group_list_to_table()
+biomarker_groups = compile_biomarker_groups_table()
 
 SuStaInLabels = 
   biomarker_varnames = 

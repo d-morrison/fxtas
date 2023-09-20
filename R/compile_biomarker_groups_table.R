@@ -5,8 +5,9 @@
 #' @return
 #' @export
 #'
-biomarker_group_list_to_table = function(
-    biomarker_group_list,
+compile_biomarker_groups_table = function(
+    biomarker_group_list =
+      compile_biomarker_group_list(),
     colors =
       names(biomarker_group_list) |>
       choose_biomarker_group_colors())

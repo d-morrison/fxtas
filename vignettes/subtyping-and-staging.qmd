@@ -75,7 +75,7 @@ biomarker_group_colors =
 
 biomarker_groups = 
   biomarker_group_list |> 
-  biomarker_group_list_to_table() |> 
+  compile_biomarker_groups_table() |> 
   left_join(
     biomarker_group_colors,
     by = "biomarker_group"

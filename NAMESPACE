@@ -2,7 +2,7 @@
 
 export(age_range_medians)
 export(all_potential_biomarkers)
-export(biomarker_group_list_to_table)
+export(compile_biomarker_groups_table)
 export(clean_numeric)
 export(compile_biomarker_group_list)
 export(compute_confus_matrix)
