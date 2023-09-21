@@ -6,8 +6,8 @@ clean_data = function(dataset)
     relocate(`Visit Date`, .after = `Event Name`) |>
     clean_head_tremor_onset() |>
 
-    create_any_tremor() |>
-    fix_tremor_onsets() |>
+
+
 
     fix_onset_age_vars() |>
 
@@ -18,11 +18,6 @@ clean_data = function(dataset)
     make_vars_numeric(regex = "Purdue pegboard") |>
     make_vars_numeric(regex = "SCL90") |>
     categorize_SCL90() |>
-
-
-    create_any_cancer() |>
-
-    create_any_autoimmune() |>
 
 
     categorize_BDS() |>
@@ -62,6 +57,12 @@ clean_data = function(dataset)
     fix_factors() |>
 
     categorize_primary_race() |>
+
+    create_any_tremor() |>
+    create_any_cancer() |>
+    create_any_autoimmune() |>
+
+    fix_tremor_onsets() |>
 
     droplevels()
 }

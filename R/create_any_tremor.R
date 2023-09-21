@@ -18,8 +18,8 @@ create_any_tremor = function(
         dplyr::if_all(
           .cols = all_of(tremor_types),
           .fns = ~ is.na(.)
-        ) ~ NA,
-        TRUE ~ "No tremors recorded"
+        ) ~ NA_character_,
+        .default = "No tremors recorded"
       ) |>
         factor() |>
         relevel(ref = "No tremors recorded")

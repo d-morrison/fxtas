@@ -123,6 +123,8 @@ n_Tremor_noAge <- visit1 |>
 
 The `r n_Tremor_noAge` patients with a recorded tremor but missing age of onset are listed below:
 
+<b>The list can be downloaded to `csv` or `excel` by clicking on the `Download` button at the top of the table.</b>
+
 ```{r}
 display_DT(
   data = visit1 |>
@@ -168,6 +170,8 @@ n_age_NoTremor <- visit1 |>
 ```
 
 The `r n_age_NoTremor` patients with Age of Onset without having any tremor recorded are listed below.
+
+<b>The list can be downloaded to `csv` or `excel` by clicking on the `Download` button at the top of the table.</b>
 
 ```{r}
 display_DT(
@@ -241,6 +245,8 @@ n_noAge_HeadTremor <- visit1 |>
 ```
 
 The `r n_noAge_HeadTremor` patients with missing age of onset that have a head tremor are listed below:
+
+<b>The list can be downloaded to `csv` or `excel` by clicking on the `Download` button at the top of the table.</b>
 
 ```{r}
 display_DT(
@@ -343,7 +349,9 @@ n_Ataxia_noAge <- visit1 |>
 
 <br>
 
-The `r n_Ataxia_noAge` patients with Ataxia but are missing age of onset are listed below:
+The `r n_Ataxia_noAge` patients with Ataxia but are missing age of onset are listed below:  
+
+<b>The list can be downloaded to `csv` or `excel` by clicking on the `Download` button at the top of the table.</b>
 
 ```{r}
 display_DT(
@@ -392,7 +400,9 @@ table1(
 )
 ```
 
-There are `r n_age_NoAtaxia` patients with age of onset without having Ataxia. These records are listed below.
+There are `r n_age_NoAtaxia` patients with age of onset without having Ataxia. These records are listed below.  
+
+<b>The list can be downloaded to `csv` or `excel` by clicking on the `Download` button at the top of the table.</b>
 
 ```{r}
 display_DT(

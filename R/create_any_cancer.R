@@ -20,7 +20,7 @@ create_any_cancer = function(
           .cols = all_of(cancer_types),
           .fns = ~ is.na(.)
         ) ~ NA,
-        TRUE ~ "No cancers recorded"
+        .default = "No cancers recorded"
       ) |>
         factor() |>
         relevel(ref = "No cancers recorded")
