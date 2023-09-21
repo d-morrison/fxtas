@@ -17,4 +17,10 @@ clean_numeric = function(
     condition = x %in% NA_codes,
     true = NA_real_,
     false = x |> as.numeric() |> suppressWarnings())
+
+## equivalent(?):
+# x |> as.numeric() |> suppressWarnings() |>
+#   case_match(NA_codes ~ NA_real_, .default = x)
+## implementations with `replace()` are also possible, and maybe faster: https://stackoverflow.com/a/27909037/9286327
+## `na_if()` can't replace multiple values: https://github.com/tidyverse/dplyr/issues/1972
 }
