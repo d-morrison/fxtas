@@ -2,17 +2,21 @@
 % Please edit documentation in R/compute_confus_matrix.R
 \name{compute_confus_matrix}
 \alias{compute_confus_matrix}
-\title{Title}
+\title{compute `confus_matrix` as in python version}
 \usage{
-compute_confus_matrix(samples_sequence)
+compute_confus_matrix(
+  samples_sequence,
+  biomarker_event_order = attr(samples_sequence, "biomarker_event_names")
+)
 }
 \arguments{
-\item{samples_sequence}{}
+\item{biomarker_event_order}{}
 }
 \description{
-Title
+compute `confus_matrix` as in python version
 }
 \examples{
 samples_sequence = matrix(
 compute_confus_matrix(samples_sequence)
+
 }

@@ -3,6 +3,9 @@
 
 ## usethis namespace: start
 #' @importFrom colorspace qualitative_hcl
+#' @importFrom dplyr arrange
+#' @importFrom dplyr mutate
+#' @importFrom dplyr select
 #' @importFrom forcats fct_na_level_to_value
 #' @importFrom forcats fct_other
 #' @importFrom fs path
@@ -13,6 +16,7 @@
 #' @importFrom plotly ggplotly
 #' @importFrom readxl read_excel
 #' @importFrom tibble column_to_rownames
+#' @importFrom tidyr pivot_wider
 #' @importFrom tidyselect contains
 ## usethis namespace: end
 NULL
