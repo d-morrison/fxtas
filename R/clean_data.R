@@ -64,5 +64,7 @@ clean_data = function(dataset)
 
     fix_tremor_onsets() |>
 
+    fix_head_tremor() |>
+
     droplevels()
 }
