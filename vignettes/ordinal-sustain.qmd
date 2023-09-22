@@ -77,8 +77,10 @@ library(pander)
 ```{r}
 #| label: "set run parameters"
 fit_models = TRUE
-fit_models = FALSE
-run_CV = FALSE
+# fit_models = FALSE
+run_CV =  TRUE
+# run_CV = FALSE
+
 N_startpoints = 10L
 N_S_max = 6L
 N_iterations_MCMC = 1e5L
@@ -194,9 +196,8 @@ prob_correct =
 prob_score0 = compute_prob_scores(
     dataset = patient_data,
     biomarker_varnames,
-    ModelScores,
-    DataScores,
-    prob_dist,
+    ModelScores = ModelScores,
+    DataScores = DataScores,
     prob_correct = prob_correct
   )
  
@@ -225,7 +226,7 @@ save.image(file = fs::path(output_folder, "data.RData"))
 
 ```
 
-```{r "run OSA from R}
+```{r "run OSA from R"}
 
 sustain_output = run_OSA(
   prob_score = prob_score0,

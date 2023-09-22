@@ -15,9 +15,9 @@ compute_prob_scores = function(
     ModelScores,
     DataScores,
     prob_dist = compute_prob_dist(
-      ModelScores,
-      DataScores,
-      biomarker_varnames,
+      ModelScores = ModelScores,
+      DataScores = DataScores,
+      biomarkers = biomarker_varnames,
       ...
     ),
     verbose = FALSE,
