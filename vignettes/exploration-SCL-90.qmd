@@ -92,7 +92,11 @@ table1(
 # visit1 |> ggplot(aes(x = `SCL90: Anxiety`, group = `FX*`)) + geom_histogram() + facet_wrap(~`FX*`, ncol = 1)
 ```
 
+<br> 
+
 List of patients with missing SCL90:  
+
+<b>The list can be downloaded to `csv` or `excel` by clicking on the `Download` button at the top of the table.</b>
 
 ```{r}
 # want to exclude categorized and reason missing variables that we created

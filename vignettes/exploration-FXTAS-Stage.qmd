@@ -104,6 +104,8 @@ table1(
 
 List of patients with missing FXTAS Stage:  
 
+<b>The list can be downloaded to `csv` or `excel` by clicking on the `Download` button at the top of the table.</b>
+
 ```{r}
 fxtas_stage_na <- visit1 |>
   dplyr::filter(is.na(`FXTAS Stage (0-5)`)) |>

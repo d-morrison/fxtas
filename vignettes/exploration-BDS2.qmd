@@ -82,7 +82,9 @@ table1(
 
 <br>
 
-The following patients have missing BDS-2 data. Is it possible some of these patients have BDS-2 data stored outsite of REDCap?
+The following patients have missing BDS-2 data. Is it possible some of these patients have BDS-2 data stored outside of REDCap?
+
+<b>The list can be downloaded to `csv` or `excel` by clicking on the `Download` button at the top of the table.</b>
 
 ```{r}
 bds2_na <- visit1 |>

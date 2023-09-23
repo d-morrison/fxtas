@@ -104,6 +104,8 @@ table1(
 
 The list of patients in GP4 with completely missing `MRI` data are shown below:
 
+<b>The list can be downloaded to `csv` or `excel` by clicking on the `Download` button at the top of the table.</b>
+
 ```{r}
 mri_gp4_na <- visit1 |>
   filter(

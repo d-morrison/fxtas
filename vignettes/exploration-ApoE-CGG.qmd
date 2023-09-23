@@ -140,6 +140,7 @@ apoe_na <- gp34 |>
   arrange(`FXS ID`, `Visit Date`)
 ```
 
+<b>The list can be downloaded to `csv` or `excel` by clicking on the `Download` button at the top of the table.</b>
 
 ```{r, results='asis'}
 DT::datatable(
@@ -235,6 +236,8 @@ gp34 |>
 
 ```
 
+<br>
+
 List of patients with missing CGG data:  
 
 ```{r, include = TRUE}
@@ -250,6 +253,7 @@ cgg_na <- gp34 |>
 
 ```
 
+<b>The list can be downloaded to `csv` or `excel` by clicking on the `Download` button at the top of the table.</b>
 
 ```{r}
 DT::datatable(
