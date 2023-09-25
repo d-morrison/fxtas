@@ -54,57 +54,22 @@ The missing codes 777, 888, and 999 were converted to `NA` for all variables, un
 
 # Data from first visits
 
-```{asis, echo=phase}
-Here, we review the data from the first visits by each participant, stratified by 
-the first study phase in which the participant enrolled (GP3 vs GP4).
-```
-
-```{asis, echo=cgg}
-Here, we review the data from the first visits by each participant, stratified by CGG (`r paste0("<55 or", " \u2265", "55")`).
-```
-
-## Study
-
-```{r}
-table1(
-  NA.label = NA.label1,
-  formula(paste(
-    "~", paste(formulaic::add.backtick("Study"), collapse = " + "), 
-    "|",
-    column_var |> formulaic::add.backtick())),
-  data = visit1)
-```
-
 ## FXTAS Stage
-
-For categorical analysis, we merged 2.5 into 2, 3.5 into 4, and 4.5 into 5.
-
 
 ```{r}
 
 vars = c(
   "FXTAS Stage (0-5)",
   "FXTAS Stage (0-5)*")
-
-table1(
-  NA.label = NA.label1,
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
-
-# gp34 |> 
-#   filter(`FXTAS Stage (0-5)` %in% c(NA, "No Response (999)", "Missing (empty in RedCap)")) |> 
-#   select(`FXS ID`, `Event Name`, `Visit Date`) |> 
-#   arrange() |> 
-#   readr::write_csv("inst/extdata/missing_FXTAS_stage.csv")
-
 ```
 
 <br>
 
 List of patients with missing FXTAS Stage:  
 
+:::{.callout-note}
 <b>The list can be downloaded to `csv` or `excel` by clicking on the `Download` button at the top of the table.</b>
+:::
 
 ```{r}
 fxtas_stage_na <- visit1 |>

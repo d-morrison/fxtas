@@ -67,7 +67,7 @@ Here, we review the data from the first visits by each participant, stratified b
 
 ## MRI
 
-The vast majority of the `MRI` data are missing. Due to this the data are summarized by `CGG` and `Study`. The `MRI` data are completely missing in GP3 and largely missing for those in GP4 who are not `CGG` $\ge55$.
+The vast majority of the `MRI` data are missing, data are completely missing in GP3 and largely missing for those in GP4.
 
 ```{r}
 
@@ -84,34 +84,20 @@ vars = c(
   "Genu (CC)-WM Hyperintensity",
   "Corpus Callosum-Thickness"
 )
-
-table1(
-  NA.label = NA.label1,
-  as.formula(
-    paste(
-      " ~ ",
-      paste(formulaic::add.backtick(vars), collapse = " + "), 
-      "|",
-      paste0("Study", " * ", formulaic::add.backtick(column_var)), 
-      sep = ""
-    )
-  ),
-  data = visit1)
-
 ```
 
-<br>
+The list of patients in GP4 with any missing `MRI` data are shown below:
 
-The list of patients in GP4 with completely missing `MRI` data are shown below:
-
+:::{.callout-note}
 <b>The list can be downloaded to `csv` or `excel` by clicking on the `Download` button at the top of the table.</b>
+:::
 
 ```{r}
 mri_gp4_na <- visit1 |>
   filter(
     Study == "GP4" & 
-      if_all(
-        vars,
+      if_any(
+        all_of(vars),
         is.na
       )
   ) |>

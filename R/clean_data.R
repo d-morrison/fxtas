@@ -7,10 +7,6 @@ clean_data = function(dataset)
     clean_head_tremor_onset() |>
 
 
-
-
-    fix_onset_age_vars() |>
-
     clean_kinesia() |>
     # includes BDS, MMSE
     make_vars_numeric(regex = "score", ignore.case = TRUE) |>
@@ -54,15 +50,22 @@ clean_data = function(dataset)
     # Ataxia
     clean_ataxia() |>
 
+    # Fix factors: recode missing codes to NA
     fix_factors() |>
 
     categorize_primary_race() |>
 
+    # handle tremor variables
     create_any_tremor() |>
+
+    fix_tremor_onsets() |>
+
+    fix_onset_age_vars() |>
+
+    # create any caner and any autoimmune
     create_any_cancer() |>
     create_any_autoimmune() |>
 
-    fix_tremor_onsets() |>
 
     fix_head_tremor() |>
 

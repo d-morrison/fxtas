@@ -10,7 +10,7 @@ format:
   docx:
     number-sections: true
 ---
-
+  
 ```{r, include = FALSE}
 
 knitr::opts_chunk$set(
@@ -58,15 +58,6 @@ In the RedCap database, the "age of onset" variables were recorded using a mix o
 
 # Data from first visits
 
-```{asis, echo=phase}
-Here, we review the data from the first visits by each participant, stratified by 
-the first study phase in which the participant enrolled (GP3 vs GP4).
-```
-
-```{asis, echo=cgg}
-Here, we review the data from the first visits by each participant, stratified by CGG (`r paste0("<55 or", " \u2265", "55")`).
-```
-
 ## Tremors
 
 
@@ -81,38 +72,7 @@ vars = c(
   # "Tremor: Age of onset"
   # "Tremor: Age of onset: missingness reasons"
 )
-table1(
-  NA.label = NA.label1,
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
-
 ```
-
-<br>
-
-Age of onset and missingness reasons where any of the four above tremor types = "Yes":
-
-```{r}
-vars = c(
-  "Tremor: Age of onset",
-  "Tremor: Age of onset: missingness reasons"
-)
-
-footnote <- paste0(
-  "Age of onset for those with 'Some tremors recorded'."
-)
-
-table1(
-  NA.label = NA.label1,
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> 
-    filter(`Any tremor (excluding Head Tremor)` == "Some tremors recorded"),
-  footnote = footnote)
-```
-
-<br>
 
 ```{r}
 n_Tremor_noAge <- visit1 |>
@@ -122,9 +82,11 @@ n_Tremor_noAge <- visit1 |>
 ```
 
 The `r n_Tremor_noAge` patients with a recorded tremor but missing age of onset are listed below:
-
+  
+:::{.callout-note}
 <b>The list can be downloaded to `csv` or `excel` by clicking on the `Download` button at the top of the table.</b>
-
+:::
+  
 ```{r}
 display_DT(
   data = visit1 |>
@@ -139,27 +101,6 @@ display_DT(
 
 <br>
 
-Do we have age of onset for those with 'No tremors recorded' or missing data?
-
-```{r}
-vars = c(
-  "Tremor: Age of onset"
-)
-
-footnote <- paste0(
-  "Age of onset for those with 'No tremors recorded' or missing data."
-)
-
-table1(
-  NA.label = NA.label1,
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> 
-    filter(`Any tremor (excluding Head Tremor)` == "No tremors recorded" |
-             is.na(`Any tremor (excluding Head Tremor)`)),
-  footnote = footnote)
-```
-
 ```{r}
 # store number
 n_age_NoTremor <- visit1 |> 
@@ -167,20 +108,22 @@ n_age_NoTremor <- visit1 |>
             `Any tremor (excluding Head Tremor)` == "No tremors recorded") & 
            !is.na(`Tremor: Age of onset`)) |> 
   nrow()
-```
+```  
+    
+  The `r n_age_NoTremor` patients with Age of Onset without having any tremor recorded are listed below.
 
-The `r n_age_NoTremor` patients with Age of Onset without having any tremor recorded are listed below.
-
+:::{.callout-note}
 <b>The list can be downloaded to `csv` or `excel` by clicking on the `Download` button at the top of the table.</b>
-
+:::
+  
 ```{r}
 display_DT(
-  data = gp34 |> 
+  data = visit1 |> 
     filter((is.na(`Any tremor (excluding Head Tremor)`) | 
-            `Any tremor (excluding Head Tremor)` == "No tremors recorded") &
-           !is.na(`Tremor: Age of onset`)) |> 
-  dplyr::select(`FXS ID`, `Event Name`, `Any tremor (excluding Head Tremor)`, 
-                `Tremor: Age of onset`),
+              `Any tremor (excluding Head Tremor)` == "No tremors recorded") &
+             !is.na(`Tremor: Age of onset`)) |> 
+    dplyr::select(`FXS ID`, `Event Name`, `Any tremor (excluding Head Tremor)`, 
+                  `Tremor: Age of onset`),
   filename = "GP3_GP4_No-Tremor_Age-of-Onset",
   group = FALSE
 )
@@ -188,7 +131,7 @@ display_DT(
 
 ## Head tremors
 
-Unfortunately, head tremor was not collected in GP3.   
+Unfortunately, head tremor was not collected in GP3. If no other tremors were recorded in GP4, and `Head tremor` was `NA` it was recoded to '`No`.
 
 ```{r}
 vars = c(
@@ -196,41 +139,17 @@ vars = c(
   # "Head Tremor: Age of onset"
   
 )
-
-footnote <- paste0(
-  "Head tremor was not collected in GP3. Summaries provided are for GP4 only."
-)
-
-table1(
-  NA.label = NA.label1,
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> filter(Study == "GP4"),
-  footnote = footnote)
-
-```
-
-<br>
-
-Age of onset and missingness reasons where "Head tremor" = "Yes":
-
-```{r}
-vars = c(
-  "Head Tremor: Age of onset",
-  "Head Tremor: Age of onset: missingness reasons"
-  
-)
-
-footnote <- paste0(
-  "Age of onset for those with a head tremor recorded."
-)
-
-table1(
-  NA.label = NA.label1,
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> filter(Study == "GP4" & `Head tremor` == "Yes"),
-  footnote = footnote)
+# 
+# footnote <- paste0(
+#   "Head tremor was not collected in GP3. Summaries provided are for GP4 only."
+# )
+# 
+# table1(
+#   NA.label = NA.label1,
+#   stratified_formula(vars, column_var),
+#   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+#   data = visit1 |> filter(Study == "GP4"),
+#   footnote = footnote)
 
 ```
 
@@ -246,7 +165,9 @@ n_noAge_HeadTremor <- visit1 |>
 
 The `r n_noAge_HeadTremor` patients with missing age of onset that have a head tremor are listed below:
 
+:::{.callout-note}
 <b>The list can be downloaded to `csv` or `excel` by clicking on the `Download` button at the top of the table.</b>
+:::
 
 ```{r}
 display_DT(
@@ -263,40 +184,6 @@ display_DT(
 )
 ```
 
-Do we have age of onset for those with 'No' head tremor or missing data?  
-
-```{r}
-# store n for text
-n_age_NoHeadTremor <- visit1 |> 
-    filter((`Head tremor` == "No" |
-             is.na(`Head tremor`)) & 
-             Study == "GP4" &
-             !is.na(`Head Tremor: Age of onset`)) |>
-  nrow()
-```
-
-There are `r n_age_NoHeadTremor` patients with age of onset without having a Head tremor.
-
-```{r}
-vars = c(
-  "Head Tremor: Age of onset"
-)
-
-footnote <- paste0(
-  "Age of onset for those with 'No' head tremor or missing data."
-)
-
-table1(
-  NA.label = NA.label1,
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> 
-    filter((`Head tremor` == "No" |
-             is.na(`Head tremor`)) & 
-             Study == "GP4"),
-  footnote = footnote)
-```
-
 
 ## Ataxia
 
@@ -311,32 +198,12 @@ vars = c(
   # "Ataxia: Age of onset: missingness reasons"
 )
 
-table1(
-  NA.label = NA.label1,
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+# table1(
+#   NA.label = NA.label1,
+#   stratified_formula(vars, column_var),
+#   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+#   data = visit1)
 
-```
-
-<br>
-
-Age of onset and missingness reasons where "Ataxia" = "Yes":
-
-```{r}
-vars = c(
-  # "Ataxia",
-  # "Ataxia: severity",
-  # "Ataxia: severity*"
-  "Ataxia: Age of onset",
-  "Ataxia: Age of onset: missingness reasons"
-)
-
-table1(
-  NA.label = NA.label1,
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> filter(Ataxia == "Yes"))
 ```
 
 ```{r}
@@ -351,7 +218,9 @@ n_Ataxia_noAge <- visit1 |>
 
 The `r n_Ataxia_noAge` patients with Ataxia but are missing age of onset are listed below:  
 
+:::{.callout-note}
 <b>The list can be downloaded to `csv` or `excel` by clicking on the `Download` button at the top of the table.</b>
+:::
 
 ```{r}
 display_DT(
@@ -376,33 +245,11 @@ n_age_NoAtaxia <- visit1 |>
   nrow()
 ```
 
-Do we have age of onset for those with 'No' Ataxia or missing data?  
+The `r n_age_NoAtaxia` patients with age of onset without having Ataxia. These records are listed below.  
 
-```{r}
-vars = c(
-  # "Ataxia",
-  # "Ataxia: severity",
-  # "Ataxia: severity*"
-  "Ataxia: Age of onset",
-  "Ataxia: Age of onset: missingness reasons"
-)
-
-footnote = paste0(
-  "Age of onset for those with 'No' Ataxia or missing data."
-)
-
-table1(
-  NA.label = NA.label1,
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  footnote = footnote,
-  data = visit1 |> filter(Ataxia == "No" | is.na(Ataxia))
-)
-```
-
-There are `r n_age_NoAtaxia` patients with age of onset without having Ataxia. These records are listed below.  
-
+:::{.callout-note}
 <b>The list can be downloaded to `csv` or `excel` by clicking on the `Download` button at the top of the table.</b>
+:::
 
 ```{r}
 display_DT(
