@@ -1,0 +1,89 @@
+---
+title: "Questions about FXTAS Sequence Data"
+subtitle: "WAIS"
+format:
+  html:
+    toc: false
+    toc-depth: 4
+    toc-float: true
+    number-sections: false
+    embed-resources: true
+---
+
+```{r, include = FALSE}
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  comment = "#>",
+  fig.width = 7.5,
+  fig.height = 4
+)
+
+# update 'asis' chunk to allow inline code
+knitr::knit_engines$set(asis = function(options) {
+  if (options$echo && options$eval) knitr::knit_child(text = options$code)
+})
+```
+
+```{r setup}
+#| message: false
+library(fxtas)
+devtools::load_all()
+library(pander)
+library(table1)
+library(dplyr)
+library(magrittr)
+NA.label1 = "Missing"
+column_var = "Recruited in study phase"
+column_var = "FX**"
+# load_all()
+
+phase <- ifelse(column_var == "Recruited in study phase", TRUE, FALSE)
+cgg <- ifelse(column_var == "FX**", TRUE, FALSE)
+```
+
+We combined "Verbal: IQ Score" (`wais_verb_iq`) from the GP study, which used WAIS3, and "Verbal Comprehension: Composite Score (VCI)" (`wais4_verbcomp_cs`) from the GP4, which used WAIS4. Since these scores are already standardized, we treated them as interchangeable. 
+
+Similarly, we combined  "Full Scale: IQ Score" (`wais_fullscale_iq`) from the GP study and 
+"Full Scale: Composite Score (FSIQ)" (`wais4_fullscale_cs`) from the GP4 study, treating them as interchangeable.
+
+```{r}
+
+wais_vars0 =
+  c("Verbal Comprehension: Composite Score (VCI)",
+  
+  "Perceptual Reasoning: Composite Score (PRI)",
+  "Working Memory: Composite Score (WMI)", 
+  "Processing Speed: Composite Score (PSI)",
+  
+  # "Full Scale: IQ Score",
+  "Full Scale: Composite Score (FSIQ)")
+vars = wais_vars0 |> sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> as.vector()
+
+table1(
+  NA.label = NA.label1,
+  stratified_formula(vars, column_var),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min, Max]"),
+  data = visit1)
+
+```
+
+
+```{r}
+missing_wais = 
+  gp34 |> 
+  filter(
+    if_any(all_of(wais_vars0), is.na)
+  ) |> 
+  select(
+    `FXS ID`,
+    `Event Name`,
+    all_of(wais_vars0)
+  )
+readr::write_csv(missing_wais, "output/incomplete_wais.csv")
+
+```
+

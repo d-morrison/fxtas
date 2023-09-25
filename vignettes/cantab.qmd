@@ -1,0 +1,125 @@
+---
+title: "Questions about FXTAS Sequence Data"
+subtitle: "Cantab variables"
+format:
+  html:
+    toc: false
+    toc-depth: 4
+    toc-float: true
+    number-sections: false
+    embed-resources: true
+---
+
+```{r, include = FALSE}
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  comment = "#>",
+  fig.width = 7.5,
+  fig.height = 4
+)
+
+# update 'asis' chunk to allow inline code
+knitr::knit_engines$set(asis = function(options) {
+  if (options$echo && options$eval) knitr::knit_child(text = options$code)
+})
+```
+
+```{r setup}
+#| message: false
+library(fxtas)
+devtools::load_all()
+library(pander)
+library(table1)
+library(dplyr)
+library(magrittr)
+NA.label1 = "Missing"
+column_var = "Recruited in study phase"
+column_var = "FX**"
+# load_all()
+
+phase <- ifelse(column_var == "Recruited in study phase", TRUE, FALSE)
+cgg <- ifelse(column_var == "FX**", TRUE, FALSE)
+```
+
+For now, we used cutoffs taken from <https://doi.org/10.1016/j.msard.2020.102172>.
+
+
+```{r}
+
+# table1(
+#   NA.label = NA.label1,
+#   stratified_formula("Drugs used", column_var),
+#   data = visit1)
+cantab_core = 
+  c(
+    "SWM Between errors",
+  "SST Median correct RT on GO trials",
+  "RVP A signal detection",
+  "OTS Problems solved on first choice",
+  "PAL Total errors (adjusted)",
+  "RTI Five-choice movement time"
+  )
+
+cantab_vars = 
+  sapply(
+    X = cantab_core,
+    F = function(pat) grep(
+      value = TRUE,
+      fixed = TRUE,
+      pattern = pat,
+      x = names(gp34)
+    ))
+
+cantab_vars = c(
+  "SWM Between errors",
+  "SWM Between errors*",
+  "SST Median correct RT on GO trials",
+  "RVP A signal detection",
+  "RVP A signal detection*",
+  "OTS Problems solved on first choice",
+  "PAL Total errors (adjusted)",
+  "PAL Total errors (adjusted)*",
+  "RTI Five-choice movement time",
+  "RTI Five-choice movement time*") 
+# |> 
+#   sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> 
+# as.vector()
+
+table1(
+  NA.label = "Missing (empty in RedCap)",
+  stratified_formula(cantab_vars, column_var),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  data = visit1)
+```
+
+```{r}
+
+
+cantab_core = 
+  c(
+    "SWM Between errors",
+  # "SWM Between errors*",
+  "SST Median correct RT on GO trials",
+  "RVP A signal detection",
+  # "RVP A signal detection*",
+  "OTS Problems solved on first choice",
+  "PAL Total errors (adjusted)",
+  # "PAL Total errors (adjusted)*",
+  "RTI Five-choice movement time"
+  # "RTI Five-choice movement time*"
+  )
+incomplete = 
+  gp34 |> 
+  filter(
+    if_any(all_of(cantab_core), is.na)
+  ) |> 
+  select(
+    `FXS ID`,
+    `Event Name`,
+    all_of(cantab_core)
+  )
+readr::write_csv(incomplete, file = "output/incomplete_cantab.csv")

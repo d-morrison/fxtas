@@ -1,0 +1,77 @@
+---
+title: "Questions about FXTAS Sequence Data"
+subtitle: "MOCA and Purdue Pegboard"
+format:
+  html:
+    toc: false
+    toc-depth: 4
+    toc-float: true
+    number-sections: false
+    embed-resources: true
+---
+
+```{r, include = FALSE}
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  comment = "#>",
+  fig.width = 7.5,
+  fig.height = 4
+)
+
+# update 'asis' chunk to allow inline code
+knitr::knit_engines$set(asis = function(options) {
+  if (options$echo && options$eval) knitr::knit_child(text = options$code)
+})
+```
+
+```{r setup}
+#| message: false
+library(fxtas)
+devtools::load_all()
+library(pander)
+library(table1)
+library(dplyr)
+library(magrittr)
+NA.label1 = "Missing"
+column_var = "Recruited in study phase"
+column_var = "FX**"
+# load_all()
+
+phase <- ifelse(column_var == "Recruited in study phase", TRUE, FALSE)
+cgg <- ifelse(column_var == "FX**", TRUE, FALSE)
+```
+
+## Purdue pegboard for reaction time
+
+```{r}
+purdue_vars = c(
+  "Purdue pegboard 1st Trial Total, R+L+B",
+  "Purdue pegboard 1st Trial Total, R+L+B: missingness reasons")
+
+table1(
+  NA.label = NA.label1,
+  stratified_formula(purdue_vars, column_var),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  data = visit1)
+```
+
+
+## MOCA total score
+
+```{r}
+
+moca_vars = c(
+  "MOCA Total score",
+  "MOCA Total score: missingness reasons"
+)
+table1(
+  NA.label = NA.label1,
+  stratified_formula(moca_vars, column_var),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  data = visit1)
+
+```
