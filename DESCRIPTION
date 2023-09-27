@@ -49,3 +49,4 @@ Config/reticulate/autoconfigure:
       list(package = "scipy")
     )
   )
+Roxygen: list(markdown = TRUE)
