@@ -3,6 +3,8 @@
 
 ## usethis namespace: start
 #' @importFrom colorspace qualitative_hcl
+#' @importFrom dplyr if_all
+#' @importFrom dplyr if_any
 #' @importFrom forcats fct_na_level_to_value
 #' @importFrom forcats fct_other
 #' @importFrom fs path
