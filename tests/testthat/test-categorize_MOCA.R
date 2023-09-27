@@ -1,6 +1,8 @@
 test_that(
   "`categorize_MOCA()` categorizes all values.",
   {
-    sum(gp34$`MOCA Total score*` %in% "uncategorized") == 0
+    expect_equal(
+      sum(gp34$`MOCA Total score*` %in% "uncategorized"),
+      0)
   }
 )

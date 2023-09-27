@@ -6,10 +6,8 @@ clean_data = function(dataset)
     relocate(`Visit Date`, .after = `Event Name`) |>
     clean_head_tremor_onset() |>
 
-    create_any_tremor() |>
-    fix_tremor_onsets() |>
 
-    fix_onset_age_vars() |>
+
 
     clean_kinesia() |>
     # includes BDS, MMSE
@@ -62,6 +60,13 @@ clean_data = function(dataset)
     clean_ataxia() |>
 
     fix_factors() |>
+
+    create_any_tremor() |>
+
+    fix_tremor_onsets() |>
+
+    fix_onset_age_vars() |>
+
 
     categorize_primary_race() |>
 
