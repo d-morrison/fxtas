@@ -13,4 +13,3 @@ $run_dev.*
 ^fxtas.*\.tar\.gz$
 ^fxtas.*\.tgz$
 ^vignettes/articles$
-^\.github$
