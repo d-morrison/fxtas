@@ -1,6 +1,7 @@
 test_that(
   "`Any tremor (excluding Head Tremor)` is consistent with the individual tremor variables",
   {
+    library(dplyr)
     tremor_types = c(
       "Intention tremor",
       "Resting tremor",
@@ -10,8 +11,9 @@ test_that(
 
     inconsistent =
       gp34 |>
-      filter(
-        `Any tremor (excluding Head Tremor)` %in% "No tremors recorded",
+      dplyr::filter(
+        `Any tremor (excluding Head Tremor)` %in%
+          "No tremors recorded",
         if_all(all_of(tremor_types), is.na)
       )
 
