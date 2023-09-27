@@ -7,20 +7,15 @@ clean_data = function(dataset)
     clean_head_tremor_onset() |>
 
 
-
-
     clean_kinesia() |>
     # includes BDS, MMSE
     make_vars_numeric(regex = "score", ignore.case = TRUE) |>
+    add_categorized_MOCA() |>
+
 
     make_vars_numeric(regex = "Purdue pegboard") |>
     make_vars_numeric(regex = "SCL90") |>
     categorize_SCL90() |>
-
-
-    create_any_cancer() |>
-
-    create_any_autoimmune() |>
 
 
     categorize_BDS() |>
@@ -30,8 +25,6 @@ clean_data = function(dataset)
 
     # `Drugs used` is unstructured text, with typos; unusable
     # fix_drugs_used() |>
-
-    add_categorized_MOCA() |>
 
     categorize_MMSE() |>
 
@@ -59,16 +52,24 @@ clean_data = function(dataset)
     # Ataxia
     clean_ataxia() |>
 
+    # Fix factors: recode missing codes to NA
     fix_factors() |>
 
+    categorize_primary_race() |>
+
+    # handle tremor variables
     create_any_tremor() |>
 
     fix_tremor_onsets() |>
 
     fix_onset_age_vars() |>
 
+    # create any cancer and any autoimmune
+    create_any_cancer() |>
+    create_any_autoimmune() |>
 
-    categorize_primary_race() |>
+
+    fix_head_tremor() |>
 
     droplevels()
 }
