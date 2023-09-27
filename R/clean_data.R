@@ -33,6 +33,8 @@ clean_data = function(dataset)
     # `Drugs used` is unstructured text, with typos; unusable
     # fix_drugs_used() |>
 
+    add_categorized_MOCA() |>
+
     categorize_MMSE() |>
 
     fix_ApoE() |>
