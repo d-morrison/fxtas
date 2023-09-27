@@ -1,8 +1,9 @@
-#' Title
+#' Clean a Numeric Variable
 #'
+#' Replace missing codes (e.g., 777, 888, 999) with NAs in a numeric variable
 #' @param x a numeric vector
 #' @param NA_codes numeric values that should be turned into to NAs
-#' @param extra_codes codes besides 777, 888, 999 to turn into NAs
+#' @param extra_codes codes besides 777, 888, 999 to turn into NAs; has no effect if the `NA_codes` argument is changed from default by the user.
 #'
 #' @return
 #' @export
