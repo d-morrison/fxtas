@@ -120,6 +120,7 @@ incomplete =
   select(
     `FXS ID`,
     `Event Name`,
+    `Visit Date`,
     all_of(cantab_core)
   )
 readr::write_csv(incomplete, file = "output/incomplete_cantab.csv")
