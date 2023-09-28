@@ -132,13 +132,23 @@ dataset=vroom::vroom(
 
 #Setting Factors(will create new variable for factors)
 
-dataset$new_mds_med_anes1 = factor(dataset$new_mds_med_anes1,levels=c("2","3","0","999","888","777"))
-dataset$medic_surg_anes  = factor(dataset$medic_surg_anes,levels=c("0","1","2","3","999"))
-dataset$mds_med_thy = factor(dataset$mds_med_thy,levels=c("0","1","999","888","777"))
+dataset$new_mds_med_anes1 = factor(
+  dataset$new_mds_med_anes1,
+  levels=c("2","3","0","999","888","777"))
+dataset$medic_surg_anes  = factor(
+  dataset$medic_surg_anes,
+  levels=c("0","1","2","3","999"))
+dataset$mds_med_thy = factor(
+  dataset$mds_med_thy,
+  levels=c("0","1","999","888","777"))
 # dataset$new_mds_med_thy = factor(dataset$new_mds_med_thy,levels=c("0","1","999","888","777"))
-dataset$mds_med_hyothy = factor(dataset$mds_med_hyothy,levels=c("0","1","999","888","777"))
+dataset$mds_med_hyothy = factor(
+  dataset$mds_med_hyothy,
+  levels=c("0","1","999","888","777"))
 # dataset$new_mds_med_hyothy = factor(dataset$new_mds_med_hyothy,levels=c("0","1","999","888","777"))
-dataset$mds_med_hyethy = factor(dataset$mds_med_hyethy,levels=c("0","1","999","888","777"))
+dataset$mds_med_hyethy = factor(
+  dataset$mds_med_hyethy,
+  levels=c("0","1","999","888","777"))
 # dataset$new_mds_med_hyethy = factor(dataset$new_mds_med_hyethy,levels=c("0","1","999","888","777"))
 
 dataset$new_mds_med_can_other = factor(dataset$new_mds_med_can_other,levels=c("0","1","999","888","777"))
@@ -431,7 +441,8 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            scid_ps01cur = "Primary Psychotic Symptoms (PS01), Current",
            scid_ps01lif = "Primary Psychotic Symptoms (PS01), Lifetime")
 
-if(!isTRUE(setequal(names(dataset), names(labels)))) browser(message('why is there a mismatch?'))
+if(!isTRUE(setequal(names(dataset), names(labels))))
+  browser(message('why is there a mismatch?'))
 
 names(dataset) = labels[names(dataset)]
 

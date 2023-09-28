@@ -435,7 +435,8 @@ labels = c(subj_id = "FXS ID",
            moca_tot_score ="MOCA Total score"
 )
 
-if(!isTRUE(setequal(names(dataset), names(labels)))) browser(message('why is there a mismatch?'))
+if(!isTRUE(setequal(names(dataset), names(labels))))
+  browser(message('why is there a mismatch?'))
 
 names(dataset) = labels[names(dataset)]
 
