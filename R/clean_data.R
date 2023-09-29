@@ -22,6 +22,8 @@ clean_data = function(dataset)
 
     create_any_cancer() |>
 
+    create_any_autoimmune() |>
+
 
     categorize_BDS() |>
 
@@ -58,6 +60,8 @@ clean_data = function(dataset)
     clean_ataxia() |>
 
     fix_factors() |>
+
+    categorize_primary_race() |>
 
     droplevels()
 }
