@@ -8,7 +8,7 @@
 #' * FX (logical): TRUE if CGG >= 55
 #' - `FX*` (factor): dichotomizes CGG to < 55 vs >= 55; `NA`s stay as `NA`
 #' - `FX**` (factor): dichotomizes CGG to < 55 vs >= 55; `NA`s converted to level "CGG missing"
-#' - `FX***` (factor): trichotomizes CGG to < 55, 55-100, and >100 >= 55; `NA`s converted to level "CGG missing"
+#' - `FX3*` (factor): trichotomizes CGG to < 55, 55-100, and >100 >= 55; `NA`s converted to level "CGG missing"
 
 #' @export
 #'
@@ -26,7 +26,7 @@ define_cases_and_controls = function(dataset)
         `FX*` |>
         forcats::fct_na_value_to_level(level = "CGG missing"),
 
-      FX3 =
+      `FX3*` =
         case_when(
           `CGG (backfilled)` < 55 ~ "CGG < 55",
           `CGG (backfilled)` |> between(55, 100) ~ "CGG 55-100",
