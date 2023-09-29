@@ -57,15 +57,17 @@ In the RedCap database, the "age of onset" variables were recorded using a mix o
 
 # Data from first visits
 
-```{asis, echo=phase}
-Here, we review the data from the first visits by each participant, stratified by 
-the first study phase in which the participant enrolled (GP3 vs GP4).
+```{r, include = FALSE}
+
+strat_text = if_else(
+  column_var == "FX**",
+  "the first study phase in which the participant enrolled (GP3 vs GP4).",
+  "CGG (<55 or \u2265 55)"
+)
+
 ```
 
-```{asis, echo=cgg}
-Here, we review the data from the first visits by each participant, stratified by CGG (`r paste0("<55 or", " \u2265", "55")`).
-```
-
+Here, we review the data from the first visits by each participant, stratified by `r strat_text`.
 
 ## Demographics
 
@@ -905,10 +907,28 @@ library(ggplot2)
 gp34 |> 
   ggplot(
   aes(
+    
   x = `Age at visit`, 
-  y = `MOCA Total score`,
-  col = `FX***`)) +
-  geom_point(colo)
+  y = `MOCA Total score`
+  )) +
+  theme_bw() +
+  facet_wrap(~`FX3*`) +
+  geom_smooth() +
+  geom_hline(
+    aes(
+      yintercept = 22, 
+      col = "< 23: pathological")) +
+  geom_hline(
+    aes(
+      yintercept = 27, 
+      col = ">= 27: healthy")) +
+  theme(legend.position = "bottom") +
+  labs(col = "MOCA cutoff") + 
+  geom_point(alpha = .6, aes(col = Gender))
+  
+
+  
+  
 
 
 ```

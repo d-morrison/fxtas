@@ -13,6 +13,7 @@ Imports:
     dplyr,
     forcats,
     fs,
+    ggnewscale,
     ggplot2,
     ggtext,
     glue,
