@@ -27,18 +27,20 @@ define_cases_and_controls = function(dataset)
         forcats::fct_na_value_to_level(level = "CGG missing"),
 
       FX3 =
-        `CGG (backfilled)` |>
         case_when(
           `CGG (backfilled)` < 55 ~ "CGG < 55",
           `CGG (backfilled)` |> between(55, 100) ~ "CGG 55-100",
           `CGG (backfilled)` > 100 ~ "CGG > 100",
-          missing = "CGG missing") |>
-        factor(
-          levels = c(
-            "CGG < 55",
-            "CGG 55-100",
-            "CGG > 100",
-            "CGG missing"))
+          is.na(`CGG (backfilled)`) ~ "CGG missing",
+          .ptype = factor(
+            levels = c(
+              "CGG < 55",
+              "CGG 55-100",
+              "CGG > 100",
+              "CGG missing")
+          )
+        )
     )
+
 
 }
