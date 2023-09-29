@@ -5,6 +5,7 @@
 #' @importFrom colorspace qualitative_hcl
 #' @importFrom dplyr arrange
 #' @importFrom dplyr as_tibble
+#' @importFrom dplyr between
 #' @importFrom dplyr count
 #' @importFrom dplyr if_all
 #' @importFrom dplyr if_any
