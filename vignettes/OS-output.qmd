@@ -16,6 +16,7 @@ format:
          - darkly
          - custom.scss
     cap-location: top
+    embed-resources: true
     css: custom.scss
     number-sections: true
     number-depth: 3
@@ -63,7 +64,7 @@ dataset_name = 'sample_data'
 root_dir = here::here()
 setwd(root_dir)
 output_folder = 
-  "output/output.longer" |> 
+  "output/output.longest" |> 
   fs::dir_create()
 
 synchronize_y_axes = FALSE
@@ -79,8 +80,9 @@ biomarker_group_colors =
     # group_color = rainbow()
     group_color = 
       length(biomarker_group_list) |> 
-      # RColorBrewer::brewer.pal(n = _, name = "Paired")
-      colorspace::qualitative_hcl(n = _, "Dark2")
+      RColorBrewer::brewer.pal(n = _, name = "Paired")
+      # rcartocolor::carto_pal(n = _, "Safe")
+      # colorspace::qualitative_hcl(n = _, "Dark2")
   )
 
 biomarker_groups = 
@@ -303,7 +305,6 @@ figs |>
   print_PVDs()
 
 ```
-
 
 ## References{.unnumbered}
 

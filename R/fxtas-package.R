@@ -18,6 +18,7 @@
 #' @importFrom glue glue
 #' @importFrom magrittr set_names
 #' @importFrom plotly ggplotly
+#' @importFrom rcartocolor carto_pal
 #' @importFrom readxl read_excel
 #' @importFrom tibble column_to_rownames
 #' @importFrom tidyr pivot_longer

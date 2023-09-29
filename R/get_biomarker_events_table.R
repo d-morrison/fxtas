@@ -23,7 +23,10 @@ get_biomarker_events_table = function(biomarker_levels)
           biomarker,
           paste(biomarker, level, sep = ": "))
     ) |>
-    mutate(level = row_number(), .by = biomarker) |>
+    mutate(
+      .by = biomarker,
+      levels = paste(level, collapse = ", "),
+      level = row_number()) |>
     filter(level > 1) |>
     arrange(level, biomarker) # |>
     # mutate(biomarker_level = factor(biomarker_level, levels = biomarker_level))
