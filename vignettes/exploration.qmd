@@ -897,6 +897,23 @@ table1(
 
 ## MOCA total score
 
+```{r}
+#| fig-cap: "MOCA scores by age and CGG category"
+#| label: moca-graph-1
+
+library(ggplot2)
+gp34 |> 
+  ggplot(
+  aes(
+  x = `Age at visit`, 
+  y = `MOCA Total score`,
+  col = `FX***`)) +
+  geom_point(colo)
+
+
+```
+
+
 Following @thomann2020enhanced, we categorized MOCA as Below 23 = "pathological", 
 24-26 = “transitional", and 27 and above = "healthy".
 

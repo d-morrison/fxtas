@@ -5,14 +5,18 @@
 \alias{gp34}
 \title{gp34}
 \format{
-## `gp34`
+\subsection{\code{gp34}}{
+
 A data frame with nrow rows and ncol columns:
 \describe{
- \item{col1}{col1name}
+\item{col1}{col1name}
+}
 }
 }
 \source{
+\if{html}{\out{
 <url>
+}}
 }
 \usage{
 gp34

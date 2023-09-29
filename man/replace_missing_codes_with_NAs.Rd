@@ -4,13 +4,22 @@
 \alias{replace_missing_codes_with_NAs}
 \title{Replace missing codes with NAs}
 \usage{
-replace_missing_codes_with_NAs(x)
+replace_missing_codes_with_NAs(
+  x,
+  missing_codes = c("Unknown", "Unknown / Not Reported", "NA",
+    "Missing (SCID not completed)", "Inadequate Info", "99", "777", "888", "999",
+    "Asked by clinician, but no answer from subject (99)",
+    "Question not asked at time of data entry; check records (777)", "NA (888)",
+    "No Response (999)", "Missing/Refused (999)", "Missing (empty in RedCap)")
+)
 }
 \arguments{
 \item{x}{a factor or character vector}
+
+\item{missing_codes}{list of codes to replace with NAs}
 }
 \value{
-a factor vector similar to `x`, but with 99, 777, 888, 999, etc replaced with `NA`s
+a factor vector similar to \code{x}, but with 99, 777, 888, 999, etc replaced with \code{NA}s
 }
 \description{
 Replace missing codes with NAs
