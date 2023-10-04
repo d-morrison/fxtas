@@ -53,7 +53,7 @@ The missing codes 777, 888, and 999 were converted to `NA` for all variables, un
 
 ## Age of onset
 
-In the RedCap database, the "age of onset" variables were recorded using a mix of precise ages and decade-long ranges (for example, "`130`" = "teens", "`200`" = "twenties", etc.). For analysis as numeric variables, the decade codes were replaced by their midpoints (for example, "`130`" was replaced with 15, "`200`" with 25, etc.). The exception is code "`555`" = "lifelong", which was replaced by the minimum of 10 years and the smallest observed value for that age-of-onset variable; for example, if the smallest observed value for "age of tremor onset" was 8, then "`555`" would be replaced by 9. If the smallest observed value were 11, then "`555`" would be replaced by 10.
+In the RedCap database, the "age of onset" variables were recorded using a mix of precise ages and decade-long ranges (for example, "`130`" = "teens", "`200`" = "twenties", etc.). For analysis as numeric variables, the decade codes were replaced by their midpoints (for example, "`130`" was replaced with 15, "`200`" with 25, etc.). The exception is code "`555`" = "lifelong", which was replaced by the minimum of 10 years and the smallest observed value for that age-of-onset variable; for example, if the smallest observed value for "age of tremor onset" was 8, then "`555`" would be replaced by 8. If the smallest observed value were 11, then "`555`" would be replaced by 10.
 
 # Data from first visits
 
@@ -352,7 +352,10 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  render.continuous=c(
+    .="N", 
+    .="Mean (SD)", 
+    .="Median [Min, Max]"),
   data = visit1)
 
 ```
@@ -631,8 +634,8 @@ For categorical analysis, we merged 2.5 into 2, 3.5 into 4, and 4.5 into 5.
 ```{r}
 
 vars = c(
-  "FXTAS Stage (0-5)",
-  "FXTAS Stage (0-5)*")
+  "FXTAS Stage (0-5)*",
+  "FXTAS Stage (0-5)*: missingness reasons")
 
 table1(
   NA.label = NA.label1,

@@ -1,10 +1,13 @@
 #' Title
 #'
+#' @param dataset Dataset to extract names from
+#'
 #' @return
 #' @export
 #'
-compile_biomarker_group_list = function()
+compile_biomarker_group_list = function(dataset = gp34)
 {
+  missingness_vars = grep("missingness", names(dataset), value = TRUE)
   tremors = c(
     "Head tremor",
     "Intention tremor",
@@ -15,7 +18,7 @@ compile_biomarker_group_list = function()
   )
 
   parkinsons_vars =
-    vars = grep("Parkinson", value = TRUE, names(gp34))
+    grep("Parkinson", value = TRUE, names(dataset))
 
   mri_vars = c(
     "Cerebral Atrophy",
@@ -70,32 +73,16 @@ compile_biomarker_group_list = function()
       "MMSE Total Score*",
       "BDS-2 Total Score*")
 
-  thyroid_vars = c(
-    # "Hypothyroid",
-    # "Hyperthyroid",
-    "Thyroid problems"
-    # "Lupus",
-    # "Rheumatoid arthritis",
-    # "Multiple Sclerosis: Workup",
-    # "ANA positive",
-    # "Sjogrens Syndrome",
-    # "Raynauds Syndrome"
-    ## "Pulmonary Fibrosis" # none
-    ## "Immunological Notes"
-
-
-  )
-
   scl90_vars =
     grep(
       value = TRUE,
-      names(gp34),
+      names(dataset),
       pattern = "^SCL90.*\\*$") |>
     sort()
 
   thyroid_vars = c(
-    "Hypothyroid",
-    "Hyperthyroid",
+    # "Hypothyroid", # removed after call 2023-09-13
+    # "Hyperthyroid", # removed after call 2023-09-13
     "Thyroid problems",
     "Lupus",
     "Rheumatoid arthritis"
@@ -103,12 +90,11 @@ compile_biomarker_group_list = function()
     # "ANA positive",
     # "Sjogrens Syndrome",
     # "Raynauds Syndrome",
-    # "Pulmonary Fibrosis"
+    # "Pulmonary Fibrosis" # no events
     ## "Immunological Notes"
+)
 
-
-  )
-  kinesia_vars = c(
+kinesia_vars = c(
     "Kinesia Left Rest Tremor*",
     "Kinesia Left Postural Tremor*",
     "Kinesia Left Kinetic Tremor*",
@@ -132,5 +118,9 @@ compile_biomarker_group_list = function()
       thyroid = thyroid_vars
       # kinesia = kinesia_vars
     )
+
+  biomarker_group_list =
+    biomarker_group_list |>
+    lapply(F = function(x) setdiff(x, missingness_vars))
 
 }
