@@ -5,7 +5,7 @@ fix_factors = function(dataset)
       across(
         where(is.factor) &
           !contains(": missingness reasons") &
-          !contains("FX**"),
+          !ends_with("*"),
 
         list(
           tmp = replace_missing_codes_with_NAs,
