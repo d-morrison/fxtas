@@ -3,6 +3,7 @@
 
 ## usethis namespace: start
 #' @importFrom colorspace qualitative_hcl
+#' @importFrom dplyr between
 #' @importFrom dplyr arrange
 #' @importFrom dplyr as_tibble
 #' @importFrom dplyr count

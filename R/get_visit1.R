@@ -2,9 +2,7 @@ get_visit1 = function(dataset)
 {
   dataset |>
     arrange(`FXS ID`, `Visit Date`, `Event Name`) |>
-    group_by(`FXS ID`) |>
-    slice_head(n = 1) |>
-    ungroup() |>
+    slice_head(n = 1, by = `FXS ID`) |>
     rename(
       `Age at first visit` = `Age at visit`
     ) |>
