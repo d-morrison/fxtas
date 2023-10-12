@@ -7,7 +7,7 @@ library(dplyr)
 library(vroom)
 #Read Data
 dataset=vroom::vroom(
-  'inst/extdata/CTSC3704GP4GenotypeP-FXTASEventSequence10_DATA_2023-09-11_1030.csv',
+  'inst/extdata/CTSC3704GP4GenotypeP-FXTASEventSequence10_DATA_2023-10-11_1241.csv',
   col_types = cols(
     dem_date = col_date(),
     new_mds_med_can_other = col_integer(),
@@ -25,6 +25,11 @@ dataset=vroom::vroom(
     sex = col_double(),
     dem_race = col_character(),
     dem_eth = col_character(),
+
+    # Oct 2023: added Education level and years
+    dem_edlev = col_double(),
+    dem_edyr = col_double(),
+
     visit_age = col_double(),
     mol_apoe = col_character(),
     mol_dna_result = col_character(),
@@ -152,6 +157,9 @@ dataset <- dataset |>
 dataset$redcap_event_name = factor(dataset$redcap_event_name,levels=c("gp4__visit_1_arm_1","gp4__visit_2_arm_1","gp4__visit_3_arm_1","gp4__visit_4_arm_1","gp4__single_visit_arm_1","gp4__participant_s_arm_1"))
 
 dataset$sex = factor(dataset$sex,levels=c("0","1"))
+
+dataset$dem_edlev = factor(dataset$dem_edlev, levels = c("1", "2", "3", "4", "5", "6", "7", "999"))
+
 dataset$new_mds_med_can_other = factor(dataset$new_mds_med_can_other,levels=c("0","1","999","888","777"))
 dataset$new_mds_psy_drug = factor(dataset$new_mds_psy_drug,levels=c("0","1","2","999","888","777"))
 dataset$new_mds_psy_drug_marij = factor(dataset$new_mds_psy_drug_marij,levels=c("0","1","2","999","888","777"))
@@ -223,6 +231,9 @@ dataset$scid_ps01cur = factor(dataset$scid_ps01cur,levels=c("1","3","777"))
 
 levels(dataset$redcap_event_name)=c("GP4 - Visit 1","GP4 - Visit 2","GP4 - Visit 3","GP4 - Visit 4","GP4 - Single Visit","GP4 - Participant Survey")
 levels(dataset$sex)=c("Female","Male")
+
+levels(dataset$dem_edlev) = c("K-7", "8-9", "10-11", "High School/GED", "Partial College", "BA/BS", "MA/MS/PhD/MD", "No Response (999)")
+
 levels(dataset$new_mds_psy_drug)=c("None","Past Only","Present","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
 levels(dataset$new_mds_psy_drug_marij)=c("None","Past Only","Present","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
 levels(dataset$new_mds_psy_alco)=c("None","Past Only","Present","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
@@ -432,7 +443,9 @@ labels = c(subj_id = "FXS ID",
            kin_r_resttrem="Kinesia Right Rest Tremor",
            kin_r_posttrem="Kinesia Right Postural Tremor",
            kin_r_kintrem ="Kinesia Right Kinetic Tremor",
-           moca_tot_score ="MOCA Total score"
+           moca_tot_score ="MOCA Total score",
+           dem_edlev = "Education Level",
+           dem_edyr = "Years of Education"
 )
 
 if(!isTRUE(setequal(names(dataset), names(labels)))) browser(message('why is there a mismatch?'))
