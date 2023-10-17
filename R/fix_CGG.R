@@ -6,6 +6,31 @@ fix_CGG = function(dataset)
 
   colnames(missingCGG)[3] = "CGG (recovered)"
 
+  # import additiona missingCGG data (10/2023)
+  updatedCGG = readxl::read_xlsx(
+    "inst/extdata/GP3 & GP4 - Missing CGG Data Samples Table - 10-9-2023-mdp.xlsx"
+  ) |>
+    mutate(
+      Study = substr(`Event Name`, start = 1, stop = 3),
+      # remove second FXS ID from "500011-608/108094-100" for now
+      `FXS ID` = substr(`FXS ID`, start = 1, stop = 10),
+      # convert "NA" string to NA_character
+      `CGG (backfilled)` = dplyr::if_else(
+        `CGG (backfilled)` == "NA",
+        NA_character_,
+        `CGG (backfilled)`
+      )
+    ) |>
+    relocate(
+      Study, .before = `FXS ID`
+    ) |>
+    rename(
+      `CGG (recovered)` = `CGG (backfilled)`
+    ) |>
+    dplyr::select(
+      all_of(colnames(missingCGG))
+    )
+
   duplicates = missingCGG |> count(`FXS ID`) |> filter(n != 1)
 
   if(nrow(duplicates) != 0) browser(message("why are there duplicates?"))
