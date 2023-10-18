@@ -83,6 +83,7 @@ run_CV =  TRUE
 
 N_startpoints = 10L
 N_S_max = 6L
+N_CV_folds = 10L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
 root_dir = here::here()
@@ -239,8 +240,18 @@ sustain_output = run_OSA(
   dataset_name = dataset_name, 
   use_parallel_startpoints = FALSE,
   seed = 1,
-  plot = FALSE)
+  plot = FALSE,
+  patient_data = patient_data,
+  N_CV_folds = N_CV_folds)
 
+temp = sustain_output |> attr("CV")
+
+temp$CVIC |> plot(type = "l")
+temp$loglike_matrix  |> boxplot()
+
+```
+
+```{r}
 sustain_output_males = run_OSA(
   prob_score = prob_score0[patient_data$Gender %in% "Male",,],
   score_vals = score_vals,
@@ -254,6 +265,22 @@ sustain_output_males = run_OSA(
   seed = 1,
   plot = FALSE)
 
+# figs = extract_figs_from_pickle(
+#   dataset_name = "males",
+#   synchronize_y_axes = synchronize_y_axes,
+#   n_s = 2,
+#   output_folder = output_folder,
+#   score_vals = score_vals,
+#   biomarker_plot_order = biomarker_plot_order2,
+#   biomarker_groups = biomarker_groups,
+#   biomarker_levels = biomarker_levels)
+# figs |> 
+#   print_PVDs()
+
+```
+
+
+```{r}
 sustain_output_females = run_OSA(
   prob_score = prob_score0[patient_data$Gender %in% "Female",,],
   score_vals = score_vals,
@@ -269,34 +296,6 @@ sustain_output_females = run_OSA(
 
 ```
 
-:::{.content-visible when-profile="cv"}
-
-```{python "cv setup"}
-#| eval: !expr run_CV
-# choose the number of folds:
-N_folds = 10
-
-# generate stratified cross-validation training and test set splits
-labels = r.patient_data.Diagnosis.values
-cv = sklearn.model_selection.StratifiedKFold(n_splits=N_folds, shuffle=True)
-cv_it = cv.split(r.patient_data, labels)
-
-# SuStaIn currently accepts ragged arrays, which will raise problems in the future.
-# We'll have to update this in the future, but this will have to do for now
-test_idxs = []
-for train, test in cv_it:
-    test_idxs.append(test)
-test_idxs = np.array(test_idxs,dtype='object')
-```
-
-
-```{python "perform CV"}
-#| eval: !expr run_CV
-# perform cross-validation and output the cross-validation information criterion and
-# log-likelihood on the test set for each subtypes model and fold combination
-CVIC, loglike_matrix     = sustain_input.cross_validate_sustain_model(test_idxs)
-```
-:::
 
 # Results
 

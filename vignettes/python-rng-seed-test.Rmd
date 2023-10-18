@@ -32,5 +32,8 @@ test()
 np.random.seed(0)
 test()
 
+np.random.seed(0)
+test()
+
 ```
 

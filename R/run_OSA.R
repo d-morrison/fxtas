@@ -11,6 +11,8 @@
 #' @param use_parallel_startpoints
 #' @param seed
 #' @param plot
+#' @param N_CV_folds
+#' @param patient_data
 #'
 #' @return
 #' @export
@@ -26,7 +28,9 @@ run_OSA = function(
     dataset_name,
     use_parallel_startpoints = FALSE,
     seed = 1,
-    plot = FALSE)
+    plot = FALSE,
+    N_CV_folds = 0,
+    patient_data)
 {
   pySuStaIn = import("pySuStaIn")
   sustain_input = pySuStaIn$OrdinalSustain(
@@ -53,6 +57,24 @@ run_OSA = function(
     "prob_subtype_stage",
     "samples_likelihoods"
   )
+
+  if(N_CV_folds > 0)
+  {
+
+    # generate stratified cross-validation training and test set splits
+    labels = patient_data |> pull(Diagnosis)
+    sklearn = import("sklearn")
+    cv = sklearn$model_selection$StratifiedKFold(
+      n_splits= N_CV_folds |> as.integer(),
+      shuffle=TRUE)
+    cv_it = cv$split(patient_data, labels)
+
+    splits = iterate(cv_it) |> lapply(F = function(x) x[[2]] |> as.integer())
+
+    CV_output = sustain_input$cross_validate_sustain_model(splits)
+    names(CV_output) = c("CVIC", "loglike_matrix")
+    sus_output |> attr("CV") = CV_output
+  }
 
   return(sus_output)
 }
