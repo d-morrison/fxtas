@@ -83,6 +83,7 @@ run_CV =  TRUE
 
 N_startpoints = 10L
 N_S_max = 6L
+N_S_max_sex = 3L
 N_CV_folds = 10L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
@@ -166,7 +167,7 @@ We applied  the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algo
 best defines each subgroup, thus capturing heterogeneity in both
 disease subtype and disease stage.
 
-Ordinal SuStaIn uses Markov Chain Monte Carlo (MCMC) sampling to estimate the Bayesian posterior probability of each subgroup progression pattern, assuming a uniform prior distribution over the set of all possible patterns. For each latent subgroup, we used   "positional variance diagrams" (@fig-pvd1 - @fig-pvd6) to display the the resulting marginal distributions of possible positions for each outcome event.
+Ordinal SuStaIn uses Markov Chain Monte Carlo (MCMC) sampling to estimate the Bayesian posterior probability of each subgroup progression pattern, assuming a uniform prior distribution over the set of all possible patterns. For each latent subgroup, we used   "positional variance diagrams" (@fig-pvd1 - @fig-pvd3) to display the the resulting marginal distributions of possible positions for each outcome event.
 
 ```{r}
 
@@ -228,7 +229,8 @@ save.image(file = fs::path(output_folder, "data.RData"))
 ```
 
 ```{r "run OSA from R"}
-
+#| message: false
+#| label: model-all-data
 sustain_output = run_OSA(
   prob_score = prob_score0,
   score_vals = score_vals,
@@ -244,20 +246,17 @@ sustain_output = run_OSA(
   patient_data = patient_data,
   N_CV_folds = N_CV_folds)
 
-temp = sustain_output |> attr("CV")
-
-temp$CVIC |> plot(type = "l")
-temp$loglike_matrix  |> boxplot()
-
 ```
 
 ```{r}
+#| message: false
+#| label: model-males
 sustain_output_males = run_OSA(
   prob_score = prob_score0[patient_data$Gender %in% "Male",,],
   score_vals = score_vals,
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
-  N_S_max = N_S_max, 
+  N_S_max = N_S_max_sex, 
   N_iterations_MCMC = N_iterations_MCMC, 
   output_folder = output_folder, 
   dataset_name = "males", 
@@ -265,28 +264,18 @@ sustain_output_males = run_OSA(
   seed = 1,
   plot = FALSE)
 
-# figs = extract_figs_from_pickle(
-#   dataset_name = "males",
-#   synchronize_y_axes = synchronize_y_axes,
-#   n_s = 2,
-#   output_folder = output_folder,
-#   score_vals = score_vals,
-#   biomarker_plot_order = biomarker_plot_order2,
-#   biomarker_groups = biomarker_groups,
-#   biomarker_levels = biomarker_levels)
-# figs |> 
-#   print_PVDs()
-
 ```
 
 
 ```{r}
+#| message: false
+#| label: model-females
 sustain_output_females = run_OSA(
   prob_score = prob_score0[patient_data$Gender %in% "Female",,],
   score_vals = score_vals,
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
-  N_S_max = N_S_max, 
+  N_S_max = N_S_max_sex, 
   N_iterations_MCMC = N_iterations_MCMC, 
   output_folder = output_folder, 
   dataset_name = "females", 
@@ -296,10 +285,91 @@ sustain_output_females = run_OSA(
 
 ```
 
+We ran the analysis for 1-6 latent subgroups, each with their own ordering. 
 
 # Results
 
-We ran the analysis for 1-6 latent subgroups, each with their own ordering. @fig-pvd1 - @fig-pvd6 show positional variance diagrams (PVDs) indicating the probability that each outcome event (y-axis) occurs at each sequence position (x-axis). 
+## Optimal number of clusters
+
+@fig-mcmc-loglik shows the distribution of log-likelihoods from the MCMC samples for each number of clusters. Adding up to 6 clusters substantially improves the log-likelihood.
+
+```{r}
+#| fig-height: 4
+#| label: fig-mcmc-loglik
+#| fig-cap: log-likelihoods of MCMC samples, by number of subtypes
+#| eval: !expr fit_models
+sustain_output$samples_likelihood |>
+  graph_likelihoods_v2(alpha = 0.5) |>
+  suppressWarnings()
+
+```
+
+We can choose an optimal number of clusters using the Cross-Validation Information Criterion (CVIC) [@young2018uncovering, @gelman2014understanding] (@fig-cvic).
+
+Let:
+
+* $n$ be the number of observations in the dataset
+* $Y_i$ be the observed biomarker values for the $i^{th}$ participant
+* $\mathcal C$ be the number of latent subtypes assumed, with corresponding index $c$.
+* $C_i$ be the latent subgroup membership of observation $i$
+* $\mathcal S$ be the set of possible event sequences, indexed by $\mathcal s$
+* $S_c \in mathcal S$ be the sequence for subgroup $c$
+* $K$ be the number of cross-validation folds, with index $k$; typically, $K = 10$.
+* $n_k$ be the number of held-out observations in cross-validation fold $K$; $n_k \approx n/K$
+* $\hat{P}_{(-k)}(C = c)$ be the prior probability that an observation belongs to subgroup $c$, estimated using all observations except those in fold $k$.
+
+Then:
+
+$$
+CVIC_{\mathcal C} = 
+-2 * 
+\sum_{k=1}^K 
+\sum_{i=1}^{n_k} 
+\log
+\left\{
+\sum_{c=1}^\mathcal C 
+\sum_{s\in \mathcal S}
+\hat P(Y_i|C_i = c, S_c=s)
+\hat{P}_{(-k)}(C = c, S_c = s)
+\right\}
+$$
+
+@young2018uncovering also calculated out-of-sample log-likelihood as:
+
+$$
+\ell_{\mathcal C, k} = 
+\sum_{i = 1}^{n_k}
+\sum_{c=1}^\mathcal C 
+\sum_{s\in \mathcal S}
+\log
+\left\{
+\hat P(Y_i|C_i = c, S_c=s)
+\right\}
+\hat{P}_{(-k)}(C = c, S_c = s)
+
+$$
+
+```{r}
+#| fig-cap: "Cross-validation information criterion"
+#| label: fig-cvic
+
+library(ggplot2)
+
+temp = sustain_output |> attr("CV")
+temp$CVIC |> plot_CVIC()
+
+```
+
+```{r}
+#| fig-cap: "Test set log-likelihood across folds"
+#| label: fig-boxplot-loglik-cv
+temp$loglike_matrix |> 
+  plot_cv_loglik()
+
+```
+
+
+@fig-pvd1 - @fig-pvd6 show positional variance diagrams (PVDs) indicating the probability that each outcome event (y-axis) occurs at each sequence position (x-axis). 
 
 ## one subgroup
 
@@ -323,6 +393,43 @@ figs = extract_figs_from_pickle(
 print(figs[[1]])
 ```
 
+### Stratified by sex
+
+```{r}
+#| label: "fig-pvd1_by_sex"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap: "positional variance diagram for 1 subgroup, stratified by sex"
+#| fig-cap-location: top
+#| layout-ncol: 2
+#| fig-subcap: 
+#|   - "Males"
+#|   - "Females"
+
+fig_male = extract_figs_from_pickle(
+  n_s = 1,
+  dataset_name = "males",
+  output_folder = output_folder,
+  score_vals = score_vals,
+  biomarker_plot_order = NULL,
+  
+  biomarker_groups = biomarker_groups,
+  biomarker_levels = biomarker_levels)
+print(fig_male[[1]])
+
+fig_female = extract_figs_from_pickle(
+  n_s = 1,
+  dataset_name = "females",
+  output_folder = output_folder,
+  score_vals = score_vals,
+  biomarker_plot_order = NULL,
+  
+  biomarker_groups = biomarker_groups,
+  biomarker_levels = biomarker_levels)
+print(fig_female[[1]])
+```
+
 ## two subgroups
 
 ```{r}
@@ -344,7 +451,7 @@ n_s = 2
 
 figs = extract_figs_from_pickle(
   synchronize_y_axes = synchronize_y_axes,
-  n_s = 2,
+  n_s = n_s,
   dataset_name = dataset_name,
   output_folder = output_folder,
   score_vals = score_vals,
@@ -374,16 +481,75 @@ table_subtype_by_demographics(
     )
 ```
 
+### Stratified by sex
+
+#### Males only
+
 ```{r}
-n_s = 3
+#| label: "fig-pvd2-male"
+#| layout-ncol: 2
+#| fig-height: 15
+#| fig-cap: "positional variance diagrams for 2 subgroups - males only"
+#| fig-cap-location: top
+#| fig-align: center
+#| column: screen
+#| fig-subcap: 
+#|   - "Subgroup 1"
+#|   - "Subgroup 2"
+
+figs = extract_figs_from_pickle(
+  synchronize_y_axes = synchronize_y_axes,
+  n_s = n_s,
+  dataset_name = "males",
+  output_folder = output_folder,
+  score_vals = score_vals,
+  biomarker_plot_order = biomarker_plot_order2,
+  biomarker_groups = biomarker_groups,
+  biomarker_levels = biomarker_levels)
+figs |> 
+  print_PVDs()
+
 ```
+
+#### Females only
+
+```{r}
+#| label: "fig-pvd2-female"
+#| layout-ncol: 2
+#| fig-height: 15
+#| fig-cap: "positional variance diagrams for 2 subgroups - males only"
+#| fig-cap-location: top
+#| fig-align: center
+#| column: screen
+#| fig-subcap: 
+#|   - "Subgroup 1"
+#|   - "Subgroup 2"
+
+figs = extract_figs_from_pickle(
+  synchronize_y_axes = synchronize_y_axes,
+  n_s = n_s,
+  dataset_name = "females",
+  output_folder = output_folder,
+  score_vals = score_vals,
+  biomarker_plot_order = biomarker_plot_order2,
+  biomarker_groups = biomarker_groups,
+  biomarker_levels = biomarker_levels)
+figs |> 
+  print_PVDs()
+
+```
+
 
 ## three subgroups
 
 ```{r}
+n_s = 3
+```
+
+```{r}
 figs = extract_figs_from_pickle(
   synchronize_y_axes = synchronize_y_axes,
-  n_s = 3,
+  n_s = n_s,
   dataset_name = dataset_name,
   output_folder = output_folder,
   score_vals = score_vals,
@@ -432,6 +598,7 @@ table_subtype_by_demographics(
 ```{r}
 n_s = 4
 ```
+
 
 ## four subgroups
 
@@ -598,21 +765,6 @@ table_subtype_by_demographics(
     patient_data,
     subtype_and_stage_table = results$subtype_and_stage_table
     )
-```
-
-@fig-mcmc-loglik shows the distribution of log-likelihoods from the MCMC samples for each number of clusters. We can see that adding up to 6 clusters substantially improves the log-likelihood.
-
-We can choose an optimal number of clusters using the Cross-Validation Information Criterion (CVIC) [@young2018uncovering] (to be added to analysis).
-
-```{r}
-#| fig-height: 4
-#| label: fig-mcmc-loglik
-#| fig-cap: log-likelihoods of MCMC samples, by number of subtypes
-#| eval: !expr fit_models
-py$samples_likelihood |>
-  graph_likelihoods_v2(alpha = 0.5) |>
-  suppressWarnings()
-
 ```
 
 # Discussion

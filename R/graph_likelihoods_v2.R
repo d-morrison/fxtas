@@ -13,7 +13,7 @@ graph_likelihoods_v2 = function(
   likelihoods |>
     format_likelihoods() |>
     tidyr::pivot_longer(
-      cols = paste(1:ncol(py$samples_likelihood), "subtype(s)")
+      cols = paste(1:ncol(likelihoods), "subtype(s)")
     ) |>
     ggplot(
       aes(
@@ -23,5 +23,6 @@ graph_likelihoods_v2 = function(
       )) +
     geom_line(alpha = alpha) +
     # facet_wrap(~name) +
-    ylab("log-likelihood")
+    ylab("log-likelihood") +
+    theme_bw()
 }

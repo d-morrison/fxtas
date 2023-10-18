@@ -15,11 +15,13 @@ run_OSA(
   dataset_name,
   use_parallel_startpoints = FALSE,
   seed = 1,
-  plot = FALSE
+  plot = FALSE,
+  N_CV_folds = 0,
+  patient_data
 )
 }
 \arguments{
-\item{plot}{}
+\item{patient_data}{}
 }
 \description{
 Title

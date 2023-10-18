@@ -18,7 +18,7 @@ replace_missing_codes_with_NAs(
 \item{missing_codes}{list of codes to replace with NAs}
 }
 \value{
-a factor vector similar to `x`, but with 99, 777, 888, 999, etc replaced with `NA`s
+a factor vector similar to \code{x}, but with 99, 777, 888, 999, etc replaced with \code{NA}s
 }
 \description{
 Replace missing codes with NAs

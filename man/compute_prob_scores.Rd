@@ -9,7 +9,8 @@ compute_prob_scores(
   biomarker_varnames,
   ModelScores,
   DataScores,
-  prob_dist = compute_prob_dist(ModelScores, DataScores, biomarker_varnames, ...),
+  prob_dist = compute_prob_dist(ModelScores = ModelScores, DataScores = DataScores,
+    biomarkers = biomarker_varnames, ...),
   verbose = FALSE,
   ...
 )
