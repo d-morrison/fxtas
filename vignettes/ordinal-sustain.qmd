@@ -76,14 +76,15 @@ library(pander)
 
 ```{r}
 #| label: "set run parameters"
+#| 
 fit_models = TRUE
 # fit_models = FALSE
 run_CV =  TRUE
 # run_CV = FALSE
 
 N_startpoints = 10L
-N_S_max = 6L
-N_S_max_sex = 3L
+N_S_max = 8L
+N_S_max_sex = 1L
 N_CV_folds = 10L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
@@ -231,6 +232,7 @@ save.image(file = fs::path(output_folder, "data.RData"))
 ```{r "run OSA from R"}
 #| message: false
 #| label: model-all-data
+#| include: false
 sustain_output = run_OSA(
   prob_score = prob_score0,
   score_vals = score_vals,
@@ -251,6 +253,7 @@ sustain_output = run_OSA(
 ```{r}
 #| message: false
 #| label: model-males
+#| include: false
 sustain_output_males = run_OSA(
   prob_score = prob_score0[patient_data$Gender %in% "Male",,],
   score_vals = score_vals,
@@ -270,6 +273,7 @@ sustain_output_males = run_OSA(
 ```{r}
 #| message: false
 #| label: model-females
+#| include: false
 sustain_output_females = run_OSA(
   prob_score = prob_score0[patient_data$Gender %in% "Female",,],
   score_vals = score_vals,
@@ -284,7 +288,6 @@ sustain_output_females = run_OSA(
   plot = FALSE)
 
 ```
-
 We ran the analysis for 1-6 latent subgroups, each with their own ordering. 
 
 # Results
@@ -304,50 +307,7 @@ sustain_output$samples_likelihood |>
 
 ```
 
-We can choose an optimal number of clusters using the Cross-Validation Information Criterion (CVIC) [@young2018uncovering, @gelman2014understanding] (@fig-cvic).
-
-Let:
-
-* $n$ be the number of observations in the dataset
-* $Y_i$ be the observed biomarker values for the $i^{th}$ participant
-* $\mathcal C$ be the number of latent subtypes assumed, with corresponding index $c$.
-* $C_i$ be the latent subgroup membership of observation $i$
-* $\mathcal S$ be the set of possible event sequences, indexed by $\mathcal s$
-* $S_c \in mathcal S$ be the sequence for subgroup $c$
-* $K$ be the number of cross-validation folds, with index $k$; typically, $K = 10$.
-* $n_k$ be the number of held-out observations in cross-validation fold $K$; $n_k \approx n/K$
-* $\hat{P}_{(-k)}(C = c)$ be the prior probability that an observation belongs to subgroup $c$, estimated using all observations except those in fold $k$.
-
-Then:
-
-$$
-CVIC_{\mathcal C} = 
--2 * 
-\sum_{k=1}^K 
-\sum_{i=1}^{n_k} 
-\log
-\left\{
-\sum_{c=1}^\mathcal C 
-\sum_{s\in \mathcal S}
-\hat P(Y_i|C_i = c, S_c=s)
-\hat{P}_{(-k)}(C = c, S_c = s)
-\right\}
-$$
-
-@young2018uncovering also calculated out-of-sample log-likelihood as:
-
-$$
-\ell_{\mathcal C, k} = 
-\sum_{i = 1}^{n_k}
-\sum_{c=1}^\mathcal C 
-\sum_{s\in \mathcal S}
-\log
-\left\{
-\hat P(Y_i|C_i = c, S_c=s)
-\right\}
-\hat{P}_{(-k)}(C = c, S_c = s)
-
-$$
+We can choose an optimal number of clusters using the Cross-Validation Information Criterion (CVIC) [@young2018uncovering, @gelman2014understanding] (@fig-cvic; details in @sec-cvic-math).
 
 ```{r}
 #| fig-cap: "Cross-validation information criterion"
@@ -359,6 +319,8 @@ temp = sustain_output |> attr("CV")
 temp$CVIC |> plot_CVIC()
 
 ```
+
+We also evaluated the consistency of our cross-validation procedure by looking at the distribution of test-set log-likelihood across folds (@fig-boxplot-loglik-cv; details in @sec-cvic-math). 
 
 ```{r}
 #| fig-cap: "Test set log-likelihood across folds"
@@ -373,13 +335,22 @@ temp$loglike_matrix |>
 
 ## one subgroup
 
+@fig-pvd1-1 shows the estimated event sequence for the combined GP and GP4 data, produced under the assumption that all individuals share the same event sequence; in other words, assuming no latent subgroups.
+
+@fig-pvd1-2 and @fig-pvd1-3 show the estimated stratified event sequences for males and females modeled separately, now assuming all males share one event sequence and all females another event sequence; in other words, assuming no latent subgroups.
+
 ```{r}
 #| label: "fig-pvd1"
 #| column: screen
 #| fig-height: 15
 #| fig-align: center
-#| fig-cap: "positional variance diagram for 1 subgroup"
+#| fig-cap: "positional variance diagram assuming one subgroup - overall and stratified by sex"
 #| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "All data" 
+#|   - "Males"
+#|   - "Females"
 
 figs = extract_figs_from_pickle(
   n_s = 1,
@@ -391,21 +362,7 @@ figs = extract_figs_from_pickle(
   biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels)
 print(figs[[1]])
-```
 
-### Stratified by sex
-
-```{r}
-#| label: "fig-pvd1_by_sex"
-#| column: screen
-#| fig-height: 15
-#| fig-align: center
-#| fig-cap: "positional variance diagram for 1 subgroup, stratified by sex"
-#| fig-cap-location: top
-#| layout-ncol: 2
-#| fig-subcap: 
-#|   - "Males"
-#|   - "Females"
 
 fig_male = extract_figs_from_pickle(
   n_s = 1,
@@ -771,7 +728,53 @@ table_subtype_by_demographics(
 
 [to be added]
 
-# References{.unnumbered}
+# References {.unnumbered}
 
 ::: {#refs}
 :::
+
+# Appendix {.appendix}
+
+## Mathematical details of cross-validation criteria {#sec-cvic-math}
+
+Let:
+
+* $n$ be the number of observations in the dataset
+* $Y_i$ be the observed biomarker values for the $i^{th}$ participant
+* $\mathcal C$ be the number of latent subtypes assumed, with corresponding index $c$.
+* $C_i$ be the latent subgroup membership of observation $i$
+* $\mathcal S$ be the set of possible event sequences, indexed by $\mathcal s$
+* $S_c \in \mathcal S$ be the sequence for subgroup $c$
+* $K$ be the number of cross-validation folds, with index $k$; typically, $K = 10$.
+* $n_k$ be the number of held-out observations in cross-validation fold $K$; $n_k \approx n/K$
+* $\hat{P}_{(-k)}(C = c)$ be the prior probability that an observation belongs to subgroup $c$, estimated using all observations except those in fold $k$.
+
+Then:
+
+$$
+CVIC_{\mathcal C} = 
+-2 * 
+\sum_{k=1}^K 
+\sum_{i=1}^{n_k} 
+\log
+\left\{
+\sum_{c=1}^\mathcal C 
+\sum_{s\in \mathcal S}
+\hat P(Y_i|C_i = c, S_c=s)
+\hat{P}_{(-k)}(C_i = c, S_c = s)
+\right\}
+$$
+
+@young2018uncovering also calculated out-of-sample log-likelihood as:
+
+$$
+\ell_{\mathcal C, k} = 
+\sum_{i = 1}^{n_k}
+\sum_{c=1}^\mathcal C 
+\sum_{s\in \mathcal S}
+\log
+\left\{
+\hat P(Y_i|C_i = c, S_c=s)
+\right\}
+\hat{P}_{(-k)}(C_i = c, S_c = s)
+$$
