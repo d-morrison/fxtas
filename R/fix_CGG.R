@@ -6,13 +6,54 @@ fix_CGG = function(dataset)
 
   colnames(missingCGG)[3] = "CGG (recovered)"
 
-  duplicates = missingCGG |> count(`FXS ID`) |> filter(n != 1)
+  # import additiona missingCGG data (10/2023)
+  updatedCGG = readxl::read_xlsx(
+    "inst/extdata/GP3 & GP4 - Missing CGG Data Samples Table - 10-9-2023-mdp.xlsx"
+  ) |>
+    mutate(
+      Study = substr(`Event Name`, start = 1, stop = 3),
+      # remove second FXS ID from "500011-608/108094-100" for now
+      `FXS ID` = substr(`FXS ID`, start = 1, stop = 10),
+      # convert "NA" string to NA_character
+      `CGG (backfilled)` = dplyr::na_if(
+        `CGG (backfilled)`,
+        "NA"
+      )
+    ) |>
+    relocate(
+      Study, .before = `FXS ID`
+    ) |>
+    rename(
+      `CGG (recovered)` = `CGG (backfilled)`
+    ) |>
+    dplyr::select(
+      all_of(colnames(missingCGG))
+    )
+
+  # combine previous and updated missingCGG data
+  # additional update should contain duplicates from previous missingCGG
+  newCGG <- rbind(missingCGG, updatedCGG) |>
+    arrange(`FXS ID`) |>
+    # remove non-unique rows, e.g. still missing CGG
+    unique() |>
+    # add count
+    add_count(`FXS ID`) |>
+    # if count == 2, remove obs with missing CGG
+    filter(
+      !(n == 2 & is.na(`CGG (recovered)`))
+    ) |>
+    # remove count variable
+    dplyr::select(-n)
+
+
+
+  duplicates = newCGG |> count(`FXS ID`) |> filter(n != 1)
 
   if(nrow(duplicates) != 0) browser(message("why are there duplicates?"))
 
   dataset |>
     left_join(
-      missingCGG |> select(-Study),
+      newCGG |> select(-Study),
       by = "FXS ID",
       relationship = "many-to-one"
     ) |>
