@@ -31,13 +31,30 @@ fix_CGG = function(dataset)
       all_of(colnames(missingCGG))
     )
 
-  duplicates = missingCGG |> count(`FXS ID`) |> filter(n != 1)
+  # combine previous and updated missingCGG data
+  # additional update should contain duplicates from previous missingCGG
+  newCGG <- rbind(missingCGG, updatedCGG) |>
+    arrange(`FXS ID`) |>
+    # remove non-unique rows, e.g. still missing CGG
+    unique() |>
+    # add count
+    add_count(`FXS ID`) |>
+    # if count == 2, remove obs with missing CGG
+    filter(
+      !(n == 2 & is.na(`CGG (recovered)`))
+    ) |>
+    # remove count variable
+    dplyr::select(-n)
+
+
+
+  duplicates = newCGG |> count(`FXS ID`) |> filter(n != 1)
 
   if(nrow(duplicates) != 0) browser(message("why are there duplicates?"))
 
   dataset |>
     left_join(
-      missingCGG |> select(-Study),
+      newCGG |> select(-Study),
       by = "FXS ID",
       relationship = "many-to-one"
     ) |>
