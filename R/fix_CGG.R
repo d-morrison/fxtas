@@ -15,10 +15,9 @@ fix_CGG = function(dataset)
       # remove second FXS ID from "500011-608/108094-100" for now
       `FXS ID` = substr(`FXS ID`, start = 1, stop = 10),
       # convert "NA" string to NA_character
-      `CGG (backfilled)` = dplyr::if_else(
-        `CGG (backfilled)` == "NA",
-        NA_character_,
-        `CGG (backfilled)`
+      `CGG (backfilled)` = dplyr::na_if(
+        `CGG (backfilled)`,
+        "NA"
       )
     ) |>
     relocate(
