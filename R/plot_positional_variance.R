@@ -50,7 +50,7 @@ plot_positional_var = function(
       biomarker_levels |> get_biomarker_events_table(),
     biomarker_event_names =
       biomarker_events_table |> pull(biomarker_level),
-    biomarker_plot_order = biomarker_event_names |> sort(),
+    biomarker_plot_order = NULL,
     ml_f_EM = NULL,
     cval = FALSE,
     subtype_order = NULL,
@@ -69,7 +69,7 @@ plot_positional_var = function(
     separate_subtypes=FALSE,
     save_path=NULL,
     save_kwargs=NULL,
-    synchronize_y_axes = TRUE,
+    synchronize_y_axes = FALSE,
     ...)
 {
 
@@ -250,6 +250,15 @@ plot_positional_var = function(
     #https://medium.com/@tobias.stalder.geo/plot-rgb-satellite-imagery-in-true-color-with-ggplot2-in-r-10bdb0e4dd1f
 
   }
+
+  if(length(figs) == 1)
+  {
+    figs = figs[[1]]
+  } else
+  {
+    class(figs) = c("PVD.list", class(figs))
+  }
+
   return(figs)
 
 }

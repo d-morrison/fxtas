@@ -17,10 +17,15 @@ table_subtype_by_demographics = function(
     bind_cols(subtype_and_stage_table)
 
   patient_data2 |>
-    filter(ml_subtype != "Type 0") |>
+    # filter(ml_subtype != "Type 0") |>
+    droplevels() |>
     tableby(
-      ml_subtype ~ Gender + `Primary Race` + `Primary Ethnicity`,
-      cat.stats="countrowpct",
+      ml_subtype ~
+        `FX3*` +
+        Gender +
+        `Primary Race` +
+        `Primary Ethnicity`,
+      cat.stats = "countpct",
       data = _) |>
     summary(pfootnote=TRUE)
 }

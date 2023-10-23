@@ -64,6 +64,9 @@ compute_position_frequencies = function(samples_sequence)
       proportion = n / nrow(samples_sequence)) |>
     select(-n)
 
+  class(results) =
+    c("PF", class(results))
+
   return(results)
 }
 
