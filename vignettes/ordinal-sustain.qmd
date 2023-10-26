@@ -86,7 +86,7 @@ run_CV =  TRUE
 N_startpoints = 10L
 N_S_max = 6L
 N_S_max_stratified = 1L
-N_CV_folds = 6L
+N_CV_folds = 10L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
 root_dir = here::here()
@@ -126,9 +126,8 @@ df = df |>
   mutate(
     across(
       all_of(biomarker_varnames), 
-      ~ as.integer(.x) - 1)
-  ) |> 
-  mutate(Diagnosis = as.integer(`FX*` == "CGG >= 55"))
+      ~ as.integer(.x) - 1),
+    Diagnosis = as.integer(`FX*` == "CGG >= 55"))
 
 biomarker_events_table =
   construct_biomarker_events_table(
@@ -136,7 +135,7 @@ biomarker_events_table =
     biomarker_groups)
 
 nlevs = 
-  sapply(biomarker_levels, length)
+  biomarker_levels |> sapply(length)
 
 ```
 
