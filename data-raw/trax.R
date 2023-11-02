@@ -407,6 +407,40 @@ levels(dataset$scid_ps01cur)=c("Absent","Present")
 levels(dataset$scid_ps01lif)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
 
 
+# each visit has either mds_crx or new_ds_crx but not both. unite to single var
+dataset |>
+  tidyr::unite(col = "mds_crx1", mds_crx1, new_ds_crx1, na.rm = TRUE) |>
+  tidyr::unite(col = "mds_crx2", mds_crx2, new_ds_crx2, na.rm = TRUE) |>
+  tidyr::unite(col = "mds_crx3", mds_crx3, new_ds_crx3, na.rm = TRUE) |>
+  tidyr::unite(col = "mds_crx4", mds_crx4, new_ds_crx4, na.rm = TRUE) |>
+  tidyr::unite(col = "mds_crx5", mds_crx5, new_ds_crx5, na.rm = TRUE) |>
+  tidyr::unite(col = "mds_crx6", mds_crx6, new_ds_crx6, na.rm = TRUE) |>
+  tidyr::unite(col = "mds_crx7", mds_crx7, new_ds_crx7, na.rm = TRUE) |>
+  tidyr::unite(col = "mds_crx8", mds_crx8, new_ds_crx8, na.rm = TRUE) |>
+  tidyr::unite(col = "mds_crx9", mds_crx9, new_ds_crx9, na.rm = TRUE) |>
+  tidyr::unite(col = "mds_crx10", mds_crx10, new_ds_crx10, na.rm = TRUE) |>
+  mutate(
+    across(
+      .cols = contains("mds_crx"),
+      .fns = na_if(.x, "")
+    )
+  )
+
+
+# remove mol_cggrep02 if all are missing
+if(sum(is.na(dataset$mol_cggrep02)) == nrow(dataset)){
+  dataset <- dataset |>
+  dplyr::select(
+    -mol_cggrep02
+  )
+} else{
+  browser(
+    message(
+      "Check why `mol_cggrep02` is no longer all missing"
+    )
+  )
+}
+
 
 
 
