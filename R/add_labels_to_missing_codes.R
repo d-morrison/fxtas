@@ -6,7 +6,9 @@ add_labels_to_missing_codes = function(x)
       "Question not asked at time of data entry; check records (777)" = "777",
       "Question not asked at time of data entry; check records" = "777",
       "NA (888)" = "888",
-      "No Response (999)" = "999"
+      "NA" = "888",
+      "No Response (999)" = "999",
+      "No Response" = "999"
     ) |>
     # tidyr::replace_na("Missing (empty in RedCap)") |> # doesn't work with factors
     forcats::fct_na_value_to_level(level = "Missing (empty in RedCap)") |>
