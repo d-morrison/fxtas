@@ -41,6 +41,8 @@ clean_trax_data = function(dataset)
 
     fix_CGG() |>
 
+    fix_iq() |>
+
     # relocate(contains("CGG"), .after = contains("ApoE")) |>
 
     fix_FXTAS_stage() |>
