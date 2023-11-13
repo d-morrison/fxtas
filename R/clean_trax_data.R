@@ -1,21 +1,26 @@
 clean_trax_data = function(dataset)
 {
   dataset |>
+    # fix date before arranging
+    fix_date() |>
+
     arrange(`FXS ID`, `Visit Date`, `Event Name`) |>
     remove_unneeded_records() |>
     relocate(`Visit Date`, .after = `Event Name`) |>
+    relocate(`FXS ID`, .before = `Event Name`) |>
     # clean_head_tremor_onset() |>
-
-    fix_date() |>
 
     create_any_tremor() |>
     fix_tremor_onsets() |>
 
     fix_onset_age_vars() |>
 
+    fix_iq() |>
+
     clean_kinesia() |>
     # includes BDS, MMSE
     make_vars_numeric(regex = "score", ignore.case = TRUE) |>
+    make_vars_numeric(regex = "Full Scale IQ", ignore.case = TRUE) |>
 
     make_vars_numeric(regex = "Purdue pegboard") |>
     make_vars_numeric(regex = "SCL90") |>
@@ -41,7 +46,6 @@ clean_trax_data = function(dataset)
 
     fix_CGG() |>
 
-    fix_iq() |>
 
     # relocate(contains("CGG"), .after = contains("ApoE")) |>
 
