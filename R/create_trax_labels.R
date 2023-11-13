@@ -1,4 +1,4 @@
-create_trax_lables <- function(
+create_trax_labels <- function(
     dataset,
     labels = c(
       study_id="Study ID Number",
@@ -120,7 +120,7 @@ create_trax_lables <- function(
       new_mds_neu_trem_age2="Head Tremor: Age of onset",
       new_mds_neu_trem_head="Head tremor",
       new_mds_neu_trem_int="Intention tremor",
-      new_mds_neu_trem_irm="Intermittent Tremor",
+      new_mds_neu_trem_irm="Intermittent tremor",
       new_mds_neu_trem_pos="Postural tremor",
       new_mds_neu_trem_rest="Resting tremor",
       new_mds_psy_alco="Alcohol use/abuse",
