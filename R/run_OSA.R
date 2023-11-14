@@ -32,7 +32,7 @@ run_OSA = function(
     N_CV_folds = 0,
     patient_data)
 {
-  pySuStaIn = import("pySuStaIn")
+  pySuStaIn = reticulate::import("pySuStaIn")
   sustain_input = pySuStaIn$OrdinalSustain(
     prob_nl = prob_score[,,1],
     prob_score = prob_score[,,-1, drop = FALSE],
@@ -46,7 +46,7 @@ run_OSA = function(
     use_parallel_startpoints = use_parallel_startpoints,
     seed = seed)
 
-  sus_output = sustain_input$run_sustain_algorithm(plot= plot)
+  sus_output = sustain_input$run_sustain_algorithm(plot = plot)
   names(sus_output) = c(
     "samples_sequence",
     "samples_f",

@@ -1,13 +1,11 @@
 ---
-title: "FXTAS Sequence Data Summary"
+title: "Questions about FXTAS Sequence Data"
 format:
   html:
     toc: true
     toc-depth: 4
     toc-float: true
     number-sections: true
-    embed-resources: true
-    bibliography: references.bib
   docx:
     number-sections: true
 ---
@@ -92,7 +90,7 @@ table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  data = trax_visit1)
 ```
 
 
@@ -105,75 +103,21 @@ table1(
     "~", paste(formulaic::add.backtick("Study"), collapse = " + "), 
     "|",
     column_var |> formulaic::add.backtick())),
-  data = visit1)
+  data = trax_visit1)
 ```
 
-## APOE
-
-```{r}
-apoe.n = gp34 |> missing_pattern_by_ID(variable = "ApoE")
-
-```
-
-Many participants (`r sum(apoe.n$first_missing)` of `r nrow(apoe.n)`) have ApoE missing in their first visit records:
-
-```{r}
-vars = grep("^ApoE", names(gp34), value = TRUE)
-table1(
-  NA.label = NA.label1,
-  
-  paste(
-    "~", 
-    paste(
-      formulaic::add.backtick(vars), 
-      collapse = " + "), 
-    "|",
-    column_var |> formulaic::add.backtick()) |> 
-    formula(),
-  # render.missing=c("Empty in RedCap"="FREQ (PCT%)"),
-  data = visit1)
-```
-
-
-`r apoe.n |> filter(first_missing) |> pull(any_nonmissing) |> sum()` of these individuals have later visits with non-missing ApoE results; for example:
-
-```{r}
-
-gp34 |> filter(
-  # `FXS ID` == "500011-122"
-  `FXS ID` == apoe.n |> filter(first_missing, any_nonmissing) |> head(1) |> pull(`FXS ID`)
-) |> 
-  select(`FXS ID`, `Event Name`, `Visit Date`, ApoE) |> 
-  pander()
-
-```
-
-**QUESTION:** Is it reasonable to use the next non-missing ApoE result to impute the ApoE results for the earlier visit? Note that in some cases, the ApoE value changes between visits:
-
-If they are missing, it is reasonable to use the next available result. The issue with differences between visits will need to be addressed with Flora; the samples may have been run differently between visit leading to different APoE values. 
-
-```{r, "multiple ApoE values", results = "asis"}
-
-gp34 |> 
-  semi_join(apoe.n |> filter(n_vals > 1), by = "FXS ID") |> 
-  select(`FXS ID`, `Visit Date`, `Event Name` ,ApoE) |> 
-  arrange(`FXS ID`, `Visit Date`) |> 
-  split(~`FXS ID`) |> 
-  pander()
-
-```
 
 ## CGG
 
 ```{r}
-cgg.n = gp34 |> missing_pattern_by_ID(variable = "CGG")
+cgg.n = trax |> missing_pattern_by_ID(variable = "CGG")
 ```
 
 There's a lot of missing data in CGG as well:
 
 ```{r}
 
-vars = grep("^CGG", names(gp34), value = TRUE)
+vars = grep("^CGG", names(trax), value = TRUE)
 
 table1(
   NA.label = NA.label1,
@@ -182,14 +126,14 @@ table1(
     "|",
     column_var |> formulaic::add.backtick())),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  data = trax_visit1)
 ```
 
 `r cgg.n |> filter(first_missing) |> pull(any_nonmissing) |> sum()` of these participants have later records with non-missing CGG values:
 
 ```{r}
-
-gp34 |> 
+if(cgg.n |> filter(first_missing) |> pull(any_nonmissing) |> sum() > 0){
+  trax |> 
   semi_join(
     cgg.n |> 
       filter(
@@ -200,13 +144,14 @@ gp34 |>
   arrange(`FXS ID`, `Visit Date`) |> 
   split(~`FXS ID`) |> 
   pander()
+}
 ```
 
 Some participants have multiple CGG values:
 
 ```{r, "multiple CGG values", include = TRUE, results = "asis"}
 
-gp34 |> 
+trax |> 
   semi_join(
     cgg.n |> 
       filter(
@@ -223,7 +168,7 @@ We decided to use the most recent CGG value.
 
 ```{r, include = TRUE}
 # check fxtas stage where CGG is missing
-gp34 |> 
+trax |> 
   filter(is.na(`FXTAS Stage (0-5)`)) |> 
   select(`FXS ID`, `Event Name`, CGG, `FXTAS Stage (0-5)`) |> 
   pander()
@@ -252,7 +197,7 @@ table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  data = trax_visit1)
 
 ```
 
@@ -279,7 +224,7 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  data = visit1)
+  data = trax_visit1)
 ```
 
 
@@ -314,8 +259,9 @@ See my previous responses for 888, 999 and missing data.
 vars = 
   c(
     "Surgery",
-    "Anesthesia (medic_surg_anes)", 
-    "Anesthesia (new_mds_med_anes1)"
+    "Anesthesia"
+    # "Anesthesia (medic_surg_anes)", 
+    # "Anesthesia (new_mds_med_anes1)"
     # "Other Cancer (detailed)", # don't include in table
     # "Surgery",
     # "Surgery type",
@@ -325,13 +271,13 @@ vars =
     # "Surgery 4: Type/Age",
     # "Surgery 5: Type/Age",
   )
-# grep(pattern = "surgery", ignore.case = TRUE, x = names(gp34), value = TRUE)
+# grep(pattern = "surgery", ignore.case = TRUE, x = names(trax), value = TRUE)
 
 library(table1)
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  data = visit1)
+  data = trax_visit1)
 ```
 
 ## Tremors
@@ -358,7 +304,7 @@ table1(
     .="N", 
     .="Mean (SD)", 
     .="Median [Min, Max]"),
-  data = visit1)
+  data = trax_visit1)
 
 ```
 
@@ -380,7 +326,7 @@ table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> 
+  data = trax_visit1 |> 
     filter(`Any tremor (excluding Head Tremor)` == "Some tremors recorded"),
   footnote = footnote)
 ```
@@ -402,7 +348,7 @@ table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> 
+  data = trax_visit1 |> 
     filter(`Any tremor (excluding Head Tremor)` == "No tremors recorded" |
              is.na(`Any tremor (excluding Head Tremor)`)),
   footnote = footnote)
@@ -410,7 +356,7 @@ table1(
 
 ```{r}
 # store number
-n_age_NoTremor <- visit1 |> 
+n_age_NoTremor <- trax_visit1 |> 
   filter((is.na(`Any tremor (excluding Head Tremor)`) | 
             `Any tremor (excluding Head Tremor)` == "No tremors recorded") & 
            !is.na(`Tremor: Age of onset`)) |> 
@@ -420,7 +366,7 @@ n_age_NoTremor <- visit1 |>
 The `r n_age_NoTremor` patients with Age of Onset without having any tremor recorded are listed below.
 
 ```{r}
-gp34 |> 
+trax |> 
   filter((is.na(`Any tremor (excluding Head Tremor)`) | 
             `Any tremor (excluding Head Tremor)` == "No tremors recorded") &
            !is.na(`Tremor: Age of onset`)) |> 
@@ -450,7 +396,7 @@ table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> filter(Study == "GP4"),
+  data = trax_visit1 |> filter(Study == "GP4"),
   footnote = footnote)
 
 ```
@@ -474,14 +420,14 @@ table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> filter(Study == "GP4" & `Head tremor` == "Yes"),
+  data = trax_visit1 |> filter(Study == "GP4" & `Head tremor` == "Yes"),
   footnote = footnote)
 
 ```
 
 ```{r}
 # store n for text
-n_age_NoHeadTremor <- visit1 |> 
+n_age_NoHeadTremor <- trax_visit1 |> 
     filter((`Head tremor` == "No" |
              is.na(`Head tremor`)) & 
              Study == "GP4" &
@@ -506,7 +452,7 @@ table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> 
+  data = trax_visit1 |> 
     filter((`Head tremor` == "No" |
              is.na(`Head tremor`)) & 
              Study == "GP4"),
@@ -533,7 +479,7 @@ table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  data = trax_visit1)
 
 ```
 
@@ -554,14 +500,14 @@ table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> filter(Ataxia == "Yes"))
+  data = trax_visit1 |> filter(Ataxia == "Yes"))
 ```
 
 <br>
 
 ```{r}
 # store n for text
-n_age_NoAtaxia <- visit1 |> 
+n_age_NoAtaxia <- trax_visit1 |> 
     filter((Ataxia == "No" |
              is.na(Ataxia)) & 
              !is.na(`Ataxia: Age of onset`)) |>
@@ -588,14 +534,14 @@ table1(
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   footnote = footnote,
-  data = visit1 |> filter(Ataxia == "No" | is.na(Ataxia))
+  data = trax_visit1 |> filter(Ataxia == "No" | is.na(Ataxia))
 )
 ```
 
 There are `r n_age_NoAtaxia` patients with age of onset without having Ataxia. These records are listed below.
 
 ```{r}
-gp34 |> 
+trax |> 
   filter((Ataxia == "No" |
              is.na(Ataxia)) & 
              !is.na(`Ataxia: Age of onset`)) |> 
@@ -616,12 +562,12 @@ See my previous responses on the matter.
 
 ```{r}
 
-vars = grep("Parkinson", value = TRUE, names(gp34))
+vars = grep("Parkinson", value = TRUE, names(trax))
 
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  data = visit1)
+  data = trax_visit1)
 
 ```
 
@@ -643,9 +589,9 @@ table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  data = trax_visit1)
 
-# gp34 |> 
+# trax |> 
 #   filter(`FXTAS Stage (0-5)` %in% c(NA, "No Response (999)", "Missing (empty in RedCap)")) |> 
 #   select(`FXS ID`, `Event Name`, `Visit Date`) |> 
 #   arrange() |> 
@@ -659,35 +605,16 @@ For `BDS2 Total Score`, codes `777`, `888`, and `999` are treated as NAs.
 
 ```{r}
 
-vars = grep("BDS-2 Total Score", value = TRUE, names(gp34), fixed = TRUE)
+vars = grep("BDS-2 Total Score", value = TRUE, names(trax), fixed = TRUE)
 
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  data = trax_visit1)
 
 ```
 
-## MMSE
-
-For `MMSE Total Score`, codes `777`, `888`, and `999` are treated as NAs.
-
-```{r}
-
-vars = grep(
-  "MMSE Total Score", 
-  value = TRUE, 
-  names(gp34), 
-  fixed = TRUE)
-
-table1(
-  NA.label = NA.label1,
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
-
-```
 
 ## SCID
 
@@ -715,7 +642,7 @@ table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  data = trax_visit1)
 
 ```
 
@@ -725,15 +652,15 @@ For analysis with the Ordinal SuStaIn method, we dichotomized each SCL90 measure
 
 ```{r}
 
-vars = grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90") |> sort()
+vars = grep(value = TRUE, fixed = TRUE, names(trax), pattern = "SCL90") |> sort()
 
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  data = trax_visit1)
 
-# visit1 |> ggplot(aes(x = `SCL90: Anxiety`, group = `FX*`)) + geom_histogram() + facet_wrap(~`FX*`, ncol = 1)
+# trax_visit1 |> ggplot(aes(x = `SCL90: Anxiety`, group = `FX*`)) + geom_histogram() + facet_wrap(~`FX*`, ncol = 1)
 ```
 
 ## MRI
@@ -757,7 +684,7 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  data = visit1)
+  data = trax_visit1)
 
 ```
 
@@ -779,34 +706,42 @@ No, b/c WAIS 3 does not have these scores but the subsequent WAIS 4 does.
 
 vars = c(
   # "Verbal: IQ Score",
-  "Verbal Comprehension: Composite Score (VCI)",
+  "Verbal Comprehension Composite Score",
+  "Verbal Comprehension Composite Score: missingness reasons",
   
-  "Perceptual Reasoning: Composite Score (PRI)",
-  "Working Memory: Composite Score (WMI)", 
-  "Processing Speed: Composite Score (PSI)",
+  "Perceptual Reasoning Composite Score",
+  "Perceptual Reasoning Composite Score: missingness reasons",
+  
+  "WAIS IV Working Memory Composite Score (WMI)", 
+  "WAIS IV Working Memory Composite Score (WMI): missingness reasons", 
+  
+  "WAIS IV Processing Speed Composite Score (PSI)",
+  "WAIS IV Processing Speed Composite Score (PSI): missingness reasons",
   
   # "Full Scale: IQ Score",
-  "Full Scale: Composite Score (FSIQ)"
-) |> sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> as.vector()
+  "Full Scale IQ",
+  "Full Scale IQ: missingness reasons"
+) # |> sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(trax_visit1))) |> as.vector()
 
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min, Max]"),
-  data = visit1)
+  data = trax_visit1)
 
 ```
 
 ## CANTAB
 
-For now, we used cutoffs taken from [@talebi2020cambridge].
+For now, we used cutoffs taken from https://www.sciencedirect.com/science/article/pii/S2211034820302480?via%3Dihub
+
 
 ```{r}
 
 # table1(
 #   NA.label = NA.label1,
 #   stratified_formula("Drugs used", column_var),
-#   data = visit1)
+#   data = trax_visit1)
 
 
 cantab_vars = c(
@@ -821,14 +756,14 @@ cantab_vars = c(
   "RTI Five-choice movement time",
   "RTI Five-choice movement time*") 
 # |> 
-#   sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> 
+#   sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(trax_visit1))) |> 
 # as.vector()
 
 table1(
   NA.label = "Missing (empty in RedCap)",
   stratified_formula(cantab_vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  data = trax_visit1)
 ```
 
 ## Thyroid and other autoimmune diseases
@@ -852,7 +787,7 @@ vars = c(
 table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  data = visit1)
+  data = trax_visit1)
 ```
 
 ## Kinesia
@@ -876,7 +811,7 @@ kinesia_vars =
 table1(
   NA.label = NA.label1,
   stratified_formula(kinesia_vars, column_var),
-  data = visit1)
+  data = trax_visit1)
 
 ```
 
@@ -892,25 +827,9 @@ table1(
   NA.label = NA.label1,
   stratified_formula(purdue_vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  data = trax_visit1)
 ```
 
-
-## MOCA total score
-
-```{r}
-
-moca_vars = c(
-  "MOCA Total score",
-  "MOCA Total score: missingness reasons"
-)
-table1(
-  NA.label = NA.label1,
-  stratified_formula(moca_vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
-
-```
 
 # Visit dates
 
@@ -920,7 +839,7 @@ We also started looking at the longitudinal data, and had some questions about t
 
 ```{r}
 
-tab = gp34 |> filter(is.na(`Visit Date`)) |> 
+tab = trax |> filter(is.na(`Visit Date`)) |> 
   select(Study:`Visit Date`)
 
 ```
@@ -941,7 +860,7 @@ pander(tab)
 
 ```{r}
 
-tab = gp34 |> 
+tab = trax |> 
   group_by(`FXS ID`, `Visit Date`) |> 
   filter(n() > 1, !is.na(`Visit Date`[1])) |> 
   select(Study:`Visit Date`) |> 
@@ -956,7 +875,9 @@ There are `r length(tab)` duplicate visit dates.
 I will need to check these.  
 
 ```{r, results = "asis"}
-pander(tab)
+if(length(tab) != 0){
+  pander(tab)
+}
 ```
 
 
@@ -964,27 +885,25 @@ pander(tab)
 ## Visits out of event sequence
 
 ```{r}
-ooo = gp34 |>
+ooo = trax |>
   select(`FXS ID`, `Visit Date`, `Event Name`) |>
   group_by(`FXS ID`) |>
-  filter(is.unsorted(`Event Name`[`Event Name` != "GP4 - Single Visit"])) |>
+  filter(is.unsorted(`Event Name`)) |>
   # filter(any(`decreased age`, na.rm = TRUE)) |>
   # ungroup() |>
   split(~`FXS ID`)
 ```
 
-`r length(ooo)` participants have visits occurring out of chronological order (e.g., GP4 Visit1 before GP3 Visit 1).
+`r length(ooo)` participants have visits occurring out of chronological order (e.g., GP4 trax_visit1 before GP3 Visit 1).
 
 **Question:** Are these records correct?  
 
 I will need to check these.  
 
 ```{r, results = "asis"}
+if(length(ooo) != 0){
+  pander(ooo)
+}
 
-pander(ooo)
 ```
 
-# References{.unnumbered}
-
-::: {#refs}
-:::

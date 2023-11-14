@@ -1,9 +1,9 @@
 # following https://rstudio.github.io/reticulate/articles/python_dependencies.html
 
-#' Title
+#' Install the `pySuStaIn` python package from github
 #'
 #' @param ...
-#' @param envname
+#' @inheritParams reticulate::py_install
 #'
 #' @return
 #' @export

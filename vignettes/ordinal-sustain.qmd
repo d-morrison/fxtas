@@ -233,6 +233,67 @@ save.image(file = fs::path(output_folder, "data.RData"))
 
 ```
 
+```{r "run OSA from R"}
+#| message: false
+#| label: model-all-data
+#| include: false
+sustain_output = run_OSA(
+  prob_score = prob_score0,
+  score_vals = score_vals,
+  SuStaInLabels = SuStaInLabels,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max, 
+  N_iterations_MCMC = N_iterations_MCMC, 
+  output_folder = output_folder, 
+  dataset_name = dataset_name, 
+  use_parallel_startpoints = FALSE,
+  seed = 1,
+  plot = FALSE,
+  patient_data = patient_data,
+  N_CV_folds = N_CV_folds)
+
+```
+0
+```{r}
+#| message: false
+#| label: model-males
+#| include: false
+sustain_output_males = run_OSA(
+  prob_score = prob_score0[patient_data$Gender %in% "Male",,],
+  score_vals = score_vals,
+  SuStaInLabels = SuStaInLabels,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified, 
+  N_iterations_MCMC = N_iterations_MCMC, 
+  output_folder = output_folder, 
+  dataset_name = "males", 
+  use_parallel_startpoints = FALSE,
+  seed = 1,
+  plot = FALSE)
+
+```
+
+
+```{r}
+#| message: false
+#| label: model-females
+#| include: false
+sustain_output_females = run_OSA(
+  prob_score = prob_score0[patient_data$Gender %in% "Female",,],
+  score_vals = score_vals,
+  SuStaInLabels = SuStaInLabels,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified, 
+  N_iterations_MCMC = N_iterations_MCMC, 
+  output_folder = output_folder, 
+  dataset_name = "females", 
+  use_parallel_startpoints = FALSE,
+  seed = 1,
+  plot = FALSE)
+
+```
+
+
 ```{r}
 #| message: false
 #| label: "cgg_over_100"
@@ -273,65 +334,6 @@ sustain_output_cgg100minus = run_OSA(
 
 ```
 
-```{r "run OSA from R"}
-#| message: false
-#| label: model-all-data
-#| include: false
-sustain_output = run_OSA(
-  prob_score = prob_score0,
-  score_vals = score_vals,
-  SuStaInLabels = SuStaInLabels,
-  N_startpoints = N_startpoints,
-  N_S_max = N_S_max, 
-  N_iterations_MCMC = N_iterations_MCMC, 
-  output_folder = output_folder, 
-  dataset_name = dataset_name, 
-  use_parallel_startpoints = FALSE,
-  seed = 1,
-  plot = FALSE,
-  patient_data = patient_data,
-  N_CV_folds = N_CV_folds)
-
-```
-
-```{r}
-#| message: false
-#| label: model-males
-#| include: false
-sustain_output_males = run_OSA(
-  prob_score = prob_score0[patient_data$Gender %in% "Male",,],
-  score_vals = score_vals,
-  SuStaInLabels = SuStaInLabels,
-  N_startpoints = N_startpoints,
-  N_S_max = N_S_max_stratified, 
-  N_iterations_MCMC = N_iterations_MCMC, 
-  output_folder = output_folder, 
-  dataset_name = "males", 
-  use_parallel_startpoints = FALSE,
-  seed = 1,
-  plot = FALSE)
-
-```
-
-
-```{r}
-#| message: false
-#| label: model-females
-#| include: false
-sustain_output_females = run_OSA(
-  prob_score = prob_score0[patient_data$Gender %in% "Female",,],
-  score_vals = score_vals,
-  SuStaInLabels = SuStaInLabels,
-  N_startpoints = N_startpoints,
-  N_S_max = N_S_max_stratified, 
-  N_iterations_MCMC = N_iterations_MCMC, 
-  output_folder = output_folder, 
-  dataset_name = "females", 
-  use_parallel_startpoints = FALSE,
-  seed = 1,
-  plot = FALSE)
-
-```
 
 # Results
 

@@ -2,13 +2,19 @@
 % Please edit documentation in R/install_pySuStaIn.R
 \name{install_pySuStaIn}
 \alias{install_pySuStaIn}
-\title{Title}
+\title{Install the \code{pySuStaIn} python package from github}
 \usage{
 install_pySuStaIn(..., envname = "r-pySuStaIn")
 }
 \arguments{
-\item{envname}{}
+\item{...}{Additional arguments passed to \code{\link[reticulate:conda_install]{conda_install()}}
+or \code{\link[reticulate:virtualenv_install]{virtualenv_install()}}.}
+
+\item{envname}{The name, or full path, of the environment in which Python
+packages are to be installed. When \code{NULL} (the default), the active
+environment as set by the \code{RETICULATE_PYTHON_ENV} variable will be used;
+if that is unset, then the \code{r-reticulate} environment will be used.}
 }
 \description{
-Title
+Install the \code{pySuStaIn} python package from github
 }

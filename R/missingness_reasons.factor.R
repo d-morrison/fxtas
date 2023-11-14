@@ -13,6 +13,8 @@ missingness_reasons.factor = function(
     x.clean = x |> replace_missing_codes_with_NAs())
 {
 
+if(all(is.na(x.clean))){browser()}
+
   to_return =
     # first change all valid values to "[Valid data recorded]"
     if_else(

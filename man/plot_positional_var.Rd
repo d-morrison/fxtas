@@ -16,7 +16,7 @@ plot_positional_var(
   biomarker_levels = NULL,
   biomarker_events_table = get_biomarker_events_table(biomarker_levels),
   biomarker_event_names = pull(biomarker_events_table, biomarker_level),
-  biomarker_plot_order = sort(biomarker_event_names),
+  biomarker_plot_order = NULL,
   ml_f_EM = NULL,
   cval = FALSE,
   subtype_order = NULL,
@@ -35,7 +35,7 @@ plot_positional_var(
   separate_subtypes = FALSE,
   save_path = NULL,
   save_kwargs = NULL,
-  synchronize_y_axes = TRUE,
+  synchronize_y_axes = FALSE,
   ...
 )
 }

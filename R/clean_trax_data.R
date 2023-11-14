@@ -1,19 +1,26 @@
-clean_data = function(dataset)
+clean_trax_data = function(dataset)
 {
   dataset |>
+    # fix date before arranging
+    fix_date() |>
+
     arrange(`FXS ID`, `Visit Date`, `Event Name`) |>
     remove_unneeded_records() |>
     relocate(`Visit Date`, .after = `Event Name`) |>
-    clean_head_tremor_onset() |>
+    relocate(`FXS ID`, .before = `Event Name`) |>
+    # clean_head_tremor_onset() |>
 
     create_any_tremor() |>
     fix_tremor_onsets() |>
 
     fix_onset_age_vars() |>
 
+    fix_iq() |>
+
     clean_kinesia() |>
     # includes BDS, MMSE
     make_vars_numeric(regex = "score", ignore.case = TRUE) |>
+    make_vars_numeric(regex = "Full Scale IQ", ignore.case = TRUE) |>
 
     make_vars_numeric(regex = "Purdue pegboard") |>
     make_vars_numeric(regex = "SCL90") |>
@@ -33,13 +40,14 @@ clean_data = function(dataset)
     # `Drugs used` is unstructured text, with typos; unusable
     # fix_drugs_used() |>
 
-    categorize_MMSE() |>
+    # categorize_MMSE() |>
 
-    fix_ApoE() |>
+    # fix_ApoE() |>
 
     fix_CGG() |>
 
-    relocate(contains("CGG"), .after = contains("ApoE")) |>
+
+    # relocate(contains("CGG"), .after = contains("ApoE")) |>
 
     fix_FXTAS_stage() |>
 
@@ -57,7 +65,7 @@ clean_data = function(dataset)
     define_cases_and_controls() |>
 
     # Ataxia
-    clean_ataxia() |>
+    clean_trax_ataxia() |>
 
     fix_factors() |>
 
