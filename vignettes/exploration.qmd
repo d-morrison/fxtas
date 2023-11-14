@@ -161,6 +161,18 @@ gp34 |>
 
 ```
 
+<b>Flora has provided updated ApoE data</b>
+
+```{r}
+gp34 |> 
+  semi_join(apoe.n |> filter(n_vals > 1), by = "FXS ID") |> 
+  select(`FXS ID`, `Visit Date`, `Event Name`, ApoE, `ApoE (updated)`) |> 
+  arrange(`FXS ID`, `Visit Date`) |> 
+  split(~`FXS ID`) |> 
+  pander()
+
+```
+
 ## CGG
 
 ```{r}

@@ -35,7 +35,10 @@ clean_data = function(dataset)
 
     categorize_MMSE() |>
 
+    # backfill missing ApoE when possible
     fix_ApoE() |>
+    # add updated ApoE from Flora (10/2023)
+    update_apoe() |>
 
     fix_CGG() |>
 
