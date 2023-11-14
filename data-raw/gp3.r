@@ -15,7 +15,7 @@ conflicts_prefer(vroom::col_double)
 conflicts_prefer(vroom::col_logical)
 conflicts_prefer(vroom::col_skip)
 dataset=vroom::vroom(
-  'inst/extdata/GPGenotypePhenotypeR-FXTASEventSequence10_DATA_2023-09-13_1001.csv',
+  'inst/extdata/GPGenotypePhenotypeR-FXTASEventSequence10_DATA_2023-10-09_1010.csv',
   col_types = cols(
     dem_date = col_date(),
     mds_med_ca_other = col_character(),
@@ -28,6 +28,11 @@ dataset=vroom::vroom(
     sex = col_double(),
     dem_race = col_character(),
     dem_eth = col_character(),
+
+    # Oct 2023: added Education level and years
+    dem_edlev = col_double(),
+    dem_edyr = col_double(),
+
     visit_age = col_double(),
     mol_apoe = col_character(),
     mol_dna_result = col_character(),
@@ -191,6 +196,8 @@ dataset$mri_corp_call_thick = factor(dataset$mri_corp_call_thick,levels=c("0","1
 dataset$dem_race = factor(dataset$dem_race,levels=c("1","2","3","4","5","8","6","7"))
 dataset$dem_eth = factor(dataset$dem_eth,levels=c("1","2","3"))
 
+dataset$dem_edlev = factor(dataset$dem_edlev, levels = c("1", "2", "3", "4", "5", "6", "7", "999"))
+
 dataset$mds_med_thy = factor(dataset$mds_med_thy,levels=c("0","1","999","888","777"))
 # dataset$new_mds_med_thy = factor(dataset$new_mds_med_thy,levels=c("0","1","999","888","777"))
 dataset$mds_med_hyothy = factor(dataset$mds_med_hyothy,levels=c("0","1","999","888","777"))
@@ -247,6 +254,8 @@ levels(dataset$new_mds_med_can_other)=c("No","Yes","No Response (999)","NA (888)
 levels(dataset$dem_race)=c("American Indian/Alaska Native","Asian","Black or African American","Native Hawaiian or Other Pacific Islander","White","Australian Aborigine","More Than One Race","Unknown / Not Reported")
 
 levels(dataset$dem_eth)=c("Hispanic or Latino","NOT Hispanic or Latino","Unknown / Not Reported")
+
+levels(dataset$dem_edlev) = c("K-7", "8-9", "10-11", "High School/GED", "Partial College", "BA/BS", "MA/MS/PhD/MD", "No Response (999)")
 
 levels(dataset$redcap_event_name)=c("GP1- Visit 1","GP1- Visit 2","GP1- Visit 3","GP2- Visit 1","GP2- Visit 2","GP2 - Visit 3","GP3 - Visit 1","GP3 - Visit 2","GP3 - Visit 3","GP3 - Visit 4","GP4")
 levels(dataset$sex)=c("Female","Male")
@@ -429,7 +438,9 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            scid_md08cur = "Substance-Induced Mood Dis. (MD08), Current",
            scid_md08lif = "Substance-Induced Mood Dis. (MD08), Lifetime",
            scid_ps01cur = "Primary Psychotic Symptoms (PS01), Current",
-           scid_ps01lif = "Primary Psychotic Symptoms (PS01), Lifetime")
+           scid_ps01lif = "Primary Psychotic Symptoms (PS01), Lifetime",
+           dem_edlev = "Education Level",
+           dem_edyr = "Years of Education")
 
 if(!isTRUE(setequal(names(dataset), names(labels)))) browser(message('why is there a mismatch?'))
 

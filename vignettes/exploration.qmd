@@ -897,11 +897,15 @@ table1(
 
 ## MOCA total score
 
+Following @thomann2020enhanced, we categorized MOCA as Below 23 = "pathological", 
+24-26 = “transitional", and 27 and above = "healthy".
+
 ```{r}
 
 moca_vars = c(
   "MOCA Total score",
-  "MOCA Total score: missingness reasons"
+  "MOCA Total score: missingness reasons",
+  "MOCA Total score*"
 )
 table1(
   NA.label = NA.label1,
