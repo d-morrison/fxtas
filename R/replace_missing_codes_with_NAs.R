@@ -21,8 +21,10 @@ replace_missing_codes_with_NAs = function(
         "999",
         "Asked by clinician, but no answer from subject (99)",
         "Question not asked at time of data entry; check records (777)",
+        "Question not asked at time of data entry; check records",
         "NA (888)",
         "No Response (999)",
+        "No Response",
         "Missing/Refused (999)",
         "Missing (empty in RedCap)"
       ))
