@@ -16,3 +16,4 @@ fxtas*.tgz
 miniconda
 .Rhistory
 fxtas
+/.quarto/

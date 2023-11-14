@@ -7,7 +7,7 @@ library(dplyr)
 library(vroom)
 #Read Data
 dataset=vroom::vroom(
-  'inst/extdata/GPGenotypePhenotypeR-FXTASEventSequence10_DATA_2023-07-31_1943.csv',
+  'inst/extdata/GPGenotypePhenotypeR-FXTASEventSequence10_DATA_2023-09-06_1650.csv',
   col_types = cols(
     dem_date = col_date(),
     mds_med_ca_other = col_character(),
@@ -209,11 +209,11 @@ dataset$scid_ps01lif = factor(dataset$scid_ps01lif,levels=c("777","1","2","3"))
 levels(dataset$scid_admin)=c("No","Yes","Follow up","N/A")
 levels(dataset$new_mds_med_anes1)=c("Local","General","None","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
 levels(dataset$medic_surg_anes)=c("None","Local","General","Other","Missing/Refused (999)")
-levels(dataset$mds_med_thy)=c("No","Yes","No Response (999)","NA","Question not asked at time of data entry; check records")
+levels(dataset$mds_med_thy)=c("No","Yes","No Response (999)","NA","Question not asked at time of data entry; check records (777)")
 # levels(dataset$new_mds_med_thy)=c("No","Yes","No Response (999)","NA","Question not asked at time of data entry; check records")
-levels(dataset$mds_med_hyothy)=c("No","Yes","No Response (999)","NA","Question not asked at time of data entry; check records")
+levels(dataset$mds_med_hyothy)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
 # levels(dataset$new_mds_med_hyothy)=c("No","Yes","No Response (999)","NA","Question not asked at time of data entry; check records")
-levels(dataset$mds_med_hyethy)=c("No","Yes","No Response (999)","NA","Question not asked at time of data entry; check records")
+levels(dataset$mds_med_hyethy)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
 # levels(dataset$new_mds_med_hyethy)=c("No","Yes","No Response (999)","NA","Question not asked at time of data entry; check records")
 
 levels(dataset$scid_admin)=c("No","Yes","Follow up","N/A")
