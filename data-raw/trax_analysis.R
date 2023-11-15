@@ -4,7 +4,7 @@ library(pander)
 # reticulate::virtualenv_create("fxtas")
 # reticulate::use_virtualenv("fxtas")
 reticulate::use_condaenv(condaenv = "fxtas")
-
+reticulate::py_config() |> print()
 #| label: "set run parameters"
 #|
 fit_models = TRUE
