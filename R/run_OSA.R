@@ -33,7 +33,7 @@ run_OSA = function(
     CV_fold_nums = 1:N_CV_folds,
     patient_data)
 {
-  pySuStaIn = reticulate::import("pySuStaIn")
+  # pySuStaIn = reticulate::import("pySuStaIn")
   sustain_input = pySuStaIn$OrdinalSustain(
     prob_nl = prob_score[,,1],
     prob_score = prob_score[,,-1, drop = FALSE],

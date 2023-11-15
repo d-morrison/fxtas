@@ -1,12 +1,12 @@
 #!/bin/bash -f
-#  ABM results loop.sbatch
+#  trax_analysis.sbatch
 #
-#  UGE job for ABM results loop built Tue Jul 4 2018
+#  UGE job for trax_analysis.R built Tue Jul 4 2018
 #
 #  The following items pertain to this script
 #  Use current working directory
 #$ -cwd
-#SBATCH -o "./logs/ABM results loop.R.joblog.%A.%2a"
+#SBATCH -o "./logs/trax_analysis.R.joblog.%A.%2a"
 
 #  Resources requested
 ##SBATCH --time 4-00:00:00
