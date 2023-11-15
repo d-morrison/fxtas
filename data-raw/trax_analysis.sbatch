@@ -54,7 +54,7 @@
   # endif
 
   source /etc/profile.d/conda.sh
-  conda activate fxtas
+  conda activate fxtas39
   echo ""
   echo Rscript  "$qqjob" $SLURM_ARRAY_TASK_ID \>\& "$qqodir/out.$SLURM_ARRAY_TASK_ID"
 #
