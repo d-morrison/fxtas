@@ -3,7 +3,9 @@ library(tidyverse)
 library(pander)
 # reticulate::virtualenv_create("fxtas")
 # reticulate::use_virtualenv("fxtas")
-reticulate::use_condaenv(condaenv = "fxtas")
+# reticulate::conda_create("Fxtas2")
+reticulate::use_condaenv(condaenv = "Fxtas2")
+# reticulate::conda_install("git+https://github.com/d-morrison/pySuStaIn", envname = 'Fxtas2', pip = TRUE)
 reticulate::py_config() |> print()
 #| label: "set run parameters"
 #|
