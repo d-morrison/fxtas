@@ -2,8 +2,8 @@ devtools::load_all()
 library(tidyverse)
 library(pander)
 # reticulate::virtualenv_create("fxtas")
-reticulate::use_virtualenv("fxtas")
-# reticulate::use_condaenv(condaenv = "fxtas")
+# reticulate::use_virtualenv("fxtas")
+reticulate::use_condaenv(condaenv = "fxtas")
 
 #| label: "set run parameters"
 #|
