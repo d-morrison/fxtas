@@ -30,6 +30,7 @@ run_OSA = function(
     seed = 1,
     plot = FALSE,
     N_CV_folds = 0,
+    CV_fold_nums = 1:N_CV_folds,
     patient_data)
 {
   pySuStaIn = reticulate::import("pySuStaIn")
@@ -71,7 +72,9 @@ run_OSA = function(
 
     splits = iterate(cv_it) |> lapply(F = function(x) x[[2]] |> as.integer())
 
-    CV_output = sustain_input$cross_validate_sustain_model(splits)
+    CV_output = sustain_input$cross_validate_sustain_model(
+      test_idxs = splits,
+      select_fold = CV_fold_nums)
     names(CV_output) = c("CVIC", "loglike_matrix")
     sus_output |> attr("CV") = CV_output
   }

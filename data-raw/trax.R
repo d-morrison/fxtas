@@ -457,8 +457,10 @@ names(data_arm2) = labels_arm2[names(data_arm2)]
 
 
 # bind arm1 and arm2 back together
-trax <- dplyr::bind_rows("Phase 1" = data_arm1, "Phase 2" = data_arm2,
-                         .id = "Study") |>
+trax <- dplyr::bind_rows(
+  "Trax Phase 1" = data_arm1,
+  "Trax Phase 2" = data_arm2,
+  .id = "Study") |>
   # clean trax data
   clean_trax_data()
 
@@ -468,3 +470,18 @@ trax_visit1 <- trax |>
 
 usethis::use_data(trax, overwrite = TRUE)
 usethis::use_data(trax_visit1, overwrite = TRUE)
+
+library(dplyr)
+
+trax$`FXS ID` |> intersect(gp34$`FXS ID`)
+
+males_gp34_trax <-
+  trax |>
+  bind_rows(gp34) |>
+  filter(Gender == "Male")
+
+males_gp34_trax_v1 =
+  males_gp34_trax |>
+  get_visit1()
+
+usethis::use_data(males_gp34_trax_v1, overwrite = TRUE)

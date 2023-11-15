@@ -17,6 +17,7 @@ run_OSA(
   seed = 1,
   plot = FALSE,
   N_CV_folds = 0,
+  CV_fold_nums = 1:N_CV_folds,
   patient_data
 )
 }

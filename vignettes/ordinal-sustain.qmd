@@ -84,7 +84,7 @@ run_CV =  TRUE
 # run_CV = FALSE
 
 N_startpoints = 10L
-N_S_max = 6L
+N_S_max = 5L
 N_S_max_stratified = 1L
 N_CV_folds = 10L
 N_iterations_MCMC = 1e5L
@@ -253,7 +253,7 @@ sustain_output = run_OSA(
   N_CV_folds = N_CV_folds)
 
 ```
-0
+
 ```{r}
 #| message: false
 #| label: model-males

@@ -19,3 +19,4 @@ if (interactive()) {
   conflicted::conflict_prefer("select", "dplyr")
   conflicted::conflict_prefer("is_in", "magrittr")
 }
+qs <- function() { q(save="no") }
