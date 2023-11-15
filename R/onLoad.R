@@ -1,3 +1,3 @@
 .onLoad <- function(...) {
-  reticulate::use_virtualenv("r-pySuStaIn", required = FALSE)
+  reticulate::use_virtualenv("r-pySuStaIn", required = TRUE)
 }
