@@ -76,7 +76,7 @@ run_OSA = function(
 
     CV_output = sustain_input$cross_validate_sustain_model(
       test_idxs = splits,
-      select_fold = CV_fold_nums)
+      select_fold = CV_fold_nums - 1)
     names(CV_output) = c("CVIC", "loglike_matrix")
     sus_output |> attr("CV") = CV_output
   }
