@@ -66,13 +66,13 @@ run_OSA = function(
 
     # generate stratified cross-validation training and test set splits
     labels = patient_data |> pull(Diagnosis)
-    sklearn = import("sklearn")
+    sklearn = reticulate::import("sklearn")
     cv = sklearn$model_selection$StratifiedKFold(
       n_splits= N_CV_folds |> as.integer(),
       shuffle=TRUE)
     cv_it = cv$split(patient_data, labels)
 
-    splits = iterate(cv_it) |> lapply(F = function(x) x[[2]] |> as.integer())
+    splits = reticulate::iterate(cv_it) |> lapply(F = function(x) x[[2]] |> as.integer())
 
     CV_output = sustain_input$cross_validate_sustain_model(
       test_idxs = splits,
