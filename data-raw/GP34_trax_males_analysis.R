@@ -1,10 +1,12 @@
 # devtools::load_all()
 print(R.version)
+message('working directory = ')
+print(getwd())
 library(fxtas)
 library(tidyverse)
 # library(reticulate)
 library(pander)
-reticulate::use_virtualenv("fxtas")
+reticulate::use_condaenv("fxtas39", required = FALSE)
 if(!reticulate::py_module_available("pySuStaIn"))
 {
   message('installing pySuStaIn')
