@@ -68,8 +68,8 @@ run_OSA = function(
     labels = patient_data |> pull(Diagnosis)
     sklearn = reticulate::import("sklearn")
     cv = sklearn$model_selection$StratifiedKFold(
-      n_splits= N_CV_folds |> as.integer(),
-      shuffle=TRUE)
+      n_splits = N_CV_folds |> as.integer(),
+      shuffle =TRUE)
     cv_it = cv$split(patient_data, labels)
 
     splits = reticulate::iterate(cv_it) |>
