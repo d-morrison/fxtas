@@ -1,12 +1,12 @@
 #!/bin/bash -f
-#  GP34_trax_males_analysis.sbatch
+#  trax_only_analysis.sbatch
 #
-#  UGE job for GP34_trax_males_analysis.R built Tue Jul 4 2018
+#  UGE job for trax_v1_only_analysis built Tue Jul 4 2018
 #
 #  The following items pertain to this script
 #  Use current working directory
 #$ -cwd
-#SBATCH -o "./logs/GP34_trax_males_analysis.R.joblog.%A.%2a"
+#SBATCH -o "./logs/trax_v1_only_analysis.R.joblog.%A.%2a"
 
 #  Resources requested
 ##SBATCH --time 4-00:00:00
@@ -32,7 +32,7 @@
 #
 # these variables are used in the script sourced below: /u/local/bin/qq.sge/qr.runtime
   export qqidir="$PWD"
-  export qqjob="GP34_trax_males_analysis.R"
+  export qqjob="trax_v1_only_analysis.R"
   export qqodir="out/$qqjob/$SLURM_ARRAY_JOB_ID"
   mkdir -p "$qqodir"
   cd "$qqidir"
