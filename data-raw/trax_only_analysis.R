@@ -1,5 +1,4 @@
 # devtools::load_all()
-print(R.version)
 library(fxtas)
 library(tidyverse)
 # library(reticulate)
@@ -30,11 +29,11 @@ N_startpoints = 10L
 N_S_max = 6L
 N_CV_folds = 10L
 N_iterations_MCMC = 1e5L
-dataset_name = 'sample_data'
+dataset_name = 'trax_visit1'
 root_dir = here::here()
 setwd(root_dir)
 output_folder =
-  "output/trax_gp34_males_v1" |>
+  "output/trax_visit1" |>
   fs::dir_create()
 
 biomarker_groups = compile_biomarker_groups_table()
@@ -47,7 +46,7 @@ SuStaInLabels =
 
 
 df =
-  males_gp34_trax_v1 |>
+  trax_visit1 |>
   filter(
     !is.na(`FX*`))
 
@@ -94,12 +93,12 @@ prob_correct =
     DataScores = DataScores)
 
 prob_score0 = compute_prob_scores(
-    dataset = patient_data,
-    biomarker_varnames,
-    ModelScores = ModelScores,
-    DataScores = DataScores,
-    prob_correct = prob_correct
-  )
+  dataset = patient_data,
+  biomarker_varnames,
+  ModelScores = ModelScores,
+  DataScores = DataScores,
+  prob_correct = prob_correct
+)
 
 prob_nl = prob_score0[,,1]
 prob_score = prob_score0[,,-1, drop = FALSE]
@@ -153,3 +152,6 @@ sustain_output = run_OSA(
   patient_data = patient_data,
   N_CV_folds = CV_fold_nums,
   CV_fold_nums = 1)
+## code to prepare `trax_only_analysis` dataset goes here
+
+# usethis::use_data(trax_only_analysis, overwrite = TRUE)

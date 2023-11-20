@@ -18,5 +18,6 @@ if (interactive()) {
   conflicted::conflict_prefer("summarize", "dplyr")
   conflicted::conflict_prefer("select", "dplyr")
   conflicted::conflict_prefer("is_in", "magrittr")
+  qs <- function() q(save="no")
 }
-qs <- function() { q(save="no") }
+message('ending package .profile')

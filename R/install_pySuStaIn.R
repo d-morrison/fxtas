@@ -8,8 +8,16 @@
 #' @return
 #' @export
 #'
-install_pySuStaIn <- function(..., envname = "r-pySuStaIn") {
-  reticulate::py_install("git+https://github.com/d-morrison/pySuStaIn", envname = envname, ...)
+install_pySuStaIn <- function(
+    envname = "r-pySuStaIn",
+    method = "auto",
+    ...)
+{
+  reticulate::py_install(
+    "git+https://github.com/d-morrison/pySuStaIn",
+    envname = envname,
+    method = method,
+    ...)
 }
 
 # conflicts with .onLoad.R; haven't figured out yet what I'm supposed to do.

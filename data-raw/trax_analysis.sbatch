@@ -15,7 +15,7 @@
 ##SBATCH --oversubscribe
 ##SBATCH --ntasks-per-core 10
 ##SBATCH --ntasks-per-node 100
-#SBATCH --mem-per-cpu 72G
+#SBATCH --mem-per-cpu 8G
 #SBATCH --cpus-per-task 1
 
 #  Email address to notify
