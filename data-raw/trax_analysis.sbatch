@@ -26,7 +26,7 @@
 #SBATCH --requeue
 #
 #  Job array indexes
-#SBATCH --array=1-10:1
+#SBATCH --array=1-1:1
 #
 # Initialization for serial execution
 #
@@ -52,9 +52,16 @@
   #   /u/local/bin/qalter -m a %A
   #   sleep 2
   # endif
-
-  source /etc/profile.d/conda.sh
+  which R
+  R --version
+  echo "which conda"
+  which conda
+#  echo "loading conda from /etc"
+#  source /etc/profile.d/conda.sh
+  which conda
   conda activate fxtas39
+  which R
+  R --version
   echo ""
   echo Rscript  "$qqjob" $SLURM_ARRAY_TASK_ID \>\& "$qqodir/out.$SLURM_ARRAY_TASK_ID"
 #
