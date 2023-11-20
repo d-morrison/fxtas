@@ -259,6 +259,11 @@ plot_positional_var = function(
     class(figs) = c("PVD.list", class(figs))
   }
 
+  figs = figs |>
+    structure(
+      biomarker_event_names = biomarker_event_names
+  )
+
   return(figs)
 
 }

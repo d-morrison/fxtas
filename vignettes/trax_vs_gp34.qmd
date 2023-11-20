@@ -49,7 +49,13 @@ text-align: center;
 </style>
 ```
 
-Here, we are comparing trax+gp34 vs gp34 only, for males:
+# Methods
+
+Here, we fit the Ordinal SuStaIn model [@young2021ordinal] on three datasets:
+
+- GP + GP4, males only, first visit only
+- Trax + GP + GP4, males only, first visit only
+- Trax (already all males), first visit only
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -66,86 +72,67 @@ knitr::opts_chunk$set(
 devtools::load_all()
 library(tidyverse)
 library(reticulate)
-reticulate::use_condaenv("fxtas39")
-py_config()
+use_condaenv("fxtas39")
+# py_config()
 library(pander)
 ```
 
 ```{r}
-# reticulate::use_condaenv(condaenv = "fxtas")
-```
+fig_male = extract_figs_from_pickle(
+  n_s = 1,
+  dataset_name = "males",
+  output_folder = "output/output.longest")
 
-```{r}
-#| label: "set run parameters"
-#| 
-fit_models = TRUE
-# fit_models = FALSE
-run_CV =  TRUE
-# run_CV = FALSE
+fig_male_trax_gp34 = extract_figs_from_pickle(
+  n_s = 1,
+  dataset_name = "sample_data",
+  output_folder = "output/trax_gp34_males_v1")
 
-N_startpoints = 10L
-N_S_max = 1L
-N_S_max_stratified = 1L
-N_CV_folds = 0L
-N_iterations_MCMC = 1e5L
-dataset_name = 'sample_data'
-root_dir = here::here()
-setwd(root_dir)
-output_folder = 
-  "output/output.longest" |> 
-  fs::dir_create()
-```
-
-```{r}
-
-biomarker_groups = compile_biomarker_groups_table()
-
-SuStaInLabels = 
-  biomarker_varnames = 
-  biomarker_groups |> 
-  pull("biomarker")
-
-
-gp34_df = 
-  visit1 |> 
-  filter(
-    !is.na(`FX*`))
-
-biomarker_levels = 
-  lapply(gp34_df[,biomarker_varnames], F = levels)
-
-trax_gp34_df = 
-  males_gp34_trax_v1 |> 
-  filter(!is.na(`FX*`))
-
-biomarker_levels_trax_gp34 = 
-  lapply(trax_gp34_df[,biomarker_varnames], F = levels)
-
-trax_df = 
-  trax_visit1 |> 
-  filter(!is.na(`FX*`))
-
-# biomarker_levels_trax = 
-#   lapply(trax_df[,biomarker_varnames], F = levels)
-
-diffs = list()
-for (i in biomarker_varnames)
-{
-  if(setequal(gp34_df[[i]], trax_gp34_df[[i]]))
-  { 
-    diffs[[i]] = "no diffs"
-  } else
-  {
-    diffs[[i]] = list(
-      gp34 = setdiff(gp34_df[[i]], trax_gp34_df[[i]]),
-      trax = setdiff(trax_gp34_df[[i]], gp34_df[[i]]))
-  }
-}
-
-
+fig_trax_only = extract_figs_from_pickle(
+  n_s = 1,
+  dataset_name = "trax_visit1",
+  output_folder = "output/trax_visit1")
 ```
 
 # Results
+
+@fig-pvd1 shows the event sequences that we estimated from each dataset. Note that clinical events which never occur in a dataset cannot be placed into the event sequence, so the set of modeled events varies by data subset. Additionally, since we only used the earliest visit for each individual across all the datasets in each analysis, some of the events included in the GP+GP4 1st visits dataset were not observed in the GP+GP4+Trax 1st visits dataset.
+
+```{r}
+gp34_events = fig_male |> attr("biomarker_event_names")
+trax_events = fig_trax_only |> attr("biomarker_event_names")
+trax_gp34_events = fig_male_trax_gp34 |> attr("biomarker_event_names")
+```
+
+```{r}
+missing1 = setdiff(gp34_events, trax_events)
+missing2 = setdiff(gp34_events, trax_gp34_events)
+```
+
+Specifically,  compared to the GP+GP4 dataset, the Trax+GP+GP4 dataset included `r length(missing2)` fewer event types:
+
+```{r}
+print(missing2 |> sort())
+```
+
+Compared to the GP+GP4 1st visits dataset, the Trax data included `r length(missing1)` fewer event types:
+
+```{r}
+print(missing1 |> sort())
+```
+
+
+
+```{r}
+#| include: false
+library(VennDiagram)
+temp = venn.diagram(
+  x = list(gp34_events, trax_events, trax_gp34_events),
+  category.names = c("GP+GP4" , "Trax" , "GP+GP4+Trax"),
+  filename = "output/venn_dagram.png",
+  output=TRUE
+)
+```
 
 ```{r}
 #| label: "fig-pvd1"
@@ -156,24 +143,9 @@ for (i in biomarker_varnames)
 #| fig-cap-location: top
 #| layout-ncol: 3
 #| fig-subcap:
-#|   - "GP34 males only"
-#|   - "Trax+GP34 males" 
+#|   - "GP+GP4 males only"
+#|   - "Trax+GP+GP4, males only" 
 #|   - "Trax only"
-
-score_vals_trax_gp34 = model_dists(
-  df = trax_gp34_df,
-  biomarker_varnames = biomarker_varnames
-)
-# 
-# score_vals_trax = model_dists(
-#   df = trax_df,
-#   biomarker_varnames = biomarker_varnames
-# )
-
-score_vals_gp34 = model_dists(
-  df = gp34_df,
-  biomarker_varnames = biomarker_varnames
-)
 
 fig_male = extract_figs_from_pickle(
   n_s = 1,
@@ -190,7 +162,12 @@ fig_male_trax_gp34 = extract_figs_from_pickle(
 fig_trax_only = extract_figs_from_pickle(
   n_s = 1,
   dataset_name = "trax_visit1",
-  output_folder = "output/trax_only_visit1") |> 
+  output_folder = "output/trax_visit1") |> 
   print()
 
 ```
+
+# References {.unnumbered}
+
+::: {#refs}
+:::
