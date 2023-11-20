@@ -36,22 +36,28 @@ output_folder =
   "output/trax_visit1" |>
   fs::dir_create()
 
-biomarker_groups = compile_biomarker_groups_table()
+df =
+  trax_visit1 |>
+  filter(
+    !is.na(`FX*`))
+
+
+biomarker_group_list =
+  df |> compile_biomarker_group_list()
+
+biomarker_groups =
+  biomarker_group_list |>
+  compile_biomarker_groups_table()
 
 SuStaInLabels =
   biomarker_varnames =
   biomarker_groups |>
   pull("biomarker")
 
-
-
-df =
-  trax_visit1 |>
-  filter(
-    !is.na(`FX*`))
-
 biomarker_levels =
-  lapply(df[,biomarker_varnames], F = levels)
+  df |>
+  select(all_of(biomarker_varnames)) |>
+  lapply(F = levels)
 
 df = df |>
   mutate(
