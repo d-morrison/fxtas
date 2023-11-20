@@ -60,7 +60,7 @@ compute_prob_scores = function(
 
     }
 
-    if(any(dataset[[biomarker]] |> is.na()))
+    if (any(dataset[[biomarker]] |> is.na()))
     {
       prob_score0[
         dataset[[biomarker]] |> is.na(),

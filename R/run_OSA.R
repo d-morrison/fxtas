@@ -72,7 +72,8 @@ run_OSA = function(
       shuffle=TRUE)
     cv_it = cv$split(patient_data, labels)
 
-    splits = reticulate::iterate(cv_it) |> lapply(F = function(x) x[[2]] |> as.integer())
+    splits = reticulate::iterate(cv_it) |>
+      lapply(F = function(x) x[[2]] |> as.integer())
 
     CV_output = sustain_input$cross_validate_sustain_model(
       test_idxs = splits,
