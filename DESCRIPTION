@@ -18,6 +18,7 @@ Imports:
     ggtext,
     glue,
     golem (>= 0.3.4),
+    here,
     magrittr,
     plotly,
     rcartocolor,
