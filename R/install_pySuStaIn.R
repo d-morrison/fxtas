@@ -13,10 +13,11 @@ install_pySuStaIn <- function(
     method = "auto",
     ...)
 {
-  reticulate::py_install(
+  reticulate::conda_install(
     "git+https://github.com/d-morrison/pySuStaIn",
     envname = envname,
     method = method,
+    pip = TRUE,
     ...)
 }
 

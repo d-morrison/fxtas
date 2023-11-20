@@ -66,6 +66,8 @@ knitr::opts_chunk$set(
 devtools::load_all()
 library(tidyverse)
 library(reticulate)
+reticulate::use_condaenv("fxtas39")
+py_config()
 library(pander)
 ```
 
@@ -104,32 +106,39 @@ SuStaInLabels =
   pull("biomarker")
 
 
-df = 
+gp34_df = 
   visit1 |> 
   filter(
     !is.na(`FX*`))
 
 biomarker_levels = 
-  lapply(df[,biomarker_varnames], F = levels)
+  lapply(gp34_df[,biomarker_varnames], F = levels)
 
-trax_df = 
+trax_gp34_df = 
   males_gp34_trax_v1 |> 
   filter(!is.na(`FX*`))
 
-biomarker_levels_trax = 
-  lapply(trax_df[,biomarker_varnames], F = levels)
+biomarker_levels_trax_gp34 = 
+  lapply(trax_gp34_df[,biomarker_varnames], F = levels)
+
+trax_df = 
+  trax_visit1 |> 
+  filter(!is.na(`FX*`))
+
+# biomarker_levels_trax = 
+#   lapply(trax_df[,biomarker_varnames], F = levels)
 
 diffs = list()
 for (i in biomarker_varnames)
 {
-  if(setequal(df[[i]], trax_df[[i]]))
+  if(setequal(gp34_df[[i]], trax_gp34_df[[i]]))
   { 
     diffs[[i]] = "no diffs"
   } else
   {
     diffs[[i]] = list(
-      gp34 = setdiff(df[[i]], trax_df[[i]]),
-      trax = setdiff(trax_df[[i]], df[[i]]))
+      gp34 = setdiff(gp34_df[[i]], trax_gp34_df[[i]]),
+      trax = setdiff(trax_gp34_df[[i]], gp34_df[[i]]))
   }
 }
 
@@ -143,41 +152,45 @@ for (i in biomarker_varnames)
 #| column: screen
 #| fig-height: 15
 #| fig-align: center
-#| fig-cap: "Estimated event sequence models - males only, gp34 vs gp34+trax"
+#| fig-cap: "Estimated event sequence models - males only: gp34, trax, and gp34+trax"
 #| fig-cap-location: top
-#| layout-ncol: 2
+#| layout-ncol: 3
 #| fig-subcap:
 #|   - "GP34 males only"
 #|   - "Trax+GP34 males" 
+#|   - "Trax only"
 
-score_vals_trax = model_dists(
-  df = trax_df,
+score_vals_trax_gp34 = model_dists(
+  df = trax_gp34_df,
   biomarker_varnames = biomarker_varnames
 )
+# 
+# score_vals_trax = model_dists(
+#   df = trax_df,
+#   biomarker_varnames = biomarker_varnames
+# )
 
 score_vals_gp34 = model_dists(
-  df = df,
+  df = gp34_df,
   biomarker_varnames = biomarker_varnames
 )
-
 
 fig_male = extract_figs_from_pickle(
   n_s = 1,
   dataset_name = "males",
-  output_folder = output_folder,
-  score_vals = score_vals_gp34,
-  biomarker_groups = biomarker_groups,
-  biomarker_levels = biomarker_levels) |> 
+  output_folder = "output/output.longest") |> 
   print()
 
-fig_male_trax = extract_figs_from_pickle(
+fig_male_trax_gp34 = extract_figs_from_pickle(
   n_s = 1,
   dataset_name = "sample_data",
-  output_folder = "output/trax_gp34_males_v1",
-  score_vals = score_vals_trax,
-  biomarker_groups = biomarker_groups,
-  biomarker_levels = biomarker_levels_trax) |> 
+  output_folder = "output/trax_gp34_males_v1") |> 
   print()
 
+fig_trax_only = extract_figs_from_pickle(
+  n_s = 1,
+  dataset_name = "trax_visit1",
+  output_folder = "output/trax_only_visit1") |> 
+  print()
 
 ```
