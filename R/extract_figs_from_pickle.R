@@ -21,6 +21,8 @@ extract_figs_from_pickle = function(
     ...)
 {
 
+  force(results)
+
   load(fs::path(output_folder, "data.RData"))
 
   figs = plot_positional_var(

@@ -65,7 +65,9 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 #| message: false
-devtools::load_all()
+# devtools::load_all()
+library(fxtas)
+reticulate::use_condaenv("fxtas39",required = TRUE)
 library(tidyverse)
 library(reticulate)
 library(pander)

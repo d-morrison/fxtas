@@ -70,6 +70,7 @@ knitr::opts_chunk$set(
 ```{r setup}
 #| message: false
 devtools::load_all()
+# library(fxtas)
 library(tidyverse)
 library(reticulate)
 use_condaenv("fxtas39")
@@ -77,12 +78,14 @@ use_condaenv("fxtas39")
 library(pander)
 ```
 
-```{r}
+```{r "build-figs"}
 fig_male = extract_figs_from_pickle(
   n_s = 1,
   dataset_name = "males",
   output_folder = "output/output.longest")
+```
 
+```{r}
 fig_male_trax_gp34 = extract_figs_from_pickle(
   n_s = 1,
   dataset_name = "sample_data",
@@ -98,7 +101,7 @@ fig_trax_only = extract_figs_from_pickle(
 
 @fig-pvd1 shows the event sequences that we estimated from each dataset. Note that clinical events which never occur in a dataset cannot be placed into the event sequence, so the set of modeled events varies by data subset. Additionally, since we only used the earliest visit for each individual across all the datasets in each analysis, some of the events included in the GP+GP4 1st visits dataset were not observed in the GP+GP4+Trax 1st visits dataset.
 
-```{r}
+```{r "extract-event-lists"}
 gp34_events = fig_male |> attr("biomarker_event_names")
 trax_events = fig_trax_only |> attr("biomarker_event_names")
 trax_gp34_events = fig_male_trax_gp34 |> attr("biomarker_event_names")

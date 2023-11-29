@@ -475,9 +475,14 @@ library(dplyr)
 
 trax$`FXS ID` |> intersect(gp34$`FXS ID`)
 
-males_gp34_trax <-
+trax_gp34_all =
   trax |>
-  bind_rows(gp34) |>
+  bind_rows(gp34)
+
+use_data(trax_gp34_all, overwrite = TRUE)
+
+males_gp34_trax <-
+  trax_gp34_all |>
   filter(Gender == "Male")
 
 males_gp34_trax_v1 =
