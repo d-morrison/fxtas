@@ -1,12 +1,14 @@
 
 ## ----setup-------------------------------------------------------------------------------------------
 #| message: false
+library(reticulate)
+py_config()
+
 devtools::load_all()
 library(tidyverse)
-library(reticulate)
-use_condaenv("fxtas39")
+# reticulate::use_condaenv("fxtas39")
 library(pander)
-
+conflicted::conflict_prefer("filter", "dplyr")
 
 ## ----------------------------------------------------------------------------------------------------
 # reticulate::use_condaenv(condaenv = "fxtas")
