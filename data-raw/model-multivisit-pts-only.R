@@ -44,9 +44,10 @@ SuStaInLabels =
 
 
 df =
-  gp34_multivisit_only |>
-  filter(
-    !is.na(`FX*`))
+  gp34 |>
+  filter(!is.na(`FXS ID`)) |>
+  filter(.by = `FXS ID`, n() > 1) |>
+  filter(!is.na(`FX*`))
 
 biomarker_levels =
   lapply(df[,biomarker_varnames], F = levels)
