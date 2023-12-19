@@ -479,6 +479,12 @@ trax_gp34_all =
   trax |>
   bind_rows(gp34)
 
+trax_gp34_multivisit_only =
+  trax_gp34_all |>
+  filter(!is.na(`FXS ID`)) |>
+  filter(.by = `FXS ID`,
+         n() > 1)
+
 use_data(trax_gp34_all, overwrite = TRUE)
 
 males_gp34_trax <-

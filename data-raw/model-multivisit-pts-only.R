@@ -1,3 +1,4 @@
+
 ## ----setup-------------------------------------------------------------------------------------------
 #| message: false
 devtools::load_all()
@@ -22,11 +23,11 @@ N_S_max = 1L
 N_S_max_stratified = 1L
 N_CV_folds = 0L
 N_iterations_MCMC = 1e5L
-dataset_name = 'gp34_longitudinal'
+dataset_name = 'gp34_multivisit_only'
 root_dir = here::here()
 setwd(root_dir)
 output_folder =
-  "output/gp34_longitudinal" |>
+  "output/gp34_multivisit_only" |>
   fs::dir_create()
 
 
@@ -41,7 +42,7 @@ SuStaInLabels =
 
 
 df =
-  gp34 |>
+  gp34_multivisit_only |>
   filter(
     !is.na(`FX*`))
 
@@ -62,6 +63,21 @@ biomarker_events_table =
 
 nlevs =
   biomarker_levels |> sapply(length)
+
+
+
+## ----------------------------------------------------------------------------------------------------
+#| tbl-cap: "Biomarkers used in analysis"
+#| label: "tbl-biomarker-list"
+table_out =
+  biomarker_events_table |>
+  select(category = biomarker_group, biomarker, levels) |>
+  slice_head(by = biomarker)
+
+table_out |>
+  pander()
+
+
 
 ## ----------------------------------------------------------------------------------------------------
 
