@@ -32,7 +32,7 @@ N_S_max = 5L
 N_S_max_stratified = 1L
 N_CV_folds = 10L
 args = commandArgs(trailingOnly = TRUE)
-
+message("args = ", args |> paste(collapse = "; "))
 if(N_CV_folds == 0)
 {
   CV_fold_nums = NULL

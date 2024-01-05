@@ -13,6 +13,8 @@
 #' @param plot
 #' @param N_CV_folds
 #' @param patient_data
+#' @param CV_fold_nums
+#' @param verbose [logical()] indicating whether to print debugging information
 #'
 #' @return
 #' @export
@@ -31,7 +33,8 @@ run_OSA = function(
     plot = FALSE,
     N_CV_folds = 0,
     CV_fold_nums = 1:N_CV_folds,
-    patient_data)
+    patient_data,
+    verbose = FALSE)
 {
 
   # reticulate::use_virtualenv("r-pySuStaIn")
@@ -64,6 +67,11 @@ run_OSA = function(
   if(N_CV_folds > 0)
   {
 
+    if(verbose)
+    {
+      message('Starting cross-validation of ', dataset_name)
+      message('folds to run: ', paste(CV_fold_nums, collapse = ', '))
+    }
     # generate stratified cross-validation training and test set splits
     labels = patient_data |> pull(Diagnosis)
     sklearn = reticulate::import("sklearn")
