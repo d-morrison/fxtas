@@ -118,15 +118,18 @@ for (i in biomarker_varnames)
   score_vals[i,score_vals[i,] > nlevs[i]-1] = 0
 }
 
-save.image(file = fs::path(output_folder, "data.RData"))
+args = commandArgs(trailingOnly = TRUE)
+print(args)
+
+if(length(args)==0 || (length(args) > 0 && (args[1] == 1))) save.image(file = fs::path(output_folder, "data.RData"))
 
 #| message: false
 #| label: model-all-data
 #| include: false
 
-args = commandArgs(trailingOnly = TRUE)
-# args = 51
-print(args)
+
+
+
 
 if(length(args) == 0)
 {
