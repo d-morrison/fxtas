@@ -1,0 +1,100 @@
+---
+title: "Modeling longitudinal data"
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "#>" 
+    R.options:  
+      dev: svg
+
+project:
+  execute-dir: project
+---
+
+```{=html}
+<style>
+.quarto-figure-center > figure {
+text-align: center;
+}
+</style>
+```
+
+# Methods
+
+Here, we fit the Ordinal SuStaIn model [@young2021ordinal] on three datasets:
+
+- GP + GP4, males only, first visit only
+- Trax + GP + GP4, males only, first visit only
+- Trax (already all males), first visit only
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  # fig.width = 7, 
+  # fig.height = 10,
+  include = TRUE
+)
+```
+
+```{r setup}
+#| message: false
+devtools::load_all()
+# library(fxtas)
+library(tidyverse)
+library(reticulate)
+use_condaenv("fxtas39")
+# py_config()
+library(pander)
+```
+
+```{r "build-figs"}
+output_folder1 = "output/gp34_longitudinal"
+rda_filename1 = "gp34_longitudinal.RData"
+fig_all = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = rda_filename1,
+  dataset_name = "gp34_longitudinal",
+  output_folder = output_folder1)
+
+fig_males = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = rda_filename1,
+  dataset_name = "males",
+  output_folder = output_folder1)
+
+fig_females = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = rda_filename1,
+  dataset_name = "females",
+  output_folder = output_folder1)
+```
+
+# Results
+
+@fig-pvd1 shows the event sequences that we estimated from each dataset. Note that clinical events which never occur in a dataset cannot be placed into the event sequence, so the set of modeled events varies by data subset. 
+```{r}
+#| label: "fig-pvd1"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap: "Estimated event sequence models"
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "All data"
+#|   - "Males only" 
+#|   - "Females only"
+
+fig_all |> print()
+
+fig_males |> print()
+
+fig_females |> print()
+
+```
+
+# References {.unnumbered}
+
+::: {#refs}
+:::

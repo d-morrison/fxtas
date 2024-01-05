@@ -1,35 +1,5 @@
 ---
 title: "Event sequences in Fragile X-associated tremor/ataxia syndrome"
-format: 
-  html: 
-    author: 
-      - name: Ezra Morrison
-        email: demorrison@ucdavis.edu
-      - Matt Ponzini
-      - Kyoungmi Kim
-      - (more to be added)
-    toc: true
-    embed-resources: true
-    mainfont: serif
-    theme:
-       light: 
-         - cosmo
-         - custom.scss
-       dark: 
-         - darkly
-         - custom.scss
-    cap-location: top
-    css: custom.scss
-    number-sections: true
-    number-depth: 3
-    html-math-method: mathjax
-    fig-cap-location: top
-    code-fold: true
-    echo: false
-    date: last-modified
-    date-format: "[Last modified:] YYYY-MM-DD: H:mm:ss (A)"
-    bibliography: references.bib
-
 knitr:
   opts_chunk: 
     collapse: true
@@ -102,7 +72,7 @@ output_folder =
 
 ## Data
 
-The data come from the GP and GP4 studies. We analyzed one visit record per participant, using the earliest visit available across the two studies with age at visit $\ge 40$ years, resulting in `r nrow(visit1)` observations in total. However, `r visit1$"FX*" |> is.na() |> sum()` individuals did not have CGG values available, so only `r visit1$"FX*" |> not_na() |> sum()` individuals 
+The data come from the GP and GP4 studies. We analyzed one visit record per participant, using the earliest visit available across the two studies with age at visit $\ge 40$ years, resulting in `r nrow(visit1)` observations in total. However, `r visit1$"FX*" |> is.na() |> sum()` individuals did not have CGG values available, so only `r visit1$"FX*" |> Negate(is.na)() |> sum()` individuals 
 (`r (visit1$"FX**" == "CGG >= 55")|> sum()` cases and 
 `r (visit1$"FX**" == "CGG < 55")|> sum()` controls) were included in the event sequence analysis.
 
@@ -360,28 +330,19 @@ sustain_output_cgg100minus = run_OSA(
 figs = extract_figs_from_pickle(
   n_s = 1,
   dataset_name = dataset_name,
-  output_folder = output_folder,
-  score_vals = score_vals,
-  biomarker_groups = biomarker_groups,
-  biomarker_levels = biomarker_levels) |> 
+  output_folder = output_folder) |> 
   print()
 
 fig_male = extract_figs_from_pickle(
   n_s = 1,
   dataset_name = "males",
-  output_folder = output_folder,
-  score_vals = score_vals,
-  biomarker_groups = biomarker_groups,
-  biomarker_levels = biomarker_levels) |> 
+  output_folder = output_folder) |> 
   print()
 
 fig_female = extract_figs_from_pickle(
   n_s = 1,
   dataset_name = "females",
-  output_folder = output_folder,
-  score_vals = score_vals,
-  biomarker_groups = biomarker_groups,
-  biomarker_levels = biomarker_levels) |> 
+  output_folder = output_folder) |> 
   print()
 ```
 
@@ -404,20 +365,13 @@ fig_female = extract_figs_from_pickle(
 fig_under100 = extract_figs_from_pickle(
   n_s = 1,
   dataset_name = "under100",
-  output_folder = output_folder,
-  score_vals = score_vals,
-  biomarker_plot_order = NULL,
-  biomarker_groups = biomarker_groups,
-  biomarker_levels = biomarker_levels) |> 
+  output_folder = output_folder) |> 
   print()
 
 fig_over100 = extract_figs_from_pickle(
   n_s = 1,
   dataset_name = "over100",
-  output_folder = output_folder,
-  score_vals = score_vals,
-  biomarker_groups = biomarker_groups,
-  biomarker_levels = biomarker_levels) |> 
+  output_folder = output_folder) |> 
   print()
 
 ```
@@ -437,10 +391,7 @@ Based on the CVIC criterion (@sec-cvic), it appears that `r n_s` subgroups is th
 figs = extract_figs_from_pickle(
   n_s = n_s,
   dataset_name = dataset_name,
-  output_folder = output_folder,
-  score_vals = score_vals,
-  biomarker_groups = biomarker_groups,
-  biomarker_levels = biomarker_levels)
+  output_folder = output_folder)
 ```
 
 ```{r}

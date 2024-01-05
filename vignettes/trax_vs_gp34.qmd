@@ -1,35 +1,5 @@
 ---
 title: "Event sequences in Fragile X-associated tremor/ataxia syndrome"
-format: 
-  html: 
-    author: 
-      - name: Ezra Morrison
-        email: demorrison@ucdavis.edu
-      - Matt Ponzini
-      - Kyoungmi Kim
-      - (more to be added)
-    toc: true
-    embed-resources: true
-    mainfont: serif
-    theme:
-       light: 
-         - cosmo
-         - custom.scss
-       dark: 
-         - darkly
-         - custom.scss
-    cap-location: top
-    css: custom.scss
-    number-sections: true
-    number-depth: 3
-    html-math-method: mathjax
-    fig-cap-location: top
-    code-fold: true
-    echo: false
-    date: last-modified
-    date-format: "[Last modified:] YYYY-MM-DD: H:mm:ss (A)"
-    bibliography: references.bib
-
 knitr:
   opts_chunk: 
     collapse: true

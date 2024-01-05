@@ -10,6 +10,7 @@ format:
       - (more to be added)
     toc: true
     embed-resources: true
+    mainfont: serif
     theme:
        light:
          - cosmo
