@@ -18,11 +18,12 @@ run_OSA(
   plot = FALSE,
   N_CV_folds = 0,
   CV_fold_nums = 1:N_CV_folds,
-  patient_data
+  patient_data,
+  verbose = TRUE
 )
 }
 \arguments{
-\item{patient_data}{}
+\item{verbose}{\code{\link[=logical]{logical()}} indicating whether to print debugging information}
 }
 \description{
 Title

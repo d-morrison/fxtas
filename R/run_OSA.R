@@ -34,7 +34,7 @@ run_OSA = function(
     N_CV_folds = 0,
     CV_fold_nums = 1:N_CV_folds,
     patient_data,
-    verbose = FALSE)
+    verbose = TRUE)
 {
 
   # reticulate::use_virtualenv("r-pySuStaIn")
