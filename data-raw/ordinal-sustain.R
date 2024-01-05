@@ -1,14 +1,17 @@
 ## ----setup-------------------------------------------------------------------------------------------
 #| message: false
+
+library(reticulate)
+py_config()
+
 library(fxtas)
 library(tidyverse)
 library(reticulate)
 library(pander)
-reticulate::use_condaenv("fxtas39", required = FALSE)
+# reticulate::use_condaenv("fxtas39", required = FALSE)
 if(!reticulate::py_module_available("pySuStaIn"))
 {
-  message('installing pySuStaIn')
-  install_pySuStaIn("fxtas")
+  stop("pySuStaIn is not installed correctly.")
 }
 reticulate::py_config() |> print()
 
