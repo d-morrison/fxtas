@@ -27,12 +27,7 @@ extract_results_from_pickle(
 \item{...}{
   Arguments passed on to \code{\link[=format_results_list]{format_results_list}}
   \describe{
-    \item{\code{results}}{pickle file contents}
-    \item{\code{biomarker_labels}}{biomarker labels}
-    \item{\code{biomarker_groups}}{biomarker groupings}
-    \item{\code{biomarker_levels}}{biomarker levels}
-    \item{\code{biomarker_events_table}}{table of biomarker events (excluding base level)}
-    \item{\code{biomarker_event_names}}{vector of biomarker event names}
+    \item{\code{format_sst}}{should the subtype and stage table be formatted? (doesn't work for cross-validation fold pickle-files)}
   }}
 }
 \description{

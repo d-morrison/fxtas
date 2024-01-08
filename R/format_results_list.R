@@ -6,6 +6,7 @@
 #' @param biomarker_levels biomarker levels
 #' @param biomarker_events_table table of biomarker events (excluding base level)
 #' @param biomarker_event_names vector of biomarker event names
+#' @param format_sst should the subtype and stage table be formatted? (doesn't work for cross-validation fold pickle-files)
 #'
 #' @return
 #'
@@ -17,7 +18,8 @@ format_results_list = function(
     biomarker_events_table =
       biomarker_levels |> get_biomarker_events_table(),
     biomarker_event_names =
-      biomarker_events_table |> pull(biomarker_level))
+      biomarker_events_table |> pull(biomarker_level),
+    format_sst = TRUE)
 {
 
   results$samples_sequence =
@@ -26,9 +28,11 @@ format_results_list = function(
       results = results,
       biomarker_event_names = biomarker_event_names)
 
-  results$subtype_and_stage_table =
-    results |>
-    extract_subtype_and_stage_table()
-
+  if(format_sst)
+  {
+    results$subtype_and_stage_table =
+      results |>
+      extract_subtype_and_stage_table()
+  }
   return(results)
 }

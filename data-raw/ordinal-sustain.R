@@ -175,7 +175,6 @@ sustain_output = run_OSA(
   output_folder = output_folder,
   dataset_name = dataset_name,
   use_parallel_startpoints = FALSE,
-  seed = 1,
   plot = FALSE,
   patient_data = patient_data,
   N_CV_folds = N_CV_folds,
@@ -197,7 +196,6 @@ sustain_output_males = run_OSA(
   output_folder = output_folder,
   dataset_name = "males",
   use_parallel_startpoints = FALSE,
-  seed = 1,
   plot = FALSE)
 
 
@@ -216,7 +214,6 @@ sustain_output_females = run_OSA(
   output_folder = output_folder,
   dataset_name = "females",
   use_parallel_startpoints = FALSE,
-  seed = 1,
   plot = FALSE)
 
 
@@ -236,7 +233,6 @@ sustain_output_cgg100plus = run_OSA(
   output_folder = output_folder,
   dataset_name = "over100",
   use_parallel_startpoints = FALSE,
-  seed = 1,
   plot = FALSE)
 
 
@@ -256,6 +252,5 @@ sustain_output_cgg100minus = run_OSA(
   output_folder = output_folder,
   dataset_name = "under100",
   use_parallel_startpoints = FALSE,
-  seed = 1,
   plot = FALSE)
 

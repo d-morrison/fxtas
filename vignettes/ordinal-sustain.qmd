@@ -419,7 +419,7 @@ figs |>
 #| label: tbl-sg_demos
 #| results: asis
 
-results = extract_results_from_pickle(
+results_cv_max = extract_results_from_pickle(
   n_s = n_s,
   dataset_name = dataset_name,
   output_folder = output_folder,

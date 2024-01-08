@@ -10,7 +10,8 @@ format_results_list(
   biomarker_groups = NULL,
   biomarker_levels = NULL,
   biomarker_events_table = get_biomarker_events_table(biomarker_levels),
-  biomarker_event_names = pull(biomarker_events_table, biomarker_level)
+  biomarker_event_names = pull(biomarker_events_table, biomarker_level),
+  format_sst = TRUE
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ format_results_list(
 \item{biomarker_events_table}{table of biomarker events (excluding base level)}
 
 \item{biomarker_event_names}{vector of biomarker event names}
+
+\item{format_sst}{should the subtype and stage table be formatted? (doesn't work for cross-validation fold pickle-files)}
 }
 \description{
 Format results list extracted from pickle file

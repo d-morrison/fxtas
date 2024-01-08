@@ -1,5 +1,5 @@
-#' Title
-#'
+#' Plot positional variance diagram
+#' @inheritParams format_results_list
 #' @param samples_sequence
 #' @param samples_f
 #' @param n_samples

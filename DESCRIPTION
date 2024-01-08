@@ -26,6 +26,7 @@ Imports:
     readxl,
     reticulate,
     shiny (>= 1.7.2),
+    splitTools,
     table1,
     tibble,
     tidyr,

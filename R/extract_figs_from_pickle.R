@@ -13,15 +13,15 @@ extract_figs_from_pickle = function(
     ...)
 {
 
-  results =
+  results00 =
     fs::path(output_folder, "pickle_files", picklename) |>
     py_load_object() |>
     force()
 
-  load(fs::path(output_folder, rda_filename))
+  load(fs::path(output_folder, rda_filename)) # be careful; might mask `results`
 
   figs = plot_positional_var(
-    results = results,
+    results = results00,
     score_vals = score_vals, # these come from the load() call
     biomarker_groups = biomarker_groups, # these come from the load() call
     biomarker_levels = biomarker_levels, # these come from the load() call

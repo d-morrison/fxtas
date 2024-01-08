@@ -196,7 +196,7 @@ samples_likelihood] = sustain_input.run_sustain_algorithm(plot=True)
 
 likelihoods = as_tibble(py$samples_likelihood) |> 
   setNames(paste(1:ncol(likelihoods), "subtype(s)")) |> 
-  mutate(Iteration = row_number())
+  mutate(Iteration = dplyr::row_number())
 
 alpha = 0.5
 ggplot() +
