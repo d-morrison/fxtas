@@ -50,7 +50,7 @@ dataset_name = 'sample_data'
 root_dir = here::here()
 setwd(root_dir)
 output_folder =
-  "output/output.longest" |>
+  "output/output.fixed_CV" |>
   fs::dir_create()
 
 
