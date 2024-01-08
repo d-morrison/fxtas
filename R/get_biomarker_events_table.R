@@ -10,10 +10,10 @@ get_biomarker_events_table = function(biomarker_levels)
   biomarker_levels |>
     stack() |>
     tibble() |>
-    rename(
+    dplyr::rename(
       biomarker = ind,
       level = values) |>
-    relocate(biomarker, .before = everything()) |>
+    dplyr::relocate(biomarker, .before = everything()) |>
     mutate(
       biomarker = factor(biomarker, levels = names(biomarker_levels)),
       # level = level |> str_replace("Yes", "Present"), # this might cause issues

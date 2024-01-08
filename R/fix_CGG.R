@@ -20,10 +20,10 @@ fix_CGG = function(dataset)
         "NA"
       )
     ) |>
-    relocate(
+    dplyr::relocate(
       Study, .before = `FXS ID`
     ) |>
-    rename(
+    dplyr::rename(
       `CGG (recovered)` = `CGG (backfilled)`
     ) |>
     dplyr::select(
@@ -81,7 +81,7 @@ fix_CGG = function(dataset)
         ),
       `CGG (backfilled)` = CGG
     )  |>
-    relocate(
+    dplyr::relocate(
       `CGG (backfilled)`, .after = "CGG"
     ) |>
     group_by(`FXS ID`) |>

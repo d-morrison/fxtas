@@ -1,11 +1,11 @@
-#' Title
+#' Extract results from pickle file
 #'
-#' @param n_s
-#' @param dataset_name
-#' @param output_folder
-#' @param picklename
-#' @param results
-#' @param ...
+#' @param n_s helps construct `picklename` by identifying number of latent subgroups
+#' @param dataset_name root name of dataset
+#' @param output_folder where to find the dataset
+#' @param picklename the name of the pickle file to open
+#' @param rda_filename name of rda file containing environment used to run analyses
+#' @inheritDotParams format_results_list
 #'
 #' @return
 #' @export
@@ -14,13 +14,25 @@ extract_results_from_pickle = function(
     n_s = 1,
     dataset_name = 'sample_data',
     output_folder = "output",
+    rda_filename = "data.RData",
     picklename = paste0(dataset_name, "_subtype", n_s - 1, ".pickle"),
-    results =
-      fs::path(output_folder, "pickle_files", picklename) |>
-      py_load_object() |>
-      format_results_list(...),
     ...)
 {
+
+  results =
+    fs::path(output_folder, "pickle_files", picklename) |>
+    py_load_object() |>
+    force()
+
+  load(fs::path(output_folder, rda_filename))
+
+  results =
+    results |>
+    format_results_list(
+      score_vals = score_vals, # these come from the load() call
+      biomarker_groups = biomarker_groups, # these come from the load() call
+      biomarker_levels = biomarker_levels,
+      ...)
 
   return(results)
 

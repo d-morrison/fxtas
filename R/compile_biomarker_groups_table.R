@@ -16,7 +16,7 @@ compile_biomarker_groups_table = function(
   biomarker_group_list |>
   stack() |>
     as_tibble() |>
-    rename(
+    dplyr::rename(
       biomarker  = values,
       biomarker_group = ind)  |>
     mutate(

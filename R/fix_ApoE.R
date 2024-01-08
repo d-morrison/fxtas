@@ -14,7 +14,7 @@ fix_ApoE = function(dataset)
       `ApoE (backfilled)` = ApoE
 
       ) |>
-    relocate(
+    dplyr::relocate(
       `ApoE (backfilled)`, .after = "ApoE"
     ) |>
     group_by(`FXS ID`) |>

@@ -38,7 +38,7 @@ visit1 =
   group_by(`FXS ID`) |> 
   slice_head(n = 1) |>
   ungroup() |> 
-  rename(
+  dplyr::rename(
     `Age at first visit` = `Age at visit`
   ) |> 
   left_join(
