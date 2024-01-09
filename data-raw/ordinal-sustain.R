@@ -129,12 +129,12 @@ prob_correct =
     DataScores = DataScores)
 
 prob_score0 = compute_prob_scores(
-    dataset = patient_data,
-    biomarker_varnames,
-    ModelScores = ModelScores,
-    DataScores = DataScores,
-    prob_correct = prob_correct
-  )
+  dataset = patient_data,
+  biomarker_varnames,
+  ModelScores = ModelScores,
+  DataScores = DataScores,
+  prob_correct = prob_correct
+)
 
 prob_nl = prob_score0[,,1]
 prob_score = prob_score0[,,-1, drop = FALSE]
@@ -157,7 +157,10 @@ for (i in biomarker_varnames)
   score_vals[i,score_vals[i,] > nlevs[i]-1] = 0
 }
 
-save.image(file = fs::path(output_folder, "data.RData"))
+if(length(args) == 0 || args[1] == 1)
+{
+  save.image(file = fs::path(output_folder, "data.RData"))
+}
 
 
 
