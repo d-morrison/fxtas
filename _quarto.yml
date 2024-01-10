@@ -2,12 +2,12 @@ project:
   execute-dir: project
 format:
   html:
-    author:
-      - name: Ezra Morrison
-        email: demorrison@ucdavis.edu
-      - Matt Ponzini
-      - Kyoungmi Kim
-      - (more to be added)
+    # author:
+    #   - name: Ezra Morrison
+    #     email: demorrison@ucdavis.edu
+    #   - Matt Ponzini
+    #   - Kyoungmi Kim
+    #   - (more to be added)
     toc: true
     embed-resources: true
     mainfont: serif
@@ -24,8 +24,15 @@ format:
     number-depth: 3
     html-math-method: mathjax
     fig-cap-location: top
+    tbl-cap-location: top
     code-fold: true
     echo: false
     date: last-modified
     date-format: "[Last modified:] YYYY-MM-DD: H:mm:ss (A)"
     bibliography: references.bib
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+    R.options:
+      dev: svg

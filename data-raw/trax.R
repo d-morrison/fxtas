@@ -491,6 +491,8 @@ males_gp34_trax <-
   trax_gp34_all |>
   filter(Gender == "Male")
 
+use_data(males_gp34_trax, overwrite = TRUE)
+
 males_gp34_trax_v1 =
   males_gp34_trax |>
   get_visit1()
