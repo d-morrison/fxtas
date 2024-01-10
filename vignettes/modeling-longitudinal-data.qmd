@@ -21,13 +21,16 @@ text-align: center;
 
 # Methods
 
-Here, we fit the Ordinal SuStaIn model [@young2021ordinal] on three datasets:
+Here, we fit the Ordinal SuStaIn model [@young2021ordinal] on nine datasets:
 
 - GP + GP4, males only, first visit only
 - Trax + GP + GP4, males only, first visit only
 - Trax (already all males), first visit only
 
-```{r, include = FALSE}
+```{r}
+#| label: setup
+#| include: false
+
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -35,20 +38,31 @@ knitr::opts_chunk$set(
   # fig.height = 10,
   include = TRUE
 )
-```
 
-```{r setup}
-#| message: false
 devtools::load_all()
 # library(fxtas)
 library(tidyverse)
-library(reticulate)
-use_condaenv("fxtas39")
-# py_config()
 library(pander)
 ```
 
-```{r "build-figs"}
+# Results
+
+## All patients, all visits
+
+@fig-pvd1 shows the event sequences that we estimated from each dataset. Note that clinical events which never occur in a dataset cannot be placed into the event sequence, so the set of modeled events varies by data subset. 
+```{r}
+#| label: "fig-pvd1"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap: "Estimated event sequences - all visits"
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "All data"
+#|   - "Males only" 
+#|   - "Females only"
+
 output_folder1 = "output/gp34_longitudinal"
 rda_filename1 = "gp34_longitudinal.RData"
 fig_all = extract_figs_from_pickle(
@@ -68,17 +82,25 @@ fig_females = extract_figs_from_pickle(
   rda_filename = rda_filename1,
   dataset_name = "females",
   output_folder = output_folder1)
+
+fig_all |> print()
+
+fig_males |> print()
+
+fig_females |> print()
+
 ```
 
-# Results
+## Multivisit patients only, all visits
 
-@fig-pvd1 shows the event sequences that we estimated from each dataset. Note that clinical events which never occur in a dataset cannot be placed into the event sequence, so the set of modeled events varies by data subset. 
+@fig-pvd2 shows the event sequences that we estimated using only the data from patients with more than one visit.
+
 ```{r}
-#| label: "fig-pvd1"
+#| label: "fig-pvd2"
 #| column: screen
 #| fig-height: 15
 #| fig-align: center
-#| fig-cap: "Estimated event sequence models"
+#| fig-cap: "Estimated event sequences - multivisit patients only"
 #| fig-cap-location: top
 #| layout-ncol: 3
 #| fig-subcap:
@@ -86,11 +108,32 @@ fig_females = extract_figs_from_pickle(
 #|   - "Males only" 
 #|   - "Females only"
 
-fig_all |> print()
+output_folder_mv_only = "output/gp34_multivisit_only"
+rda_filename_mv_only = "gp34_multivisit_only.RData"
 
-fig_males |> print()
+fig_all_mv_only = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = rda_filename_mv_only,
+  dataset_name = "gp34_multivisit_only",
+  output_folder = output_folder_mv_only)
 
-fig_females |> print()
+fig_males_mv_only = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = rda_filename_mv_only,
+  dataset_name = "males",
+  output_folder = output_folder_mv_only)
+
+fig_females_mv_only = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = rda_filename_mv_only,
+  dataset_name = "females",
+  output_folder = output_folder_mv_only)
+
+fig_all_mv_only |> print()
+
+fig_males_mv_only |> print()
+
+fig_females_mv_only |> print()
 
 ```
 

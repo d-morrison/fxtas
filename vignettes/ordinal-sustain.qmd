@@ -64,7 +64,7 @@ dataset_name = 'sample_data'
 root_dir = here::here()
 setwd(root_dir)
 output_folder = 
-  "output/output.longest" |> 
+  "output/output.longest_shiva/" |> 
   fs::dir_create()
 ```
 
@@ -422,13 +422,11 @@ figs |>
 results_cv_max = extract_results_from_pickle(
   n_s = n_s,
   dataset_name = dataset_name,
-  output_folder = output_folder,
-  biomarker_groups = biomarker_groups,
-  biomarker_levels = biomarker_levels)
+  output_folder = output_folder)
 
 table_subtype_by_demographics(
     patient_data,
-    subtype_and_stage_table = results$subtype_and_stage_table
+    subtype_and_stage_table = results_cv_max$subtype_and_stage_table
     )
 ```
 
