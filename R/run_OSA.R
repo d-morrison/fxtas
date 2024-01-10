@@ -39,6 +39,8 @@ run_OSA = function(
     verbose = TRUE)
 {
 
+  if(verbose) message("starting `run_OSA()`")
+
   # reticulate::use_virtualenv("r-pySuStaIn")
   # pySuStaIn = reticulate::import("pySuStaIn")
   sustain_input = pySuStaIn$OrdinalSustain(
