@@ -33,11 +33,7 @@ get_title_i = function(
         "(f={vals[i] |> round(2)})")
     }
 
-  } else
-  {
-    title_i = glue::glue("Subtype {i} cross-validated")
   }
-
 
   return(title_i)
 
