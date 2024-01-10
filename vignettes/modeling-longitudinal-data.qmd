@@ -21,11 +21,16 @@ text-align: center;
 
 # Methods
 
-Here, we fit the Ordinal SuStaIn model [@young2021ordinal] on nine datasets:
+Here, we fit the Ordinal SuStaIn model [@young2021ordinal] on six subsets of the data:
 
-- GP + GP4, males only, first visit only
-- Trax + GP + GP4, males only, first visit only
-- Trax (already all males), first visit only
+- All patients (@fig-pvd1-1)
+- Males only (@fig-pvd1-2)
+- Females only (@fig-pvd1-3)
+- All patients with multiple visits (@fig-pvd2-1)
+- Males with multiple visits (@fig-pvd2-2)
+- Females with multiple visits (@fig-pvd2-3)
+
+For each of these patient subgroups, we included all longitudinal visits.
 
 ```{r}
 #| label: setup
@@ -49,7 +54,8 @@ library(pander)
 
 ## All patients, all visits
 
-@fig-pvd1 shows the event sequences that we estimated from each dataset. Note that clinical events which never occur in a dataset cannot be placed into the event sequence, so the set of modeled events varies by data subset. 
+@fig-pvd1 shows the event sequences that we estimated from each data subset. Note that clinical events which never occur in a dataset cannot be placed into the event sequence, so the set of modeled events varies by data subset.
+
 ```{r}
 #| label: "fig-pvd1"
 #| column: screen
