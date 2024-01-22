@@ -128,6 +128,10 @@ table_out |>
 
 The trailing asterisk (*) indicates a numeric variable that has been categorized for use with Ordinal SusTaIn.
 
+{{< include exploration.qmd >}}
+
+{{< include demos-by-sex.qmd >}}
+
 ## Statistical analysis {#sec-Statistical-analysis}
 
 We applied  the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2018uncovering; @young2021ordinal] to our dataset to find event sequences and subgroupings for FXTAS patients. This algorithm combines disease progression modelling [@fonteijn2012event] and unsupervised clustering to model event onset sequences using a cross-sectional sample of a patient population. The algorithm simultaneously clusters individuals into subgroups and characterizes the trajectory that best defines each subgroup, thus capturing heterogeneity in both disease subtype and disease stage.
@@ -136,6 +140,8 @@ Ordinal SuStaIn uses Markov Chain Monte Carlo (MCMC) sampling to estimate the Ba
 
 We first fit the model using the first visit after age 40 for each participant in GP+GP4, assuming one shared event sequence (no latent subgroups; see @fig-first-only-1).
 
+### Stratified analyses
+
 We also fit the model stratified by sex (again with no latent subgroups; one event sequence per per sex; see @fig-first-only-2 and @fig-first-only-3).
 
 We also fit the model stratified by CGG repeats (<100 vs $\ge$ 100), also with no latent subgroups (see @fig-pvd-by-cgg).
@@ -143,6 +149,10 @@ We also fit the model stratified by CGG repeats (<100 vs $\ge$ 100), also with n
 ### Latent subgroups
 
 We also fit the model on the full dataset (not stratified by sex or CGG) for 2-6 latent subgroups, each with their own ordering (@fig-pvd4). We determined the optimal number of latent subgroups for this dataset using the CVIC criterion (@sec-cvic). 
+
+### Adding Trax data
+
+We also considered adding Trax data for the stratified analysis of males (@fig-trax).
 
 ### Longitudinal subsets
 
@@ -237,6 +247,7 @@ save.image(file = fs::path(output_folder, "data.RData"))
 #| message: false
 #| label: model-all-data
 #| include: false
+#| eval: true
 sustain_output = run_OSA(
   prob_score = prob_score0,
   score_vals = score_vals,
@@ -258,6 +269,7 @@ sustain_output = run_OSA(
 #| message: false
 #| label: model-males
 #| include: false
+#| eval: false
 sustain_output_males = run_OSA(
   prob_score = prob_score0[patient_data$Gender %in% "Male",,],
   score_vals = score_vals,
@@ -278,6 +290,7 @@ sustain_output_males = run_OSA(
 #| message: false
 #| label: model-females
 #| include: false
+#| eval: false
 sustain_output_females = run_OSA(
   prob_score = prob_score0[patient_data$Gender %in% "Female",,],
   score_vals = score_vals,
@@ -298,6 +311,7 @@ sustain_output_females = run_OSA(
 #| message: false
 #| label: "cgg_over_100"
 #| include: false
+#| eval: false
 sustain_output_cgg100plus = run_OSA(
   prob_score = prob_score0[
     patient_data$`CGG (backfilled)` >= 100,,],
@@ -318,6 +332,7 @@ sustain_output_cgg100plus = run_OSA(
 #| message: false
 #| label: "cgg_under_100"
 #| include: false
+#| eval: false
 sustain_output_cgg100minus = run_OSA(
   prob_score = prob_score0[
     patient_data$`CGG (backfilled)` < 100,,],
@@ -395,6 +410,18 @@ fig_both_mv_only = extract_figs_from_pickle(
   rda_filename = "gp34_multivisit_only.RData",
   dataset_name = "gp34_multivisit_only",
   output_folder = "output/gp34_multivisit_only")
+
+fig_male_trax_gp34 = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "data.Rdata",
+  dataset_name = "sample_data",
+  output_folder = "output/trax_gp34_males_v1")
+
+fig_trax_only = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "data.Rdata",
+  dataset_name = "trax_visit1",
+  output_folder = "output/trax_visit1")
 
 ```
 
@@ -512,6 +539,27 @@ table_subtype_by_demographics(
     )
 ```
 
+## Adding Trax data
+
+```{r}
+#| label: "fig-trax"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap: "Estimated event sequence models - males only: GP+GP4, Trax, and GP+GP4+Trax"
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "GP+GP4 males only"
+#|   - "Trax+GP+GP4, males only" 
+#|   - "Trax only"
+
+fig_males_first |> print()
+fig_male_trax_gp34 |> print()
+fig_trax_only |>  print()
+
+```
+
 ## Longitudinal data
 
 ### Males
@@ -590,6 +638,11 @@ fig_both_mv_only |> print()
 
 @fig-all-visits shows the event sequences that we estimated from each data subset. Note that clinical events which never occur in a dataset cannot be placed into the event sequence, so the set of modeled events varies by data subset.
 
+We note that Parkinsonian features mostly appear after FXTAS stage 4 for females, whereas they occur before stage 4 for males.
+
+Similarly, clinically-elevated SCL90 values appear before FXTAS stage 1 for females, whereas they occur after stage 3 for males.
+
+
 ```{r}
 #| label: "fig-all-visits"
 #| column: screen
@@ -644,11 +697,11 @@ fig_females_mv_only |> print()
 
 # Appendix {.appendix}
 
-## Detecting latent subgroups {#sec-subgroups}
+## Detecting latent subgroups {#sec-subgroups .appendix}
 
 In order to the Ordinal SuStaIn algorithm, we must specify how many latent subgroups to model. There are several metrics for determining the optimal number of subgroups for a given data set.
 
-### Likelihood
+### Likelihood {.appendix}
 
 The simplest option is to compare the likelihood of the data for the fitted model while varying the number of subgroups used to fit the model. @fig-mcmc-loglik shows the distribution of log-likelihoods from the MCMC samples for the full dataset (not stratified by sex or CGG repeats). Adding up to 6 clusters substantially improves the log-likelihood.
 
@@ -663,13 +716,13 @@ sustain_output$samples_likelihood |>
 
 ```
 
-### Cross-Validation Information Criterion {#sec-cvic}
+### Cross-Validation Information Criterion {#sec-cvic .appendix}
 
 Since models with fewer subtypes are limited special cases of models with more subtypes (i.e., "nested models"), the likelihood of the training data is guaranteed to improve as we increase the number of subtypes. However, using too many subtypes means there is less data available for each subtype, possibly leading to a model that does not generalize well to new data (i.e., a model that is "overfit" to the training data).
 
 To avoid overfitting, @young2018uncovering recommends choosing the optimal number using the the Cross-Validation Information Criterion (CVIC):
 
-#### Mathematical details of cross-validation criteria {#sec-cvic-math}
+#### Mathematical details of cross-validation criteria {#sec-cvic-math .appendix}
 
 Let:
 
@@ -699,7 +752,7 @@ CVIC_{\mathcal C} =
 \right\}
 $$
 
-#### CVIC for the full GP+GP4 dataset
+#### CVIC for the full GP+GP4 dataset {.appendix}
 
 We performed `r N_CV_folds`-fold cross-validation on the unstratified GP+GP4 data, and calculated the CVIC for 1-6 latent subgroups.
 
@@ -716,7 +769,7 @@ temp$CVIC |> plot_CVIC()
 
 It appears that the model nearly reaches peak CVIC by 4 subgroups.
 
-## Out-of-fold log-likelihood distribution
+## Out-of-fold log-likelihood distribution {.appendix}
 
 We also evaluated the consistency of our cross-validation procedure by looking at the distribution of test-set log-likelihood across folds (@fig-boxplot-loglik-cv); following @young2018uncovering, we calculated out-of-sample log-likelihood as:
 

@@ -1,7 +1,3 @@
----
-title: "FXTAS Sequence Data Summary"
----
-
 ```{r}
 #| include: false
 knitr::opts_chunk$set(
@@ -20,7 +16,8 @@ knitr::knit_engines$set(asis = function(options) {
 })
 ```
 
-```{r setup}
+```{r}
+#| label: setup-demos-unstratified
 #| message: false
 library(fxtas)
 devtools::load_all()
@@ -38,7 +35,7 @@ phase <- ifelse(column_var == "Recruited in study phase", TRUE, FALSE)
 cgg <- ifelse(column_var == "FX**", TRUE, FALSE)
 ```
 
-# Data from first visits
+## First-visit characteristics by CGG repeats level
 
 ```{asis, echo=phase}
 Here, we review the data from the first visits by each participant, stratified by 
@@ -50,7 +47,7 @@ Here, we review the data from the first visits by each participant, stratified b
 ```
 
 
-## Demographics
+### Demographics
 
 ```{r}
 #| label: "tbl-demographics"
@@ -73,7 +70,7 @@ table1(
   data = visit1_cgg_complete)
 ```
 
-## Apo-E
+### Apo-E
 
 ```{r}
 #| tbl-cap: "Apo-E by CGG repeats level"
@@ -95,7 +92,7 @@ table1(
   data = visit1_cgg_complete)
 ```
 
-## Drug use
+### Drug use
 
 ```{r}
 #| label: tbl-lifestyle
@@ -118,7 +115,7 @@ table1(
 
 ```
 
-## Cancer
+### Cancer
 
 ```{r}
 vars = c(
@@ -136,7 +133,7 @@ table1(
   data = visit1_cgg_complete)
 ```
 
-## Surgery
+### Surgery
 
 ```{r}
 
@@ -163,7 +160,7 @@ table1(
   data = visit1_cgg_complete)
 ```
 
-## Tremors
+### Tremors
 
 ```{r}
 vars = c(
@@ -210,7 +207,7 @@ table1(
 
 <br>
 
-## Head tremors
+### Head tremors
 
 ```{r}
 #| tbl-cap: Head tremors
@@ -253,7 +250,7 @@ table1(
 
 ```
 
-## Ataxia
+### Ataxia
 
 ```{r}
 
@@ -295,7 +292,7 @@ table1(
 
 <br>
 
-## Parkinsons
+### Parkinsons
 
 ```{r}
 
@@ -308,7 +305,7 @@ table1(
 
 ```
 
-## FXTAS Stage
+### FXTAS Stage
 
 ```{r}
 
@@ -331,7 +328,7 @@ table1(
 
 ```
 
-## BDS2
+### BDS2
 
 ```{r}
 
@@ -346,7 +343,7 @@ table1(
 
 ```
 
-## MMSE
+### MMSE
 
 
 
@@ -367,7 +364,7 @@ table1(
 
 ```
 
-## SCID
+### SCID
 
 ```{r}
 
@@ -397,7 +394,7 @@ table1(
 
 ```
 
-## SCL90
+### SCL90
 
 For analysis with the Ordinal SuStaIn method, we dichotomized each SCL90 measure as clinically elevated (60+) vs not.
 
@@ -414,7 +411,7 @@ table1(
 # visit1_cgg_complete |> ggplot(aes(x = `SCL90: Anxiety`, group = `FX*`)) + geom_histogram() + facet_wrap(~`FX*`, ncol = 1)
 ```
 
-## MRI
+### MRI
 
 ```{r}
 
@@ -439,7 +436,7 @@ table1(
 
 ```
 
-## WAIS
+### WAIS
 
 ```{r}
 
@@ -463,7 +460,7 @@ table1(
 
 ```
 
-## CANTAB
+### CANTAB
 
 For now, we used cutoffs taken from [@talebi2020cambridge].
 
@@ -497,7 +494,7 @@ table1(
   data = visit1_cgg_complete)
 ```
 
-## Thyroid and other autoimmune diseases
+### Thyroid and other autoimmune diseases
 
 ```{r}
 
@@ -521,7 +518,7 @@ table1(
   data = visit1_cgg_complete)
 ```
 
-## Kinesia
+### Kinesia
 
 We categorized each kinesia variable as "0-1", "1-2", "2-3", and "3-4".
 
@@ -547,7 +544,7 @@ table1(
 ```
 
 
-## Purdue pegboard for reaction time
+### Purdue pegboard for reaction time
 
 ```{r}
 purdue_vars = c(
@@ -562,7 +559,7 @@ table1(
 ```
 
 
-## MOCA total score
+### MOCA total score
 
 ```{r}
 
@@ -578,18 +575,12 @@ table1(
 
 ```
 
-# General data processing notes {.appendix}
+## General data processing notes {.appendix}
 
-## Missing codes {.appendix}
+### Missing codes {.appendix}
 
 The missing codes 777, 888, and 999 were converted to `NA` for all variables, unless noted otherwise below.
 
-## Age of onset
+### Age of onset {.appendix}
 
 In the RedCap database, the "age of onset" variables were recorded using a mix of precise ages and decade-long ranges (for example, "`130`" = "teens", "`200`" = "twenties", etc.). For analysis as numeric variables, the decade codes were replaced by their midpoints (for example, "`130`" was replaced with 15, "`200`" with 25, etc.). The exception is code "`555`" = "lifelong", which was replaced by the minimum of 10 years and the smallest observed value for that age-of-onset variable; for example, if the smallest observed value for "age of tremor onset" was 8, then "`555`" would be replaced by 8. If the smallest observed value were 11, then "`555`" would be replaced by 10.
-
-
-# References{.unnumbered}
-
-::: {#refs}
-:::

@@ -1,4 +1,4 @@
-# First-Visit Characteristics by Gender for CGG > 55
+## First-Visit Characteristics by Gender for CGG > 55
 
 ```{r}
 #| include: false
@@ -18,8 +18,9 @@ knitr::knit_engines$set(asis = function(options) {
 })
 ```
 
-```{r setup}
+```{r}
 #| message: false
+#| label: setup-demos-by-sex
 library(fxtas)
 devtools::load_all()
 library(pander)
@@ -44,10 +45,10 @@ table2 = function(...)
 
 ```
 
-## Demographics
+### Demographics
 
 ```{r}
-#| label: "tbl-demographics"
+#| label: "tbl-demographics-by-sex"
 #| tbl-cap: "Demographics"
 vars = c(
   "Study",
@@ -66,11 +67,11 @@ table2(
   data = visit1_cgg_55plus)
 ```
 
-## ApoE
+### ApoE
 
 ```{r}
 #| tbl-cap: "ApoE"
-#| label: "tbl-apoe"
+#| label: "tbl-apoe-by-sex"
 # vars = grep("^ApoE", names(gp34), value = TRUE)
 vars = "ApoE"
 table2(
@@ -88,11 +89,11 @@ table2(
   data = visit1_cgg_55plus)
 ```
 
-## Drug use
+### Drug use
 
 ```{r}
-#| label: tbl-lifestyle
-#| tbl-cap: "Drug use characteristics"
+#| label: tbl-lifestyle-by-sex
+#| tbl-cap: "Drug use characteristics by sex"
 vars = c("Drug use",
          "Marijuana use",
          "Alcohol use/abuse",
@@ -111,7 +112,7 @@ table2(
 
 ```
 
-## Cancer
+### Cancer
 
 ```{r}
 vars = c(
@@ -129,7 +130,7 @@ table2(
   data = visit1_cgg_55plus)
 ```
 
-## Surgery
+### Surgery
 
 ```{r}
 
@@ -156,7 +157,7 @@ table2(
   data = visit1_cgg_55plus)
 ```
 
-## Tremors
+### Tremors
 
 ```{r}
 vars = c(
@@ -183,8 +184,8 @@ table2(
 <br>
 
 ```{r}
-#| tbl-cap: "Age of onset for those with 'Some tremors recorded'."
-#| label: "tbl-tremor-ao"
+#| tbl-cap: "Age of onset for those with 'Some tremors recorded', by sex"
+#| label: "tbl-tremor-ao-by-sex"
 #| 
 vars = c(
   "Tremor: Age of onset",
@@ -203,11 +204,11 @@ table2(
 
 <br>
 
-## Head tremors
+### Head tremors
 
 ```{r}
 #| tbl-cap: Head tremors
-#| label: tbl-head-tremors
+#| label: tbl-head-tremors-by-sex
 vars = c(
   "Head tremor"
   # "Head Tremor: Age of onset"
@@ -231,7 +232,7 @@ table2(
 
 ```{r}
 #| tbl-cap: "Age of onset for those with a head tremor recorded."
-#| label: "tbl-head-tremor-AO"
+#| label: "tbl-head-tremor-AO-by-sex"
 vars = c(
   "Head Tremor: Age of onset",
   "Head Tremor: Age of onset: missingness reasons"
@@ -246,7 +247,7 @@ table2(
 
 ```
 
-## Ataxia
+### Ataxia
 
 ```{r}
 
@@ -288,7 +289,7 @@ table2(
 
 <br>
 
-## Parkinsons
+### Parkinsons
 
 ```{r}
 
@@ -301,7 +302,7 @@ table2(
 
 ```
 
-## FXTAS Stage
+### FXTAS Stage
 
 ```{r}
 
@@ -324,7 +325,7 @@ table2(
 
 ```
 
-## BDS2
+### BDS2
 
 ```{r}
 
@@ -339,7 +340,7 @@ table2(
 
 ```
 
-## MMSE
+### MMSE
 
 
 
@@ -360,7 +361,7 @@ table2(
 
 ```
 
-## SCID
+### SCID
 
 ```{r}
 
@@ -390,7 +391,7 @@ table2(
 
 ```
 
-## SCL90
+### SCL90
 
 For analysis with the Ordinal SuStaIn method, we dichotomized each SCL90 measure as clinically elevated (60+) vs not.
 
@@ -407,7 +408,7 @@ table2(
 # visit1_cgg_55plus |> ggplot(aes(x = `SCL90: Anxiety`, group = `FX*`)) + geom_histogram() + facet_wrap(~`FX*`, ncol = 1)
 ```
 
-## MRI
+### MRI
 
 ```{r}
 
@@ -432,7 +433,7 @@ table2(
 
 ```
 
-## WAIS
+### WAIS
 
 ```{r}
 
@@ -456,7 +457,7 @@ table2(
 
 ```
 
-## CANTAB
+### CANTAB
 
 For now, we used cutoffs taken from [@talebi2020cambridge].
 
@@ -490,7 +491,7 @@ table2(
   data = visit1_cgg_55plus)
 ```
 
-## Thyroid and other autoimmune diseases
+### Thyroid and other autoimmune diseases
 
 ```{r}
 
@@ -514,7 +515,7 @@ table2(
   data = visit1_cgg_55plus)
 ```
 
-## Kinesia
+### Kinesia
 
 We categorized each kinesia variable as "0-1", "1-2", "2-3", and "3-4".
 
@@ -540,7 +541,7 @@ table2(
 ```
 
 
-## Purdue pegboard for reaction time
+### Purdue pegboard for reaction time
 
 ```{r}
 purdue_vars = c(
@@ -555,7 +556,7 @@ table2(
 ```
 
 
-## MOCA total score
+### MOCA total score
 
 ```{r}
 
