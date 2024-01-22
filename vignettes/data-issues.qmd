@@ -1,6 +1,27 @@
 ---
-title: "FXTAS Sequence Data Summary"
+title: "visit date issues"
+editor: visual
 ---
+
+```{r setup}
+#| label: setup
+#| include: false
+#| message: false
+library(fxtas)
+devtools::load_all()
+library(pander)
+library(table1)
+library(dplyr)
+library(magrittr)
+NA.label1 = "Missing"
+column_var = "Recruited in study phase"
+column_var = "FX**"
+# load_all()
+
+phase <- ifelse(column_var == "Recruited in study phase", TRUE, FALSE)
+cgg <- ifelse(column_var == "FX**", TRUE, FALSE)
+```
+
 
 ```{r}
 #| include: false
@@ -19,24 +40,6 @@ knitr::knit_engines$set(asis = function(options) {
   if (options$echo && options$eval) knitr::knit_child(text = options$code)
 })
 ```
-
-```{r setup}
-#| message: false
-library(fxtas)
-devtools::load_all()
-library(pander)
-library(table1)
-library(dplyr)
-library(magrittr)
-NA.label1 = "Missing"
-column_var = "Recruited in study phase"
-column_var = "FX**"
-# load_all()
-
-phase <- ifelse(column_var == "Recruited in study phase", TRUE, FALSE)
-cgg <- ifelse(column_var == "FX**", TRUE, FALSE)
-```
-
 
 
 # Data from first visits
@@ -894,6 +897,78 @@ table1(
 
 ```
 
+
+
+# Visit dates
+
+We also started looking at the longitudinal data, and had some questions about the visit dates:
+
+## Missing visit dates
+
+```{r}
+
+tab = gp34 |> filter(is.na(`Visit Date`)) |> 
+  select(Study:`Visit Date`)
+
+```
+
+There are `r nrow(tab)` records with missing visit dates.
+
+**Question:** Can these missing dates be filled in?
+
+Yes I can fill these in.
+
+```{r}
+pander(tab)
+```
+
+## Duplicate visit dates
+
+```{r}
+
+tab = gp34 |> 
+  group_by(`FXS ID`, `Visit Date`) |> 
+  filter(n() > 1, !is.na(`Visit Date`[1])) |> 
+  select(Study:`Visit Date`) |> 
+  split(~`FXS ID`)
+
+```
+
+There are `r length(tab)` duplicate visit dates.
+
+**Question:** Are these duplicate values correct?
+
+I will need to check these.
+
+```{r, results = "asis"}
+pander(tab)
+```
+
+## Visits out of event sequence
+
+```{r}
+ooo = gp34 |>
+  select(`FXS ID`, `Visit Date`, `Event Name`) |>
+  group_by(`FXS ID`) |>
+  filter(is.unsorted(`Event Name`[`Event Name` != "GP4 - Single Visit"])) |>
+  # filter(any(`decreased age`, na.rm = TRUE)) |>
+  # ungroup() |>
+  split(~`FXS ID`)
+```
+
+`r length(ooo)` participants have visits occurring out of chronological order (e.g., GP4 Visit1 before GP3 Visit 1).
+
+**Question:** Are these records correct?
+
+I will need to check these.
+
+```{r, results = "asis"}
+
+pander(ooo)
+```
+
+
+
 # General data processing notes {.appendix}
 
 ## Missing codes {.appendix}
@@ -903,9 +978,3 @@ The missing codes 777, 888, and 999 were converted to `NA` for all variables, un
 ## Age of onset
 
 In the RedCap database, the "age of onset" variables were recorded using a mix of precise ages and decade-long ranges (for example, "`130`" = "teens", "`200`" = "twenties", etc.). For analysis as numeric variables, the decade codes were replaced by their midpoints (for example, "`130`" was replaced with 15, "`200`" with 25, etc.). The exception is code "`555`" = "lifelong", which was replaced by the minimum of 10 years and the smallest observed value for that age-of-onset variable; for example, if the smallest observed value for "age of tremor onset" was 8, then "`555`" would be replaced by 8. If the smallest observed value were 11, then "`555`" would be replaced by 10.
-
-
-# References{.unnumbered}
-
-::: {#refs}
-:::
