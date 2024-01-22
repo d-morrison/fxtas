@@ -11,17 +11,20 @@ fix_ApoE = function(dataset)
 
       ApoE = factor(ApoE, levels = sort(unique(ApoE))),
 
-      `ApoE*` = ApoE
-
-      ) |>
+      `ApoE (original)` = ApoE,
+    ) |>
     dplyr::relocate(
-      `ApoE*`, .after = "ApoE"
+      `ApoE (original)`, .after = "ApoE"
     ) |>
     group_by(`FXS ID`) |>
     tidyr::fill(
-      `ApoE*`,
+      `ApoE`,
       .direction = "downup") |>
-    ungroup()
+    ungroup() |>
+    mutate(
+      .by = `FXS ID`,
+      `ApoE` = `ApoE` |> last() # more recent assays may be more accurate
+    )
 
 
 }

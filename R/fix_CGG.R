@@ -88,8 +88,9 @@ fix_CGG = function(dataset)
     tidyr::fill(
       `CGG (backfilled)`,
       .direction = "downup") |>
+    ungroup()  |>
     mutate(
+      .by = `FXS ID`,
       `CGG (backfilled)` = `CGG (backfilled)` |> last() # more recent assays may be more accurate
-    ) |>
-    ungroup()
+    )
 }

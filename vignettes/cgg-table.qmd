@@ -1,0 +1,20 @@
+---
+title: "CGG_table"
+editor: visual
+---
+
+## CGG
+
+```{r}
+
+vars = grep("^CGG", names(gp34), value = TRUE)
+
+table1(
+  NA.label = NA.label1,
+  formula(paste(
+    "~", paste(formulaic::add.backtick(vars), collapse = " + "), 
+    "|",
+    column_var |> formulaic::add.backtick())),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  data = visit1_cgg_complete)
+```
