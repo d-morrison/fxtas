@@ -11,15 +11,15 @@ fix_ApoE = function(dataset)
 
       ApoE = factor(ApoE, levels = sort(unique(ApoE))),
 
-      `ApoE (backfilled)` = ApoE
+      `ApoE*` = ApoE
 
       ) |>
     dplyr::relocate(
-      `ApoE (backfilled)`, .after = "ApoE"
+      `ApoE*`, .after = "ApoE"
     ) |>
     group_by(`FXS ID`) |>
     tidyr::fill(
-      `ApoE (backfilled)`,
+      `ApoE*`,
       .direction = "downup") |>
     ungroup()
 
