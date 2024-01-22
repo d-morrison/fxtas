@@ -15,6 +15,7 @@ get_title_i = function(
 
   } else
   {
+    temp_mean_f = rowMeans(samples_f)
 
     # Shuffle vals according to subtype_order
     # This defaults to previous method if custom order not given
