@@ -72,7 +72,7 @@ output_folder =
 
 ## Data
 
-The data come from the GP and GP4 studies. We analyzed one visit record per participant, using the earliest visit available across the two studies with age at visit $\ge 40$ years, resulting in `r nrow(visit1)` observations in total. However, `r visit1$"FX*" |> is.na() |> sum()` individuals did not have CGG values available, so only `r visit1$"FX*" |> Negate(is.na)() |> sum()` individuals 
+The data come from the GP and GP4 studies. In the primary analyses, we analyzed one visit record per participant, using the earliest visit available across the two studies with age at visit $\ge 40$ years, resulting in `r nrow(visit1)` observations in total. However, `r visit1$"FX*" |> is.na() |> sum()` individuals did not have CGG values available, so only `r visit1$"FX*" |> Negate(is.na)() |> sum()` individuals 
 (`r (visit1$"FX**" == "CGG >= 55")|> sum()` cases and 
 `r (visit1$"FX**" == "CGG < 55")|> sum()` controls) were included in the event sequence analysis.
 
@@ -134,13 +134,41 @@ We applied  the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algo
 
 Ordinal SuStaIn uses Markov Chain Monte Carlo (MCMC) sampling to estimate the Bayesian posterior probability of each possible event sequence for each subgroup given the training dataset, assuming a uniform prior distribution over the set of all possible patterns. 
 
-We first fit the model on the full GP+GP4 dataset, assuming one shared event sequence (no latent subgroups; see @fig-pvd1-1).
+We first fit the model using the first visit after age 40 for each participant in GP+GP4, assuming one shared event sequence (no latent subgroups; see @fig-first-only-1).
 
-We also fit the model stratified by sex (again with no latent subgroups; one event sequence per per sex; see @fig-pvd1-2 and @fig-pvd1-3).
+We also fit the model stratified by sex (again with no latent subgroups; one event sequence per per sex; see @fig-first-only-2 and @fig-first-only-3).
 
 We also fit the model stratified by CGG repeats (<100 vs $\ge$ 100), also with no latent subgroups (see @fig-pvd-by-cgg).
 
+### Latent subgroups
+
 We also fit the model on the full dataset (not stratified by sex or CGG) for 2-6 latent subgroups, each with their own ordering (@fig-pvd4). We determined the optimal number of latent subgroups for this dataset using the CVIC criterion (@sec-cvic). 
+
+### Longitudinal subsets
+
+Next, we fit the Ordinal SuStaIn model on nine subsets of the longitudinal GP+GP4 data:
+
+- Males only (@fig-males):
+  * first visits only (@fig-males-1)
+  * all visits (@fig-males-2)
+  * multivisit patients only (@fig-males-3)
+
+- Females only (@fig-females):
+  * first visits only (@fig-females-1)
+  * all visits (@fig-females-2)
+  * multivisit patients only (@fig-females-3)
+  
+- Unstratified (@fig-both-genders):
+  * first visits only (@fig-both-genders-1)
+  * all visits (@fig-both-genders-2)
+  * multivisit patients only (@fig-both-genders-3)
+  
+We also rearranged these results by subset type:
+
+- first visits only (@fig-first-only)
+- all visits (@fig-all-visits)
+- multivisit patients only (@fig-mv-only)
+
 
 ### Visualizing modeling results
 
@@ -309,41 +337,93 @@ sustain_output_cgg100minus = run_OSA(
 
 # Results
 
-@fig-pvd1-1 shows the event sequence model, estimated using the combined GP and GP4 data and assuming that all individuals share the same event sequence; in other words, assuming one subgroup.
+```{r}
+#| label: extract-figs
 
-@fig-pvd1-2 and @fig-pvd1-3 show estimated event sequences stratified by sex, assuming one  subgroup per sex. It appears that males experience increasing ataxia severity earlier in the event sequence than females, while females experience MRI events and SCL psychological symptoms earlier in the event sequence than males.^[There are probably other patterns worth noting here; clinical folks, let us know what you notice!]
+
+fig_females_first = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "data.RData",
+  dataset_name = "females",
+  output_folder = "output/output.fixed_CV")
+
+fig_females_all = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "gp34_longitudinal.RData",
+  dataset_name = "females",
+  output_folder = "output/gp34_longitudinal")
+
+fig_females_mv_only = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "gp34_multivisit_only.RData",
+  dataset_name = "females",
+  output_folder = "output/gp34_multivisit_only")
+
+
+fig_males_first = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "data.RData",
+  dataset_name = "males",
+  output_folder = "output/output.fixed_CV")
+
+fig_males_all = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "gp34_longitudinal.RData",
+  dataset_name = "males",
+  output_folder = "output/gp34_longitudinal")
+
+fig_males_mv_only = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "gp34_multivisit_only.RData",
+  dataset_name = "males",
+  output_folder = "output/gp34_multivisit_only")
+
+fig_both_first = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "data.RData",
+  dataset_name = "sample_data",
+  output_folder = "output/output.fixed_CV")
+
+fig_both_all = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "gp34_longitudinal.RData",
+  dataset_name = "gp34_longitudinal",
+  output_folder = "output/gp34_longitudinal")
+
+fig_both_mv_only = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "gp34_multivisit_only.RData",
+  dataset_name = "gp34_multivisit_only",
+  output_folder = "output/gp34_multivisit_only")
+
+```
+
+
+### All patients, first visits only
+
+@fig-first-only-1 shows the event sequence model, estimated using the first visits per participant from the combined GP and GP4 data and assuming that all individuals share the same event sequence; in other words, assuming one subgroup.
+
+@fig-first-only-2 and @fig-first-only-3 show estimated event sequences stratified by sex, assuming one  subgroup per sex. It appears that males experience increasing ataxia severity earlier in the event sequence than females, while females experience MRI events and SCL psychological symptoms earlier in the event sequence than males.^[There are probably other patterns worth noting here; clinical folks, let us know what you notice!]
 
 
 ```{r}
-#| label: "fig-pvd1"
+#| label: "fig-first-only"
 #| column: screen
 #| fig-height: 15
 #| fig-align: center
-#| fig-cap: "Estimated event sequence models - overall and stratified by sex"
+#| fig-cap: "Estimated event sequence models - overall and stratified by sex, first visits only"
 #| fig-cap-location: top
 #| layout-ncol: 3
 #| fig-subcap:
-#|   - "All data" 
+#|   - "Unstratified" 
 #|   - "Males"
 #|   - "Females"
 
-figs = extract_figs_from_pickle(
-  n_s = 1,
-  dataset_name = dataset_name,
-  output_folder = output_folder) |> 
-  print()
 
-fig_male = extract_figs_from_pickle(
-  n_s = 1,
-  dataset_name = "males",
-  output_folder = output_folder) |> 
-  print()
+fig_both_first |> print()
+fig_males_first |> print()
+fig_females_first |> print()
 
-fig_female = extract_figs_from_pickle(
-  n_s = 1,
-  dataset_name = "females",
-  output_folder = output_folder) |> 
-  print()
 ```
 
 ## Stratified by CGG repeats
@@ -355,13 +435,15 @@ fig_female = extract_figs_from_pickle(
 #| column: screen
 #| fig-height: 15
 #| fig-align: center
-#| fig-cap: "positional variance diagram assuming one subgroup - overall and stratified by CGG repeats (<100 vs 100+)"
+#| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only"
 #| fig-cap-location: top
-#| layout-ncol: 2
+#| layout-ncol: 3
 #| fig-subcap:
+#|   - "Unstratified"
 #|   - "CGG < 100"
 #|   - "CGG 100+"
 
+fig_both_first |> print() 
 fig_under100 = extract_figs_from_pickle(
   n_s = 1,
   dataset_name = "under100",
@@ -429,6 +511,127 @@ table_subtype_by_demographics(
     subtype_and_stage_table = results_cv_max$subtype_and_stage_table
     )
 ```
+
+## Longitudinal data
+
+### Males
+
+@fig-males shows estimated event sequences for males, depending on which subset of the data we use to fit the model.
+
+```{r}
+#| label: "fig-males"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap: "Estimated event sequences for males, by data subset"
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "First visits only"
+#|   - "All visits" 
+#|   - "Multivisit patients only"
+
+fig_males_first |> print()
+
+fig_males_all |> print()
+
+fig_males_mv_only |> print()
+
+```
+
+### Females
+
+```{r}
+#| label: "fig-females"
+#| fig-cap: "Estimated event sequences for females, by data subset"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "First visits only"
+#|   - "All visits" 
+#|   - "Multivisit patients only"
+
+fig_females_first |> print()
+
+fig_females_all |> print()
+
+fig_females_mv_only |> print()
+
+```
+
+
+### Unstratified, by data subset
+
+```{r}
+#| label: "fig-both-genders"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap: "Estimated event sequences, unstratified, by data subset"
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "First visits only"
+#|   - "All visits" 
+#|   - "Multivisit patients only"
+
+fig_both_first |> print()
+fig_both_all |> print()
+fig_both_mv_only |> print()
+
+```
+
+
+
+### All patients, all visits
+
+@fig-all-visits shows the event sequences that we estimated from each data subset. Note that clinical events which never occur in a dataset cannot be placed into the event sequence, so the set of modeled events varies by data subset.
+
+```{r}
+#| label: "fig-all-visits"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap: "Estimated event sequences - all visits"
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "Unstratified"
+#|   - "Males only" 
+#|   - "Females only"
+
+fig_both_all |> print()
+fig_males_all |> print()
+fig_females_all |> print()
+
+```
+
+### Multivisit patients only, all visits
+
+@fig-mv-only shows the event sequences that we estimated using only the data from patients with more than one visit.
+
+```{r}
+#| label: "fig-mv-only"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap: "Estimated event sequences - multivisit patients only"
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "Unstratified"
+#|   - "Males only" 
+#|   - "Females only"
+
+fig_both_mv_only |> print()
+fig_males_mv_only |> print()
+fig_females_mv_only |> print()
+
+```
+
 
 # Discussion
 

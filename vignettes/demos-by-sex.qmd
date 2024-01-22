@@ -66,10 +66,10 @@ table2(
   data = visit1_cgg_55plus)
 ```
 
-## Apo-E
+## ApoE
 
 ```{r}
-#| tbl-cap: "Apo-E"
+#| tbl-cap: "ApoE"
 #| label: "tbl-apoe"
 # vars = grep("^ApoE", names(gp34), value = TRUE)
 vars = "ApoE"

@@ -21,7 +21,7 @@ text-align: center;
 
 # Methods
 
-Here, we fit the Ordinal SuStaIn model [@young2021ordinal] on nine subsets of the data:
+Next, we fit the Ordinal SuStaIn model [@young2021ordinal] on nine subsets of the longitudinal GP+GP4 data:
 
 - Males only (@fig-males):
   * first visits only (@fig-males-1)
@@ -39,9 +39,10 @@ Here, we fit the Ordinal SuStaIn model [@young2021ordinal] on nine subsets of th
   * multivisit patients only (@fig-both-genders-3)
   
 We also rearranged these results by subset type:
+
 - first visits only (@fig-first-only)
-- all visits (@fig-pvd1)
-- multivisit patients only (@fig-pvd2)
+- all visits (@fig-all-visits)
+- multivisit patients only (@fig-mv-only)
 
 
 
@@ -192,9 +193,7 @@ fig_females_mv_only |> print()
 #|   - "Multivisit patients only"
 
 fig_both_first |> print()
-
 fig_both_all |> print()
-
 fig_both_mv_only |> print()
 
 ```
@@ -223,10 +222,10 @@ fig_females_first |> print()
 
 ## All patients, all visits
 
-@fig-pvd1 shows the event sequences that we estimated from each data subset. Note that clinical events which never occur in a dataset cannot be placed into the event sequence, so the set of modeled events varies by data subset.
+@fig-all-visits shows the event sequences that we estimated from each data subset. Note that clinical events which never occur in a dataset cannot be placed into the event sequence, so the set of modeled events varies by data subset.
 
 ```{r}
-#| label: "fig-pvd1"
+#| label: "fig-all-visits"
 #| column: screen
 #| fig-height: 15
 #| fig-align: center
@@ -239,19 +238,17 @@ fig_females_first |> print()
 #|   - "Females only"
 
 fig_both_all |> print()
-
 fig_males_all |> print()
-
 fig_females_all |> print()
 
 ```
 
 ## Multivisit patients only, all visits
 
-@fig-pvd2 shows the event sequences that we estimated using only the data from patients with more than one visit.
+@fig-mv-only shows the event sequences that we estimated using only the data from patients with more than one visit.
 
 ```{r}
-#| label: "fig-pvd2"
+#| label: "fig-mv-only"
 #| column: screen
 #| fig-height: 15
 #| fig-align: center
@@ -263,10 +260,8 @@ fig_females_all |> print()
 #|   - "Males only" 
 #|   - "Females only"
 
-fig_all_mv_only |> print()
-
+fig_both_mv_only |> print()
 fig_males_mv_only |> print()
-
 fig_females_mv_only |> print()
 
 ```
