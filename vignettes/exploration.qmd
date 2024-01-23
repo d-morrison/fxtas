@@ -97,6 +97,7 @@ table1(
 ```{r}
 #| label: tbl-lifestyle
 #| tbl-cap: "Drug use characteristics"
+
 vars = c("Drug use",
          "Marijuana use",
          "Alcohol use/abuse",
@@ -253,7 +254,8 @@ table1(
 ### Ataxia
 
 ```{r}
-
+#| label: tbl-ataxia-by-cgg
+#| tbl-cap: "Ataxia by CGG status"
 vars = c(
   "Ataxia",
   "Ataxia: severity",
@@ -272,9 +274,9 @@ table1(
 
 <br>
 
-Age of onset and missingness reasons where "Ataxia" = "Yes":
-
 ```{r}
+#| label: tbl-ataxia-AO-by-cgg
+#| tbl-cap: "Ataxia age of onset by CGG level"
 vars = c(
   # "Ataxia",
   # "Ataxia: severity",
@@ -295,7 +297,8 @@ table1(
 ### Parkinsons
 
 ```{r}
-
+#| label: tbl-parkinsons-by-cgg
+#| tbl-cap: "Parkinsons by CGG status"
 vars = grep("Parkinson", value = TRUE, names(gp34))
 
 table1(
@@ -308,7 +311,8 @@ table1(
 ### FXTAS Stage
 
 ```{r}
-
+#| label: tbl-fxtas-stage-by-cgg
+#| tbl-cap: "FXTAS Stage by CGG level"
 vars = c(
   "FXTAS Stage (0-5)*",
   "FXTAS Stage (0-5)*: missingness reasons")
@@ -574,13 +578,3 @@ table1(
   data = visit1_cgg_complete)
 
 ```
-
-## General data processing notes {.appendix}
-
-### Missing codes {.appendix}
-
-The missing codes 777, 888, and 999 were converted to `NA` for all variables, unless noted otherwise below.
-
-### Age of onset {.appendix}
-
-In the RedCap database, the "age of onset" variables were recorded using a mix of precise ages and decade-long ranges (for example, "`130`" = "teens", "`200`" = "twenties", etc.). For analysis as numeric variables, the decade codes were replaced by their midpoints (for example, "`130`" was replaced with 15, "`200`" with 25, etc.). The exception is code "`555`" = "lifelong", which was replaced by the minimum of 10 years and the smallest observed value for that age-of-onset variable; for example, if the smallest observed value for "age of tremor onset" was 8, then "`555`" would be replaced by 8. If the smallest observed value were 11, then "`555`" would be replaced by 10.

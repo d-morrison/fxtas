@@ -426,7 +426,7 @@ fig_trax_only = extract_figs_from_pickle(
 ```
 
 
-### All patients, first visits only
+## All patients, first visits only
 
 @fig-first-only-1 shows the event sequence model, estimated using the first visits per participant from the combined GP and GP4 data and assuming that all individuals share the same event sequence; in other words, assuming one subgroup.
 
@@ -696,6 +696,8 @@ fig_females_mv_only |> print()
 :::
 
 # Appendix {.appendix}
+
+{{< include general-data-notes.qmd >}}
 
 ## Detecting latent subgroups {#sec-subgroups .appendix}
 
