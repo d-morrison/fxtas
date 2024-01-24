@@ -227,6 +227,11 @@ plot_positional_var = function(
       mutate(
         `event label` =
           glue("<i style='color:{group_color}'>{`row number and name`}</i>"),
+        `event label` = if_else(
+          .data$biomarker_group == "stage",
+          paste0("**", .data$`event label`, "**"),
+          .data$`event label`
+        ),
         `event label` =
           .data$`event label` |>
           factor(levels = .data$`event label` |> unique())
@@ -264,7 +269,7 @@ plot_positional_var = function(
   figs = figs |>
     structure(
       biomarker_event_names = biomarker_event_names
-  )
+    )
 
   return(figs)
 
