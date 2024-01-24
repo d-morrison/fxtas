@@ -20,7 +20,7 @@ plot.PF = function(
     ggplot(
       aes(
         x = position,
-        y = `event name`,
+        y = `event label`,
         fill = proportion
       )) +
     geom_tile() +

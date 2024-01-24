@@ -225,9 +225,11 @@ plot_positional_var = function(
         biomarker_order = biomarker_plot_order
       ) |>
       mutate(
-        `event name` =
-          glue("<i style='color:{group_color}'>{`event name`}</i>"),
-        `event name` = factor(`event name`, levels = `event name` |> unique())
+        `event label` =
+          glue("<i style='color:{group_color}'>{`row number and name`}</i>"),
+        `event label` =
+          .data$`event label` |>
+          factor(levels = .data$`event label` |> unique())
       )
 
 

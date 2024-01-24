@@ -21,6 +21,7 @@
 #' @importFrom forcats fct_na_level_to_value
 #' @importFrom forcats fct_other
 #' @importFrom fs path
+#' @importFrom ggplot2 element_text
 #' @importFrom ggplot2 geom_line
 #' @importFrom ggplot2 geom_point
 #' @importFrom ggplot2 ggplot
