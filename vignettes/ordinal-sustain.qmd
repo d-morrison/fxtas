@@ -14,7 +14,7 @@ project:
 ```{=html}
 <style>
 .quarto-figure-center > figure {
-  text-align: center;
+text-align: center;
 }
 </style>
 ```
@@ -72,9 +72,28 @@ output_folder =
 
 ## Data
 
-The data come from the GP and GP4 studies. In the primary analyses, we analyzed one visit record per participant, using the earliest visit available across the two studies with age at visit $\ge 40$ years, resulting in `r nrow(visit1)` observations in total. However, `r visit1$"FX*" |> is.na() |> sum()` individuals did not have CGG values available, so only `r visit1$"FX*" |> Negate(is.na)() |> sum()` individuals 
-(`r (visit1$"FX**" == "CGG >= 55")|> sum()` cases and 
-`r (visit1$"FX**" == "CGG < 55")|> sum()` controls) were included in the event sequence analysis.
+```{r}
+n_missing_CGG = visit1$"FX*" |> is.na() |> sum()
+n_above_200 = sum(visit1$CGG > 200, na.rm = TRUE)
+gp34_v1_usable = visit1 |> filter(CGG < 200)
+gp34_v1_cases = gp34_v1_usable |> filter(CGG >= 55)
+gp34_v1_controls =  gp34_v1_usable |> filter(CGG < 55)
+
+```
+
+```{r}
+#| label: fig-hist-CGG-gp34-v1
+#| caption: Histogram of CGG repeats among GP/GP4 participants
+
+visit1 |> 
+  graph_CGG_repeats()
+
+```
+
+
+The data come from the GP and GP4 studies. In the primary analyses, we analyzed one visit record per participant, using the earliest visit available across the two studies with age at visit $\ge 40$ years, resulting in `r nrow(visit1)` observations in total. However, `r n_missing_CGG` individuals did not have CGG values available, and `r n_above_200` had full fragile X syndrome mutation (>200 CGG repeats), so only `r nrow(gp34_v1_usable)` individuals 
+(`r nrow(gp34_v1_cases)` cases and 
+`r nrow(gp34_v1_controls)` controls) were included in the event sequence analysis.
 
 ```{r}
 
@@ -159,20 +178,20 @@ We also considered adding Trax data for the stratified analysis of males (@fig-t
 Next, we fit the Ordinal SuStaIn model on nine subsets of the longitudinal GP+GP4 data:
 
 - Males only (@fig-males):
-  * first visits only (@fig-males-1)
-  * all visits (@fig-males-2)
-  * multivisit patients only (@fig-males-3)
+* first visits only (@fig-males-1)
+* all visits (@fig-males-2)
+* multivisit patients only (@fig-males-3)
 
 - Females only (@fig-females):
-  * first visits only (@fig-females-1)
-  * all visits (@fig-females-2)
-  * multivisit patients only (@fig-females-3)
-  
+* first visits only (@fig-females-1)
+* all visits (@fig-females-2)
+* multivisit patients only (@fig-females-3)
+
 - Unstratified (@fig-both-genders):
-  * first visits only (@fig-both-genders-1)
-  * all visits (@fig-both-genders-2)
-  * multivisit patients only (@fig-both-genders-3)
-  
+* first visits only (@fig-both-genders-1)
+* all visits (@fig-both-genders-2)
+* multivisit patients only (@fig-both-genders-3)
+
 We also rearranged these results by subset type:
 
 - first visits only (@fig-first-only)
@@ -211,13 +230,13 @@ prob_correct =
     DataScores = DataScores)
 
 prob_score0 = compute_prob_scores(
-    dataset = patient_data,
-    biomarker_varnames,
-    ModelScores = ModelScores,
-    DataScores = DataScores,
-    prob_correct = prob_correct
-  )
- 
+  dataset = patient_data,
+  biomarker_varnames,
+  ModelScores = ModelScores,
+  DataScores = DataScores,
+  prob_correct = prob_correct
+)
+
 prob_nl = prob_score0[,,1]
 prob_score = prob_score0[,,-1, drop = FALSE]
 
@@ -534,9 +553,9 @@ results_cv_max = extract_results_from_pickle(
   output_folder = output_folder)
 
 table_subtype_by_demographics(
-    patient_data,
-    subtype_and_stage_table = results_cv_max$subtype_and_stage_table
-    )
+  patient_data,
+  subtype_and_stage_table = results_cv_max$subtype_and_stage_table
+)
 ```
 
 ## Adding Trax data
