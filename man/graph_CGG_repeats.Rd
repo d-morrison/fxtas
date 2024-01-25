@@ -4,17 +4,30 @@
 \alias{graph_CGG_repeats}
 \title{Barplot of CGG repeats}
 \usage{
-graph_CGG_repeats(data)
+graph_CGG_repeats(data, rows = NULL, cols = NULL)
 }
 \arguments{
 \item{data}{a \link{data.frame} containing a \link{numeric} or \link{integer} column named \code{CGG}}
+
+\item{rows, cols}{A set of variables or expressions quoted by
+\code{\link[ggplot2:vars]{vars()}} and defining faceting groups on the rows or columns
+dimension. The variables can be named (the names are passed to
+\code{labeller}).
+
+For compatibility with the classic interface, \code{rows} can also be
+a formula with the rows (of the tabular display) on the LHS and
+the columns (of the tabular display) on the RHS; the dot in the
+formula is used to indicate there should be no faceting on this
+dimension (either row or column).}
 }
 \value{
-a \link[ggplot2:ggplot]{ggplot2::ggplot}
+a \link[ggplot2:ggplot]{ggplot2::ggplot} object
 }
 \description{
 Barplot of CGG repeats
 }
 \examples{
-visit1 |> graph_CGG_repeats()
+visit1 |>
+graph_CGG_repeats(
+facet_rows = "Gender")
 }

@@ -83,10 +83,9 @@ gp34_v1_controls =  gp34_v1_usable |> filter(CGG < 55)
 
 ```{r}
 #| label: fig-hist-CGG-gp34-v1
-#| caption: Histogram of CGG repeats among GP/GP4 participants
+#| caption: Bar-plot of CGG repeats among GP/GP4 participants
 
-visit1 |> 
-  graph_CGG_repeats()
+visit1 |> graph_CGG_repeats(rows = vars(Gender))
 
 ```
 
