@@ -19,7 +19,7 @@
 #SBATCH --cpus-per-task 1
 
 #  Email address to notify
-#SBATCH --mail-user demorrison@ucdavis.edu
+# #SBATCH --mail-user demorrison@ucdavis.edu
 #  Do not notify at beginning and end of job
 #SBATCH --mail-type FAIL,REQUEUE
 #  Job is rerunable
@@ -56,6 +56,7 @@ which R
 R --version
 echo "which conda"
 which conda
+source ~/.bashrc
 #  echo "loading conda from /etc"
 #  source /etc/profile.d/conda.sh
 which conda
