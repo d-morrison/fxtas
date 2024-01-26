@@ -21,16 +21,30 @@ text-align: center;
 
 # Methods
 
-Here, we fit the Ordinal SuStaIn model [@young2021ordinal] on six subsets of the data:
+Next, we fit the Ordinal SuStaIn model [@young2021ordinal] on nine subsets of the longitudinal GP+GP4 data:
 
-- All patients (@fig-pvd1-1)
-- Males only (@fig-pvd1-2)
-- Females only (@fig-pvd1-3)
-- All patients with multiple visits (@fig-pvd2-1)
-- Males with multiple visits (@fig-pvd2-2)
-- Females with multiple visits (@fig-pvd2-3)
+- Males only (@fig-males):
+  * first visits only (@fig-males-1)
+  * all visits (@fig-males-2)
+  * multivisit patients only (@fig-males-3)
 
-For each of these patient subgroups, we included all longitudinal visits.
+- Females only (@fig-females):
+  * first visits only (@fig-females-1)
+  * all visits (@fig-females-2)
+  * multivisit patients only (@fig-females-3)
+  
+- Unstratified (@fig-both-genders):
+  * first visits only (@fig-both-genders-1)
+  * all visits (@fig-both-genders-2)
+  * multivisit patients only (@fig-both-genders-3)
+  
+We also rearranged these results by subset type:
+
+- first visits only (@fig-first-only)
+- all visits (@fig-all-visits)
+- multivisit patients only (@fig-mv-only)
+
+
 
 ```{r}
 #| label: setup
@@ -50,14 +64,168 @@ library(tidyverse)
 library(pander)
 ```
 
+```{r}
+#| label: extract-figs
+
+
+fig_females_first = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "data.RData",
+  dataset_name = "females",
+  output_folder = "output/output.fixed_CV")
+
+fig_females_all = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "gp34_longitudinal.RData",
+  dataset_name = "females",
+  output_folder = "output/gp34_longitudinal")
+
+fig_females_mv_only = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "gp34_multivisit_only.RData",
+  dataset_name = "females",
+  output_folder = "output/gp34_multivisit_only")
+
+
+fig_males_first = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "data.RData",
+  dataset_name = "males",
+  output_folder = "output/output.fixed_CV")
+
+fig_males_all = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "gp34_longitudinal.RData",
+  dataset_name = "males",
+  output_folder = "output/gp34_longitudinal")
+
+fig_males_mv_only = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "gp34_multivisit_only.RData",
+  dataset_name = "males",
+  output_folder = "output/gp34_multivisit_only")
+
+fig_both_first = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "data.RData",
+  dataset_name = "sample_data",
+  output_folder = "output/output.fixed_CV")
+
+fig_both_all = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "gp34_longitudinal.RData",
+  dataset_name = "gp34_longitudinal",
+  output_folder = "output/gp34_longitudinal")
+
+fig_both_mv_only = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "gp34_multivisit_only.RData",
+  dataset_name = "gp34_multivisit_only",
+  output_folder = "output/gp34_multivisit_only")
+
+```
+
+
 # Results
+
+## Males
+
+@fig-males shows estimated event sequences for males, depending on which subset of the data we use to fit the model.
+
+```{r}
+#| label: "fig-males"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap: "Estimated event sequences for males, by data subset"
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "First visits only"
+#|   - "All visits" 
+#|   - "Multivisit patients only"
+
+fig_males_first |> print()
+
+fig_males_all |> print()
+
+fig_males_mv_only |> print()
+
+```
+
+## Females
+
+```{r}
+#| label: "fig-females"
+#| fig-cap: "Estimated event sequences for females, by data subset"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "First visits only"
+#|   - "All visits" 
+#|   - "Multivisit patients only"
+
+fig_females_first |> print()
+
+fig_females_all |> print()
+
+fig_females_mv_only |> print()
+
+```
+
+
+## Unstratified, by data subset
+
+```{r}
+#| label: "fig-both-genders"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap: "Estimated event sequences, unstratified, by data subset"
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "First visits only"
+#|   - "All visits" 
+#|   - "Multivisit patients only"
+
+fig_both_first |> print()
+fig_both_all |> print()
+fig_both_mv_only |> print()
+
+```
+
+## All patients, first visits only
+
+```{r}
+#| label: "fig-first-only"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap: "Estimated event sequences - first visits only"
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "Unstratified"
+#|   - "Males only" 
+#|   - "Females only"
+
+fig_both_first |> print()
+fig_males_first |> print()
+fig_females_first |> print()
+
+
+```
 
 ## All patients, all visits
 
-@fig-pvd1 shows the event sequences that we estimated from each data subset. Note that clinical events which never occur in a dataset cannot be placed into the event sequence, so the set of modeled events varies by data subset.
+@fig-all-visits shows the event sequences that we estimated from each data subset. Note that clinical events which never occur in a dataset cannot be placed into the event sequence, so the set of modeled events varies by data subset.
 
 ```{r}
-#| label: "fig-pvd1"
+#| label: "fig-all-visits"
 #| column: screen
 #| fig-height: 15
 #| fig-align: center
@@ -65,44 +233,22 @@ library(pander)
 #| fig-cap-location: top
 #| layout-ncol: 3
 #| fig-subcap:
-#|   - "All data"
+#|   - "Unstratified"
 #|   - "Males only" 
 #|   - "Females only"
 
-output_folder1 = "output/gp34_longitudinal"
-rda_filename1 = "gp34_longitudinal.RData"
-fig_all = extract_figs_from_pickle(
-  n_s = 1,
-  rda_filename = rda_filename1,
-  dataset_name = "gp34_longitudinal",
-  output_folder = output_folder1)
-
-fig_males = extract_figs_from_pickle(
-  n_s = 1,
-  rda_filename = rda_filename1,
-  dataset_name = "males",
-  output_folder = output_folder1)
-
-fig_females = extract_figs_from_pickle(
-  n_s = 1,
-  rda_filename = rda_filename1,
-  dataset_name = "females",
-  output_folder = output_folder1)
-
-fig_all |> print()
-
-fig_males |> print()
-
-fig_females |> print()
+fig_both_all |> print()
+fig_males_all |> print()
+fig_females_all |> print()
 
 ```
 
 ## Multivisit patients only, all visits
 
-@fig-pvd2 shows the event sequences that we estimated using only the data from patients with more than one visit.
+@fig-mv-only shows the event sequences that we estimated using only the data from patients with more than one visit.
 
 ```{r}
-#| label: "fig-pvd2"
+#| label: "fig-mv-only"
 #| column: screen
 #| fig-height: 15
 #| fig-align: center
@@ -110,35 +256,12 @@ fig_females |> print()
 #| fig-cap-location: top
 #| layout-ncol: 3
 #| fig-subcap:
-#|   - "All data"
+#|   - "Unstratified"
 #|   - "Males only" 
 #|   - "Females only"
 
-output_folder_mv_only = "output/gp34_multivisit_only"
-rda_filename_mv_only = "gp34_multivisit_only.RData"
-
-fig_all_mv_only = extract_figs_from_pickle(
-  n_s = 1,
-  rda_filename = rda_filename_mv_only,
-  dataset_name = "gp34_multivisit_only",
-  output_folder = output_folder_mv_only)
-
-fig_males_mv_only = extract_figs_from_pickle(
-  n_s = 1,
-  rda_filename = rda_filename_mv_only,
-  dataset_name = "males",
-  output_folder = output_folder_mv_only)
-
-fig_females_mv_only = extract_figs_from_pickle(
-  n_s = 1,
-  rda_filename = rda_filename_mv_only,
-  dataset_name = "females",
-  output_folder = output_folder_mv_only)
-
-fig_all_mv_only |> print()
-
+fig_both_mv_only |> print()
 fig_males_mv_only |> print()
-
 fig_females_mv_only |> print()
 
 ```

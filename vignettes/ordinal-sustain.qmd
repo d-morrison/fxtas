@@ -14,7 +14,7 @@ project:
 ```{=html}
 <style>
 .quarto-figure-center > figure {
-  text-align: center;
+text-align: center;
 }
 </style>
 ```
@@ -64,7 +64,7 @@ dataset_name = 'sample_data'
 root_dir = here::here()
 setwd(root_dir)
 output_folder = 
-  "output/output.longest_shiva/" |> 
+  "output/output.fixed_CV/" |> 
   fs::dir_create()
 ```
 
@@ -72,9 +72,27 @@ output_folder =
 
 ## Data
 
-The data come from the GP and GP4 studies. We analyzed one visit record per participant, using the earliest visit available across the two studies with age at visit $\ge 40$ years, resulting in `r nrow(visit1)` observations in total. However, `r visit1$"FX*" |> is.na() |> sum()` individuals did not have CGG values available, so only `r visit1$"FX*" |> Negate(is.na)() |> sum()` individuals 
-(`r (visit1$"FX**" == "CGG >= 55")|> sum()` cases and 
-`r (visit1$"FX**" == "CGG < 55")|> sum()` controls) were included in the event sequence analysis.
+```{r}
+n_missing_CGG = visit1$"FX*" |> is.na() |> sum()
+n_above_200 = sum(visit1$CGG > 200, na.rm = TRUE)
+gp34_v1_usable = visit1 |> filter(CGG < 200)
+gp34_v1_cases = gp34_v1_usable |> filter(CGG >= 55)
+gp34_v1_controls =  gp34_v1_usable |> filter(CGG < 55)
+
+```
+
+```{r}
+#| label: fig-hist-CGG-gp34-v1
+#| caption: Bar-plot of CGG repeats among GP/GP4 participants
+
+visit1 |> graph_CGG_repeats(rows = vars(Gender))
+
+```
+
+
+The data come from the GP and GP4 studies. In the primary analyses, we analyzed one visit record per participant, using the earliest visit available across the two studies with age at visit $\ge 40$ years, resulting in `r nrow(visit1)` observations in total. However, `r n_missing_CGG` individuals did not have CGG values available, and `r n_above_200` had full fragile X syndrome mutation (>200 CGG repeats), so only `r nrow(gp34_v1_usable)` individuals 
+(`r nrow(gp34_v1_cases)` cases and 
+`r nrow(gp34_v1_controls)` controls) were included in the event sequence analysis.
 
 ```{r}
 
@@ -128,19 +146,57 @@ table_out |>
 
 The trailing asterisk (*) indicates a numeric variable that has been categorized for use with Ordinal SusTaIn.
 
+{{< include exploration.qmd >}}
+
+{{< include demos-by-sex.qmd >}}
+
 ## Statistical analysis {#sec-Statistical-analysis}
 
 We applied  the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2018uncovering; @young2021ordinal] to our dataset to find event sequences and subgroupings for FXTAS patients. This algorithm combines disease progression modelling [@fonteijn2012event] and unsupervised clustering to model event onset sequences using a cross-sectional sample of a patient population. The algorithm simultaneously clusters individuals into subgroups and characterizes the trajectory that best defines each subgroup, thus capturing heterogeneity in both disease subtype and disease stage.
 
 Ordinal SuStaIn uses Markov Chain Monte Carlo (MCMC) sampling to estimate the Bayesian posterior probability of each possible event sequence for each subgroup given the training dataset, assuming a uniform prior distribution over the set of all possible patterns. 
 
-We first fit the model on the full GP+GP4 dataset, assuming one shared event sequence (no latent subgroups; see @fig-pvd1-1).
+We first fit the model using the first visit after age 40 for each participant in GP+GP4, assuming one shared event sequence (no latent subgroups; see @fig-first-only-1).
 
-We also fit the model stratified by sex (again with no latent subgroups; one event sequence per per sex; see @fig-pvd1-2 and @fig-pvd1-3).
+### Stratified analyses
+
+We also fit the model stratified by sex (again with no latent subgroups; one event sequence per per sex; see @fig-first-only-2 and @fig-first-only-3).
 
 We also fit the model stratified by CGG repeats (<100 vs $\ge$ 100), also with no latent subgroups (see @fig-pvd-by-cgg).
 
+### Latent subgroups
+
 We also fit the model on the full dataset (not stratified by sex or CGG) for 2-6 latent subgroups, each with their own ordering (@fig-pvd4). We determined the optimal number of latent subgroups for this dataset using the CVIC criterion (@sec-cvic). 
+
+### Adding Trax data
+
+We also considered adding Trax data for the stratified analysis of males (@fig-trax).
+
+### Longitudinal subsets
+
+Next, we fit the Ordinal SuStaIn model on nine subsets of the longitudinal GP+GP4 data:
+
+- Males only (@fig-males):
+* first visits only (@fig-males-1)
+* all visits (@fig-males-2)
+* multivisit patients only (@fig-males-3)
+
+- Females only (@fig-females):
+* first visits only (@fig-females-1)
+* all visits (@fig-females-2)
+* multivisit patients only (@fig-females-3)
+
+- Unstratified (@fig-both-genders):
+* first visits only (@fig-both-genders-1)
+* all visits (@fig-both-genders-2)
+* multivisit patients only (@fig-both-genders-3)
+
+We also rearranged these results by subset type:
+
+- first visits only (@fig-first-only)
+- all visits (@fig-all-visits)
+- multivisit patients only (@fig-mv-only)
+
 
 ### Visualizing modeling results
 
@@ -173,13 +229,13 @@ prob_correct =
     DataScores = DataScores)
 
 prob_score0 = compute_prob_scores(
-    dataset = patient_data,
-    biomarker_varnames,
-    ModelScores = ModelScores,
-    DataScores = DataScores,
-    prob_correct = prob_correct
-  )
- 
+  dataset = patient_data,
+  biomarker_varnames,
+  ModelScores = ModelScores,
+  DataScores = DataScores,
+  prob_correct = prob_correct
+)
+
 prob_nl = prob_score0[,,1]
 prob_score = prob_score0[,,-1, drop = FALSE]
 
@@ -209,6 +265,7 @@ save.image(file = fs::path(output_folder, "data.RData"))
 #| message: false
 #| label: model-all-data
 #| include: false
+#| eval: true
 sustain_output = run_OSA(
   prob_score = prob_score0,
   score_vals = score_vals,
@@ -230,6 +287,7 @@ sustain_output = run_OSA(
 #| message: false
 #| label: model-males
 #| include: false
+#| eval: false
 sustain_output_males = run_OSA(
   prob_score = prob_score0[patient_data$Gender %in% "Male",,],
   score_vals = score_vals,
@@ -250,6 +308,7 @@ sustain_output_males = run_OSA(
 #| message: false
 #| label: model-females
 #| include: false
+#| eval: false
 sustain_output_females = run_OSA(
   prob_score = prob_score0[patient_data$Gender %in% "Female",,],
   score_vals = score_vals,
@@ -270,6 +329,7 @@ sustain_output_females = run_OSA(
 #| message: false
 #| label: "cgg_over_100"
 #| include: false
+#| eval: false
 sustain_output_cgg100plus = run_OSA(
   prob_score = prob_score0[
     patient_data$`CGG (backfilled)` >= 100,,],
@@ -290,6 +350,7 @@ sustain_output_cgg100plus = run_OSA(
 #| message: false
 #| label: "cgg_under_100"
 #| include: false
+#| eval: false
 sustain_output_cgg100minus = run_OSA(
   prob_score = prob_score0[
     patient_data$`CGG (backfilled)` < 100,,],
@@ -309,41 +370,105 @@ sustain_output_cgg100minus = run_OSA(
 
 # Results
 
-@fig-pvd1-1 shows the event sequence model, estimated using the combined GP and GP4 data and assuming that all individuals share the same event sequence; in other words, assuming one subgroup.
+```{r}
+#| label: extract-figs
 
-@fig-pvd1-2 and @fig-pvd1-3 show estimated event sequences stratified by sex, assuming one  subgroup per sex. It appears that males experience increasing ataxia severity earlier in the event sequence than females, while females experience MRI events and SCL psychological symptoms earlier in the event sequence than males.^[There are probably other patterns worth noting here; clinical folks, let us know what you notice!]
+
+fig_females_first = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "data.RData",
+  dataset_name = "females",
+  output_folder = "output/output.fixed_CV")
+
+fig_females_all = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "gp34_longitudinal.RData",
+  dataset_name = "females",
+  output_folder = "output/gp34_longitudinal")
+
+fig_females_mv_only = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "gp34_multivisit_only.RData",
+  dataset_name = "females",
+  output_folder = "output/gp34_multivisit_only")
+
+
+fig_males_first = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "data.RData",
+  dataset_name = "males",
+  output_folder = "output/output.fixed_CV")
+
+fig_males_all = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "gp34_longitudinal.RData",
+  dataset_name = "males",
+  output_folder = "output/gp34_longitudinal")
+
+fig_males_mv_only = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "gp34_multivisit_only.RData",
+  dataset_name = "males",
+  output_folder = "output/gp34_multivisit_only")
+
+fig_both_first = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "data.RData",
+  dataset_name = "sample_data",
+  output_folder = "output/output.fixed_CV")
+
+fig_both_all = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "gp34_longitudinal.RData",
+  dataset_name = "gp34_longitudinal",
+  output_folder = "output/gp34_longitudinal")
+
+fig_both_mv_only = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "gp34_multivisit_only.RData",
+  dataset_name = "gp34_multivisit_only",
+  output_folder = "output/gp34_multivisit_only")
+
+fig_male_trax_gp34 = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "data.Rdata",
+  dataset_name = "sample_data",
+  output_folder = "output/trax_gp34_males_v1")
+
+fig_trax_only = extract_figs_from_pickle(
+  n_s = 1,
+  rda_filename = "data.Rdata",
+  dataset_name = "trax_visit1",
+  output_folder = "output/trax_visit1")
+
+```
+
+
+## All patients, first visits only
+
+@fig-first-only-1 shows the event sequence model, estimated using the first visits per participant from the combined GP and GP4 data and assuming that all individuals share the same event sequence; in other words, assuming one subgroup.
+
+@fig-first-only-2 and @fig-first-only-3 show estimated event sequences stratified by sex, assuming one  subgroup per sex. It appears that males experience increasing ataxia severity earlier in the event sequence than females, while females experience MRI events and SCL psychological symptoms earlier in the event sequence than males.^[There are probably other patterns worth noting here; clinical folks, let us know what you notice!]
 
 
 ```{r}
-#| label: "fig-pvd1"
+#| label: "fig-first-only"
 #| column: screen
 #| fig-height: 15
 #| fig-align: center
-#| fig-cap: "Estimated event sequence models - overall and stratified by sex"
+#| fig-cap: "Estimated event sequence models - overall and stratified by sex, first visits only"
 #| fig-cap-location: top
 #| layout-ncol: 3
 #| fig-subcap:
-#|   - "All data" 
+#|   - "Unstratified" 
 #|   - "Males"
 #|   - "Females"
 
-figs = extract_figs_from_pickle(
-  n_s = 1,
-  dataset_name = dataset_name,
-  output_folder = output_folder) |> 
-  print()
 
-fig_male = extract_figs_from_pickle(
-  n_s = 1,
-  dataset_name = "males",
-  output_folder = output_folder) |> 
-  print()
+fig_both_first |> print()
+fig_males_first |> print()
+fig_females_first |> print()
 
-fig_female = extract_figs_from_pickle(
-  n_s = 1,
-  dataset_name = "females",
-  output_folder = output_folder) |> 
-  print()
 ```
 
 ## Stratified by CGG repeats
@@ -355,13 +480,15 @@ fig_female = extract_figs_from_pickle(
 #| column: screen
 #| fig-height: 15
 #| fig-align: center
-#| fig-cap: "positional variance diagram assuming one subgroup - overall and stratified by CGG repeats (<100 vs 100+)"
+#| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only"
 #| fig-cap-location: top
-#| layout-ncol: 2
+#| layout-ncol: 3
 #| fig-subcap:
+#|   - "Unstratified"
 #|   - "CGG < 100"
 #|   - "CGG 100+"
 
+fig_both_first |> print() 
 fig_under100 = extract_figs_from_pickle(
   n_s = 1,
   dataset_name = "under100",
@@ -425,10 +552,157 @@ results_cv_max = extract_results_from_pickle(
   output_folder = output_folder)
 
 table_subtype_by_demographics(
-    patient_data,
-    subtype_and_stage_table = results_cv_max$subtype_and_stage_table
-    )
+  patient_data,
+  subtype_and_stage_table = results_cv_max$subtype_and_stage_table
+)
 ```
+
+## Adding Trax data
+
+```{r}
+#| label: "fig-trax"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap: "Estimated event sequence models - males only: GP+GP4, Trax, and GP+GP4+Trax"
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "GP+GP4 males only"
+#|   - "Trax+GP+GP4, males only" 
+#|   - "Trax only"
+
+fig_males_first |> print()
+fig_male_trax_gp34 |> print()
+fig_trax_only |>  print()
+
+```
+
+## Longitudinal data
+
+### Males
+
+@fig-males shows estimated event sequences for males, depending on which subset of the data we use to fit the model.
+
+```{r}
+#| label: "fig-males"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap: "Estimated event sequences for males, by data subset"
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "First visits only"
+#|   - "All visits" 
+#|   - "Multivisit patients only"
+
+fig_males_first |> print()
+
+fig_males_all |> print()
+
+fig_males_mv_only |> print()
+
+```
+
+### Females
+
+```{r}
+#| label: "fig-females"
+#| fig-cap: "Estimated event sequences for females, by data subset"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "First visits only"
+#|   - "All visits" 
+#|   - "Multivisit patients only"
+
+fig_females_first |> print()
+
+fig_females_all |> print()
+
+fig_females_mv_only |> print()
+
+```
+
+
+### Unstratified, by data subset
+
+```{r}
+#| label: "fig-both-genders"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap: "Estimated event sequences, unstratified, by data subset"
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "First visits only"
+#|   - "All visits" 
+#|   - "Multivisit patients only"
+
+fig_both_first |> print()
+fig_both_all |> print()
+fig_both_mv_only |> print()
+
+```
+
+
+
+### All patients, all visits
+
+@fig-all-visits shows the event sequences that we estimated from each data subset. Note that clinical events which never occur in a dataset cannot be placed into the event sequence, so the set of modeled events varies by data subset.
+
+We note that Parkinsonian features mostly appear after FXTAS stage 4 for females, whereas they occur before stage 4 for males.
+
+Similarly, clinically-elevated SCL90 values appear before FXTAS stage 1 for females, whereas they occur after stage 3 for males.
+
+
+```{r}
+#| label: "fig-all-visits"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap: "Estimated event sequences - all visits"
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "Unstratified"
+#|   - "Males only" 
+#|   - "Females only"
+
+fig_both_all |> print()
+fig_males_all |> print()
+fig_females_all |> print()
+
+```
+
+### Multivisit patients only, all visits
+
+@fig-mv-only shows the event sequences that we estimated using only the data from patients with more than one visit.
+
+```{r}
+#| label: "fig-mv-only"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap: "Estimated event sequences - multivisit patients only"
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "Unstratified"
+#|   - "Males only" 
+#|   - "Females only"
+
+fig_both_mv_only |> print()
+fig_males_mv_only |> print()
+fig_females_mv_only |> print()
+
+```
+
 
 # Discussion
 
@@ -441,11 +715,13 @@ table_subtype_by_demographics(
 
 # Appendix {.appendix}
 
-## Detecting latent subgroups {#sec-subgroups}
+{{< include general-data-notes.qmd >}}
+
+## Detecting latent subgroups {#sec-subgroups .appendix}
 
 In order to the Ordinal SuStaIn algorithm, we must specify how many latent subgroups to model. There are several metrics for determining the optimal number of subgroups for a given data set.
 
-### Likelihood
+### Likelihood {.appendix}
 
 The simplest option is to compare the likelihood of the data for the fitted model while varying the number of subgroups used to fit the model. @fig-mcmc-loglik shows the distribution of log-likelihoods from the MCMC samples for the full dataset (not stratified by sex or CGG repeats). Adding up to 6 clusters substantially improves the log-likelihood.
 
@@ -460,13 +736,13 @@ sustain_output$samples_likelihood |>
 
 ```
 
-### Cross-Validation Information Criterion {#sec-cvic}
+### Cross-Validation Information Criterion {#sec-cvic .appendix}
 
 Since models with fewer subtypes are limited special cases of models with more subtypes (i.e., "nested models"), the likelihood of the training data is guaranteed to improve as we increase the number of subtypes. However, using too many subtypes means there is less data available for each subtype, possibly leading to a model that does not generalize well to new data (i.e., a model that is "overfit" to the training data).
 
 To avoid overfitting, @young2018uncovering recommends choosing the optimal number using the the Cross-Validation Information Criterion (CVIC):
 
-#### Mathematical details of cross-validation criteria {#sec-cvic-math}
+#### Mathematical details of cross-validation criteria {#sec-cvic-math .appendix}
 
 Let:
 
@@ -496,7 +772,7 @@ CVIC_{\mathcal C} =
 \right\}
 $$
 
-#### CVIC for the full GP+GP4 dataset
+#### CVIC for the full GP+GP4 dataset {.appendix}
 
 We performed `r N_CV_folds`-fold cross-validation on the unstratified GP+GP4 data, and calculated the CVIC for 1-6 latent subgroups.
 
@@ -513,7 +789,7 @@ temp$CVIC |> plot_CVIC()
 
 It appears that the model nearly reaches peak CVIC by 4 subgroups.
 
-## Out-of-fold log-likelihood distribution
+## Out-of-fold log-likelihood distribution {.appendix}
 
 We also evaluated the consistency of our cross-validation procedure by looking at the distribution of test-set log-likelihood across folds (@fig-boxplot-loglik-cv); following @young2018uncovering, we calculated out-of-sample log-likelihood as:
 

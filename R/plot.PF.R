@@ -20,12 +20,14 @@ plot.PF = function(
     ggplot(
       aes(
         x = position,
-        y = `event name`,
+        y = `event label`,
         fill = proportion
       )) +
     geom_tile() +
     # scale_fill_identity() +
-    scale_fill_gradient(low = "gray", high = "red")+
+    scale_fill_gradient(
+      low = "gray",
+      high = "red")+
     scale_y_discrete(limits = rev) +
     xlab('SuStaIn Stage') +
     ylab(NULL) +
@@ -33,7 +35,9 @@ plot.PF = function(
     theme(
       legend.position = "bottom",
       axis.text.y =
-        element_markdown(hjust=0, size = size.y)
+        ggtext::element_markdown(
+          hjust = 0,
+          size = size.y)
     ) +
     labs(fill = color_label)
 

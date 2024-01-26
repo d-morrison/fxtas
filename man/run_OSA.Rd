@@ -2,7 +2,7 @@
 % Please edit documentation in R/run_OSA.R
 \name{run_OSA}
 \alias{run_OSA}
-\title{Title}
+\title{Run the Ordinal SuStaIn Algorithm (OSA)}
 \usage{
 run_OSA(
   prob_score,
@@ -10,7 +10,7 @@ run_OSA(
   SuStaInLabels,
   N_startpoints,
   N_S_max,
-  N_iterations_MCMC,
+  N_iterations_MCMC = 100000L,
   output_folder,
   dataset_name,
   use_parallel_startpoints = FALSE,
@@ -23,8 +23,45 @@ run_OSA(
 )
 }
 \arguments{
+\item{prob_score}{\link{array} probability of each score for all subjects across all biomarkers
+\itemize{
+\item dim = number of subjects x number of biomarkers x number of scores
+}}
+
+\item{score_vals}{a matrix specifying the scores for each biomarker
+\itemize{
+\item dim: number of biomarkers x number of scores
+}}
+
+\item{SuStaInLabels}{the names of the biomarkers as a list of strings}
+
+\item{N_startpoints}{number of startpoints to use in maximum likelihood step of SuStaIn, typically 25}
+
+\item{N_S_max}{maximum number of subtypes, should be 1 or more}
+
+\item{N_iterations_MCMC}{number of MCMC iterations, typically 1e5 or 1e6 but can be lower for debugging}
+
+\item{output_folder}{where to save pickle files, etc.}
+
+\item{dataset_name}{for naming pickle files}
+
+\item{use_parallel_startpoints}{boolean for whether or not to parallelize the maximum likelihood loop}
+
+\item{seed}{random number seed for python code}
+
+\item{plot}{\code{\link[=logical]{logical()}} indicating whether to construct PVD plots via python subroutines}
+
+\item{N_CV_folds}{number of cross-validation folds to create}
+
+\item{CV_fold_nums}{which CV folds to run (for parallel processing)}
+
+\item{patient_data}{patient biomarker data}
+
 \item{verbose}{\code{\link[=logical]{logical()}} indicating whether to print debugging information}
 }
+\value{
+a \code{\link[=list]{list()}}
+}
 \description{
-Title
+Run the Ordinal SuStaIn Algorithm (OSA)
 }

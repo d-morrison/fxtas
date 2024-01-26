@@ -1,4 +1,4 @@
-# First-Visit Characteristics by Gender for CGG > 55
+## First-Visit Characteristics by Gender for CGG > 55
 
 ```{r}
 #| include: false
@@ -18,8 +18,9 @@ knitr::knit_engines$set(asis = function(options) {
 })
 ```
 
-```{r setup}
+```{r}
 #| message: false
+#| label: setup-demos-by-sex
 library(fxtas)
 devtools::load_all()
 library(pander)
@@ -33,12 +34,21 @@ visit1_cgg_55plus =
   filter(!is.na(`FX*`)) |> 
   filter(`FX*` == "CGG >= 55")
 
+table2 = function(...)
+{
+  table1::table1(
+    NA.label = NA.label1,
+    overall=c(left="Total"),
+    ...
+  )
+}
+
 ```
 
-## Demographics
+### Demographics
 
 ```{r}
-#| label: "tbl-demographics"
+#| label: "tbl-demographics-by-sex"
 #| tbl-cap: "Demographics"
 vars = c(
   "Study",
@@ -50,22 +60,22 @@ vars = c(
   
 )
 
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1_cgg_55plus)
 ```
 
-## Apo-E
+### ApoE
 
 ```{r}
-#| tbl-cap: "Apo-E"
-#| label: "tbl-apoe"
+#| tbl-cap: "ApoE"
+#| label: "tbl-apoe-by-sex"
 # vars = grep("^ApoE", names(gp34), value = TRUE)
 vars = "ApoE"
-table1(
-  NA.label = NA.label1,
+table2(
+  
   
   paste(
     "~", 
@@ -79,19 +89,19 @@ table1(
   data = visit1_cgg_55plus)
 ```
 
-## Drug use
+### Drug use
 
 ```{r}
-#| label: tbl-lifestyle
-#| tbl-cap: "Drug use characteristics"
+#| label: tbl-lifestyle-by-sex
+#| tbl-cap: "Drug use characteristics by sex"
 vars = c("Drug use",
          "Marijuana use",
          "Alcohol use/abuse",
          "# of drinks per day now",
          "# of drinks per day now: missingness reasons")
 
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   footnote = paste0(
@@ -102,7 +112,7 @@ table1(
 
 ```
 
-## Cancer
+### Cancer
 
 ```{r}
 vars = c(
@@ -114,13 +124,13 @@ vars = c(
   "Any Cancer"
 )
 
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(vars, column_var),
   data = visit1_cgg_55plus)
 ```
 
-## Surgery
+### Surgery
 
 ```{r}
 
@@ -141,13 +151,13 @@ vars =
 # grep(pattern = "surgery", ignore.case = TRUE, x = names(gp34), value = TRUE)
 
 library(table1)
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(vars, column_var),
   data = visit1_cgg_55plus)
 ```
 
-## Tremors
+### Tremors
 
 ```{r}
 vars = c(
@@ -160,8 +170,8 @@ vars = c(
   # "Tremor: Age of onset"
   # "Tremor: Age of onset: missingness reasons"
 )
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(vars, column_var),
   render.continuous=c(
     .="N", 
@@ -174,8 +184,8 @@ table1(
 <br>
 
 ```{r}
-#| tbl-cap: "Age of onset for those with 'Some tremors recorded'."
-#| label: "tbl-tremor-ao"
+#| tbl-cap: "Age of onset for those with 'Some tremors recorded', by sex"
+#| label: "tbl-tremor-ao-by-sex"
 #| 
 vars = c(
   "Tremor: Age of onset",
@@ -184,8 +194,8 @@ vars = c(
 )
 
 
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1_cgg_55plus |> 
@@ -194,11 +204,11 @@ table1(
 
 <br>
 
-## Head tremors
+### Head tremors
 
 ```{r}
 #| tbl-cap: Head tremors
-#| label: tbl-head-tremors
+#| label: tbl-head-tremors-by-sex
 vars = c(
   "Head tremor"
   # "Head Tremor: Age of onset"
@@ -209,8 +219,8 @@ footnote <- paste0(
   "Head tremor was not collected in GP3. Summaries provided are for GP4 only."
 )
 
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1_cgg_55plus |> filter(Study == "GP4"),
@@ -222,22 +232,22 @@ table1(
 
 ```{r}
 #| tbl-cap: "Age of onset for those with a head tremor recorded."
-#| label: "tbl-head-tremor-AO"
+#| label: "tbl-head-tremor-AO-by-sex"
 vars = c(
   "Head Tremor: Age of onset",
   "Head Tremor: Age of onset: missingness reasons"
   
 )
 
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1_cgg_55plus |> filter(Study == "GP4" & `Head tremor` == "Yes"))
 
 ```
 
-## Ataxia
+### Ataxia
 
 ```{r}
 
@@ -249,8 +259,8 @@ vars = c(
   # "Ataxia: Age of onset: missingness reasons"
 )
 
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1_cgg_55plus)
@@ -270,8 +280,8 @@ vars = c(
   "Ataxia: Age of onset: missingness reasons"
 )
 
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1_cgg_55plus |> filter(Ataxia == "Yes"))
@@ -279,20 +289,20 @@ table1(
 
 <br>
 
-## Parkinsons
+### Parkinsons
 
 ```{r}
 
 vars = grep("Parkinson", value = TRUE, names(gp34))
 
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(vars, column_var),
   data = visit1_cgg_55plus)
 
 ```
 
-## FXTAS Stage
+### FXTAS Stage
 
 ```{r}
 
@@ -300,8 +310,8 @@ vars = c(
   "FXTAS Stage (0-5)*",
   "FXTAS Stage (0-5)*: missingness reasons")
 
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   footnote = "For categorical analysis, we merged 2.5 into 2, 3.5 into 4, and 4.5 into 5.",
@@ -315,14 +325,14 @@ table1(
 
 ```
 
-## BDS2
+### BDS2
 
 ```{r}
 
 vars = grep("BDS-2 Total Score", value = TRUE, names(gp34), fixed = TRUE)
 
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   footnote = "For `BDS2 Total Score`, codes `777`, `888`, and `999` are treated as NAs.",
@@ -330,7 +340,7 @@ table1(
 
 ```
 
-## MMSE
+### MMSE
 
 
 
@@ -342,8 +352,8 @@ vars = grep(
   names(gp34), 
   fixed = TRUE)
 
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(vars, column_var),
   footnote = "For `MMSE Total Score`, codes `777`, `888`, and `999` are treated as NAs.",
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
@@ -351,7 +361,7 @@ table1(
 
 ```
 
-## SCID
+### SCID
 
 ```{r}
 
@@ -373,15 +383,15 @@ vars = c(
   "Primary Psychotic Symptoms (PS01), Current"
 )
 
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1_cgg_55plus)
 
 ```
 
-## SCL90
+### SCL90
 
 For analysis with the Ordinal SuStaIn method, we dichotomized each SCL90 measure as clinically elevated (60+) vs not.
 
@@ -389,8 +399,8 @@ For analysis with the Ordinal SuStaIn method, we dichotomized each SCL90 measure
 
 vars = grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90") |> sort()
 
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1_cgg_55plus)
@@ -398,7 +408,7 @@ table1(
 # visit1_cgg_55plus |> ggplot(aes(x = `SCL90: Anxiety`, group = `FX*`)) + geom_histogram() + facet_wrap(~`FX*`, ncol = 1)
 ```
 
-## MRI
+### MRI
 
 ```{r}
 
@@ -416,14 +426,14 @@ vars = c(
   "Corpus Callosum-Thickness"
 )
 
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(vars, column_var),
   data = visit1_cgg_55plus)
 
 ```
 
-## WAIS
+### WAIS
 
 ```{r}
 
@@ -439,22 +449,22 @@ vars = c(
   "Full Scale: Composite Score (FSIQ)"
 ) |> sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1_cgg_55plus))) |> as.vector()
 
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min, Max]"),
   data = visit1_cgg_55plus)
 
 ```
 
-## CANTAB
+### CANTAB
 
 For now, we used cutoffs taken from [@talebi2020cambridge].
 
 ```{r}
 
-# table1(
-#   NA.label = NA.label1,
+# table2(
+#   
 #   stratified_formula("Drugs used", column_var),
 #   data = visit1_cgg_55plus)
 
@@ -474,14 +484,14 @@ cantab_vars = c(
 #   sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1_cgg_55plus))) |> 
 # as.vector()
 
-table1(
+table2(
   NA.label = "Missing (empty in RedCap)",
   stratified_formula(cantab_vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1_cgg_55plus)
 ```
 
-## Thyroid and other autoimmune diseases
+### Thyroid and other autoimmune diseases
 
 ```{r}
 
@@ -499,13 +509,13 @@ vars = c(
   "Any Autoimmune"
 )
 
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(vars, column_var),
   data = visit1_cgg_55plus)
 ```
 
-## Kinesia
+### Kinesia
 
 We categorized each kinesia variable as "0-1", "1-2", "2-3", and "3-4".
 
@@ -523,30 +533,30 @@ kinesia_vars =
     paste0(kinesia_vars, "*")) |> 
   sort()
 
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(kinesia_vars, column_var),
   data = visit1_cgg_55plus)
 
 ```
 
 
-## Purdue pegboard for reaction time
+### Purdue pegboard for reaction time
 
 ```{r}
 purdue_vars = c(
   "Purdue pegboard 1st Trial Total, R+L+B",
   "Purdue pegboard 1st Trial Total, R+L+B: missingness reasons")
 
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(purdue_vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1_cgg_55plus)
 ```
 
 
-## MOCA total score
+### MOCA total score
 
 ```{r}
 
@@ -554,8 +564,8 @@ moca_vars = c(
   "MOCA Total score",
   "MOCA Total score: missingness reasons"
 )
-table1(
-  NA.label = NA.label1,
+table2(
+  
   stratified_formula(moca_vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1_cgg_55plus)
