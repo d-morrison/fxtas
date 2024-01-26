@@ -26,7 +26,7 @@ run_CV =  TRUE
 # run_CV = FALSE
 
 N_startpoints = 10L
-N_S_max = 5L
+N_S_max = 7L
 N_S_max_stratified = 1L
 N_CV_folds = 10L
 args = commandArgs(trailingOnly = TRUE)
