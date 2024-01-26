@@ -259,3 +259,75 @@ sustain_output_cgg100minus = run_OSA(
   use_parallel_startpoints = FALSE,
   plot = FALSE)
 
+## ----------------------------------------------------------------------------------------------------
+#| message: false
+#| label: "cgg_over_100 & Male"
+#| include: false
+sustain_output_cgg100plus = run_OSA(
+  prob_score = prob_score0[
+    patient_data$`CGG (backfilled)` >= 100 & patient_data$Gender == "Male",,],
+  score_vals = score_vals,
+  SuStaInLabels = SuStaInLabels,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified,
+  N_iterations_MCMC = N_iterations_MCMC,
+  output_folder = output_folder,
+  dataset_name = "over100_Male",
+  use_parallel_startpoints = FALSE,
+  plot = FALSE)
+
+
+
+## ----------------------------------------------------------------------------------------------------
+#| message: false
+#| label: "cgg_under_100 & Male"
+#| include: false
+sustain_output_cgg100minus = run_OSA(
+  prob_score = prob_score0[
+    patient_data$`CGG (backfilled)` < 100 & patient_data$Gender == "Male",,],
+  score_vals = score_vals,
+  SuStaInLabels = SuStaInLabels,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified,
+  N_iterations_MCMC = N_iterations_MCMC,
+  output_folder = output_folder,
+  dataset_name = "under100_Male",
+  use_parallel_startpoints = FALSE,
+  plot = FALSE)
+
+## ----------------------------------------------------------------------------------------------------
+#| message: false
+#| label: "cgg_over_100 & Female"
+#| include: false
+sustain_output_cgg100plus = run_OSA(
+  prob_score = prob_score0[
+    patient_data$`CGG (backfilled)` >= 100 & patient_data$Gender == "Female",,],
+  score_vals = score_vals,
+  SuStaInLabels = SuStaInLabels,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified,
+  N_iterations_MCMC = N_iterations_MCMC,
+  output_folder = output_folder,
+  dataset_name = "over100_Female",
+  use_parallel_startpoints = FALSE,
+  plot = FALSE)
+
+
+
+## ----------------------------------------------------------------------------------------------------
+#| message: false
+#| label: "cgg_under_100 & Female"
+#| include: false
+sustain_output_cgg100minus = run_OSA(
+  prob_score = prob_score0[
+    patient_data$`CGG (backfilled)` < 100 & patient_data$Gender == "Female",,],
+  score_vals = score_vals,
+  SuStaInLabels = SuStaInLabels,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified,
+  N_iterations_MCMC = N_iterations_MCMC,
+  output_folder = output_folder,
+  dataset_name = "under100_Female",
+  use_parallel_startpoints = FALSE,
+  plot = FALSE)
+
