@@ -39,7 +39,9 @@ output_folder =
 df =
   trax_visit1 |>
   filter(
-    !is.na(`FX*`))
+    !is.na(`FX*`),
+    # exclude patients with CGG > 200 (full mutation)
+    CGG < 200)
 
 
 biomarker_group_list =

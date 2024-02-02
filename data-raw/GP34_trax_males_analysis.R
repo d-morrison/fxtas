@@ -51,7 +51,9 @@ SuStaInLabels =
 df =
   males_gp34_trax_v1 |>
   filter(
-    !is.na(`FX*`))
+    !is.na(`FX*`),
+    # exclude patients with CGG > 200 (full mutation)
+    CGG < 200)
 
 biomarker_levels =
   lapply(df[,biomarker_varnames], F = levels)
