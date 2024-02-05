@@ -263,7 +263,7 @@ sustain_output_cgg100minus = run_OSA(
 #| message: false
 #| label: "cgg_over_100 & Male"
 #| include: false
-sustain_output_cgg100plus = run_OSA(
+sustain_output_cgg100plus_males = run_OSA(
   prob_score = prob_score0[
     patient_data$`CGG` >= 100 & patient_data$Gender == "Male",,],
   score_vals = score_vals,
@@ -282,7 +282,7 @@ sustain_output_cgg100plus = run_OSA(
 #| message: false
 #| label: "cgg_under_100 & Male"
 #| include: false
-sustain_output_cgg100minus = run_OSA(
+sustain_output_cgg100minus_males = run_OSA(
   prob_score = prob_score0[
     patient_data$`CGG` < 100 & patient_data$Gender == "Male",,],
   score_vals = score_vals,
@@ -299,7 +299,7 @@ sustain_output_cgg100minus = run_OSA(
 #| message: false
 #| label: "cgg_over_100 & Female"
 #| include: false
-sustain_output_cgg100plus = run_OSA(
+sustain_output_cgg100plus_females = run_OSA(
   prob_score = prob_score0[
     patient_data$`CGG` >= 100 & patient_data$Gender == "Female",,],
   score_vals = score_vals,
@@ -318,7 +318,7 @@ sustain_output_cgg100plus = run_OSA(
 #| message: false
 #| label: "cgg_under_100 & Female"
 #| include: false
-sustain_output_cgg100minus = run_OSA(
+sustain_output_cgg100minus_females = run_OSA(
   prob_score = prob_score0[
     patient_data$`CGG` < 100 & patient_data$Gender == "Female",,],
   score_vals = score_vals,

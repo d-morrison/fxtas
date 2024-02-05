@@ -30,7 +30,7 @@ define_cases_and_controls = function(dataset)
         case_when(
           `CGG` < 55 ~ "CGG < 55",
           `CGG` |> between(55, 99) ~ "CGG 55-99",
-          `CGG` |>  between(100, 199) ~ "CGG 101-199",
+          `CGG` |> between(100, 199) ~ "CGG 100-199",
           `CGG` >= 200 ~ "CGG >= 200",
           is.na(`CGG`) ~ "CGG missing",
           .ptype = factor(
