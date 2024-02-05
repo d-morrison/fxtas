@@ -7,7 +7,7 @@ py_config()
 library(fxtas)
 library(tidyverse)
 library(pander)
-reticulate::use_condaenv("fxtas39", required = FALSE)
+#reticulate::use_condaenv("fxtas39", required = FALSE)
 if(!reticulate::py_module_available("pySuStaIn"))
 {
   stop("pySuStaIn is not installed correctly.")
@@ -15,7 +15,7 @@ if(!reticulate::py_module_available("pySuStaIn"))
 
 ## ----------------------------------------------------------------------------------------------------
 # reticulate::use_condaenv(condaenv = "fxtas")
-
+py_config()
 
 ## ----------------------------------------------------------------------------------------------------
 #| label: "set run parameters"
