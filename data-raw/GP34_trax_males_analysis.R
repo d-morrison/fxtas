@@ -2,17 +2,17 @@
 print(R.version)
 message('working directory = ')
 print(getwd())
+library(reticulate)
+py_config()
+
 library(fxtas)
 library(tidyverse)
-# library(reticulate)
 library(pander)
 #reticulate::use_condaenv("fxtas39", required = FALSE)
-# if(!reticulate::py_module_available("pySuStaIn"))
-# {
-#   message('installing pySuStaIn')
-#   install_pySuStaIn("fxtas")
-# }
-reticulate::py_config() |> print()
+if(!reticulate::py_module_available("pySuStaIn"))
+{
+  stop("pySuStaIn is not installed correctly.")
+}
 # pySuStaIn = reticulate::import("pySuStaIn", delay_load = TRUE)
 # pySuStaIn = reticulate::import_from_path("pySuStaIn", path = "~/.virtualenvs/r-pySuStaIn/lib/python3.11/site-packages/")
 # pySuStaIn
