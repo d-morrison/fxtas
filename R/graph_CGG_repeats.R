@@ -27,7 +27,10 @@ graph_CGG_repeats = function(
           factor() |>
           relevel(ref = "55 CGG repeats (control vs case)")
       ),
-      aes(xintercept = x, col = col)
+      aes(
+        xintercept = x,
+        col = col),
+      linetype = "dashed"
       ) +
     # geom_vline(
     #   aes(

@@ -67,12 +67,7 @@ fix_CGG = function(dataset)
       `CGG (recovered)` = NULL,
       CGG =
         `Floras Non-Sortable Allele Size (CGG) Results` |>
-        strsplit(" *(\\)|-|,| ) *\\(?") |>
-        sapply(F = function(x) gsub(x = x, fixed = TRUE, "?*", "")) |>
-        sapply(F = function(x) gsub(x = x, fixed = TRUE, ">", "")) |>
-        sapply(F = as.numeric) |>
-        suppressWarnings() |>
-        sapply(F = max),
+        parse_CGG(),
 
       `CGG: missingness reasons` =
         missingness_reasons.numeric(
@@ -92,5 +87,9 @@ fix_CGG = function(dataset)
     mutate(
       .by = `FXS ID`,
       `CGG (backfilled)` = `CGG (backfilled)` |> last() # more recent assays may be more accurate
+    ) |>
+    rename(
+      `CGG (before backfill)` = CGG,
+      CGG = `CGG (backfilled)`
     )
 }

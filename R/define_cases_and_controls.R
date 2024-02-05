@@ -1,8 +1,8 @@
-#' Categorize `CGG (backfilled)``
+#' Categorize `CGG``
 #'
 #' Adds categorized versions of CGG to input dataset.
 #'
-#' @param dataset a tibble containing a numeric variable named `CGG (backfilled)`
+#' @param dataset a tibble containing a numeric variable named `CGG`
 #'
 #' @return a tibble with the same columns as `dataset`, except with the following additions:
 #' * FX (logical): TRUE if CGG >= 55
@@ -16,7 +16,7 @@ define_cases_and_controls = function(dataset)
 {
   dataset |>
     mutate(
-      FX = `CGG (backfilled)` >= 55, # TRUE = cases
+      FX = `CGG` >= 55, # TRUE = cases
       `FX*` =
         if_else(FX, "CGG >= 55", "CGG < 55") |>
         factor() |>
@@ -28,15 +28,17 @@ define_cases_and_controls = function(dataset)
 
       `FX3*` =
         case_when(
-          `CGG (backfilled)` < 55 ~ "CGG < 55",
-          `CGG (backfilled)` |> between(55, 100) ~ "CGG 55-100",
-          `CGG (backfilled)` > 100 ~ "CGG > 100",
-          is.na(`CGG (backfilled)`) ~ "CGG missing",
+          `CGG` < 55 ~ "CGG < 55",
+          `CGG` |> between(55, 100) ~ "CGG 55-100",
+          `CGG` |>  between(101, 200) ~ "CGG 101-200",
+          `CGG` > 200 ~ "CGG > 200",
+          is.na(`CGG`) ~ "CGG missing",
           .ptype = factor(
             levels = c(
               "CGG < 55",
               "CGG 55-100",
-              "CGG > 100",
+              "CGG 101-200",
+              "CGG > 200",
               "CGG missing")
           )
         )

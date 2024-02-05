@@ -497,4 +497,20 @@ males_gp34_trax_v1 =
   males_gp34_trax |>
   get_visit1()
 
+gp3_ids <- gp34[gp34$Study == "GP3" & gp34$Gender== "Male", ]$`FXS ID`
+gp4_ids <- gp34[gp34$Study == "GP4" & gp34$Gender== "Male", ]$`FXS ID`
+trax_ids <- trax$`FXS ID`
+
+males_gp34_trax_v1 <-
+  males_gp34_trax_v1 |>
+  mutate(
+    "GP3" = ifelse(`FXS ID` %in% gp3_ids, "GP3", NA_character_),
+    "GP4" = ifelse(`FXS ID` %in% gp4_ids, "GP4", NA_character_),
+    "TRAX" = ifelse(`FXS ID` %in% trax_ids, "TRAX", NA_character_)
+  ) |>
+  unite(
+    col = "Studies", GP3, GP4, TRAX, sep = ", ", remove = FALSE, na.rm = TRUE
+  )
+
+
 usethis::use_data(males_gp34_trax_v1, overwrite = TRUE)

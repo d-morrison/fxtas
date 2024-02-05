@@ -56,7 +56,7 @@ run_CV =  TRUE
 # run_CV = FALSE
 
 N_startpoints = 10L
-N_S_max = 7L
+N_S_max = 5L
 N_S_max_stratified = 1L
 N_CV_folds = 10L
 N_iterations_MCMC = 1e5L
@@ -75,7 +75,8 @@ output_folder =
 
 ```{r}
 #| label: fig-hist-CGG-gp34-v1
-#| caption: Bar-plot of CGG repeats among GP/GP4 participants
+#| fig-cap: "Bar-plot of CGG repeats among GP/GP4 participants"
+#| warning: false
 
 visit1 |> graph_CGG_repeats(rows = vars(Gender))
 
@@ -170,7 +171,36 @@ We also fit the model on the full dataset (not stratified by sex or CGG) for 2-6
 
 ### Adding Trax data
 
-We also considered adding Trax data for the stratified analysis of males (@fig-trax).
+```{r}
+n_trax_added_cases = 
+  males_gp34_trax_v1 |> 
+  filter(
+    Studies == "TRAX",
+    CGG |> between(55, 200)) |> 
+  nrow()
+
+n_trax_added_controls = 
+  males_gp34_trax_v1 |> 
+  filter(
+    Studies == "TRAX",
+    CGG < 55) |> 
+  nrow()
+```
+
+
+We also considered adding Trax data for the stratified analysis of males (@fig-trax); doing so added `r n_trax_added_cases` additional cases and `r n_trax_added_controls` additional controls (@tbl-trax-counts).
+
+```{r}
+#| tbl-cap: "Study participation among males, by CGG status"
+#| label: tbl-trax-counts
+
+males_gp34_trax_v1 |> 
+  dplyr::filter(CGG < 200) |> 
+  arrange(GP3, GP4, TRAX) |> 
+  mutate(Studies = factor(Studies)) |> 
+  table1(~ Studies |`FX*`, data = _)
+```
+
 
 ### Longitudinal subsets
 
@@ -433,11 +463,11 @@ fig_male_trax_gp34 = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "data.Rdata",
   dataset_name = "sample_data",
-  output_folder = "output/trax_gp34_males_v1")
+  output_folder = "output/mdp/trax_gp34_males_v1")
 
 fig_trax_only = extract_figs_from_pickle(
   n_s = 1,
-  rda_filename = "data.Rdata",
+  rda_filename = "data.Rdata", 
   dataset_name = "trax_visit1",
   output_folder = "output/mdp/trax_visit1")
 

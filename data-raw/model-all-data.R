@@ -196,7 +196,7 @@ sustain_output_females = run_OSA(
 #| include: false
 sustain_output_cgg100plus = run_OSA(
   prob_score = prob_score0[
-    patient_data$`CGG (backfilled)` >= 100,,],
+    patient_data$`CGG` >= 100,,],
   score_vals = score_vals,
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
@@ -216,7 +216,7 @@ sustain_output_cgg100plus = run_OSA(
 #| include: false
 sustain_output_cgg100minus = run_OSA(
   prob_score = prob_score0[
-    patient_data$`CGG (backfilled)` < 100,,],
+    patient_data$`CGG` < 100,,],
   score_vals = score_vals,
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
