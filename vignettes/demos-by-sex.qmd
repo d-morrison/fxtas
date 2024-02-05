@@ -32,7 +32,8 @@ column_var = "Gender"
 visit1_cgg_55plus = 
   visit1 |> 
   filter(!is.na(`FX*`)) |> 
-  filter(`FX*` == "CGG >= 55")
+  filter(`FX*` == "CGG >= 55",
+         CGG < 200)
 
 table2 = function(...)
 {
