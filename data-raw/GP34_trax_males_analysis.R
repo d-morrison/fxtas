@@ -158,5 +158,5 @@ sustain_output = run_OSA(
   seed = 1,
   plot = FALSE,
   patient_data = patient_data,
-  N_CV_folds = 10,
+  N_CV_folds = N_CV_folds,
   CV_fold_nums = CV_fold_nums)
