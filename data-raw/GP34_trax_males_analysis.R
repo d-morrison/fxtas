@@ -29,7 +29,7 @@ run_CV =  TRUE
 # run_CV = FALSE
 
 N_startpoints = 10L
-N_S_max = 6L
+N_S_max = 2L
 N_CV_folds = 10L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
