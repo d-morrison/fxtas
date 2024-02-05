@@ -48,7 +48,9 @@ df =
   gp34 |>
   filter(!is.na(`FXS ID`)) |>
   filter(.by = `FXS ID`, n() > 1) |>
-  filter(!is.na(`FX*`))
+  filter(!is.na(`FX*`),
+         # exclude patients with CGG > 200 (full mutation)
+         CGG < 200)
 
 biomarker_levels =
   lapply(df[,biomarker_varnames], F = levels)
