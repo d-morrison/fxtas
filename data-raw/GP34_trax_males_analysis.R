@@ -2,17 +2,17 @@
 print(R.version)
 message('working directory = ')
 print(getwd())
+library(reticulate)
+py_config()
+
 library(fxtas)
 library(tidyverse)
-# library(reticulate)
 library(pander)
-reticulate::use_condaenv("fxtas39", required = FALSE)
+#reticulate::use_condaenv("fxtas39", required = FALSE)
 if(!reticulate::py_module_available("pySuStaIn"))
 {
-  message('installing pySuStaIn')
-  install_pySuStaIn("fxtas")
+  stop("pySuStaIn is not installed correctly.")
 }
-reticulate::py_config() |> print()
 # pySuStaIn = reticulate::import("pySuStaIn", delay_load = TRUE)
 # pySuStaIn = reticulate::import_from_path("pySuStaIn", path = "~/.virtualenvs/r-pySuStaIn/lib/python3.11/site-packages/")
 # pySuStaIn
@@ -26,11 +26,11 @@ reticulate::py_config() |> print()
 fit_models = TRUE
 # fit_models = FALSE
 run_CV =  TRUE
-# run_CV = FALSE
+run_CV = FALSE
 
 N_startpoints = 10L
-N_S_max = 6L
-N_CV_folds = 10L
+N_S_max = 2L
+N_CV_folds = 0L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
 root_dir = here::here()
@@ -158,5 +158,5 @@ sustain_output = run_OSA(
   seed = 1,
   plot = FALSE,
   patient_data = patient_data,
-  N_CV_folds = 10,
+  N_CV_folds = N_CV_folds,
   CV_fold_nums = CV_fold_nums)

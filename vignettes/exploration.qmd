@@ -20,7 +20,7 @@ knitr::knit_engines$set(asis = function(options) {
 #| label: setup-demos-unstratified
 #| message: false
 library(fxtas)
-devtools::load_all()
+# devtools::load_all()
 library(pander)
 library(table1)
 library(dplyr)
@@ -29,7 +29,9 @@ NA.label1 = "Missing"
 column_var = "Recruited in study phase"
 column_var = "FX**"
 
-visit1_cgg_complete = visit1 |> filter(!is.na(`FX*`))
+visit1_cgg_complete = visit1 |> 
+  filter(!is.na(`FX*`),
+         CGG < 200)
 
 phase <- ifelse(column_var == "Recruited in study phase", TRUE, FALSE)
 cgg <- ifelse(column_var == "FX**", TRUE, FALSE)
