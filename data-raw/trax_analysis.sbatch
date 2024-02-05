@@ -56,6 +56,7 @@
   R --version
   echo "which conda"
   which conda
+  source ~/.bashrc
 #  echo "loading conda from /etc"
 #  source /etc/profile.d/conda.sh
   which conda

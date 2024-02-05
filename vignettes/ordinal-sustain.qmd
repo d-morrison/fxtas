@@ -64,7 +64,7 @@ dataset_name = 'sample_data'
 root_dir = here::here()
 setwd(root_dir)
 output_folder = 
-  "output/output.fixed_CV/" |> 
+  "output/mdp/output.fixed_CV/" |> 
   fs::dir_create()
 ```
 
@@ -90,7 +90,7 @@ visit1 |> graph_CGG_repeats(rows = vars(Gender))
 ```
 
 
-The data come from the GP and GP4 studies. In the primary analyses, we analyzed one visit record per participant, using the earliest visit available across the two studies with age at visit $\ge 40$ years, resulting in `r nrow(visit1)` observations in total. However, `r n_missing_CGG` individuals did not have CGG values available, and `r n_above_200` had full fragile X syndrome mutation (>200 CGG repeats), so only `r nrow(gp34_v1_usable)` individuals 
+The data come from the GP and GP4 studies. In the primary analyses, we analyzed one visit record per participant, using the earliest visit available across the two studies with age at visit $\ge 40$ years, resulting in `r nrow(visit1)` observations in total. However, `r n_missing_CGG` individuals did not have CGG values available, and `r n_above_200` had full fragile X syndrome mutation (>200 CGG repeats; @fig-hist-CGG-gp34-v1), so only `r nrow(gp34_v1_usable)` individuals 
 (`r nrow(gp34_v1_cases)` cases and 
 `r nrow(gp34_v1_controls)` controls) were included in the event sequence analysis.
 
@@ -378,56 +378,56 @@ fig_females_first = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "females",
-  output_folder = "output/output.fixed_CV")
+  output_folder = "output/mdp/output.fixed_CV")
 
 fig_females_all = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "gp34_longitudinal.RData",
   dataset_name = "females",
-  output_folder = "output/gp34_longitudinal")
+  output_folder = "output/mdp/gp34_longitudinal")
 
 fig_females_mv_only = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "gp34_multivisit_only.RData",
   dataset_name = "females",
-  output_folder = "output/gp34_multivisit_only")
+  output_folder = "output/mdp/gp34_multivisit_only")
 
 
 fig_males_first = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "males",
-  output_folder = "output/output.fixed_CV")
+  output_folder = "output/mdp/output.fixed_CV")
 
 fig_males_all = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "gp34_longitudinal.RData",
   dataset_name = "males",
-  output_folder = "output/gp34_longitudinal")
+  output_folder = "output/mdp/gp34_longitudinal")
 
 fig_males_mv_only = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "gp34_multivisit_only.RData",
   dataset_name = "males",
-  output_folder = "output/gp34_multivisit_only")
+  output_folder = "output/mdp/gp34_multivisit_only")
 
 fig_both_first = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "sample_data",
-  output_folder = "output/output.fixed_CV")
+  output_folder = "output/mdp/output.fixed_CV")
 
 fig_both_all = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "gp34_longitudinal.RData",
   dataset_name = "gp34_longitudinal",
-  output_folder = "output/gp34_longitudinal")
+  output_folder = "output/mdp/gp34_longitudinal")
 
 fig_both_mv_only = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "gp34_multivisit_only.RData",
   dataset_name = "gp34_multivisit_only",
-  output_folder = "output/gp34_multivisit_only")
+  output_folder = "output/mdp/gp34_multivisit_only")
 
 fig_male_trax_gp34 = extract_figs_from_pickle(
   n_s = 1,
@@ -439,7 +439,38 @@ fig_trax_only = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "data.Rdata",
   dataset_name = "trax_visit1",
-  output_folder = "output/trax_visit1")
+  output_folder = "output/mdp/trax_visit1")
+
+fig_under100 = extract_figs_from_pickle(
+  n_s = 1,
+  dataset_name = "under100",
+  output_folder = output_folder)
+
+fig_over100 = extract_figs_from_pickle(
+  n_s = 1,
+  dataset_name = "over100",
+  output_folder = output_folder)
+
+fig_under100_males = extract_figs_from_pickle(
+  n_s = 1,
+  dataset_name = "under100_Male",
+  output_folder = output_folder)
+
+fig_over100_males = extract_figs_from_pickle(
+  n_s = 1,
+  dataset_name = "over100_Male",
+  output_folder = output_folder)
+
+
+fig_under100_females = extract_figs_from_pickle(
+  n_s = 1,
+  dataset_name = "under100_Female",
+  output_folder = output_folder)
+
+fig_over100_females = extract_figs_from_pickle(
+  n_s = 1,
+  dataset_name = "over100_Female",
+  output_folder = output_folder)
 
 ```
 
@@ -489,20 +520,50 @@ fig_females_first |> print()
 #|   - "CGG 100+"
 
 fig_both_first |> print() 
-fig_under100 = extract_figs_from_pickle(
-  n_s = 1,
-  dataset_name = "under100",
-  output_folder = output_folder) |> 
-  print()
-
-fig_over100 = extract_figs_from_pickle(
-  n_s = 1,
-  dataset_name = "over100",
-  output_folder = output_folder) |> 
-  print()
+fig_under100 |> print()
+fig_over100 |> print()
 
 ```
 
+## Stratified by CGG and Sex
+
+```{r}
+#| label: "fig-pvd-by-cgg-male"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only, males only"
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "Unstratified"
+#|   - "CGG < 100"
+#|   - "CGG 100+"
+
+fig_males_first |> print() 
+fig_under100_males |> print()
+fig_over100_males |> print()
+
+```
+
+```{r}
+#| label: "fig-pvd-by-cgg-female"
+#| column: screen
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only, females only"
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "Unstratified"
+#|   - "CGG < 100"
+#|   - "CGG 100+"
+
+fig_females_first |> print() 
+fig_under100_females |> print()
+fig_over100_females |> print()
+
+```
 
 ## Latent subgroups {#sec-latent-subgroups}
 
