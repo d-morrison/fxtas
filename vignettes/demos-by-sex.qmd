@@ -37,7 +37,7 @@ visit1_cgg_55plus =
 
 table2 = function(...)
 {
-  table1::table1(
+  table1::table1(na.is.category = FALSE, 
     NA.label = NA.label1,
     overall=c(left="Total"),
     ...

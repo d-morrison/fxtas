@@ -74,7 +74,7 @@ males_gp34_trax |>
       "Trax"
     )
   ) |> 
-  table1(
+  table1(na.is.category = FALSE, 
     ~ `PAL Total errors (adjusted)` | `FX3*`,
     # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
     data = _)

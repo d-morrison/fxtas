@@ -134,13 +134,13 @@ We analyzed `r length(biomarker_levels)` biomarkers (@tbl-biomarker-list) with a
 ```{r}
 #| tbl-cap: "Biomarkers used in analysis"
 #| label: "tbl-biomarker-list"
+
 table_out =
   biomarker_events_table |> 
   select(category = biomarker_group, biomarker, levels) |> 
   slice_head(by = biomarker)
 
-table_out |> 
-  pander()
+table_out |> pander()
 
 ```
 
@@ -197,7 +197,7 @@ males_gp34_trax_v1 |>
   dplyr::filter(CGG < 200) |> 
   arrange(GP3, GP4, TRAX) |> 
   mutate(Studies = factor(Studies)) |> 
-  table1(~ Studies |`FX*`, data = _)
+  table1(na.is.category = FALSE, ~ Studies |`FX*`, data = _)
 ```
 
 
@@ -565,9 +565,9 @@ fig_over100 |> print()
 #| fig-cap-location: top
 #| layout-ncol: 3
 #| fig-subcap:
-#|   - "Unstratified"
-#|   - "CGG < 100"
-#|   - "CGG 100+"
+#|   - "Males"
+#|   - "Males, CGG < 100"
+#|   - "Males, CGG ≥ 100"
 
 fig_males_first |> print() 
 fig_under100_males |> print()
@@ -584,9 +584,9 @@ fig_over100_males |> print()
 #| fig-cap-location: top
 #| layout-ncol: 3
 #| fig-subcap:
-#|   - "Unstratified"
-#|   - "CGG < 100"
-#|   - "CGG 100+"
+#|   - "Females"
+#|   - "Females, CGG < 100"
+#|   - "Females, CGG ≥ 100"
 
 fig_females_first |> print() 
 fig_under100_females |> print()

@@ -54,5 +54,5 @@ males_gp34_trax_v1 |>
   dplyr::filter(CGG < 200) |> 
   arrange(GP3, GP4, TRAX) |> 
   mutate(Studies = factor(Studies)) |> 
-  table1(~ Studies |`FX*`, data = _)
+  table1(na.is.category = FALSE, ~ Studies |`FX*`, data = _)
 ```

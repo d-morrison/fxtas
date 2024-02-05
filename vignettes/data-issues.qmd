@@ -73,7 +73,7 @@ vars = c(
   
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
@@ -84,7 +84,7 @@ table1(
 ## Study
 
 ```{r}
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   formula(paste(
     "~", paste(formulaic::add.backtick("Study"), collapse = " + "), 
@@ -104,7 +104,7 @@ Many participants (`r sum(apoe.n$first_missing)` of `r nrow(apoe.n)`) have ApoE 
 
 ```{r}
 vars = grep("^ApoE", names(gp34), value = TRUE)
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   
   paste(
@@ -160,7 +160,7 @@ There's a lot of missing data in CGG as well:
 
 vars = grep("^CGG", names(gp34), value = TRUE)
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   formula(paste(
     "~", paste(formulaic::add.backtick(vars), collapse = " + "), 
@@ -233,7 +233,7 @@ vars = c("Drug use",
          "# of drinks per day now",
          "# of drinks per day now: missingness reasons")
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
@@ -261,7 +261,7 @@ vars = c(
   "Any Cancer"
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   data = visit1)
@@ -313,7 +313,7 @@ vars =
 # grep(pattern = "surgery", ignore.case = TRUE, x = names(gp34), value = TRUE)
 
 library(table1)
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   data = visit1)
@@ -336,7 +336,7 @@ vars = c(
   # "Tremor: Age of onset"
   # "Tremor: Age of onset: missingness reasons"
 )
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   render.continuous=c(
@@ -361,7 +361,7 @@ footnote <- paste0(
   "Age of onset for those with 'Some tremors recorded'."
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
@@ -383,7 +383,7 @@ footnote <- paste0(
   "Age of onset for those with 'No tremors recorded' or missing data."
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
@@ -431,7 +431,7 @@ footnote <- paste0(
   "Head tremor was not collected in GP3. Summaries provided are for GP4 only."
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
@@ -455,7 +455,7 @@ footnote <- paste0(
   "Age of onset for those with a head tremor recorded."
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
@@ -487,7 +487,7 @@ footnote <- paste0(
   "Age of onset for those with 'No' head tremor or missing data."
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
@@ -514,7 +514,7 @@ vars = c(
   # "Ataxia: Age of onset: missingness reasons"
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
@@ -535,7 +535,7 @@ vars = c(
   "Ataxia: Age of onset: missingness reasons"
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
@@ -568,7 +568,7 @@ footnote = paste0(
   "Age of onset for those with 'No' Ataxia or missing data."
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
@@ -603,7 +603,7 @@ See my previous responses on the matter.
 
 vars = grep("Parkinson", value = TRUE, names(gp34))
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   data = visit1)
@@ -624,7 +624,7 @@ vars = c(
   "FXTAS Stage (0-5)*",
   "FXTAS Stage (0-5)*: missingness reasons")
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
@@ -646,7 +646,7 @@ For `BDS2 Total Score`, codes `777`, `888`, and `999` are treated as NAs.
 
 vars = grep("BDS-2 Total Score", value = TRUE, names(gp34), fixed = TRUE)
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
@@ -666,7 +666,7 @@ vars = grep(
   names(gp34), 
   fixed = TRUE)
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
@@ -696,7 +696,7 @@ vars = c(
   "Primary Psychotic Symptoms (PS01), Current"
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
@@ -712,7 +712,7 @@ For analysis with the Ordinal SuStaIn method, we dichotomized each SCL90 measure
 
 vars = grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90") |> sort()
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
@@ -739,7 +739,7 @@ vars = c(
   "Corpus Callosum-Thickness"
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   data = visit1)
@@ -774,7 +774,7 @@ vars = c(
   "Full Scale: Composite Score (FSIQ)"
 ) |> sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> as.vector()
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min, Max]"),
@@ -788,7 +788,7 @@ For now, we used cutoffs taken from [@talebi2020cambridge].
 
 ```{r}
 
-# table1(
+# table1(na.is.category = FALSE, 
 #   NA.label = NA.label1,
 #   stratified_formula("Drugs used", column_var),
 #   data = visit1)
@@ -809,7 +809,7 @@ cantab_vars = c(
 #   sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> 
 # as.vector()
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = "Missing (empty in RedCap)",
   stratified_formula(cantab_vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
@@ -834,7 +834,7 @@ vars = c(
   "Any Autoimmune"
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   data = visit1)
@@ -858,7 +858,7 @@ kinesia_vars =
     paste0(kinesia_vars, "*")) |> 
   sort()
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(kinesia_vars, column_var),
   data = visit1)
@@ -873,7 +873,7 @@ purdue_vars = c(
   "Purdue pegboard 1st Trial Total, R+L+B",
   "Purdue pegboard 1st Trial Total, R+L+B: missingness reasons")
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(purdue_vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
@@ -889,7 +889,7 @@ moca_vars = c(
   "MOCA Total score",
   "MOCA Total score: missingness reasons"
 )
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(moca_vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),

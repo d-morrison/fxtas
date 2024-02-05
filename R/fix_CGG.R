@@ -87,9 +87,10 @@ fix_CGG = function(dataset)
     mutate(
       .by = `FXS ID`,
       `CGG (backfilled)` = `CGG (backfilled)` |> last() # more recent assays may be more accurate
-    ) |>
-    rename(
-      `CGG (before backfill)` = CGG,
-      CGG = `CGG (backfilled)`
     )
+  # |>
+  #   rename(
+  #     `CGG (before backfill)` = CGG,
+  #     CGG = `CGG (backfilled)`
+  #   )
 }

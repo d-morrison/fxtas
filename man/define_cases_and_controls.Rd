@@ -2,12 +2,12 @@
 % Please edit documentation in R/define_cases_and_controls.R
 \name{define_cases_and_controls}
 \alias{define_cases_and_controls}
-\title{Categorize `CGG (backfilled)``}
+\title{Categorize `CGG``}
 \usage{
 define_cases_and_controls(dataset)
 }
 \arguments{
-\item{dataset}{a tibble containing a numeric variable named \code{CGG (backfilled)}}
+\item{dataset}{a tibble containing a numeric variable named \code{CGG}}
 }
 \value{
 a tibble with the same columns as \code{dataset}, except with the following additions:
