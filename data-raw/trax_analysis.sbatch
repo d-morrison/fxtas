@@ -61,6 +61,7 @@
 #  source /etc/profile.d/conda.sh
   which conda
   conda activate fxtas39
+  which conda
   which R
   R --version
   echo ""

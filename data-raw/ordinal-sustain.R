@@ -27,7 +27,7 @@ run_CV =  TRUE
 
 N_startpoints = 10L
 N_S_max = 5L
-N_S_max_stratified = 1L
+N_S_max_stratified = 2L
 N_CV_folds = 10L
 args = commandArgs(trailingOnly = TRUE)
 message("args = ", args |> paste(collapse = "; "))
