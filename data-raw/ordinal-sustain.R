@@ -265,7 +265,7 @@ sustain_output_cgg100minus = run_OSA(
 #| include: false
 sustain_output_cgg100plus = run_OSA(
   prob_score = prob_score0[
-    patient_data$`CGG (backfilled)` >= 100 & patient_data$Gender == "Male",,],
+    patient_data$`CGG` >= 100 & patient_data$Gender == "Male",,],
   score_vals = score_vals,
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
@@ -284,7 +284,7 @@ sustain_output_cgg100plus = run_OSA(
 #| include: false
 sustain_output_cgg100minus = run_OSA(
   prob_score = prob_score0[
-    patient_data$`CGG (backfilled)` < 100 & patient_data$Gender == "Male",,],
+    patient_data$`CGG` < 100 & patient_data$Gender == "Male",,],
   score_vals = score_vals,
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
@@ -301,7 +301,7 @@ sustain_output_cgg100minus = run_OSA(
 #| include: false
 sustain_output_cgg100plus = run_OSA(
   prob_score = prob_score0[
-    patient_data$`CGG (backfilled)` >= 100 & patient_data$Gender == "Female",,],
+    patient_data$`CGG` >= 100 & patient_data$Gender == "Female",,],
   score_vals = score_vals,
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
@@ -320,7 +320,7 @@ sustain_output_cgg100plus = run_OSA(
 #| include: false
 sustain_output_cgg100minus = run_OSA(
   prob_score = prob_score0[
-    patient_data$`CGG (backfilled)` < 100 & patient_data$Gender == "Female",,],
+    patient_data$`CGG` < 100 & patient_data$Gender == "Female",,],
   score_vals = score_vals,
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,

@@ -1,5 +1,6 @@
 # fxtas (development version)
 
+* Renamed "CGG (backfilled)" to CGG
 * Renamed "ApoE (backfilled)" to ApoE
 * Now using most recent ApoE value
 
