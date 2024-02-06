@@ -663,15 +663,7 @@ stages =
 
 library(ggplot2)
 stages |>
-  filter(ml_subtype != "Type 0") |> 
-  ggplot(
-    aes(x = age,
-        y = ml_stage)
-  ) + 
-  geom_point() +
-  facet_wrap(~ml_subtype) +
-  geom_smooth() +
-  xlab("Age at visit (years)")
+  graph_stage_by_age()
 
 
 ```
@@ -797,6 +789,23 @@ Similarly, clinically-elevated SCL90 values appear before FXTAS stage 1 for fema
 fig_both_all |> print()
 fig_males_all |> print()
 fig_females_all |> print()
+
+```
+
+```{r}
+#| label: fig-stage-by-age-longitudinal
+#| fig-cap: "ML stage by age, longitudinal data"
+#| include: false
+stages = 
+  results_cv_max$subtype_and_stage_table |> 
+  mutate(
+    age = patient_data$`Age at first visit`
+  )
+
+library(ggplot2)
+stages |>
+  graph_stage_by_age()
+
 
 ```
 
