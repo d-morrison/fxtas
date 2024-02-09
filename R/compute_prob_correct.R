@@ -28,9 +28,9 @@ compute_prob_correct = function(
     summarize(
       across(
         .cols = all_of(biomarkers),
-        .fn = ~ min(
-          max_prob,
-          mean(.x == DataScores[1], na.rm = TRUE)) |>
+        .fn = ~
+          mean(.x == DataScores[1], na.rm = TRUE) |>
+          min(max_prob) |>
           replace_na(max_prob))
     ) |>
     unlist()

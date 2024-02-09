@@ -185,7 +185,16 @@ sustain_output = run_OSA(
   N_CV_folds = N_CV_folds,
   CV_fold_nums = CV_fold_nums)
 
-
+sustain_output_males = run_OSA_permuted(
+  prob_score = prob_score0,
+  score_vals = score_vals,
+  SuStaInLabels = SuStaInLabels,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified,
+  N_iterations_MCMC = N_iterations_MCMC,
+  output_folder = output_folder,
+  use_parallel_startpoints = FALSE,
+  plot = FALSE)
 
 ## ----------------------------------------------------------------------------------------------------
 #| message: false

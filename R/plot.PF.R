@@ -23,7 +23,7 @@ plot.PF = function(
         y = `event label`,
         fill = proportion
       )) +
-    geom_tile() +
+    ggplot2::geom_tile() +
     # scale_fill_identity() +
     scale_fill_gradient(
       low = "gray",

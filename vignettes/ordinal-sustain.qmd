@@ -41,6 +41,7 @@ reticulate::use_condaenv("fxtas39",required = TRUE)
 library(tidyverse)
 library(reticulate)
 library(pander)
+library(table1)
 ```
 
 ```{r}
@@ -107,7 +108,7 @@ SuStaInLabels =
 df = 
   gp34_v1_usable |> 
   filter(
-    !is.na(`FX*`))
+    !is.na(CGG))
 
 biomarker_levels = 
   lapply(df[,biomarker_varnames], F = levels)
@@ -256,10 +257,11 @@ prob_correct =
   control_data |> 
   compute_prob_correct(
     max_prob = .95,
-    biomarkers = biomarker_varnames,
+    biomarkers = biomarker_varnames[1],
     DataScores = DataScores)
 
 prob_score0 = compute_prob_scores(
+  verbose = TRUE,
   dataset = patient_data,
   biomarker_varnames,
   ModelScores = ModelScores,
@@ -404,6 +406,11 @@ sustain_output_cgg100minus = run_OSA(
 ```{r}
 #| label: extract-figs
 
+results_females_first = extract_results_from_pickle(
+  n_s = 1,
+  rda_filename = "data.RData",
+  dataset_name = "females",
+  output_folder = "output/mdp/output.fixed_CV")
 
 fig_females_first = extract_figs_from_pickle(
   n_s = 1,
