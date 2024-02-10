@@ -31,7 +31,7 @@ run_OSA = function(
     output_folder,
     dataset_name,
     use_parallel_startpoints = FALSE,
-    seed = 1,
+    seed = 1L,
     plot = FALSE,
     N_CV_folds = 0,
     CV_fold_nums = 1:N_CV_folds,
@@ -49,7 +49,7 @@ run_OSA = function(
     score_vals = score_vals,
     biomarker_labels = SuStaInLabels,
     N_startpoints = N_startpoints,
-    N_S_max = N_S_max,
+    N_S_max = N_S_max |> as.integer(), # double doesn't work
     N_iterations_MCMC = N_iterations_MCMC,
     output_folder = output_folder,
     dataset_name = dataset_name,

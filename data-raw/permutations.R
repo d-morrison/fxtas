@@ -1,13 +1,15 @@
 ## ----setup-------------------------------------------------------------------------------------------
 #| message: false
 
-library(reticulate)
-py_config()
+
+
 
 library(fxtas)
 library(tidyverse)
 library(pander)
-#reticulate::use_condaenv("fxtas39", required = FALSE)
+reticulate::use_condaenv("fxtas39", required = TRUE)
+library(reticulate)
+py_config()
 if(!reticulate::py_module_available("pySuStaIn"))
 {
   stop("pySuStaIn is not installed correctly.")
@@ -162,12 +164,13 @@ if(length(args) == 0 || args[1] == 1)
 }
 
 sustain_output_permutations = run_OSA_permuted(
+  patient_data = patient_data,
   permutation_seeds = permutation_seeds,
   prob_score = prob_score0,
   score_vals = score_vals,
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
-  N_S_max = 1,
+  N_S_max = 1L,
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
   use_parallel_startpoints = FALSE,
