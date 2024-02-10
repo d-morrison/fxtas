@@ -7,7 +7,7 @@
 library(fxtas)
 library(tidyverse)
 library(pander)
-reticulate::use_condaenv("fxtas39", required = TRUE)
+# reticulate::use_condaenv("fxtas39", required = TRUE)
 library(reticulate)
 py_config()
 if(!reticulate::py_module_available("pySuStaIn"))
