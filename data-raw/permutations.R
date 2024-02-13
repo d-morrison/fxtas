@@ -1,5 +1,6 @@
 ## ----setup-------------------------------------------------------------------------------------------
 #| message: false
+message('Starting `permutations.R` at: ', Sys.time())
 
 library(reticulate)
 py_config()
