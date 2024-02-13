@@ -14,7 +14,7 @@ run_OSA(
   output_folder,
   dataset_name,
   use_parallel_startpoints = FALSE,
-  seed = 1,
+  seed = 1L,
   plot = FALSE,
   N_CV_folds = 0,
   CV_fold_nums = 1:N_CV_folds,
