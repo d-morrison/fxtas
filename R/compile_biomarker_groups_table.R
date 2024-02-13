@@ -1,4 +1,4 @@
-#' Title
+#' Compile biomarker groups table
 #'
 #' @param biomarker_group_list
 #'

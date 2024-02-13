@@ -2,7 +2,7 @@
 % Please edit documentation in R/compile_biomarker_groups_table.R
 \name{compile_biomarker_groups_table}
 \alias{compile_biomarker_groups_table}
-\title{Title}
+\title{Compile biomarker groups table}
 \usage{
 compile_biomarker_groups_table(
   biomarker_group_list = compile_biomarker_group_list(...),
@@ -14,5 +14,5 @@ compile_biomarker_groups_table(
 \item{biomarker_group_list}{}
 }
 \description{
-Title
+Compile biomarker groups table
 }

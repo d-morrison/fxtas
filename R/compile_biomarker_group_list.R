@@ -1,13 +1,23 @@
-#' Title
+#' Compile list of biomarker groups
 #'
-#' @param dataset Dataset to extract names from
+#' @description
+#' This function compiles a [list] of biomarker variable names, grouped into categories.
+#' Some of the categories are hard-coded, while others are extracted from the
+#' column names of the input [data.frame] `dataset` using regular expressions (see [base::regex] and [base::grep()]).
 #'
-#' @return
+#'
+#'
+#' @param dataset Dataset to extract biomarker names from using regular expressions
+#'
+#' @returns a [list] of [character] vectors, with the list names denoting biomarker groups and the elements of the [character] vectors denoting individual biomarkers in each group.
+#'
 #' @export
+#' @examples
+#' gp34 |> compile_biomarker_group_list()
 #'
 compile_biomarker_group_list = function(dataset = gp34)
 {
-  missingness_vars = grep("missingness", names(dataset), value = TRUE)
+
   tremors = c(
     "Head tremor",
     "Intention tremor",
@@ -120,8 +130,11 @@ kinesia_vars = c(
       # kinesia = kinesia_vars
     )
 
+  missingness_vars = grep("missingness", names(dataset), value = TRUE)
+
   biomarker_group_list =
     biomarker_group_list |>
-    lapply(F = function(x) setdiff(x, missingness_vars))
+    lapply(F = function(x) setdiff(x, missingness_vars)) |>
+    structure(class = c("biomarker.groups.list", "list"))
 
 }
