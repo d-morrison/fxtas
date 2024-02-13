@@ -1,6 +1,6 @@
 ## ----setup-------------------------------------------------------------------------------------------
 #| message: false
-message('Starting `permutations.R` at: ', Sys.time())
+message('Starting at: ', Sys.time())
 
 library(reticulate)
 py_config()
@@ -176,3 +176,4 @@ sustain_output_permutations = run_OSA_permuted(
   use_parallel_startpoints = FALSE,
   plot = FALSE)
 
+message('Ending at: ', Sys.time())
