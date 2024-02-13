@@ -16,3 +16,5 @@ fxtas*.tgz
 miniconda
 .Rhistory
 /.quarto/
+data-raw/logs
+data-raw/out

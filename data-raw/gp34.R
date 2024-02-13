@@ -58,3 +58,10 @@ visit1 =
   get_visit1()
 
 usethis::use_data(visit1, overwrite = TRUE)
+
+gp34_multivisit_only =
+  gp34 |>
+  filter(!is.na(`FXS ID`)) |>
+  filter(.by = `FXS ID`, n() > 1)
+
+usethis::use_data(gp34_multivisit_only, overwrite = TRUE)

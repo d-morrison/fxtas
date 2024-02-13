@@ -14,8 +14,14 @@ compute_prob_scores = function(
     biomarker_varnames,
     ModelScores,
     DataScores,
-    prob_dist,
-    verbose = FALSE
+    prob_dist = compute_prob_dist(
+      ModelScores = ModelScores,
+      DataScores = DataScores,
+      biomarkers = biomarker_varnames,
+      ...
+    ),
+    verbose = FALSE,
+    ...
 )
 {
   prob_score_dims =
@@ -54,7 +60,7 @@ compute_prob_scores = function(
 
     }
 
-    if(any(dataset[[biomarker]] |> is.na()))
+    if (any(dataset[[biomarker]] |> is.na()))
     {
       prob_score0[
         dataset[[biomarker]] |> is.na(),

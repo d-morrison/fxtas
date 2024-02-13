@@ -20,10 +20,10 @@ fix_CGG = function(dataset)
         "NA"
       )
     ) |>
-    relocate(
+    dplyr::relocate(
       Study, .before = `FXS ID`
     ) |>
-    rename(
+    dplyr::rename(
       `CGG (recovered)` = `CGG (backfilled)`
     ) |>
     dplyr::select(
@@ -67,12 +67,7 @@ fix_CGG = function(dataset)
       `CGG (recovered)` = NULL,
       CGG =
         `Floras Non-Sortable Allele Size (CGG) Results` |>
-        strsplit(" *(\\)|-|,| ) *\\(?") |>
-        sapply(F = function(x) gsub(x = x, fixed = TRUE, "?*", "")) |>
-        sapply(F = function(x) gsub(x = x, fixed = TRUE, ">", "")) |>
-        sapply(F = as.numeric) |>
-        suppressWarnings() |>
-        sapply(F = max),
+        parse_CGG(),
 
       `CGG: missingness reasons` =
         missingness_reasons.numeric(
@@ -81,15 +76,20 @@ fix_CGG = function(dataset)
         ),
       `CGG (backfilled)` = CGG
     )  |>
-    relocate(
+    dplyr::relocate(
       `CGG (backfilled)`, .after = "CGG"
     ) |>
     group_by(`FXS ID`) |>
     tidyr::fill(
       `CGG (backfilled)`,
       .direction = "downup") |>
+    ungroup()  |>
     mutate(
+      .by = `FXS ID`,
       `CGG (backfilled)` = `CGG (backfilled)` |> last() # more recent assays may be more accurate
     ) |>
-    ungroup()
+    rename(
+      `CGG (before backfill)` = CGG,
+      CGG = `CGG (backfilled)`
+    )
 }

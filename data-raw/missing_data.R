@@ -2,8 +2,8 @@ library("fxtas")
 
 variables =
   c(
-    "ApoE (backfilled)",
-    "CGG (backfilled)",
+    "ApoE*",
+    "CGG",
 
     "Drug use",
     "Marijuana use",

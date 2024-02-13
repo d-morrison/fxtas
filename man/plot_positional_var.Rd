@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_positional_variance.R
 \name{plot_positional_var}
 \alias{plot_positional_var}
-\title{Title}
+\title{Plot positional variance diagram}
 \usage{
 plot_positional_var(
   results,
@@ -16,7 +16,7 @@ plot_positional_var(
   biomarker_levels = NULL,
   biomarker_events_table = get_biomarker_events_table(biomarker_levels),
   biomarker_event_names = pull(biomarker_events_table, biomarker_level),
-  biomarker_plot_order = sort(biomarker_event_names),
+  biomarker_plot_order = NULL,
   ml_f_EM = NULL,
   cval = FALSE,
   subtype_order = NULL,
@@ -35,13 +35,25 @@ plot_positional_var(
   separate_subtypes = FALSE,
   save_path = NULL,
   save_kwargs = NULL,
-  synchronize_y_axes = TRUE,
+  synchronize_y_axes = FALSE,
   ...
 )
 }
 \arguments{
+\item{results}{pickle file contents}
+
+\item{biomarker_labels}{biomarker labels}
+
+\item{biomarker_groups}{biomarker groupings}
+
+\item{biomarker_levels}{biomarker levels}
+
+\item{biomarker_events_table}{table of biomarker events (excluding base level)}
+
+\item{biomarker_event_names}{vector of biomarker event names}
+
 \item{synchronize_y_axes}{}
 }
 \description{
-Title
+Plot positional variance diagram
 }

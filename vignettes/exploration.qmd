@@ -1,17 +1,5 @@
----
-title: "Questions about FXTAS Sequence Data"
-format:
-  html:
-    toc: true
-    toc-depth: 4
-    toc-float: true
-    number-sections: true
-  docx:
-    number-sections: true
----
-
-```{r, include = FALSE}
-
+```{r}
+#| include: false
 knitr::opts_chunk$set(
   collapse = TRUE,
   echo = FALSE,
@@ -28,34 +16,31 @@ knitr::knit_engines$set(asis = function(options) {
 })
 ```
 
-```{r setup}
+```{r}
+#| label: setup-demos-unstratified
 #| message: false
 library(fxtas)
-devtools::load_all()
+# devtools::load_all()
 library(pander)
 library(table1)
 library(dplyr)
 library(magrittr)
 NA.label1 = "Missing"
 column_var = "Recruited in study phase"
-column_var = "FX**"
-# load_all()
+column_var = "FX3*"
+
+visit1_cgg_complete = 
+  visit1 |> 
+  filter(
+    CGG < 200,
+    !is.na(`FX*`)
+    )
 
 phase <- ifelse(column_var == "Recruited in study phase", TRUE, FALSE)
 cgg <- ifelse(column_var == "FX**", TRUE, FALSE)
 ```
 
-# General data processing notes
-
-## Missing codes
-
-The missing codes 777, 888, and 999 were converted to `NA` for all variables, unless noted otherwise below.
-
-## Age of onset
-
-In the RedCap database, the "age of onset" variables were recorded using a mix of precise ages and decade-long ranges (for example, "`130`" = "teens", "`200`" = "twenties", etc.). For analysis as numeric variables, the decade codes were replaced by their midpoints (for example, "`130`" was replaced with 15, "`200`" with 25, etc.). The exception is code "`555`" = "lifelong", which was replaced by the minimum of 10 years and the smallest observed value for that age-of-onset variable; for example, if the smallest observed value for "age of tremor onset" was 8, then "`555`" would be replaced by 8. If the smallest observed value were 11, then "`555`" would be replaced by 10.
-
-# Data from first visits
+## First-visit characteristics by CGG repeats level
 
 ```{asis, echo=phase}
 Here, we review the data from the first visits by each participant, stratified by 
@@ -67,16 +52,13 @@ Here, we review the data from the first visits by each participant, stratified b
 ```
 
 
-## Demographics
-
-There is substantial missingness in both `Primary Ethnicity` and `Primary Race`; not sure if we will need these variables:  
-
-
-Primary ethnicity we can drop. Primary race we may be able to look on Randi’s cards for that or ask her. There are only 44 to look up. 
+### Demographics
 
 ```{r}
-
+#| label: "tbl-demographics"
+#| tbl-cap: "Demographics by CGG repeats level"
 vars = c(
+  "Study",
   "Age at first visit",
   "# visits",
   # column_var,
@@ -86,38 +68,21 @@ vars = c(
   
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  data = visit1_cgg_complete)
 ```
 
-
-## Study
-
-```{r}
-table1(
-  NA.label = NA.label1,
-  formula(paste(
-    "~", paste(formulaic::add.backtick("Study"), collapse = " + "), 
-    "|",
-    column_var |> formulaic::add.backtick())),
-  data = visit1)
-```
-
-## APOE
+### Apo-E
 
 ```{r}
-apoe.n = gp34 |> missing_pattern_by_ID(variable = "ApoE")
-
-```
-
-Many participants (`r sum(apoe.n$first_missing)` of `r nrow(apoe.n)`) have ApoE missing in their first visit records:
-
-```{r}
-vars = grep("^ApoE", names(gp34), value = TRUE)
-table1(
+#| tbl-cap: "Apo-E by CGG repeats level"
+#| label: "tbl-apoe"
+# vars = grep("^ApoE", names(gp34), value = TRUE)
+vars = "ApoE"
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   
   paste(
@@ -129,140 +94,34 @@ table1(
     column_var |> formulaic::add.backtick()) |> 
     formula(),
   # render.missing=c("Empty in RedCap"="FREQ (PCT%)"),
-  data = visit1)
+  data = visit1_cgg_complete)
 ```
 
-
-`r apoe.n |> filter(first_missing) |> pull(any_nonmissing) |> sum()` of these individuals have later visits with non-missing ApoE results; for example:
+### Drug use
 
 ```{r}
+#| label: tbl-lifestyle
+#| tbl-cap: "Drug use characteristics"
 
-gp34 |> filter(
-  # `FXS ID` == "500011-122"
-  `FXS ID` == apoe.n |> filter(first_missing, any_nonmissing) |> head(1) |> pull(`FXS ID`)
-) |> 
-  select(`FXS ID`, `Event Name`, `Visit Date`, ApoE) |> 
-  pander()
-
-```
-
-**QUESTION:** Is it reasonable to use the next non-missing ApoE result to impute the ApoE results for the earlier visit? Note that in some cases, the ApoE value changes between visits:
-
-If they are missing, it is reasonable to use the next available result. The issue with differences between visits will need to be addressed with Flora; the samples may have been run differently between visit leading to different APoE values. 
-
-```{r, "multiple ApoE values", results = "asis"}
-
-gp34 |> 
-  semi_join(apoe.n |> filter(n_vals > 1), by = "FXS ID") |> 
-  select(`FXS ID`, `Visit Date`, `Event Name` ,ApoE) |> 
-  arrange(`FXS ID`, `Visit Date`) |> 
-  split(~`FXS ID`) |> 
-  pander()
-
-```
-
-## CGG
-
-```{r}
-cgg.n = gp34 |> missing_pattern_by_ID(variable = "CGG")
-```
-
-There's a lot of missing data in CGG as well:
-
-```{r}
-
-vars = grep("^CGG", names(gp34), value = TRUE)
-
-table1(
-  NA.label = NA.label1,
-  formula(paste(
-    "~", paste(formulaic::add.backtick(vars), collapse = " + "), 
-    "|",
-    column_var |> formulaic::add.backtick())),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
-```
-
-`r cgg.n |> filter(first_missing) |> pull(any_nonmissing) |> sum()` of these participants have later records with non-missing CGG values:
-
-```{r}
-
-gp34 |> 
-  semi_join(
-    cgg.n |> 
-      filter(
-        first_missing,
-        any_nonmissing), 
-    by = "FXS ID") |> 
-  select(`FXS ID`, `Visit Date`, `Event Name` , CGG) |> 
-  arrange(`FXS ID`, `Visit Date`) |> 
-  split(~`FXS ID`) |> 
-  pander()
-```
-
-Some participants have multiple CGG values:
-
-```{r, "multiple CGG values", include = TRUE, results = "asis"}
-
-gp34 |> 
-  semi_join(
-    cgg.n |> 
-      filter(
-        n_vals > 1), 
-    by = "FXS ID") |> 
-  select(`FXS ID`, `Visit Date`, `Event Name` , CGG) |> 
-  arrange(`FXS ID`, `Visit Date`) |> 
-  split(~`FXS ID`) |> 
-  pander()
-
-```
-
-We decided to use the most recent CGG value.
-
-```{r, include = TRUE}
-# check fxtas stage where CGG is missing
-gp34 |> 
-  filter(is.na(`FXTAS Stage (0-5)`)) |> 
-  select(`FXS ID`, `Event Name`, CGG, `FXTAS Stage (0-5)`) |> 
-  pander()
-
-```
-
-
-
-**Question:** can we fill in the earlier values using later values?
-
-Yes this is reasonable. Shouldn’t change between visits.  
-From Randi: use later versions if inconsistent, might change due to improvements in assays. 
-
-## Lifestyle
-
-"Alcohol Abuse" in GP3 (`mds_psy_alco`) and "Alcohol Use" in GP4 (`new_mds_psy_alco`) were combined as "Alcohol use/abuse".
-
-```{r}
 vars = c("Drug use",
          "Marijuana use",
          "Alcohol use/abuse",
          "# of drinks per day now",
          "# of drinks per day now: missingness reasons")
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  footnote = paste0(
+    '"Alcohol Abuse" in GP3 (`mds_psy_alco`) ',
+    'and "Alcohol Use" in GP4 (`new_mds_psy_alco`) ',
+    'were combined as "Alcohol use/abuse".'),
+  data = visit1_cgg_complete)
 
 ```
 
-## Cancer
-
-**Question:** Can we fill in any data for Skin Cancer, Melanoma, or "Other Cancer"?  
-
-Not sure I understand this question. 
-
-**Question:** What should we do with codes 888 and 999 for these variables? Should they be treated as "Never used" or as actual missing values? What about blank entries (empty fields in RedCap)?  
-
-Again I think 888 and 999 should be treated as “no” or “none” and missing values as “no data”. but will need to check with Kyoungmi. 
+### Cancer
 
 ```{r}
 vars = c(
@@ -274,38 +133,13 @@ vars = c(
   "Any Cancer"
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  data = visit1)
+  data = visit1_cgg_complete)
 ```
 
-
-## Surgery
-
-**Question:** Can we categorize the surgery data into a binary variable for GP4? (There are currently multiple surgery variables, `new_mds_med_sur1`, `new_mds_med_sur2`, etc., all with unstructured data.)  
-
-Binary as in Surgery Yes or No? Yes I think that would be best. 
-
-**Question:** Can we categorize surgery types into a small set of indicator variables?  
-
-Yes, lets see what that will show.  
-
-**Question:** Can we extract age at surgery and surgery dates from the unstructured text?  
-
-We may, but this is really hit or miss and will take some time.  
-
-**Question:** Do we have a source of anesthesia data for GP3?  
-
-No.  
-
-**Question:** Can we categorize anesthesia into a binary variable (yes/no), summarizing across all fields in GP4 (`new_mds_med_anes1`, `new_mds_med_anes2`, etc.)?  
-
-Yes.  
-
-**Question:** What should we do with missing codes and blanks?  
-
-See my previous responses for 888, 999 and missing data.   
+### Surgery
 
 ```{r}
 
@@ -326,17 +160,13 @@ vars =
 # grep(pattern = "surgery", ignore.case = TRUE, x = names(gp34), value = TRUE)
 
 library(table1)
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  data = visit1)
+  data = visit1_cgg_complete)
 ```
 
-## Tremors
-
-**Question:** What should we do with missing codes and blanks?  
-
-See my previous responses on the matter.   
+### Tremors
 
 ```{r}
 vars = c(
@@ -349,91 +179,45 @@ vars = c(
   # "Tremor: Age of onset"
   # "Tremor: Age of onset: missingness reasons"
 )
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   render.continuous=c(
     .="N", 
     .="Mean (SD)", 
     .="Median [Min, Max]"),
-  data = visit1)
+  data = visit1_cgg_complete)
 
 ```
 
 <br>
 
-Age of onset and missingness reasons where any of the four above tremor types = "Yes":
-
 ```{r}
+#| tbl-cap: "Age of onset for those with 'Some tremors recorded'."
+#| label: "tbl-tremor-ao"
+#| 
 vars = c(
-  "Tremor: Age of onset",
-  "Tremor: Age of onset: missingness reasons"
-)
+         "Tremor: Age of onset",
+         # "Tremor: Age of onset: missingness reasons",
+         NULL
+         )
 
-footnote <- paste0(
-  "Age of onset for those with 'Some tremors recorded'."
-)
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> 
-    filter(`Any tremor (excluding Head Tremor)` == "Some tremors recorded"),
-  footnote = footnote)
+  data = visit1_cgg_complete |> 
+    filter(`Any tremor (excluding Head Tremor)` == "Some tremors recorded"))
 ```
 
 <br>
 
-Do we have age of onset for those with 'No tremors recorded' or missing data?
+### Head tremors
 
 ```{r}
-vars = c(
-  "Tremor: Age of onset"
-)
-
-footnote <- paste0(
-  "Age of onset for those with 'No tremors recorded' or missing data."
-)
-
-table1(
-  NA.label = NA.label1,
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> 
-    filter(`Any tremor (excluding Head Tremor)` == "No tremors recorded" |
-             is.na(`Any tremor (excluding Head Tremor)`)),
-  footnote = footnote)
-```
-
-```{r}
-# store number
-n_age_NoTremor <- visit1 |> 
-  filter((is.na(`Any tremor (excluding Head Tremor)`) | 
-            `Any tremor (excluding Head Tremor)` == "No tremors recorded") & 
-           !is.na(`Tremor: Age of onset`)) |> 
-  nrow()
-```
-
-The `r n_age_NoTremor` patients with Age of Onset without having any tremor recorded are listed below.
-
-```{r}
-gp34 |> 
-  filter((is.na(`Any tremor (excluding Head Tremor)`) | 
-            `Any tremor (excluding Head Tremor)` == "No tremors recorded") &
-           !is.na(`Tremor: Age of onset`)) |> 
-  dplyr::select(`FXS ID`, `Event Name`, `Any tremor (excluding Head Tremor)`, 
-                `Tremor: Age of onset`) |> 
-  pander()
-```
-
-## Head tremors
-
-**Question:** Can we get any data on head tremor for GP3?  
-
-Unfortunately head tremor was not collected in GP3   
-
-```{r}
+#| tbl-cap: Head tremors
+#| label: tbl-head-tremors
 vars = c(
   "Head tremor"
   # "Head Tremor: Age of onset"
@@ -444,81 +228,39 @@ footnote <- paste0(
   "Head tremor was not collected in GP3. Summaries provided are for GP4 only."
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> filter(Study == "GP4"),
+  data = visit1_cgg_complete |> filter(Study == "GP4"),
   footnote = footnote)
 
 ```
 
 <br>
 
-Age of onset and missingness reasons where "Head tremor" = "Yes":
-
 ```{r}
+#| tbl-cap: "Age of onset for those with a head tremor recorded."
+#| label: "tbl-head-tremor-AO"
 vars = c(
   "Head Tremor: Age of onset",
   "Head Tremor: Age of onset: missingness reasons"
   
 )
 
-footnote <- paste0(
-  "Age of onset for those with a head tremor recorded."
-)
-
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> filter(Study == "GP4" & `Head tremor` == "Yes"),
-  footnote = footnote)
+  data = visit1_cgg_complete |> filter(Study == "GP4" & `Head tremor` == "Yes"))
 
 ```
 
-```{r}
-# store n for text
-n_age_NoHeadTremor <- visit1 |> 
-    filter((`Head tremor` == "No" |
-             is.na(`Head tremor`)) & 
-             Study == "GP4" &
-             !is.na(`Head Tremor: Age of onset`)) |>
-  nrow()
-```
-
-Do we have age of onset for those with 'No' head tremor or missing data?  
-
-There are `r n_age_NoHeadTremor` patients with age of onset without having a Head tremor.
+### Ataxia
 
 ```{r}
-vars = c(
-  "Head Tremor: Age of onset"
-)
-
-footnote <- paste0(
-  "Age of onset for those with 'No' head tremor or missing data."
-)
-
-table1(
-  NA.label = NA.label1,
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> 
-    filter((`Head tremor` == "No" |
-             is.na(`Head tremor`)) & 
-             Study == "GP4"),
-  footnote = footnote)
-```
-
-## Ataxia
-
-**Question:** What should we do with missing codes and blanks?  
-
-See my previous responses on the matter. 
-
-```{r}
-
+#| label: tbl-ataxia-by-cgg
+#| tbl-cap: "Ataxia by CGG status"
 vars = c(
   "Ataxia",
   "Ataxia: severity",
@@ -527,19 +269,19 @@ vars = c(
   # "Ataxia: Age of onset: missingness reasons"
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  data = visit1_cgg_complete)
 
 ```
 
 <br>
 
-Age of onset and missingness reasons where "Ataxia" = "Yes":
-
 ```{r}
+#| label: tbl-ataxia-AO-by-cgg
+#| tbl-cap: "Ataxia age of onset by CGG level"
 vars = c(
   # "Ataxia",
   # "Ataxia: severity",
@@ -548,100 +290,44 @@ vars = c(
   "Ataxia: Age of onset: missingness reasons"
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> filter(Ataxia == "Yes"))
+  data = visit1_cgg_complete |> filter(Ataxia == "Yes"))
 ```
 
 <br>
 
-```{r}
-# store n for text
-n_age_NoAtaxia <- visit1 |> 
-    filter((Ataxia == "No" |
-             is.na(Ataxia)) & 
-             !is.na(`Ataxia: Age of onset`)) |>
-  nrow()
-```
-
-Do we have age of onset for those with 'No' Ataxia or missing data?  
+### Parkinsons
 
 ```{r}
-vars = c(
-  # "Ataxia",
-  # "Ataxia: severity",
-  # "Ataxia: severity*"
-  "Ataxia: Age of onset",
-  "Ataxia: Age of onset: missingness reasons"
-)
-
-footnote = paste0(
-  "Age of onset for those with 'No' Ataxia or missing data."
-)
-
-table1(
-  NA.label = NA.label1,
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  footnote = footnote,
-  data = visit1 |> filter(Ataxia == "No" | is.na(Ataxia))
-)
-```
-
-There are `r n_age_NoAtaxia` patients with age of onset without having Ataxia. These records are listed below.
-
-```{r}
-gp34 |> 
-  filter((Ataxia == "No" |
-             is.na(Ataxia)) & 
-             !is.na(`Ataxia: Age of onset`)) |> 
-  dplyr::select(`FXS ID`, `Event Name`, Ataxia, 
-                `Ataxia: Age of onset`) |> 
-  pander()
-```
-
-## Parkinsons
-
-**Question:** Can we fill in Parkinsons (formal diagnosis) for GP3?  
-
-No, because the question was not asked in GP3.    
-
-**Question:** What should we do with missing codes and blanks?  
-
-See my previous responses on the matter.  
-
-```{r}
-
+#| label: tbl-parkinsons-by-cgg
+#| tbl-cap: "Parkinsons by CGG status"
 vars = grep("Parkinson", value = TRUE, names(gp34))
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  data = visit1)
+  data = visit1_cgg_complete)
 
 ```
 
-## FXTAS Stage
-
-
-**Question:** What should we do with missing codes and blanks?  
-
-For categorical analysis, we merged 2.5 into 2, 3.5 into 4, and 4.5 into 5.
-
+### FXTAS Stage
 
 ```{r}
-
+#| label: tbl-fxtas-stage-by-cgg
+#| tbl-cap: "FXTAS Stage by CGG level"
 vars = c(
   "FXTAS Stage (0-5)*",
   "FXTAS Stage (0-5)*: missingness reasons")
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  footnote = "For categorical analysis, we merged 2.5 into 2, 3.5 into 4, and 4.5 into 5.",
+  data = visit1_cgg_complete)
 
 # gp34 |> 
 #   filter(`FXTAS Stage (0-5)` %in% c(NA, "No Response (999)", "Missing (empty in RedCap)")) |> 
@@ -651,25 +337,24 @@ table1(
 
 ```
 
-## BDS2
-
-For `BDS2 Total Score`, codes `777`, `888`, and `999` are treated as NAs.
+### BDS2
 
 ```{r}
 
 vars = grep("BDS-2 Total Score", value = TRUE, names(gp34), fixed = TRUE)
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  footnote = "For `BDS2 Total Score`, codes `777`, `888`, and `999` are treated as NAs.",
+  data = visit1_cgg_complete)
 
 ```
 
-## MMSE
+### MMSE
 
-For `MMSE Total Score`, codes `777`, `888`, and `999` are treated as NAs.
+
 
 ```{r}
 
@@ -679,15 +364,16 @@ vars = grep(
   names(gp34), 
   fixed = TRUE)
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
+  footnote = "For `MMSE Total Score`, codes `777`, `888`, and `999` are treated as NAs.",
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  data = visit1_cgg_complete)
 
 ```
 
-## SCID
+### SCID
 
 ```{r}
 
@@ -709,15 +395,15 @@ vars = c(
   "Primary Psychotic Symptoms (PS01), Current"
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  data = visit1_cgg_complete)
 
 ```
 
-## SCL90
+### SCL90
 
 For analysis with the Ordinal SuStaIn method, we dichotomized each SCL90 measure as clinically elevated (60+) vs not.
 
@@ -725,16 +411,16 @@ For analysis with the Ordinal SuStaIn method, we dichotomized each SCL90 measure
 
 vars = grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90") |> sort()
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  data = visit1_cgg_complete)
 
-# visit1 |> ggplot(aes(x = `SCL90: Anxiety`, group = `FX*`)) + geom_histogram() + facet_wrap(~`FX*`, ncol = 1)
+# visit1_cgg_complete |> ggplot(aes(x = `SCL90: Anxiety`, group = `FX*`)) + geom_histogram() + facet_wrap(~`FX*`, ncol = 1)
 ```
 
-## MRI
+### MRI
 
 ```{r}
 
@@ -752,26 +438,14 @@ vars = c(
   "Corpus Callosum-Thickness"
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  data = visit1)
+  data = visit1_cgg_complete)
 
 ```
 
-## WAIS
-
-We treated "Verbal: IQ Score" (`wais_verb_iq`) and "Verbal Comprehension: Composite Score (VCI)" (`wais4_verbcomp_cs`) as interchangeable. 
-
-(wais_verb_iq) is from WAIS version 3 and (wais4_v, erbcomp_cs) is from WAIS version 4. so the answer is No, primarily because the norms used to set the scaled scores are different - so what it took to get a standard score of 7 may be different between the norms of WAIS III and IV, but also if the actual subtest has changed then it's certainly not a direct comparison as they are different tests.  
-
-**Question:** Can we combine "Full Scale: IQ Score" (`wais_fullscale_iq`) and "Full Scale: Composite Score (FSIQ)" (`wais4_fullscale_cs`)?  
-
-See previous answer on VERBAL IQ  
-
-**Question:** Do we have any data for perceptual reasoning, working memory, or processing speed for GP3?  
-
-No, b/c WAIS 3 does not have these scores but the subsequent WAIS 4 does.  
+### WAIS
 
 ```{r}
 
@@ -785,27 +459,26 @@ vars = c(
   
   # "Full Scale: IQ Score",
   "Full Scale: Composite Score (FSIQ)"
-) |> sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> as.vector()
+) |> sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1_cgg_complete))) |> as.vector()
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min, Max]"),
-  data = visit1)
+  data = visit1_cgg_complete)
 
 ```
 
-## CANTAB
+### CANTAB
 
-For now, we used cutoffs taken from https://www.sciencedirect.com/science/article/pii/S2211034820302480?via%3Dihub
-
+For now, we used cutoffs taken from [@talebi2020cambridge].
 
 ```{r}
 
-# table1(
+# table1(na.is.category = FALSE, 
 #   NA.label = NA.label1,
 #   stratified_formula("Drugs used", column_var),
-#   data = visit1)
+#   data = visit1_cgg_complete)
 
 
 cantab_vars = c(
@@ -820,17 +493,17 @@ cantab_vars = c(
   "RTI Five-choice movement time",
   "RTI Five-choice movement time*") 
 # |> 
-#   sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> 
+#   sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1_cgg_complete))) |> 
 # as.vector()
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = "Missing (empty in RedCap)",
   stratified_formula(cantab_vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  data = visit1_cgg_complete)
 ```
 
-## Thyroid and other autoimmune diseases
+### Thyroid and other autoimmune diseases
 
 ```{r}
 
@@ -848,54 +521,54 @@ vars = c(
   "Any Autoimmune"
 )
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  data = visit1)
+  data = visit1_cgg_complete)
 ```
 
-## Kinesia
+### Kinesia
 
 We categorized each kinesia variable as "0-1", "1-2", "2-3", and "3-4".
 
 ```{r}
 kinesia_vars = c(
-      "Kinesia Left Rest Tremor",
-      "Kinesia Left Postural Tremor",
-      "Kinesia Left Kinetic Tremor",
-      "Kinesia Right Rest Tremor",
-      "Kinesia Right Postural Tremor",
-      "Kinesia Right Kinetic Tremor"
-    )
+  "Kinesia Left Rest Tremor",
+  "Kinesia Left Postural Tremor",
+  "Kinesia Left Kinetic Tremor",
+  "Kinesia Right Rest Tremor",
+  "Kinesia Right Postural Tremor",
+  "Kinesia Right Kinetic Tremor"
+)
 kinesia_vars = 
   c(kinesia_vars,
     paste0(kinesia_vars, "*")) |> 
   sort()
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(kinesia_vars, column_var),
-  data = visit1)
+  data = visit1_cgg_complete)
 
 ```
 
 
-## Purdue pegboard for reaction time
+### Purdue pegboard for reaction time
 
 ```{r}
 purdue_vars = c(
   "Purdue pegboard 1st Trial Total, R+L+B",
   "Purdue pegboard 1st Trial Total, R+L+B: missingness reasons")
 
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(purdue_vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  data = visit1_cgg_complete)
 ```
 
 
-## MOCA total score
+### MOCA total score
 
 ```{r}
 
@@ -903,83 +576,10 @@ moca_vars = c(
   "MOCA Total score",
   "MOCA Total score: missingness reasons"
 )
-table1(
+table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(moca_vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1)
+  data = visit1_cgg_complete)
 
 ```
-
-# Visit dates
-
-We also started looking at the longitudinal data, and had some questions about the visit dates:
-
-## Missing visit dates
-
-```{r}
-
-tab = gp34 |> filter(is.na(`Visit Date`)) |> 
-  select(Study:`Visit Date`)
-
-```
-
-There are `r nrow(tab)` records with missing visit dates.
-
-**Question:** Can these missing dates be filled in?  
-
-Yes I can fill these in.
-
-```{r}
-pander(tab)
-```
-
-
-
-## Duplicate visit dates
-
-```{r}
-
-tab = gp34 |> 
-  group_by(`FXS ID`, `Visit Date`) |> 
-  filter(n() > 1, !is.na(`Visit Date`[1])) |> 
-  select(Study:`Visit Date`) |> 
-  split(~`FXS ID`)
-
-```
-
-There are `r length(tab)` duplicate visit dates.
-
-**Question:** Are these duplicate values correct?  
-
-I will need to check these.  
-
-```{r, results = "asis"}
-pander(tab)
-```
-
-
-
-## Visits out of event sequence
-
-```{r}
-ooo = gp34 |>
-  select(`FXS ID`, `Visit Date`, `Event Name`) |>
-  group_by(`FXS ID`) |>
-  filter(is.unsorted(`Event Name`[`Event Name` != "GP4 - Single Visit"])) |>
-  # filter(any(`decreased age`, na.rm = TRUE)) |>
-  # ungroup() |>
-  split(~`FXS ID`)
-```
-
-`r length(ooo)` participants have visits occurring out of chronological order (e.g., GP4 Visit1 before GP3 Visit 1).
-
-**Question:** Are these records correct?  
-
-I will need to check these.  
-
-```{r, results = "asis"}
-
-pander(ooo)
-```
-

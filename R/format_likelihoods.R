@@ -13,5 +13,5 @@ format_likelihoods = function(likelihoods)
     setNames(
       paste(1:ncol(likelihoods), "subtype(s)")
     ) |>
-    mutate(Iteration = row_number())
+    mutate(Iteration = dplyr::row_number())
 }

@@ -14,7 +14,7 @@ compile_biomarker_group_list = function(dataset = gp34)
     "Resting tremor",
     "Postural tremor",
     "Intermittent tremor"
-    # "Any tremor"
+    # "Any tremor (excluding Head Tremor)"
   )
 
   parkinsons_vars =
@@ -71,7 +71,8 @@ compile_biomarker_group_list = function(dataset = gp34)
   scores =
     c(
       "MMSE Total Score*",
-      "BDS-2 Total Score*")
+      "BDS-2 Total Score*") |>
+    intersect(names(dataset))
 
   scl90_vars =
     grep(
@@ -81,9 +82,9 @@ compile_biomarker_group_list = function(dataset = gp34)
     sort()
 
   thyroid_vars = c(
-    # "Hypothyroid", # removed after call 2023-09-13
-    # "Hyperthyroid", # removed after call 2023-09-13
-    "Thyroid problems",
+    "Hypothyroid", # removed after call 2023-09-13
+    "Hyperthyroid", # removed after call 2023-09-13
+    # "Thyroid problems",
     "Lupus",
     "Rheumatoid arthritis"
     # "Multiple Sclerosis: Workup",

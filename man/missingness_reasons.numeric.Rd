@@ -15,7 +15,7 @@ missingness_reasons.numeric(x, x.clean = clean_numeric(x, ...), ...)
   Arguments passed on to \code{\link[=clean_numeric]{clean_numeric}}
   \describe{
     \item{\code{NA_codes}}{numeric values that should be turned into to NAs}
-    \item{\code{extra_codes}}{codes besides 777, 888, 999 to turn into NAs}
+    \item{\code{extra_codes}}{codes besides 777, 888, 999 to turn into NAs; has no effect if the \code{NA_codes} argument is changed from default by the user.}
   }}
 }
 \description{

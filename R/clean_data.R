@@ -3,7 +3,7 @@ clean_data = function(dataset)
   dataset |>
     arrange(`FXS ID`, `Visit Date`, `Event Name`) |>
     remove_unneeded_records() |>
-    relocate(`Visit Date`, .after = `Event Name`) |>
+    dplyr::relocate(`Visit Date`, .after = `Event Name`) |>
     clean_head_tremor_onset() |>
 
     create_any_tremor() |>
@@ -39,7 +39,7 @@ clean_data = function(dataset)
 
     fix_CGG() |>
 
-    relocate(contains("CGG"), .after = contains("ApoE")) |>
+    dplyr::relocate(contains("CGG"), .after = contains("ApoE")) |>
 
     fix_FXTAS_stage() |>
 

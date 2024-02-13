@@ -2,15 +2,20 @@
 % Please edit documentation in R/stratified_formula.R
 \name{stratified_formula}
 \alias{stratified_formula}
-\title{Title}
+\title{Build a formula for \code{\link[table1:table1]{table1::table1()}}}
 \usage{
-stratified_formula(vars, stratum)
+stratified_formula(vars, strata)
 }
 \arguments{
-\item{stratum}{}
+\item{vars}{row variables}
+
+\item{strata}{column variables}
+}
+\value{
+a \code{\link[=formula]{formula()}} object
 }
 \description{
-Title
+Build a formula for \code{\link[table1:table1]{table1::table1()}}
 }
 \examples{
 stratified_formula(c("Sepal.Length" ,"Sepal.Width"), "Species")
