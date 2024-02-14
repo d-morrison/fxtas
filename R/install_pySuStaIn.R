@@ -1,16 +1,21 @@
-# following https://rstudio.github.io/reticulate/articles/python_dependencies.html
-
-#' Install the `pySuStaIn` python package from github
+#' @title Install the `pySuStaIn` python package from github
+#' @description
+#' This function is a wrapper for [reticulate::conda_install].
+#' Its implementation follows the instructions in:
+#' - https://rstudio.github.io/reticulate/articles/package.html
+#' - https://rstudio.github.io/reticulate/articles/python_dependencies.html
+#' @details
+#' ## `python_version`
 #'
 #' @param ...
-#' @inheritParams reticulate::py_install
+#' @inheritParams reticulate::conda_install
 #'
 #' @return
 #' @export
 #'
 install_pySuStaIn <- function(
     envname = "r-pySuStaIn",
-    method = "auto",
+    python_version = "<3.10",
     ...)
 {
   reticulate::conda_install(
@@ -18,6 +23,7 @@ install_pySuStaIn <- function(
     envname = envname,
     method = method,
     pip = TRUE,
+    python_version = python_version,
     ...)
 }
 

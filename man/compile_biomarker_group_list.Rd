@@ -2,7 +2,7 @@
 % Please edit documentation in R/compile_biomarker_group_list.R
 \name{compile_biomarker_group_list}
 \alias{compile_biomarker_group_list}
-\title{Compile list of biomarker groups}
+\title{Compile a list of biomarker groups}
 \usage{
 compile_biomarker_group_list(dataset = gp34)
 }

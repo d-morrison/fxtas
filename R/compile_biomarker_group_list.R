@@ -1,4 +1,4 @@
-#' Compile list of biomarker groups
+#' @title Compile a list of biomarker groups
 #'
 #' @description
 #' This function compiles a [list] of biomarker variable names, grouped into categories.
