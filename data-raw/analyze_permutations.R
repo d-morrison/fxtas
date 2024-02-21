@@ -1,5 +1,5 @@
 library(fxtas)
-output_folder = "output/output.fixed_CV"
+output_folder = fs(here::here(), "output/output.fixed_CV")
 output_folder |> fs::path("pickle_files") |> dir()
 
 
@@ -28,7 +28,7 @@ n_permutations = 1000
 permuted_test_stats = numeric(length = n_permutations)
 for (p in 1:n_permutations)
 {
-
+  message('analyzing permutation ', p)
   results_females_first = extract_results_from_pickle(
     n_s = 1,
     rda_filename = "data.RData",
