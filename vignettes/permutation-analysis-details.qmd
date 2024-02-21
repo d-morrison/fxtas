@@ -1,3 +1,8 @@
+## Testing for differences among strata {#sec-permutation .appendix}
+
+We tested for differences between subgroups using a permutation test. For example, to test for differences in event sequences between males and females, we randomly permuted the `Sex` variable in our dataset 1000 times. For each random permutation, we calculated the mean log-likelihood of the data (averaging across MCMC samples from the posterior distribution of possible event sequences and summing across "Male" and "Female" subsets). We then compared the distribution of permuted mean log-likelihoods to the observed mean log-likelihood.
+
+```{r}
 library(fxtas)
 output_folder = fs::path(here::here(), "output/output.fixed_CV")
 output_folder |> fs::path("pickle_files") |> dir()
@@ -23,19 +28,10 @@ if(FALSE)
   test_stat = mean(llik_females) + mean(llik_males)
 }
 
-n_permutations = 1000
-args = commandArgs(trailingOnly = TRUE)
 
-if(length(args==0))
-{
-  permutations = 1:n_permutations
-} else
-{
-  start = args[1]
-  permutations = start:(start+19)
-}
-permuted_test_stats = numeric(length = length(permutations))
-for (p in permutations)
+n_permutations = 1000
+permuted_test_stats = numeric(length = n_permutations)
+for (p in 1:n_permutations)
 {
   message('analyzing permutation ', p)
   results_females_first = extract_results_from_pickle(
@@ -56,9 +52,7 @@ for (p in permutations)
   permuted_test_stats[p] = cur_test_stat
 }
 
-permuted_test_stats |>
-  save(
-  file =
-    output_folder |>
-    fs::path(
-      paste0("permuted_test_stats", args[1], ".RData")))
+save.image(file = "permutations.RData")
+
+
+```
