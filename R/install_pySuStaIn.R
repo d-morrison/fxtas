@@ -6,9 +6,11 @@
 #' - https://rstudio.github.io/reticulate/articles/python_dependencies.html
 #' @details
 #' ## `python_version`
-#'
+#' `pySuStaIn` and its dependency `kde_ebm` currently (2024-02-14) do not appear to be  with python >= 3.10.
+#' ## `pip`
+#' `pip = TRUE` appears to be necessary, since `pySuStaIn` needs to be installed directly from github.com
 #' @param ...
-#' @inheritParams reticulate::conda_install
+#' @inheritParams reticulate::py_install
 #'
 #' @return
 #' @export
@@ -16,13 +18,14 @@
 install_pySuStaIn <- function(
     envname = "r-pySuStaIn",
     python_version = "<3.10",
+    method = "auto",
+    pip = TRUE,
     ...)
 {
-  reticulate::conda_install(
-    "git+https://github.com/d-morrison/pySuStaIn",
+  reticulate::py_install(
+    packages = "git+https://github.com/d-morrison/pySuStaIn",
     envname = envname,
-    method = method,
-    pip = TRUE,
+    pip = pip,
     python_version = python_version,
     ...)
 }

@@ -8,7 +8,7 @@ library(reticulate)
 library(fxtas)
 library(tidyverse)
 library(pander)
-# reticulate::use_condaenv("fxtas39", required = TRUE)
+reticulate::use_condaenv("fxtas39", required = TRUE)
 if(!reticulate::py_module_available("pySuStaIn"))
 {
   stop("pySuStaIn is not installed correctly.")
@@ -16,7 +16,8 @@ if(!reticulate::py_module_available("pySuStaIn"))
 
 ## ----------------------------------------------------------------------------------------------------
 # reticulate::use_condaenv(condaenv = "fxtas")
-py_config()
+reticulate::py_discover_config()
+reticulate::py_config()
 
 ## ----------------------------------------------------------------------------------------------------
 #| label: "set run parameters"
@@ -186,12 +187,12 @@ sustain_output = run_OSA(
   N_CV_folds = N_CV_folds,
   CV_fold_nums = CV_fold_nums)
 
-sustain_output_males = run_OSA_permuted(
+sustain_output_permuted = run_OSA_permuted(
   prob_score = prob_score0,
   score_vals = score_vals,
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
-  N_S_max = N_S_max_stratified,
+  N_S_max = 1,
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
   use_parallel_startpoints = FALSE,

@@ -29,7 +29,7 @@ run_CV =  TRUE
 
 N_startpoints = 10L
 N_S_max = 8L
-N_S_max_stratified = 2L
+N_S_max_stratified = 1L
 args = commandArgs(trailingOnly = TRUE)
 message("args = ", args |> paste(collapse = "; "))
 
@@ -162,6 +162,31 @@ if(length(args) == 0 || args[1] == 1)
 {
   save.image(file = fs::path(output_folder, "data.RData"))
 }
+
+
+sustain_output_males = run_OSA(
+  prob_score = prob_score0[patient_data$Gender %in% "Male",,],
+  score_vals = score_vals,
+  SuStaInLabels = SuStaInLabels,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified,
+  N_iterations_MCMC = N_iterations_MCMC,
+  output_folder = output_folder,
+  dataset_name = "males",
+  use_parallel_startpoints = FALSE,
+  plot = FALSE)
+
+sustain_output_females = run_OSA(
+  prob_score = prob_score0[patient_data$Gender %in% "Female",,],
+  score_vals = score_vals,
+  SuStaInLabels = SuStaInLabels,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified,
+  N_iterations_MCMC = N_iterations_MCMC,
+  output_folder = output_folder,
+  dataset_name = "females",
+  use_parallel_startpoints = FALSE,
+  plot = FALSE)
 
 sustain_output_permutations = run_OSA_permuted(
   patient_data = patient_data,
