@@ -1,26 +1,6 @@
 library(fxtas)
 output_folder = fs::path(here::here(), "output/output.fixed_CV")
 
-if(FALSE)
-{
-  results_females_first = extract_results_from_pickle(
-    n_s = 1,
-    rda_filename = "data.RData",
-    dataset_name = "females",
-    output_folder = output_folder)
-
-  results_males_first = extract_results_from_pickle(
-    n_s = 1,
-    rda_filename = "data.RData",
-    dataset_name = "females",
-    output_folder = output_folder)
-
-  llik_females = results_females_first$samples_likelihood
-  llik_males = results_males_first$samples_likelihood
-
-  test_stat = mean(llik_females) + mean(llik_males)
-}
-
 n_permutations = 1000
 args = commandArgs(trailingOnly = TRUE) |> as.numeric()
 
@@ -60,10 +40,10 @@ for (p in permutations)
 }
 
 permuted_test_stats |>
-  save(
+  saveRDS(
   file =
     output_folder |>
     fs::path(
-      paste0("permuted_test_stats", args[1], "-", args[1] + 19, ".RData")))
+      paste0("permuted_test_stats", args[1], "-", args[1] + 19, ".rds")))
 
 message("ending `analyze_permutations.R`")

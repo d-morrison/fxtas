@@ -323,6 +323,7 @@ sustain_output = run_OSA(
 #| label: model-males
 #| include: false
 #| eval: !expr fit_models
+
 sustain_output_males = run_OSA(
   prob_score = prob_score0[patient_data$Gender %in% "Male",,],
   score_vals = score_vals,

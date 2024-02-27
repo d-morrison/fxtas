@@ -100,7 +100,7 @@ run_OSA = function(
     {
       message('Starting cross-validation of ', dataset_name)
       message("here are the current folds: ")
-      print(splits)
+      print(splits) # can't easily rbind; potentially uneven lengths in folds
       message('folds to run: ', paste(CV_fold_nums, collapse = ', '))
     }
 
