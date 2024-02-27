@@ -26,7 +26,7 @@
 #SBATCH --requeue
 #
 #  Job array indexes
-#SBATCH --array=1-50:1
+#SBATCH --array=1-981:20
 #
 # Initialization for serial execution
 #

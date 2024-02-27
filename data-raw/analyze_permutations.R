@@ -24,7 +24,7 @@ if(FALSE)
 }
 
 n_permutations = 1000
-args = commandArgs(trailingOnly = TRUE)
+args = commandArgs(trailingOnly = TRUE) |> as.numeric()
 
 if(length(args==0))
 {
@@ -61,4 +61,4 @@ permuted_test_stats |>
   file =
     output_folder |>
     fs::path(
-      paste0("permuted_test_stats", args[1], ".RData")))
+      paste0("permuted_test_stats", args[1], "-", args[1] + 19, ".RData")))
