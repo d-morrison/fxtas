@@ -348,3 +348,4 @@ sustain_output_cgg100minus_females = run_OSA(
   use_parallel_startpoints = FALSE,
   plot = FALSE)
 
+message('Ending at: ', Sys.time())
