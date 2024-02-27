@@ -17,7 +17,9 @@ if(length(args)==0)
 
 message('analyzing permutations: ', paste(range(permutations), collapse = "-"))
 
-permuted_test_stats = numeric(length = length(permutations))
+permuted_test_stats =
+  numeric(length = length(permutations)) |>
+  set_names(permutations |> as.character())
 for (p in permutations)
 {
   message('analyzing permutation ', p)
@@ -36,7 +38,7 @@ for (p in permutations)
   llik_females = results_females_first$samples_likelihood
   llik_males = results_males_first$samples_likelihood
   cur_test_stat = mean(llik_females) + mean(llik_males)
-  permuted_test_stats[p] = cur_test_stat
+  permuted_test_stats[as.character(p)] = cur_test_stat
 }
 
 permuted_test_stats |>

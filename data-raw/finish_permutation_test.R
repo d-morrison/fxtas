@@ -21,9 +21,10 @@ output_folder = fs::path(here::here(), "output/output.fixed_CV")
 }
 
 permutation_results = output_folder |> fs::path("permutation_test_stats")
-perm
+test_stats = c()
 files = dir(permutation_results, full = TRUE)
 for (cur_file in files)
 {
   load(cur_file)
+  test_stats = test_stats |> c(permuted_test_stats)
 }
