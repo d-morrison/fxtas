@@ -41,12 +41,13 @@ for (p in permutations)
   permuted_test_stats[as.character(p)] = cur_test_stat
 }
 
-permuted_test_stats |>
-  saveRDS(
-  file =
-    output_folder |>
-    fs::path(
-      "test_stats",
-      paste0("permuted_test_stats", args[1], "-", args[1] + 19, ".rds")))
+file_path = output_folder |>
+  fs::path(
+    "test_stats",
+    paste0("permuted_test_stats", args[1], "-", args[1] + 19, ".rds"))
+
+if(file.exists(file_path)) file.remove(file_path)
+
+permuted_test_stats |> saveRDS(file = file_path)
 
 message("ending `analyze_permutations.R`")
