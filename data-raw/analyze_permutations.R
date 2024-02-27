@@ -44,6 +44,7 @@ permuted_test_stats |>
   file =
     output_folder |>
     fs::path(
+      "test_stats",
       paste0("permuted_test_stats", args[1], "-", args[1] + 19, ".rds")))
 
 message("ending `analyze_permutations.R`")
