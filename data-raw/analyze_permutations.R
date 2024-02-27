@@ -26,11 +26,13 @@ if(FALSE)
 n_permutations = 1000
 args = commandArgs(trailingOnly = TRUE) |> as.numeric()
 
-if(length(args==0))
+if(length(args)==0)
 {
+  message('no arguments found')
   permutations = 1:n_permutations
 } else
 {
+  message("args = ", args)
   start = args[1]
   permutations = start:(start+19)
 }
