@@ -1,22 +1,17 @@
-# devtools::load_all()
+message('Starting at: ', Sys.time())
+
+library(reticulate)
+py_config()
+
 library(fxtas)
 library(tidyverse)
-# library(reticulate)
 library(pander)
-reticulate::use_condaenv("fxtas39", required = FALSE)
-# if(!reticulate::py_module_available("pySuStaIn"))
-# {
-#   message('installing pySuStaIn')
-#   install_pySuStaIn("fxtas")
-# }
-reticulate::py_config() |> print()
-# pySuStaIn = reticulate::import("pySuStaIn", delay_load = TRUE)
-# pySuStaIn = reticulate::import_from_path("pySuStaIn", path = "~/.virtualenvs/r-pySuStaIn/lib/python3.11/site-packages/")
-# pySuStaIn
-# fun1 = pySuStaIn$OrdinalSustain
-# reticulate::use_condaenv(condaenv = "fxtas")
+# reticulate::use_condaenv("fxtas39", required = TRUE)
 
-# reticulate::use_virtualenv("r-pySuStaIn")
+if(!reticulate::py_module_available("pySuStaIn"))
+{
+  stop("pySuStaIn is not installed correctly.")
+}
 
 #| label: "set run parameters"
 #|
