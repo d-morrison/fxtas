@@ -102,21 +102,16 @@ The data come from the GP and GP4 studies. In the primary analyses, we analyzed 
 
 biomarker_groups = compile_biomarker_groups_table()
 
-SuStaInLabels = 
-  biomarker_varnames = 
+biomarker_varnames = 
   biomarker_groups |> 
   pull("biomarker")
 
-
-df = 
-  gp34_v1_usable |> 
-  filter(
-    !is.na(CGG))
-
 biomarker_levels = 
-  lapply(df[,biomarker_varnames], F = levels)
+  gp34_v1_usable |> 
+  select(all_of(biomarker_varnames)) |> 
+  lapply(F = levels)
 
-df = df |>
+df = gp34_v1_usable |>
   mutate(
     across(
       all_of(biomarker_varnames), 
@@ -304,7 +299,7 @@ save.image(file = fs::path(output_folder, "data.RData"))
 sustain_output = run_OSA(
   prob_score = prob_score0,
   score_vals = score_vals,
-  SuStaInLabels = SuStaInLabels,
+  biomarker_varnames = biomarker_varnames,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max, 
   N_iterations_MCMC = N_iterations_MCMC, 
@@ -327,7 +322,7 @@ sustain_output = run_OSA(
 sustain_output_males = run_OSA(
   prob_score = prob_score0[patient_data$Gender %in% "Male",,],
   score_vals = score_vals,
-  SuStaInLabels = SuStaInLabels,
+  biomarker_varnames = biomarker_varnames,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max_stratified, 
   N_iterations_MCMC = N_iterations_MCMC, 
@@ -348,7 +343,7 @@ sustain_output_males = run_OSA(
 sustain_output_females = run_OSA(
   prob_score = prob_score0[patient_data$Gender %in% "Female",,],
   score_vals = score_vals,
-  SuStaInLabels = SuStaInLabels,
+  biomarker_varnames = biomarker_varnames,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max_stratified, 
   N_iterations_MCMC = N_iterations_MCMC, 
@@ -370,7 +365,7 @@ sustain_output_cgg100plus = run_OSA(
   prob_score = prob_score0[
     patient_data$`CGG` >= 100,,],
   score_vals = score_vals,
-  SuStaInLabels = SuStaInLabels,
+  biomarker_varnames = biomarker_varnames,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max_stratified, 
   N_iterations_MCMC = N_iterations_MCMC, 
@@ -391,7 +386,7 @@ sustain_output_cgg100minus = run_OSA(
   prob_score = prob_score0[
     patient_data$`CGG` < 100,,],
   score_vals = score_vals,
-  SuStaInLabels = SuStaInLabels,
+  biomarker_varnames = biomarker_varnames,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max_stratified, 
   N_iterations_MCMC = N_iterations_MCMC, 

@@ -1,6 +1,8 @@
 library(fxtas)
-output_folder = fs::path(here::here(), "output/output.fixed_CV")
 
+test_stats = collect_permutation_test_stats()
+
+# compare with observed test stat
 {
   results_females_first = extract_results_from_pickle(
     n_s = 1,
@@ -17,14 +19,16 @@ output_folder = fs::path(here::here(), "output/output.fixed_CV")
   llik_females = results_females_first$samples_likelihood
   llik_males = results_males_first$samples_likelihood
 
-  test_stat = mean(llik_females) + mean(llik_males)
+  test_stat = mean(llik_females + llik_males)
 }
 
-permutation_results = output_folder |> fs::path("permutation_test_stats")
-test_stats = c()
-files = dir(permutation_results, full = TRUE)
-for (cur_file in files)
-{
-  load(cur_file)
-  test_stats = test_stats |> c(permuted_test_stats)
-}
+library(ggplot2)
+
+tibble(test_stats = test_stats) |>
+  ggplot(aes(x = .data$test_stats)) +
+  geom_histogram(bins = 100, alpha = .7) +
+  xlim(range(c(test_stats, test_stat))) +
+  xlab("test statistic (mean log-likelihood)") +
+  geom_vline(aes(xintercept = test_stat, col = 'observed test statistic')) +
+  theme_bw() +
+  theme(legend.position = "bottom")
