@@ -45,6 +45,7 @@ compute_prob_scores = function(
 
   for (biomarker in biomarker_varnames)
   {
+
     if(verbose) message('computing prob scores for ', biomarker, " at ", Sys.time())
     for (datascore in DataScores)
     {

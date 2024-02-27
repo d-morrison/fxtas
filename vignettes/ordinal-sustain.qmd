@@ -57,7 +57,7 @@ run_CV =  TRUE
 # run_CV = FALSE
 
 N_startpoints = 10L
-N_S_max = 5L
+N_S_max = 8L
 N_S_max_stratified = 1L
 N_CV_folds = 10L
 N_iterations_MCMC = 1e5L
@@ -65,7 +65,7 @@ dataset_name = 'sample_data'
 root_dir = here::here()
 setwd(root_dir)
 output_folder = 
-  "output/mdp/output.fixed_CV/" |> 
+  "output/output.fixed_CV/" |> 
   fs::dir_create()
 ```
 
@@ -88,6 +88,9 @@ n_missing_CGG = visit1$CGG |> is.na() |> sum()
 n_above_200 = sum(visit1$CGG >= 200, na.rm = TRUE)
 gp34_v1_usable = visit1 |> filter(CGG < 200)
 gp34_v1_cases = gp34_v1_usable |> filter(CGG >= 55)
+# note: there are 231 records in `visit1` with CGG >= 55, but 4 have CGG >= 200
+# previously `nrow(gp34_v1_cases)` was 221, which was based on incorrectly filtering on a version of CGG that hadn't been backfilled.
+
 gp34_v1_controls =  gp34_v1_usable |> filter(CGG < 55)
 ```
 
@@ -257,11 +260,10 @@ prob_correct =
   control_data |> 
   compute_prob_correct(
     max_prob = .95,
-    biomarkers = biomarker_varnames[1],
+    biomarkers = biomarker_varnames,
     DataScores = DataScores)
 
 prob_score0 = compute_prob_scores(
-  verbose = TRUE,
   dataset = patient_data,
   biomarker_varnames,
   ModelScores = ModelScores,
@@ -298,7 +300,7 @@ save.image(file = fs::path(output_folder, "data.RData"))
 #| message: false
 #| label: model-all-data
 #| include: false
-#| eval: true
+#| eval: !expr fit_models
 sustain_output = run_OSA(
   prob_score = prob_score0,
   score_vals = score_vals,
@@ -320,7 +322,7 @@ sustain_output = run_OSA(
 #| message: false
 #| label: model-males
 #| include: false
-#| eval: false
+#| eval: !expr fit_models
 sustain_output_males = run_OSA(
   prob_score = prob_score0[patient_data$Gender %in% "Male",,],
   score_vals = score_vals,
@@ -341,7 +343,7 @@ sustain_output_males = run_OSA(
 #| message: false
 #| label: model-females
 #| include: false
-#| eval: false
+#| eval: !expr fit_models
 sustain_output_females = run_OSA(
   prob_score = prob_score0[patient_data$Gender %in% "Female",,],
   score_vals = score_vals,
@@ -362,7 +364,7 @@ sustain_output_females = run_OSA(
 #| message: false
 #| label: "cgg_over_100"
 #| include: false
-#| eval: false
+#| eval: !expr fit_models
 sustain_output_cgg100plus = run_OSA(
   prob_score = prob_score0[
     patient_data$`CGG` >= 100,,],
@@ -383,7 +385,7 @@ sustain_output_cgg100plus = run_OSA(
 #| message: false
 #| label: "cgg_under_100"
 #| include: false
-#| eval: false
+#| eval: !expr fit_models
 sustain_output_cgg100minus = run_OSA(
   prob_score = prob_score0[
     patient_data$`CGG` < 100,,],
@@ -410,81 +412,81 @@ results_v1 = extract_results_from_pickle(
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "sample_data",
-  output_folder = "output/mdp/output.fixed_CV")
+  output_folder = "output/output.fixed_CV")
 
 
 results_females_first = extract_results_from_pickle(
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "females",
-  output_folder = "output/mdp/output.fixed_CV")
+  output_folder = "output/output.fixed_CV")
 
 fig_females_first = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "females",
-  output_folder = "output/mdp/output.fixed_CV")
+  output_folder = "output/output.fixed_CV")
 
 fig_females_all = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "gp34_longitudinal.RData",
   dataset_name = "females",
-  output_folder = "output/mdp/gp34_longitudinal")
+  output_folder = "output/gp34_longitudinal")
 
 fig_females_mv_only = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "gp34_multivisit_only.RData",
   dataset_name = "females",
-  output_folder = "output/mdp/gp34_multivisit_only")
+  output_folder = "output/gp34_multivisit_only")
 
 
 fig_males_first = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "males",
-  output_folder = "output/mdp/output.fixed_CV")
+  output_folder = "output/output.fixed_CV")
 
 fig_males_all = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "gp34_longitudinal.RData",
   dataset_name = "males",
-  output_folder = "output/mdp/gp34_longitudinal")
+  output_folder = "output/gp34_longitudinal")
 
 fig_males_mv_only = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "gp34_multivisit_only.RData",
   dataset_name = "males",
-  output_folder = "output/mdp/gp34_multivisit_only")
+  output_folder = "output/gp34_multivisit_only")
 
 fig_both_first = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "sample_data",
-  output_folder = "output/mdp/output.fixed_CV")
+  output_folder = "output/output.fixed_CV")
 
 fig_both_all = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "gp34_longitudinal.RData",
   dataset_name = "gp34_longitudinal",
-  output_folder = "output/mdp/gp34_longitudinal")
+  output_folder = "output/gp34_longitudinal")
 
 fig_both_mv_only = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "gp34_multivisit_only.RData",
   dataset_name = "gp34_multivisit_only",
-  output_folder = "output/mdp/gp34_multivisit_only")
+  output_folder = "output/gp34_multivisit_only")
 
 fig_male_trax_gp34 = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "data.Rdata",
   dataset_name = "sample_data",
-  output_folder = "output/mdp/trax_gp34_males_v1")
+  output_folder = "output/trax_gp34_males_v1")
 
 fig_trax_only = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "data.Rdata", 
   dataset_name = "trax_visit1",
-  output_folder = "output/mdp/trax_visit1")
+  output_folder = "outputOLD/trax_visit1")
 
 fig_under100 = extract_figs_from_pickle(
   n_s = 1,
@@ -922,6 +924,7 @@ We performed `r N_CV_folds`-fold cross-validation on the unstratified GP+GP4 dat
 ```{r}
 #| fig-cap: "Cross-validation information criterion"
 #| label: fig-cvic
+#| eval: !expr fit_models
 
 library(ggplot2)
 
@@ -952,6 +955,7 @@ $$
 ```{r}
 #| fig-cap: "Test set log-likelihood across folds"
 #| label: fig-boxplot-loglik-cv
+#| eval: !expr fit_models
 temp$loglike_matrix |> 
   plot_cv_loglik()
 
