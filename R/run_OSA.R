@@ -48,13 +48,13 @@ run_OSA = function(
     prob_score = prob_score[,,-1, drop = FALSE],
     score_vals = score_vals,
     biomarker_labels = SuStaInLabels,
-    N_startpoints = N_startpoints,
+    N_startpoints = N_startpoints |> as.integer(),
     N_S_max = N_S_max |> as.integer(), # double doesn't work
     N_iterations_MCMC = N_iterations_MCMC,
     output_folder = output_folder,
     dataset_name = dataset_name,
     use_parallel_startpoints = use_parallel_startpoints,
-    seed = seed)
+    seed = seed |> as.integer())
 
   sus_output = sustain_input$run_sustain_algorithm(plot = plot)
   names(sus_output) = c(

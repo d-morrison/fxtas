@@ -406,6 +406,13 @@ sustain_output_cgg100minus = run_OSA(
 ```{r}
 #| label: extract-figs
 
+results_v1 = extract_results_from_pickle(
+  n_s = 1,
+  rda_filename = "data.RData",
+  dataset_name = "sample_data",
+  output_folder = "output/mdp/output.fixed_CV")
+
+
 results_females_first = extract_results_from_pickle(
   n_s = 1,
   rda_filename = "data.RData",
