@@ -197,7 +197,7 @@ sustain_output_permutations = run_OSA_permuted(
   N_startpoints = N_startpoints,
   N_S_max = 1L,
   N_iterations_MCMC = N_iterations_MCMC,
-  output_folder = output_folder,
+  output_folder = output_folder |> fs::path("permutations") |> fs::dir_create(),
   use_parallel_startpoints = FALSE,
   plot = FALSE)
 

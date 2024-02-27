@@ -1,5 +1,5 @@
 library(fxtas)
-output_folder = fs::path(here::here(), "output/output.fixed_CV")
+output_folder = fs::path(here::here(), "output/output.fixed_CV/permutations")
 
 n_permutations = 1000
 args = commandArgs(trailingOnly = TRUE) |> as.numeric()
