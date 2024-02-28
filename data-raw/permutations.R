@@ -2,6 +2,9 @@
 #| message: false
 message('Starting at: ', Sys.time())
 
+args = commandArgs(trailingOnly = TRUE)
+message("args = ", args |> paste(collapse = "; "))
+
 library(reticulate)
 py_config()
 
@@ -30,8 +33,6 @@ run_CV =  TRUE
 N_startpoints = 10L
 N_S_max = 8L
 N_S_max_stratified = 1L
-args = commandArgs(trailingOnly = TRUE)
-message("args = ", args |> paste(collapse = "; "))
 
 if(length(args) == 0)
 {
