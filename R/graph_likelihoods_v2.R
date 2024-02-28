@@ -10,11 +10,15 @@ graph_likelihoods_v2 = function(
     likelihoods,
     alpha = 0.5)
 {
-  likelihoods |>
-    format_likelihoods() |>
-    tidyr::pivot_longer(
-      cols = paste(1:ncol(likelihoods), "subtype(s)")
-    ) |>
+
+  data =
+    likelihoods |>
+    format_likelihoods()
+
+
+  labels = data |> slice_head(n = 1, by = name)
+
+  data |>
     ggplot(
       aes(
         x = Iteration,
@@ -22,6 +26,12 @@ graph_likelihoods_v2 = function(
         col = name
       )) +
     geom_line(alpha = alpha) +
+    # ggplot2::annotate(
+    #   "text",
+    #   x = 10000,
+    #   y = labels$value,
+    #   label = labels$name
+    # ) +
     # facet_wrap(~name) +
     ylab("log-likelihood") +
     theme_bw()

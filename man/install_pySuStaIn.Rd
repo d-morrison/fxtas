@@ -4,16 +4,34 @@
 \alias{install_pySuStaIn}
 \title{Install the \code{pySuStaIn} python package from github}
 \usage{
-install_pySuStaIn(envname = "r-pySuStaIn", python_version = "<3.10", ...)
+install_pySuStaIn(
+  envname = "r-pySuStaIn",
+  python_version = "<3.10",
+  method = "auto",
+  pip = TRUE,
+  ...
+)
 }
 \arguments{
-\item{envname}{The name of, or path to, a conda environment.}
+\item{envname}{The name, or full path, of the environment in which Python
+packages are to be installed. When \code{NULL} (the default), the active
+environment as set by the \code{RETICULATE_PYTHON_ENV} variable will be used;
+if that is unset, then the \code{r-reticulate} environment will be used.}
 
-\item{python_version}{The version of Python to be installed. Set this if
-you'd like to change the version of Python associated with a particular
-conda environment.}
+\item{python_version}{The requested Python version. Ignored when attempting
+to install with a Python virtual environment.}
 
-\item{...}{Optional arguments, reserved for future expansion.}
+\item{method}{Installation method. By default, "auto" automatically finds a
+method that will work in the local environment. Change the default to force
+a specific installation method. Note that the "virtualenv" method is not
+available on Windows.}
+
+\item{pip}{Boolean; use \code{pip} for package installation? This is only relevant
+when Conda environments are used, as otherwise packages will be installed
+from the Conda repositories.}
+
+\item{...}{Additional arguments passed to \code{\link[reticulate:conda_install]{conda_install()}}
+or \code{\link[reticulate:virtualenv_install]{virtualenv_install()}}.}
 }
 \description{
 This function is a wrapper for \link[reticulate:conda-tools]{reticulate::conda_install}.
@@ -21,5 +39,16 @@ Its implementation follows the instructions in:
 \itemize{
 \item https://rstudio.github.io/reticulate/articles/package.html
 \item https://rstudio.github.io/reticulate/articles/python_dependencies.html
+}
+}
+\details{
+\subsection{\code{python_version}}{
+
+\code{pySuStaIn} and its dependency \code{kde_ebm} currently (2024-02-14) do not appear to be  with python >= 3.10.
+}
+
+\subsection{\code{pip}}{
+
+\code{pip = TRUE} appears to be necessary, since \code{pySuStaIn} needs to be installed directly from github.com
 }
 }

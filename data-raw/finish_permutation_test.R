@@ -19,7 +19,7 @@ test_stats = collect_permutation_test_stats()
   llik_females = results_females_first$samples_likelihood
   llik_males = results_males_first$samples_likelihood
 
-  test_stat = mean(llik_females + llik_males)
+  test_stat = mean(llik_females) + mean(llik_males)
 }
 
 library(ggplot2)

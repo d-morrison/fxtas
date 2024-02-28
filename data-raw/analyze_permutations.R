@@ -20,6 +20,7 @@ message('analyzing permutations: ', paste(range(permutations), collapse = "-"))
 permuted_test_stats =
   numeric(length = length(permutations)) |>
   magrittr::set_names(permutations |> as.character())
+
 for (p in permutations)
 {
   message('analyzing permutation ', p)
@@ -42,9 +43,8 @@ for (p in permutations)
 }
 
 file_path = output_folder |>
-  fs::path(
-    "test_stats",
-    paste0("permuted_test_stats", args[1], "-", args[1] + 19, ".rds"))
+  paste0("permuted_test_stats", args[1], "-", args[1] + 19, ".rds") |>
+  fs::path("test_stats", _)
 
 message("permuted_test_stats = \n")
 print(permuted_test_stats)

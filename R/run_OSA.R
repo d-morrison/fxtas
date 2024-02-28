@@ -25,7 +25,7 @@ run_OSA = function(
     prob_score,
     score_vals,
     SuStaInLabels,
-    N_startpoints,
+    N_startpoints = 25,
     N_S_max,
     N_iterations_MCMC = 1e5L,
     output_folder,

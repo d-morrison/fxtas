@@ -6,7 +6,7 @@
 #' @param picklename the name of the pickle file to open
 #' @param rda_filename name of rda file containing environment used to run analyses
 #' @inheritDotParams format_results_list format_sst
-#' @return
+#' @returns
 #' @export
 #'
 extract_results_from_pickle = function(
@@ -36,3 +36,13 @@ extract_results_from_pickle = function(
   return(results)
 
 }
+
+#' Extract results from multiple pickle files
+#'
+#' @inheritParams extract_results_from_pickle
+#' @returns
+#' @export
+#'
+extract_results_from_pickles =
+  extract_results_from_pickle |>
+  Vectorize(vectorize.args = "picklename")
