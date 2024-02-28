@@ -1,3 +1,10 @@
+#' Compute permutation test statistic
+#'
+#' @param output_folder where to find the relevant pickle files
+#'
+#' @returns the observed test statistic (a [numeric()] scalar)
+#' @export
+#'
 get_observed_permutation_test_stat = function(
     output_folder)
 {

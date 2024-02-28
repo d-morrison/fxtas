@@ -12,7 +12,7 @@ plot_permutation_results(permuted_test_stats, observed_test_stat)
 \item{observed_test_stat}{a \code{\link[=numeric]{numeric()}} with length 1}
 }
 \value{
-a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}
+an object of class \code{"permutation-test-results"}, which extends \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} by adding a \code{p-value} attribute.
 }
 \description{
 Plot permutation test results

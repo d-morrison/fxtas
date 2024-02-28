@@ -73,7 +73,6 @@ output_folder =
 
 ## Data
 
-
 ```{r}
 #| label: fig-hist-CGG-gp34-v1
 #| fig-cap: "Bar-plot of CGG repeats among GP/GP4 participants"
@@ -168,6 +167,21 @@ We first fit the model using the first visit after age 40 for each participant i
 We also fit the model stratified by sex (again with no latent subgroups; one event sequence per per sex; see @fig-first-only-2 and @fig-first-only-3).
 
 We also fit the model stratified by CGG repeats (<100 vs $\ge$ 100), also with no latent subgroups (see @fig-pvd-by-cgg).
+
+#### Testing for differences between strata
+
+To test for statistically significant differences in event sequences between sexes and CGG repeat levels, we implemented a permutation test, in which we created 1000 permuted datasets in which the strata variables were randomly shuffled. We computed the mean log-likelihood of the data for each permuted dataset (averaging across MCMC samples and summing across strata) and compared the distribution of permuted mean log-likelihoods to the observed log-likelihood calculated from the original (unpermuted) dataset.
+
+```{r}
+#| fig-cap: "Histogram of mean log-likelihoods for GP34 visit 1 data, permuted by sex"
+#| label: fig-permute-llik-sex
+
+plot_permutation_results(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats) |>
+  print()
+
+```
 
 ### Latent subgroups
 
@@ -564,6 +578,21 @@ fig_females_first |> print()
 
 ```
 
+```{r}
+#| label: p-val-test-sex
+output_folder = "output/output.fixed_CV/"
+
+permuted_test_stats = collect_permutation_test_stats(output_folder)
+observed_test_stat = get_observed_permutation_test_stat(output_folder)
+
+pval_sex_gp34_v1 = compute_permutation_pvalue(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats
+)
+```
+
+The data provided statistically significant evidence of a difference in event sequences between males and females (p `r pval_sex_gp34_v1 |> scales::pvalue()`).
+
 ## Stratified by CGG repeats
 
 @fig-pvd-by-cgg shows the estimated event sequence model, this time comparing the unstratified results with stratification by CGG repeats (<100 vs 100+; assuming no latent subgroups within strata). Here, we find that patients with CGG <100 experienced SCL90 events earlier in the sequence than patients with CGG $\ge$ 100.
@@ -877,9 +906,9 @@ fig_females_mv_only |> print()
 
 {{< include general-data-notes.qmd >}}
 
-## Hypothesis testing
+## Hypothesis testing {.appendix}
 
-To test for differences in event sequence between strata such as sex and CGG repeat level, we implemented a permutation test, in which we created 1000 permuted datasets in which the strata variables were randomly shuffled. We computed the mean log-likelihood of the data for each permuted dataset (averaging across MCMC samples and summing across strata) and compared the distribution of permuted mean log-likelihoods to the observed log-likelihood calculated from the original (unpermuted) dataset. @fig-permute-llik-sex compares the observed log-likelihood for the sex-stratified model to the distribution of mean log-likelihoods when sex is permuted.
+@fig-permute-llik-sex compares the observed log-likelihood for the sex-stratified model to the distribution of mean log-likelihoods when sex is permuted.
 
 ```{r}
 #| fig-cap: "Histogram of mean log-likelihoods for GP34 visit 1 data, permuted by sex"
@@ -889,18 +918,12 @@ output_folder = "output/output.fixed_CV/"
 permuted_test_stats = collect_permutation_test_stats(output_folder)
 observed_test_stat = get_observed_permutation_test_stat(output_folder)
 
-pval_sex_gp34_v1 = compute_permutation_pvalue(
-  observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats
-)
-
 plot_permutation_results(
   observed_test_stat = observed_test_stat,
   permuted_test_stats = permuted_test_stats) |>
   print()
 
 ```
-
 
 ## Detecting latent subgroups {#sec-subgroups .appendix}
 

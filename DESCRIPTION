@@ -38,6 +38,7 @@ Suggests:
     pander,
     purrr,
     rmarkdown,
+    scales,
     testthat (>= 3.0.0),
     tidyverse,
     VennDiagram
