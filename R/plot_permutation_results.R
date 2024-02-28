@@ -18,6 +18,7 @@ plot_permutation_results = function(
     ggplot2::geom_histogram(bins = 100, alpha = .7) +
     ggplot2::xlim(xrange) +
     ggplot2::xlab("test statistic (mean log-likelihood)") +
+    ggplot2::ylab('number of permuted datasets') +
     ggplot2::geom_vline(
       ggplot2::aes(
         xintercept = observed_test_stat,
