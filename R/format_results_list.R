@@ -8,7 +8,7 @@
 #' @param biomarker_event_names vector of biomarker event names
 #' @param format_sst should the subtype and stage table be formatted? (doesn't work for cross-validation fold pickle-files)
 #'
-#' @return
+#' @returns a `"SuStaIn-model"` object (extends [list()])
 #'
 format_results_list = function(
     results,
@@ -34,5 +34,8 @@ format_results_list = function(
       results |>
       extract_subtype_and_stage_table()
   }
+
+  class(results) = c("SuStaIn-model", class(results))
+
   return(results)
 }

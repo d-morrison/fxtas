@@ -287,7 +287,7 @@ for (i in biomarker_varnames)
   score_vals[i,score_vals[i,] > nlevs[i]-1] = 0
 }
 
-save.image(file = fs::path(output_folder, "data.RData"))
+# save.image(file = fs::path(output_folder, "data.RData"))
 
 ```
 
@@ -310,10 +310,7 @@ sustain_output = run_OSA(
   seed = 1,
   plot = FALSE,
   patient_data = patient_data,
-  CV_fold_nums = c(1:5, 7:10),
   N_CV_folds = N_CV_folds)
-
-
 
 ```
 
@@ -344,6 +341,7 @@ sustain_output_males = run_OSA(
 #| label: model-females
 #| include: false
 #| eval: !expr fit_models
+
 sustain_output_females = run_OSA(
   prob_score = prob_score0[patient_data$Gender %in% "Female",,],
   score_vals = score_vals,
@@ -402,14 +400,26 @@ sustain_output_cgg100minus = run_OSA(
 
 ```
 
+```{r}
+
+fs::path_package("fxtas", "extdata") |> 
+  fs::path("ordinal-sustain-results.rda") |> 
+  save.image()
+   
+# fs::path_package("fxtas", "extdata") |>
+#   fs::path("ordinal-sustain-results.rda") |>
+#   load()
+
+```
+
 
 # Results
 
 ```{r}
 #| label: extract-figs
 
-results_v1 = extract_results_from_pickle(
-  n_s = 1:2,
+results_v1 = extract_results_from_pickles(
+  n_s = 1:N_S_max,
   rda_filename = "data.RData",
   dataset_name = "sample_data",
   output_folder = "output/output.fixed_CV")
@@ -525,7 +535,7 @@ fig_over100_females = extract_figs_from_pickle(
 
 @fig-first-only-1 shows the event sequence model, estimated using the first visits per participant from the combined GP and GP4 data and assuming that all individuals share the same event sequence; in other words, assuming one subgroup.
 
-@fig-first-only-2 and @fig-first-only-3 show estimated event sequences stratified by sex, assuming one  subgroup per sex. It appears that males experience increasing ataxia severity earlier in the event sequence than females, while females experience MRI events and SCL psychological symptoms earlier in the event sequence than males.^[There are probably other patterns worth noting here; clinical folks, let us know what you notice!]
+@fig-first-only-2 and @fig-first-only-3 show estimated event sequences stratified by sex, assuming one subgroup per sex. It appears that males experience increasing ataxia severity earlier in the event sequence than females, while females experience MRI events and SCL psychological symptoms earlier in the event sequence than males.^[There are probably other patterns worth noting here; clinical folks, let us know what you notice!]
 
 
 ```{r}
@@ -875,13 +885,10 @@ The simplest option is to compare the likelihood of the data for the fitted mode
 #| fig-cap: log-likelihoods of MCMC samples, by number of subtypes
 #| eval: !expr fit_models
 
-results_v1 = extract_results_from_pickle(
-  n_s = 1,
-  rda_filename = "data.RData",
-  dataset_name = "sample_data",
-  output_folder = "output/output.fixed_CV")
+lliks = results_v1 |> 
+  sapply(F = function(x) x$samples_likelihood)
 
-sustain_output$samples_likelihood |>
+lliks |>
   graph_likelihoods_v2(alpha = 0.5) |>
   suppressWarnings()
 
@@ -931,8 +938,6 @@ We performed `r N_CV_folds`-fold cross-validation on the unstratified GP+GP4 dat
 #| fig-cap: "Cross-validation information criterion"
 #| label: fig-cvic
 #| eval: !expr fit_models
-
-library(ggplot2)
 
 temp = sustain_output |> attr("CV")
 temp$CVIC |> plot_CVIC()

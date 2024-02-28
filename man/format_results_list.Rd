@@ -29,6 +29,9 @@ format_results_list(
 
 \item{format_sst}{should the subtype and stage table be formatted? (doesn't work for cross-validation fold pickle-files)}
 }
+\value{
+a \code{"SuStaIn-model"} object (extends \code{\link[=list]{list()}})
+}
 \description{
 Format results list extracted from pickle file
 }

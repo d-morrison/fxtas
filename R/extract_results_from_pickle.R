@@ -45,4 +45,4 @@ extract_results_from_pickle = function(
 #'
 extract_results_from_pickles =
   extract_results_from_pickle |>
-  Vectorize(vectorize.args = "picklename")
+  Vectorize(vectorize.args = c("n_s", "picklename"), SIMPLIFY = FALSE)

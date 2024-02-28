@@ -8,7 +8,7 @@ run_OSA(
   prob_score,
   score_vals,
   SuStaInLabels,
-  N_startpoints,
+  N_startpoints = 25,
   N_S_max,
   N_iterations_MCMC = 100000L,
   output_folder,
