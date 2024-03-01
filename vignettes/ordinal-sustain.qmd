@@ -21,6 +21,8 @@ text-align: center;
 
 # Introduction
 
+The fragile X-associated tremor/ataxia syndrome (FXTAS) is a relatively newly discovered neurodegenerative disorder caused by the premutation (55 to 200 CGG repeats) in the FMR1 gene [@hagerman2001intention]. The premutation is associated with elevation of the FMR1 mRNA and this leads to RNA toxicity including oxidative stress, mitochondrial dysfunction, calcium dysregulation and sequestration of proteins important to neuronal function. Proteins and neurofilaments sequester  with the excess FMR1 mRNA leading to the formation of eosinophilic, tau negative intranuclear inclusions in neurons and astrocytes throughout the CNS and even in the peripheral nervous system (Greco et al 2006; Hunter et al 2011). FXTAS usually begins in the 60s and as premutation carriers age, the prevalence of FXTAS increases from approximately 40% in males in their 60s to 75% in their 80s (Jacquemont et al 2004 JAMA).Females with the premutation are also at risk for FXTAS but the prevalence is lower and approximately 16 to 20% may develop FXTAS but it is less severe than in the males (Tassone et al 2023 Genes conf summary). The higher the CGG repeat within the premutation range the earlier the onset of FXTAS and the earlier the age of death (Greco et al 2006 Brain)The prevalence of the premutation is approximately 1 in148 to 200 females in the general population and one in 290 to 855 males. (Maenner et al 2013 AJMG neuropsychiatric genetics; Hunter et al 2014 AJMG part A ).
+
 Here, we apply the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2021ordinal] to find event sequences for FXTAS patients.
 
 ```{r, include = FALSE}
@@ -57,7 +59,7 @@ run_CV =  TRUE
 # run_CV = FALSE
 
 N_startpoints = 10L
-N_S_max = 8L
+N_S_max = 6L
 N_S_max_stratified = 1L
 N_CV_folds = 10L
 N_iterations_MCMC = 1e5L
@@ -171,17 +173,6 @@ We also fit the model stratified by CGG repeats (<100 vs $\ge$ 100), also with n
 #### Testing for differences between strata
 
 To test for statistically significant differences in event sequences between sexes and CGG repeat levels, we implemented a permutation test, in which we created 1000 permuted datasets in which the strata variables were randomly shuffled. We computed the mean log-likelihood of the data for each permuted dataset (averaging across MCMC samples and summing across strata) and compared the distribution of permuted mean log-likelihoods to the observed log-likelihood calculated from the original (unpermuted) dataset.
-
-```{r}
-#| fig-cap: "Histogram of mean log-likelihoods for GP34 visit 1 data, permuted by sex"
-#| label: fig-permute-llik-sex
-
-plot_permutation_results(
-  observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats) |>
-  print()
-
-```
 
 ### Latent subgroups
 

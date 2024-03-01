@@ -286,8 +286,8 @@ vars = c(
   # "Ataxia",
   # "Ataxia: severity",
   # "Ataxia: severity*"
-  "Ataxia: Age of onset",
-  "Ataxia: Age of onset: missingness reasons"
+  "Ataxia: Age of onset"
+  # "Ataxia: Age of onset: missingness reasons"
 )
 
 table1(na.is.category = FALSE, 
