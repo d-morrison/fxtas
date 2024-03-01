@@ -63,11 +63,12 @@ which conda
 conda activate fxtas39
 which R
 R --version
+export offset=0
 echo ""
-echo Rscript  "$qqjob" $SLURM_ARRAY_TASK_ID \>\& "$qqodir/out.$SLURM_ARRAY_TASK_ID"
+echo Rscript  "$qqjob" $(($offset+$SLURM_ARRAY_TASK_ID)) \>\& "$qqodir/out.$SLURM_ARRAY_TASK_ID"
 #
 # /usr/bin/time -p \
-Rscript "./$qqjob" $SLURM_ARRAY_TASK_ID >&  "$qqodir/out.$SLURM_ARRAY_TASK_ID"
+Rscript "./$qqjob" $(($offset+$SLURM_ARRAY_TASK_ID)) >&  "$qqodir/out.$SLURM_ARRAY_TASK_ID"
 #
 echo ""
 echo "Task $SLURM_ARRAY_TASK_ID finished at:  "` date `
