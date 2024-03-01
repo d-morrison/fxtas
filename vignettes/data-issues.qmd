@@ -640,7 +640,7 @@ table1(na.is.category = FALSE,
 
 ## BDS2
 
-For `BDS2 Total Score`, codes `777`, `888`, and `999` are treated as NAs.
+For `BDS2 Total Score`, codes `777`, `888`, and `999` are counted as "Missing" (NA)..
 
 ```{r}
 
@@ -656,7 +656,7 @@ table1(na.is.category = FALSE,
 
 ## MMSE
 
-For `MMSE Total Score`, codes `777`, `888`, and `999` are treated as NAs.
+For `MMSE Total Score`, codes `777`, `888`, and `999` are counted as "Missing" (NA)..
 
 ```{r}
 
