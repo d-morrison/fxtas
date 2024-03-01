@@ -601,7 +601,7 @@ table1(na.is.category = FALSE,
 
 ## BDS2
 
-For `BDS2 Total Score`, codes `777`, `888`, and `999` are counted as "Missing" (NA)..
+
 
 ```{r}
 
@@ -609,6 +609,7 @@ vars = grep("BDS-2 Total Score", value = TRUE, names(trax), fixed = TRUE)
 
 table1(na.is.category = FALSE, 
   NA.label = NA.label1,
+  footnote = 'For `BDS2 Total Score`, codes `777`, `888`, and `999` are counted as "Missing" (NA).',
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = males_gp34_trax_v1)

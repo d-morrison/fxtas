@@ -60,7 +60,7 @@ library(table1)
 #| label: "set run parameters"
 #| 
 fit_models = TRUE
-fit_models = FALSE
+# fit_models = FALSE
 run_CV =  TRUE
 # run_CV = FALSE
 
