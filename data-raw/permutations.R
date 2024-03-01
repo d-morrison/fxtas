@@ -6,12 +6,14 @@ args = commandArgs(trailingOnly = TRUE)
 message("args = ", args |> paste(collapse = "; "))
 
 library(reticulate)
+# reticulate::use_condaenv("fxtas39", required = TRUE)
 py_config()
 
 library(fxtas)
 library(tidyverse)
 library(pander)
-# reticulate::use_condaenv("fxtas39", required = TRUE)
+library(dplyr)
+
 
 if(!reticulate::py_module_available("pySuStaIn"))
 {
@@ -115,13 +117,15 @@ ModelScores = DataScores =
 
 control_data =
   df |>
-  filter(`FX*` == "CGG < 55") |>
+  dplyr::filter(CGG < 55) |>
   select(all_of(biomarker_varnames))
 
 patient_data =
   df |>
   # na.omit() |>
-  filter(`FX*` == "CGG >= 55")
+  dplyr::filter(
+    CGG >= 55,
+    CGG < 200)
 
 prob_correct =
   control_data |>
@@ -164,42 +168,74 @@ if(length(args) == 0 || args[1] == 1)
   save.image(file = fs::path(output_folder, "data.RData"))
 }
 
+stratifying_variables = c("Gender")
+permuting_variables = "FX3*"
 
-sustain_output_males = run_OSA(
-  prob_score = prob_score0[patient_data$Gender %in% "Male",,],
-  score_vals = score_vals,
-  SuStaInLabels = SuStaInLabels,
-  N_startpoints = N_startpoints,
-  N_S_max = N_S_max_stratified,
-  N_iterations_MCMC = N_iterations_MCMC,
-  output_folder = output_folder,
-  dataset_name = "males",
-  use_parallel_startpoints = FALSE,
-  plot = FALSE)
+if(is.null(stratifying_variables))
+{
+  run_OSA_permuted(
+    permuting_variables = permuting_variables,
+    patient_data = patient_data,
+    permutation_seeds = permutation_seeds,
+    prob_score = prob_score0[cur_data$`FXS ID`,,],
+    score_vals = score_vals,
+    SuStaInLabels = SuStaInLabels,
+    N_startpoints = N_startpoints,
+    N_S_max = 1L,
+    N_iterations_MCMC = N_iterations_MCMC,
+    output_folder =
+      output_folder |>
+      fs::path("permutations") |>
+      fs::dir_create(),
+    use_parallel_startpoints = FALSE,
+    plot = FALSE)
 
-sustain_output_females = run_OSA(
-  prob_score = prob_score0[patient_data$Gender %in% "Female",,],
-  score_vals = score_vals,
-  SuStaInLabels = SuStaInLabels,
-  N_startpoints = N_startpoints,
-  N_S_max = N_S_max_stratified,
-  N_iterations_MCMC = N_iterations_MCMC,
-  output_folder = output_folder,
-  dataset_name = "females",
-  use_parallel_startpoints = FALSE,
-  plot = FALSE)
+} else
+{
+  strata =
+    patient_data |>
+    dplyr::distinct(across(all_of(stratifying_variables)))
 
-sustain_output_permutations = run_OSA_permuted(
-  patient_data = patient_data,
-  permutation_seeds = permutation_seeds,
-  prob_score = prob_score0,
-  score_vals = score_vals,
-  SuStaInLabels = SuStaInLabels,
-  N_startpoints = N_startpoints,
-  N_S_max = 1L,
-  N_iterations_MCMC = N_iterations_MCMC,
-  output_folder = output_folder |> fs::path("permutations") |> fs::dir_create(),
-  use_parallel_startpoints = FALSE,
-  plot = FALSE)
+  for (cur_stratum in 1:nrow(strata))
+  {
+
+    message("starting new stratum:")
+
+    print(strata[cur_stratum,])
+
+    cur_data =
+      patient_data |>
+      semi_join(strata[cur_stratum,], by = stratifying_variables)
+
+    message("output folder: ")
+    output_folder1 =
+      output_folder |>
+      fs::path(
+        "permutations",
+        strata[cur_stratum,] |>
+          sapply(F = as.character) |>
+          paste(collapse = "/")) |> print()
+
+    run_OSA_permuted(
+      permuting_variables = permuting_variables,
+      patient_data = cur_data,
+      permutation_seeds = permutation_seeds,
+      prob_score = prob_score0[cur_data$`FXS ID`,,],
+      score_vals = score_vals,
+      SuStaInLabels = SuStaInLabels,
+      N_startpoints = N_startpoints,
+      N_S_max = 1L,
+      N_iterations_MCMC = N_iterations_MCMC,
+      output_folder =
+        output_folder1 |>
+        fs::dir_create(),
+      use_parallel_startpoints = FALSE,
+      plot = FALSE)
+
+  }
+
+}
 
 message('Ending at: ', Sys.time())
+
+
