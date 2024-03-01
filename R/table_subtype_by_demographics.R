@@ -3,7 +3,7 @@
 #' @param patient_data
 #' @param subtype_and_stage_table
 #'
-#' @return
+#' @returns A `"tableby"` object (extends [arsenal::arsenal_table]; see [arsenal::tableby])
 #' @export
 #'
 table_subtype_by_demographics = function(
