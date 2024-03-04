@@ -37,15 +37,14 @@ levels =
   unique() |>
   as.character()
 
+message('levels are:')
+print(levels)
+
 for (p in permutations)
 {
   message('analyzing permutation ', p)
 
   cur_test_stat = 0
-
-
-  message('levels are:')
-  print(levels)
 
   for (cur_level in levels)
   {
