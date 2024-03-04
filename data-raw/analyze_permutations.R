@@ -48,6 +48,8 @@ for (p in permutations)
 
   for (cur_level in levels)
   {
+    message('cur level = ', cur_level)
+    message('extracting results from pickle')
     results_cur_level = extract_results_from_pickle(
       n_s = 1,
       rda_filename = "data.RData",
