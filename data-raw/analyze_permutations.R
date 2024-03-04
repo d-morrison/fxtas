@@ -28,20 +28,21 @@ permuted_test_stats =
   numeric(length = length(permutations)) |>
   magrittr::set_names(permutations |> as.character())
 
+file_path = fs::path(output_folder, "data.rds")
+patient_data = readRDS(file = file_path)
+
+levels =
+  patient_data |>
+  dplyr::pull(all_of(permuting_variables)) |>
+  unique() |>
+  as.character()
+
 for (p in permutations)
 {
   message('analyzing permutation ', p)
 
   cur_test_stat = 0
 
-  file_path = fs::path(output_folder, "data.rds")
-  patient_data = readRDS(file = file_path)
-
-  levels =
-    patient_data |>
-    dplyr::pull(all_of(permuting_variables)) |>
-    unique() |>
-    as.character()
 
   message('levels are:')
   print(levels)
