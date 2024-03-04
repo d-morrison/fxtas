@@ -6,11 +6,24 @@
 \usage{
 collect_permutation_test_stats(
   output_folder = fs::path(here::here(), "output/output.fixed_CV"),
-  permutation_results = fs::path(output_folder, "permutation_test_stats")
+  permutation_results_folder_path = fs::path(output_folder, "permutations/test_stats"),
+  file_stem = "permuted_test_stats",
+  seeds = 1:1000,
+  by = 20,
+  first_seeds = seq(min(seeds), max(seeds), by = by),
+  last_seeds = first_seeds + by - 1
 )
 }
 \arguments{
-\item{permutation_results}{}
+\item{output_folder}{where to find the \code{permutations/test_stats} subfolder}
+
+\item{permutation_results_folder_path}{path to folder containing \code{.rds} files with permuted test statistics}
+
+\item{file_stem}{stem of test stat .rds files}
+
+\item{seeds}{seeds to find}
+
+\item{by}{number of seeds per file}
 }
 \description{
 Collect permutation test statistics

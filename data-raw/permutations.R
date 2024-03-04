@@ -173,6 +173,13 @@ permuting_variables = "FX3*"
 
 if(is.null(stratifying_variables))
 {
+
+  if(length(args) == 0 || args[1] == 1)
+  {
+    file_path = fs::path(output_folder, "data.rds")
+    patient_data |> saveRDS(file = file_path)
+  }
+
   run_OSA_permuted(
     permuting_variables = permuting_variables,
     patient_data = patient_data,
@@ -206,7 +213,6 @@ if(is.null(stratifying_variables))
     cur_data =
       patient_data |>
       semi_join(strata[cur_stratum,], by = stratifying_variables)
-
     message("output folder: ")
     output_folder1 =
       output_folder |>
@@ -215,6 +221,12 @@ if(is.null(stratifying_variables))
         strata[cur_stratum,] |>
           sapply(F = as.character) |>
           paste(collapse = "/")) |> print()
+
+    if(length(args) == 0 || args[1] == 1)
+    {
+      file_path = fs::path(output_folder1, "cur_data.rds")
+      cur_data |> saveRDS(file = file_path)
+    }
 
     run_OSA_permuted(
       permuting_variables = permuting_variables,

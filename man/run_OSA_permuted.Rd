@@ -4,7 +4,13 @@
 \alias{run_OSA_permuted}
 \title{Title}
 \usage{
-run_OSA_permuted(permutation_seeds = 1:100, patient_data, prob_score0, ...)
+run_OSA_permuted(
+  permutation_seeds = 1:100,
+  permuting_variables = "Gender",
+  patient_data,
+  prob_score0,
+  ...
+)
 }
 \arguments{
 \item{...}{}

@@ -1,6 +1,13 @@
 project:
   execute-dir: project
 format:
+  docx:
+    toc: false
+    fig-format: svg
+    toc-depth: 4
+    number-sections: true
+    number-depth: 3
+    link-citations: true
   html:
     # author:
     #   - name: Ezra Morrison
@@ -9,9 +16,11 @@ format:
     #   - Kyoungmi Kim
     #   - (more to be added)
     toc: true
+    fig-format: svg
     toc-float: true
     toc-depth: 4
     embed-resources: true
+    appendix-style: plain
     mainfont: serif
     theme:
        light:

@@ -1,5 +1,8 @@
 ---
 title: "Event sequences in Fragile X-associated tremor/ataxia syndrome"
+format: 
+  docx: default
+  html: default
 knitr:
   opts_chunk: 
     collapse: true
@@ -28,6 +31,8 @@ FXTAS usually begins in the 60s and as premutation carriers age, the prevalence 
 Females with the premutation are also at risk for FXTAS, but the prevalence is lower; approximately 16 to 20% may develop FXTAS, but it is less severe than in the males (Tassone et al 2023 Genes conf summary). 
 The higher the CGG repeat within the premutation range the earlier the onset of FXTAS and the earlier the age of death (Greco et al 2006 Brain).
 The prevalence of the premutation is approximately 1 in 148 to 200 females in the general population and one in 290 to 855 males. (Maenner et al 2013 AJMG neuropsychiatric genetics; Hunter et al 2014 AJMG part A).
+
+A currently open question is: In what sequential time-order do FXTAS symptoms typically appear, how does that sequence vary between participants, and what baseline characteristics predict that order?
 
 Here, we apply the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2021ordinal] to find event sequences for FXTAS patients.
 
@@ -913,6 +918,13 @@ fig_females_mv_only |> print()
 
 output_folder = "output/output.fixed_CV/"
 permuted_test_stats = collect_permutation_test_stats(output_folder)
+observed_test_stat = get_observed_permutation_test_stat(output_folder)
+
+plot_permutation_results(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats) |>
+  print()
+
 observed_test_stat = get_observed_permutation_test_stat(output_folder)
 
 plot_permutation_results(

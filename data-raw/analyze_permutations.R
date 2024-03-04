@@ -1,5 +1,10 @@
 library(fxtas)
+library(dplyr)
 output_folder = fs::path(here::here(), "output/output.fixed_CV/permutations")
+
+# stratifying_variables = c("Gender")
+# permuting_variables = "FX3*"
+permuting_variables = "Gender"
 
 n_permutations = 1000
 args = commandArgs(trailingOnly = TRUE) |> as.numeric()
@@ -24,22 +29,36 @@ permuted_test_stats =
 for (p in permutations)
 {
   message('analyzing permutation ', p)
-  results_females_first = extract_results_from_pickle(
-    n_s = 1,
-    rda_filename = "data.RData",
-    dataset_name = paste("females", p, sep = "_p"),
-    output_folder = output_folder)
 
-  results_males_first = extract_results_from_pickle(
-    n_s = 1,
-    rda_filename = "data.RData",
-    dataset_name = paste("males", p, sep = "_p"),
-    output_folder = output_folder)
+  cur_test_stat = 0
 
-  llik_females = results_females_first$samples_likelihood
-  llik_males = results_males_first$samples_likelihood
-  cur_test_stat = mean(llik_females) + mean(llik_males)
+  file_path = fs::path(output_folder, "data.rds")
+  patient_data = readRDS(file = file_path)
+
+  levels =
+    patient_data |>
+    dplyr::pull(all_of(permuting_variables)) |>
+    unique()
+
+  message('levels are:')
+  print(levels)
+
+  for (cur_level in levels)
+  {
+    results_cur_level = extract_results_from_pickle(
+      n_s = 1,
+      rda_filename = "data.RData",
+      dataset_name = paste(cur_level, p, sep = "_p"),
+      output_folder = output_folder)
+
+
+    llik_cur_level = results_cur_level$samples_likelihood
+
+    cur_test_stat = cur_test_stat + mean(llik_cur_level)
+  }
+
   permuted_test_stats[as.character(p)] = cur_test_stat
+
 }
 
 file_path =
