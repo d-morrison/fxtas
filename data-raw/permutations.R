@@ -169,7 +169,9 @@ if(length(args) == 0 || args[1] == 1)
 }
 
 stratifying_variables = c("Gender")
+stratifying_variables = NULL
 permuting_variables = "FX3*"
+permuting_variables = "Gender"
 
 if(is.null(stratifying_variables))
 {
