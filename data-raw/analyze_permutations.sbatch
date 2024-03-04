@@ -63,7 +63,8 @@ which conda
 conda activate fxtas39
 which R
 R --version
-export offset=1000
+export offset=0
+#export offset=1000
 echo ""
 echo Rscript  "$qqjob" $(($offset+$SLURM_ARRAY_TASK_ID)) \>\& "$qqodir/out.$SLURM_ARRAY_TASK_ID"
 #

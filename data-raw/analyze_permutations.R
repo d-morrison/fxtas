@@ -1,6 +1,6 @@
 library(fxtas)
 library(dplyr)
-output_folder = fs::path(here::here(), "output/output.fixed_CV/permutations")
+output_folder = fs::path(here::here(), "output/output.fixed_CV/permutations/Male")
 
 # stratifying_variables = "FX3*"
 stratifying_variables = c("Gender")
