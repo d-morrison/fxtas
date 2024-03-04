@@ -229,7 +229,7 @@ if(is.null(stratifying_variables))
 
     if(length(args) == 0 || args[1] == 1)
     {
-      file_path = fs::path(output_folder1, "cur_data.rds")
+      file_path = fs::path(output_folder1, "data.rds")
       cur_data |> saveRDS(file = file_path)
     }
 
