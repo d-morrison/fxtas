@@ -2,9 +2,11 @@ library(fxtas)
 library(dplyr)
 output_folder = fs::path(here::here(), "output/output.fixed_CV/permutations")
 
-# stratifying_variables = c("Gender")
-# permuting_variables = "FX3*"
-permuting_variables = "Gender"
+# stratifying_variables = "FX3*"
+stratifying_variables = c("Gender")
+# stratifying_variables = NULL
+permuting_variables = "FX3*"
+# permuting_variables = "Gender"
 
 n_permutations = 1000
 args = commandArgs(trailingOnly = TRUE) |> as.numeric()
@@ -38,7 +40,8 @@ for (p in permutations)
   levels =
     patient_data |>
     dplyr::pull(all_of(permuting_variables)) |>
-    unique()
+    unique() |>
+    as.character()
 
   message('levels are:')
   print(levels)

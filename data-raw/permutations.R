@@ -168,17 +168,18 @@ if(length(args) == 0 || args[1] == 1)
   save.image(file = fs::path(output_folder, "data.RData"))
 }
 
+# stratifying_variables = "FX3*"
 stratifying_variables = c("Gender")
-stratifying_variables = NULL
+# stratifying_variables = NULL
 permuting_variables = "FX3*"
-permuting_variables = "Gender"
+# permuting_variables = "Gender"
 
 if(is.null(stratifying_variables))
 {
   cur_data = patient_data
   if(length(args) == 0 || args[1] == 1)
   {
-    message('saving dataset to ', output_folder)
+    message('saving dataset to ', output_folder, "/permutations")
     file_path = fs::path(output_folder, "permutations/data.rds")
     cur_data |> saveRDS(file = file_path)
   }
