@@ -173,14 +173,15 @@ permuting_variables = "FX3*"
 
 if(is.null(stratifying_variables))
 {
-
+  cur_data = patient_data
   if(length(args) == 0 || args[1] == 1)
   {
-    file_path = fs::path(output_folder, "data.rds")
-    patient_data |> saveRDS(file = file_path)
+    message('saving dataset to ', output_folder)
+    file_path = fs::path(output_folder, "permutations/data.rds")
+    cur_data |> saveRDS(file = file_path)
   }
 
-  cur_data = patient_data
+
   run_OSA_permuted(
     permuting_variables = permuting_variables,
     patient_data = cur_data,
