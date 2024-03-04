@@ -180,9 +180,10 @@ if(is.null(stratifying_variables))
     patient_data |> saveRDS(file = file_path)
   }
 
+  cur_data = patient_data
   run_OSA_permuted(
     permuting_variables = permuting_variables,
-    patient_data = patient_data,
+    patient_data = cur_data,
     permutation_seeds = permutation_seeds,
     prob_score = prob_score0[cur_data$`FXS ID`,,],
     score_vals = score_vals,
