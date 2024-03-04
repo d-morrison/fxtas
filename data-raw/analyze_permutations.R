@@ -42,10 +42,13 @@ for (p in permutations)
   permuted_test_stats[as.character(p)] = cur_test_stat
 }
 
-file_path = output_folder |>
-  paste0("permuted_test_stats", args[1], "-", args[1] + 19, ".rds") |>
-  fs::path("test_stats", _)
+file_path =
+  fs::path(
+    output_folder,
+    "test_stats",
+    paste0("permuted_test_stats", args[1], "-", args[1] + 19, ".rds"))
 
+message("file_path:\n", file_path)
 message("permuted_test_stats = \n")
 print(permuted_test_stats)
 
