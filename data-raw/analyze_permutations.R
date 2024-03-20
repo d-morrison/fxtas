@@ -6,7 +6,7 @@
 library(fxtas)
 library(dplyr)
 
-args = commandArgs(trailingOnly = TRUE) |> as.numeric()
+args = commandArgs(trailingOnly = TRUE)
 
 if(length(args) == 0)
 {
@@ -16,7 +16,7 @@ if(length(args) == 0)
   stratifying_level = "Male"
 } else
 {
-  message("args = ", )
+  message("args = ")
   print(args)
   start = args[1] |> as.numeric()
   permutations = start:(start+19)
