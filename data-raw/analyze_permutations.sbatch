@@ -69,7 +69,7 @@ echo ""
 echo Rscript  "$qqjob" $(($offset+$SLURM_ARRAY_TASK_ID)) "${1}" "${2}" \>\& "$qqodir/out.$SLURM_ARRAY_TASK_ID"
 #
 # /usr/bin/time -p \
-Rscript "./$qqjob" $(($offset+$SLURM_ARRAY_TASK_ID)) "${1}" "${2}" >& "$qqodir/out.$SLURM_ARRAY_TASK_ID"
+Rscript "./$qqjob" "$(($offset+$SLURM_ARRAY_TASK_ID))" "${1}" "${2}" >& "$qqodir/out.$SLURM_ARRAY_TASK_ID"
 #
 echo ""
 echo "Task $SLURM_ARRAY_TASK_ID finished at:  "` date `
