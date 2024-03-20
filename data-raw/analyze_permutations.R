@@ -1,17 +1,20 @@
 library(fxtas)
 library(dplyr)
-output_folder = fs::path(here::here(), "output/output.fixed_CV/permutations/Male")
+output_folder =
+  fs::path(
+    here::here(),
+    "output/output.fixed_CV/permutations/Male")
 
 # stratifying_variables = "FX3*"
 stratifying_variables = c("Gender")
 # stratifying_variables = NULL
-permuting_variables = "FX3*"
-# permuting_variables = "Gender"
+# permuting_variables = "FX3*"
+permuting_variables = "Gender"
 
 n_permutations = 1000
 args = commandArgs(trailingOnly = TRUE) |> as.numeric()
 
-if(length(args)==0)
+if(length(args) == 0)
 {
   message('no arguments found')
   permutations = 1:n_permutations
@@ -22,62 +25,16 @@ if(length(args)==0)
   permutations = start:(start+19)
 }
 
-message('analyzing permutations: ', paste(range(permutations), collapse = "-"))
+permuted_test_stats =.
+extract_permuted_likelihoods(
+  permuting_variables = permuting_variables,
+  permutations = permutations,
+  output_folder = output_folder
+)
 
-permuted_test_stats =
-  numeric(length = length(permutations)) |>
-  magrittr::set_names(permutations |> as.character())
-
-file_path = fs::path(output_folder, "data.rds")
-patient_data = readRDS(file = file_path)
-
-levels =
-  patient_data |>
-  dplyr::pull(all_of(permuting_variables)) |>
-  unique() |>
-  as.character()
-
-message('levels are:')
-print(levels)
-
-for (p in permutations)
-{
-  message('analyzing permutation ', p)
-
-  cur_test_stat = 0
-
-  for (cur_level in levels)
-  {
-    message('cur level = ', cur_level)
-    message('extracting results from pickle')
-    results_cur_level = extract_results_from_pickle(
-      n_s = 1,
-      rda_filename = "data.RData",
-      dataset_name = paste(cur_level, p, sep = "_p"),
-      output_folder = output_folder)
-
-
-    llik_cur_level = results_cur_level$samples_likelihood
-
-    cur_test_stat = cur_test_stat + mean(llik_cur_level)
-  }
-
-  permuted_test_stats[as.character(p)] = cur_test_stat
-
-}
-
-file_path =
-  fs::path(
-    output_folder,
-    "test_stats",
-    paste0("permuted_test_stats", args[1], "-", args[1] + 19, ".rds"))
-
-message("file_path:\n", file_path)
-message("permuted_test_stats = \n")
-print(permuted_test_stats)
-
-if(file.exists(file_path)) file.remove(file_path)
-
-permuted_test_stats |> saveRDS(file = file_path)
+write_permuted_test_stats(
+  permuted_test_stats = permuted_test_stats,
+  output_folder = output_folder
+)
 
 message("ending `analyze_permutations.R`")

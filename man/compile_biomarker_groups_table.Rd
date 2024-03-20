@@ -6,7 +6,7 @@
 \usage{
 compile_biomarker_groups_table(
   biomarker_group_list = compile_biomarker_group_list(...),
-  colors = choose_biomarker_group_colors(names(biomarker_group_list)),
+  colors = choose_biomarker_group_colors(biomarker_group_list),
   ...
 )
 }
