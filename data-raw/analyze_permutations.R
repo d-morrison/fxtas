@@ -11,18 +11,17 @@ if(length(args) == 0)
 {
   message('no arguments found')
   permutations = 1:1000
+  stratifying_level = "Male"
+  permuting_variables = "FX3*"
 } else
 {
   message("args = ", args)
   start = args[1] |> as.numeric()
   permutations = start:(start+19)
+  stratifying_level = args[2]
+  permuting_variables = args[3]
+
 }
-
-
-stratifying_level = "Male"
-# stratifying_level = ""
-permuting_variables = "FX3*"
-# permuting_variables = "Gender"
 
 output_folder =
   fs::path(
