@@ -9,12 +9,12 @@ compile_biomarker_groups_table = function(
     biomarker_group_list =
       compile_biomarker_group_list(...),
     colors =
-      names(biomarker_group_list) |>
+      biomarker_group_list |>
       choose_biomarker_group_colors(),
     ...)
 {
   biomarker_group_list |>
-  stack() |>
+    stack() |>
     as_tibble() |>
     dplyr::rename(
       biomarker  = values,

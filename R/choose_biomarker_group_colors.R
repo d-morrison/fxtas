@@ -1,4 +1,8 @@
-choose_biomarker_group_colors = function(biomarker_groups)
+choose_biomarker_group_colors = function(
+    biomarker_groups,
+    biomarker_group_names =
+      biomarker_groups |>
+      names())
 {
   tibble(
     biomarker_group = biomarker_groups) |>
