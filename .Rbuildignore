@@ -15,3 +15,10 @@ $run_dev.*
 ^fxtas.*\.tar\.gz$
 ^fxtas.*\.tgz$
 ^vignettes/articles$
+^\.git$
+^\.github$
+^\.pkgdown$
+^cran-comment\.md$
+^cran-comments\.md$
+^pkgdown$
+^_pkgdown\.yml$
