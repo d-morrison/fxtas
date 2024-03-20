@@ -1,19 +1,9 @@
 # args
 # 1: first permutation seed (for job arrays)
-# 2: stratifying level (can be NULL)
-
+# 2: stratifying level (can be "")
+# 3: permuting level
 library(fxtas)
 library(dplyr)
-output_folder =
-  fs::path(
-    here::here(),
-    "output/output.fixed_CV/permutations/Male")
-
-# stratifying_variables = "FX3*"
-stratifying_variables = c("Gender")
-# stratifying_variables = NULL
-permuting_variables = "FX3*"
-# permuting_variables = "Gender"
 
 args = commandArgs(trailingOnly = TRUE) |> as.numeric()
 
@@ -27,6 +17,18 @@ if(length(args) == 0)
   start = args[1] |> as.numeric()
   permutations = start:(start+19)
 }
+
+
+stratifying_level = "Male"
+# stratifying_level = ""
+permuting_variables = "FX3*"
+# permuting_variables = "Gender"
+
+output_folder =
+  fs::path(
+    here::here(),
+    "output/output.fixed_CV/permutations",
+    stratifying_level)
 
 permuted_test_stats = extract_permuted_likelihoods(
     permuting_variables = permuting_variables,
