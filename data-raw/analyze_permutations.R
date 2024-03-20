@@ -16,7 +16,8 @@ if(length(args) == 0)
   stratifying_level = "Male"
 } else
 {
-  message("args = ", args)
+  message("args = ", )
+  print(args)
   start = args[1] |> as.numeric()
   permutations = start:(start+19)
   permuting_variables = args[2]
