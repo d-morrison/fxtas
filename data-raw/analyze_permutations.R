@@ -1,7 +1,7 @@
 # args
 # 1: first permutation seed (for job arrays)
 # 2: stratifying level (can be "")
-# 3: permuting level
+# 3: permuting variable
 library(fxtas)
 library(dplyr)
 
