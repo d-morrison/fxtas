@@ -50,7 +50,7 @@ extract_permuted_likelihoods = function(
       if(verbose)
       {
         message('cur level = ', cur_level)
-        message('extracting results from pickle')
+        message('extracting results from pickle at ', Sys.time())
       }
 
       results_cur_level = extract_results_from_pickle(
