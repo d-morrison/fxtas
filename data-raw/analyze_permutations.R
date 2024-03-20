@@ -12,8 +12,8 @@ output_folder =
 # stratifying_variables = "FX3*"
 stratifying_variables = c("Gender")
 # stratifying_variables = NULL
-# permuting_variables = "FX3*"
-permuting_variables = "Gender"
+permuting_variables = "FX3*"
+# permuting_variables = "Gender"
 
 args = commandArgs(trailingOnly = TRUE) |> as.numeric()
 
