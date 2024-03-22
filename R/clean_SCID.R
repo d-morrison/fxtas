@@ -32,5 +32,6 @@ clean_SCID = function(
                 levels = c(levels(.), "Missing (SCID not completed)")),
             false = .)
       )
-    )
+    ) |>
+    create_scid_domains()
 }

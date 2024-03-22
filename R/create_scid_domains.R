@@ -1,4 +1,11 @@
-#### Create SCID domain variables ####
+#' @title Create SCID domain variables
+#'
+#' @param dataset a [tibble::tbl_df] containing all of `scid_vars` as columns
+#' @param scid_vars a [character()] vector
+#'
+#' @returns a [tibble::tbl_df]
+#' @export
+#'
 create_scid_domains <- function(
   dataset,
   scid_vars = c(
@@ -103,6 +110,9 @@ create_scid_domains <- function(
     ) |>
     # create domain variables using max level
     mutate(
+      # notes: could use `do.call()`, `invoke()`, `rowwise() & max()`;
+      # no clearly most-idiomatic approach as of 2024-03-22
+      # some discussion here: https://r4ds.hadley.nz/numbers.html#numeric-transformations
       `SCID: Mood Disorders` = pmax(!!!rlang::syms(scid_md_vars_lif), na.rm = TRUE),
       `SCID: Substance Use Disorders` = pmax(!!!rlang::syms(scid_sud_vars_lif), na.rm = TRUE),
       `SCID: Anxiety` = pmax(!!!rlang::syms(scid_anx_vars_lif), na.rm = TRUE),
