@@ -1,0 +1,223 @@
+---
+format:
+    html
+---
+
+```{r}
+#| include: false
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  comment = "#>",
+  fig.width = 7.5,
+  fig.height = 4
+)
+
+# update 'asis' chunk to allow inline code
+knitr::knit_engines$set(asis = function(options) {
+  if (options$echo && options$eval) knitr::knit_child(text = options$code)
+})
+```
+
+```{r}
+#| label: setup-demos-unstratified
+#| message: false
+library(fxtas)
+# devtools::load_all()
+library(pander)
+library(table1)
+library(dplyr)
+library(tidyr)
+library(magrittr)
+library(arsenal)
+```
+
+```{r, include=FALSE}
+# scid vars
+scid_vars = c(
+    "Bipolar I Disorder (MD01), Lifetime",                            
+    "Bipolar I Disorder (MD01), Current",
+    "Bipolar II Disorder (MD02), Lifetime",         
+    "Bipolar II Disorder (MD02), Current",         
+    "Other Bipolar Disorder (MD03), Current",         
+    "Other Bipolar Disorder (MD03), Lifetime",         
+    "Major Depressive Disorder (MD04), Current",         
+    "Major Depressive Disorder (MD04), Lifetime",         
+    "Mood Disorder Due to GMC (MD07), Current",         
+    "Mood Disorder Due to GMC (MD07), Lifetime",         
+    "Substance-Induced Mood Dis. (MD08), Current",         
+    "Substance-Induced Mood Dis. (MD08), Lifetime",         
+    "Primary Psychotic Symptoms (PS01), Current",         
+    "Primary Psychotic Symptoms (PS01), Lifetime",
+    "Dysthymic Disorder (MD05)",         
+    "Depressive Disorder NOS (MD06), Lifetime",         
+    "Depressive Disorder NOS (MD06) Current",         
+    "Alcohol (SUD17), Lifetime",         
+    "Alcohol (SUD17) Current",         
+    "Sedative-Hypnotic-Anxiolytic (SUD18), Lifetime",         
+    "Sedative-Hypnotic-Anxiolytic (SUD18), Current",         
+    "Cannabis (SUD19), Lifetime",         
+    "Cannabis (SUD19),Current",         
+    "Stimulants (SUD20), Lifetime",         
+    "Stimulants (SUD20) Current",         
+    "Opiod (SUD21), Lifetime",         
+    "Cocaine (SUD22), Lifetime",         
+    "Opiod (SUD21), Current",         
+    "Hallucinogenics/ PCP (SUD23), Lifetime",         
+    "Cocaine (SUD22) Current",         
+    "Hallucinogenics/ PCP (SUD23), Current",         
+    "Poly Drug (SUD24), Lifetime",         
+    "Poly Drug (SUD24), Current",         
+    "Other (SUD25), Lifetime",         
+    "Other (SUD25), Current",         
+    "Panic Disorder (ANX26), Lifetime",         
+    "Panic Disorder (ANX26), Current",         
+    "Agoraphobia without Panic (ANX27), Lifetime",         
+    "Agoraphobia without Panic (ANX27), Current",         
+    "Social Phobia (ANX28), Lifetime",         
+    "Social Phobia (ANX28), Current",         
+    "Specific Phobia (ANX29), Lifetime",         
+    "Specific Phobia (ANX29), Current",         
+    "Obsessive Compulsive (ANX30), Lifetime",         
+    "Obsessive Compulsive (ANX30), Current",         
+    "Posttraumatic Stress (ANX31), Lifetime",         
+    "Posttraumatic Stress (ANX31), Current",         
+    "Generalized Anxiety (ANX32), Current Only",         
+    "Anxiety Due To GMC (ANX33), Lifetime",         
+    "Anxiety Due To GMC (ANX33), Current",         
+    "Substance-Induced Anxiety (ANX34), Lifetime",         
+    "Substance-Induced Anxiety (ANX34), Current",         
+    "Anxiety Disorder NOS (ANX35), Lifetime",         
+    "Anxiety Disorder NOS (ANX35), Current",         
+    "Somatization Disorder (SOM36)",         
+    "Pain Disorder (SOM37)",         
+    "Undifferentiated Somatoform (SOM38)",         
+    "Body Dysmorphic (SOM40)",         
+    "Hypochondriasis (SOM39)"
+  )
+
+# scid vars by domain
+scid_md_vars <- scid_vars[grepl("\\(MD", scid_vars)]
+scid_sud_vars <- scid_vars[grepl("\\(SUD", scid_vars)]
+scid_anx_vars <- scid_vars[grepl("\\(ANX", scid_vars)]
+scid_somatic_vars <- scid_vars[grepl("\\(SOM", scid_vars)]
+scid_psych_vars <- scid_vars[grepl("\\(PS", scid_vars)]
+
+# scid vars by time (lifetime vs current)
+lifetime_vars <- scid_vars[grepl("Lifetime", scid_vars)]
+current_vars <- scid_vars[grepl("Current", scid_vars)]
+# remove Current Only
+current_vars <- current_vars[!grepl("Current Only", current_vars)]
+
+# subset gp34 to scid vars
+data("gp34")
+scid_dat <- gp34 |>
+  dplyr::select(`FXS ID`, all_of(scid_vars))
+
+# convert to long format
+scid_lifetime_long <- scid_dat |>
+  dplyr::select(`FXS ID`, all_of(lifetime_vars)) |>
+  pivot_longer(
+    cols = all_of(lifetime_vars),
+    names_to = "Variable",
+    values_to = "Lifetime"
+  ) |>
+  mutate(
+    Variable = gsub("Lifetime", "", Variable)
+  ) |>
+  mutate(
+    Variable = gsub("\\,", "", Variable)
+  ) |>
+  mutate(
+    Variable = trimws(Variable)
+  ) |>
+  mutate(
+    Lifetime = factor(Lifetime, levels = c("Absent", "Sub-Threshold", "Threshold"))
+  )
+  
+
+scid_current_long <- scid_dat |>
+  dplyr::select(`FXS ID`, all_of(current_vars)) |>
+  pivot_longer(
+    cols = all_of(current_vars),
+    names_to = "Variable",
+    values_to = "Current"
+  ) |>
+  mutate(
+    Variable = gsub("Current", "", Variable)
+  ) |>
+  mutate(
+    Variable = gsub("\\,", "", Variable)
+  ) |>
+  mutate(
+    Variable = trimws(Variable)
+  ) |>
+  mutate(
+    Current = factor(Current, levels = c("Absent", "Present"))
+  )
+
+lifetime_vars_clean <- unique(scid_lifetime_long$Variable)
+current_vars_clean <- unique(scid_current_long$Variable)
+
+lifetime_vars_clean[!(lifetime_vars_clean %in% current_vars_clean)]
+current_vars_clean[!(current_vars_clean %in% lifetime_vars_clean)]
+
+scid_long_vars <- c(
+  "Bipolar I Disorder (MD01)", "Bipolar II Disorder (MD02)", 
+  "Other Bipolar Disorder (MD03)", "Major Depressive Disorder (MD04)", 
+  "Depressive Disorder NOS (MD06)", "Mood Disorder Due to GMC (MD07)", 
+  "Substance-Induced Mood Dis. (MD08)", "Primary Psychotic Symptoms (PS01)",  
+  "Alcohol (SUD17)", "Sedative-Hypnotic-Anxiolytic (SUD18)", "Cannabis (SUD19)", 
+  "Stimulants (SUD20)", "Opiod (SUD21)", "Cocaine (SUD22)", 
+  "Hallucinogenics/ PCP (SUD23)", "Poly Drug (SUD24)", "Other (SUD25)", 
+  "Panic Disorder (ANX26)", "Agoraphobia without Panic (ANX27)", 
+  "Social Phobia (ANX28)", "Specific Phobia (ANX29)", "Obsessive Compulsive (ANX30)", 
+  "Posttraumatic Stress (ANX31)", "Anxiety Due To GMC (ANX33)", 
+  "Substance-Induced Anxiety (ANX34)", "Anxiety Disorder NOS (ANX35)"
+)
+
+scid_long <- merge(scid_current_long, scid_lifetime_long, 
+                   by = c("FXS ID", "Variable"), sort = FALSE) |>
+  mutate(
+    Variable = factor(
+      Variable, levels = scid_long_vars
+    )
+  )
+
+
+# test scid domains
+scid_domains <- create_scid_domain(gp34 |> get_visit1())
+```
+
+# SCID: Current vs Lifetime
+
+For the disorders with current vs lifetime variables, examine the relationship between them. If `current` is present, is `lifetime` always sub-threshold or threshold?  
+
+```{r, results='asis'}
+summary(
+  arsenal::tableby(
+    Lifetime ~ Current,
+    strata = Variable,
+    data = scid_long,
+    test = FALSE,
+    total = FALSE
+  )
+)
+```
+
+# SCID: Domains
+
+Using only `lifetime` variables or variables without `current`/`lifetime` distinction, collapse the SCID variables into 5 domains: Mood Disorders, Anxiety, Substance Use Disorder, Somatization, and Psychotic.
+
+```{r, results='asis'}
+summary(
+  arsenal::tableby(
+    `FX**` ~ `SCID: Mood Disorders` + `SCID: Substance Use Disorders` + 
+      `SCID: Anxiety` + `SCID: Somatization` + `SCID: Psychotic`,
+    data = scid_domains,
+    test = FALSE
+  )
+)
+```

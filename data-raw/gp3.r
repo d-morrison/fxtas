@@ -15,7 +15,7 @@ conflicts_prefer(vroom::col_double)
 conflicts_prefer(vroom::col_logical)
 conflicts_prefer(vroom::col_skip)
 dataset=vroom::vroom(
-  'inst/extdata/GPGenotypePhenotypeR-FXTASEventSequence10_DATA_2023-09-25_1240.csv',
+  'inst/extdata/GPGenotypePhenotypeR-FXTASEventSequence10_DATA_2024-03-20_1146.csv',
   col_types = cols(
     dem_date = col_date(),
     mds_med_ca_other = col_character(),
@@ -212,7 +212,54 @@ dataset$scid_md08cur = factor(dataset$scid_md08cur,levels=c("1","3","777"))
 dataset$scid_md08lif = factor(dataset$scid_md08lif,levels=c("777","1","3"))
 dataset$scid_ps01cur = factor(dataset$scid_ps01cur,levels=c("1","3","777"))
 dataset$scid_ps01lif = factor(dataset$scid_ps01lif,levels=c("777","1","2","3"))
-
+# 03-21-2024: add additional SCID variables
+dataset$scid_md05lif = factor(dataset$scid_md05lif,levels=c("777","1","2","3"))
+dataset$scid_md06lif = factor(dataset$scid_md06lif,levels=c("777","1","3"))
+dataset$scid_md06cur = factor(dataset$scid_md06cur,levels=c("1","3","777"))
+dataset$scid_sud17lif = factor(dataset$scid_sud17lif,levels=c("777","1","2","3"))
+dataset$scid_sud17cur = factor(dataset$scid_sud17cur,levels=c("1","3","777"))
+dataset$scid_sud18lif = factor(dataset$scid_sud18lif,levels=c("777","1","2","3"))
+dataset$scid_sud18cur = factor(dataset$scid_sud18cur,levels=c("1","3","777"))
+dataset$scid_sud19lif = factor(dataset$scid_sud19lif,levels=c("777","1","2","3"))
+dataset$scid_sud19cur = factor(dataset$scid_sud19cur,levels=c("1","3","777"))
+dataset$scid_sud20lif = factor(dataset$scid_sud20lif,levels=c("777","1","2","3"))
+dataset$scid_sud20cur = factor(dataset$scid_sud20cur,levels=c("1","3","777"))
+dataset$scid_sud21lif = factor(dataset$scid_sud21lif,levels=c("777","1","2","3"))
+dataset$scid_sud22lif = factor(dataset$scid_sud22lif,levels=c("777","1","2","3"))
+dataset$scid_sud21cur = factor(dataset$scid_sud21cur,levels=c("1","3","777"))
+dataset$scid_sud23lif = factor(dataset$scid_sud23lif,levels=c("777","1","2","3"))
+dataset$scid_sud22cur = factor(dataset$scid_sud22cur,levels=c("1","3","777"))
+dataset$scid_sud23cur = factor(dataset$scid_sud23cur,levels=c("1","3","777"))
+dataset$scid_sud24lif = factor(dataset$scid_sud24lif,levels=c("777","1","3"))
+dataset$scid_sud24cur = factor(dataset$scid_sud24cur,levels=c("1","3","777"))
+dataset$scid_sud25lif = factor(dataset$scid_sud25lif,levels=c("777","1","2","3"))
+dataset$scid_sud25cur = factor(dataset$scid_sud25cur,levels=c("1","3","777"))
+dataset$scid_anx26lif = factor(dataset$scid_anx26lif,levels=c("777","1","2","3"))
+dataset$scid_anx26cur = factor(dataset$scid_anx26cur,levels=c("1","3","777"))
+dataset$scid_anx27lif = factor(dataset$scid_anx27lif,levels=c("777","1","2","3"))
+dataset$scid_anx27cur = factor(dataset$scid_anx27cur,levels=c("1","3","777"))
+dataset$scid_anx28lif = factor(dataset$scid_anx28lif,levels=c("777","1","2","3"))
+dataset$scid_anx28cur = factor(dataset$scid_anx28cur,levels=c("1","3","777"))
+dataset$scid_anx29lif = factor(dataset$scid_anx29lif,levels=c("777","1","2","3"))
+dataset$scid_anx29cur = factor(dataset$scid_anx29cur,levels=c("1","3","777"))
+dataset$scid_anx30lif = factor(dataset$scid_anx30lif,levels=c("777","1","2","3"))
+dataset$scid_anx30cur = factor(dataset$scid_anx30cur,levels=c("1","3","777"))
+dataset$scid_anx31lif = factor(dataset$scid_anx31lif,levels=c("777","1","2","3"))
+dataset$scid_anx31cur = factor(dataset$scid_anx31cur,levels=c("1","3","777"))
+dataset$scid_anx32cur = factor(dataset$scid_anx32cur,levels=c("777","1","2","3"))
+dataset$scid_anx33lif = factor(dataset$scid_anx33lif,levels=c("777","1","3"))
+dataset$scid_anx33cur = factor(dataset$scid_anx33cur,levels=c("1","3","777"))
+dataset$scid_anx34lif = factor(dataset$scid_anx34lif,levels=c("777","1","2","3"))
+dataset$scid_anx34cur = factor(dataset$scid_anx34cur,levels=c("1","3","777"))
+dataset$scid_anx35lif = factor(dataset$scid_anx35lif,levels=c("777","1","2","3"))
+dataset$scid_anx35cur = factor(dataset$scid_anx35cur,levels=c("1","3","777"))
+dataset$scid_som36 = factor(dataset$scid_som36,levels=c("777","1","2","3"))
+dataset$scid_som37 = factor(dataset$scid_som37,levels=c("777","1","2","3"))
+dataset$scid_som38 = factor(dataset$scid_som38,levels=c("777","1","2","3"))
+dataset$scid_som40 = factor(dataset$scid_som40,levels=c("777","1","2","3"))
+dataset$scid_som39 = factor(dataset$scid_som39,levels=c("777","1","2","3"))
+# edu variable
+dataset$dem_edlev = factor(dataset$dem_edlev,levels=c("1","2","3","4","5","6","7","999"))
 
 levels(dataset$scid_admin)=c("No","Yes","Follow up","N/A")
 levels(dataset$new_mds_med_anes1)=c("Local","General","None","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
@@ -239,7 +286,54 @@ levels(dataset$scid_md08cur)=c("Absent","Present","Inadequate Info")
 levels(dataset$scid_md08lif)=c("Inadequate Info","Absent","Threshold")
 levels(dataset$scid_ps01cur)=c("Absent","Present","Inadequate Info")
 levels(dataset$scid_ps01lif)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
-
+# 03-21-2024: add additional SCID variables
+levels(dataset$scid_md05lif)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_md06lif)=c("Inadequate Info","Absent","Threshold")
+levels(dataset$scid_md06cur)=c("Absent","Present","Inadequate Info")
+levels(dataset$scid_sud17lif)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_sud17cur)=c("Absent","Present","Inadequate Info")
+levels(dataset$scid_sud18lif)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_sud18cur)=c("Absent","Present","Inadequate Info")
+levels(dataset$scid_sud19lif)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_sud19cur)=c("Absent","Present","Inadequate Info")
+levels(dataset$scid_sud20lif)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_sud20cur)=c("Absent","Present","Inadequate Info")
+levels(dataset$scid_sud21lif)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_sud22lif)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_sud21cur)=c("Absent","Present","Inadequate Info")
+levels(dataset$scid_sud23lif)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_sud22cur)=c("Absent","Present","Inadequate Info")
+levels(dataset$scid_sud23cur)=c("Absent","Present","Inadequate Info")
+levels(dataset$scid_sud24lif)=c("Inadequate Info","Absent","Threshold")
+levels(dataset$scid_sud24cur)=c("Absent","Present","Inadequate Info")
+levels(dataset$scid_sud25lif)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_sud25cur)=c("Absent","Present","Inadequate Info")
+levels(dataset$scid_anx26lif)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_anx26cur)=c("Absent","Present","Inadequate Info")
+levels(dataset$scid_anx27lif)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_anx27cur)=c("Absent","Present","Inadequate Info")
+levels(dataset$scid_anx28lif)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_anx28cur)=c("Absent","Present","Inadequate Info")
+levels(dataset$scid_anx29lif)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_anx29cur)=c("Absent","Present","Inadequate Info")
+levels(dataset$scid_anx30lif)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_anx30cur)=c("Absent","Present","Inadequate Info")
+levels(dataset$scid_anx31lif)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_anx31cur)=c("Absent","Present","Inadequate Info")
+levels(dataset$scid_anx32cur)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_anx33lif)=c("Inadequate Info","Absent","Threshold")
+levels(dataset$scid_anx33cur)=c("Absent","Present","Inadequate Info")
+levels(dataset$scid_anx34lif)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_anx34cur)=c("Absent","Present","Inadequate Info")
+levels(dataset$scid_anx35lif)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_anx35cur)=c("Absent","Present","Inadequate Info")
+levels(dataset$scid_som36)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_som37)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_som38)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_som40)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+levels(dataset$scid_som39)=c("Inadequate Info","Absent","Sub-Threshold","Threshold")
+# edu var
+levels(dataset$dem_edlev)=c("K-7","8-9","10-11","High School/GED","Partial College","BA/BS","MA/MS/PhD/MD","No Data")
 
 levels(dataset$new_mds_med_can_other)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
 
@@ -424,12 +518,61 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            scid_md03lif = "Other Bipolar Disorder (MD03), Lifetime",
            scid_md04cur = "Major Depressive Disorder (MD04), Current",
            scid_md04lif = "Major Depressive Disorder (MD04), Lifetime",
-           scid_md07cur = "Mood Disorder Due to a GMC (MD07), Current",
+           scid_md07cur = "Mood Disorder Due to GMC (MD07), Current",
            scid_md07lif = "Mood Disorder Due to GMC (MD07), Lifetime",
            scid_md08cur = "Substance-Induced Mood Dis. (MD08), Current",
            scid_md08lif = "Substance-Induced Mood Dis. (MD08), Lifetime",
            scid_ps01cur = "Primary Psychotic Symptoms (PS01), Current",
-           scid_ps01lif = "Primary Psychotic Symptoms (PS01), Lifetime")
+           scid_ps01lif = "Primary Psychotic Symptoms (PS01), Lifetime",
+           # 03-21-2024: add additional SCID variables
+           scid_md05lif = "Dysthymic Disorder (MD05)",
+           scid_md06lif = "Depressive Disorder NOS (MD06), Lifetime",
+           scid_md06cur = "Depressive Disorder NOS (MD06) Current",
+           scid_sud17lif = "Alcohol (SUD17), Lifetime",
+           scid_sud17cur = "Alcohol (SUD17) Current",
+           scid_sud18lif = "Sedative-Hypnotic-Anxiolytic (SUD18), Lifetime",
+           scid_sud18cur = "Sedative-Hypnotic-Anxiolytic (SUD18), Current",
+           scid_sud19lif = "Cannabis (SUD19), Lifetime",
+           scid_sud19cur = "Cannabis (SUD19),Current",
+           scid_sud20lif = "Stimulants (SUD20), Lifetime",
+           scid_sud20cur = "Stimulants (SUD20) Current",
+           scid_sud21lif = "Opiod (SUD21), Lifetime",
+           scid_sud22lif = "Cocaine (SUD22), Lifetime",
+           scid_sud21cur = "Opiod (SUD21), Current",
+           scid_sud23lif = "Hallucinogenics/ PCP (SUD23), Lifetime",
+           scid_sud22cur = "Cocaine (SUD22) Current",
+           scid_sud23cur = "Hallucinogenics/ PCP (SUD23), Current",
+           scid_sud24lif = "Poly Drug (SUD24), Lifetime",
+           scid_sud24cur = "Poly Drug (SUD24), Current",
+           scid_sud25lif = "Other (SUD25), Lifetime",
+           scid_sud25cur = "Other (SUD25), Current",
+           scid_anx26lif = "Panic Disorder (ANX26), Lifetime",
+           scid_anx26cur = "Panic Disorder (ANX26), Current",
+           scid_anx27lif = "Agoraphobia without Panic (ANX27), Lifetime",
+           scid_anx27cur = "Agoraphobia without Panic (ANX27), Current",
+           scid_anx28lif = "Social Phobia (ANX28), Lifetime",
+           scid_anx28cur = "Social Phobia (ANX28), Current",
+           scid_anx29lif = "Specific Phobia (ANX29), Lifetime",
+           scid_anx29cur = "Specific Phobia (ANX29), Current",
+           scid_anx30lif = "Obsessive Compulsive (ANX30), Lifetime",
+           scid_anx30cur = "Obsessive Compulsive (ANX30), Current",
+           scid_anx31lif = "Posttraumatic Stress (ANX31), Lifetime",
+           scid_anx31cur = "Posttraumatic Stress (ANX31), Current",
+           scid_anx32cur = "Generalized Anxiety (ANX32), Current Only",
+           scid_anx33lif = "Anxiety Due To GMC (ANX33), Lifetime",
+           scid_anx33cur = "Anxiety Due To GMC (ANX33), Current",
+           scid_anx34lif = "Substance-Induced Anxiety (ANX34), Lifetime",
+           scid_anx34cur = "Substance-Induced Anxiety (ANX34), Current",
+           scid_anx35lif = "Anxiety Disorder NOS (ANX35), Lifetime",
+           scid_anx35cur = "Anxiety Disorder NOS (ANX35), Current",
+           scid_som36 = "Somatization Disorder (SOM36)",
+           scid_som37 = "Pain Disorder (SOM37)",
+           scid_som38 = "Undifferentiated Somatoform (SOM38)",
+           scid_som40 = "Body Dysmorphic (SOM40)",
+           scid_som39 = "Hypochondriasis (SOM39)",
+           # edu variables
+           dem_edlev = "Education Level",
+           dem_edyr = "Years of Education")
 
 if(!isTRUE(setequal(names(dataset), names(labels)))) browser(message('why is there a mismatch?'))
 

@@ -6,6 +6,7 @@ library(dplyr)
 conflicted::conflict_prefer("label", "Hmisc")
 conflicted::conflict_prefer("not", "magrittr")
 conflicted::conflicts_prefer(dplyr::filter)
+conflicted::conflicts_prefer(dplyr::last)
 library(tidyr)
 # dupes = gp3 |> semi_join(gp4, by = c("subj_id", "redcap_event_name"))
 # if(nrow(dupes) != 0) browser(message("why are there duplicate records?"))
@@ -65,3 +66,4 @@ gp34_multivisit_only =
   filter(.by = `FXS ID`, n() > 1)
 
 usethis::use_data(gp34_multivisit_only, overwrite = TRUE)
+
