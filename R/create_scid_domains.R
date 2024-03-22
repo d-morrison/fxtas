@@ -72,6 +72,9 @@ create_scid_domains <- function(
 ){
   # split scid_vars into current/lifetime
   # lifetime + Generalized Anxiety
+  # Note: Generalized Anxiety goes with `lifetime` vars because:
+  # 1) There is no lifetime version,
+  # 2) it has the same Absent/Sub-Threshold/Threshold levels as the lifetime variables
   lifetime_vars <- c(scid_vars[!grepl("Current", scid_vars)],
                      "Generalized Anxiety (ANX32), Current Only")
   # current - Generalized Anxiety
