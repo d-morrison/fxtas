@@ -21,7 +21,7 @@ create_mri_domains <- function(
   cerebral_vars <- c(
     "Cerebral Atrophy", "Cerebral WM Hyperintensity", "Pons-WM Hyperintensity",
     "Sub-Insular WM Hyperintensity", "Periventricular WM Hyperintensity",
-    "Splenium (CC)-WM Hyperintensity"#,
+    # "Splenium (CC)-WM Hyperintensity",
     # don't include Genu and Corpus as they are on different scales
     # "Genu (CC)-WM Hyperintensity",
     # "Corpus Callosum-Thickness"
