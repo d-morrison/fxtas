@@ -53,6 +53,10 @@ clean_data = function(dataset)
 
     fix_drinks_per_day() |>
 
+    # create SCID and MRI domains
+    create_scid_domains() |>
+    create_mri_domains() |>
+
     # cases and controls
     define_cases_and_controls() |>
 

@@ -1,0 +1,119 @@
+---
+format:
+    html
+---
+
+```{r}
+#| include: false
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  comment = "#>",
+  fig.width = 7.5,
+  fig.height = 4
+)
+
+# update 'asis' chunk to allow inline code
+knitr::knit_engines$set(asis = function(options) {
+  if (options$echo && options$eval) knitr::knit_child(text = options$code)
+})
+```
+
+```{r}
+#| label: setup-demos-unstratified
+#| message: false
+library(fxtas)
+# devtools::load_all()
+library(pander)
+library(table1)
+library(dplyr)
+library(tidyr)
+library(magrittr)
+library(arsenal)
+
+NA.label1 = "Missing"
+column_var = "FX3*"
+
+data("visit1")
+
+visit1_cgg_complete = 
+  visit1 |> 
+  filter(
+    CGG < 200,
+    !is.na(`FX*`)
+    )
+```
+
+# MRI Variables
+
+Create MRI cerebral and cerebellum domains.
+
+<ul>
+  <li>Cerebral variables:
+    <ul>
+      <li>Cerebral Atrophy</li> 
+      <li>Cerebral WM Hyperintensity</li> 
+      <li>Pons-WM Hyperintensity</li>
+      <li>Sub-Insular WM Hyperintensity</li> 
+      <li>Periventricular WM Hyperintensity</li>
+      <li>Splenium (CC)-WM Hyperintensity</li>
+    </ul>
+  </li>
+  <li>Cerebellar variables:
+    <ul>
+      <li>Cerebellar Atrophy</li>
+      <li>Cerebellar WM Hyperintensity</li>
+      <li>MCP-WM Hyperintensity</li>
+    </ul>
+  </li>
+</ul>
+
+
+## Cerebral Variables 
+
+```{r}
+vars <- c(
+  "Cerebral Atrophy", "Cerebral WM Hyperintensity", "Pons-WM Hyperintensity",
+  "Sub-Insular WM Hyperintensity", "Periventricular WM Hyperintensity",
+  "Splenium (CC)-WM Hyperintensity", "MRI: Cerebral"
+)
+
+table1(na.is.category = FALSE, 
+  NA.label = NA.label1,
+  
+  paste(
+    "~", 
+    paste(
+      formulaic::add.backtick(vars), 
+      collapse = " + "), 
+    "|",
+    column_var |> formulaic::add.backtick()) |> 
+    formula(),
+  # render.missing=c("Empty in RedCap"="FREQ (PCT%)"),
+  data = visit1_cgg_complete)
+```
+
+## Cerebellar Variables
+
+```{r}
+vars <- c(
+  "Cerebellar Atrophy", "Cerebellar WM Hyperintensity",
+  "MCP-WM Hyperintensity", "MRI: Cerebellum"
+)
+
+table1(na.is.category = FALSE, 
+  NA.label = NA.label1,
+  
+  paste(
+    "~", 
+    paste(
+      formulaic::add.backtick(vars), 
+      collapse = " + "), 
+    "|",
+    column_var |> formulaic::add.backtick()) |> 
+    formula(),
+  # render.missing=c("Empty in RedCap"="FREQ (PCT%)"),
+  data = visit1_cgg_complete)
+```
