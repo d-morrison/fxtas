@@ -9,7 +9,8 @@ extract_results_from_pickle(
   dataset_name = "sample_data",
   output_folder = "output",
   rda_filename = "data.RData",
-  picklename = paste0(dataset_name, "_subtype", n_s - 1, ".pickle"),
+  basename = paste0(dataset_name, "_subtype", n_s - 1),
+  picklename = paste0(basename, ".pickle"),
   ...
 )
 }

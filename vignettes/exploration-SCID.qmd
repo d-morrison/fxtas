@@ -45,8 +45,8 @@ scid_vars = c(
     "Other Bipolar Disorder (MD03), Lifetime",         
     "Major Depressive Disorder (MD04), Current",         
     "Major Depressive Disorder (MD04), Lifetime",         
-    "Mood Disorder Due to GMC (MD07), Current",         
-    "Mood Disorder Due to GMC (MD07), Lifetime",         
+    "Mood Disorder Due to a GMC (MD07), Current",         
+    "Mood Disorder Due to a GMC (MD07), Lifetime",         
     "Substance-Induced Mood Dis. (MD08), Current",         
     "Substance-Induced Mood Dis. (MD08), Lifetime",         
     "Primary Psychotic Symptoms (PS01), Current",         
@@ -85,8 +85,8 @@ scid_vars = c(
     "Posttraumatic Stress (ANX31), Lifetime",         
     "Posttraumatic Stress (ANX31), Current",         
     "Generalized Anxiety (ANX32), Current Only",         
-    "Anxiety Due To GMC (ANX33), Lifetime",         
-    "Anxiety Due To GMC (ANX33), Current",         
+    "Anxiety Due to a GMC (ANX33), Lifetime",         
+    "Anxiety Due to a GMC (ANX33), Current",         
     "Substance-Induced Anxiety (ANX34), Lifetime",         
     "Substance-Induced Anxiety (ANX34), Current",         
     "Anxiety Disorder NOS (ANX35), Lifetime",         
@@ -167,14 +167,14 @@ current_vars_clean[!(current_vars_clean %in% lifetime_vars_clean)]
 scid_long_vars <- c(
   "Bipolar I Disorder (MD01)", "Bipolar II Disorder (MD02)", 
   "Other Bipolar Disorder (MD03)", "Major Depressive Disorder (MD04)", 
-  "Depressive Disorder NOS (MD06)", "Mood Disorder Due to GMC (MD07)", 
+  "Depressive Disorder NOS (MD06)", "Mood Disorder Due to a GMC (MD07)", 
   "Substance-Induced Mood Dis. (MD08)", "Primary Psychotic Symptoms (PS01)",  
   "Alcohol (SUD17)", "Sedative-Hypnotic-Anxiolytic (SUD18)", "Cannabis (SUD19)", 
   "Stimulants (SUD20)", "Opiod (SUD21)", "Cocaine (SUD22)", 
   "Hallucinogenics/ PCP (SUD23)", "Poly Drug (SUD24)", "Other (SUD25)", 
   "Panic Disorder (ANX26)", "Agoraphobia without Panic (ANX27)", 
   "Social Phobia (ANX28)", "Specific Phobia (ANX29)", "Obsessive Compulsive (ANX30)", 
-  "Posttraumatic Stress (ANX31)", "Anxiety Due To GMC (ANX33)", 
+  "Posttraumatic Stress (ANX31)", "Anxiety Due to a GMC (ANX33)", 
   "Substance-Induced Anxiety (ANX34)", "Anxiety Disorder NOS (ANX35)"
 )
 

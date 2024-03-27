@@ -65,7 +65,7 @@ compile_biomarker_group_list = function(dataset = gp34)
       "Bipolar II Disorder (MD02), Lifetime",
       "Other Bipolar Disorder (MD03), Lifetime",
       "Major Depressive Disorder (MD04), Lifetime",
-      "Mood Disorder Due to GMC (MD07), Lifetime",
+      "Mood Disorder Due to a GMC (MD07), Lifetime",
       # "Substance-Induced Mood Dis. (MD08), Lifetime", # no positives
       "Primary Psychotic Symptoms (PS01), Lifetime"
     )

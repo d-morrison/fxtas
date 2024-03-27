@@ -146,7 +146,7 @@ create_trax_labels <- function(
       scid_md04cur="Major Depressive Disorder (MD04), Current",
       scid_md04lif="Major Depressive Disorder (MD04), Lifetime",
       scid_md07cur="Mood Disorder Due to a GMC (MD07), Current",
-      scid_md07lif="Mood Disorder Due to GMC (MD07), Lifetime",
+      scid_md07lif="Mood Disorder Due to a GMC (MD07), Lifetime",
       scid_md08cur="Substance-Induced Mood Dis. (MD08), Current",
       scid_md08lif="Substance-Induced Mood Dis. (MD08), Lifetime",
       scid_ps01cur="Primary Psychotic Symptoms (PS01), Current",
