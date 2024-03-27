@@ -572,6 +572,9 @@ trax_gp34_all =
   trax |>
   bind_rows(gp34)
 
+trax_gp34_v1 <- trax_gp34_all |>
+  get_visit1()
+
 trax_gp34_multivisit_only =
   trax_gp34_all |>
   filter(!is.na(`FXS ID`)) |>
@@ -579,6 +582,7 @@ trax_gp34_multivisit_only =
          n() > 1)
 
 use_data(trax_gp34_all, overwrite = TRUE)
+use_data(trax_gp34_v1, overwrite = TRUE)
 
 males_gp34_trax <-
   trax_gp34_all |>

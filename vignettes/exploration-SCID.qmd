@@ -24,8 +24,8 @@ knitr::knit_engines$set(asis = function(options) {
 ```{r}
 #| label: setup-demos-unstratified
 #| message: false
-library(fxtas)
-# devtools::load_all()
+# library(fxtas)
+devtools::load_all()
 library(pander)
 library(table1)
 library(dplyr)

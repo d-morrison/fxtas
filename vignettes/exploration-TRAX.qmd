@@ -180,7 +180,7 @@ trax |>
 **Question:** can we fill in the earlier values using later values?
 
 Yes this is reasonable. Shouldn’t change between visits.  
-From Randi: use later versions if inconsistent, might change due to improvements in assays. 
+From Randi: use later versions if inconsistent, might change Due to improvements in assays. 
 
 ## Lifestyle
 

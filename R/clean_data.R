@@ -122,8 +122,8 @@ clean_data = function(dataset)
                           "Posttraumatic Stress (ANX31), Lifetime",
                           "Posttraumatic Stress (ANX31), Current",
                           "Generalized Anxiety (ANX32), Current Only",
-                          "Anxiety Due To GMC (ANX33), Lifetime",
-                          "Anxiety Due To GMC (ANX33), Current",
+                          "Anxiety Due to GMC (ANX33), Lifetime",
+                          "Anxiety Due to GMC (ANX33), Current",
                           "Substance-Induced Anxiety (ANX34), Lifetime",
                           "Substance-Induced Anxiety (ANX34), Current",
                           "Anxiety Disorder NOS (ANX35), Lifetime",
@@ -139,5 +139,6 @@ clean_data = function(dataset)
                           "SCID: Somatization",
                           "SCID: Psychotic",
                           # mri domains
-                          "MRI: Cerebral", "MRI: Cerebellum"))
+                          "MRI: Cerebral", "MRI: Cerebellum")
+      )
 }

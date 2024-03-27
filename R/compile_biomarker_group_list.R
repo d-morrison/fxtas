@@ -15,7 +15,7 @@
 #' @examples
 #' gp34 |> compile_biomarker_group_list()
 #'
-compile_biomarker_group_list = function(dataset = gp34)
+compile_biomarker_group_list = function(dataset = trax_gp34_v1)
 {
 
   tremors = c(
@@ -73,8 +73,8 @@ compile_biomarker_group_list = function(dataset = gp34)
       "SCID: Mood Disorders",
       "SCID: Substance Use Disorders",
       "SCID: Anxiety",
-      "SCID: Somatization",
-      "SCID: Psychotic"
+      "SCID: Somatization"
+      # "SCID: Psychotic" # exclude, only 2 at sub-threshold & 0 at threshold
     )
 
   cantab_vars = c(
@@ -91,25 +91,26 @@ compile_biomarker_group_list = function(dataset = gp34)
       "BDS-2 Total Score*") |>
     intersect(names(dataset))
 
-  scl90_vars =
-    grep(
-      value = TRUE,
-      names(dataset),
-      pattern = "^SCL90.*\\*$") |>
-    sort()
+  # scl90_vars =
+  #   grep(
+  #     value = TRUE,
+  #     names(dataset),
+  #     pattern = "^SCL90.*\\*$") |>
+  #   sort()
 
   thyroid_vars = c(
     "Hypothyroid", # removed after call 2023-09-13
     "Hyperthyroid", # removed after call 2023-09-13
     # "Thyroid problems",
-    "Lupus",
-    "Rheumatoid arthritis"
+    # "Lupus",
+    # "Rheumatoid arthritis"
     # "Multiple Sclerosis: Workup",
     # "ANA positive",
     # "Sjogrens Syndrome",
     # "Raynauds Syndrome",
     # "Pulmonary Fibrosis" # no events
     ## "Immunological Notes"
+    "Any Autoimmune"
 )
 
 kinesia_vars = c(
@@ -127,11 +128,11 @@ kinesia_vars = c(
       ataxia = ataxia,
       stage = "FXTAS Stage (0-5)*",
       parkinsons = parkinsons_vars,
-      cancer = cancer_vars,
+      # cancer = cancer_vars,
       mri = mri_vars,
       scores = scores,
       scid = scid_vars,
-      scl90 = scl90_vars,
+      # scl90 = scl90_vars,
       cantab = cantab_vars,
       thyroid = thyroid_vars
       # kinesia = kinesia_vars
