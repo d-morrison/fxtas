@@ -31,27 +31,29 @@ compile_biomarker_group_list = function(dataset = gp34)
     grep("Parkinson", value = TRUE, names(dataset))
 
   mri_vars = c(
-    "Cerebral Atrophy",
-    "Cerebellar Atrophy",
-    "Cerebral WM Hyperintensity",
-    "Cerebellar WM Hyperintensity",
-    "MCP-WM Hyperintensity",
-    "Pons-WM Hyperintensity",
-    "Sub-Insular WM Hyperintensity",
-    "Periventricular WM Hyperintensity",
+    # "Cerebral Atrophy",
+    # "Cerebellar Atrophy",
+    # "Cerebral WM Hyperintensity",
+    # "Cerebellar WM Hyperintensity",
+    # "MCP-WM Hyperintensity",
+    # "Pons-WM Hyperintensity",
+    # "Sub-Insular WM Hyperintensity",
+    # "Periventricular WM Hyperintensity",
+    "MRI: Cerebellum",
+    "MRI: Cerebral",
     "Splenium (CC)-WM Hyperintensity",
     "Genu (CC)-WM Hyperintensity",
     "Corpus Callosum-Thickness"
   )
 
-  cancer_vars =  c(
-    # "Any Cancer"
-    "Thyroid Cancer",
-    "Skin Cancer",
-    "Melanoma",
-    "Prostate Cancer",
-    "Other Cancer"
-  )
+  # cancer_vars =  c(
+  #   # "Any Cancer"
+  #   "Thyroid Cancer",
+  #   "Skin Cancer",
+  #   "Melanoma",
+  #   "Prostate Cancer",
+  #   "Other Cancer"
+  # )
 
   ataxia = c(
     "Ataxia",
@@ -61,13 +63,18 @@ compile_biomarker_group_list = function(dataset = gp34)
 
   scid_vars =
     vars = c(
-      "Bipolar I Disorder (MD01), Lifetime",
-      "Bipolar II Disorder (MD02), Lifetime",
-      "Other Bipolar Disorder (MD03), Lifetime",
-      "Major Depressive Disorder (MD04), Lifetime",
-      "Mood Disorder Due to GMC (MD07), Lifetime",
+      # "Bipolar I Disorder (MD01), Lifetime",
+      # "Bipolar II Disorder (MD02), Lifetime",
+      # "Other Bipolar Disorder (MD03), Lifetime",
+      # "Major Depressive Disorder (MD04), Lifetime",
+      # "Mood Disorder Due to GMC (MD07), Lifetime",
       # "Substance-Induced Mood Dis. (MD08), Lifetime", # no positives
-      "Primary Psychotic Symptoms (PS01), Lifetime"
+      # "Primary Psychotic Symptoms (PS01), Lifetime"
+      "SCID: Mood Disorders",
+      "SCID: Substance Use Disorders",
+      "SCID: Anxiety",
+      "SCID: Somatization",
+      "SCID: Psychotic"
     )
 
   cantab_vars = c(

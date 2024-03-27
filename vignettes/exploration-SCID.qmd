@@ -188,7 +188,7 @@ scid_long <- merge(scid_current_long, scid_lifetime_long,
 
 
 # test scid domains
-scid_domains <- create_scid_domain(gp34 |> get_visit1())
+scid_domains <- create_scid_domains(gp34 |> get_visit1())
 ```
 
 # SCID: Current vs Lifetime
