@@ -85,8 +85,8 @@ scid_vars = c(
     "Posttraumatic Stress (ANX31), Lifetime",         
     "Posttraumatic Stress (ANX31), Current",         
     "Generalized Anxiety (ANX32), Current Only",         
-    "Anxiety Due To GMC (ANX33), Lifetime",         
-    "Anxiety Due To GMC (ANX33), Current",         
+    "Anxiety Due to GMC (ANX33), Lifetime",         
+    "Anxiety Due to GMC (ANX33), Current",         
     "Substance-Induced Anxiety (ANX34), Lifetime",         
     "Substance-Induced Anxiety (ANX34), Current",         
     "Anxiety Disorder NOS (ANX35), Lifetime",         
@@ -114,11 +114,11 @@ current_vars <- current_vars[!grepl("Current Only", current_vars)]
 # subset gp34 to scid vars
 data("gp34")
 scid_dat <- gp34 |>
-  dplyr::select(`FXS ID`, all_of(scid_vars))
+  dplyr::select(`FXS ID`, `Event Name`, all_of(scid_vars))
 
 # convert to long format
 scid_lifetime_long <- scid_dat |>
-  dplyr::select(`FXS ID`, all_of(lifetime_vars)) |>
+  dplyr::select(`FXS ID`, `Event Name`, all_of(lifetime_vars)) |>
   pivot_longer(
     cols = all_of(lifetime_vars),
     names_to = "Variable",
@@ -139,7 +139,7 @@ scid_lifetime_long <- scid_dat |>
   
 
 scid_current_long <- scid_dat |>
-  dplyr::select(`FXS ID`, all_of(current_vars)) |>
+  dplyr::select(`FXS ID`, `Event Name`, all_of(current_vars)) |>
   pivot_longer(
     cols = all_of(current_vars),
     names_to = "Variable",
@@ -174,17 +174,18 @@ scid_long_vars <- c(
   "Hallucinogenics/ PCP (SUD23)", "Poly Drug (SUD24)", "Other (SUD25)", 
   "Panic Disorder (ANX26)", "Agoraphobia without Panic (ANX27)", 
   "Social Phobia (ANX28)", "Specific Phobia (ANX29)", "Obsessive Compulsive (ANX30)", 
-  "Posttraumatic Stress (ANX31)", "Anxiety Due To GMC (ANX33)", 
+  "Posttraumatic Stress (ANX31)", "Anxiety Due to GMC (ANX33)", 
   "Substance-Induced Anxiety (ANX34)", "Anxiety Disorder NOS (ANX35)"
 )
 
 scid_long <- merge(scid_current_long, scid_lifetime_long, 
-                   by = c("FXS ID", "Variable"), sort = FALSE) |>
+                   by = c("FXS ID", "Event Name", "Variable"), sort = FALSE) |>
   mutate(
     Variable = factor(
       Variable, levels = scid_long_vars
     )
-  )
+  ) |> 
+  as_tibble()
 
 
 # test scid domains
@@ -198,7 +199,8 @@ For the disorders with current vs lifetime variables, examine the relationship b
 ```{r, results='asis'}
 summary(
   arsenal::tableby(
-    Lifetime ~ Current,
+    na.action = na.tableby(lhs = TRUE),
+    includeNA(Lifetime) ~ includeNA(Current),
     strata = Variable,
     data = scid_long,
     test = FALSE,
@@ -206,6 +208,30 @@ summary(
   )
 )
 ```
+
+Occasionally, current = "Present" and lifetime = "Absent":
+
+```{r}
+scid_long |> filter(Current == "Present", Lifetime %in% c("Absent", NA))
+
+```
+
+double-checking the first case:
+
+```{R}
+gp34 |> 
+  filter(`FXS ID` == "104279-100") |> 
+  select(`Event Name`, 
+         `Anxiety Disorder NOS (ANX35), Lifetime`, 
+         `Anxiety Disorder NOS (ANX35), Current`)
+```
+
+Missingness issues:
+
+```{r}
+scid_long |> filter(!is.na(Current), is.na(Lifetime))
+```
+
 
 # SCID: Domains
 

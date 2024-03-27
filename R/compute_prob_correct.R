@@ -25,7 +25,7 @@ compute_prob_correct = function(
 
   # prob_correct = (dataset == 0) |> colMeans() # old version
   dataset |>
-    summarize(
+    dplyr::summarize(
       across(
         .cols = all_of(biomarkers),
         .fn = ~

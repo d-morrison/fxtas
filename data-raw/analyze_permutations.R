@@ -1,25 +1,30 @@
-# args
+# args (passed in from .sbatch file)
 # 1: first permutation seed (for job arrays)
-# 2: stratifying level (can be "")
-# 3: permuting variable
+# 3: permuting variable (must be a quoted column name, such as "Gender" - 1st argument to analyze_permutations.sbatch
+# 2: stratifying level (can be "") - 2nd argument to analyze_permutations.sbatch
+
 library(fxtas)
 library(dplyr)
 
-args = commandArgs(trailingOnly = TRUE) |> as.numeric()
+args = commandArgs(trailingOnly = TRUE)
 
 if(length(args) == 0)
 {
   message('no arguments found')
   permutations = 1:1000
-  stratifying_level = "Male"
   permuting_variables = "FX3*"
+  stratifying_level = "Male"
 } else
 {
-  message("args = ", args)
+  message("args = ")
+  print(args)
   start = args[1] |> as.numeric()
   permutations = start:(start+19)
-  stratifying_level = args[2]
-  permuting_variables = args[3]
+  permuting_variables = args[2]
+  cli::cli_inform("permuting variables: {permuting_variables}")
+  stratifying_level = args[3]
+  if(is.na(stratifying_level)) stratifying_level = ""
+  cli::cli_inform("stratifying level: {stratifying_level}")
 
 }
 

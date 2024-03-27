@@ -5,7 +5,7 @@ choose_biomarker_group_colors = function(
       names())
 {
   tibble(
-    biomarker_group = biomarker_groups) |>
+    biomarker_group = biomarker_group_names) |>
     mutate(
     # group_color = rainbow()
     group_color =

@@ -377,25 +377,10 @@ table1(na.is.category = FALSE,
 
 ```{r}
 
-vars = c(
-  "Was SCID completed?",
-  "Bipolar I Disorder (MD01), Lifetime",
-  "Bipolar I Disorder (MD01), Current",
-  "Bipolar II Disorder (MD02), Lifetime",
-  "Bipolar II Disorder (MD02), Current",
-  "Other Bipolar Disorder (MD03), Lifetime",
-  "Other Bipolar Disorder (MD03), Current",
-  "Major Depressive Disorder (MD04), Lifetime",
-  "Major Depressive Disorder (MD04), Current",
-  "Mood Disorder Due to GMC (MD07), Lifetime",
-  "Mood Disorder Due to a GMC (MD07), Current",
-  "Substance-Induced Mood Dis. (MD08), Lifetime",
-  "Substance-Induced Mood Dis. (MD08), Current",
-  "Primary Psychotic Symptoms (PS01), Lifetime",
-  "Primary Psychotic Symptoms (PS01), Current"
-)
+vars = scid_vars_for_table1()
 
-table1(na.is.category = FALSE, 
+table1(
+  na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),

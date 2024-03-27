@@ -14,24 +14,37 @@ extract_results_from_pickle = function(
     dataset_name = 'sample_data',
     output_folder = "output",
     rda_filename = "data.RData",
-    picklename = paste0(dataset_name, "_subtype", n_s - 1, ".pickle"),
+    basename = paste0(dataset_name, "_subtype", n_s - 1),
+    picklename = paste0(basename, ".pickle"),
     ...)
 {
+  rds_path = build_rds_path(basename, output_folder)
 
-  results00 =
-    fs::path(output_folder, "pickle_files", picklename) |>
-    py_load_object() |>
-    force()
+  if(file.exists(rds_path))
+  {
+    cli::cli_inform("loading {basename} results from RDS file.")
+    results = readRDS(rds_path)
+  } else
+  {
+    cli::cli_inform("loading {basename} results from pickle file.")
+    results00 =
+      fs::path(output_folder, "pickle_files", picklename) |>
+      py_load_object() |>
+      force()
 
-  load(fs::path(output_folder, rda_filename))  # be careful; might mask `results`
+    load(fs::path(output_folder, rda_filename))  # be careful; might mask `results`
 
-  results =
-    results00 |>
-    format_results_list(
-      biomarker_groups = biomarker_groups, # these come from the load() call
-      biomarker_levels = biomarker_levels,  # these come from the load() call,
-      ...
-    )
+    results =
+      results00 |>
+      format_results_list(
+        biomarker_groups = biomarker_groups, # these come from the load() call
+        biomarker_levels = biomarker_levels,  # these come from the load() call,
+        ...
+      )
+
+  }
+
+  results |> saveRDS(file = rds_path)
 
   return(results)
 

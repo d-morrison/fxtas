@@ -1,4 +1,11 @@
-#### Create SCID domain variables ####
+#' @title Create SCID domain variables
+#'
+#' @param dataset a [tibble::tbl_df] containing all of `scid_vars` as columns
+#' @param scid_vars a [character()] vector
+#'
+#' @returns a [tibble::tbl_df]
+#' @export
+#'
 create_scid_domains <- function(
   dataset,
   scid_vars = c(
@@ -50,8 +57,8 @@ create_scid_domains <- function(
     "Posttraumatic Stress (ANX31), Lifetime",
     "Posttraumatic Stress (ANX31), Current",
     "Generalized Anxiety (ANX32), Current Only",
-    "Anxiety Due To GMC (ANX33), Lifetime",
-    "Anxiety Due To GMC (ANX33), Current",
+    "Anxiety Due to GMC (ANX33), Lifetime",
+    "Anxiety Due to GMC (ANX33), Current",
     "Substance-Induced Anxiety (ANX34), Lifetime",
     "Substance-Induced Anxiety (ANX34), Current",
     "Anxiety Disorder NOS (ANX35), Lifetime",
@@ -65,6 +72,9 @@ create_scid_domains <- function(
 ){
   # split scid_vars into current/lifetime
   # lifetime + Generalized Anxiety
+  # Note: Generalized Anxiety goes with `lifetime` vars because:
+  # 1) There is no lifetime version,
+  # 2) it has the same Absent/Sub-Threshold/Threshold levels as the lifetime variables
   lifetime_vars <- c(scid_vars[!grepl("Current", scid_vars)],
                      "Generalized Anxiety (ANX32), Current Only")
   # current - Generalized Anxiety
@@ -103,6 +113,9 @@ create_scid_domains <- function(
     ) |>
     # create domain variables using max level
     mutate(
+      # notes: could use `do.call()`, `invoke()`, `rowwise() & max()`;
+      # no clearly most-idiomatic approach as of 2024-03-22
+      # some discussion here: https://r4ds.hadley.nz/numbers.html#numeric-transformations
       `SCID: Mood Disorders` = pmax(!!!rlang::syms(scid_md_vars_lif), na.rm = TRUE),
       `SCID: Substance Use Disorders` = pmax(!!!rlang::syms(scid_sud_vars_lif), na.rm = TRUE),
       `SCID: Anxiety` = pmax(!!!rlang::syms(scid_anx_vars_lif), na.rm = TRUE),
