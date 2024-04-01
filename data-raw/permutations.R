@@ -65,9 +65,9 @@ SuStaInLabels =
   biomarker_groups |>
   pull("biomarker")
 
-
+# April 2024, main analysis now uses Trax/GP34 Visit 1 data replacing previous version using only GP34
 df =
-  visit1 |>
+  trax_gp34_v1 |>
   filter(
     !is.na(`FX*`),
     # exclude patients with CGG > 200 (full mutation)
