@@ -168,11 +168,11 @@ if(length(args) == 0 || args[1] == 1)
   save.image(file = fs::path(output_folder, "data.RData"))
 }
 
-# stratifying_variables = "FX3*"
-stratifying_variables = c("Gender")
+stratifying_variables = "FX3*"
+# stratifying_variables = c("Gender")
 # stratifying_variables = NULL
-permuting_variables = "FX3*"
-# permuting_variables = "Gender"
+# permuting_variables = "FX3*"
+permuting_variables = "Gender"
 
 if(is.null(stratifying_variables))
 {
