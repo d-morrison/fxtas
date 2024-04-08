@@ -40,10 +40,8 @@ extract_results_from_pickle = function(
         biomarker_levels = biomarker_levels,  # these come from the load() call,
         ...
       )
-
+    results |> saveRDS(file = rds_path)
   }
-
-  results |> saveRDS(file = rds_path)
 
   return(results)
 
