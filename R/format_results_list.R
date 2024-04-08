@@ -2,7 +2,6 @@
 #'
 #' @param results pickle file contents
 #' @param biomarker_labels biomarker labels
-#' @param biomarker_groups biomarker groupings
 #' @param biomarker_levels biomarker levels
 #' @param biomarker_events_table table of biomarker events (excluding base level)
 #' @param biomarker_event_names vector of biomarker event names
@@ -13,7 +12,6 @@
 format_results_list = function(
     results,
     biomarker_labels = names(biomarker_levels),
-    biomarker_groups = NULL,
     biomarker_levels = NULL,
     biomarker_events_table =
       biomarker_levels |> get_biomarker_events_table(),

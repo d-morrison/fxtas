@@ -25,7 +25,7 @@
 #' @param save_kwargs
 #' @param results
 #' @param biomarker_levels
-#' @param biomarker_groups
+#' @param biomarker_groups biomarker groupings
 #' @param biomarker_events_table
 #' @param biomarker_event_names
 #' @param biomarker_plot_order
