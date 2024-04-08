@@ -4,7 +4,7 @@
 \alias{compile_biomarker_group_list}
 \title{Compile a list of biomarker groups}
 \usage{
-compile_biomarker_group_list(dataset = gp34)
+compile_biomarker_group_list(dataset = trax_gp34_v1)
 }
 \arguments{
 \item{dataset}{Dataset to extract biomarker names from using regular expressions}

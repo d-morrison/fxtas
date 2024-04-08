@@ -7,7 +7,6 @@
 format_results_list(
   results,
   biomarker_labels = names(biomarker_levels),
-  biomarker_groups = NULL,
   biomarker_levels = NULL,
   biomarker_events_table = get_biomarker_events_table(biomarker_levels),
   biomarker_event_names = pull(biomarker_events_table, biomarker_level),
@@ -18,8 +17,6 @@ format_results_list(
 \item{results}{pickle file contents}
 
 \item{biomarker_labels}{biomarker labels}
-
-\item{biomarker_groups}{biomarker groupings}
 
 \item{biomarker_levels}{biomarker levels}
 
