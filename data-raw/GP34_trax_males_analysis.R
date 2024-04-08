@@ -124,8 +124,13 @@ for (i in biomarker_varnames)
 args = commandArgs(trailingOnly = TRUE)
 print(args)
 
-if(length(args)==0 || (length(args) > 0 && (args[1] == 1))) save.image(file = fs::path(output_folder, "data.RData"))
-
+if(length(args)==0 || (length(args) > 0 && (args[1] == 1)))
+{
+  save.image(file = fs::path(output_folder, "data.RData"))
+  patient_data     |> saveRDS(file = fs::path(output_folder, "data.rds"))
+  biomarker_levels |> saveRDS(file = fs::path(output_folder, "biomarker_levels.rds"))
+  biomarker_groups |> saveRDS(file = fs::path(output_folder, "biomarker_groups.rds"))
+}
 #| message: false
 #| label: model-all-data
 #| include: false

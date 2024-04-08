@@ -171,6 +171,9 @@ for (i in biomarker_varnames)
 if(length(args) == 0 || args[1] == 1)
 {
   save.image(file = fs::path(output_folder, "data.RData"))
+  patient_data     |> saveRDS(file = fs::path(output_folder, "data.rds"))
+  biomarker_levels |> saveRDS(file = fs::path(output_folder, "biomarker_levels.rds"))
+  biomarker_groups |> saveRDS(file = fs::path(output_folder, "biomarker_groups.rds"))
 }
 
 
