@@ -171,11 +171,11 @@ if(length(args) == 0 || args[1] == 1)
   biomarker_groups |> saveRDS(file = fs::path(output_folder, "biomarker_groups.rds"))
 }
 
-# stratifying_variables = "FX3*"
-stratifying_variables = "Gender"
+stratifying_variables = "FX3*"
+# stratifying_variables = "Gender"
 # stratifying_variables = NULL
-permuting_variables = "FX3*"
-# permuting_variables = "Gender"
+# permuting_variables = "FX3*"
+permuting_variables = "Gender"
 
 if(is.null(stratifying_variables))
 {
