@@ -18,7 +18,9 @@ extract_results_from_pickle = function(
     picklename = paste0(basename, ".pickle"),
     ...)
 {
-  rds_path = build_rds_path(basename, output_folder)
+  rds_path = build_rds_path(
+    dataset_name = basename,
+    output_folder = output_folder)
 
   if(file.exists(rds_path))
   {
