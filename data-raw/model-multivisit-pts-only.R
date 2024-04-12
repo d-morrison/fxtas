@@ -45,7 +45,7 @@ SuStaInLabels =
 
 
 df =
-  trax_gp34 |>
+  trax_gp34_all |>
   filter(!is.na(`FXS ID`)) |>
   filter(.by = `FXS ID`, n() > 1) |>
   filter(!is.na(`FX*`),
