@@ -1,8 +1,13 @@
-## Latent subgroups {#sec-latent-subgroups .appendix}
+### Results for latent subgroups analysis {#sec-latent-subgroups .appendix}
 
 ```{r}
 #| label: set-optimal-subgroups
 n_s = 6
+
+results_cv_max = extract_results_from_pickle(
+  n_s = n_s,
+  dataset_name = dataset_name,
+  output_folder = output_folder)
 ```
 
 Based on the CVIC criterion (@sec-cvic), it appears that `r n_s` subgroups is the optimal number for the full, unstratified GP+GP4 dataset.
@@ -42,11 +47,6 @@ figs |> print_PVDs()
 #| label: tbl-sg_demos
 #| results: asis
 
-results_cv_max = extract_results_from_pickle(
-  n_s = n_s,
-  dataset_name = dataset_name,
-  output_folder = output_folder)
-
 table_subtype_by_demographics(
   patient_data,
   subtype_and_stage_table = 
@@ -60,6 +60,24 @@ table_subtype_by_demographics(
 #| fig-cap: "ML stage by age and latent subtype"
 #| include: false
 
+stages = 
+  results_cv_max$subtype_and_stage_table |> 
+  mutate(
+    age = patient_data$`Age at first visit`
+  )
+
+library(ggplot2)
+stages |>
+  graph_stage_by_age()
+
+
+```
+
+
+```{r}
+#| label: fig-stage-by-age-longitudinal
+#| fig-cap: "ML stage by age, longitudinal data"
+#| include: true
 stages = 
   results_cv_max$subtype_and_stage_table |> 
   mutate(
