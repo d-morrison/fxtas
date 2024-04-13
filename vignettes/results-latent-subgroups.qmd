@@ -23,8 +23,8 @@ figs = extract_figs_from_pickle(
 
 ```{r}
 #| label: "fig-pvd_optimal"
-#| layout-ncol: 3
-#| fig-height: 15
+#| layout-ncol: 2
+#| fig-height: !expr pvd_height
 #| fig-align: center
 #| fig-cap: "positional variance diagrams for 4 subgroups"
 #| fig-cap-location: top

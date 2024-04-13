@@ -46,7 +46,7 @@ fig_both_mv_only = extract_figs_from_pickle(
 ```{r}
 #| label: "fig-males"
 #| column: page
-#| fig-height: 15
+#| fig-height: !expr pvd_height
 #| fig-align: center
 #| fig-cap: "Estimated event sequences for males, by data subset"
 #| fig-cap-location: top
@@ -69,7 +69,7 @@ fig_males_all |> print()
 #| label: "fig-females"
 #| fig-cap: "Estimated event sequences for females, by data subset"
 #| column: page
-#| fig-height: 15
+#| fig-height: !expr pvd_height
 #| fig-align: center
 #| fig-cap-location: top
 #| layout-ncol: 2
@@ -97,7 +97,7 @@ Similarly, clinically-elevated SCL90 values appear before FXTAS stage 1 for fema
 ```{r}
 #| label: "fig-all-visits"
 #| column: page
-#| fig-height: 15
+#| fig-height: !expr pvd_height
 #| fig-align: center
 #| fig-cap: "Estimated event sequences - all visits"
 #| fig-cap-location: top

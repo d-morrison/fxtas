@@ -306,7 +306,7 @@ We ran the analysis for 1-6 latent subgroups, each with their own ordering. @fig
 ```{r}
 #| label: "fig-pvd1"
 #| column: page
-#| fig-height: 15
+#| fig-height: !expr pvd_height
 #| fig-align: center
 #| fig-cap: "positional variance diagram for 1 subgroup"
 #| fig-cap-location: top
@@ -328,7 +328,7 @@ print(figs[[1]])
 ```{r}
 #| label: "fig-pvd2"
 #| layout-ncol: 2
-#| fig-height: 15
+#| fig-height: !expr pvd_height
 #| fig-cap: "positional variance diagrams for 2 subgroups"
 #| fig-cap-location: top
 #| fig-align: center
@@ -368,7 +368,7 @@ figs = extract_figs_from_pickle(
 ```{r}
 #| label: "fig-pvd3"
 #| layout-ncol: 3
-#| fig-height: 15
+#| fig-height: !expr pvd_height
 #| fig-align: center
 #| fig-cap: "positional variance diagrams for 3 subgroups"
 #| fig-cap-location: top
@@ -401,7 +401,7 @@ figs = extract_figs_from_pickle(
 ```{r}
 #| label: "fig-pvd4"
 #| layout-ncol: 4
-#| fig-height: 15
+#| fig-height: !expr pvd_height
 #| fig-align: center
 #| fig-cap: "positional variance diagrams for 4 subgroups"
 #| fig-cap-location: top
@@ -436,7 +436,7 @@ figs = extract_figs_from_pickle(
 ```{r}
 #| label: "fig-pvd5"
 #| layout-ncol: 3
-#| fig-height: 15
+#| fig-height: !expr pvd_height
 #| fig-align: center
 #| fig-cap: "positional variance diagrams for 5 subgroups"
 #| fig-cap-location: top
@@ -471,7 +471,7 @@ figs = extract_figs_from_pickle(
 ```{r}
 #| label: "fig-pvd6"
 #| layout-ncol: 3
-#| fig-height: 15
+#| fig-height: !expr pvd_height
 #| fig-align: center
 #| fig-cap: "positional variance diagrams for 6 subgroups"
 #| fig-cap-location: top

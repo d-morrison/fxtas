@@ -7,7 +7,7 @@
 ```{r}
 #| label: "fig-mv-only"
 #| column: page
-#| fig-height: 15
+#| fig-height: !expr pvd_height
 #| fig-align: center
 #| fig-cap: "Estimated event sequences - multivisit patients only"
 #| fig-cap-location: top
