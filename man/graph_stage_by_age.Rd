@@ -4,10 +4,10 @@
 \alias{graph_stage_by_age}
 \title{graph stage by age}
 \usage{
-graph_stage_by_age(data)
+graph_stage_by_age(data, alpha = 0.7)
 }
 \arguments{
-\item{data}{}
+\item{alpha}{}
 }
 \description{
 graph stage by age

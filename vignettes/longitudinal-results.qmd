@@ -118,6 +118,12 @@ fig_females_all |> print()
 #| fig-cap: "ML stage by age, longitudinal data"
 #| include: true
 
+patient_data1 = 
+  trax_gp34_all |>
+  filter(
+    CGG < 200, 
+    CGG >= 55)
+
 results_both_all = extract_results_from_pickle(
   n_s = 1,
   rda_filename = "gp34_longitudinal.RData",
@@ -127,12 +133,13 @@ results_both_all = extract_results_from_pickle(
 stages = 
   results_both_all$subtype_and_stage_table |> 
   mutate(
-    age = patient_data$`Age at first visit`
-  )
+    age = patient_data1$`Age at visit`,
+    id = patient_data1$`FXS ID`
+  ) |> 
+  arrange(id, age)
 
 library(ggplot2)
-stages |>
-  graph_stage_by_age()
+stages |> graph_stage_by_age()
 
 
 ```

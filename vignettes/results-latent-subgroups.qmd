@@ -63,12 +63,14 @@ table_subtype_by_demographics(
 stages = 
   results_cv_max$subtype_and_stage_table |> 
   mutate(
-    age = patient_data$`Age at first visit`
+    age = patient_data$`Age at first visit`,
+    id = patient_data$`FXS ID`
   )
 
 library(ggplot2)
 stages |>
   graph_stage_by_age()
+  
 
 
 ```
