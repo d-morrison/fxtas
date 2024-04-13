@@ -1,4 +1,5 @@
 ```{r}
+#| label: exploration-setup
 #| include: false
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -37,56 +38,10 @@ visit1_cgg_complete =
     !is.na(`FX*`)
   )
 
-phase <- ifelse(column_var == "Recruited in study phase", TRUE, FALSE)
-cgg <- ifelse(column_var == "FX**", TRUE, FALSE)
 ```
 
-## First-visit characteristics by Sex and CGG repeats level
 
-Here, we review the data from the first visits by each participant, stratified by CGG (`r unique(visit1_cgg_complete$"FX3*")`) 
-and Sex (`r unique(visit1_cgg_complete$Gender)`)
-
-### Demographics
-
-```{r}
-#| label: "tbl-demographics"
-#| tbl-cap: "Demographics by CGG repeats level"
-vars = c(
-  "Study",
-  "Age at first visit",
-  "# visits",
-  # column_var,
-  "Gender",
-  "Primary Ethnicity",
-  "Primary Race"
-  
-)
-
-table1(
-  na.is.category = FALSE, overall = FALSE,
-  NA.label = NA.label1,
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1_cgg_complete)
-```
-
-### APOE
-
-```{r}
-#| tbl-cap: "APOE by CGG repeats level"
-#| label: "tbl-apoe"
-# vars = grep("^ApoE", names(trax_gp34_all), value = TRUE)
-vars = "ApoE"
-table1(
-  na.is.category = FALSE, 
-  overall = FALSE,
-  NA.label = NA.label1,
-  x = stratified_formula(vars, column_var),
-  # render.missing=c("Empty in RedCap"="FREQ (PCT%)"),
-  data = visit1_cgg_complete)
-```
-
-### Tremors
+### Tremors {.appendix}
 
 ```{r}
 #| label: tbl-tremors
@@ -135,7 +90,7 @@ table1(na.is.category = FALSE, overall = FALSE,
 
 <br>
 
-### Head tremors
+### Head tremors  {.appendix}
 
 ```{r}
 #| tbl-cap: "Head tremors"
@@ -188,7 +143,7 @@ table1(
 
 ```
 
-### Ataxia
+### Ataxia  {.appendix}
 
 ```{r}
 #| label: tbl-ataxia-by-cgg
@@ -231,7 +186,7 @@ table1(na.is.category = FALSE, overall = FALSE,
 
 <br>
 
-### Parkinsons
+### Parkinsons  {.appendix}
 
 ```{r}
 #| label: tbl-parkinsons-by-cgg
@@ -250,7 +205,7 @@ table1(na.is.category = FALSE, overall = FALSE,
 
 ```
 
-### FXTAS Stage
+### FXTAS Stage {.appendix}
 
 ```{r}
 #| label: tbl-fxtas-stage-by-cgg
@@ -275,7 +230,7 @@ table1(na.is.category = FALSE, overall = FALSE,
 
 ```
 
-### Behavior Dimensions Scale - Second Edition (BDS-2)
+### Behavior Dimensions Scale - Second Edition (BDS-2) {.appendix}
 
 ```{r}
 #| label: tbl-bds2
@@ -292,7 +247,7 @@ table1(na.is.category = FALSE, overall = FALSE,
 
 ```
 
-### Mini-Mental State Examination (MMSE)
+### Mini-Mental State Examination (MMSE)  {.appendix}
 
 ```{r}
 #| label: tbl-mmse
@@ -317,7 +272,7 @@ table1(na.is.category = FALSE, overall = FALSE,
 
 ```
 
-### Structured Clinical Interview for DSM Disorders (SCID)
+### Structured Clinical Interview for DSM Disorders (SCID)  {.appendix}
 
 ```{r}
 #| label: tbl-scid
@@ -335,7 +290,7 @@ table1(
 
 
 
-### MRI
+### MRI  {.appendix}
 
 ```{r}
 #| label: tab-mri
@@ -363,7 +318,7 @@ table1(
 
 ```
 
-### Wechsler Adult Intelligence Scale (WAIS)
+### Wechsler Adult Intelligence Scale (WAIS)  {.appendix}
 
 ```{r}
 #| label: tbl-wais
@@ -402,7 +357,7 @@ table1(
 
 ```
 
-### Cambridge Neuropsychological Test Automated Battery (CANTAB)
+### Cambridge Neuropsychological Test Automated Battery (CANTAB)  {.appendix}
 
 We used categorization cutoffs taken from [@talebi2020cambridge].
 
@@ -438,7 +393,7 @@ table1(na.is.category = FALSE, overall = FALSE,
        data = visit1_cgg_complete)
 ```
 
-### Thyroid and autoimmune diseases
+### Thyroid and autoimmune diseases  {.appendix}
 
 ```{r}
 #| label: tbl-autoimmune

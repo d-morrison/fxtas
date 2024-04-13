@@ -3,11 +3,21 @@ project:
 format:
   docx:
     toc: false
+    echo: false
     fig-format: svg
     toc-depth: 4
+    cap-location: top
+    fig-cap-location: top
+    tbl-cap-location: top
     number-sections: true
     number-depth: 3
     link-citations: true
+    date: last-modified
+    date-format: "[Last modified:] YYYY-MM-DD: H:mm:ss (A)"
+    bibliography: references.bib
+    embed-resources: true
+    appendix-style: plain
+    mainfont: serif
   html:
     # author:
     #   - name: Ezra Morrison
@@ -29,11 +39,11 @@ format:
        dark:
          - darkly
          - custom.scss
-    cap-location: top
     css: custom.scss
     number-sections: true
     number-depth: 3
     html-math-method: mathjax
+    cap-location: top
     fig-cap-location: top
     tbl-cap-location: top
     code-fold: true
@@ -47,3 +57,8 @@ knitr:
     comment: "#>"
     R.options:
       dev: svg
+execute:
+  warning: false
+  message: false
+  cache: false
+  freeze: auto  # re-render only when source changes

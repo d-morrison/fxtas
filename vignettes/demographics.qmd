@@ -1,0 +1,31 @@
+```{r}
+#| label: "tbl-demographics"
+#| tbl-cap: "Demographics by CGG repeats level"
+
+column_var = c("Gender", "FX3*")
+
+visit1_cgg_complete = 
+  trax_gp34_v1 |> 
+  filter(
+    CGG < 200,
+    !is.na(`FX*`)
+  )
+
+vars = c(
+  "Study",
+  "Age at first visit",
+  "# visits",
+  # column_var,
+  "Primary Ethnicity",
+  "Primary Race",
+  "ApoE"
+  
+)
+
+table1(
+  na.is.category = FALSE, overall = FALSE,
+  NA.label = "Missing",
+  stratified_formula(vars, column_var),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  data = visit1_cgg_complete)
+```

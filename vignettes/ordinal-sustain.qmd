@@ -163,7 +163,10 @@ table_out |> pander()
 
 ```
 
-{{< include exploration.qmd >}}
+@tbl-demographics provides demographic information about the study participants. @tbl-apoe - @tbl-autoimmune summarize the biomarker data, stratified by CGG (`r unique(visit1_cgg_complete$"FX3*")`) 
+and Sex (`r unique(visit1_cgg_complete$Gender)`)
+
+{{< include demographics.qmd >}}
 
 ## Statistical analysis {#sec-Statistical-analysis}
 
@@ -843,4 +846,5 @@ temp$loglike_matrix |>
 
 ## Additional data tables {.appendix}
 
+{{< include exploration.qmd >}}
 {{< include data-tables-appendix.qmd >}}
