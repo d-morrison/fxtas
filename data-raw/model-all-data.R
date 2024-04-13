@@ -48,7 +48,7 @@ SuStaInLabels =
 
 
 df =
-  gp34 |>
+  trax_gp34_all |>
   filter(
     !is.na(`FX*`),
     # exclude patients with CGG > 200 (full mutation)
