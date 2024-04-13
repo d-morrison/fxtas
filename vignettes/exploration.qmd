@@ -70,10 +70,10 @@ table1(
   data = visit1_cgg_complete)
 ```
 
-### Apo-E
+### APOE
 
 ```{r}
-#| tbl-cap: "Apo-E by CGG repeats level"
+#| tbl-cap: "APOE by CGG repeats level"
 #| label: "tbl-apoe"
 # vars = grep("^ApoE", names(trax_gp34_all), value = TRUE)
 vars = "ApoE"
@@ -342,15 +342,18 @@ table1(na.is.category = FALSE, overall = FALSE,
 
 ### MMSE
 
-
-
 ```{r}
 
-vars = grep(
+# vars = grep(
+#   "MMSE Total Score", 
+#   value = TRUE, 
+#   names(trax_gp34_all), 
+#   fixed = TRUE)
+
+vars = c(
   "MMSE Total Score", 
-  value = TRUE, 
-  names(trax_gp34_all), 
-  fixed = TRUE)
+  # "MMSE Total Score: missingness reasons", 
+  "MMSE Total Score*")
 
 table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
@@ -399,10 +402,10 @@ vars = c(
 
 table1(
   na.is.category = FALSE, 
-       overall = FALSE,
-       NA.label = NA.label1,
-       stratified_formula(vars, column_var),
-       data = visit1_cgg_complete)
+  overall = FALSE,
+  NA.label = NA.label1,
+  stratified_formula(vars, column_var),
+  data = visit1_cgg_complete)
 
 ```
 
@@ -504,9 +507,9 @@ table1(na.is.category = FALSE, overall = FALSE,
 
 ### Kinesia
 
-We categorized each kinesia variable as "0-1", "1-2", "2-3", and "3-4".
-
 ```{r}
+#| label: tbl-kinesia
+#| tbl-cap: "Kinesia"
 kinesia_vars = c(
   "Kinesia Left Rest Tremor",
   "Kinesia Left Postural Tremor",

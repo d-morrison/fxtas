@@ -1,0 +1,74 @@
+## Latent subgroups {#sec-latent-subgroups .appendix}
+
+```{r}
+#| label: set-optimal-subgroups
+n_s = 6
+```
+
+Based on the CVIC criterion (@sec-cvic), it appears that `r n_s` subgroups is the optimal number for the full, unstratified GP+GP4 dataset.
+@fig-pvd_optimal shows positional variance diagrams (PVDs) for each of the subgroup clusters detected under this assumption, and @tbl-sg_demos shows the demographics of the patients clustered in each subgroup; patients in the "Type 0" category were too early in the disease process to be classified into a subgroup.
+
+```{r}
+#| label: extract-PVD-optimal
+figs = extract_figs_from_pickle(
+  n_s = n_s,
+  dataset_name = dataset_name,
+  output_folder = output_folder)
+```
+
+```{r}
+#| label: "fig-pvd_optimal"
+#| layout-ncol: 3
+#| fig-height: 15
+#| fig-align: center
+#| fig-cap: "positional variance diagrams for 4 subgroups"
+#| fig-cap-location: top
+#| column: screen
+#| fig-subcap:
+#|   - "Subgroup 1"
+#|   - "Subgroup 2"
+#|   - "Subgroup 3"
+#|   - "Subgroup 4"
+#|   - "Subgroup 5"
+#|   - "Subgroup 6"
+library(ggplot2)
+
+figs |> print_PVDs()
+
+```
+
+```{r}
+#| tbl-cap: !expr glue::glue("Subgroup demographics ({n_s} subgroups)")
+#| label: tbl-sg_demos
+#| results: asis
+
+results_cv_max = extract_results_from_pickle(
+  n_s = n_s,
+  dataset_name = dataset_name,
+  output_folder = output_folder)
+
+table_subtype_by_demographics(
+  patient_data,
+  subtype_and_stage_table = 
+    results_cv_max$subtype_and_stage_table
+)
+
+```
+
+```{r}
+#| label: fig-stage-by-age
+#| fig-cap: "ML stage by age and latent subtype"
+#| include: false
+
+stages = 
+  results_cv_max$subtype_and_stage_table |> 
+  mutate(
+    age = patient_data$`Age at first visit`
+  )
+
+library(ggplot2)
+stages |>
+  graph_stage_by_age()
+
+
+```

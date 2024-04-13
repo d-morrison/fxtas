@@ -16,7 +16,7 @@ format:
     #   - Kyoungmi Kim
     #   - (more to be added)
     toc: true
-    fig-format: svg
+    # fig-format: svg
     toc-float: true
     toc-depth: 4
     embed-resources: true

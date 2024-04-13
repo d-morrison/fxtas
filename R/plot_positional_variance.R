@@ -246,7 +246,7 @@ plot_positional_var = function(
     PF.plot =
       PFs  |>
       plot.PF(...) +
-      ggtitle(title_i)
+      ggplot2::ggtitle(title_i)
 
 
     figs[[i]] = structure(

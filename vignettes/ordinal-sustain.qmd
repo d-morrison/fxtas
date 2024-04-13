@@ -82,19 +82,12 @@ output_folder =
 ## Data
 
 ```{r}
-#| label: fig-hist-CGG-gp34-v1
-#| fig-cap: "Bar-plot of CGG repeats among GP/GP4 participants"
-#| warning: false
-
-trax_gp34_v1 |> graph_CGG_repeats(rows = vars(Gender))
-
-```
-
-```{r}
 #| label: subset-data
-n_missing_CGG = trax_gp34_v1$CGG |> is.na() |> sum()
-n_above_200 = sum(trax_gp34_v1$CGG >= 200, na.rm = TRUE)
-gp34_v1_usable = trax_gp34_v1 |> filter(CGG < 200)
+
+full_data = trax_gp34_v1
+n_missing_CGG = full_data$CGG |> is.na() |> sum()
+n_above_200 = sum(full_data$CGG >= 200, na.rm = TRUE)
+gp34_v1_usable = full_data |> filter(CGG < 200)
 gp34_v1_cases = gp34_v1_usable |> filter(CGG >= 55)
 # note: there are 231 records in `visit1` with CGG >= 55, but 4 have CGG >= 200
 # previously `nrow(gp34_v1_cases)` was 221, which was based on incorrectly filtering on a version of CGG that hadn't been backfilled.
@@ -102,9 +95,18 @@ gp34_v1_cases = gp34_v1_usable |> filter(CGG >= 55)
 gp34_v1_controls =  gp34_v1_usable |> filter(CGG < 55)
 ```
 
-The data come from the GP and GP4 studies. In the primary analyses, we analyzed one visit record per participant, using the earliest visit available across the two studies with age at visit $\ge 40$ years, resulting in `r nrow(trax_gp34_v1)` observations in total. However, `r n_missing_CGG` individuals did not have CGG values available, and `r n_above_200` had full fragile X syndrome mutation (≥200 CGG repeats; @fig-hist-CGG-gp34-v1), so only `r nrow(gp34_v1_usable)` individuals 
+The data come from the GP, GP4, and Trax (Phases 1 & 2) studies. In the primary analyses, we analyzed one visit record per participant, using the earliest visit available across the two studies with age at visit $\ge 40$ years, resulting in `r nrow(full_data)` observations in total. However, `r n_missing_CGG` individuals did not have CGG values available, and `r n_above_200` had full fragile X syndrome mutation (≥200 CGG repeats; @fig-hist-CGG-gp34-v1), so only `r nrow(gp34_v1_usable)` individuals 
 (`r nrow(gp34_v1_cases)` cases and 
 `r nrow(gp34_v1_controls)` controls) were included in the event sequence analysis.
+
+```{r}
+#| label: fig-hist-CGG-gp34-v1
+#| fig-cap: "Bar-plot of CGG repeats among GP/GP4 participants"
+#| warning: false
+
+full_data |> graph_CGG_repeats(rows = vars(Gender))
+
+```
 
 ```{r}
 #| label: "biomarker-events"
@@ -478,7 +480,7 @@ fig_over100_females = extract_figs_from_pickle(
 ```{r}
 #| label: "fig-first-only"
 #| column: screen
-#| fig-height: 15
+#| fig-height: 10
 #| fig-align: center
 #| fig-cap: "Estimated event sequence models - overall and stratified by sex, first visits only"
 #| fig-cap-location: top
@@ -573,79 +575,6 @@ fig_over100_females |> print()
 
 ```
 
-## Latent subgroups {#sec-latent-subgroups}
-
-```{r}
-n_s = 6
-```
-
-Based on the CVIC criterion (@sec-cvic), it appears that `r n_s` subgroups is the optimal number for the full, unstratified GP+GP4 dataset.
-@fig-pvd_optimal shows positional variance diagrams (PVDs) for each of the subgroup clusters detected under this assumption, and @tbl-sg_demos shows the demographics of the patients clustered in each subgroup; patients in the "Type 0" category were too early in the disease process to be classified into a subgroup.
-
-```{r, extract-PVD-optimal}
-
-figs = extract_figs_from_pickle(
-  n_s = n_s,
-  dataset_name = dataset_name,
-  output_folder = output_folder)
-```
-
-```{r}
-#| label: "fig-pvd_optimal"
-#| layout-ncol: 3
-#| fig-height: 15
-#| fig-align: center
-#| fig-cap: "positional variance diagrams for 4 subgroups"
-#| fig-cap-location: top
-#| column: screen
-#| fig-subcap:
-#|   - "Subgroup 1"
-#|   - "Subgroup 2"
-#|   - "Subgroup 3"
-#|   - "Subgroup 4"
-#|   - "Subgroup 5"
-#|   - "Subgroup 6"
-library(ggplot2)
-
-figs |> print_PVDs()
-
-```
-
-```{r}
-#| tbl-cap: !expr glue::glue("Subgroup demographics ({n_s} subgroups)")
-#| label: tbl-sg_demos
-#| results: asis
-
-results_cv_max = extract_results_from_pickle(
-  n_s = n_s,
-  dataset_name = dataset_name,
-  output_folder = output_folder)
-
-table_subtype_by_demographics(
-  patient_data,
-  subtype_and_stage_table = 
-    results_cv_max$subtype_and_stage_table
-)
-
-```
-
-```{r}
-#| label: fig-stage-by-age
-#| fig-cap: "ML stage by age and latent subtype"
-#| include: false
-
-stages = 
-  results_cv_max$subtype_and_stage_table |> 
-  mutate(
-    age = patient_data$`Age at first visit`
-  )
-
-library(ggplot2)
-stages |>
-  graph_stage_by_age()
-
-
-```
 ## Longitudinal data
 
 {{< include longitudinal-results.qmd >}}
@@ -783,3 +712,4 @@ temp$loglike_matrix |>
 
 ```
 
+{{< include results-latent-subgroups.qmd >}}
