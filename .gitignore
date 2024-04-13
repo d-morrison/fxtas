@@ -18,3 +18,4 @@ miniconda
 /.quarto/
 data-raw/logs
 data-raw/out
+_freeze
