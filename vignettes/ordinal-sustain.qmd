@@ -743,7 +743,7 @@ fig_over100_females |> print()
 
 :::
 
-# Appendix {.appendix}
+# Supplementary material {.appendix}
 
 {{< include general-data-notes.qmd >}}
 
