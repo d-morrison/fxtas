@@ -20,12 +20,18 @@ graph_CGG_repeats = function(
     geom_bar(alpha = .5) +
     geom_vline(
       data = tibble(
-        x = c(55, 200),
+        x = c(55, 100, 200),
         col = c(
-          "55 CGG repeats (control vs case)",
-          "200 CGG repeats (pre- vs full- mutation)") |>
-          factor() |>
-          relevel(ref = "55 CGG repeats (control vs case)")
+          "55 CGG repeats",
+          "100 CGG repeats",
+          "200 CGG repeats") |>
+          factor(
+            levels = c(
+              "55 CGG repeats",
+              "100 CGG repeats",
+              "200 CGG repeats"
+            )
+          )
       ),
       aes(
         xintercept = x,
