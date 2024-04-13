@@ -171,11 +171,9 @@ We applied  the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algo
 
 Ordinal SuStaIn uses Markov Chain Monte Carlo (MCMC) sampling to estimate the Bayesian posterior probability of each possible event sequence for each subgroup given the training dataset, assuming a uniform prior distribution over the set of all possible patterns. 
 
-We fit models stratified by sex (no latent subgroups; see @fig-first-only-1 and @fig-first-only-2).
+We fit models stratified by sex, with no latent subgroups (@fig-first-only). We also fit the model stratified by CGG repeats (<100 vs $\ge$ 100), also with no latent subgroups (@fig-pvd-by-cgg).
 
-We also fit the model stratified by CGG repeats (<100 vs $\ge$ 100), also with no latent subgroups (see @fig-pvd-by-cgg).
-
-We also fit the models stratified by both sex and CGG repeats (<100 vs $\ge$ 100), also with no latent subgroups (results in @sec-stratified-by-cgg-and-sex).
+We then fit the models stratified by both sex and CGG repeats (<100 vs $\ge$ 100), also with no latent subgroups (@sec-stratified-by-cgg-and-sex).
 
 #### Testing for differences between strata
 

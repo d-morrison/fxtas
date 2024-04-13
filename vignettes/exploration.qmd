@@ -89,6 +89,8 @@ table1(
 ### Tremors
 
 ```{r}
+#| label: tbl-tremors
+#| tbl-cap: "Tremors"
 vars = c(
   
   "Intention tremor",
@@ -164,7 +166,7 @@ table1(
 ```{r}
 #| tbl-cap: "Age of onset for those with a head tremor recorded."
 #| label: "tbl-head-tremor-AO"
-#| eval: false
+#| eval: true
 vars = c(
   "Head Tremor: Age of onset",
   if(show_missingness_reasons) "Head Tremor: Age of onset: missingness reasons"
@@ -268,10 +270,11 @@ table1(na.is.category = FALSE, overall = FALSE,
 
 ```
 
-### BDS2
+### Behavior Dimensions Scale - Second Edition (BDS-2)
 
 ```{r}
-
+#| label: tbl-bds2
+#| tbl-cap: "Behavior Dimensions Scale - Second Edition (BDS-2)"
 vars = c("BDS-2 Total Score", "BDS-2 Total Score*")
 
 
@@ -284,10 +287,11 @@ table1(na.is.category = FALSE, overall = FALSE,
 
 ```
 
-### MMSE
+### Mini-Mental State Examination (MMSE)
 
 ```{r}
-
+#| label: tbl-mmse
+#| tbl-cap: "Mini-Mental State Examination (MMSE)"
 # vars = grep(
 #   "MMSE Total Score", 
 #   value = TRUE, 
@@ -308,10 +312,11 @@ table1(na.is.category = FALSE, overall = FALSE,
 
 ```
 
-### SCID
+### Structured Clinical Interview for DSM Disorders (SCID)
 
 ```{r}
-
+#| label: tbl-scid
+#| tbl-cap: "Structured Clinical Interview for DSM Disorders (SCID)"
 vars = scid_vars_for_table1()
 
 table1(
@@ -353,10 +358,11 @@ table1(
 
 ```
 
-### WAIS
+### Wechsler Adult Intelligence Scale (WAIS)
 
 ```{r}
-
+#| label: tbl-wais
+#| tbl-cap: "Wechsler Adult Intelligence Scale (WAIS)"
 vars = c(
   # "Verbal: IQ Score",
   "Verbal Comprehension: Composite Score (VCI)",
@@ -391,12 +397,14 @@ table1(
 
 ```
 
-### CANTAB
+### Cambridge Neuropsychological Test Automated Battery (CANTAB)
 
-For now, we used cutoffs taken from [@talebi2020cambridge].
+We used categorization cutoffs taken from [@talebi2020cambridge].
 
 ```{r}
-
+#| label: tbl-cantab
+#| tbl-cap: "Cambridge Neuropsychological Test Automated Battery (CANTAB)"
+#| 
 # table1(na.is.category = FALSE, overall = FALSE,
 #   NA.label = NA.label1,
 #   stratified_formula("Drugs used", column_var),
@@ -425,10 +433,11 @@ table1(na.is.category = FALSE, overall = FALSE,
        data = visit1_cgg_complete)
 ```
 
-### Thyroid and other autoimmune diseases
+### Thyroid and autoimmune diseases
 
 ```{r}
-
+#| label: tbl-autoimmune
+#| tbl-cap: "Thyroid and autoimmune diseases"
 vars = c(
   "Hypothyroid",
   "Hyperthyroid",
@@ -443,8 +452,10 @@ vars = c(
   "Any Autoimmune"
 )
 
-table1(na.is.category = FALSE, overall = FALSE,
-       NA.label = NA.label1,
-       stratified_formula(vars, column_var),
-       data = visit1_cgg_complete)
+table1(
+  na.is.category = FALSE, 
+  overall = FALSE,
+  NA.label = NA.label1,
+  stratified_formula(vars, column_var),
+  data = visit1_cgg_complete)
 ```

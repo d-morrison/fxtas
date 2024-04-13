@@ -184,7 +184,10 @@ if(is.null(stratifying_variables))
   {
     message('saving dataset to ', output_folder, "/permutations")
     output_folder1 =
-      fs::path(output_folder, "permutations") |>
+      fs::path(
+        output_folder,
+        "permutations",
+        permuting_variables |> fs::path_sanitize() |> paste(collapse = "-")) |>
       fs::dir_create()
 
     save.image(file = fs::path(output_folder1, "data.RData"))
@@ -241,7 +244,8 @@ if(is.null(stratifying_variables))
       fs::path(
         output_folder,
         "permutations",
-        cur_stratum_string) |>
+        cur_stratum_string,
+        permuting_variables |> fs::path_sanitize() |> paste(collapse = "-")) |>
       fs::dir_create() |>
       print()
 
