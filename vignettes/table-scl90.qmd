@@ -10,7 +10,7 @@ table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
        stratified_formula(vars, column_var),
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-       data = visit1_cgg_complete)
+       data = v1_usable)
 
-# visit1_cgg_complete |> ggplot(aes(x = `SCL90: Anxiety`, group = `FX*`)) + geom_histogram() + facet_wrap(~`FX*`, ncol = 1)
+# v1_usable |> ggplot(aes(x = `SCL90: Anxiety`, group = `FX*`)) + geom_histogram() + facet_wrap(~`FX*`, ncol = 1)
 ```

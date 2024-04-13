@@ -67,7 +67,7 @@ SuStaInLabels =
   pull("biomarker")
 
 # note: there are 231 records in `visit1` with CGG >= 55, but 4 have CGG >= 200
-# previously `nrow(gp34_v1_cases)` was 221, which was based on incorrectly filtering on a version of CGG that hadn't been backfilled.
+# previously `nrow(v1_usable_cases)` was 221, which was based on incorrectly filtering on a version of CGG that hadn't been backfilled.
 
 # March 2024, main analysis now uses Trax/GP34 Visit 1 data replacing previous version using only GP34
 df =

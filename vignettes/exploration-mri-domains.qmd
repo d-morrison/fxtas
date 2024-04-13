@@ -38,7 +38,7 @@ column_var = "FX3*"
 
 data("visit1")
 
-visit1_cgg_complete = 
+v1_usable = 
   visit1 |> 
   filter(
     CGG < 200,
@@ -92,7 +92,7 @@ table1(na.is.category = FALSE,
     column_var |> formulaic::add.backtick()) |> 
     formula(),
   # render.missing=c("Empty in RedCap"="FREQ (PCT%)"),
-  data = visit1_cgg_complete)
+  data = v1_usable)
 ```
 
 ## Cerebellar Variables
@@ -115,5 +115,5 @@ table1(na.is.category = FALSE,
     column_var |> formulaic::add.backtick()) |> 
     formula(),
   # render.missing=c("Empty in RedCap"="FREQ (PCT%)"),
-  data = visit1_cgg_complete)
+  data = v1_usable)
 ```

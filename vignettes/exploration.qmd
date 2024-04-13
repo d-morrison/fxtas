@@ -27,17 +27,6 @@ NA.label1 = "Missing"
 show_missingness_reasons = FALSE
 footnote1 = 'Codes `777`, `888`, and `999` are counted as "Missing" (NA).'
 
-column_var = "Recruited in study phase"
-column_var = "FX3*"
-column_var = c("Gender", "FX3*")
-
-visit1_cgg_complete = 
-  trax_gp34_v1 |> 
-  filter(
-    CGG < 200,
-    !is.na(`FX*`)
-  )
-
 ```
 
 
@@ -63,7 +52,7 @@ table1(na.is.category = FALSE, overall = FALSE,
          .="N", 
          .="Mean (SD)", 
          .="Median [Min, Max]"),
-       data = visit1_cgg_complete)
+       data = v1_usable)
 
 ```
 
@@ -84,7 +73,7 @@ table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
        stratified_formula(vars, column_var),
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-       data = visit1_cgg_complete |> 
+       data = v1_usable |> 
          filter(`Any tremor (excluding Head Tremor)` == "Some tremors recorded"))
 ```
 
@@ -112,7 +101,7 @@ table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1_cgg_complete |> 
+  data = v1_usable |> 
     filter(!(Study %in% c("Trax Phase 1", "GP3"))),
   footnote = footnote_HT)
 
@@ -136,7 +125,7 @@ table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1_cgg_complete |> 
+  data = v1_usable |> 
     filter(
       !(Study %in% c("Trax Phase 1", "GP3")),
       `Head tremor` == "Yes"))
@@ -160,7 +149,7 @@ table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
        stratified_formula(vars, column_var),
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-       data = visit1_cgg_complete)
+       data = v1_usable)
 
 ```
 
@@ -181,7 +170,7 @@ table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
        stratified_formula(vars, column_var),
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-       data = visit1_cgg_complete |> filter(Ataxia == "Yes"))
+       data = v1_usable |> filter(Ataxia == "Yes"))
 ```
 
 <br>
@@ -201,7 +190,7 @@ if(!show_missingness_reasons)
 table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
        stratified_formula(vars, column_var),
-       data = visit1_cgg_complete)
+       data = v1_usable)
 
 ```
 
@@ -220,7 +209,7 @@ table1(na.is.category = FALSE, overall = FALSE,
        stratified_formula(vars, column_var),
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
        footnote = "For categorical analysis, we merged 2.5 into 2, 3.5 into 4, and 4.5 into 5.",
-       data = visit1_cgg_complete)
+       data = v1_usable)
 
 # trax_gp34_all |> 
 #   filter(`FXTAS Stage (0-5)` %in% c(NA, "No Response (999)", "Missing (empty in RedCap)")) |> 
@@ -243,7 +232,7 @@ table1(na.is.category = FALSE, overall = FALSE,
        stratified_formula(vars, column_var),
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
        footnote = footnote1,
-       data = visit1_cgg_complete)
+       data = v1_usable)
 
 ```
 
@@ -268,7 +257,7 @@ table1(na.is.category = FALSE, overall = FALSE,
        stratified_formula(vars, column_var),
        footnote = footnote1,
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-       data = visit1_cgg_complete)
+       data = v1_usable)
 
 ```
 
@@ -284,7 +273,7 @@ table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1_cgg_complete)
+  data = v1_usable)
 
 ```
 
@@ -314,7 +303,7 @@ table1(
   overall = FALSE,
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  data = visit1_cgg_complete)
+  data = v1_usable)
 
 ```
 
@@ -344,7 +333,7 @@ if(show_missingness_reasons)
           value =  TRUE, 
           fixed = TRUE, 
           pattern = x, 
-          x = names(visit1_cgg_complete))) |> as.vector()
+          x = names(v1_usable))) |> as.vector()
 }
 
 table1(
@@ -353,7 +342,7 @@ table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min, Max]"),
-  data = visit1_cgg_complete)
+  data = v1_usable)
 
 ```
 
@@ -368,7 +357,7 @@ We used categorization cutoffs taken from [@talebi2020cambridge].
 # table1(na.is.category = FALSE, overall = FALSE,
 #   NA.label = NA.label1,
 #   stratified_formula("Drugs used", column_var),
-#   data = visit1_cgg_complete)
+#   data = v1_usable)
 
 
 cantab_vars = c(
@@ -383,14 +372,14 @@ cantab_vars = c(
   "RTI Five-choice movement time",
   "RTI Five-choice movement time*") 
 # |> 
-#   sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1_cgg_complete))) |> 
+#   sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(v1_usable))) |> 
 # as.vector()
 
 table1(na.is.category = FALSE, overall = FALSE,
        NA.label = "Missing (empty in RedCap)",
        stratified_formula(cantab_vars, column_var),
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-       data = visit1_cgg_complete)
+       data = v1_usable)
 ```
 
 ### Thyroid and autoimmune diseases  {.appendix}
@@ -417,5 +406,5 @@ table1(
   overall = FALSE,
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  data = visit1_cgg_complete)
+  data = v1_usable)
 ```

@@ -17,6 +17,6 @@ table1(na.is.category = FALSE, overall = FALSE,
     '"Alcohol Abuse" in GP3 (`mds_psy_alco`) ',
     'and "Alcohol Use" in GP4 (`new_mds_psy_alco`) ',
     'were combined as "Alcohol use/abuse".'),
-  data = visit1_cgg_complete)
+  data = v1_usable)
 
 ```

@@ -18,7 +18,7 @@ vars = c(
 table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
        stratified_formula(vars, column_var),
-       data = visit1_cgg_complete)
+       data = v1_usable)
 ```
 
 
@@ -46,7 +46,7 @@ library(table1)
 table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
        stratified_formula(vars, column_var),
-       data = visit1_cgg_complete)
+       data = v1_usable)
 ```
 
 
@@ -71,7 +71,7 @@ kinesia_vars =
 table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
        stratified_formula(kinesia_vars, column_var),
-       data = visit1_cgg_complete)
+       data = v1_usable)
 
 ```
 
@@ -88,7 +88,7 @@ table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
        stratified_formula(purdue_vars, column_var),
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-       data = visit1_cgg_complete)
+       data = v1_usable)
 ```
 
 
@@ -104,7 +104,7 @@ table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
        stratified_formula(moca_vars, column_var),
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-       data = visit1_cgg_complete)
+       data = v1_usable)
 
 ```
 

@@ -16,5 +16,5 @@ table1(na.is.category = FALSE,
     "|",
     column_var |> formulaic::add.backtick())),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1_cgg_complete)
+  data = v1_usable)
 ```
