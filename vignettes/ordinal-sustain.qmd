@@ -106,14 +106,6 @@ The data come from the GP, GP4, and Trax (Phases 1 & 2) studies. In the primary 
 `r nrow(gp34_v1_controls)` controls) were included in the event sequence analysis.
 
 ```{r}
-#| label: fig-hist-CGG-gp34-v1
-#| fig-cap: "Bar-plot of CGG repeats among GP/GP4 participants"
-#| warning: false
-
-full_data |> graph_CGG_repeats(rows = vars(Gender))
-```
-
-```{r}
 #| label: "biomarker-events"
 biomarker_groups = compile_biomarker_groups_table()
 
@@ -145,32 +137,8 @@ nlevs =
 
 We analyzed `r length(biomarker_levels)` biomarkers (@tbl-biomarker-list) with a total of `r nrow(biomarker_events_table)` non-baseline levels; each level above baseline constitutes an outcome event in the disease progression modelling analysis (@sec-Statistical-analysis).
 
-```{r}
-#| tbl-cap: "Biomarkers used in analysis"
-#| label: "tbl-biomarker-list"
-
-table_out =
-  biomarker_events_table |> 
-  select(
-    category = biomarker_group, 
-    biomarker, 
-    levels) |> 
-  slice_head(by = biomarker) |> 
-  mutate(
-    biomarker = biomarker |> 
-      sub(
-        pattern = "*", 
-        replacement = "", 
-        fixed = TRUE))
-
-table_out |> pander()
-
-```
-
 @tbl-demographics provides demographic information about the study participants. @tbl-tremors - @tbl-autoimmune summarize the biomarker data, stratified by CGG (`r unique(v1_usable$"FX3*")`) 
 and Sex (`r unique(v1_usable$Gender)`)
-
-{{< include demographics.qmd >}}
 
 ## Statistical analysis {#sec-Statistical-analysis}
 
@@ -623,8 +591,47 @@ We did not find statistically significant evidence of a difference between males
 ::: {#refs}
 :::
 
+
+# Tables {.unnumbered}
+
+```{r}
+#| tbl-cap: "Biomarkers used in analysis"
+#| label: "tbl-biomarker-list"
+
+table_out =
+  biomarker_events_table |> 
+  select(
+    category = biomarker_group, 
+    biomarker, 
+    levels) |> 
+  slice_head(by = biomarker) |> 
+  mutate(
+    biomarker = biomarker |> 
+      sub(
+        pattern = "*", 
+        replacement = "", 
+        fixed = TRUE))
+
+table_out |> pander()
+
+```
+
+::: landscape
+
+{{< include demographics.qmd >}}
+
+:::
+
 ::: landscape
 # Figures {.unnumbered}
+
+```{r}
+#| label: fig-hist-CGG-gp34-v1
+#| fig-cap: "Distribution of CGG repeats by sex, among study participants included in analysis"
+#| warning: false
+
+full_data |> graph_CGG_repeats(rows = vars(Gender))
+```
 
 ```{r}
 #| label: "fig-first-only"
@@ -858,7 +865,9 @@ temp$loglike_matrix |>
 
 {{< include results-latent-subgroups.qmd >}}
 
+::: landscape
 ## Additional data tables {.appendix}
 
 {{< include exploration.qmd >}}
 {{< include data-tables-appendix.qmd >}}
+:::
