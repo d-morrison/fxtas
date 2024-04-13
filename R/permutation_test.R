@@ -14,7 +14,7 @@ permutation_test = function(
   pval = 2*min(upper, lower)
   pval = pval |>
     structure(
-    class = "permutation_test",
+    class = c("permutation_test", class(pval)),
     observed_test_stat = observed_test_stat,
     permuted_test_stats = permuted_test_stats
   )
@@ -36,6 +36,13 @@ autoplot.permutation_test = function(object, ...)
     permuted_test_stats = attr(object, "permuted_test_stats"))
 }
 
+#' print method for "permutation_test" objects
+#'
+#' @param x a [permutation_test()] object
+#' @param ... unused
+#' @export
+#' @return `x`, invisibly
+#'
 print.permutation_test = function(x, ...)
 {
   x |> scales::pvalue() |> print()

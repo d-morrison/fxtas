@@ -2,6 +2,7 @@
 
 S3method(autoplot,permutation_test)
 S3method(plot,PF)
+S3method(print,permutation_test)
 export(age_range_medians)
 export(all_potential_biomarkers)
 export(autoplot)
