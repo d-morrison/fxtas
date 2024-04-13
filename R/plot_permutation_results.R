@@ -11,7 +11,7 @@ plot_permutation_results = function(
     observed_test_stat)
 {
 
-  pval = compute_permutation_pvalue(
+  pval = permutation_test(
     observed_test_stat = observed_test_stat,
     permuted_test_stats = permuted_test_stats
   )

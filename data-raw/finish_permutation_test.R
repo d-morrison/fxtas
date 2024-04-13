@@ -8,7 +8,7 @@ plot_permutation_results(
   permuted_test_stats = permuted_test_stats) |>
   print()
 
-compute_permutation_pvalue(
+permutation_test(
   observed_test_stat = observed_test_stat,
   permuted_test_stats = permuted_test_stats
 ) |> print()

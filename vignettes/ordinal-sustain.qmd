@@ -494,7 +494,7 @@ observed_test_stat = get_observed_permutation_test_stat(
   output_folder,
   dataset_names = c('females', 'males'))
 
-pval_sex_gp34_v1 = compute_permutation_pvalue(
+pval_sex_gp34_v1 = permutation_test(
   observed_test_stat = observed_test_stat,
   permuted_test_stats = permuted_test_stats
 )
@@ -542,15 +542,16 @@ observed_test_stat = get_observed_permutation_test_stat(
   output_folder,
   dataset_names = c('under100', 'over100'))
 
-pval_cgg_gp34_v1 = compute_permutation_pvalue(
+pval_cgg_gp34_v1 = permutation_test(
   observed_test_stat = observed_test_stat,
   permuted_test_stats = permuted_test_stats
 )
 
-plot_permutation_results(
-  observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats) |>
-  print()
+# plot_permutation_results(
+#   observed_test_stat = observed_test_stat,
+#   permuted_test_stats = permuted_test_stats) |>
+#   print()
+
 ```
 
 The data provided statistically significant evidence of a difference in event sequences between males and females (p `r pval_sex_gp34_v1 |> scales::pvalue()`).
@@ -576,6 +577,31 @@ fig_over100_males |> print()
 ```
 
 ```{r}
+#| label: p-val-test-cgg-male
+output_folder = "output/output.fixed_CV/"
+
+permuted_test_stats = collect_permutation_test_stats(
+  output_folder = output_folder,
+  stratifying_levels = "Male",
+  permuting_variables = "FX3")
+
+observed_test_stat = get_observed_permutation_test_stat(
+  output_folder,
+  dataset_names = c('under100_Male', 'over100_Male'))
+
+pval_male_cgg_gp34_v1 = permutation_test(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats
+)
+
+plot_permutation_results(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats) |>
+  print()
+
+```
+
+```{r}
 #| label: "fig-pvd-by-cgg-female"
 #| column: page
 #| fig-height: !expr pvd_height
@@ -597,15 +623,20 @@ fig_over100_females |> print()
 #| label: p-val-test-cgg-female
 output_folder = "output/output.fixed_CV/"
 
-permuted_test_stats = collect_permutation_test_stats(output_folder)
+permuted_test_stats = collect_permutation_test_stats(
+  output_folder = output_folder,
+  stratifying_levels = "Female",
+  permuting_variables = "FX3")
+
 observed_test_stat = get_observed_permutation_test_stat(
   output_folder,
-  dataset_name = "females")
+  dataset_names = c('under100_Female', 'over100_Female'))
 
-pval_sex_gp34_v1 = compute_permutation_pvalue(
+pval_female_cgg_gp34_v1 = permutation_test(
   observed_test_stat = observed_test_stat,
   permuted_test_stats = permuted_test_stats
 )
+
 ```
 
 ```{r}
