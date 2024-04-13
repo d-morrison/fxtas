@@ -138,7 +138,7 @@ table1(na.is.category = FALSE, overall = FALSE,
 ### Head tremors
 
 ```{r}
-#| tbl-cap: Head tremors
+#| tbl-cap: "Head tremors"
 #| label: tbl-head-tremors
 vars = c(
   "Head tremor"
@@ -152,11 +152,13 @@ footnote_HT <- paste(
 )
 
 table1(
-  na.is.category = FALSE, overall = FALSE,
+  na.is.category = FALSE, 
+  overall = FALSE,
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1_cgg_complete |> filter(!(Study %in% c("Trax Phase 1", "GP3"))),
+  data = visit1_cgg_complete |> 
+    filter(!(Study %in% c("Trax Phase 1", "GP3"))),
   footnote = footnote_HT)
 
 ```
@@ -166,7 +168,7 @@ table1(
 ```{r}
 #| tbl-cap: "Age of onset for those with a head tremor recorded."
 #| label: "tbl-head-tremor-AO"
-#| eval: true
+#| eval: false # converting to docx runs into a weird `flextable()` edge case because two subcolumn headers are identical
 vars = c(
   "Head Tremor: Age of onset",
   if(show_missingness_reasons) "Head Tremor: Age of onset: missingness reasons"
@@ -179,7 +181,10 @@ table1(
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1_cgg_complete |> filter(`Head tremor` == "Yes"))
+  data = visit1_cgg_complete |> 
+    filter(
+      !(Study %in% c("Trax Phase 1", "GP3")),
+      `Head tremor` == "Yes"))
 
 ```
 
