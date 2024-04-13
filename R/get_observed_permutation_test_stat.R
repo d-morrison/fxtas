@@ -1,27 +1,26 @@
 #' Compute permutation test statistic
 #'
 #' @param output_folder where to find the relevant pickle files
+#' @param dataset_names [character()] vector of dataset name stems
 #'
 #' @returns the observed test statistic (a [numeric()] scalar)
 #' @export
 #'
 get_observed_permutation_test_stat = function(
-    output_folder)
+    output_folder,
+    dataset_names)
 {
-  results_females_first = extract_results_from_pickle(
-    n_s = 1,
-    rda_filename = "data.RData",
-    dataset_name = "females",
-    output_folder = output_folder)
+  test_stat = 0
 
-  results_males_first = extract_results_from_pickle(
-    n_s = 1,
-    rda_filename = "data.RData",
-    dataset_name = "females",
-    output_folder = output_folder)
+  for (cur in dataset_names)
+  {
+    results = extract_results_from_pickle(
+      n_s = 1,
+      rda_filename = "data.RData",
+      dataset_name = cur,
+      output_folder = output_folder)
 
-  llik_females = results_females_first$samples_likelihood
-  llik_males = results_males_first$samples_likelihood
-
-  test_stat = mean(llik_females) + mean(llik_males)
+    test_stat = test_stat + mean(results$samples_likelihood)
+  }
+  return(test_stat)
 }

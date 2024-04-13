@@ -4,10 +4,12 @@
 \alias{get_observed_permutation_test_stat}
 \title{Compute permutation test statistic}
 \usage{
-get_observed_permutation_test_stat(output_folder)
+get_observed_permutation_test_stat(output_folder, dataset_names)
 }
 \arguments{
 \item{output_folder}{where to find the relevant pickle files}
+
+\item{dataset_names}{\code{\link[=character]{character()}} vector of dataset name stems}
 }
 \value{
 the observed test statistic (a \code{\link[=numeric]{numeric()}} scalar)

@@ -29,6 +29,7 @@ plot_permutation_results = function(
         xintercept = observed_test_stat,
         col = 'observed test statistic')) +
     ggplot2::theme_bw() +
+    ggplot2::labs(col = "") +
     ggplot2::theme(legend.position = "bottom")
 
   to_return =

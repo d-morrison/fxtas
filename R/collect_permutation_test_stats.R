@@ -14,12 +14,18 @@
 #' test_stats = collect_permutation_test_stats("output/output.fixed_CV")
 #' }
 collect_permutation_test_stats = function(
+    permuting_variables,
+    stratifying_levels = "",
     output_folder =
       here::here() |>
       fs::path("output/output.fixed_CV"),
     permutation_results_folder_path =
-      output_folder |>
-      fs::path("permutations/test_stats"),
+      fs::path(
+        output_folder,
+        "permutations",
+        stratifying_levels |> fs::path_sanitize() |> paste(collapse = "-"),
+        permuting_variables |> fs::path_sanitize() |> paste(collapse = "-"),
+        "test_stats"),
     file_stem = "permuted_test_stats",
     seeds = 1:1000,
     by = 20,

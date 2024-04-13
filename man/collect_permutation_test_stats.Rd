@@ -5,8 +5,12 @@
 \title{Collect permutation test statistics}
 \usage{
 collect_permutation_test_stats(
+  permuting_variables,
+  stratifying_levels = "",
   output_folder = fs::path(here::here(), "output/output.fixed_CV"),
-  permutation_results_folder_path = fs::path(output_folder, "permutations/test_stats"),
+  permutation_results_folder_path = fs::path(output_folder, "permutations",
+    paste(fs::path_sanitize(stratifying_levels), collapse = "-"),
+    paste(fs::path_sanitize(permuting_variables), collapse = "-"), "test_stats"),
   file_stem = "permuted_test_stats",
   seeds = 1:1000,
   by = 20,
