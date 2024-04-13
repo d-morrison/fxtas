@@ -32,7 +32,8 @@ output_folder =
   fs::path(
     here::here(),
     "output/output.fixed_CV/permutations",
-    stratifying_level)
+    stratifying_level,
+    permuting_variables |> fs::path_sanitize() |> paste(collapse = "-"))
 
 permuted_test_stats = extract_permuted_likelihoods(
     permuting_variables = permuting_variables,
