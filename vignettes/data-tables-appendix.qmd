@@ -1,0 +1,110 @@
+### Drug use {.appendix}
+
+{{< include table_drug_use.qmd >}}
+
+
+### Cancer {.appendix}
+
+```{r}
+vars = c(
+  "Thyroid Cancer",
+  "Skin Cancer",
+  "Melanoma",
+  "Prostate Cancer",
+  "Other Cancer",
+  "Any Cancer"
+)
+
+table1(na.is.category = FALSE, overall = FALSE,
+       NA.label = NA.label1,
+       stratified_formula(vars, column_var),
+       data = visit1_cgg_complete)
+```
+
+
+### Surgery  {.appendix}
+
+```{r}
+
+vars = 
+  c(
+    "Surgery",
+    "Anesthesia (medic_surg_anes)", 
+    "Anesthesia (new_mds_med_anes1)"
+    # "Other Cancer (detailed)", # don't include in table
+    # "Surgery",
+    # "Surgery type",
+    # "Surgery: Type/Age",
+    # "Surgery 2: Type/Age",
+    # "Surgery 3: Type/Age",
+    # "Surgery 4: Type/Age",
+    # "Surgery 5: Type/Age",
+  )
+# grep(pattern = "surgery", ignore.case = TRUE, x = names(trax_gp34_all), value = TRUE)
+
+library(table1)
+table1(na.is.category = FALSE, overall = FALSE,
+       NA.label = NA.label1,
+       stratified_formula(vars, column_var),
+       data = visit1_cgg_complete)
+```
+
+
+### Kinesia  {.appendix}
+
+```{r}
+#| label: tbl-kinesia
+#| tbl-cap: "Kinesia"
+kinesia_vars = c(
+  "Kinesia Left Rest Tremor",
+  "Kinesia Left Postural Tremor",
+  "Kinesia Left Kinetic Tremor",
+  "Kinesia Right Rest Tremor",
+  "Kinesia Right Postural Tremor",
+  "Kinesia Right Kinetic Tremor"
+)
+kinesia_vars = 
+  c(kinesia_vars,
+    paste0(kinesia_vars, "*")) |> 
+  sort()
+
+table1(na.is.category = FALSE, overall = FALSE,
+       NA.label = NA.label1,
+       stratified_formula(kinesia_vars, column_var),
+       data = visit1_cgg_complete)
+
+```
+
+
+### Purdue pegboard for reaction time  {.appendix}
+
+```{r}
+purdue_vars = c(
+  "Purdue pegboard 1st Trial Total, R+L+B",
+  if(show_missingness_reasons) "Purdue pegboard 1st Trial Total, R+L+B: missingness reasons"
+)
+
+table1(na.is.category = FALSE, overall = FALSE,
+       NA.label = NA.label1,
+       stratified_formula(purdue_vars, column_var),
+       # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+       data = visit1_cgg_complete)
+```
+
+
+### MOCA total score  {.appendix}
+
+```{r}
+
+moca_vars = c(
+  "MOCA Total score",
+  if(show_missingness_reasons)"MOCA Total score: missingness reasons"
+)
+table1(na.is.category = FALSE, overall = FALSE,
+       NA.label = NA.label1,
+       stratified_formula(moca_vars, column_var),
+       # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+       data = visit1_cgg_complete)
+
+```
+

@@ -28,7 +28,7 @@ figs = extract_figs_from_pickle(
 #| fig-align: center
 #| fig-cap: "positional variance diagrams for 4 subgroups"
 #| fig-cap-location: top
-#| column: screen
+#| column: page
 #| fig-subcap:
 #|   - "Subgroup 1"
 #|   - "Subgroup 2"

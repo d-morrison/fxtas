@@ -6,7 +6,7 @@
 
 ```{r}
 #| label: "fig-mv-only"
-#| column: screen
+#| column: page
 #| fig-height: 15
 #| fig-align: center
 #| fig-cap: "Estimated event sequences - multivisit patients only"

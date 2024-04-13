@@ -305,7 +305,7 @@ We ran the analysis for 1-6 latent subgroups, each with their own ordering. @fig
 
 ```{r}
 #| label: "fig-pvd1"
-#| column: screen
+#| column: page
 #| fig-height: 15
 #| fig-align: center
 #| fig-cap: "positional variance diagram for 1 subgroup"
@@ -332,7 +332,7 @@ print(figs[[1]])
 #| fig-cap: "positional variance diagrams for 2 subgroups"
 #| fig-cap-location: top
 #| fig-align: center
-#| column: screen
+#| column: page
 #| fig-subcap: 
 #|   - "Subgroup 1"
 #|   - "Subgroup 2"
@@ -372,7 +372,7 @@ figs = extract_figs_from_pickle(
 #| fig-align: center
 #| fig-cap: "positional variance diagrams for 3 subgroups"
 #| fig-cap-location: top
-#| column: screen
+#| column: page
 #| fig-subcap:
 #|   - "Subgroup 1"
 #|   - "Subgroup 2"
@@ -405,7 +405,7 @@ figs = extract_figs_from_pickle(
 #| fig-align: center
 #| fig-cap: "positional variance diagrams for 4 subgroups"
 #| fig-cap-location: top
-#| column: screen
+#| column: page
 #| fig-subcap:
 #|   - "Subgroup 1"
 #|   - "Subgroup 2"
@@ -440,7 +440,7 @@ figs = extract_figs_from_pickle(
 #| fig-align: center
 #| fig-cap: "positional variance diagrams for 5 subgroups"
 #| fig-cap-location: top
-#| column: screen
+#| column: page
 #| fig-subcap:
 #|   - "Subgroup 1"
 #|   - "Subgroup 2"
@@ -475,7 +475,7 @@ figs = extract_figs_from_pickle(
 #| fig-align: center
 #| fig-cap: "positional variance diagrams for 6 subgroups"
 #| fig-cap-location: top
-#| column: screen
+#| column: page
 #| fig-subcap:
 #|   - "Subgroup 1"
 #|   - "Subgroup 2"

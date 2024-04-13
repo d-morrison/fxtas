@@ -184,7 +184,7 @@ for (i in biomarker_varnames)
 
 ```{r}
 #| label: "positional variance diagrams - 1 group"
-#| column: screen
+#| column: page
 #| fig-height: 15
 #| fig-align: center
 #| fig-cap: "positional variance diagrams: 1 subgroup"
@@ -210,7 +210,7 @@ results = extract_results_from_pickle(
 #| fig-cap: "positional variance diagrams: 2 subgroups"
 #| fig-cap-location: top
 #| fig-align: center
-#| column: screen
+#| column: page
 #| fig-subcap: 
 #|   - "Group 1"
 #|   - "Group 2"
@@ -263,7 +263,7 @@ figs = extract_figs_from_pickle(
 #| fig-align: center
 #| fig-cap: "positional variance diagrams: 3 subgroups"
 #| fig-cap-location: top
-#| column: screen
+#| column: page
 #| fig-subcap:
 #|   - "Group 1"
 #|   - "Group 2"

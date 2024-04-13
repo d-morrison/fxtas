@@ -64,6 +64,7 @@ run_CV =  TRUE
 # run_CV = FALSE
 
 pvd_height = 10
+pvd_column = "screen"
 N_startpoints = 10L
 N_S_max = 8L
 N_S_max_stratified = 1L
@@ -210,7 +211,7 @@ We visualized the results of Ordinal SuStaIn analysis using "positional variance
 The PVD's color scale indicates the Bayesian posterior probability that a particular biomarker event (y-axis) appears at a particular position along the progression sequence (x-axis). Red indicates a more probable sequence position, and gray indicates a less probable position.
 
 ```{r}
-
+#| label: get-control-dists
 ModelScores = DataScores = 
   df |> 
   select(all_of(biomarker_varnames)) |> 
@@ -379,7 +380,7 @@ sustain_output_cgg100minus = run_and_save_OSA(
 ```
 
 ```{r}
-
+#| label: save-image
 fs::path_package("fxtas", "extdata") |> 
   fs::path("ordinal-sustain-results.rda") |> 
   save.image()
@@ -468,10 +469,10 @@ fig_over100_females = extract_figs_from_pickle(
 
 ```{r}
 #| label: "fig-first-only"
-#| column: screen
+#| column: page
 #| fig-height: !expr pvd_height
 #| fig-align: center
-#| fig-cap: "Estimated event sequence models - overall and stratified by sex, first visits only"
+#| fig-cap: "Estimated event sequence models, stratified by sex, first visits only"
 #| fig-cap-location: top
 #| layout-ncol: 2
 #| fig-subcap:
@@ -506,7 +507,7 @@ The data provided statistically significant evidence of a difference in event se
 
 ```{r}
 #| label: "fig-pvd-by-cgg"
-#| column: screen
+#| column: page
 #| fig-height: !expr pvd_height
 #| fig-align: center
 #| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only"
@@ -522,11 +523,27 @@ fig_over100 |> print()
 
 ```
 
+
+```{r}
+#| label: p-val-test-cgg
+output_folder = "output/output.fixed_CV/"
+
+permuted_test_stats = collect_permutation_test_stats(output_folder)
+observed_test_stat = get_observed_permutation_test_stat(output_folder)
+
+pval_cgg_gp34_v1 = compute_permutation_pvalue(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats
+)
+```
+
+The data provided statistically significant evidence of a difference in event sequences between males and females (p `r pval_sex_gp34_v1 |> scales::pvalue()`).
+
 ## Stratified by CGG and Sex
 
 ```{r}
 #| label: "fig-pvd-by-cgg-male"
-#| column: screen
+#| column: page
 #| fig-height: !expr pvd_height
 #| fig-align: center
 #| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only, males only"
@@ -544,7 +561,7 @@ fig_over100_males |> print()
 
 ```{r}
 #| label: "fig-pvd-by-cgg-female"
-#| column: screen
+#| column: page
 #| fig-height: !expr pvd_height
 #| fig-align: center
 #| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only, females only"
@@ -560,6 +577,40 @@ fig_over100_females |> print()
 
 ```
 
+
+```{r}
+#| label: "fig-pvd-by-gender-cgg_under100"
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-align: center
+#| fig-cap: "Estimated event sequences, stratified by sex, for CGG repeats <100; first visits only"
+#| fig-cap-location: top
+#| layout-ncol: 2
+#| fig-subcap:
+#|   - "Males, CGG < 100"
+#|   - "Females, CGG < 100"
+
+fig_under100_males |> print()
+fig_under100_females |> print()
+
+```
+
+```{r}
+#| label: "fig-pvd-by-gender-cgg_over100"
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-align: center
+#| fig-cap: "Estimated event sequences, stratified by sex, for CGG repeats ≥100; first visits only"
+#| fig-cap-location: top
+#| layout-ncol: 2
+#| fig-subcap:
+#|   - "Males, CGG ≥ 100"
+#|   - "Females, CGG ≥ 100"
+
+fig_over100_males |> print()
+fig_over100_females |> print()
+
+```
 # Discussion
 
 [to be added]
@@ -698,3 +749,7 @@ temp$loglike_matrix |>
 ```
 
 {{< include results-latent-subgroups.qmd >}}
+
+## Additional data tables {.appendix}
+
+{{< include data-tables-appendix.qmd >}}
