@@ -30,7 +30,7 @@ column_var = "Recruited in study phase"
 column_var = "FX3*"
 
 visit1_cgg_complete = 
-  visit1 |> 
+  trax_gp34_v1 |> 
   filter(
     CGG < 200,
     !is.na(`FX*`)
@@ -80,7 +80,7 @@ table1(na.is.category = FALSE,
 ```{r}
 #| tbl-cap: "Apo-E by CGG repeats level"
 #| label: "tbl-apoe"
-# vars = grep("^ApoE", names(gp34), value = TRUE)
+# vars = grep("^ApoE", names(trax_gp34_all), value = TRUE)
 vars = "ApoE"
 table1(na.is.category = FALSE, 
   NA.label = NA.label1,
@@ -107,7 +107,8 @@ vars = c("Drug use",
          "Marijuana use",
          "Alcohol use/abuse",
          "# of drinks per day now",
-         "# of drinks per day now: missingness reasons")
+         if(show_missingness_reasons) "# of drinks per day now: missingness reasons"
+         )
 
 table1(na.is.category = FALSE, 
   NA.label = NA.label1,
@@ -139,6 +140,8 @@ table1(na.is.category = FALSE,
   data = visit1_cgg_complete)
 ```
 
+
+::: hidden
 ### Surgery
 
 ```{r}
@@ -157,7 +160,7 @@ vars =
     # "Surgery 4: Type/Age",
     # "Surgery 5: Type/Age",
   )
-# grep(pattern = "surgery", ignore.case = TRUE, x = names(gp34), value = TRUE)
+# grep(pattern = "surgery", ignore.case = TRUE, x = names(trax_gp34_all), value = TRUE)
 
 library(table1)
 table1(na.is.category = FALSE, 
@@ -165,6 +168,8 @@ table1(na.is.category = FALSE,
   stratified_formula(vars, column_var),
   data = visit1_cgg_complete)
 ```
+
+:::
 
 ### Tremors
 
@@ -177,7 +182,7 @@ vars = c(
   "Intermittent tremor",
   "Any tremor (excluding Head Tremor)"
   # "Tremor: Age of onset"
-  # "Tremor: Age of onset: missingness reasons"
+  # if(show_missingness_reasons) "Tremor: Age of onset: missingness reasons"
 )
 table1(na.is.category = FALSE, 
   NA.label = NA.label1,
@@ -244,7 +249,7 @@ table1(na.is.category = FALSE,
 #| label: "tbl-head-tremor-AO"
 vars = c(
   "Head Tremor: Age of onset",
-  "Head Tremor: Age of onset: missingness reasons"
+  if(show_missingness_reasons) "Head Tremor: Age of onset: missingness reasons"
   
 )
 
@@ -304,7 +309,12 @@ table1(na.is.category = FALSE,
 ```{r}
 #| label: tbl-parkinsons-by-cgg
 #| tbl-cap: "Parkinsons by CGG status"
-vars = grep("Parkinson", value = TRUE, names(gp34))
+vars = grep("Parkinson", value = TRUE, names(trax_gp34_all))
+
+if(!show_missingness_reasons) 
+{
+  vars = vars |> remove_missingness_reason_vars()
+}
 
 table1(na.is.category = FALSE, 
   NA.label = NA.label1,
@@ -320,7 +330,8 @@ table1(na.is.category = FALSE,
 #| tbl-cap: "FXTAS Stage by CGG level"
 vars = c(
   "FXTAS Stage (0-5)*",
-  "FXTAS Stage (0-5)*: missingness reasons")
+  if(show_missingness_reasons) "FXTAS Stage (0-5)*: missingness reasons"
+  )
 
 table1(na.is.category = FALSE, 
   NA.label = NA.label1,
@@ -329,7 +340,7 @@ table1(na.is.category = FALSE,
   footnote = "For categorical analysis, we merged 2.5 into 2, 3.5 into 4, and 4.5 into 5.",
   data = visit1_cgg_complete)
 
-# gp34 |> 
+# trax_gp34_all |> 
 #   filter(`FXTAS Stage (0-5)` %in% c(NA, "No Response (999)", "Missing (empty in RedCap)")) |> 
 #   select(`FXS ID`, `Event Name`, `Visit Date`) |> 
 #   arrange() |> 
@@ -341,13 +352,14 @@ table1(na.is.category = FALSE,
 
 ```{r}
 
-vars = grep("BDS-2 Total Score", value = TRUE, names(gp34), fixed = TRUE)
+vars = c("BDS-2 Total Score", "BDS-2 Total Score*")
+  
 
 table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  footnote = 'For `BDS2 Total Score`, codes `777`, `888`, and `999` are counted as "Missing" (NA).',
+  footnote = footnote1,
   data = visit1_cgg_complete)
 
 ```
@@ -361,13 +373,13 @@ table1(na.is.category = FALSE,
 vars = grep(
   "MMSE Total Score", 
   value = TRUE, 
-  names(gp34), 
+  names(trax_gp34_all), 
   fixed = TRUE)
 
 table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  footnote = 'For `MMSE Total Score`, codes `777`, `888`, and `999` are counted as "Missing" (NA).',
+  footnote = footnote1,
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1_cgg_complete)
 
@@ -394,7 +406,7 @@ For analysis with the Ordinal SuStaIn method, we dichotomized each SCL90 measure
 
 ```{r}
 
-vars = grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90") |> sort()
+vars = grep(value = TRUE, fixed = TRUE, names(trax_gp34_all), pattern = "SCL90") |> sort()
 
 table1(na.is.category = FALSE, 
   NA.label = NA.label1,
@@ -543,7 +555,8 @@ table1(na.is.category = FALSE,
 ```{r}
 purdue_vars = c(
   "Purdue pegboard 1st Trial Total, R+L+B",
-  "Purdue pegboard 1st Trial Total, R+L+B: missingness reasons")
+  if(show_missingness_reasons) "Purdue pegboard 1st Trial Total, R+L+B: missingness reasons"
+  )
 
 table1(na.is.category = FALSE, 
   NA.label = NA.label1,
@@ -559,7 +572,7 @@ table1(na.is.category = FALSE,
 
 moca_vars = c(
   "MOCA Total score",
-  "MOCA Total score: missingness reasons"
+  if(show_missingness_reasons)"MOCA Total score: missingness reasons"
 )
 table1(na.is.category = FALSE, 
   NA.label = NA.label1,

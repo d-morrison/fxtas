@@ -638,7 +638,7 @@ vars = grep("BDS-2 Total Score", value = TRUE, names(gp34), fixed = TRUE)
 table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  footnote = 'For `BDS2 Total Score`, codes `777`, `888`, and `999` are counted as "Missing" (NA).',
+  footnote = footnote1,
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 
@@ -659,7 +659,7 @@ vars = grep(
 table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  footnote = 'For `MMSE Total Score`, codes `777`, `888`, and `999` are counted as "Missing" (NA).',
+  footnote = footnote1,
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1)
 

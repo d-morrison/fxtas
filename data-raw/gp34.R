@@ -54,11 +54,11 @@ readr::write_csv(decreased_age2, "inst/extdata/decreased_age2.csv")
 
 usethis::use_data(gp34, overwrite = TRUE)
 
-visit1 =
+gp34_v1 =
   gp34 |>
   get_visit1()
 
-usethis::use_data(visit1, overwrite = TRUE)
+usethis::use_data(gp34_v1, overwrite = TRUE)
 
 gp34_multivisit_only =
   gp34 |>

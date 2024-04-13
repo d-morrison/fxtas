@@ -108,13 +108,13 @@ all_potential_biomarkers = function(dataset = gp34)
       tremors = tremors,
       ataxia = ataxia,
       stage = "FXTAS Stage (0-5)*",
-      parkinsons = parkinsons_vars,
+      Parkinsons = parkinsons_vars,
       cancer = cancer_vars,
-      mri = mri_vars,
+      MRI = mri_vars,
       scores = scores,
-      scid = scid_vars,
-      scl90 = scl90_vars,
-      cantab = cantab_vars,
+      SCID = scid_vars,
+      SCL90 = scl90_vars,
+      CANTAB = cantab_vars,
       thyroid = thyroid_vars,
       kinesia = kinesia_vars
     )

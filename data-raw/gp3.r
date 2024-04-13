@@ -132,7 +132,8 @@ dataset=vroom::vroom(
 
 #Setting Factors(will create new variable for factors)
 
-dataset$new_mds_med_anes1 = factor(dataset$new_mds_med_anes1,levels=c("2","3","0","999","888","777"))
+dataset$new_mds_med_anes1 =
+  factor(dataset$new_mds_med_anes1,levels=c("0","2","3","999","888","777"))
 dataset$medic_surg_anes  = factor(dataset$medic_surg_anes,levels=c("0","1","2","3","999"))
 dataset$mds_med_thy = factor(dataset$mds_med_thy,levels=c("0","1","999","888","777"))
 # dataset$new_mds_med_thy = factor(dataset$new_mds_med_thy,levels=c("0","1","999","888","777"))
@@ -262,7 +263,7 @@ dataset$scid_som39 = factor(dataset$scid_som39,levels=c("777","1","2","3"))
 dataset$dem_edlev = factor(dataset$dem_edlev,levels=c("1","2","3","4","5","6","7","999"))
 
 levels(dataset$scid_admin)=c("No","Yes","Follow up","N/A")
-levels(dataset$new_mds_med_anes1)=c("Local","General","None","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
+levels(dataset$new_mds_med_anes1)=c("None","Local","General","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
 levels(dataset$medic_surg_anes)=c("None","Local","General","Other","Missing/Refused (999)")
 levels(dataset$mds_med_thy)=c("No","Yes","No Response (999)","NA","Question not asked at time of data entry; check records (777)")
 # levels(dataset$new_mds_med_thy)=c("No","Yes","No Response (999)","NA","Question not asked at time of data entry; check records")

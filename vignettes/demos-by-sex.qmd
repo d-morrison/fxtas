@@ -29,7 +29,7 @@ library(dplyr)
 library(magrittr)
 column_var = c("Gender", "FX3*")
 visit1_cgg_55_199 = 
-  visit1 |> 
+  trax_gp34_v1 |> 
   filter(CGG |> between(55, 199))
 
 
@@ -112,6 +112,7 @@ table1a(
   data = visit1_cgg_55_199)
 ```
 
+::: hidden
 ### Surgery
 
 ```{r}
@@ -138,6 +139,7 @@ table1a(
   stratified_formula(vars, column_var),
   data = visit1_cgg_55_199)
 ```
+:::
 
 ### Tremors
 
@@ -317,7 +319,7 @@ table1a(
   
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  footnote = 'For `BDS2 Total Score`, codes `777`, `888`, and `999` are counted as "Missing" (NA).',
+  footnote = footnote1,
   data = visit1_cgg_55_199)
 
 ```
@@ -337,7 +339,7 @@ vars = grep(
 table1a(
   
   stratified_formula(vars, column_var),
-  footnote = 'For `MMSE Total Score`, codes `777`, `888`, and `999` are counted as "Missing" (NA).',
+  footnote = footnote1,
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1_cgg_55_199)
 
