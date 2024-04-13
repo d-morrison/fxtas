@@ -1,15 +1,15 @@
 #' Create positional variance diagram (PVD)
 #'
-#' @param PFs
-#' @param size.y
-#' @param color_label
+#' @param PFs a "PF" object (created by `compute_position_frequencies()`)
+#' @param size.y size of biomarker event labels
+#' @param color_label label for legend color scale
 #'
 #' @return a "PVD" object (extends [ggplot2::ggplot()])
 #' @export
 #'
 plot.PF = function(
     PFs,
-    size.y = 12,
+    size.y = 9,
     color_label = "Pr(stage)")
 {
   to_return =

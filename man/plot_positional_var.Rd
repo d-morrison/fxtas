@@ -52,7 +52,13 @@ plot_positional_var(
 
 \item{biomarker_event_names}{vector of biomarker event names}
 
-\item{synchronize_y_axes}{}
+\item{...}{
+  Arguments passed on to \code{\link[=plot.PF]{plot.PF}}
+  \describe{
+    \item{\code{PFs}}{a "PF" object (created by \code{compute_position_frequencies()})}
+    \item{\code{size.y}}{size of biomarker event labels}
+    \item{\code{color_label}}{label for legend color scale}
+  }}
 }
 \description{
 Plot positional variance diagram

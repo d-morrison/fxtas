@@ -2,7 +2,7 @@
 
 ```{r}
 #| label: set-optimal-subgroups
-n_s = 6
+n_s = n_s_optimal = 6
 
 results_cv_max = extract_results_from_pickle(
   n_s = n_s,
@@ -11,7 +11,7 @@ results_cv_max = extract_results_from_pickle(
 ```
 
 Based on the CVIC criterion (@sec-cvic), it appears that `r n_s` subgroups is the optimal number for the full, unstratified GP+GP4 dataset.
-@fig-pvd_optimal shows positional variance diagrams (PVDs) for each of the subgroup clusters detected under this assumption, and @tbl-sg_demos shows the demographics of the patients clustered in each subgroup; patients in the "Type 0" category were too early in the disease process to be classified into a subgroup.
+@fig-pvd_optimal shows positional variance diagrams (PVDs) for each of the subgroup clusters detected under this assumption, and @tbl-sg_demos shows the demographics of the patients clustered in each subgroup. Patients in the "Type 0" category were too early in the disease process to be classified into a subgroup.
 
 ```{r}
 #| label: extract-PVD-optimal
@@ -26,7 +26,7 @@ figs = extract_figs_from_pickle(
 #| layout-ncol: 2
 #| fig-height: !expr pvd_height
 #| fig-align: center
-#| fig-cap: "positional variance diagrams for 4 subgroups"
+#| fig-cap: !expr glue::glue("positional variance diagrams for {n_s_optimal} subgroups")
 #| fig-cap-location: top
 #| column: page
 #| fig-subcap:

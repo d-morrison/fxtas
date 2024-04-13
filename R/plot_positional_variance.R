@@ -30,7 +30,7 @@
 #' @param biomarker_event_names
 #' @param biomarker_plot_order
 #' @param synchronize_y_axes
-#'
+#' @inheritDotParams plot.PF
 #' @return
 #' @export
 #'

@@ -4,10 +4,14 @@
 \alias{plot.PF}
 \title{Create positional variance diagram (PVD)}
 \usage{
-\method{plot}{PF}(PFs, size.y = 12, color_label = "Pr(stage)")
+\method{plot}{PF}(PFs, size.y = 9, color_label = "Pr(stage)")
 }
 \arguments{
-\item{color_label}{}
+\item{PFs}{a "PF" object (created by \code{compute_position_frequencies()})}
+
+\item{size.y}{size of biomarker event labels}
+
+\item{color_label}{label for legend color scale}
 }
 \value{
 a "PVD" object (extends \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}})

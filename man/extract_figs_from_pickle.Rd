@@ -28,7 +28,6 @@ extract_figs_from_pickle(
   Arguments passed on to \code{\link[=plot_positional_var]{plot_positional_var}}
   \describe{
     \item{\code{biomarker_groups}}{biomarker groupings}
-    \item{\code{synchronize_y_axes}}{}
     \item{\code{results}}{pickle file contents}
     \item{\code{biomarker_labels}}{biomarker labels}
     \item{\code{biomarker_levels}}{biomarker levels}
