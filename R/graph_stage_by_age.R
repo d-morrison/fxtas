@@ -25,6 +25,7 @@ graph_stage_by_age = function(data,
     geom_smooth() +
     xlab("Age at visit (years)") +
     ylab("Estimated sequence stage") +
+    ggplot2::theme_bw() +
     theme(legend.position = "none")
 
   n_subtypes = data |>
