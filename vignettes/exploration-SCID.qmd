@@ -240,7 +240,7 @@ Using only `lifetime` variables or variables without `current`/`lifetime` distin
 ```{r, results='asis'}
 summary(
   arsenal::tableby(
-    `FX**` ~ `SCID: Mood Disorders` + `SCID: Substance Use Disorders` + 
+    `FX**` ~ `SCID: Mood Disorders` + `SCID: Substance Use` + 
       `SCID: Anxiety` + `SCID: Somatization` + `SCID: Psychotic`,
     data = scid_domains,
     test = FALSE

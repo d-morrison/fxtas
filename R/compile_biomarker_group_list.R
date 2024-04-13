@@ -39,7 +39,7 @@ compile_biomarker_group_list = function(dataset = trax_gp34_v1)
     # "Pons-WM Hyperintensity",
     # "Sub-Insular WM Hyperintensity",
     # "Periventricular WM Hyperintensity",
-    "MRI: Cerebellum",
+    "MRI: Cerebellar",
     "MRI: Cerebral",
     "Splenium (CC)-WM Hyperintensity",
     "Genu (CC)-WM Hyperintensity",
@@ -71,7 +71,7 @@ compile_biomarker_group_list = function(dataset = trax_gp34_v1)
       # "Substance-Induced Mood Dis. (MD08), Lifetime", # no positives
       # "Primary Psychotic Symptoms (PS01), Lifetime"
       "SCID: Mood Disorders",
-      "SCID: Substance Use Disorders",
+      "SCID: Substance Use",
       "SCID: Anxiety",
       "SCID: Somatization"
       # "SCID: Psychotic" # exclude, only 2 at sub-threshold & 0 at threshold

@@ -15,11 +15,13 @@ Based on the CVIC criterion (@sec-cvic), it appears that `r n_s` subgroups is th
 
 ```{r}
 #| label: extract-PVD-optimal
-figs = extract_figs_from_pickle(
+figs = extract_figs_from_pickle(size.y = size.y,
   n_s = n_s,
   dataset_name = dataset_name,
   output_folder = output_folder)
 ```
+
+::: landscape
 
 ```{r}
 #| label: "fig-pvd_optimal"
@@ -54,6 +56,8 @@ table_subtype_by_demographics(
 )
 
 ```
+
+:::
 
 ```{r}
 #| label: fig-stage-by-age

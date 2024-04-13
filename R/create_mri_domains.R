@@ -39,6 +39,6 @@ create_mri_domains <- function(
     # create Cerebral and Cerebellum domains
     mutate(
       `MRI: Cerebral` = pmax(!!!rlang::syms(cerebral_vars), na.rm = TRUE),
-      `MRI: Cerebellum` = pmax(!!!rlang::syms(cerebellum_vars), na.rm = TRUE),
+      `MRI: Cerebellar` = pmax(!!!rlang::syms(cerebellum_vars), na.rm = TRUE),
     )
 }

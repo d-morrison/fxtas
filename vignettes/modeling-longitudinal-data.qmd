@@ -68,56 +68,56 @@ library(pander)
 #| label: extract-figs
 
 
-fig_females_first = extract_figs_from_pickle(
+fig_females_first = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "females",
   output_folder = "output/output.fixed_CV")
 
-fig_females_all = extract_figs_from_pickle(
+fig_females_all = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   rda_filename = "gp34_longitudinal.RData",
   dataset_name = "females",
   output_folder = "output/gp34_longitudinal")
 
-fig_females_mv_only = extract_figs_from_pickle(
+fig_females_mv_only = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   rda_filename = "gp34_multivisit_only.RData",
   dataset_name = "females",
   output_folder = "output/gp34_multivisit_only")
 
 
-fig_males_first = extract_figs_from_pickle(
+fig_males_first = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "males",
   output_folder = "output/output.fixed_CV")
 
-fig_males_all = extract_figs_from_pickle(
+fig_males_all = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   rda_filename = "gp34_longitudinal.RData",
   dataset_name = "males",
   output_folder = "output/gp34_longitudinal")
 
-fig_males_mv_only = extract_figs_from_pickle(
+fig_males_mv_only = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   rda_filename = "gp34_multivisit_only.RData",
   dataset_name = "males",
   output_folder = "output/gp34_multivisit_only")
 
-fig_both_first = extract_figs_from_pickle(
+fig_both_first = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "sample_data",
   output_folder = "output/output.fixed_CV")
 
-fig_both_all = extract_figs_from_pickle(
+fig_both_all = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   rda_filename = "gp34_longitudinal.RData",
   dataset_name = "gp34_longitudinal",
   output_folder = "output/gp34_longitudinal")
 
-fig_both_mv_only = extract_figs_from_pickle(
+fig_both_mv_only = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   rda_filename = "gp34_multivisit_only.RData",
   dataset_name = "gp34_multivisit_only",

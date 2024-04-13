@@ -228,7 +228,7 @@ table_subtype_by_demographics(
     subtype_and_stage_table = results$subtype_and_stage_table
     )
 
-figs = extract_figs_from_pickle(
+figs = extract_figs_from_pickle(size.y = size.y,
   synchronize_y_axes = synchronize_y_axes,
   n_s = 2,
   dataset_name = dataset_name,
@@ -245,7 +245,7 @@ figs |>
 ## three subgroups
 
 ```{r}
-figs = extract_figs_from_pickle(
+figs = extract_figs_from_pickle(size.y = size.y,
   synchronize_y_axes = synchronize_y_axes,
   n_s = 3,
   dataset_name = dataset_name,

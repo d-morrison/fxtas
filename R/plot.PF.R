@@ -9,7 +9,7 @@
 #'
 plot.PF = function(
     PFs,
-    size.y = 9,
+    size.y = 10,
     color_label = "Pr(stage)")
 {
   to_return =

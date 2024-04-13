@@ -62,3 +62,5 @@ execute:
   message: false
   cache: false
   freeze: auto  # re-render only when source changes
+filters:
+  - docx-landscape.lua

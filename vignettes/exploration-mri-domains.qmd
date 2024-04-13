@@ -100,7 +100,7 @@ table1(na.is.category = FALSE,
 ```{r}
 vars <- c(
   "Cerebellar Atrophy", "Cerebellar WM Hyperintensity",
-  "MCP-WM Hyperintensity", "MRI: Cerebellum"
+  "MCP-WM Hyperintensity", "MRI: Cerebellar"
 )
 
 table1(na.is.category = FALSE, 

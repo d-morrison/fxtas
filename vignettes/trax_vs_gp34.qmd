@@ -49,19 +49,19 @@ library(pander)
 ```
 
 ```{r "build-figs"}
-fig_male = extract_figs_from_pickle(
+fig_male = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   dataset_name = "males",
   output_folder = "output/output.longest")
 ```
 
 ```{r}
-fig_male_trax_gp34 = extract_figs_from_pickle(
+fig_male_trax_gp34 = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   dataset_name = "sample_data",
   output_folder = "output/trax_gp34_males_v1")
 
-fig_trax_only = extract_figs_from_pickle(
+fig_trax_only = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   dataset_name = "trax_visit1",
   output_folder = "output/trax_visit1")
@@ -120,19 +120,19 @@ temp = venn.diagram(
 #|   - "Trax+GP+GP4, males only" 
 #|   - "Trax only"
 
-fig_male = extract_figs_from_pickle(
+fig_male = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   dataset_name = "males",
   output_folder = "output/output.longest") |> 
   print()
 
-fig_male_trax_gp34 = extract_figs_from_pickle(
+fig_male_trax_gp34 = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   dataset_name = "sample_data",
   output_folder = "output/trax_gp34_males_v1") |> 
   print()
 
-fig_trax_only = extract_figs_from_pickle(
+fig_trax_only = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   dataset_name = "trax_visit1",
   output_folder = "output/trax_visit1") |> 

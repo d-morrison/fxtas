@@ -311,7 +311,7 @@ We ran the analysis for 1-6 latent subgroups, each with their own ordering. @fig
 #| fig-cap: "positional variance diagram for 1 subgroup"
 #| fig-cap-location: top
 
-figs = extract_figs_from_pickle(
+figs = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   dataset_name = dataset_name,
   output_folder = output_folder,
@@ -337,7 +337,7 @@ print(figs[[1]])
 #|   - "Subgroup 1"
 #|   - "Subgroup 2"
 biomarker_plot_order2 = NULL
-figs = extract_figs_from_pickle(
+figs = extract_figs_from_pickle(size.y = size.y,
   synchronize_y_axes = synchronize_y_axes,
   n_s = 2,
   dataset_name = dataset_name,
@@ -354,7 +354,7 @@ figs |>
 ## three subgroups
 
 ```{r}
-figs = extract_figs_from_pickle(
+figs = extract_figs_from_pickle(size.y = size.y,
   synchronize_y_axes = synchronize_y_axes,
   n_s = 3,
   dataset_name = dataset_name,
@@ -387,7 +387,7 @@ figs |>
 ## four subgroups
 
 ```{r}
-figs = extract_figs_from_pickle(
+figs = extract_figs_from_pickle(size.y = size.y,
   synchronize_y_axes = synchronize_y_axes,
   n_s = 4,
   dataset_name = dataset_name,
@@ -422,7 +422,7 @@ figs |>
 ## five subgroups
 
 ```{r}
-figs = extract_figs_from_pickle(
+figs = extract_figs_from_pickle(size.y = size.y,
   synchronize_y_axes = synchronize_y_axes,
   n_s = 5,
   dataset_name = dataset_name,
@@ -457,7 +457,7 @@ figs |>
 ## six subgroups
 
 ```{r "build-figs-6sg"}
-figs = extract_figs_from_pickle(
+figs = extract_figs_from_pickle(size.y = size.y,
   synchronize_y_axes = synchronize_y_axes,
   n_s = 6,
   dataset_name = dataset_name,

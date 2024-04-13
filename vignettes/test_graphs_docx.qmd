@@ -1,0 +1,64 @@
+---
+title: "test-graphs"
+format: docx
+    
+filters:
+  - ../docx-landscape.lua
+---
+
+```{r}
+#| label: setup
+library(fxtas)
+pvd_height = 8
+size.y = 11
+output_folder = 
+  "output/output.fixed_CV/" |> 
+  fs::dir_create()
+fig_females_first = extract_figs_from_pickle(
+  n_s = 1,
+  size.y = size.y,
+  rda_filename = "data.RData",
+  dataset_name = "females",
+  output_folder = "output/output.fixed_CV")
+
+fig_males_first = extract_figs_from_pickle(
+  n_s = 1,
+  size.y = size.y,
+  rda_filename = "data.RData",
+  dataset_name = "males",
+  output_folder = "output/output.fixed_CV")
+```
+
+test
+
+::: landscape
+
+```{r}
+#| label: "fig-first-only"
+#| fig-height: !expr pvd_height
+#| fig-align: center
+#| fig-cap: "Estimated event sequence models, stratified by sex, first visits only"
+#| fig-cap-location: top
+#| layout-ncol: 2
+#| layout: [[15, -1, 15]]
+#| fig-subcap:
+#|   - "Males"
+#|   - "Females"
+
+
+# fig_both_first |> print()
+fig_males_first |> print()
+fig_females_first |> print()
+
+```
+
+```{r}
+#| label: "fig-justone"
+#| fig-height: !expr pvd_height
+#| fig-cap: "just one"
+fig_females_first |> print()
+```
+
+:::
+
+back

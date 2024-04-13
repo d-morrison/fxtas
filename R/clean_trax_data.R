@@ -143,10 +143,10 @@ clean_trax_data = function(dataset)
                  "Hypochondriasis (SOM39)",
                  # scid domains
                  "SCID: Mood Disorders", "SCID: Anxiety",
-                 "SCID: Substance Use Disorders",
+                 "SCID: Substance Use",
                  "SCID: Somatization",
                  "SCID: Psychotic",
                  # mri domains
-                 "MRI: Cerebral", "MRI: Cerebellum")
+                 "MRI: Cerebral", "MRI: Cerebellar")
     )
 }

@@ -4,11 +4,10 @@ knitr:
   opts_chunk: 
     collapse: true
     comment: "#>" 
-    R.options:  
-      dev: svg
-
 project:
   execute-dir: project
+filters:
+  - ../docx-landscape.lua
 ---
 
 ```{=html}
@@ -63,7 +62,8 @@ fit_models = TRUE
 run_CV =  TRUE
 # run_CV = FALSE
 
-pvd_height = 10
+pvd_height = 8
+size.y = 11
 pvd_column = "screen"
 N_startpoints = 10L
 N_S_max = 8L
@@ -404,51 +404,51 @@ results_v1 = extract_results_from_pickles(
   dataset_name = "sample_data",
   output_folder = "output/output.fixed_CV")
 
-fig_females_first = extract_figs_from_pickle(
+fig_females_first = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "females",
   output_folder = "output/output.fixed_CV")
 
-fig_males_first = extract_figs_from_pickle(
+fig_males_first = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "males",
   output_folder = "output/output.fixed_CV")
 
-fig_both_first = extract_figs_from_pickle(
+fig_both_first = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "sample_data",
   output_folder = "output/output.fixed_CV")
 
-fig_under100 = extract_figs_from_pickle(
+fig_under100 = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   dataset_name = "under100",
   output_folder = output_folder)
 
-fig_over100 = extract_figs_from_pickle(
+fig_over100 = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   dataset_name = "over100",
   output_folder = output_folder)
 
-fig_under100_males = extract_figs_from_pickle(
+fig_under100_males = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   dataset_name = "under100_Male",
   output_folder = output_folder)
 
-fig_over100_males = extract_figs_from_pickle(
+fig_over100_males = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   dataset_name = "over100_Male",
   output_folder = output_folder)
 
 
-fig_under100_females = extract_figs_from_pickle(
+fig_under100_females = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   dataset_name = "under100_Female",
   output_folder = output_folder)
 
-fig_over100_females = extract_figs_from_pickle(
+fig_over100_females = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   dataset_name = "over100_Female",
   output_folder = output_folder)
@@ -623,6 +623,7 @@ We did not find statistically significant evidence of a difference between males
 ::: {#refs}
 :::
 
+::: landscape
 # Figures {.unnumbered}
 
 ```{r}
@@ -733,6 +734,7 @@ fig_over100_females |> print()
 
 ```
 
+:::
 
 # Appendix {.appendix}
 
@@ -750,9 +752,9 @@ pval_sex_gp34_v1 |> autoplot() |> print()
 ```
 
 ## Results with repeated measures {.appendix}
-
+::: landscape
 {{< include longitudinal-results.qmd >}}
-
+:::
 ## Detecting latent subgroups {#sec-subgroups .appendix}
 
 In order to the Ordinal SuStaIn algorithm, we must specify how many latent subgroups to model. There are several metrics for determining the optimal number of subgroups for a given data set.
