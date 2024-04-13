@@ -499,10 +499,6 @@ pval_sex_gp34_v1 = permutation_test(
   permuted_test_stats = permuted_test_stats
 )
 
-# plot_permutation_results(
-#   observed_test_stat = observed_test_stat,
-#   permuted_test_stats = permuted_test_stats) |>
-#   print()
 ```
 
 The data provided statistically significant evidence of a difference in event sequences between males and females (p `r pval_sex_gp34_v1 |> scales::pvalue()`).
@@ -546,12 +542,7 @@ pval_cgg_gp34_v1 = permutation_test(
   observed_test_stat = observed_test_stat,
   permuted_test_stats = permuted_test_stats
 )
-
-# plot_permutation_results(
-#   observed_test_stat = observed_test_stat,
-#   permuted_test_stats = permuted_test_stats) |>
-#   print()
-
+# autoplot(pval_sex_gp34_v1)
 ```
 
 The data provided statistically significant evidence of a difference in event sequences between males and females (p `r pval_sex_gp34_v1 |> scales::pvalue()`).
@@ -693,21 +684,7 @@ fig_over100_females |> print()
 #| fig-cap: "Histogram of mean log-likelihoods for GP34 visit 1 data, permuted by sex"
 #| label: fig-permute-llik-sex
 
-output_folder = "output/output.fixed_CV/"
-
-permuted_test_stats = collect_permutation_test_stats(
-  output_folder = output_folder,
-  permuting_variables = "Gender")
-
-observed_test_stat = get_observed_permutation_test_stat(
-  output_folder,
-  dataset_names = c('females', 'males'))
-
-plot_permutation_results(
-  observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats) |>
-  print()
-
+pval_sex_gp34_v1 |> autoplot() |> print()
 ```
 
 ## Results with repeated measures {.appendix}

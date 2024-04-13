@@ -35,3 +35,9 @@ autoplot.permutation_test = function(object, ...)
     observed_test_stat = attr(object, "observed_test_stat"),
     permuted_test_stats = attr(object, "permuted_test_stats"))
 }
+
+print.permutation_test = function(x, ...)
+{
+  x |> scales::pvalue() |> print()
+  invisible(x)
+}

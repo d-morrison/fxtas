@@ -25,7 +25,9 @@ plot_permutation_results = function(
     ggplot2::geom_vline(
       ggplot2::aes(
         xintercept = observed_test_stat,
-        col = 'observed test statistic')) +
+        col =
+          paste('observed test statistic: p =',
+                pval |> scales::pvalue()))) +
     ggplot2::theme_bw() +
     ggplot2::labs(col = "") +
     ggplot2::theme(legend.position = "bottom")
