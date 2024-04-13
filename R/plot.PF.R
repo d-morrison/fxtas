@@ -25,21 +25,21 @@ plot.PF = function(
       )) +
     ggplot2::geom_tile() +
     # scale_fill_identity() +
-    scale_fill_gradient(
+    ggplot2::scale_fill_gradient(
       low = "gray",
       high = "red")+
-    scale_y_discrete(limits = rev) +
-    xlab('SuStaIn Stage') +
-    ylab(NULL) +
-    theme_bw() +
-    theme(
+    ggplot2::scale_y_discrete(limits = rev) +
+    ggplot2::xlab('SuStaIn Stage') +
+    ggplot2::ylab(NULL) +
+    ggplot2::theme_bw() +
+    ggplot2::theme(
       legend.position = "bottom",
       axis.text.y =
         ggtext::element_markdown(
           hjust = 0,
           size = size.y)
     ) +
-    labs(fill = color_label)
+    ggplot2::labs(fill = color_label)
 
   to_return |>
     structure(class = c("PVD", class(to_return)))

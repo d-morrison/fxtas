@@ -33,6 +33,7 @@
 #' @importFrom ggplot2 geom_vline
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 labs
+#' @importFrom ggplot2 scale_fill_gradient
 #' @importFrom ggplot2 scale_x_log10
 #' @importFrom ggplot2 scale_y_discrete
 #' @importFrom ggplot2 theme

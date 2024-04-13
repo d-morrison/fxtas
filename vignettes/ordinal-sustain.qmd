@@ -1,8 +1,5 @@
 ---
 title: "Event sequences in Fragile X-associated tremor/ataxia syndrome"
-format: 
-  docx: default
-  html: default
 knitr:
   opts_chunk: 
     collapse: true
@@ -65,8 +62,8 @@ fit_models = TRUE
 # fit_models = FALSE
 run_CV =  TRUE
 # run_CV = FALSE
-show_missingness_reasons = FALSE
-footnote1 = 'codes `777`, `888`, and `999` are counted as "Missing" (NA).'
+
+
 N_startpoints = 10L
 N_S_max = 8L
 N_S_max_stratified = 1L
@@ -165,8 +162,6 @@ table_out |> pander()
 
 {{< include exploration.qmd >}}
 
-{{< include demos-by-sex.qmd >}}
-
 ## Statistical analysis {#sec-Statistical-analysis}
 
 We applied  the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2018uncovering; @young2021ordinal] to our dataset to find event sequences and subgroupings for FXTAS patients. This algorithm combines disease progression modelling [@fonteijn2012event] and unsupervised clustering to model event onset sequences using a cross-sectional sample of a patient population. The algorithm simultaneously clusters individuals into subgroups and characterizes the trajectory that best defines each subgroup, thus capturing heterogeneity in both disease subtype and disease stage.
@@ -187,8 +182,7 @@ To test for statistically significant differences in event sequences between sex
 
 ### Latent subgroups
 
-We also fit the model on the full dataset (not stratified by sex or CGG) for 2-6 latent subgroups, each with their own ordering (@fig-pvd4). We determined the optimal number of latent subgroups for this dataset using the CVIC criterion (@sec-cvic). 
-
+We also fit the model on the full dataset (not stratified by sex or CGG) for 2-`r N_S_max` latent subgroups, each with their own ordering (@fig-pvd_optimal). We determined the optimal number of latent subgroups for this dataset using the CVIC criterion (@sec-cvic). 
 
 ### Longitudinal subsets
 
@@ -582,11 +576,11 @@ fig_over100_females |> print()
 ## Latent subgroups {#sec-latent-subgroups}
 
 ```{r}
-n_s = 4
+n_s = 6
 ```
 
 Based on the CVIC criterion (@sec-cvic), it appears that `r n_s` subgroups is the optimal number for the full, unstratified GP+GP4 dataset.
-@fig-pvd4 shows positional variance diagrams (PVDs) for each of the subgroup clusters detected under this assumption, and @tbl-sg_demos shows the demographics of the patients clustered in each subgroup; patients in the "Type 0" category were too early in the disease process to be classified into a subgroup.
+@fig-pvd_optimal shows positional variance diagrams (PVDs) for each of the subgroup clusters detected under this assumption, and @tbl-sg_demos shows the demographics of the patients clustered in each subgroup; patients in the "Type 0" category were too early in the disease process to be classified into a subgroup.
 
 ```{r, extract-PVD-optimal}
 
@@ -597,8 +591,8 @@ figs = extract_figs_from_pickle(
 ```
 
 ```{r}
-#| label: "fig-pvd4"
-#| layout-ncol: 4
+#| label: "fig-pvd_optimal"
+#| layout-ncol: 3
 #| fig-height: 15
 #| fig-align: center
 #| fig-cap: "positional variance diagrams for 4 subgroups"
@@ -609,10 +603,11 @@ figs = extract_figs_from_pickle(
 #|   - "Subgroup 2"
 #|   - "Subgroup 3"
 #|   - "Subgroup 4"
+#|   - "Subgroup 5"
+#|   - "Subgroup 6"
 library(ggplot2)
 
-figs |> 
-  print_PVDs()
+figs |> print_PVDs()
 
 ```
 
@@ -748,7 +743,7 @@ $$
 
 #### CVIC for the full GP+GP4 dataset {.appendix}
 
-We performed `r N_CV_folds`-fold cross-validation on the unstratified GP+GP4 data, and calculated the CVIC for 1-6 latent subgroups.
+We performed `r N_CV_folds`-fold cross-validation on the unstratified GP+GP4 data, and calculated the CVIC for 1-`r N_S_max` latent subgroups.
 
 ```{r}
 #| fig-cap: "Cross-validation information criterion"
@@ -760,7 +755,7 @@ temp$CVIC |> plot_CVIC()
 
 ```
 
-It appears that the model nearly reaches peak CVIC by 4 subgroups.
+It appears that the model reaches optimum CVIC at 6 subgroups.
 
 ## Out-of-fold log-likelihood distribution {.appendix}
 

@@ -199,16 +199,17 @@ vars = c(
   
 )
 
-footnote <- paste0(
-  "Head tremor was not collected in GP3. Summaries provided are for GP4 only."
+footnote_HT <- paste(
+  "Head tremor was not collected in GP3 or Trax Phase 1.",
+  "Summaries provided are for GP4 + Trax Phase 2 only."
 )
-
 table1a(
   
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1_cgg_55_199 |> filter(Study == "GP4"),
-  footnote = footnote)
+  data = visit1_cgg_55_199 |> 
+    filter(!(Study %in% c("Trax Phase 1", "GP3"))),
+  footnote = footnote_HT)
 
 ```
 
@@ -227,7 +228,7 @@ table1a(
   
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1_cgg_55_199 |> filter(Study == "GP4" & `Head tremor` == "Yes"))
+  data = visit1_cgg_55_199 |> filter(`Head tremor` == "Yes"))
 
 ```
 

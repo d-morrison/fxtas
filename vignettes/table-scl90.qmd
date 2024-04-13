@@ -1,0 +1,16 @@
+### SCL90
+
+For analysis with the Ordinal SuStaIn method, we dichotomized each SCL90 measure as clinically elevated (60+) vs not.
+
+```{r}
+
+vars = grep(value = TRUE, fixed = TRUE, names(trax_gp34_all), pattern = "SCL90") |> sort()
+
+table1(na.is.category = FALSE, overall = FALSE,
+       NA.label = NA.label1,
+       stratified_formula(vars, column_var),
+       # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+       data = visit1_cgg_complete)
+
+# visit1_cgg_complete |> ggplot(aes(x = `SCL90: Anxiety`, group = `FX*`)) + geom_histogram() + facet_wrap(~`FX*`, ncol = 1)
+```

@@ -124,17 +124,17 @@ kinesia_vars = c(
 
   biomarker_group_list =
     list(
-      tremors = tremors,
-      ataxia = ataxia,
-      stage = "FXTAS Stage (0-5)*",
+      Tremors = tremors,
+      Ataxia = ataxia,
+      Stage = "FXTAS Stage (0-5)*",
       Parkinsons = parkinsons_vars,
       # cancer = cancer_vars,
       MRI = mri_vars,
-      scores = scores,
+      Scores = scores,
       SCID = scid_vars,
       # scl90 = scl90_vars,
       CANTAB = cantab_vars,
-      thyroid = thyroid_vars
+      Thyroid = thyroid_vars
       # kinesia = kinesia_vars
     )
 
