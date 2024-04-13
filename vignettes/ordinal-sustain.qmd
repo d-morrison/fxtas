@@ -471,13 +471,10 @@ pval_cgg_gp34_v1 = permutation_test(
 ```
 
 We did not find statistically significant evidence of a difference in event sequences between CGG < 100 and CGG > 100,  (p = `r pval_cgg_gp34_v1`).
-
-@fig-pvd-by-cgg shows the estimated event sequence models stratified by CGG repeats (<100 vs 100+; assuming no latent subgroups within strata).
+@fig-pvd-by-cgg shows the estimated sequence models.
 
 
 ## Stratified by CGG and Sex {#sec-stratified-by-cgg-and-sex}
-
-### Comparing CGG levels among males
 
 ```{r}
 #| label: p-val-test-cgg-male
@@ -503,9 +500,6 @@ pval_male_cgg_gp34_v1 = permutation_test(
 
 We found significant evidence of a difference between CGG < 100 and CGG ≥ 100 among males (p `r pval_male_cgg_gp34_v1`). @fig-pvd-by-cgg-male shows the corresponding stratified models.
 
-### Comparing CGG levels among females
-
-
 ```{r}
 #| label: p-val-test-cgg-female
 output_folder = "output/output.fixed_CV/"
@@ -527,9 +521,6 @@ pval_female_cgg_gp34_v1 = permutation_test(
 ```
 
 We did not find statistically significant evidence of a difference between CGG < 100 and CGG ≥ 100 among females (p = `r pval_female_cgg_gp34_v1`). @fig-pvd-by-cgg-female shows the estimated stratified models.
-
-
-## Comparing sexes for CGG < 100
 
 ```{r}
 #| label: p-val-test-sex-under100
@@ -554,9 +545,6 @@ pval_under100_sex_gp34_v1 = permutation_test(
 ```
 
 We did not find statistically significant evidence of a difference between males and females among those with CGG < 100 (p = `r pval_under100_sex_gp34_v1`). @fig-pvd-by-gender-cgg_under100 shows the estimated stratified models.
-
-
-## Comparing sexes for CGG ≥ 100
 
 ```{r}
 #| label: p-val-test-sex-over100
