@@ -31,7 +31,7 @@ permutation_test = function(
 #' @examples
 autoplot.permutation_test = function(object, ...)
 {
-  fig = plot_permutation_results(
+  plot_permutation_results(
     observed_test_stat = attr(object, "observed_test_stat"),
     permuted_test_stats = attr(object, "permuted_test_stats"))
 }

@@ -16,12 +16,10 @@ plot_permutation_results = function(
     permuted_test_stats = permuted_test_stats
   )
 
-  xrange = range(c(permuted_test_stats, observed_test_stat))
-
-  plot1 = tibble::tibble(permuted_test_stats = permuted_test_stats) |>
+  plot1 =
+    tibble::tibble(permuted_test_stats = permuted_test_stats) |>
     ggplot2::ggplot(ggplot2::aes(x = .data$permuted_test_stats)) +
     ggplot2::geom_histogram(bins = 100, alpha = .7) +
-    ggplot2::xlim(xrange) +
     ggplot2::xlab("test statistic (mean log-likelihood)") +
     ggplot2::ylab('number of permuted datasets') +
     ggplot2::geom_vline(
@@ -36,6 +34,6 @@ plot_permutation_results = function(
     plot1 |>
     structure(
     pvalue = pval,
-    class = c("permutation-test-results", class(plot1)))
+    class = c("permutation-test-plot", class(plot1)))
   return(to_return)
 }
