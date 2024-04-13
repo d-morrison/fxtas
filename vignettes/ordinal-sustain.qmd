@@ -387,9 +387,6 @@ fs::path_package("fxtas", "extdata") |>
 
 ```
 
-
-# Results
-
 ```{r}
 #| label: extract-figs
 
@@ -399,18 +396,11 @@ results_v1 = extract_results_from_pickles(
   dataset_name = "sample_data",
   output_folder = "output/output.fixed_CV")
 
-results_females_first = extract_results_from_pickle(
-  n_s = 1,
-  rda_filename = "data.RData",
-  dataset_name = "females",
-  output_folder = "output/output.fixed_CV")
-
 fig_females_first = extract_figs_from_pickle(
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "females",
   output_folder = "output/output.fixed_CV")
-
 
 fig_males_first = extract_figs_from_pickle(
   n_s = 1,
@@ -458,29 +448,9 @@ fig_over100_females = extract_figs_from_pickle(
 ```
 
 
-## All patients, first visits only
+# Results
 
-@fig-first-only-1 and @fig-first-only-2 show estimated event sequences stratified by sex. It appears that males experience increasing ataxia severity earlier in the event sequence than females, while females experience MRI events and SCL psychological symptoms earlier in the event sequence than males.^[There are probably other patterns worth noting here; clinical folks, let us know what you notice!]
-
-
-```{r}
-#| label: "fig-first-only"
-#| column: page
-#| fig-height: !expr pvd_height
-#| fig-align: center
-#| fig-cap: "Estimated event sequence models, stratified by sex, first visits only"
-#| fig-cap-location: top
-#| layout-ncol: 2
-#| fig-subcap:
-#|   - "Males"
-#|   - "Females"
-
-
-# fig_both_first |> print()
-fig_males_first |> print()
-fig_females_first |> print()
-
-```
+## Stratified by sex
 
 ```{r}
 #| label: p-val-test-sex
@@ -501,30 +471,29 @@ pval_sex_gp34_v1 = permutation_test(
 
 ```
 
-The data provided statistically significant evidence of a difference in event sequences between males and females (p `r pval_sex_gp34_v1 |> scales::pvalue()`).
-
-## Stratified by CGG repeats
-
-@fig-pvd-by-cgg shows the estimated event sequence model, this time comparing the unstratified results with stratification by CGG repeats (<100 vs 100+; assuming no latent subgroups within strata). Here, we find that patients with CGG <100 experienced SCL90 events earlier in the sequence than patients with CGG $\ge$ 100.
+We found statistically significant evidence of a difference in event sequences between males and females (p = `r pval_sex_gp34_v1`). @fig-first-only-1 and @fig-first-only-2 show estimated event sequences stratified by sex. It appears that males experience increasing ataxia severity earlier in the event sequence than females, while females experience MRI events and SCL psychological symptoms earlier in the event sequence than males.^[There are probably other patterns worth noting here; clinical folks, let us know what you notice!]
 
 ```{r}
-#| label: "fig-pvd-by-cgg"
+#| label: "fig-first-only"
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-align: center
-#| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only"
+#| fig-cap: "Estimated event sequence models, stratified by sex, first visits only"
 #| fig-cap-location: top
 #| layout-ncol: 2
 #| fig-subcap:
-#|   - "CGG < 100"
-#|   - "CGG 100+"
+#|   - "Males"
+#|   - "Females"
 
-# fig_both_first |> print() 
-fig_under100 |> print()
-fig_over100 |> print()
+
+# fig_both_first |> print()
+fig_males_first |> print()
+fig_females_first |> print()
 
 ```
 
+
+## Stratified by CGG repeats
 
 ```{r}
 #| label: p-val-test-cgg
@@ -545,27 +514,31 @@ pval_cgg_gp34_v1 = permutation_test(
 # autoplot(pval_sex_gp34_v1)
 ```
 
-The data provided statistically significant evidence of a difference in event sequences between males and females (p `r pval_sex_gp34_v1 |> scales::pvalue()`).
+We did not find statistically significant evidence of a difference in event sequences between CGG < 100 and CGG > 100,  (p = `r pval_cgg_gp34_v1`).
 
-## Stratified by CGG and Sex {#sec-stratified-by-cgg-and-sex}
+@fig-pvd-by-cgg shows the estimated event sequence models stratified by CGG repeats (<100 vs 100+; assuming no latent subgroups within strata).
 
 ```{r}
-#| label: "fig-pvd-by-cgg-male"
+#| label: "fig-pvd-by-cgg"
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-align: center
-#| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only, males only"
+#| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only"
 #| fig-cap-location: top
 #| layout-ncol: 2
 #| fig-subcap:
-#|   - "Males, CGG < 100"
-#|   - "Males, CGG ≥ 100"
+#|   - "CGG < 100"
+#|   - "CGG 100+"
 
-# fig_males_first |> print() 
-fig_under100_males |> print()
-fig_over100_males |> print()
+# fig_both_first |> print() 
+fig_under100 |> print()
+fig_over100 |> print()
 
 ```
+
+## Stratified by CGG and Sex {#sec-stratified-by-cgg-and-sex}
+
+### Comparing CGG levels among males
 
 ```{r}
 #| label: p-val-test-cgg-male
@@ -585,30 +558,32 @@ pval_male_cgg_gp34_v1 = permutation_test(
   permuted_test_stats = permuted_test_stats
 )
 
-plot_permutation_results(
-  observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats) |>
-  print()
+# autoplot(pval_male_cgg_gp34_v1)
 
 ```
 
+We found significant evidence of a difference between CGG < 100 and CGG ≥ 100 among males (p `r pval_male_cgg_gp34_v1`). @fig-pvd-by-cgg-male shows the corresponding stratified models.
+
 ```{r}
-#| label: "fig-pvd-by-cgg-female"
+#| label: "fig-pvd-by-cgg-male"
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-align: center
-#| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only, females only"
+#| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only, males only"
 #| fig-cap-location: top
 #| layout-ncol: 2
 #| fig-subcap:
-#|   - "Females, CGG < 100"
-#|   - "Females, CGG ≥ 100"
+#|   - "Males, CGG < 100"
+#|   - "Males, CGG ≥ 100"
 
-# fig_females_first |> print() 
-fig_under100_females |> print()
-fig_over100_females |> print()
+# fig_males_first |> print() 
+fig_under100_males |> print()
+fig_over100_males |> print()
 
 ```
+
+### Comparing CGG levels among females
+
 
 ```{r}
 #| label: p-val-test-cgg-female
@@ -630,6 +605,52 @@ pval_female_cgg_gp34_v1 = permutation_test(
 
 ```
 
+We did not find statistically significant evidence of a difference between CGG < 100 and CGG ≥ 100 among females (p = `r pval_female_cgg_gp34_v1`). @fig-pvd-by-cgg-female shows the estimated stratified models.
+
+```{r}
+#| label: "fig-pvd-by-cgg-female"
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-align: center
+#| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only, females only"
+#| fig-cap-location: top
+#| layout-ncol: 2
+#| fig-subcap:
+#|   - "Females, CGG < 100"
+#|   - "Females, CGG ≥ 100"
+
+# fig_females_first |> print() 
+fig_under100_females |> print()
+fig_over100_females |> print()
+
+```
+
+## Comparing sexes for CGG < 100
+
+```{r}
+#| label: p-val-test-sex-under100
+output_folder = "output/output.fixed_CV/"
+
+permuted_test_stats = collect_permutation_test_stats(
+  output_folder = output_folder,
+  stratifying_levels = "CGG 55-99",
+  permuting_variables = "Gender")
+
+observed_test_stat = get_observed_permutation_test_stat(
+  output_folder,
+  dataset_names = c('under100_Female', 'under100_Male'))
+
+pval_under100_sex_gp34_v1 = permutation_test(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats
+)
+
+# autoplot(pval_under100_sex_gp34_v1)
+
+```
+
+We did not find statistically significant evidence of a difference between males and females among those with CGG < 100 (p = `r pval_under100_sex_gp34_v1`). @fig-pvd-by-gender-cgg_under100 shows the estimated stratified models.
+
 ```{r}
 #| label: "fig-pvd-by-gender-cgg_under100"
 #| column: page
@@ -647,6 +668,31 @@ fig_under100_females |> print()
 
 ```
 
+## Comparing sexes for CGG ≥ 100
+
+```{r}
+#| label: p-val-test-sex-over100
+output_folder = "output/output.fixed_CV/"
+
+permuted_test_stats = collect_permutation_test_stats(
+  output_folder = output_folder,
+  stratifying_levels = "CGG 100-199",
+  permuting_variables = "Gender")
+
+observed_test_stat = get_observed_permutation_test_stat(
+  output_folder,
+  dataset_names = c('over100_Female', 'over100_Male'))
+
+pval_over100_sex_gp34_v1 = permutation_test(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats
+)
+
+# autoplot(pval_over100_sex_gp34_v1)
+
+```
+
+We did not find statistically significant evidence of a difference between males and females among those with CGG < 100 (p `r pval_over100_sex_gp34_v1`). @fig-pvd-by-gender-cgg_over100 shows the estimated stratified models.
 ```{r}
 #| label: "fig-pvd-by-gender-cgg_over100"
 #| column: page
@@ -663,6 +709,7 @@ fig_over100_males |> print()
 fig_over100_females |> print()
 
 ```
+
 # Discussion
 
 [to be added]

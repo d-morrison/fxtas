@@ -26,8 +26,10 @@ plot_permutation_results = function(
       ggplot2::aes(
         xintercept = observed_test_stat,
         col =
-          paste('observed test statistic: p =',
-                pval |> scales::pvalue()))) +
+          paste0(
+            'observed test statistic (p = ',
+            pval |> scales::pvalue(),
+            ")"))) +
     ggplot2::theme_bw() +
     ggplot2::labs(col = "") +
     ggplot2::theme(legend.position = "bottom")
@@ -35,7 +37,7 @@ plot_permutation_results = function(
   to_return =
     plot1 |>
     structure(
-    pvalue = pval,
-    class = c("permutation-test-plot", class(plot1)))
+      pvalue = pval,
+      class = c("permutation-test-plot", class(plot1)))
   return(to_return)
 }

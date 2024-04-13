@@ -19,7 +19,8 @@ run_OSA(
   N_CV_folds = 0,
   CV_fold_nums = 1:N_CV_folds,
   patient_data,
-  verbose = TRUE
+  verbose = TRUE,
+  keep_data = TRUE
 )
 }
 \arguments{
@@ -58,6 +59,8 @@ run_OSA(
 \item{patient_data}{patient biomarker data}
 
 \item{verbose}{\code{\link[=logical]{logical()}} indicating whether to print debugging information}
+
+\item{keep_data}{\code{\link[=logical]{logical()}} indicating whether to include the ata in the return object}
 }
 \value{
 a \code{\link[=list]{list()}}

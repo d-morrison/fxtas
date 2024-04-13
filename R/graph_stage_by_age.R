@@ -17,5 +17,6 @@ graph_stage_by_age = function(data)
     geom_point() +
     facet_wrap(~ml_subtype) +
     geom_smooth() +
-    xlab("Age at visit (years)")
+    xlab("Age at visit (years)") +
+    ylab("Estimated sequence stage")
 }

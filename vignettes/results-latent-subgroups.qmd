@@ -58,26 +58,8 @@ table_subtype_by_demographics(
 ```{r}
 #| label: fig-stage-by-age
 #| fig-cap: "ML stage by age and latent subtype"
-#| include: false
-
-stages = 
-  results_cv_max$subtype_and_stage_table |> 
-  mutate(
-    age = patient_data$`Age at first visit`
-  )
-
-library(ggplot2)
-stages |>
-  graph_stage_by_age()
-
-
-```
-
-
-```{r}
-#| label: fig-stage-by-age-longitudinal
-#| fig-cap: "ML stage by age, longitudinal data"
 #| include: true
+
 stages = 
   results_cv_max$subtype_and_stage_table |> 
   mutate(
@@ -90,3 +72,5 @@ stages |>
 
 
 ```
+
+

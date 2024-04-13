@@ -35,6 +35,7 @@ run_and_save_OSA(dataset_name, output_folder, verbose = TRUE, N_S_max, ...)
     \item{\code{N_CV_folds}}{number of cross-validation folds to create}
     \item{\code{patient_data}}{patient biomarker data}
     \item{\code{CV_fold_nums}}{which CV folds to run (for parallel processing)}
+    \item{\code{keep_data}}{\code{\link[=logical]{logical()}} indicating whether to include the ata in the return object}
   }}
 }
 \value{

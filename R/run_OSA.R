@@ -17,6 +17,7 @@
 #' @param patient_data patient biomarker data
 #' @param CV_fold_nums which CV folds to run (for parallel processing)
 #' @param verbose [logical()] indicating whether to print debugging information
+#' @param keep_data [logical()] indicating whether to include the ata in the return object
 #'
 #' @returns a [list()]
 #' @export
@@ -36,7 +37,8 @@ run_OSA = function(
     N_CV_folds = 0,
     CV_fold_nums = 1:N_CV_folds,
     patient_data,
-    verbose = TRUE)
+    verbose = TRUE,
+    keep_data = TRUE)
 {
 
   if(verbose) message("starting `run_OSA()`")
@@ -68,6 +70,7 @@ run_OSA = function(
     "samples_likelihoods"
   )
 
+  if(keep_data) sus_output["patient_data"] = patient_data
   if(N_CV_folds > 0)
   {
     # generate stratified cross-validation training and test set splits
