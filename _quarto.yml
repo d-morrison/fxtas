@@ -2,6 +2,7 @@ project:
   execute-dir: project
 format:
   docx:
+    # reference-doc: template1.docx
     toc: false
     echo: false
     # fig-format: svg

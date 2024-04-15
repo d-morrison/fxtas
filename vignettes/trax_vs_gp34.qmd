@@ -111,7 +111,6 @@ temp = venn.diagram(
 #| label: "fig-pvd1"
 #| column: page
 #| fig-height: !expr pvd_height
-#| fig-align: center
 #| fig-cap: "Estimated event sequence models - males only: gp34, trax, and gp34+trax"
 #| fig-cap-location: top
 #| layout-ncol: 3

@@ -136,7 +136,6 @@ fig_both_mv_only = extract_figs_from_pickle(size.y = size.y,
 #| label: "fig-males"
 #| column: page
 #| fig-height: !expr pvd_height
-#| fig-align: center
 #| fig-cap: "Estimated event sequences for males, by data subset"
 #| fig-cap-location: top
 #| layout-ncol: 3
@@ -160,7 +159,6 @@ fig_males_mv_only |> print()
 #| fig-cap: "Estimated event sequences for females, by data subset"
 #| column: page
 #| fig-height: !expr pvd_height
-#| fig-align: center
 #| fig-cap-location: top
 #| layout-ncol: 3
 #| fig-subcap:
@@ -183,7 +181,6 @@ fig_females_mv_only |> print()
 #| label: "fig-both-genders"
 #| column: page
 #| fig-height: !expr pvd_height
-#| fig-align: center
 #| fig-cap: "Estimated event sequences, unstratified, by data subset"
 #| fig-cap-location: top
 #| layout-ncol: 3
@@ -204,7 +201,6 @@ fig_both_mv_only |> print()
 #| label: "fig-first-only"
 #| column: page
 #| fig-height: !expr pvd_height
-#| fig-align: center
 #| fig-cap: "Estimated event sequences - first visits only"
 #| fig-cap-location: top
 #| layout-ncol: 3
@@ -228,7 +224,6 @@ fig_females_first |> print()
 #| label: "fig-all-visits"
 #| column: page
 #| fig-height: !expr pvd_height
-#| fig-align: center
 #| fig-cap: "Estimated event sequences - all visits"
 #| fig-cap-location: top
 #| layout-ncol: 3
@@ -251,7 +246,6 @@ fig_females_all |> print()
 #| label: "fig-mv-only"
 #| column: page
 #| fig-height: !expr pvd_height
-#| fig-align: center
 #| fig-cap: "Estimated event sequences - multivisit patients only"
 #| fig-cap-location: top
 #| layout-ncol: 3

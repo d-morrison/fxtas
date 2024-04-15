@@ -4,7 +4,7 @@ knitr:
   opts_chunk: 
     collapse: true
     comment: "#>" 
-project:
+project: 
   execute-dir: project
 filters:
   - ../docx-landscape.lua
@@ -64,7 +64,6 @@ run_CV =  TRUE
 
 pvd_height = 8
 size.y = 11
-pvd_column = "screen"
 N_startpoints = 10L
 N_S_max = 8L
 N_S_max_stratified = 1L
@@ -625,7 +624,6 @@ full_data |> graph_CGG_repeats(rows = vars(Gender))
 #| label: "fig-first-only"
 #| column: page
 #| fig-height: !expr pvd_height
-#| fig-align: center
 #| fig-cap: "Estimated event sequence models, stratified by sex, first visits only"
 #| fig-cap-location: top
 #| layout-ncol: 2
@@ -645,7 +643,6 @@ fig_females_first |> print()
 #| label: "fig-pvd-by-cgg"
 #| column: page
 #| fig-height: !expr pvd_height
-#| fig-align: center
 #| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only"
 #| fig-cap-location: top
 #| layout-ncol: 2
@@ -663,7 +660,6 @@ fig_over100 |> print()
 #| label: "fig-pvd-by-cgg-male"
 #| column: page
 #| fig-height: !expr pvd_height
-#| fig-align: center
 #| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only, males only"
 #| fig-cap-location: top
 #| layout-ncol: 2
@@ -681,7 +677,6 @@ fig_over100_males |> print()
 #| label: "fig-pvd-by-cgg-female"
 #| column: page
 #| fig-height: !expr pvd_height
-#| fig-align: center
 #| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only, females only"
 #| fig-cap-location: top
 #| layout-ncol: 2
@@ -699,7 +694,6 @@ fig_over100_females |> print()
 #| label: "fig-pvd-by-gender-cgg_under100"
 #| column: page
 #| fig-height: !expr pvd_height
-#| fig-align: center
 #| fig-cap: "Estimated event sequences, stratified by sex, for CGG repeats <100; first visits only"
 #| fig-cap-location: top
 #| layout-ncol: 2
@@ -716,7 +710,6 @@ fig_under100_females |> print()
 #| label: "fig-pvd-by-gender-cgg_over100"
 #| column: page
 #| fig-height: !expr pvd_height
-#| fig-align: center
 #| fig-cap: "Estimated event sequences, stratified by sex, for CGG repeats ≥100; first visits only"
 #| fig-cap-location: top
 #| layout-ncol: 2

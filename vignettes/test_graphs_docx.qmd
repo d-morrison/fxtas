@@ -1,9 +1,5 @@
 ---
 title: "test-graphs"
-format: docx
-    
-filters:
-  - ../docx-landscape.lua
 ---
 
 ```{r}
@@ -30,27 +26,23 @@ fig_males_first = extract_figs_from_pickle(
 ```
 
 test
-
+{{< pagebreak >}}
 ::: landscape
 
 ```{r}
 #| label: "fig-first-only"
 #| fig-height: !expr pvd_height
-#| fig-align: center
 #| fig-cap: "Estimated event sequence models, stratified by sex, first visits only"
-#| fig-cap-location: top
 #| layout-ncol: 2
-#| layout: [[15, -1, 15]]
 #| fig-subcap:
 #|   - "Males"
 #|   - "Females"
-
-
-# fig_both_first |> print()
 fig_males_first |> print()
 fig_females_first |> print()
 
 ```
+
+{{< pagebreak >}}
 
 ```{r}
 #| label: "fig-justone"
@@ -62,3 +54,9 @@ fig_females_first |> print()
 :::
 
 back
+
+test 
+
+{{< pagebreak >}}
+
+tests

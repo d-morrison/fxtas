@@ -27,7 +27,6 @@ figs = extract_figs_from_pickle(size.y = size.y,
 #| label: "fig-pvd_optimal"
 #| layout-ncol: 2
 #| fig-height: !expr pvd_height
-#| fig-align: center
 #| fig-cap: !expr glue::glue("positional variance diagrams for {n_s_optimal} subgroups")
 #| fig-cap-location: top
 #| column: page
