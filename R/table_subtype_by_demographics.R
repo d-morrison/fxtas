@@ -25,7 +25,7 @@ table_subtype_by_demographics = function(
         Gender +
         `Primary Race` +
         `Primary Ethnicity`,
-      cat.stats = "countpct",
+      cat.stats = "countrowpct",
       data = _) |>
     summary(pfootnote=TRUE)
 }
