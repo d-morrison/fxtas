@@ -1,7 +1,7 @@
-### Results for latent subgroups analysis {#sec-latent-subgroups .appendix}
+### Results for latent subtypes analysis {#sec-latent-subtypes .appendix}
 
 ```{r}
-#| label: set-optimal-subgroups
+#| label: set-optimal-subtypes
 n_s = n_s_optimal = 6
 
 results_cv_max = extract_results_from_pickle(
@@ -10,8 +10,8 @@ results_cv_max = extract_results_from_pickle(
   output_folder = output_folder)
 ```
 
-Based on the CVIC criterion (@sec-cvic), it appears that `r n_s` subgroups is the optimal number for the full, unstratified GP+GP4 dataset.
-@fig-pvd_optimal shows positional variance diagrams (PVDs) for each of the subgroup clusters detected under this assumption, and @tbl-sg_demos shows the demographics of the patients clustered in each subgroup. Patients in the "Type 0" category were too early in the disease process to be classified into a subgroup.
+Based on the CVIC criterion (@sec-cvic), it appears that `r n_s` subtypes is the optimal number for the full, unstratified GP+GP4 dataset.
+@fig-pvd_optimal shows positional variance diagrams (PVDs) for each of the subtype clusters detected under this assumption, and @tbl-sg_demos shows the demographics of the patients clustered in each subtype. Patients in the "Type 0" category were too early in the disease process to be classified into a subtype.
 
 ```{r}
 #| label: extract-PVD-optimal
@@ -27,16 +27,16 @@ figs = extract_figs_from_pickle(size.y = size.y,
 #| label: "fig-pvd_optimal"
 #| layout-ncol: 2
 #| fig-height: !expr pvd_height
-#| fig-cap: !expr glue::glue("positional variance diagrams for {n_s_optimal} subgroups")
+#| fig-cap: !expr glue::glue("positional variance diagrams for {n_s_optimal} subtypes")
 #| fig-cap-location: top
 #| column: page
 #| fig-subcap:
-#|   - "Subgroup 1"
-#|   - "Subgroup 2"
-#|   - "Subgroup 3"
-#|   - "Subgroup 4"
-#|   - "Subgroup 5"
-#|   - "Subgroup 6"
+#|   - "Subtype 1"
+#|   - "Subtype 2"
+#|   - "Subtype 3"
+#|   - "Subtype 4"
+#|   - "Subtype 5"
+#|   - "Subtype 6"
 library(ggplot2)
 
 figs |> print_PVDs()
@@ -44,7 +44,7 @@ figs |> print_PVDs()
 ```
 
 ```{r}
-#| tbl-cap: !expr glue::glue("Subgroup demographics ({n_s} subgroups)")
+#| tbl-cap: !expr glue::glue("Subtype demographics ({n_s} subtypes)")
 #| label: tbl-sg_demos
 #| results: asis
 

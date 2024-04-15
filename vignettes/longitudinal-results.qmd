@@ -1,3 +1,21 @@
+Here we compared the longitudinal models to the cross-sectional models (estimated using each participant's earliest visit):
+
+- Males only (@fig-males):
+  * first visits only (@fig-males-1)
+  * all visits (@fig-males-2)
+
+- Females only (@fig-females):
+  * first visits only (@fig-females-1)
+  * all visits (@fig-females-2)
+
+We also rearranged these results by subset type:
+
+- first visits only (@fig-first-only)
+- all visits (@fig-all-visits)
+
+
+::: landscape
+
 ```{r}
 fig_females_all = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
@@ -91,6 +109,7 @@ We note that Parkinsonian features mostly appear after FXTAS stage 4 for females
 
 Similarly, clinically-elevated SCL90 values appear before FXTAS stage 1 for females, whereas they occur after stage 3 for males.
 
+{{< pagebreak >}}
 
 ```{r}
 #| label: "fig-all-visits"
@@ -109,6 +128,7 @@ fig_females_all |> print()
 
 ```
 
+{{< pagebreak >}}
 
 ```{r}
 #| label: fig-stage-by-age-longitudinal
@@ -140,3 +160,5 @@ stages |> graph_stage_by_age()
 
 
 ```
+
+:::

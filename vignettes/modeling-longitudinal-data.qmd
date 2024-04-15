@@ -132,6 +132,8 @@ fig_both_mv_only = extract_figs_from_pickle(size.y = size.y,
 
 @fig-males shows estimated event sequences for males, depending on which subset of the data we use to fit the model.
 
+{{< pagebreak >}}
+
 ```{r}
 #| label: "fig-males"
 #| column: page
@@ -151,6 +153,8 @@ fig_males_all |> print()
 fig_males_mv_only |> print()
 
 ```
+
+{{< pagebreak >}}
 
 ## Females
 
@@ -174,6 +178,7 @@ fig_females_mv_only |> print()
 
 ```
 
+{{< pagebreak >}}
 
 ## Unstratified, by data subset
 
@@ -194,6 +199,8 @@ fig_both_all |> print()
 fig_both_mv_only |> print()
 
 ```
+
+{{< pagebreak >}}
 
 ## All patients, first visits only
 
@@ -216,9 +223,13 @@ fig_females_first |> print()
 
 ```
 
+{{< pagebreak >}}
+
 ## All patients, all visits
 
 @fig-all-visits shows the event sequences that we estimated from each data subset. Note that clinical events which never occur in a dataset cannot be placed into the event sequence, so the set of modeled events varies by data subset.
+
+{{< pagebreak >}}
 
 ```{r}
 #| label: "fig-all-visits"
@@ -237,6 +248,8 @@ fig_males_all |> print()
 fig_females_all |> print()
 
 ```
+
+{{< pagebreak >}}
 
 ## Multivisit patients only, all visits
 

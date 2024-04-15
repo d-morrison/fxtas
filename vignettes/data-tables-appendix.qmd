@@ -79,6 +79,8 @@ table1(na.is.category = FALSE, overall = FALSE,
 ### Purdue pegboard for reaction time  {.appendix}
 
 ```{r}
+#| label: tbl-purdue-pegboard
+#| tbl-cap: "Purdue pegboard for reaction time"
 purdue_vars = c(
   "Purdue pegboard 1st Trial Total, R+L+B",
   if(show_missingness_reasons) "Purdue pegboard 1st Trial Total, R+L+B: missingness reasons"
@@ -95,7 +97,8 @@ table1(na.is.category = FALSE, overall = FALSE,
 ### MOCA total score  {.appendix}
 
 ```{r}
-
+#| label: tbl-moca-total-score
+#| tbl-cap: "MOCA total score"
 moca_vars = c(
   "MOCA Total score",
   if(show_missingness_reasons)"MOCA Total score: missingness reasons"
