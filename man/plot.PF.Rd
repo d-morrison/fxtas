@@ -4,7 +4,7 @@
 \alias{plot.PF}
 \title{Create positional variance diagram (PVD)}
 \usage{
-\method{plot}{PF}(PFs, size.y = 8, color_label = "Pr(stage)")
+\method{plot}{PF}(PFs, size.y = 10, color_label = "Pr(stage)")
 }
 \arguments{
 \item{PFs}{a "PF" object (created by \code{compute_position_frequencies()})}

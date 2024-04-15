@@ -1,6 +1,7 @@
 #' Barplot of CGG repeats
 #'
 #' @param data a [data.frame] containing a [numeric] or [integer] column named `CGG`
+#' @param include_200_cutoff whether to include the `CGG = 200` cutoff
 #' @inheritParams ggplot2::facet_grid
 #' @return a [ggplot2::ggplot] object
 #' @export
@@ -11,8 +12,9 @@
 graph_CGG_repeats = function(
     data,
     rows = NULL,
-    cols = NULL
-      )
+    cols = NULL,
+    include_200_cutoff = FALSE
+)
 {
   plot1 =
     data |>
@@ -20,16 +22,21 @@ graph_CGG_repeats = function(
     geom_bar(alpha = .5) +
     geom_vline(
       data = tibble(
-        x = c(55, 100, 200),
+        x = c(
+          55,
+          100,
+          if(include_200_cutoff) 200
+        ),
         col = c(
           "55 CGG repeats",
           "100 CGG repeats",
-          "200 CGG repeats") |>
+          if(include_200_cutoff) "200 CGG repeats"
+        ) |>
           factor(
             levels = c(
               "55 CGG repeats",
               "100 CGG repeats",
-              "200 CGG repeats"
+              if(include_200_cutoff) "200 CGG repeats"
             )
           )
       ),
@@ -37,7 +44,7 @@ graph_CGG_repeats = function(
         xintercept = x,
         col = col),
       linetype = "dashed"
-      ) +
+    ) +
     # geom_vline(
     #   aes(
     #     xintercept = 200,
@@ -49,11 +56,16 @@ graph_CGG_repeats = function(
     scale_x_log10() +
     xlab("# CGG repeats (logarithmic spacing)")
 
+  # ---------------------------------------------------------------
+
+
   if(!is.null(rows) || !is.null(cols))
   {
     plot1 =
       plot1 +
-      facet_grid(rows = rows, cols = cols)
+      facet_grid(
+        rows = rows,
+        cols = cols)
   }
 
   return(plot1)

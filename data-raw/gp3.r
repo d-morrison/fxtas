@@ -341,7 +341,7 @@ levels(dataset$new_mds_med_can_other)=c("No","Yes","No Response (999)","NA (888)
 
 levels(dataset$dem_race)=c("American Indian/Alaska Native","Asian","Black or African American","Native Hawaiian or Other Pacific Islander","White","Australian Aborigine","More Than One Race","Unknown / Not Reported")
 
-levels(dataset$dem_eth)=c("Hispanic or Latino","NOT Hispanic or Latino","Unknown / Not Reported")
+levels(dataset$dem_eth)=c("Hispanic or Latino","Not Hispanic or Latino","Unknown / Not Reported")
 
 levels(dataset$redcap_event_name)=c("GP1- Visit 1","GP1- Visit 2","GP1- Visit 3","GP2- Visit 1","GP2- Visit 2","GP2 - Visit 3","GP3 - Visit 1","GP3 - Visit 2","GP3 - Visit 3","GP3 - Visit 4","GP4")
 levels(dataset$sex)=c("Female","Male")

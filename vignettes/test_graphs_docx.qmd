@@ -51,6 +51,23 @@ fig_females_first |> print()
 fig_females_first |> print()
 ```
 
+{{< pagebreak >}}
+
+
+```{r}
+#| label: "fig-v2"
+#| fig-height: !expr pvd_height
+#| fig-cap: "Estimated event sequence models, stratified by sex, first visits only"
+#| layout-ncol: 2
+#| fig-subcap:
+#|   - "Males"
+#|   - "Females"
+fig_males_first |> print()
+fig_females_first |> print()
+
+```
+
+
 :::
 
 back

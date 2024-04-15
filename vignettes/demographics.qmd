@@ -8,8 +8,8 @@ vars = c(
   "# visits",
   # column_var,
   "Primary Ethnicity",
-  "Primary Race",
-  "ApoE"
+  "Primary Race"
+  # "ApoE"
   
 )
 

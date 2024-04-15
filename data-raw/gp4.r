@@ -315,7 +315,7 @@ levels(dataset$mri_splen_wm_hyper)=c("None","Mild","Moderate","Severe","Missing/
 levels(dataset$mri_genu_wm_hyper)=c("No","Yes","Missing/Refused (999)")
 levels(dataset$mri_corp_call_thick)=c("Normal","Thin","Missing/Refused (999)")
 levels(dataset$dem_race)=c("American Indian/Alaska Native","Asian","Black or African American","Native Hawaiian or Other Pacific Islander","White","Australian Aborigine","More Than One Race","Unknown / Not Reported")
-levels(dataset$dem_eth)=c("Hispanic or Latino","NOT Hispanic or Latino","Unknown / Not Reported")
+levels(dataset$dem_eth)=c("Hispanic or Latino","Not Hispanic or Latino","Unknown / Not Reported")
 
 
 levels(dataset$new_mds_med_anes1)=c("Local","General","None","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")

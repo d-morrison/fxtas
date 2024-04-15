@@ -228,7 +228,7 @@ plot = False)
 
 ```
 
-In the second analysis phase, we compute the the Bayesian posterior distribution of $\vec S$ given the observed data $\mathbf X$, i.e., $\mathrm{p}(\vec S \mid \mathbf X)=\mathrm{p}(\mathbf X \mid \vec S)\mathrm{p}(\vec  S)/\mathrm{p}(\mathbf X)$, using a Markov-Chain Monte Carlo (MCMC) algorithm. To do so, we compute $\mathrm{p}(\mathbf X \mid \vec S = \vec s)$ using the following decomposition:
+In the second analysis phase, we compute the Bayesian posterior distribution of $\vec S$ given the observed data $\mathbf X$, i.e., $\mathrm{p}(\vec S \mid \mathbf X)=\mathrm{p}(\mathbf X \mid \vec S)\mathrm{p}(\vec  S)/\mathrm{p}(\mathbf X)$, using a Markov-Chain Monte Carlo (MCMC) algorithm. To do so, we compute $\mathrm{p}(\mathbf X \mid \vec S = \vec s)$ using the following decomposition:
 
 $$
 \mathrm{p}(\mathbf X|\vec S = \vec s) = \prod_{i=1}^n \mathrm{p}(\vec X_i | \vec S = \vec s)

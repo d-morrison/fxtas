@@ -4,7 +4,7 @@
 \alias{graph_CGG_repeats}
 \title{Barplot of CGG repeats}
 \usage{
-graph_CGG_repeats(data, rows = NULL, cols = NULL)
+graph_CGG_repeats(data, rows = NULL, cols = NULL, include_200_cutoff = FALSE)
 }
 \arguments{
 \item{data}{a \link{data.frame} containing a \link{numeric} or \link{integer} column named \code{CGG}}
@@ -19,6 +19,8 @@ a formula with the rows (of the tabular display) on the LHS and
 the columns (of the tabular display) on the RHS; the dot in the
 formula is used to indicate there should be no faceting on this
 dimension (either row or column).}
+
+\item{include_200_cutoff}{whether to include the \code{CGG = 200} cutoff}
 }
 \value{
 a \link[ggplot2:ggplot]{ggplot2::ggplot} object

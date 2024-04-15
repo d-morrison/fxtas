@@ -21,7 +21,7 @@ text-align: center;
 
 # Methods
 
-Next, we fit the Ordinal SuStaIn model [@young2021ordinal] on nine subsets of the longitudinal GP+GP4 data:
+Next, we fit the Ordinal SuStaIn model [@young2021ordinal] on nine subsets of the longitudinal data:
 
 - Males only (@fig-males):
   * first visits only (@fig-males-1)

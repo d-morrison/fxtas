@@ -132,7 +132,7 @@ fig_females_all |> print()
 
 ```{r}
 #| label: fig-stage-by-age-longitudinal
-#| fig-cap: "ML stage by age, longitudinal data"
+#| fig-cap: "Progression stage by age, estimated using longitudinal data"
 #| include: true
 
 patient_data1 = 

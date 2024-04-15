@@ -101,9 +101,12 @@ gp34_v1_controls =  v1_usable |> filter(CGG < 55)
 
 ### Study cohorts
 
-The data come from the GP, GP4, and Trax (Phases 1 & 2) studies. In the primary analyses, we analyzed one visit record per participant, using the earliest visit available across the two studies with age at visit $\ge 40$ years, resulting in `r nrow(full_data)` observations in total. However, `r n_missing_CGG` individuals did not have CGG values available, and `r n_above_200` had full fragile X syndrome mutation (≥200 CGG repeats; @fig-hist-CGG-gp34-v1), so only `r nrow(v1_usable)` individuals 
+The data come from the GP, GP4, and Trax (Phases 1 & 2) studies. In the primary analyses, we analyzed one visit record per participant, using the earliest visit available across the two studies with age at visit $\ge 40$ years, resulting in `r nrow(full_data)` observations in total. 
+However, `r n_missing_CGG` individuals did not have CGG values available, and `r n_above_200` had full fragile X syndrome mutation (≥200 CGG repeats), so only `r nrow(v1_usable)` individuals 
 (`r nrow(v1_usable_cases)` cases and 
-`r nrow(gp34_v1_controls)` controls) were included in the event sequence analysis. @tbl-demographics provides demographic information about the study participants. 
+`r nrow(gp34_v1_controls)` controls) were included in the event sequence analysis. 
+@fig-hist-CGG-gp34-v1 shows the distribution of CGG repeats among the participants included in the analysis. 
+@tbl-demographics provides demographic information about the study participants. 
 
 ```{r}
 #| label: "biomarker-events"
@@ -149,6 +152,10 @@ Ordinal SuStaIn uses Markov Chain Monte Carlo (MCMC) sampling to estimate the Ba
 
 We fit models stratified by sex, with no latent subtypes (@fig-first-only). We also fit the model stratified by CGG repeats (<100 vs $\ge$ 100), also with no latent subtypes (@fig-pvd-by-cgg).
 We then fit the models stratified by both sex and CGG repeats (<100 vs $\ge$ 100), also with no latent subtypes (@sec-stratified-by-cgg-and-sex).
+
+#### Incomplete data
+
+We handled missing outcome event data by assigning a uniform probability distribution across the possible values of the missing variable; that is, we assumed that all possible values of the missing outcome were equally likely to be the true value.
 
 #### Testing for differences between covariate subgroup strata
 
@@ -595,9 +602,8 @@ table_out |> pander()
 
 {{< include demographics.qmd >}}
 
-:::
+{{< pagebreak >}}
 
-::: landscape
 # Figures {.unnumbered}
 
 ```{r}
@@ -605,7 +611,7 @@ table_out |> pander()
 #| fig-cap: "Distribution of CGG repeats by sex, among study participants included in analysis"
 #| warning: false
 
-full_data |> graph_CGG_repeats(rows = vars(Gender))
+v1_usable |> graph_CGG_repeats(rows = vars(Gender))
 ```
 
 {{< pagebreak >}}
@@ -748,7 +754,7 @@ pval_sex_gp34_v1 |> autoplot() |> print()
 
 ## Detecting latent subtypes {#sec-subtypes .appendix}
 
-In order to the Ordinal SuStaIn algorithm, we must specify how many latent subtypes to model. There are several metrics for determining the optimal number of subtypes for a given data set.
+In order to use the Ordinal SuStaIn modeling algorithm, we must specify how many latent subtypes to include in the model. There are several metrics for determining the optimal number of subtypes for a given data set.
 
 ### Likelihood {.appendix}
 
@@ -756,6 +762,7 @@ The simplest option is to compare the likelihood of the data for the fitted mode
 
 ```{r}
 #| fig-height: 4
+#| fig-width: 6
 #| label: fig-mcmc-loglik
 #| fig-cap: log-likelihoods of MCMC samples, by number of subtypes
 #| eval: !expr fit_models
@@ -775,7 +782,7 @@ lliks |>
 
 Since models with fewer subtypes are limited special cases of models with more subtypes (i.e., "nested models"), the likelihood of the training data is guaranteed to improve as we increase the number of subtypes. However, using too many subtypes means there is less data available for each subtype, possibly leading to a model that does not generalize well to new data (i.e., a model that is "overfit" to the training data).
 
-To avoid overfitting, @young2018uncovering recommends choosing the optimal number using the the Cross-Validation Information Criterion (CVIC):
+To avoid overfitting, @young2018uncovering recommends choosing the optimal number using the Cross-Validation Information Criterion (CVIC):
 
 #### Mathematical details of cross-validation criteria {#sec-cvic-math .appendix}
 
@@ -807,9 +814,9 @@ CVIC_{\mathcal C} =
 \right\}
 $$
 
-#### CVIC for the full GP+GP4 dataset {.appendix}
+#### CVIC for the full dataset {.appendix}
 
-We performed `r N_CV_folds`-fold cross-validation on the unstratified GP+GP4 data, and calculated the CVIC for 1-`r N_S_max` latent subtypes.
+We performed `r N_CV_folds`-fold cross-validation on the unstratified data, and calculated the CVIC for 1-`r N_S_max` latent subtypes.
 
 ```{r}
 #| fig-cap: "Cross-validation information criterion"
