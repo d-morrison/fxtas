@@ -39,7 +39,7 @@ visit1 =
   slice_head(n = 1) |>
   ungroup() |> 
   dplyr::rename(
-    `Age at first visit` = `Age at visit`
+    `Age at visit` = `Age at visit`
   ) |> 
   left_join(
     gp34 |> count(`FXS ID`, name = "# visits"),

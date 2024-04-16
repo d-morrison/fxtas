@@ -77,7 +77,7 @@ Primary ethnicity we can drop. Primary race we may be able to look on Randi’s 
 ```{r}
 
 vars = c(
-  "Age at first visit",
+  "Age at visit",
   "# visits",
   # column_var,
   "Gender",

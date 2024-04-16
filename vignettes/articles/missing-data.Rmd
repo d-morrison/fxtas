@@ -494,7 +494,7 @@ There is substantial missingness in both `Primary Ethnicity` and `Primary Race`;
 ```{r}
 
 vars = c(
-  "Age at first visit",
+  "Age at visit",
   "# visits",
   # "Recruited in study phase",
   "Gender",

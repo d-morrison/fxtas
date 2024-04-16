@@ -3,9 +3,9 @@
 #| tbl-cap: "Demographics by CGG repeats level"
 
 vars = c(
-  "Study",
-  "Age at first visit",
-  "# visits",
+  # "Study",
+  "Age at visit",
+  # "# visits",
   # column_var,
   "Primary Ethnicity",
   "Primary Race"

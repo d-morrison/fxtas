@@ -53,12 +53,41 @@ fig_females_first |> print()
 
 {{< pagebreak >}}
 
+::::{#fig-v2 layout-ncol=2}
+
+::::: {#fig-v2-1}
 
 ```{r}
-#| label: "fig-v2"
 #| fig-height: !expr pvd_height
-#| fig-cap: "Estimated event sequence models, stratified by sex, first visits only"
-#| layout-ncol: 2
+#| fig-width: 2.5
+fig_males_first |> print()
+
+```
+
+Males
+
+:::::
+
+::::: {#fig-v2-2}
+
+```{r}
+#| fig-height: !expr pvd_height
+#| fig-width: 2.5
+fig_females_first |> print()
+```
+
+Females
+
+:::::
+
+Estimated event sequence models, stratified by sex, first visits only
+
+::::
+
+::::{#fig-try-3 layout-ncol=2}
+
+```{r}
+#| fig-height: !expr pvd_height
 #| fig-subcap:
 #|   - "Males"
 #|   - "Females"
@@ -67,13 +96,9 @@ fig_females_first |> print()
 
 ```
 
+Estimated event sequence models, stratified by sex, first visits only try 3
+::::
 
 :::
 
-back
 
-test 
-
-{{< pagebreak >}}
-
-tests

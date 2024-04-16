@@ -43,7 +43,7 @@ visit1_cgg_55_199 =
 #| tbl-cap: "Demographics"
 vars = c(
   "Study",
-  "Age at first visit",
+  "Age at visit",
   "# visits",
   # column_var,
   "Primary Ethnicity",

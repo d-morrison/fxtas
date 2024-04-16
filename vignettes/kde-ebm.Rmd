@@ -111,7 +111,7 @@ cur_data =
     FX,
     `FX*`,
     `FXS ID`,
-    `Age at first visit`
+    `Age at visit`
   ) |> 
   filter(!is.na(FX))
 
@@ -358,9 +358,9 @@ print(plot1)
 ```{r}
 cur_data |> 
   filter(!FX) |> 
-  select(stages_ML, `FXS ID`, `Age at first visit`) |> 
+  select(stages_ML, `FXS ID`, `Age at visit`) |> 
   arrange(stages_ML) %$% 
-  plot(stages_ML  ~ `Age at first visit`)
+  plot(stages_ML  ~ `Age at visit`)
 ```
 
 
