@@ -567,6 +567,10 @@ We did not find statistically significant evidence of a difference between males
 
 # Discussion
 
+## Missing data
+
+We had substantial amounts of missing data. As described in the methods, we used a uniform distribution to impute the underlying values of these missing data. The missing data contributes to the large amount of uncertainty in the results.
+
 [to be added]
 
 # References {.unnumbered}
