@@ -1,5 +1,5 @@
-#' Run the Ordinal SusTaIn algorithm (OSA) or load results from RDS
-#'
+#' @title Run the Ordinal SusTaIn algorithm (OSA) or load results from RDS
+#' @params rerun whether to force a rerun of the python code
 #' @inheritParams run_OSA
 #' @inheritDotParams run_OSA
 #'
@@ -11,13 +11,14 @@ run_and_save_OSA = function(
     output_folder,
     verbose = TRUE,
     N_S_max,
+    rerun = FALSE,
     ...)
 {
 
   rds_filebase = glue::glue("{dataset_name}_1-{N_S_max}")
   rds_path = build_rds_path(rds_filebase, output_folder)
 
-  if(file.exists(rds_path))
+  if(file.exists(rds_path) && !rerun)
   {
     if(verbose) cli::cli_inform("Found RDS file for {rds_filebase}; loading...")
     sus_output = readRDS(rds_path)

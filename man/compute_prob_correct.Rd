@@ -4,10 +4,18 @@
 \alias{compute_prob_correct}
 \title{Title}
 \usage{
-compute_prob_correct(dataset, biomarkers, DataScores, max_prob = 1)
+compute_prob_correct(
+  dataset,
+  biomarkers = names(biomarker_levels),
+  biomarker_levels,
+  DataScores,
+  max_prob = 1
+)
 }
 \arguments{
 \item{dataset}{Should be just the control data?}
+
+\item{biomarker_levels}{a list containing the levels of each biomarker}
 
 \item{max_prob}{}
 }

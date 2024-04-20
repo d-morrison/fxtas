@@ -18,6 +18,7 @@
 #' @param CV_fold_nums which CV folds to run (for parallel processing)
 #' @param verbose [logical()] indicating whether to print debugging information
 #' @param keep_data [logical()] indicating whether to include the ata in the return object
+#' @param fig_size python figure size, in inches (width, height)
 #'
 #' @returns a [list()]
 #' @export
@@ -38,7 +39,9 @@ run_OSA = function(
     CV_fold_nums = 1:N_CV_folds,
     patient_data,
     verbose = TRUE,
-    keep_data = TRUE)
+    keep_data = TRUE,
+    fig_size = c(10,10),
+    ...)
 {
 
   if(verbose) message("starting `run_OSA()`")
@@ -58,7 +61,11 @@ run_OSA = function(
     use_parallel_startpoints = use_parallel_startpoints,
     seed = seed |> as.integer())
 
-  sus_output = sustain_input$run_sustain_algorithm(plot = plot)
+  sus_output = sustain_input$run_sustain_algorithm(
+    plot = plot,
+    figsize = fig_size,
+    ...)
+
   names(sus_output) = c(
     "samples_sequence",
     "samples_f",
@@ -70,7 +77,7 @@ run_OSA = function(
     "samples_likelihoods"
   )
 
-  if(keep_data) sus_output["patient_data"] = patient_data
+  if(keep_data) sus_output$patient_data = patient_data
   if(N_CV_folds > 0)
   {
     # generate stratified cross-validation training and test set splits

@@ -2,13 +2,22 @@
 % Please edit documentation in R/compute_prob_dist.R
 \name{compute_prob_dist}
 \alias{compute_prob_dist}
-\title{Title}
+\title{Computes \code{p(true | obs)}? for each biomarker}
 \usage{
-compute_prob_dist(ModelScores, DataScores, biomarkers, prob_correct)
+compute_prob_dist(
+  ModelScores,
+  DataScores,
+  biomarkers,
+  prob_correct,
+  biomarker_levels,
+  do_old = FALSE
+)
 }
 \arguments{
-\item{prob_correct}{}
+\item{biomarker_levels}{a list containing the levels for each biomarker}
+
+\item{do_old}{if \code{TRUE}, build an array instead of a list, the way the python code did it}
 }
 \description{
-Title
+Includes a row for NAs, which are treated as uniformly distributed over the possible true levels of the biomarker
 }

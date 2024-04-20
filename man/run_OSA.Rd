@@ -20,7 +20,9 @@ run_OSA(
   CV_fold_nums = 1:N_CV_folds,
   patient_data,
   verbose = TRUE,
-  keep_data = TRUE
+  keep_data = TRUE,
+  fig_size = c(10, 10),
+  ...
 )
 }
 \arguments{
@@ -61,6 +63,8 @@ run_OSA(
 \item{verbose}{\code{\link[=logical]{logical()}} indicating whether to print debugging information}
 
 \item{keep_data}{\code{\link[=logical]{logical()}} indicating whether to include the ata in the return object}
+
+\item{fig_size}{python figure size, in inches (width, height)}
 }
 \value{
 a \code{\link[=list]{list()}}

@@ -123,9 +123,9 @@ biomarker_levels =
 
 df = v1_usable |>
   mutate(
-    across(
-      all_of(biomarker_varnames), 
-      ~ as.integer(.x) - 1),
+    # across(
+    #   all_of(biomarker_varnames), 
+    #   ~ as.integer(.x) - 1),
     Diagnosis = as.integer(`FX*` == "CGG >= 55"))
 
 biomarker_events_table =
@@ -178,12 +178,12 @@ The PVD's color scale indicates the Bayesian posterior probability that a partic
 ```{r}
 #| label: get-control-dists
 ModelScores = DataScores = 
-  df |> 
-  select(all_of(biomarker_varnames)) |> 
-  # lapply(F = levels)
-  compute_score_levels()
-
-
+  # df |> 
+  # select(all_of(biomarker_varnames)) |> 
+  # # lapply(F = levels)
+  # compute_score_levels()
+max_levels = biomarker_levels |> sapply(F = length) |> max()
+ModelScores = DataScores = (1:max_levels) - 1
 control_data = 
   df |> 
   filter(`FX*` == "CGG < 55") |> 
@@ -198,17 +198,29 @@ prob_correct =
   control_data |> 
   compute_prob_correct(
     max_prob = .95,
-    biomarkers = biomarker_varnames,
-    DataScores = DataScores)
+    biomarker_levels = biomarker_levels)
+
+```
+
+```{r}
+prob_dist = compute_prob_dist(
+      ModelScores = ModelScores,
+      DataScores = DataScores,
+      biomarker_levels = biomarker_levels,
+      prob_correct = prob_correct
+    )
 
 prob_score0 = compute_prob_scores(
   dataset = patient_data,
   biomarker_varnames,
   ModelScores = ModelScores,
   DataScores = DataScores,
-  prob_correct = prob_correct
+  prob_correct = prob_correct,
+  biomarker_levels = biomarker_levels
 )
+```
 
+```{r}
 prob_nl = prob_score0[,,1]
 prob_score = prob_score0[,,-1, drop = FALSE]
 
@@ -251,7 +263,7 @@ sustain_output = run_and_save_OSA(
   dataset_name = dataset_name, 
   use_parallel_startpoints = FALSE,
   seed = 1,
-  plot = FALSE,
+  plot = TRUE,
   patient_data = patient_data,
   N_CV_folds = N_CV_folds)
 
@@ -265,6 +277,7 @@ sustain_output = run_and_save_OSA(
 
 sustain_output_males = run_and_save_OSA(
   prob_score = prob_score0[patient_data$Gender %in% "Male",,],
+  patient_data = patient_data |> filter(Gender == "Male"),
   score_vals = score_vals,
   SuStaInLabels = biomarker_varnames,
   N_startpoints = N_startpoints,
@@ -274,7 +287,9 @@ sustain_output_males = run_and_save_OSA(
   dataset_name = "males", 
   use_parallel_startpoints = FALSE,
   seed = 1,
-  plot = FALSE)
+  plot = TRUE,
+  rerun = TRUE,
+  fig_size = c(20,10))
 
 ```
 
@@ -287,6 +302,7 @@ sustain_output_males = run_and_save_OSA(
 
 sustain_output_females = run_and_save_OSA(
   prob_score = prob_score0[patient_data$Gender %in% "Female",,],
+  patient_data = patient_data |> filter(Gender == "Female"),
   score_vals = score_vals,
   SuStaInLabels = biomarker_varnames,
   N_startpoints = N_startpoints,
@@ -296,7 +312,9 @@ sustain_output_females = run_and_save_OSA(
   dataset_name = "females", 
   use_parallel_startpoints = FALSE,
   seed = 1,
-  plot = FALSE)
+  plot = TRUE,
+  rerun = TRUE,
+  fig_size = c(20,10))
 
 ```
 

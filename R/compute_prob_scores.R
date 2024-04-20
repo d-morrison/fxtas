@@ -32,7 +32,7 @@ compute_prob_scores = function(
     )
 
   prob_score0 = array(
-    NA,
+    0,
     dim = prob_score_dims |> sapply(length),
     dimnames = prob_score_dims
   )
@@ -47,29 +47,17 @@ compute_prob_scores = function(
   {
 
     if(verbose) message('computing prob scores for ', biomarker, " at ", Sys.time())
-    for (datascore in DataScores)
-    {
-      for (modelscore in ModelScores)
-      {
-        prob_score0[
-          dataset[[biomarker]] == datascore,
-          biomarker,
-          modelscore
-        ] =
-          prob_dist[modelscore, datascore, biomarker]
-      }
 
-    }
+    cur_confusion_matrix = prob_dist[[biomarker]]
+    cur_observed_scores =
+      dataset[[biomarker]] |>
+      as.character() |>
+      stringr::str_replace_na()
 
-    if (any(dataset[[biomarker]] |> is.na()))
-    {
-      prob_score0[
-        dataset[[biomarker]] |> is.na(),
-        biomarker,
-
-      ] = 1/length(ModelScores)
-    }
+    prob_score0[ , biomarker, 1:ncol(cur_confusion_matrix)] =
+      cur_confusion_matrix[cur_observed_scores, ]
 
   }
+
   return(prob_score0)
 }

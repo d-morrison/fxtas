@@ -4,7 +4,14 @@
 \alias{run_and_save_OSA}
 \title{Run the Ordinal SusTaIn algorithm (OSA) or load results from RDS}
 \usage{
-run_and_save_OSA(dataset_name, output_folder, verbose = TRUE, N_S_max, ...)
+run_and_save_OSA(
+  dataset_name,
+  output_folder,
+  verbose = TRUE,
+  N_S_max,
+  rerun = FALSE,
+  ...
+)
 }
 \arguments{
 \item{dataset_name}{for naming pickle files}
@@ -36,6 +43,7 @@ run_and_save_OSA(dataset_name, output_folder, verbose = TRUE, N_S_max, ...)
     \item{\code{patient_data}}{patient biomarker data}
     \item{\code{CV_fold_nums}}{which CV folds to run (for parallel processing)}
     \item{\code{keep_data}}{\code{\link[=logical]{logical()}} indicating whether to include the ata in the return object}
+    \item{\code{fig_size}}{python figure size, in inches (width, height)}
   }}
 }
 \value{
