@@ -6,7 +6,7 @@ library(reticulate)
 # reticulate::use_condaenv("fxtas39", required = TRUE)
 py_config()
 
-load_all(fxtas)
+devtools::load_all()
 library(tidyverse)
 library(pander)
 

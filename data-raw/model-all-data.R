@@ -4,7 +4,8 @@
 library(reticulate)
 py_config()
 
-library(fxtas)
+# library(fxtas)
+devtools::load_all()
 library(tidyverse)
 library(pander)
 reticulate::use_condaenv("fxtas39", required = FALSE)
