@@ -5,24 +5,23 @@
 \title{Run the Ordinal SuStaIn Algorithm (OSA)}
 \usage{
 run_OSA(
-  prob_score = compute_prob_scores(dataset = patient_data, biomarker_varnames =
-    SuStaInLabels, ModelScores = ModelScores, prob_correct = prob_correct,
-    biomarker_levels = biomarker_levels),
+  patient_data,
   prob_correct,
+  prob_score = compute_prob_scores(dataset = patient_data, prob_correct = prob_correct,
+    biomarker_levels = biomarker_levels),
   score_vals = build_score_vals(biomarker_levels),
   biomarker_levels = lapply(patient_data[, SuStaInLabels], F = levels),
   SuStaInLabels = names(biomarker_levels),
   N_startpoints = 25,
-  N_S_max,
+  N_S_max = 8,
   N_iterations_MCMC = 100000L,
-  output_folder,
-  dataset_name,
+  output_folder = "output",
+  dataset_name = "sample_data",
   use_parallel_startpoints = FALSE,
   seed = 1L,
   plot = FALSE,
   N_CV_folds = 0,
   CV_fold_nums = 1:N_CV_folds,
-  patient_data,
   verbose = TRUE,
   keep_data = TRUE,
   fig_size = c(10, 10),
@@ -30,12 +29,14 @@ run_OSA(
 )
 }
 \arguments{
+\item{patient_data}{patient biomarker data}
+
+\item{prob_correct}{the probability of correctly classifying the underlying biomarker level: p(obs = true)}
+
 \item{prob_score}{\link{array} probability of each score for all subjects across all biomarkers
 \itemize{
 \item dim = number of subjects x number of biomarkers x number of scores
 }}
-
-\item{prob_correct}{the probability of correctly classifying the underlying biomarker level: p(obs = true)}
 
 \item{score_vals}{a matrix specifying the scores for each biomarker
 \itemize{
@@ -66,13 +67,13 @@ run_OSA(
 
 \item{CV_fold_nums}{which CV folds to run (for parallel processing)}
 
-\item{patient_data}{patient biomarker data}
-
 \item{verbose}{\code{\link[=logical]{logical()}} indicating whether to print debugging information}
 
 \item{keep_data}{\code{\link[=logical]{logical()}} indicating whether to include the ata in the return object}
 
 \item{fig_size}{python figure size, in inches (width, height)}
+
+\item{...}{additional arguments passed to the Python function \code{pySuStaIn$OrdinalSustain()}}
 }
 \value{
 a \code{\link[=list]{list()}}

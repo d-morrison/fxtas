@@ -6,15 +6,18 @@
 \usage{
 compute_prob_scores(
   dataset,
-  biomarker_varnames,
-  ModelScores,
-  prob_dist = compute_prob_dist(...),
+  biomarker_levels,
+  biomarker_varnames = names(biomarker_levels),
+  ModelScores = compute_ModelScores(biomarker_levels),
+  prob_dist = compute_prob_dist(biomarker_levels = biomarker_levels, ...),
   verbose = FALSE,
   ...
 )
 }
 \arguments{
 \item{dataset}{a \code{\link[=data.frame]{data.frame()}} containing biomarker data in columns and observations in rows; column names must include all the values of \code{biomarker_varnames}}
+
+\item{biomarker_levels}{a list containing the levels for each biomarker}
 
 \item{biomarker_varnames}{a \code{\link[=character]{character()}} vector of biomarker variable names}
 
@@ -28,7 +31,6 @@ compute_prob_scores(
   Arguments passed on to \code{\link[=compute_prob_dist]{compute_prob_dist}}
   \describe{
     \item{\code{prob_correct}}{the probability of correctly classifying the underlying biomarker level: p(obs = true)}
-    \item{\code{biomarker_levels}}{a list containing the levels for each biomarker}
   }}
 }
 \description{

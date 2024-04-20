@@ -110,13 +110,6 @@ nlevs =
 
 ```{r}
 
-ModelScores = DataScores = 
-  df |> 
-  select(all_of(biomarker_varnames)) |> 
-  # lapply(F = levels)
-  compute_score_levels()
-
-
 control_data = 
   df |> 
   filter(`FX*` == "CGG < 55")
@@ -130,13 +123,10 @@ prob_correct =
   control_data |> 
   compute_prob_correct(
     max_prob = .95,
-    biomarkers = biomarker_varnames,
-    DataScores = DataScores)
+    biomarker_levels = biomarker_levels)
 
 prob_dist = compute_prob_dist(
-  ModelScores,
-  DataScores,
-  biomarker_varnames,
+  biomarker_levels,
   prob_correct
 )
 

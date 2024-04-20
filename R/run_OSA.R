@@ -19,34 +19,34 @@
 #' @param verbose [logical()] indicating whether to print debugging information
 #' @param keep_data [logical()] indicating whether to include the ata in the return object
 #' @param fig_size python figure size, in inches (width, height)
+#' @param ... additional arguments passed to the Python function `pySuStaIn$OrdinalSustain()`
 #' @inheritParams compute_prob_dist
 #' @returns a [list()]
 #' @export
 #'
 run_OSA = function(
+    patient_data,
+    prob_correct,
     prob_score = compute_prob_scores(
       dataset = patient_data,
-      biomarker_varnames = SuStaInLabels,
-      ModelScores = ModelScores,
       prob_correct = prob_correct,
       biomarker_levels = biomarker_levels
     ),
-    prob_correct,
     score_vals = build_score_vals(biomarker_levels),
     biomarker_levels =
       lapply(patient_data[,SuStaInLabels], F = levels),
     SuStaInLabels = names(biomarker_levels),
     N_startpoints = 25,
-    N_S_max,
+    N_S_max = 8,
     N_iterations_MCMC = 1e5L,
-    output_folder,
-    dataset_name,
+    output_folder = "output",
+    dataset_name = "sample_data",
     use_parallel_startpoints = FALSE,
     seed = 1L,
     plot = FALSE,
     N_CV_folds = 0,
     CV_fold_nums = 1:N_CV_folds,
-    patient_data,
+
     verbose = TRUE,
     keep_data = TRUE,
     fig_size = c(10,10),
@@ -60,7 +60,7 @@ run_OSA = function(
   sustain_input = pySuStaIn$OrdinalSustain(
     prob_nl = prob_score[,,1],
     prob_score = prob_score[,,-1, drop = FALSE],
-    
+    score_vals = score_vals,
     biomarker_labels = SuStaInLabels,
     N_startpoints = N_startpoints |> as.integer(),
     N_S_max = N_S_max |> as.integer(), # double doesn't work

@@ -55,13 +55,6 @@ df =
 biomarker_levels =
   lapply(df[,biomarker_varnames], F = levels)
 
-df = df |>
-  mutate(
-    across(
-      all_of(biomarker_varnames),
-      ~ as.integer(.x) - 1),
-    Diagnosis = as.integer(`FX*` == "CGG >= 55"))
-
 biomarker_events_table =
   construct_biomarker_events_table(
     biomarker_levels,
@@ -82,13 +75,6 @@ table_out |>
 
 ## ----------------------------------------------------------------------------------------------------
 
-ModelScores = DataScores =
-  df |>
-  select(all_of(biomarker_varnames)) |>
-  # lapply(F = levels)
-  compute_score_levels()
-
-
 control_data =
   df |>
   filter(`FX*` == "CGG < 55") |>
@@ -103,8 +89,7 @@ prob_correct =
   control_data |>
   compute_prob_correct(
     max_prob = .95,
-    biomarkers = biomarker_varnames,
-    DataScores = DataScores)
+    biomarker_levels = biomarker_levels)
 
 save.image(file = fs::path(output_folder, paste0(dataset_name, ".RData")))
 patient_data     |> saveRDS(file = fs::path(output_folder, "data.rds"))

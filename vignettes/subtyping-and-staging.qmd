@@ -140,17 +140,6 @@ table_out |>
 
 The trailing asterisk (*) indicates a numeric variable that has been categorized for use with Ordinal SusTaIn.
 
-```{r "convert factors to numeric"}
-df = df |>
-  mutate(
-    across(
-      all_of(biomarker_varnames), 
-      ~ as.integer(.x) - 1)
-  ) |> 
-  mutate(Diagnosis = as.integer(`FX*` == "CGG >= 55"))
-
-```
-
 ## Statistical analysis {#sec-Statistical-analysis}
 
 We applied  the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2018uncovering; @young2021ordinal] to our dataset find event sequences and subgroupings for FXTAS patients. The Ordinal Subtype and Stage Inference (Ordinal SuStaIn) algorithm [@young2021ordinal] combines disease progression modelling [@fonteijn2012event] and unsupervised clustering to identify subgroups of individuals with distinct disease trajectories. SuStaIn simultaneously clusters individuals into subgroups and characterises the trajectory that
@@ -162,12 +151,7 @@ For each latent subgroup, we used   "positional variance diagrams" (@fig-pvd1 - 
 
 ```{r}
 
-ModelScores = DataScores = 
-  df |> 
-  select(all_of(biomarker_varnames)) |> 
-  # lapply(F = levels)
-  compute_score_levels()
-
+ModelScores = compute_ModelScores(biomarker_levels)
 
 control_data = 
   df |> 
@@ -183,18 +167,7 @@ prob_correct =
   control_data |> 
   compute_prob_correct(
     max_prob = .95,
-    biomarkers = biomarker_varnames,
-    DataScores = DataScores)
-
-prob_dist = compute_prob_dist(
-  ModelScores,
-  DataScores,
-  biomarker_varnames,
-  prob_correct
-)
-
-prob_nl_dist = prob_dist[1, , ]
-prob_score_dist = prob_dist[-1, , ]
+    biomarker_levels = biomarker_levels)
 
 ```
 
@@ -204,8 +177,8 @@ prob_score0 = compute_prob_scores(
     dataset = patient_data,
     biomarker_varnames,
     ModelScores,
-    DataScores,
-    prob_dist
+    biomarker_levels = biomarker_levels,
+    prob_correct = prob_correct
   )
  
 prob_nl = prob_score0[,,1]

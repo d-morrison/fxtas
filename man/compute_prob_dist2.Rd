@@ -7,6 +7,8 @@
 compute_prob_dist2(ModelScores, DataScores, biomarkers, prob_correct)
 }
 \arguments{
+\item{DataScores}{a list of possible scores}
+
 \item{prob_correct}{}
 }
 \description{

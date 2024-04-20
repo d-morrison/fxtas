@@ -75,16 +75,6 @@ df =
 biomarker_levels =
   lapply(df[,biomarker_varnames], F = levels)
 
-df = df |>
-  mutate(Diagnosis = as.integer(`FX*` == "CGG >= 55"))
-
-DataScores =
-  df |>
-  select(all_of(biomarker_varnames)) |>
-  # lapply(F = levels)
-  compute_score_levels()
-
-
 control_data =
   df |>
   dplyr::filter(CGG < 55) |>
@@ -101,8 +91,7 @@ prob_correct =
   control_data |>
   compute_prob_correct(
     max_prob = .95,
-    biomarkers = biomarker_varnames,
-    DataScores = DataScores)
+    biomarker_levels = biomarker_levels)
 
 if(length(args) == 0 || args[1] == 1)
 {

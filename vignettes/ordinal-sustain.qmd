@@ -121,12 +121,7 @@ biomarker_levels =
   dplyr::select(all_of(biomarker_varnames)) |> 
   lapply(F = levels)
 
-df = v1_usable |>
-  mutate(
-    # across(
-    #   all_of(biomarker_varnames), 
-    #   ~ as.integer(.x) - 1),
-    Diagnosis = as.integer(`FX*` == "CGG >= 55"))
+df = v1_usable
 
 biomarker_events_table =
   construct_biomarker_events_table(

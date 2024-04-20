@@ -11,9 +11,12 @@
 #'
 compute_prob_scores = function(
     dataset,
-    biomarker_varnames,
-    ModelScores,
-    prob_dist = compute_prob_dist(...),
+    biomarker_levels,
+    biomarker_varnames = names(biomarker_levels),
+    ModelScores = compute_ModelScores(biomarker_levels),
+    prob_dist = compute_prob_dist(
+      biomarker_levels = biomarker_levels,
+      ...),
     verbose = FALSE,
     ...
 )

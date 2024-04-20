@@ -81,22 +81,10 @@ df =
 biomarker_levels =
   lapply(df[,biomarker_varnames], F = levels)
 
-df = df |>
-  mutate(
-    across(
-      all_of(biomarker_varnames),
-      ~ as.integer(.x) - 1),
-    Diagnosis = as.integer(`FX*` == "CGG >= 55"))
-
 biomarker_events_table =
   construct_biomarker_events_table(
     biomarker_levels,
     biomarker_groups)
-
-nlevs =
-  biomarker_levels |> sapply(length)
-
-
 
 ## ----------------------------------------------------------------------------------------------------
 #| tbl-cap: "Biomarkers used in analysis"
@@ -104,21 +92,12 @@ nlevs =
 table_out =
   biomarker_events_table |>
   select(category = biomarker_group, biomarker, levels) |>
-  slice_head(by = biomarker)
-
-table_out |>
+  slice_head(by = biomarker) |>
   pander()
 
 
 
 ## ----------------------------------------------------------------------------------------------------
-
-ModelScores = DataScores =
-  df |>
-  select(all_of(biomarker_varnames)) |>
-  # lapply(F = levels)
-  compute_score_levels()
-
 
 control_data =
   df |>
@@ -136,8 +115,7 @@ prob_correct =
   control_data |>
   compute_prob_correct(
     max_prob = .95,
-    biomarkers = biomarker_varnames,
-    DataScores = DataScores)
+    biomarker_levels = biomarker_levels)
 
 if(length(args) == 0 || args[1] == 1)
 {
@@ -319,7 +297,6 @@ sustain_output_cgg100minus_females = run_OSA(
   patient_data = patient_data |>
     filter(`CGG` < 100,
            Gender == "Female"),
-
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max_stratified,

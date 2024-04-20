@@ -4,18 +4,14 @@
 \alias{compute_prob_correct}
 \title{Compute each biomarker's probability of being recorded at its baseline level}
 \usage{
-compute_prob_correct(dataset, biomarker_levels, DataScores, max_prob = 1)
+compute_prob_correct(dataset, biomarker_levels, max_prob = 1)
 }
 \arguments{
 \item{dataset}{a \code{\link[=data.frame]{data.frame()}}; should be just control data}
 
 \item{biomarker_levels}{a list containing the levels of each biomarker}
 
-\item{DataScores}{a list of possible scores}
-
 \item{max_prob}{a maximum value for the baseline probability}
-
-\item{biomarkers}{a \code{\link[=character]{character()}} vector of biomarker variable names}
 }
 \description{
 Compute each biomarker's probability of being recorded at its baseline level
