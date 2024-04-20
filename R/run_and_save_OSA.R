@@ -26,7 +26,7 @@ run_and_save_OSA = function(
   } else
   {
     if(verbose) cli::cli_inform("RDS file for {rds_filebase} not found; running OSA.")
-    sus_output = run_OSA(
+    sus_output = run_OSA(biomarker_levels = biomarker_levels, prob_correct = prob_correct, 
       dataset_name = dataset_name,
       output_folder = output_folder,
       N_S_max = N_S_max,

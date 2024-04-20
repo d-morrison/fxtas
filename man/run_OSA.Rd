@@ -5,9 +5,13 @@
 \title{Run the Ordinal SuStaIn Algorithm (OSA)}
 \usage{
 run_OSA(
-  prob_score,
-  score_vals,
-  SuStaInLabels,
+  prob_score = compute_prob_scores(dataset = patient_data, biomarker_varnames =
+    SuStaInLabels, ModelScores = ModelScores, prob_correct = prob_correct,
+    biomarker_levels = biomarker_levels),
+  prob_correct,
+  score_vals = build_score_vals(biomarker_levels),
+  biomarker_levels = lapply(patient_data[, SuStaInLabels], F = levels),
+  SuStaInLabels = names(biomarker_levels),
   N_startpoints = 25,
   N_S_max,
   N_iterations_MCMC = 100000L,
@@ -31,10 +35,14 @@ run_OSA(
 \item dim = number of subjects x number of biomarkers x number of scores
 }}
 
+\item{prob_correct}{the probability of correctly classifying the underlying biomarker level: p(obs = true)}
+
 \item{score_vals}{a matrix specifying the scores for each biomarker
 \itemize{
 \item dim: number of biomarkers x number of scores
 }}
+
+\item{biomarker_levels}{a list containing the levels for each biomarker}
 
 \item{SuStaInLabels}{the names of the biomarkers as a list of strings}
 

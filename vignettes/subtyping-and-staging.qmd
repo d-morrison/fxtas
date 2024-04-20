@@ -217,17 +217,7 @@ prob_score = prob_score0[,,-1, drop = FALSE]
 
 # sapply(X = biomarker_varnames, F = function(x) 1:nlevs[x])
 
-score_vals = matrix(
-  ModelScores[-1] |> as.numeric(),
-  byrow = TRUE,
-  nrow = length(biomarker_varnames),
-  ncol = length(ModelScores) - 1,
-  dimnames = list(biomarker_varnames, ModelScores[-1]))
-
-for (i in biomarker_varnames)
-{
-  score_vals[i,score_vals[i,] > nlevs[i]-1] = 0
-}
+score_vals = build_score_vals(biomarker_levels)
 
 save.image(file = fs::path(output_folder, "data.RData"))
 
@@ -315,7 +305,7 @@ figs = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   dataset_name = dataset_name,
   output_folder = output_folder,
-  score_vals = score_vals,
+  
   biomarker_plot_order = NULL,
   
   biomarker_groups = biomarker_groups,
@@ -341,7 +331,7 @@ figs = extract_figs_from_pickle(size.y = size.y,
   n_s = 2,
   dataset_name = dataset_name,
   output_folder = output_folder,
-  score_vals = score_vals,
+  
   biomarker_plot_order = biomarker_plot_order2,
   biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels)
@@ -358,7 +348,7 @@ figs = extract_figs_from_pickle(size.y = size.y,
   n_s = 3,
   dataset_name = dataset_name,
   output_folder = output_folder,
-  score_vals = score_vals,
+  
   biomarker_plot_order = biomarker_plot_order2,
   biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels)
@@ -390,7 +380,7 @@ figs = extract_figs_from_pickle(size.y = size.y,
   n_s = 4,
   dataset_name = dataset_name,
   output_folder = output_folder,
-  score_vals = score_vals,
+  
   biomarker_plot_order = biomarker_plot_order2,
   biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels)
@@ -424,7 +414,7 @@ figs = extract_figs_from_pickle(size.y = size.y,
   n_s = 5,
   dataset_name = dataset_name,
   output_folder = output_folder,
-  score_vals = score_vals,
+  
   biomarker_plot_order = biomarker_plot_order2,
   biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels)
@@ -458,7 +448,7 @@ figs = extract_figs_from_pickle(size.y = size.y,
   n_s = 6,
   dataset_name = dataset_name,
   output_folder = output_folder,
-  score_vals = score_vals,
+  
   biomarker_plot_order = biomarker_plot_order2,
   biomarker_groups = biomarker_groups,
   biomarker_levels = biomarker_levels)

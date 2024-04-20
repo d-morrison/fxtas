@@ -71,9 +71,6 @@ biomarker_events_table =
     biomarker_levels,
     biomarker_groups)
 
-nlevs =
-  biomarker_levels |> sapply(length)
-
 ModelScores = DataScores =
   df |>
   select(all_of(biomarker_varnames)) |>
@@ -97,29 +94,6 @@ prob_correct =
     max_prob = .95,
     biomarkers = biomarker_varnames,
     DataScores = DataScores)
-
-prob_score0 = compute_prob_scores(
-    dataset = patient_data,
-    biomarker_varnames,
-    ModelScores = ModelScores,
-    DataScores = DataScores,
-    prob_correct = prob_correct
-  )
-
-prob_nl = prob_score0[,,1]
-prob_score = prob_score0[,,-1, drop = FALSE]
-
-score_vals = matrix(
-  ModelScores[-1] |> as.numeric(),
-  byrow = TRUE,
-  nrow = length(biomarker_varnames),
-  ncol = length(ModelScores) - 1,
-  dimnames = list(biomarker_varnames, ModelScores[-1]))
-
-for (i in biomarker_varnames)
-{
-  score_vals[i,score_vals[i,] > nlevs[i]-1] = 0
-}
 
 args = commandArgs(trailingOnly = TRUE)
 print(args)
@@ -152,8 +126,8 @@ if(length(args) == 0)
 }
 
 sustain_output = run_OSA(
-  prob_score = prob_score0,
-  score_vals = score_vals,
+  biomarker_levels = biomarker_levels,
+  prob_correct = prob_correct,
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max,

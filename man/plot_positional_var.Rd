@@ -10,7 +10,7 @@ plot_positional_var(
     biomarker_event_names),
   samples_f = results$samples_f,
   n_samples = nrow(results$ml_subtype),
-  score_vals,
+  score_vals = build_score_vals(biomarker_levels),
   biomarker_labels = names(biomarker_levels),
   biomarker_groups = NULL,
   biomarker_levels = NULL,

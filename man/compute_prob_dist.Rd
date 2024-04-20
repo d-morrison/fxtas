@@ -4,19 +4,15 @@
 \alias{compute_prob_dist}
 \title{Computes \code{p(true | obs)}? for each biomarker}
 \usage{
-compute_prob_dist(
-  ModelScores,
-  DataScores,
-  biomarkers,
-  prob_correct,
-  biomarker_levels,
-  do_old = FALSE
-)
+compute_prob_dist(biomarker_levels, prob_correct)
 }
 \arguments{
 \item{biomarker_levels}{a list containing the levels for each biomarker}
 
-\item{do_old}{if \code{TRUE}, build an array instead of a list, the way the python code did it}
+\item{prob_correct}{the probability of correctly classifying the underlying biomarker level: p(obs = true)}
+}
+\value{
+a \code{\link[=list]{list()}} of confusion \code{\link[=matrix]{matrix()}} objects
 }
 \description{
 Includes a row for NAs, which are treated as uniformly distributed over the possible true levels of the biomarker

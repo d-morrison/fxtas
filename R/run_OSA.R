@@ -19,14 +19,23 @@
 #' @param verbose [logical()] indicating whether to print debugging information
 #' @param keep_data [logical()] indicating whether to include the ata in the return object
 #' @param fig_size python figure size, in inches (width, height)
-#'
+#' @inheritParams compute_prob_dist
 #' @returns a [list()]
 #' @export
 #'
 run_OSA = function(
-    prob_score,
-    score_vals,
-    SuStaInLabels,
+    prob_score = compute_prob_scores(
+      dataset = patient_data,
+      biomarker_varnames = SuStaInLabels,
+      ModelScores = ModelScores,
+      prob_correct = prob_correct,
+      biomarker_levels = biomarker_levels
+    ),
+    prob_correct,
+    score_vals = build_score_vals(biomarker_levels),
+    biomarker_levels =
+      lapply(patient_data[,SuStaInLabels], F = levels),
+    SuStaInLabels = names(biomarker_levels),
     N_startpoints = 25,
     N_S_max,
     N_iterations_MCMC = 1e5L,
@@ -44,14 +53,14 @@ run_OSA = function(
     ...)
 {
 
-  if(verbose) message("starting `run_OSA()`")
+  if(verbose) message("starting `run_OSA ()`")
 
   # reticulate::use_virtualenv("r-pySuStaIn")
   # pySuStaIn = reticulate::import("pySuStaIn")
   sustain_input = pySuStaIn$OrdinalSustain(
     prob_nl = prob_score[,,1],
     prob_score = prob_score[,,-1, drop = FALSE],
-    score_vals = score_vals,
+    
     biomarker_labels = SuStaInLabels,
     N_startpoints = N_startpoints |> as.integer(),
     N_S_max = N_S_max |> as.integer(), # double doesn't work

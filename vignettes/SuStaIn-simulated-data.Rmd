@@ -130,13 +130,7 @@ prob_score = prob_score0[,,-1]
 
 ```{r "score_vals"}
 
-score_vals = matrix(
-  ModelScores[-1] |> as.numeric(),
-  byrow = TRUE,
-  nrow = length(biomarkers),
-  ncol = length(ModelScores) - 1)
-
-
+score_vals = build_score_vals(biomarker_levels)
 
 ```
 

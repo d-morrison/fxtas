@@ -46,9 +46,9 @@ SuStaInLabels =
 
 df =
   trax_gp34_all |>
-  filter(!is.na(`FXS ID`)) |>
-  filter(.by = `FXS ID`, n() > 1) |>
-  filter(!is.na(`FX*`),
+  dplyr::filter(!is.na(`FXS ID`)) |>
+  dplyr::filter(.by = `FXS ID`, n() > 1) |>
+  dplyr::filter(!is.na(`FX*`),
          # exclude patients with CGG > 200 (full mutation)
          CGG < 200)
 
@@ -66,11 +66,6 @@ biomarker_events_table =
   construct_biomarker_events_table(
     biomarker_levels,
     biomarker_groups)
-
-nlevs =
-  biomarker_levels |> sapply(length)
-
-
 
 ## ----------------------------------------------------------------------------------------------------
 #| tbl-cap: "Biomarkers used in analysis"
@@ -111,35 +106,6 @@ prob_correct =
     biomarkers = biomarker_varnames,
     DataScores = DataScores)
 
-prob_score0 = compute_prob_scores(
-  dataset = patient_data,
-  biomarker_varnames,
-  ModelScores = ModelScores,
-  DataScores = DataScores,
-  prob_correct = prob_correct
-)
-
-prob_nl = prob_score0[,,1]
-prob_score = prob_score0[,,-1, drop = FALSE]
-
-
-
-## ----"score_vals"------------------------------------------------------------------------------------
-
-# sapply(X = biomarker_varnames, F = function(x) 1:nlevs[x])
-
-score_vals = matrix(
-  ModelScores[-1] |> as.numeric(),
-  byrow = TRUE,
-  nrow = length(biomarker_varnames),
-  ncol = length(ModelScores) - 1,
-  dimnames = list(biomarker_varnames, ModelScores[-1]))
-
-for (i in biomarker_varnames)
-{
-  score_vals[i,score_vals[i,] > nlevs[i]-1] = 0
-}
-
 save.image(file = fs::path(output_folder, paste0(dataset_name, ".RData")))
 patient_data     |> saveRDS(file = fs::path(output_folder, "data.rds"))
 biomarker_levels |> saveRDS(file = fs::path(output_folder, "biomarker_levels.rds"))
@@ -151,8 +117,10 @@ biomarker_groups |> saveRDS(file = fs::path(output_folder, "biomarker_groups.rds
 #| label: model-all-data
 #| include: false
 sustain_output = run_OSA(
-  prob_score = prob_score0,
-  score_vals = score_vals,
+  biomarker_levels = biomarker_levels,
+  prob_correct = prob_correct,
+  patient_data = patient_data,
+
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max,
@@ -162,7 +130,7 @@ sustain_output = run_OSA(
   use_parallel_startpoints = FALSE,
   seed = 1,
   plot = FALSE,
-  patient_data = patient_data,
+
   N_CV_folds = N_CV_folds)
 
 
@@ -172,8 +140,11 @@ sustain_output = run_OSA(
 #| label: model-males
 #| include: false
 sustain_output_males = run_OSA(
-  prob_score = prob_score0[patient_data$Gender %in% "Male",,],
-  score_vals = score_vals,
+  biomarker_levels = biomarker_levels,
+  prob_correct = prob_correct,
+  patient_data = patient_data |>
+    filter(Gender %in% "Male"),
+
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max_stratified,
@@ -191,8 +162,10 @@ sustain_output_males = run_OSA(
 #| label: model-females
 #| include: false
 sustain_output_females = run_OSA(
-  prob_score = prob_score0[patient_data$Gender %in% "Female",,],
-  score_vals = score_vals,
+  biomarker_levels = biomarker_levels,
+  prob_correct = prob_correct,
+  patient_data = patient_data |> filter(Gender == "Female"),
+
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max_stratified,
@@ -210,9 +183,11 @@ sustain_output_females = run_OSA(
 #| label: "cgg_over_100"
 #| include: false
 sustain_output_cgg100plus = run_OSA(
-  prob_score = prob_score0[
-    patient_data$`CGG` >= 100,,],
-  score_vals = score_vals,
+  biomarker_levels = biomarker_levels,
+  prob_correct = prob_correct,
+  patient_data = patient_data |>
+    filter(`CGG` >= 100),
+
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max_stratified,
@@ -230,9 +205,11 @@ sustain_output_cgg100plus = run_OSA(
 #| label: "cgg_under_100"
 #| include: false
 sustain_output_cgg100minus = run_OSA(
-  prob_score = prob_score0[
-    patient_data$`CGG` < 100,,],
-  score_vals = score_vals,
+  biomarker_levels = biomarker_levels,
+  prob_correct = prob_correct,
+  patient_data = patient_data |>
+    filter(`CGG` < 100),
+
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max_stratified,

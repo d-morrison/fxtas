@@ -3,23 +3,17 @@
 #' Includes a row for NAs, which are treated as uniformly distributed over the possible true levels of the biomarker
 #'
 #'
-#' @param ModelScores
-#' @param DataScores
-#' @param biomarkers
-#' @param prob_correct
+#' @param prob_correct the probability of correctly classifying the underlying biomarker level: p(obs = true)
 #' @param biomarker_levels a list containing the levels for each biomarker
-#' @param do_old if `TRUE`, build an array instead of a list, the way the python code did it
-#' @return
+#' @returns a [list()] of confusion [matrix()] objects
 #' @export
 #'
 compute_prob_dist = function(
-    ModelScores,
-    DataScores,
-    biomarkers = names(biomarker_levels),
-    prob_correct,
-    biomarker_levels,
-    do_old = FALSE)
+  biomarker_levels,
+  prob_correct)
 {
+
+  biomarkers = names(biomarker_levels)
 
   confusion_matrices = list()
 
@@ -44,38 +38,6 @@ compute_prob_dist = function(
   }
 
   prob_dist = confusion_matrices
-
-  if(do_old)
-  {
-    prob_dist_dims =
-      list(
-        modelscore = ModelScores,
-        datascore = DataScores,
-        biomarker = biomarkers)
-
-    prob_dist = array(
-      NA,
-      dim = sapply(length, X = prob_dist_dims),
-      dimnames = prob_dist_dims)
-
-    for (biomarker in biomarkers)
-    {
-      for (datascore in DataScores)
-      {
-        for (modelscore in ModelScores)
-        {
-          if(datascore == modelscore)
-          {
-            prob_dist[modelscore, datascore, biomarker] = prob_correct[biomarker]
-          } else
-          {
-            prob_dist[modelscore, datascore, biomarker] =
-              (1 - prob_correct[biomarker] ) / (length(DataScores) - 1)
-          }
-        }
-      }
-    }
-  }
 
   return(prob_dist)
 }

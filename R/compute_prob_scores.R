@@ -1,11 +1,11 @@
-#' Title
+#' @title Compute probabilities of true biomarker levels
 #'
-#' @param dataset
-#' @param biomarker_varnames
-#' @param ModelScores
-#' @param DataScores
-#' @param prob_dist
-#'
+#' @param dataset a [data.frame()] containing biomarker data in columns and observations in rows; column names must include all the values of `biomarker_varnames`
+#' @param biomarker_varnames a [character()] vector of biomarker variable names
+#' @param ModelScores a vector of true score levels (max size among all biomarkers)
+#' @param prob_dist a vector of probabilities of correctly classifying a biomarker level
+#' @inheritParams run_OSA
+#' @inheritDotParams compute_prob_dist
 #' @return
 #' @export
 #'
@@ -13,13 +13,7 @@ compute_prob_scores = function(
     dataset,
     biomarker_varnames,
     ModelScores,
-    DataScores,
-    prob_dist = compute_prob_dist(
-      ModelScores = ModelScores,
-      DataScores = DataScores,
-      biomarkers = biomarker_varnames,
-      ...
-    ),
+    prob_dist = compute_prob_dist(...),
     verbose = FALSE,
     ...
 )

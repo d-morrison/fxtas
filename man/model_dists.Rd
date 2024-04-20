@@ -15,5 +15,5 @@ model_dists(
 \item{nlevs}{}
 }
 \description{
-Title
+possibly not needed; keeping because it has an example of using attributes that I want to propagate across the codebase
 }

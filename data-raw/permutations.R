@@ -60,8 +60,7 @@ output_folder =
 
 biomarker_groups = compile_biomarker_groups_table()
 
-SuStaInLabels =
-  biomarker_varnames =
+biomarker_varnames =
   biomarker_groups |>
   pull("biomarker")
 
@@ -77,38 +76,9 @@ biomarker_levels =
   lapply(df[,biomarker_varnames], F = levels)
 
 df = df |>
-  mutate(
-    across(
-      all_of(biomarker_varnames),
-      ~ as.integer(.x) - 1),
-    Diagnosis = as.integer(`FX*` == "CGG >= 55"))
+  mutate(Diagnosis = as.integer(`FX*` == "CGG >= 55"))
 
-biomarker_events_table =
-  construct_biomarker_events_table(
-    biomarker_levels,
-    biomarker_groups)
-
-nlevs =
-  biomarker_levels |> sapply(length)
-
-
-
-## ----------------------------------------------------------------------------------------------------
-#| tbl-cap: "Biomarkers used in analysis"
-#| label: "tbl-biomarker-list"
-table_out =
-  biomarker_events_table |>
-  select(category = biomarker_group, biomarker, levels) |>
-  slice_head(by = biomarker)
-
-table_out |>
-  pander()
-
-
-
-## ----------------------------------------------------------------------------------------------------
-
-ModelScores = DataScores =
+DataScores =
   df |>
   select(all_of(biomarker_varnames)) |>
   # lapply(F = levels)
@@ -133,35 +103,6 @@ prob_correct =
     max_prob = .95,
     biomarkers = biomarker_varnames,
     DataScores = DataScores)
-
-prob_score0 = compute_prob_scores(
-  dataset = patient_data,
-  biomarker_varnames,
-  ModelScores = ModelScores,
-  DataScores = DataScores,
-  prob_correct = prob_correct
-)
-
-prob_nl = prob_score0[,,1]
-prob_score = prob_score0[,,-1, drop = FALSE]
-
-
-
-## ----"score_vals"------------------------------------------------------------------------------------
-
-# sapply(X = biomarker_varnames, F = function(x) 1:nlevs[x])
-
-score_vals = matrix(
-  ModelScores[-1] |> as.numeric(),
-  byrow = TRUE,
-  nrow = length(biomarker_varnames),
-  ncol = length(ModelScores) - 1,
-  dimnames = list(biomarker_varnames, ModelScores[-1]))
-
-for (i in biomarker_varnames)
-{
-  score_vals[i,score_vals[i,] > nlevs[i]-1] = 0
-}
 
 if(length(args) == 0 || args[1] == 1)
 {
@@ -198,12 +139,13 @@ if(is.null(stratifying_variables))
 
 
   run_OSA_permuted(
+    biomarker_levels = biomarker_levels,
+    prob_correct = prob_correct,
     permuting_variables = permuting_variables,
     patient_data = cur_data,
     permutation_seeds = permutation_seeds,
-    prob_score = prob_score0[cur_data$`FXS ID`,,],
-    score_vals = score_vals,
-    SuStaInLabels = SuStaInLabels,
+
+    SuStaInLabels = biomarker_levels,
     N_startpoints = N_startpoints,
     N_S_max = 1L,
     N_iterations_MCMC = N_iterations_MCMC,
@@ -261,9 +203,7 @@ if(is.null(stratifying_variables))
       permuting_variables = permuting_variables,
       patient_data = cur_data,
       permutation_seeds = permutation_seeds,
-      prob_score = prob_score0[cur_data$`FXS ID`,,],
-      score_vals = score_vals,
-      SuStaInLabels = SuStaInLabels,
+      SuStaInLabels = biomarker_levels,
       N_startpoints = N_startpoints,
       N_S_max = 1L,
       N_iterations_MCMC = N_iterations_MCMC,

@@ -22,7 +22,6 @@ extract_figs_from_pickle = function(
 
   figs = plot_positional_var(
     results = results00,
-    score_vals = score_vals, # these come from the load() call
     biomarker_groups = biomarker_groups, # these come from the load() call
     biomarker_levels = biomarker_levels, # these come from the load() call
     ...)

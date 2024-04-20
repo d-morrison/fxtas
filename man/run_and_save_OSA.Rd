@@ -44,6 +44,8 @@ run_and_save_OSA(
     \item{\code{CV_fold_nums}}{which CV folds to run (for parallel processing)}
     \item{\code{keep_data}}{\code{\link[=logical]{logical()}} indicating whether to include the ata in the return object}
     \item{\code{fig_size}}{python figure size, in inches (width, height)}
+    \item{\code{prob_correct}}{the probability of correctly classifying the underlying biomarker level: p(obs = true)}
+    \item{\code{biomarker_levels}}{a list containing the levels for each biomarker}
   }}
 }
 \value{
