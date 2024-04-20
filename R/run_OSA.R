@@ -90,7 +90,7 @@ run_OSA = function(
   if(N_CV_folds > 0)
   {
     # generate stratified cross-validation training and test set splits
-    labels = rep(1, times = nrow(patient_data))
+    labels = rep(1L, times = nrow(patient_data))
     sklearn = reticulate::import("sklearn")
     cv =
       sklearn$
