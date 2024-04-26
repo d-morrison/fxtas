@@ -23,12 +23,14 @@ if(length(args) == 0)
   start = args[1] |> as.numeric()
   permutations = start:(start+19)
   permuting_variables = args[2]
-  cli::cli_inform("permuting variables: {permuting_variables}")
+
   stratifying_level = args[3]
   if(is.na(stratifying_level)) stratifying_level = ""
-  cli::cli_inform("stratifying level: {stratifying_level}")
 
 }
+
+cli::cli_inform("permuting variables: {permuting_variables}")
+cli::cli_inform("stratifying level: {stratifying_level}")
 
 output_folder =
   fs::path(

@@ -12,14 +12,32 @@ message("args = ", args |> paste(collapse = "; "))
 
 if(length(args) == 0)
 {
-
-  permutation_seeds = 1:100
+  message('no arguments found')
+  permutation_seeds = 1:1000
+  permuting_variables = "Gender"
+  stratifying_variables = NULL
 
 } else
 {
 
   permutation_seeds = as.integer(as.character(args[1]))
 
+  permuting_variables = args[2]
+
+
+  stratifying_variables = args[3]
+  if(is.na(stratifying_variables)) stratifying_variables = NULL
+
+}
+
+cli::cli_inform("permuting variables: {permuting_variables}")
+
+if(is.null(stratifying_variables))
+{
+  cli::cli_inform("no stratifying variables provided")
+} else
+{
+  cli::cli_inform("stratifying variables: {stratifying_variables}")
 }
 
 library(reticulate)
@@ -107,12 +125,6 @@ if(length(args) == 0 || args[1] == 1)
   biomarker_levels |> saveRDS(file = fs::path(output_folder, "biomarker_levels.rds"))
   biomarker_groups |> saveRDS(file = fs::path(output_folder, "biomarker_groups.rds"))
 }
-
-stratifying_variables = "FX3*"
-# stratifying_variables = "Gender"
-# stratifying_variables = NULL
-# permuting_variables = "FX3*"
-permuting_variables = "Gender"
 
 if(is.null(stratifying_variables))
 {
