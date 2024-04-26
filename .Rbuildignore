@@ -5,6 +5,8 @@ dev_history.R
 ^dev$
 ^misc$
 ^output$
+^output*$
+^outputOLD$
 $run_dev.*
 ^LICENSE\.md$
 ^README\.Rmd$
