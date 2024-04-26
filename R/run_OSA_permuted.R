@@ -45,7 +45,6 @@ run_OSA_permuted = function(
         paste(cur_seed, sep = "_p")
 
       run_OSA(
-        biomarker_levels = biomarker_levels,
         patient_data = data_to_use,
         dataset_name = cur_dataset_name,
         ...)

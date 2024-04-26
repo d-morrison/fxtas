@@ -58,8 +58,8 @@ run_OSA = function(
   # reticulate::use_virtualenv("r-pySuStaIn")
   # pySuStaIn = reticulate::import("pySuStaIn")
   sustain_input = pySuStaIn$OrdinalSustain(
-    prob_nl = prob_score[,,1],
-    prob_score = prob_score[,,-1, drop = FALSE],
+    prob_nl = prob_score[ , , 1],
+    prob_score = prob_score[ , , -1, drop = FALSE],
     score_vals = score_vals,
     biomarker_labels = SuStaInLabels,
     N_startpoints = N_startpoints |> as.integer(),

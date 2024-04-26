@@ -1,7 +1,7 @@
 # args (passed in from .sbatch file)
 # 1: first permutation seed (for job arrays)
 # 3: permuting variable (must be a quoted column name, such as "Gender" - 1st argument to analyze_permutations.sbatch
-# 2: stratifying level (can be "") - 2nd argument to analyze_permutations.sbatch
+# 2: stratifying variable (can be "") - 2nd argument to permutations.sbatch
 
 ## ----setup-------------------------------------------------------------------------------------------
 #| message: false
@@ -41,7 +41,7 @@ if(is.null(stratifying_variables))
 }
 
 library(reticulate)
-# reticulate::use_condaenv("fxtas39", required = TRUE)
+if(interactive()) reticulate::use_condaenv("fxtas39", required = TRUE)
 py_config()
 
 devtools::load_all()
