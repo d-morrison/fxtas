@@ -10,7 +10,7 @@ run_OSA(
   prob_score = compute_prob_scores(dataset = patient_data, prob_correct = prob_correct,
     biomarker_levels = biomarker_levels),
   score_vals = build_score_vals(biomarker_levels),
-  biomarker_levels = lapply(patient_data[, SuStaInLabels], F = levels),
+  biomarker_levels = get_levels(patient_data, varnames = SuStaInLabels),
   SuStaInLabels = names(biomarker_levels),
   N_startpoints = 25,
   N_S_max = 8,

@@ -97,8 +97,7 @@ df =
     # exclude patients with CGG > 200 (full mutation)
     CGG < 200)
 
-biomarker_levels =
-  lapply(df[,biomarker_varnames], F = levels)
+biomarker_levels = df |> get_levels(biomarker_varnames)
 
 control_data =
   df |>
@@ -131,20 +130,38 @@ if(is.null(stratifying_variables))
   cur_data = patient_data
   if(length(args) == 0 || args[1] == 1)
   {
-    message('saving dataset to ', output_folder, "/permutations")
+    message(
+      'saving dataset to ',
+      output_folder,
+      "/permutations")
+
     output_folder1 =
       fs::path(
         output_folder,
         "permutations",
-        permuting_variables |> fs::path_sanitize() |> paste(collapse = "-")) |>
+        permuting_variables |>
+          fs::path_sanitize() |>
+          paste(collapse = "-")
+      ) |>
       fs::dir_create()
 
     save.image(file = fs::path(output_folder1, "data.RData"))
-    cur_data         |> saveRDS(file = fs::path(output_folder1, "data.rds"))
-    biomarker_levels |> saveRDS(file = fs::path(output_folder1, "biomarker_levels.rds"))
-    biomarker_groups |> saveRDS(file = fs::path(output_folder1, "biomarker_groups.rds"))
+    cur_data |> saveRDS(
+      file = fs::path(output_folder1, "data.rds"))
+    biomarker_levels |> saveRDS(
+      file = fs::path(
+        output_folder1,
+        "biomarker_levels.rds"))
+    biomarker_groups |> saveRDS(
+      file = fs::path(
+        output_folder1,
+        "biomarker_groups.rds"))
   }
 
+  output_folder1 =
+    output_folder |>
+    fs::path("permutations") |>
+    fs::dir_create()
 
   run_OSA_permuted(
     biomarker_levels = biomarker_levels,
@@ -152,15 +169,10 @@ if(is.null(stratifying_variables))
     permuting_variables = permuting_variables,
     patient_data = cur_data,
     permutation_seeds = permutation_seeds,
-
-    SuStaInLabels = biomarker_levels,
     N_startpoints = N_startpoints,
     N_S_max = 1L,
     N_iterations_MCMC = N_iterations_MCMC,
-    output_folder =
-      output_folder |>
-      fs::path("permutations") |>
-      fs::dir_create(),
+    output_folder = output_folder1,
     use_parallel_startpoints = FALSE,
     plot = FALSE)
 
@@ -195,7 +207,10 @@ if(is.null(stratifying_variables))
         output_folder,
         "permutations",
         cur_stratum_string,
-        permuting_variables |> fs::path_sanitize() |> paste(collapse = "-")) |>
+        permuting_variables |>
+          fs::path_sanitize() |>
+          paste(collapse = "-")
+      ) |>
       fs::dir_create() |>
       print()
 
@@ -208,10 +223,11 @@ if(is.null(stratifying_variables))
     }
 
     run_OSA_permuted(
+      biomarker_levels = biomarker_levels,
+      prob_correct = prob_correct,
       permuting_variables = permuting_variables,
       patient_data = cur_data,
       permutation_seeds = permutation_seeds,
-      SuStaInLabels = biomarker_levels,
       N_startpoints = N_startpoints,
       N_S_max = 1L,
       N_iterations_MCMC = N_iterations_MCMC,

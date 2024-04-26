@@ -33,8 +33,7 @@ run_OSA = function(
       biomarker_levels = biomarker_levels
     ),
     score_vals = build_score_vals(biomarker_levels),
-    biomarker_levels =
-      lapply(patient_data[,SuStaInLabels], F = levels),
+    biomarker_levels = patient_data |> get_levels(varnames = SuStaInLabels),
     SuStaInLabels = names(biomarker_levels),
     N_startpoints = 25,
     N_S_max = 8,
