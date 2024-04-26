@@ -1,9 +1,26 @@
+# args (passed in from .sbatch file)
+# 1: first permutation seed (for job arrays)
+# 3: permuting variable (must be a quoted column name, such as "Gender" - 1st argument to analyze_permutations.sbatch
+# 2: stratifying level (can be "") - 2nd argument to analyze_permutations.sbatch
+
 ## ----setup-------------------------------------------------------------------------------------------
 #| message: false
 message('Starting at: ', Sys.time())
 
 args = commandArgs(trailingOnly = TRUE)
 message("args = ", args |> paste(collapse = "; "))
+
+if(length(args) == 0)
+{
+
+  permutation_seeds = 1:100
+
+} else
+{
+
+  permutation_seeds = as.integer(as.character(args[1]))
+
+}
 
 library(reticulate)
 # reticulate::use_condaenv("fxtas39", required = TRUE)
@@ -36,17 +53,7 @@ N_startpoints = 10L
 N_S_max = 8L
 N_S_max_stratified = 1L
 
-if(length(args) == 0)
-{
 
-  permutation_seeds = 1:100
-
-} else
-{
-
-  permutation_seeds = as.integer(as.character(args[1]))
-
-}
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
 root_dir = here::here()
