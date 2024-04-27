@@ -57,4 +57,5 @@ Config/reticulate/autoconfigure:
       list(package = "scipy")
     )
   )
+Config/build/copy-method: link
 Roxygen: list(markdown = TRUE)
