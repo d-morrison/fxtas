@@ -8,6 +8,7 @@ License: MIT + file LICENSE
 URL: https://github.com/d-morrison/fxtas
 BugReports: https://github.com/d-morrison/fxtas/issues
 Imports: 
+    and,
     arsenal,
     cli,
     colorspace,
@@ -33,6 +34,7 @@ Imports:
     tibble,
     tidyr,
     tidyselect,
+    veccompare,
     viridis
 Suggests: 
     formulaic,
