@@ -21,12 +21,9 @@ if(length(args) == 0)
 {
 
   permutation_seeds = as.integer(as.character(args[1]))
-
   permuting_variables = args[2]
-
-
   stratifying_variables = args[3]
-  if(is.na(stratifying_variables)) stratifying_variables = NULL
+  if(is.na(stratifying_variables) || stratifying_variables == "") stratifying_variables = NULL
 
 }
 
