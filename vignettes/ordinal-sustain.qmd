@@ -167,14 +167,11 @@ For the `r n_missing` cases with missing values, we assigned probabilities of `r
 ```{r}
 #| label: tbl-ex-incomplete-data
 #| tbl-cap: "Distribution of ataxia severity among cases"
-table1(data = v1_usable_cases, x = ~ `Ataxia: severity*`)
+table1(
+  na.is.category = FALSE,
+  data = v1_usable_cases, 
+  x = ~ `Ataxia: severity*`)
 ```
-
-```{r}
-v1_usable_cases |> select(`Ataxia: severity`) |> table() |> proportions()
-```
-
-
 
 
 ### Testing for differences between covariate subgroup strata
