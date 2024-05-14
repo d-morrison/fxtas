@@ -1,7 +1,11 @@
 # args (passed in from .sbatch file)
 # 1: first permutation seed (for job arrays)
-# 3: permuting variable (must be a quoted column name, such as "Gender" - 1st argument to analyze_permutations.sbatch
-# 2: stratifying variable (can be "") - 2nd argument to permutations.sbatch
+# 2: permuting variable (must be a quoted column name, such as "Gender" - 1st argument to analyze_permutations.sbatch
+# 3: stratifying variable (can be "") - 2nd argument to permutations.sbatch
+
+# for example to permute by `FX3*` and stratify by `Gender`, you can run the following command on shiva:
+
+# `sbatch permutations.sbatch "FX3*" "Gender"`
 
 ## ----setup-------------------------------------------------------------------------------------------
 #| message: false
