@@ -633,6 +633,7 @@ vars = c(
   "Age at visit",
   # "# visits",
   # column_var,
+  "Primary Race/Ethnicity",
   "Primary Ethnicity",
   "Primary Race",
   "FXTAS Stage (0-5)*"
@@ -640,12 +641,47 @@ vars = c(
   
 )
 
-table1(
-  na.is.category = FALSE, overall = FALSE,
-  NA.label = "Missing",
-  stratified_formula(vars, strata = "FX*"),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = v1_usable)
+# table1(
+#   na.is.category = FALSE, overall = FALSE,
+#   NA.label = "Missing",
+#   stratified_formula(vars, strata = "FX*"),
+#   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+#   data = v1_usable)
+
+
+# create table using gtsummary with p-value for sex difference
+tbl_stat <- tbl_strata(
+  data = v1_usable |> clean_ethnicity() |> create_race_ethnicity() |> 
+    dplyr::select(all_of(vars), Gender, `FX*`),
+  strata = c("Gender"),
+  .tbl_fun = ~ .x %>%
+    tbl_summary(
+      by = `FX*`,
+      type = all_continuous() ~ "continuous2",
+      statistic = list(
+        all_continuous() ~ c("{mean} ({sd})", "{median} [{min}, {max}]")
+      ),
+      digits = list(`Age at visit` ~ c(1, 2)),
+      missing_text = "Missing"
+    )
+)
+
+tbl_pval <- v1_usable |> clean_ethnicity() |> create_race_ethnicity() |>
+  dplyr::select(all_of(vars), Gender) |>
+  tbl_summary(
+    by = Gender,
+    missing_text = "Missing"
+  ) |>
+  add_p(
+    pvalue_fun = function(x) style_number(x, digits = 3)
+  ) |>
+  modify_column_hide(columns = c(stat_1, stat_2))
+
+tbl_final <- tbl_merge(
+  list(tbl_stat, tbl_pval), tab_spanner = FALSE
+)
+
+tbl_final
 ```
 
 {{< pagebreak >}}

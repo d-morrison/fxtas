@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 ```{r}
 #| label: exploration-setup
 #| include: false
@@ -139,7 +144,7 @@ table1(
 #| tbl-cap: "Ataxia by CGG status"
 vars = c(
   "Ataxia",
-  "Ataxia: severity",
+  # "Ataxia: severity",
   "Ataxia: severity*"
   # "Ataxia: Age of onset",
   # "Ataxia: Age of onset: missingness reasons"
@@ -285,14 +290,16 @@ table1(
 #| label: tab-mri
 #| tbl-cap: "MRI variables by Sex and CGG level"
 vars = c(
-  "Cerebral Atrophy",
-  "Cerebellar Atrophy",
-  "Cerebral WM Hyperintensity",
-  "Cerebellar WM Hyperintensity",
-  "MCP-WM Hyperintensity",
-  "Pons-WM Hyperintensity",
-  "Sub-Insular WM Hyperintensity",
-  "Periventricular WM Hyperintensity",
+  # "Cerebral Atrophy",
+  # "Cerebellar Atrophy",
+  # "Cerebral WM Hyperintensity",
+  # "Cerebellar WM Hyperintensity",
+  # "MCP-WM Hyperintensity",
+  # "Pons-WM Hyperintensity",
+  # "Sub-Insular WM Hyperintensity",
+  # "Periventricular WM Hyperintensity",
+  "MRI: Cerebellar",
+  "MRI: Cerebral",
   "Splenium (CC)-WM Hyperintensity",
   "Genu (CC)-WM Hyperintensity",
   "Corpus Callosum-Thickness"
@@ -390,14 +397,14 @@ table1(na.is.category = FALSE, overall = FALSE,
 vars = c(
   "Hypothyroid",
   "Hyperthyroid",
-  "Thyroid problems",
-  "Lupus",
-  "Rheumatoid arthritis",
-  "Multiple Sclerosis: Workup",
-  "ANA positive",
-  "Sjogrens Syndrome",
-  "Raynauds Syndrome",
-  "Pulmonary Fibrosis",
+  # "Thyroid problems",
+  # "Lupus",
+  # "Rheumatoid arthritis",
+  # "Multiple Sclerosis: Workup",
+  # "ANA positive",
+  # "Sjogrens Syndrome",
+  # "Raynauds Syndrome",
+  # "Pulmonary Fibrosis",
   "Any Autoimmune"
 )
 
