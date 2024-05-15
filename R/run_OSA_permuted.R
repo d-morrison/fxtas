@@ -44,7 +44,7 @@ run_OSA_permuted = function(
         paste(collapse = " - ") |>
         paste(cur_seed, sep = "_p")
 
-      run_OSA(
+      run_and_save_OSA(
         patient_data = data_to_use,
         dataset_name = cur_dataset_name,
         ...)

@@ -89,9 +89,9 @@ biomarker_groups |> saveRDS(file = fs::path(output_folder, "biomarker_groups.rds
 #| message: false
 #| label: model-all-data
 #| include: false
-sustain_output = run_OSA(biomarker_levels = biomarker_levels, prob_correct = prob_correct,
-
-
+sustain_output = run_OSA(
+  biomarker_levels = biomarker_levels,
+  prob_correct = prob_correct,
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max,

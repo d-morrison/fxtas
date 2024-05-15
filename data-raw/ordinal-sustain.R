@@ -131,7 +131,7 @@ if(length(args) == 0 || args[1] == 1)
 #| message: false
 #| label: model-all-data
 #| include: false
-sustain_output = run_OSA(
+sustain_output = run_and_save_OSA(
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   SuStaInLabels = SuStaInLabels,
