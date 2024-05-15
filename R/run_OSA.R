@@ -69,12 +69,12 @@ run_OSA = function(
     use_parallel_startpoints = use_parallel_startpoints,
     seed = seed |> as.integer())
 
-  sus_output = sustain_input$run_sustain_algorithm(
+  sustain_output = sustain_input$run_sustain_algorithm(
     plot = plot,
     figsize = fig_size,
     ...)
 
-  names(sus_output) = c(
+  names(sustain_output) = c(
     "samples_sequence",
     "samples_f",
     "ml_subtype",
@@ -85,7 +85,7 @@ run_OSA = function(
     "samples_likelihoods"
   )
 
-  if(keep_data) sus_output$patient_data = patient_data
+  if(keep_data) sustain_output$patient_data = patient_data
   if(N_CV_folds > 0)
   {
     # generate stratified cross-validation training and test set splits
@@ -130,8 +130,8 @@ run_OSA = function(
         select_fold = as.integer(CV_fold_nums - 1L))
 
     names(CV_output) = c("CVIC", "loglike_matrix")
-    sus_output |> attr("CV") = CV_output
+    sustain_output |> attr("CV") = CV_output
   }
 
-  return(sus_output)
+  return(sustain_output)
 }
