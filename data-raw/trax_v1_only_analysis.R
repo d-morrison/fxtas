@@ -112,9 +112,9 @@ if(length(args) == 0)
 
 }
 
-sustain_output = run_OSA(biomarker_levels = biomarker_levels, prob_correct = prob_correct,
-
-
+sustain_output = run_and_save_OSA(
+  biomarker_levels = biomarker_levels,
+  prob_correct = prob_correct,
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max,
