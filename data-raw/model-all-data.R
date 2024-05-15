@@ -1,5 +1,6 @@
 ## ----setup-------------------------------------------------------------------------------------------
 #| message: false
+message('Starting at: ', Sys.time())
 
 library(reticulate)
 py_config()
