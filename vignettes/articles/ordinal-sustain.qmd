@@ -46,7 +46,7 @@ knitr::opts_chunk$set(
 #| message: false
 # devtools::load_all()
 library(fxtas)
-reticulate::use_condaenv("fxtas39",required = TRUE)
+# reticulate::use_condaenv("fxtas39",required = TRUE)
 library(tidyverse)
 library(reticulate)
 library(pander)
@@ -65,7 +65,7 @@ pvd_height = 8
 size.y = 11
 N_startpoints = 10L
 N_S_max = 8L
-N_S_max_stratified = 1L
+N_S_max_stratified = 2L
 N_CV_folds = 10L
 
 # column_var = "Recruited in study phase"
@@ -152,7 +152,8 @@ We then fit the models stratified by both sex and CGG repeats (<100 vs $\ge$ 100
 ```{r}
 x1 = v1_usable_cases |> pull(`Ataxia: severity`)
 n_missing = sum(x1 |> is.na())
-n_obs = sum(x1 |> is.na() |> not()) 
+# n_obs = sum(x1 |> is.na() |> not()) # not() is deprecated?
+n_obs = sum(!is.na(x1)) 
 n_total = length(x1)
 pct_missing = scales::percent(n_missing/n_total, accuracy = 0.1)
 pct_obs = scales::percent(n_obs/n_total, accuracy = 0.1)
@@ -258,7 +259,7 @@ sustain_output_males = run_and_save_OSA(
   use_parallel_startpoints = FALSE,
   seed = 1,
   plot = TRUE,
-  rerun = TRUE,
+  rerun = FALSE,
   fig_size = c(20, 10)
 )
 
@@ -284,7 +285,7 @@ sustain_output_females = run_and_save_OSA(
   use_parallel_startpoints = FALSE,
   seed = 1,
   plot = TRUE,
-  rerun = TRUE,
+  rerun = FALSE,
   fig_size = c(20,10))
 
 ```
@@ -634,8 +635,8 @@ vars = c(
   # "# visits",
   # column_var,
   "Primary Race/Ethnicity",
-  "Primary Ethnicity",
-  "Primary Race",
+  # "Primary Ethnicity",
+  # "Primary Race",
   "FXTAS Stage (0-5)*"
   # "ApoE"
   
@@ -650,34 +651,34 @@ vars = c(
 
 
 # create table using gtsummary with p-value for sex difference
-tbl_stat <- tbl_strata(
-  data = v1_usable |> clean_ethnicity() |> create_race_ethnicity() |> 
+tbl_stat <- gtsummary::tbl_strata(
+  data = v1_usable |>
     dplyr::select(all_of(vars), Gender, `FX*`),
   strata = c("Gender"),
   .tbl_fun = ~ .x %>%
-    tbl_summary(
+    gtsummary::tbl_summary(
       by = `FX*`,
-      type = all_continuous() ~ "continuous2",
+      type = gtsummary::all_continuous() ~ "continuous2",
       statistic = list(
-        all_continuous() ~ c("{mean} ({sd})", "{median} [{min}, {max}]")
+        gtsummary::all_continuous() ~ c("{mean} ({sd})", "{median} [{min}, {max}]")
       ),
       digits = list(`Age at visit` ~ c(1, 2)),
       missing_text = "Missing"
     )
 )
 
-tbl_pval <- v1_usable |> clean_ethnicity() |> create_race_ethnicity() |>
+tbl_pval <- v1_usable |> 
   dplyr::select(all_of(vars), Gender) |>
-  tbl_summary(
+  gtsummary::tbl_summary(
     by = Gender,
     missing_text = "Missing"
   ) |>
-  add_p(
+  gtsummary::add_p(
     pvalue_fun = function(x) style_number(x, digits = 3)
   ) |>
-  modify_column_hide(columns = c(stat_1, stat_2))
+  gtsummary::modify_column_hide(columns = c(stat_1, stat_2))
 
-tbl_final <- tbl_merge(
+tbl_final <- gtsummary::tbl_merge(
   list(tbl_stat, tbl_pval), tab_spanner = FALSE
 )
 
