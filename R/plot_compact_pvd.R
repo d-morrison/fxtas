@@ -1,4 +1,5 @@
-## compact positional variance diagram ##
+#' Plot compact PVD
+#' @export
 
 # tmp function using list of extract_figs_from_pickle
 plot_compact_pvd <- function(

@@ -2,7 +2,7 @@
 % Please edit documentation in R/run_and_save_OSA.R
 \name{run_and_save_OSA}
 \alias{run_and_save_OSA}
-\title{Run the Ordinal SusTaIn algorithm (OSA) or load results from RDS}
+\title{Run the Ordinal SusTaIn algorithm (OSA) or load results from presaved .rds file if available}
 \usage{
 run_and_save_OSA(
   dataset_name,
@@ -52,5 +52,5 @@ run_and_save_OSA(
 a \code{\link[=list]{list()}}
 }
 \description{
-Run the Ordinal SusTaIn algorithm (OSA) or load results from RDS
+Run the Ordinal SusTaIn algorithm (OSA) or load results from presaved .rds file if available
 }

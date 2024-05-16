@@ -24,7 +24,7 @@ figs = extract_figs_from_pickle(size.y = size.y,
 ::: landscape
 
 ```{r, eval=FALSE}
-#| label: "fig-pvd_optimal"
+#| label: "fig-pvd_optimal-old"
 #| layout-ncol: 2
 #| fig-height: !expr pvd_height
 #| fig-cap: !expr glue::glue("positional variance diagrams for {n_s_optimal} subtypes")
