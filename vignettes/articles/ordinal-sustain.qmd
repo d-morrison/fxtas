@@ -51,6 +51,7 @@ library(tidyverse)
 library(reticulate)
 library(pander)
 library(table1)
+library(magrittr)
 ```
 
 ```{r}
@@ -258,7 +259,6 @@ sustain_output_males = run_and_save_OSA(
   use_parallel_startpoints = FALSE,
   seed = 1,
   plot = TRUE,
-  rerun = TRUE,
   fig_size = c(20, 10)
 )
 
@@ -284,7 +284,6 @@ sustain_output_females = run_and_save_OSA(
   use_parallel_startpoints = FALSE,
   seed = 1,
   plot = TRUE,
-  rerun = TRUE,
   fig_size = c(20,10))
 
 ```
