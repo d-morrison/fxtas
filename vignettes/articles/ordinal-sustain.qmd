@@ -28,7 +28,7 @@ Females with the premutation are also at risk for FXTAS, but the prevalence is l
 The higher the CGG repeat within the premutation range the earlier the onset of FXTAS and the earlier the age of death [@greco2006neuropathology].
 The prevalence of the premutation is approximately 1 in 148 to 200 females in the general population and one in 290 to 855 males (@maenner2013fmr1; @hunter2014epidemiology).
 
-A currently open question is: In what sequential time-order do FXTAS symptoms typically appear, how does that sequence vary between participants, and what baseline characteristics predict that order?
+A currently open question is: In what sequential order do FXTAS symptoms typically appear, how does that sequence vary between participants, and what baseline characteristics predict that order?
 Here, we apply the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2021ordinal] to find event sequences for FXTAS patients.
 
 ```{r, include = FALSE}
@@ -102,7 +102,20 @@ gp34_v1_controls =  v1_usable |> filter(CGG < 55)
 
 ### Study cohorts
 
-The data come from the GP, GP4, and Trax studies. In the primary analyses, we analyzed one visit record per participant, using the earliest visit available across the two studies with age at visit $\ge 40$ years, resulting in `r nrow(full_data)` observations in total. 
+Research participants were recruited between 2007? and 2023?  
+for two longitudinal cohorts (GP and Trax).
+Inclusion criteria were:
+
+- age 40 years or greater
+- [clinical team, please complete this section]
+
+Written informed consent was obtained from all participants 
+according to the procedures approved by the 
+University of California Davis Institutional Review Board.  
+
+In the primary analyses, 
+we analyzed the baseline visit record for each participant, 
+resulting in `r nrow(full_data)` observations in total. 
 However, `r n_missing_CGG` individuals did not have CGG values available, and `r n_above_200` had full fragile X syndrome mutation (≥200 CGG repeats), so only `r nrow(v1_usable)` individuals 
 (`r nrow(v1_usable_cases)` cases and 
 `r nrow(gp34_v1_controls)` controls) were included in the event sequence analysis. 
@@ -148,7 +161,7 @@ Ordinal SuStaIn uses Markov Chain Monte Carlo (MCMC) sampling to estimate the Ba
 We fit models stratified by sex, with no latent subtypes (@fig-first-only). We also fit the model stratified by CGG repeats (<100 vs $\ge$ 100), also with no latent subtypes (@fig-pvd-by-cgg).
 We then fit the models stratified by both sex and CGG repeats (<100 vs $\ge$ 100), also with no latent subtypes (@sec-stratified-by-cgg-and-sex).
 
-### Incomplete data
+### Incomplete data {#sec-incomplete-data}
 
 ```{r}
 x1 = v1_usable_cases |> pull(`Ataxia: severity`)
@@ -558,7 +571,10 @@ We did not find statistically significant evidence of a difference between males
 
 ## Missing data
 
-We had substantial amounts of missing data. As described in the methods, we used a uniform distribution to impute the underlying values of these missing data. The missing data contributes to the large amount of uncertainty in the results.
+We had substantial amounts of missing data. 
+As described in the methods (@sec-incomplete-data),
+we used a uniform distribution to impute the underlying values of these missing data. 
+The missing data contributes to the large amount of uncertainty in the results.
 
 [to be added]
 
