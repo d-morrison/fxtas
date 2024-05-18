@@ -113,13 +113,11 @@ Written informed consent was obtained from all participants
 according to the procedures approved by the 
 University of California Davis Institutional Review Board.  
 
-In the primary analyses, 
-we analyzed the baseline visit record for each participant, 
-resulting in `r nrow(full_data)` observations in total. 
-However, `r n_missing_CGG` individuals did not have CGG values available, and `r n_above_200` had full fragile X syndrome mutation (≥200 CGG repeats), so only `r nrow(v1_usable)` individuals 
-(`r nrow(v1_usable_cases)` cases and 
-`r nrow(gp34_v1_controls)` controls) were included in the event sequence analysis. 
-@fig-hist-CGG-gp34-v1 shows the distribution of CGG repeats among the participants included in the analysis. 
+The primary event sequence analysis included baseline data from 297 participants 
+(`r `nrow(v1_usable_cases)` Fragile X premutation carriers and `r nrow(gp34_v1_controls)`  controls) from the two cohorts. 
+
+@fig-hist-CGG-gp34-v1 shows the distribution of CGG repeats 
+among the participants included in the analysis. 
 @tbl-demographics provides demographic information about the study participants. 
 
 ```{r}
@@ -149,7 +147,7 @@ nlevs =
 
 ### Biomarkers of neurodegenerative events
 
-We analyzed `r length(biomarker_levels)` biomarkers (@tbl-biomarker-list) with a total of `r nrow(biomarker_events_table)` non-baseline levels; each level above baseline constitutes an outcome event in the disease progression modelling analysis (@sec-Statistical-analysis).
+We analyzed baseline measurements of `r length(biomarker_levels)` biomarkers (@tbl-biomarker-list) with a total of `r nrow(biomarker_events_table)` non-baseline levels; each level above baseline constitutes an outcome event in the disease progression modelling analysis (@sec-Statistical-analysis).
 @tbl-tremors - @tbl-autoimmune summarize the biomarker data, stratified by CGG (`r unique(v1_usable$"FX3*")`) 
 and Sex (`r unique(v1_usable$Gender)`).
 
@@ -586,57 +584,6 @@ The missing data contributes to the large amount of uncertainty in the results.
 
 # Tables {.unnumbered}
 
-```{r}
-#| tbl-cap: "Biomarkers used in analysis"
-#| label: "tbl-biomarker-list"
-
-probs_above_baseline_by_gender = 
-  v1_usable |> 
-  summarize(
-    .by = "Gender",
-    across(
-      all_of(biomarker_varnames),
-      ~ mean(.x != levels(.x)[1], na.rm = TRUE)
-           )
-  ) |> 
-  pivot_longer(
-    cols = -Gender, 
-    names_to = "biomarker", 
-    values_to = "Pr(above_baseline)") |>
-  mutate(
-    `Pr(above_baseline)` = 
-      `Pr(above_baseline)` |>  
-      scales::percent(accuracy = 0.01)) |> 
-  pivot_wider(
-    id_cols = "biomarker",
-    names_from = Gender,
-    values_from = `Pr(above_baseline)`)
-
-table_out =
-  biomarker_events_table |> 
-  select(
-    category = biomarker_group, 
-    biomarker, 
-    levels) |> 
-  slice_head(by = biomarker) |> 
-  filter(category != "Stage") |> 
-  left_join(
-    probs_above_baseline_by_gender,
-    by = "biomarker",
-    relationship = "one-to-one"
-  ) |> 
-  mutate(
-    biomarker = 
-      biomarker |> 
-      sub(
-        pattern = "*", 
-        replacement = "", 
-        fixed = TRUE))
-
-table_out |> pander()
-
-```
-
 ::: landscape
 
 ```{r}
@@ -699,7 +646,62 @@ tbl_final <- tbl_merge(
 tbl_final
 ```
 
+:::
+
+```{r}
+#| tbl-cap: "Biomarkers used in analysis"
+#| label: "tbl-biomarker-list"
+
+probs_above_baseline_by_gender = 
+  v1_usable |> 
+  summarize(
+    .by = "Gender",
+    across(
+      all_of(biomarker_varnames),
+      ~ mean(.x != levels(.x)[1], na.rm = TRUE)
+           )
+  ) |> 
+  pivot_longer(
+    cols = -Gender, 
+    names_to = "biomarker", 
+    values_to = "Pr(above_baseline)") |>
+  mutate(
+    `Pr(above_baseline)` = 
+      `Pr(above_baseline)` |>  
+      scales::percent(accuracy = 0.01)) |> 
+  pivot_wider(
+    id_cols = "biomarker",
+    names_from = Gender,
+    values_from = `Pr(above_baseline)`)
+
+table_out =
+  biomarker_events_table |> 
+  select(
+    category = biomarker_group, 
+    biomarker, 
+    levels) |> 
+  slice_head(by = biomarker) |> 
+  filter(category != "Stage") |> 
+  left_join(
+    probs_above_baseline_by_gender,
+    by = "biomarker",
+    relationship = "one-to-one"
+  ) |> 
+  mutate(
+    biomarker = 
+      biomarker |> 
+      sub(
+        pattern = "*", 
+        replacement = "", 
+        fixed = TRUE))
+
+table_out |> pander()
+
+```
+
 {{< pagebreak >}}
+
+::: landscape
 
 # Figures {.unnumbered}
 
