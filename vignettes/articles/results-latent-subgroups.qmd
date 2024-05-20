@@ -62,7 +62,7 @@ library(ggplot2)
 plot_compact_pvd(
   figs = figs,
   tile_height = 2,
-  tile_width = 1
+  facet_label = NULL
 )
 
 ```

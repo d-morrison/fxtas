@@ -72,11 +72,19 @@ fig_both_mv_only = extract_figs_from_pickle(size.y = size.y,
 #|   - "First visits only"
 #|   - "All visits" 
 
-fig_males_first |> print()
-
-fig_males_all |> print()
+# fig_males_first |> print()
+# 
+# fig_males_all |> print()
 
 # fig_males_mv_only |> print()
+
+plot_compact_pvd(
+  figs = list(
+    fig_males_first,
+    fig_males_all
+  ),
+  facet_label = c("Males, First Visit Only", "Males, All Visits")
+)
 
 ```
 
@@ -93,12 +101,19 @@ fig_males_all |> print()
 #|   - "First visits only"
 #|   - "All visits" 
 
-fig_females_first |> print()
-
-fig_females_all |> print()
+# fig_females_first |> print()
+# 
+# fig_females_all |> print()
 
 # fig_females_mv_only |> print()
 
+plot_compact_pvd(
+  figs = list(
+    fig_females_first,
+    fig_females_all
+  ),
+  facet_label = c("Females, First Visit Only", "Females, All Visits")
+)
 ```
 
 ### All patients, all visits  {.appendix}
@@ -123,9 +138,16 @@ Similarly, clinically-elevated SCL90 values appear before FXTAS stage 1 for fema
 #|   - "Females only"
 
 # fig_both_all |> print()
-fig_males_all |> print()
-fig_females_all |> print()
+# fig_males_all |> print()
+# fig_females_all |> print()
 
+plot_compact_pvd(
+  figs = list(
+    fig_males_all,
+    fig_females_all
+  ),
+  facet_label = c("Males", "Females")
+)
 ```
 
 {{< pagebreak >}}
