@@ -3,14 +3,14 @@
 
 # tmp function using list of extract_figs_from_pickle
 plot_compact_pvd <- function(
-    figs = list(),
+    figs,
     tile_height = 1,
-    facet_label = NULL
+    facet_label_prefix = NULL
 ){
   # extract and prep data from fig list
   plot_dataset <- compact_pvd_data_prep(figs)
   # facet labels
-  facet_names <- compact_pvd_facet_labels(figs, facet_label)
+  facet_names <- compact_pvd_facet_labels(figs, facet_label_prefix)
   # generate figure
   compact_pvd_figure(
     plot_dataset,

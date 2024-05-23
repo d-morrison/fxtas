@@ -2,8 +2,8 @@
 #'
 
 compact_pvd_facet_labels <- function(
-  figs = list(),
-  facet_label = NULL
+  figs,
+  facet_label_prefix
 ){
 
   # extract fig titles
@@ -21,12 +21,12 @@ compact_pvd_facet_labels <- function(
   }
 
   # update facet names with provided prefix
-  if(!is.null(facet_label)){
+  if(!is.null(facet_label_prefix)){
     # check that facet label is same length as figs
-    if(length(figs) != length(facet_label)){
-      stop("`facet_label` must be the same length as `figs`.")
+    if(length(figs) != length(facet_label_prefix)){
+      stop("`facet_label_prefix` must be the same length as `figs`.")
     }
-    facet_names <- glue::glue("{facet_label} {tmp}")
+    facet_names <- glue::glue("{facet_label_prefix} {tmp}")
   } else{
     facet_names <- tmp
   }

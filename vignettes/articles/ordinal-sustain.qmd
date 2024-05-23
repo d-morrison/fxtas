@@ -710,7 +710,7 @@ plot_compact_pvd(
     fig_males_first,
     fig_females_first
   ),
-  facet_label = c("Males", "Females")
+  facet_label = c("Males <br>", "Females <br>")
 )
 
 ```
@@ -737,7 +737,7 @@ plot_compact_pvd(
     fig_under100,
     fig_over100
   ),
-  facet_label = c("CGG < 100", "CGG &ge; 100")
+  facet_label = c("CGG < 100 <br>", "CGG &ge; 100 <br>")
 )
 
 ```
@@ -764,7 +764,7 @@ plot_compact_pvd(
     fig_under100_males,
     fig_over100_males
   ),
-  facet_label = c("Males, CGG < 100", "Males, CGG &ge; 100")
+  facet_label = c("Males, CGG < 100 <br>", "Males, CGG &ge; 100  <br>")
 )
 
 ```
@@ -791,7 +791,7 @@ plot_compact_pvd(
     fig_under100_females,
     fig_over100_females
   ),
-  facet_label = c("Females, CGG < 100", "Females, CGG &ge; 100")
+  facet_label = c("Females, CGG < 100  <br>", "Females, CGG &ge; 100  <br>")
 )
 
 ```
@@ -817,7 +817,7 @@ plot_compact_pvd(
     fig_under100_males,
     fig_under100_females
   ),
-  facet_label = c("CGG < 100, Males", "CGG < 100, Females")
+  facet_label = c("CGG < 100, Males  <br>", "CGG < 100, Females  <br>")
 )
 
 ```
@@ -843,7 +843,7 @@ plot_compact_pvd(
     fig_over100_males,
     fig_over100_females
   ),
-  facet_label = c("CGG &ge; 100, Males", "CGG &ge; 100, Females")
+  facet_label = c("CGG &ge; 100, Males  <br>", "CGG &ge; 100, Females  <br>")
 )
 
 ```

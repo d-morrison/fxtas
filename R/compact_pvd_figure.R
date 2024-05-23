@@ -3,8 +3,8 @@
 
 compact_pvd_figure <- function(
     plot_dataset,
-    tile_height = 1,
-    facet_names = NULL
+    tile_height,
+    facet_names
     ){
   # set tile width
   tile_width = 1
@@ -134,7 +134,7 @@ compact_pvd_figure <- function(
     # plot theme
     theme_bw() +
     theme(
-      legend.position = "none", # add color scale info in figure caption
+      legend.position = "bottom", # add color scale info in figure caption
       axis.title.y = element_blank(),
       axis.text.y = ggtext::element_markdown(), # allow markdown for coloring
       strip.text = ggtext::element_markdown() # allow markdown for labels
