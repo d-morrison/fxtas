@@ -7,7 +7,7 @@ knitr:
 project: 
   execute-dir: project
 filters:
-  - ../docx-landscape.lua
+  - ../../docx-landscape.lua
 ---
 
 ```{=html}
@@ -147,8 +147,10 @@ nlevs =
 
 ### Biomarkers of neurodegenerative events
 
-We analyzed baseline measurements of `r length(biomarker_levels)` biomarkers (@tbl-biomarker-list) with a total of `r nrow(biomarker_events_table)` non-baseline levels; each level above baseline constitutes an outcome event in the disease progression modelling analysis (@sec-Statistical-analysis).
-@tbl-tremors - @tbl-autoimmune summarize the biomarker data, stratified by CGG (`r unique(v1_usable$"FX3*")`) 
+We analyzed baseline measurements of `r length(biomarker_levels)` biomarkers (@tbl-biomarker-list) with a total of `r nrow(biomarker_events_table)` non-baseline levels; 
+each level above baseline constitutes an outcome event in the disease progression modelling analysis (@sec-Statistical-analysis).
+@tbl-tremors - @tbl-autoimmune summarize the biomarker data, 
+stratified by CGG (`r unique(v1_usable$"FX3*")`) 
 and Sex (`r unique(v1_usable$Gender)`).
 
 ## Statistical analysis {#sec-Statistical-analysis}

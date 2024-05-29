@@ -15,7 +15,9 @@ Imports:
     config (>= 0.3.1),
     dplyr,
     forcats,
+    formulaic,
     fs,
+    ggnewscale,
     ggplot2,
     ggtext,
     glue,
@@ -37,7 +39,6 @@ Imports:
     veccompare,
     viridis
 Suggests: 
-    formulaic,
     knitr,
     pander,
     rmarkdown,
