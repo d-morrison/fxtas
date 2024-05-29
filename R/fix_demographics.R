@@ -20,7 +20,5 @@ fix_demographics = function(dataset)
     mutate(
       `Recruited in study phase` = first(Study)
     ) |>
-    ungroup() |>
-    clean_ethnicity() |>
-    create_race_ethnicity()
+    ungroup()
 }

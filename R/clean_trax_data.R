@@ -73,7 +73,10 @@ clean_trax_data = function(dataset)
 
     fix_factors() |>
 
+    # clean/recode race and ethnicity
     categorize_primary_race() |>
+    # clean_ethnicity() |> # fixed upstream during data import
+    create_race_ethnicity() |>
 
     droplevels(
       except = c("Cerebral Atrophy", "Cerebellar Atrophy",
