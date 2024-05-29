@@ -25,9 +25,9 @@ write_permuted_test_stats = function(
   file_path =
     fs::path(
       output_folder,
-      "test_stats",
-      file_name) |>
-    fs::dir_create()
+      "test_stats") |>
+    fs::dir_create() |>
+    fs::path(file_name)
 
   if(verbose) {
     message("file_path:\n", file_path)
