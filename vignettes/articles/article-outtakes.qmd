@@ -1,0 +1,83 @@
+---
+title: "Summaries of Excluded Variables"
+---
+
+### Head Tremors
+
+```{r}
+#| tbl-cap: "Age of onset for those with a head tremor recorded."
+#| label: "tbl-head-tremor-AO"
+#| eval: false # converting to docx runs into a weird `flextable()` edge case because two subcolumn headers are identical
+vars = c(
+  "Head Tremor: Age of onset",
+  if(show_missingness_reasons) "Head Tremor: Age of onset: missingness reasons"
+  
+)
+
+table1(
+  na.is.category = FALSE, 
+  overall = FALSE,
+  NA.label = NA.label1,
+  stratified_formula(vars, column_var),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  data = v1_usable |> 
+    filter(
+      !(Study %in% c("Trax Phase 1", "GP3")),
+      `Head tremor` == "Yes"))
+
+```
+
+
+### Cancer {.appendix}
+
+```{r}
+#| label: tbl-cancer
+#| tbl-caption: "Cancer"
+
+
+vars = c(
+  "Thyroid Cancer",
+  "Skin Cancer",
+  "Melanoma",
+  "Prostate Cancer",
+  "Other Cancer",
+  "Any Cancer"
+)
+
+table1(na.is.category = FALSE, overall = FALSE,
+       NA.label = NA.label1,
+       stratified_formula(vars, column_var),
+       data = v1_usable)
+```
+
+
+### Surgery  {.appendix}
+
+```{r}
+#| label: tbl-surgery
+#| tbl-caption: "Surgery"
+
+
+vars = 
+  c(
+    "Surgery",
+    "Anesthesia (medic_surg_anes)", 
+    "Anesthesia (new_mds_med_anes1)"
+    # "Other Cancer (detailed)", # don't include in table
+    # "Surgery",
+    # "Surgery type",
+    # "Surgery: Type/Age",
+    # "Surgery 2: Type/Age",
+    # "Surgery 3: Type/Age",
+    # "Surgery 4: Type/Age",
+    # "Surgery 5: Type/Age",
+  )
+# grep(pattern = "surgery", ignore.case = TRUE, x = names(trax_gp34_all), value = TRUE)
+
+library(table1)
+table1(na.is.category = FALSE, overall = FALSE,
+       NA.label = NA.label1,
+       stratified_formula(vars, column_var),
+       data = v1_usable)
+```
+

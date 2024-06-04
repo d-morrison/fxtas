@@ -1,12 +1,12 @@
 Here we compared the longitudinal models to the cross-sectional models (estimated using each participant's earliest visit):
 
 - Males only (@fig-males):
-  * first visits only (@fig-males-1)
-  * all visits (@fig-males-2)
+  * first visits only (@fig-males)
+  * all visits (@fig-males)
 
 - Females only (@fig-females):
-  * first visits only (@fig-females-1)
-  * all visits (@fig-females-2)
+  * first visits only (@fig-females)
+  * all visits (@fig-females)
 
 We also rearranged these results by subset type:
 
@@ -65,12 +65,14 @@ fig_both_mv_only = extract_figs_from_pickle(size.y = size.y,
 #| label: "fig-males"
 #| column: page
 #| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
 #| fig-cap: "Estimated event sequences for males, by data subset"
 #| fig-cap-location: top
-#| layout-ncol: 2
-#| fig-subcap:
-#|   - "First visits only"
-#|   - "All visits" 
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "First visits only"
+#   - "All visits" 
 
 # fig_males_first |> print()
 # 
@@ -83,7 +85,8 @@ plot_compact_pvd(
     fig_males_first,
     fig_males_all
   ),
-  facet_label = c("Males, First Visit Only", "Males, All Visits")
+  facet_label = c("Males, First Visit Only", "Males, All Visits"),
+  y_text_size = 11
 )
 
 ```
@@ -95,11 +98,13 @@ plot_compact_pvd(
 #| fig-cap: "Estimated event sequences for females, by data subset"
 #| column: page
 #| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
 #| fig-cap-location: top
-#| layout-ncol: 2
-#| fig-subcap:
-#|   - "First visits only"
-#|   - "All visits" 
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "First visits only"
+#   - "All visits" 
 
 # fig_females_first |> print()
 # 
@@ -112,7 +117,8 @@ plot_compact_pvd(
     fig_females_first,
     fig_females_all
   ),
-  facet_label = c("Females, First Visit Only", "Females, All Visits")
+  facet_label = c("Females, First Visit Only", "Females, All Visits"),
+  y_text_size = 11
 )
 ```
 
@@ -130,12 +136,14 @@ Similarly, clinically-elevated SCL90 values appear before FXTAS stage 1 for fema
 #| label: "fig-all-visits"
 #| column: page
 #| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
 #| fig-cap: "Estimated event sequences - all visits"
 #| fig-cap-location: top
-#| layout-ncol: 2
-#| fig-subcap:
-#|   - "Males only" 
-#|   - "Females only"
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "Males only" 
+#   - "Females only"
 
 # fig_both_all |> print()
 # fig_males_all |> print()
@@ -146,7 +154,8 @@ plot_compact_pvd(
     fig_males_all,
     fig_females_all
   ),
-  facet_label = c("Males", "Females")
+  facet_label = c("Males", "Females"),
+  y_text_size = 11
 )
 ```
 
