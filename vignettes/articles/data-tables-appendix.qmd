@@ -20,10 +20,21 @@ kinesia_vars =
     paste0(kinesia_vars, "*")) |> 
   sort()
 
-table1(na.is.category = FALSE, overall = FALSE,
+table1::t1flex(
+  table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
        stratified_formula(kinesia_vars, column_var),
        data = v1_usable)
+) |>
+  flextable::width(
+    width = 2
+  ) |>
+  flextable::width(
+    j = 2:7,
+    width = 1.25
+  )
+
+
 
 ```
 
@@ -37,12 +48,22 @@ purdue_vars = c(
   "Purdue pegboard 1st Trial Total, R+L+B",
   if(show_missingness_reasons) "Purdue pegboard 1st Trial Total, R+L+B: missingness reasons"
 )
-
-table1(na.is.category = FALSE, overall = FALSE,
+table1::t1flex(
+  table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
        stratified_formula(purdue_vars, column_var),
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
        data = v1_usable)
+) |>
+  flextable::width(
+    width = 2
+  ) |>
+  flextable::width(
+    j = 2:7,
+    width = 1.25
+  )
+
+
 ```
 
 

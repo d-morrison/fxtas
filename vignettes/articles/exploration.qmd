@@ -321,13 +321,24 @@ if(show_missingness_reasons)
           x = names(v1_usable))) |> as.vector()
 }
 
-table1(
-  na.is.category = FALSE, 
-  overall = FALSE,
-  NA.label = NA.label1,
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min, Max]"),
-  data = v1_usable)
+table1::t1flex(
+  table1(
+    na.is.category = FALSE, 
+    overall = FALSE,
+    NA.label = NA.label1,
+    stratified_formula(vars, column_var),
+    # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min, Max]"),
+    data = v1_usable
+  )
+) |>
+  flextable::width(
+    width = 2
+  ) |>
+  flextable::width(
+    j = 2:7,
+    width = 1.25
+  )
+
 
 ```
 
@@ -356,15 +367,26 @@ cantab_vars = c(
   "PAL Total errors (adjusted)*",
   "RTI Five-choice movement time",
   "RTI Five-choice movement time*") 
-# |> 
+# > 
 #   sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(v1_usable))) |> 
 # as.vector()
 
-table1(na.is.category = FALSE, overall = FALSE,
+table1::t1flex(
+  table1(na.is.category = FALSE, overall = FALSE,
        NA.label = "Missing (empty in RedCap)",
        stratified_formula(cantab_vars, column_var),
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
        data = v1_usable)
+) |>
+  flextable::width(
+    width = 2
+  ) |>
+  flextable::width(
+    j = 2:7,
+    width = 1.25
+  )
+
+
 ```
 
 ### Thyroid and autoimmune diseases  {.appendix}
