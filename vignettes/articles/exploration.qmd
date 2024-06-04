@@ -114,28 +114,6 @@ table1(
 
 <br>
 
-```{r}
-#| tbl-cap: "Age of onset for those with a head tremor recorded."
-#| label: "tbl-head-tremor-AO"
-#| eval: false # converting to docx runs into a weird `flextable()` edge case because two subcolumn headers are identical
-vars = c(
-  "Head Tremor: Age of onset",
-  if(show_missingness_reasons) "Head Tremor: Age of onset: missingness reasons"
-  
-)
-
-table1(
-  na.is.category = FALSE, 
-  overall = FALSE,
-  NA.label = NA.label1,
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = v1_usable |> 
-    filter(
-      !(Study %in% c("Trax Phase 1", "GP3")),
-      `Head tremor` == "Yes"))
-
-```
 
 ### Ataxia  {.appendix}
 

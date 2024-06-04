@@ -21,37 +21,11 @@ figs = extract_figs_from_pickle(size.y = size.y,
   output_folder = output_folder)
 ```
 
-::: landscape
-
-```{r, eval=FALSE}
-#| label: "fig-pvd_optimal-old"
-#| layout-ncol: 2
-#| fig-height: !expr pvd_height
-#| fig-cap: !expr glue::glue("positional variance diagrams for {n_s_optimal} subtypes")
-#| fig-cap-location: top
-#| column: page
-#| fig-subcap:
-#|   - "Subtype 1"
-#|   - "Subtype 2"
-#|   - "Subtype 3"
-#|   - "Subtype 4"
-#|   - "Subtype 5"
-#|   - "Subtype 6"
-library(ggplot2)
-
-figs |> print_PVDs()
-
-# plot_compact_pvd(
-#   figs = figs,
-#   tile_height = 2,
-#   tile_width = 1
-# )
-
-```
 
 ```{r}
 #| label: "fig-pvd_optimal"
 #| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
 #| fig-cap: !expr glue::glue("positional variance diagrams for {n_s_optimal} subtypes")
 #| fig-cap-location: top
 #| column: page
@@ -62,10 +36,13 @@ library(ggplot2)
 plot_compact_pvd(
   figs = figs,
   tile_height = 2,
-  facet_label_prefix = NULL
+  facet_label_prefix = NULL,
+  y_text_size = 8
 )
 
 ```
+
+::: landscape
 
 ```{r}
 #| tbl-cap: !expr glue::glue("Subtype demographics ({n_s} subtypes)")

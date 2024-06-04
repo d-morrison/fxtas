@@ -2,54 +2,6 @@
 
 {{< include table_drug_use.qmd >}}
 
-
-### Cancer {.appendix}
-
-```{r}
-vars = c(
-  "Thyroid Cancer",
-  "Skin Cancer",
-  "Melanoma",
-  "Prostate Cancer",
-  "Other Cancer",
-  "Any Cancer"
-)
-
-table1(na.is.category = FALSE, overall = FALSE,
-       NA.label = NA.label1,
-       stratified_formula(vars, column_var),
-       data = v1_usable)
-```
-
-
-### Surgery  {.appendix}
-
-```{r}
-
-vars = 
-  c(
-    "Surgery",
-    "Anesthesia (medic_surg_anes)", 
-    "Anesthesia (new_mds_med_anes1)"
-    # "Other Cancer (detailed)", # don't include in table
-    # "Surgery",
-    # "Surgery type",
-    # "Surgery: Type/Age",
-    # "Surgery 2: Type/Age",
-    # "Surgery 3: Type/Age",
-    # "Surgery 4: Type/Age",
-    # "Surgery 5: Type/Age",
-  )
-# grep(pattern = "surgery", ignore.case = TRUE, x = names(trax_gp34_all), value = TRUE)
-
-library(table1)
-table1(na.is.category = FALSE, overall = FALSE,
-       NA.label = NA.label1,
-       stratified_formula(vars, column_var),
-       data = v1_usable)
-```
-
-
 ### Kinesia  {.appendix}
 
 ```{r}

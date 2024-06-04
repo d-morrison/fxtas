@@ -7,7 +7,7 @@ knitr:
 project: 
   execute-dir: project
 filters:
-  - ../docx-landscape.lua
+  - ../../docx-landscape.lua
 ---
 
 ```{=html}
@@ -46,7 +46,7 @@ knitr::opts_chunk$set(
 #| message: false
 # devtools::load_all()
 library(fxtas)
-# reticulate::use_condaenv("fxtas39",required = TRUE)
+reticulate::use_condaenv("fxtas39",required = TRUE)
 library(tidyverse)
 library(reticulate)
 library(pander)
@@ -62,6 +62,7 @@ run_CV =  TRUE
 # run_CV = FALSE
 
 pvd_height = 8
+pvd_width = 10
 size.y = 11
 N_startpoints = 10L
 N_S_max = 8L
@@ -168,6 +169,7 @@ For the `r n_missing` cases with missing values, we assigned probabilities of `r
 ```{r}
 #| label: tbl-ex-incomplete-data
 #| tbl-cap: "Distribution of ataxia severity among cases"
+
 table1(
   na.is.category = FALSE,
   data = v1_usable_cases, 
@@ -234,6 +236,7 @@ sustain_output = run_and_save_OSA(
   use_parallel_startpoints = FALSE,
   seed = 1,
   plot = TRUE,
+  rerun = TRUE,
   patient_data = patient_data,
   N_CV_folds = N_CV_folds)
 
@@ -431,7 +434,7 @@ pval_sex_gp34_v1 = permutation_test(
 
 ```
 
-@fig-first-only-1 and @fig-first-only-2 show estimated event sequences stratified by sex. We found statistically significant evidence of a difference in event sequences between males and females (p = `r pval_sex_gp34_v1`). 
+@fig-first-only shows the estimated event sequences stratified by sex. We found statistically significant evidence of a difference in event sequences between males and females (p = `r pval_sex_gp34_v1`). 
 It appears that males develop cerebral, cerebellar, and splenium white matter hyperintensity at an earlier stage of the event sequence than females (events 6, 7, and 8 for males versus 9, 1)
 ataxia severity earlier in the event sequence than females, while females experience MRI events earlier in the event sequence than males.^[There are probably other patterns worth noting here; clinical folks, please add your observations from the results here.]
 
@@ -570,6 +573,8 @@ We had substantial amounts of missing data. As described in the methods, we used
 :::
 
 
+::: landscape
+
 # Tables {.unnumbered}
 
 ```{r}
@@ -619,11 +624,19 @@ table_out =
         replacement = "", 
         fixed = TRUE))
 
-table_out |> pander()
+table_out |> 
+  flextable::flextable() |>
+  flextable::set_header_labels(
+    values = c("Category", "Biomarker", "Levels", "Female", "Male")
+  ) |>
+  flextable::width(j = ~ biomarker, width = 3) |>
+  flextable::width(j = ~ category + levels, width = 2) |>
+  flextable::theme_booktabs() |>
+  flextable::align(j = ~ biomarker + levels, align = "center", part = "all")
 
 ```
 
-::: landscape
+{{< pagebreak >}}
 
 ```{r}
 #| label: "tbl-demographics"
@@ -678,14 +691,15 @@ tbl_pval <- v1_usable |>
   ) |>
   gtsummary::modify_column_hide(columns = c(stat_1, stat_2))
 
-tbl_final <- gtsummary::tbl_merge(
+gtsummary::tbl_merge(
   list(tbl_stat, tbl_pval), tab_spanner = FALSE
-)
-
-tbl_final
+) |>
+  gtsummary::modify_caption(
+    caption = "Demographics by CGG repeats level"
+  )
 ```
 
-{{< pagebreak >}}
+:::
 
 # Figures {.unnumbered}
 
@@ -693,12 +707,14 @@ tbl_final
 #| label: "fig-first-only"
 #| column: page
 #| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
 #| fig-cap: "Estimated event sequence models, stratified by sex, first visits only"
 #| fig-cap-location: top
-#| layout-ncol: 2
-#| fig-subcap:
-#|   - "Males"
-#|   - "Females"
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "Males"
+#   - "Females"
 
 
 # fig_both_first |> print()
@@ -710,7 +726,8 @@ plot_compact_pvd(
     fig_males_first,
     fig_females_first
   ),
-  facet_label = c("Males <br>", "Females <br>")
+  facet_label = c("Males <br>", "Females <br>"),
+  y_text_size = 11
 )
 
 ```
@@ -721,12 +738,14 @@ plot_compact_pvd(
 #| label: "fig-pvd-by-cgg"
 #| column: page
 #| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
 #| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only"
 #| fig-cap-location: top
-#| layout-ncol: 2
-#| fig-subcap:
-#|   - "CGG < 100"
-#|   - "CGG 100+"
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "CGG < 100"
+#   - "CGG 100+"
 
 # fig_both_first |> print() 
 # fig_under100 |> print()
@@ -737,7 +756,8 @@ plot_compact_pvd(
     fig_under100,
     fig_over100
   ),
-  facet_label = c("CGG < 100 <br>", "CGG &ge; 100 <br>")
+  facet_label = c("CGG < 100 <br>", "CGG &ge; 100 <br>"),
+  y_text_size = 11
 )
 
 ```
@@ -748,12 +768,14 @@ plot_compact_pvd(
 #| label: "fig-pvd-by-cgg-male"
 #| column: page
 #| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
 #| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only, males only"
 #| fig-cap-location: top
-#| layout-ncol: 2
-#| fig-subcap:
-#|   - "Males, CGG < 100"
-#|   - "Males, CGG ≥ 100"
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "Males, CGG < 100"
+#   - "Males, CGG ≥ 100"
 
 # fig_males_first |> print() 
 # fig_under100_males |> print()
@@ -764,7 +786,8 @@ plot_compact_pvd(
     fig_under100_males,
     fig_over100_males
   ),
-  facet_label = c("Males, CGG < 100 <br>", "Males, CGG &ge; 100  <br>")
+  facet_label = c("Males, CGG < 100 <br>", "Males, CGG &ge; 100  <br>"),
+  y_text_size = 11
 )
 
 ```
@@ -775,12 +798,14 @@ plot_compact_pvd(
 #| label: "fig-pvd-by-cgg-female"
 #| column: page
 #| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
 #| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only, females only"
 #| fig-cap-location: top
-#| layout-ncol: 2
-#| fig-subcap:
-#|   - "Females, CGG < 100"
-#|   - "Females, CGG ≥ 100"
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "Females, CGG < 100"
+#   - "Females, CGG ≥ 100"
 
 # fig_females_first |> print() 
 # fig_under100_females |> print()
@@ -791,7 +816,8 @@ plot_compact_pvd(
     fig_under100_females,
     fig_over100_females
   ),
-  facet_label = c("Females, CGG < 100  <br>", "Females, CGG &ge; 100  <br>")
+  facet_label = c("Females, CGG < 100  <br>", "Females, CGG &ge; 100  <br>"),
+  y_text_size = 11
 )
 
 ```
@@ -802,12 +828,14 @@ plot_compact_pvd(
 #| label: "fig-pvd-by-gender-cgg_under100"
 #| column: page
 #| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
 #| fig-cap: "Estimated event sequences, stratified by sex, for CGG repeats <100; first visits only"
 #| fig-cap-location: top
-#| layout-ncol: 2
-#| fig-subcap:
-#|   - "Males, CGG < 100"
-#|   - "Females, CGG < 100"
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "Males, CGG < 100"
+#   - "Females, CGG < 100"
 
 # fig_under100_males |> print()
 # fig_under100_females |> print()
@@ -817,7 +845,8 @@ plot_compact_pvd(
     fig_under100_males,
     fig_under100_females
   ),
-  facet_label = c("CGG < 100, Males  <br>", "CGG < 100, Females  <br>")
+  facet_label = c("CGG < 100, Males  <br>", "CGG < 100, Females  <br>"),
+  y_text_size = 11
 )
 
 ```
@@ -828,12 +857,14 @@ plot_compact_pvd(
 #| label: "fig-pvd-by-gender-cgg_over100"
 #| column: page
 #| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
 #| fig-cap: "Estimated event sequences, stratified by sex, for CGG repeats ≥100; first visits only"
 #| fig-cap-location: top
-#| layout-ncol: 2
-#| fig-subcap:
-#|   - "Males, CGG ≥ 100"
-#|   - "Females, CGG ≥ 100"
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "Males, CGG ≥ 100"
+#   - "Females, CGG ≥ 100"
 
 # fig_over100_males |> print()
 # fig_over100_females |> print()
@@ -843,12 +874,11 @@ plot_compact_pvd(
     fig_over100_males,
     fig_over100_females
   ),
-  facet_label = c("CGG &ge; 100, Males  <br>", "CGG &ge; 100, Females  <br>")
+  facet_label = c("CGG &ge; 100, Males  <br>", "CGG &ge; 100, Females  <br>"),
+  y_text_size = 11
 )
 
 ```
-
-:::
 
 # Supplementary material {.appendix}
 
