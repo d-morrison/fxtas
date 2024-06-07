@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 ### Results for latent subtypes analysis {#sec-latent-subtypes .appendix}
 
 ```{r}
@@ -49,6 +54,8 @@ plot_compact_pvd(
 #| label: tbl-sg_demos
 #| results: asis
 
+
+set.seed(2)
 table_subtype_by_demographics(
   patient_data,
   subtype_and_stage_table = 

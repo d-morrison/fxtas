@@ -115,7 +115,7 @@ according to the procedures approved by the
 University of California Davis Institutional Review Board.  
 
 The primary event sequence analysis included baseline data from 297 participants 
-(`r `nrow(v1_usable_cases)` Fragile X premutation carriers and `r nrow(gp34_v1_controls)`  controls) from the two cohorts. 
+(`r nrow(v1_usable_cases)` Fragile X premutation carriers and `r nrow(gp34_v1_controls)`  controls) from the two cohorts. 
 
 @fig-hist-CGG-gp34-v1 shows the distribution of CGG repeats 
 among the participants included in the analysis. 
@@ -1010,7 +1010,8 @@ temp$CVIC |> plot_CVIC()
 
 ```
 
-It appears that the model reaches optimum CVIC at 6 subtypes.
+It appears that the model reaches optimum CVIC at `r which.min(temp$CVIC)` subtypes. 
+For clinical interpretation, we did not want to go beyond 6 subtypes.
 
 ## Out-of-fold log-likelihood distribution {.appendix}
 
