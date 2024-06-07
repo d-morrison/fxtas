@@ -10,7 +10,7 @@ table_subtype_by_demographics(patient_data, subtype_and_stage_table)
 \item{subtype_and_stage_table}{}
 }
 \value{
-A \code{"tableby"} object (extends \link[arsenal:arsenal_table]{arsenal::arsenal_table}; see \link[arsenal:tableby]{arsenal::tableby})
+A \link[gtsummary:tbl_summary]{gtsummary::tbl_summary}
 }
 \description{
 Title

@@ -1013,7 +1013,8 @@ temp$CVIC |> plot_CVIC()
 
 ```
 
-It appears that the model reaches optimum CVIC at 6 subtypes.
+It appears that the model reaches optimum CVIC at `r which.min(temp$CVIC)` subtypes. 
+For clinical interpretation, we did not want to go beyond 6 subtypes.
 
 ## Out-of-fold log-likelihood distribution {.appendix}
 
