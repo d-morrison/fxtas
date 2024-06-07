@@ -74,6 +74,8 @@ format:
     toc: false
     echo: false
     # fig-format: svg
+    fig-dpi: 300
+    # dpi: 300
     toc-depth: 4
     cap-location: top
     fig-cap-location: top

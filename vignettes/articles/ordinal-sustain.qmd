@@ -62,6 +62,9 @@ fit_models = TRUE
 run_CV =  TRUE
 # run_CV = FALSE
 
+# plot_python = TRUE
+plot_python = FALSE
+
 pvd_height = 8
 pvd_width = 10
 size.y = 11
@@ -115,7 +118,7 @@ according to the procedures approved by the
 University of California Davis Institutional Review Board.  
 
 The primary event sequence analysis included baseline data from 297 participants 
-(`r `nrow(v1_usable_cases)` Fragile X premutation carriers and `r nrow(gp34_v1_controls)`  controls) from the two cohorts. 
+(`r nrow(v1_usable_cases)` Fragile X premutation carriers and `r nrow(gp34_v1_controls)`  controls) from the two cohorts. 
 
 @fig-hist-CGG-gp34-v1 shows the distribution of CGG repeats 
 among the participants included in the analysis. 
@@ -249,7 +252,7 @@ sustain_output = run_and_save_OSA(
   dataset_name = dataset_name, 
   use_parallel_startpoints = FALSE,
   seed = 1,
-  plot = TRUE,
+  plot = plot_python,
   rerun = TRUE,
   patient_data = patient_data,
   N_CV_folds = N_CV_folds)
@@ -275,7 +278,7 @@ sustain_output_males = run_and_save_OSA(
   dataset_name = "males",
   use_parallel_startpoints = FALSE,
   seed = 1,
-  plot = TRUE,
+  plot = plot_python,
   rerun = FALSE,
   fig_size = c(20, 10)
 )
@@ -301,7 +304,7 @@ sustain_output_females = run_and_save_OSA(
   dataset_name = "females", 
   use_parallel_startpoints = FALSE,
   seed = 1,
-  plot = TRUE,
+  plot = plot_python,
   rerun = FALSE,
   fig_size = c(20,10))
 

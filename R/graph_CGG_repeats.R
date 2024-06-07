@@ -53,8 +53,9 @@ graph_CGG_repeats = function(
     theme(legend.position = "bottom") +
     labs(colour = "") +
     ylab("# study participants") +
-    scale_x_log10() +
-    xlab("# CGG repeats (logarithmic spacing)")
+    expand_limits(x = 0) +
+    # scale_x_log10() +
+    xlab("# CGG repeats")
 
   # ---------------------------------------------------------------
 
