@@ -1,21 +1,24 @@
-#' Title
+#' @title Compute probabilities of true biomarker levels
 #'
-#' @param dataset
-#' @param biomarker_varnames
-#' @param ModelScores
-#' @param DataScores
-#' @param prob_dist
-#'
+#' @param dataset a [data.frame()] containing biomarker data in columns and observations in rows; column names must include all the values of `biomarker_varnames`
+#' @param biomarker_varnames a [character()] vector of biomarker variable names
+#' @param ModelScores a vector of true score levels (max size among all biomarkers)
+#' @param prob_dist a vector of probabilities of correctly classifying a biomarker level
+#' @inheritParams run_OSA
+#' @inheritDotParams compute_prob_dist
 #' @return
 #' @export
 #'
 compute_prob_scores = function(
     dataset,
-    biomarker_varnames,
-    ModelScores,
-    DataScores,
-    prob_dist,
-    verbose = FALSE
+    biomarker_levels,
+    biomarker_varnames = names(biomarker_levels),
+    ModelScores = compute_ModelScores(biomarker_levels),
+    prob_dist = compute_prob_dist(
+      biomarker_levels = biomarker_levels,
+      ...),
+    verbose = FALSE,
+    ...
 )
 {
   prob_score_dims =
@@ -26,7 +29,7 @@ compute_prob_scores = function(
     )
 
   prob_score0 = array(
-    NA,
+    0,
     dim = prob_score_dims |> sapply(length),
     dimnames = prob_score_dims
   )
@@ -39,30 +42,19 @@ compute_prob_scores = function(
 
   for (biomarker in biomarker_varnames)
   {
+
     if(verbose) message('computing prob scores for ', biomarker, " at ", Sys.time())
-    for (datascore in DataScores)
-    {
-      for (modelscore in ModelScores)
-      {
-        prob_score0[
-          dataset[[biomarker]] == datascore,
-          biomarker,
-          modelscore
-        ] =
-          prob_dist[modelscore, datascore, biomarker]
-      }
 
-    }
+    cur_confusion_matrix = prob_dist[[biomarker]]
+    cur_observed_scores =
+      dataset[[biomarker]] |>
+      as.character() |>
+      stringr::str_replace_na()
 
-    if(any(dataset[[biomarker]] |> is.na()))
-    {
-      prob_score0[
-        dataset[[biomarker]] |> is.na(),
-        biomarker,
-
-      ] = 1/length(ModelScores)
-    }
+    prob_score0[ , biomarker, 1:ncol(cur_confusion_matrix)] =
+      cur_confusion_matrix[cur_observed_scores, ]
 
   }
+
   return(prob_score0)
 }

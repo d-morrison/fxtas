@@ -1,0 +1,90 @@
+---
+title: "potential variables list"
+format: 
+  html:
+    embed-resources: true
+editor: visual
+---
+
+
+```{=html}
+<style>
+.quarto-figure-center > figure {
+  text-align: center;
+}
+</style>
+```
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo = FALSE,
+  comment = "#>",
+  # fig.width = 7, 
+  # fig.height = 10,
+  include = TRUE
+)
+```
+
+```{r setup}
+#| message: false
+devtools::load_all()
+library(tidyverse)
+library(reticulate)
+library(pander)
+```
+
+```{r}
+
+biomarker_group_list = 
+  all_potential_biomarkers()
+
+biomarker_groups = 
+  biomarker_group_list |> 
+  compile_biomarker_groups_table()
+
+```
+
+@tbl-biomarker-list lists the biomarkers that are potentially usable for analysis by the Ordinal SuStaIn method.
+
+Notes: 
+
+- "Any Autoimmune" includes:
+  - "Lupus",
+  - "Rheumatoid arthritis",
+  - "Multiple Sclerosis: Workup",
+  - "ANA positive",
+  - "Sjogrens Syndrome",
+  - "Raynauds Syndrome",
+  - "Pulmonary Fibrosis"
+  
+- "Any tremor (excluding Head Tremor)" includes:
+  - "Intention tremor",
+  - "Resting tremor",
+  - "Postural tremor",
+  - "Intermittent tremor"
+  
+- "Any cancer" includes:
+  - "Thyroid Cancer",
+  - "Skin Cancer",
+  - "Melanoma",
+  - "Prostate Cancer",
+  - "Other Cancer"
+
+- an asterisk ("*") after the biomarker name indicates a numerical variable that has been categorized.
+
+```{r}
+#| tbl-cap: "Potential biomarkers for Ordinal SuStaIn analysis"
+#| label: "tbl-biomarker-list"
+table_out =
+  biomarker_groups |> 
+  select(category = biomarker_group, biomarker) |> 
+  slice_head(by = biomarker)
+
+table_out |> 
+  pander()
+
+writexl::write_xlsx(table_out, 
+                    path = fs::path(here::here(), "output", "potential_variables.xlsx"))
+
+```

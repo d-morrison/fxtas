@@ -2,20 +2,37 @@
 % Please edit documentation in R/compute_prob_scores.R
 \name{compute_prob_scores}
 \alias{compute_prob_scores}
-\title{Title}
+\title{Compute probabilities of true biomarker levels}
 \usage{
 compute_prob_scores(
   dataset,
-  biomarker_varnames,
-  ModelScores,
-  DataScores,
-  prob_dist,
-  verbose = FALSE
+  biomarker_levels,
+  biomarker_varnames = names(biomarker_levels),
+  ModelScores = compute_ModelScores(biomarker_levels),
+  prob_dist = compute_prob_dist(biomarker_levels = biomarker_levels, ...),
+  verbose = FALSE,
+  ...
 )
 }
 \arguments{
-\item{prob_dist}{}
+\item{dataset}{a \code{\link[=data.frame]{data.frame()}} containing biomarker data in columns and observations in rows; column names must include all the values of \code{biomarker_varnames}}
+
+\item{biomarker_levels}{a list containing the levels for each biomarker}
+
+\item{biomarker_varnames}{a \code{\link[=character]{character()}} vector of biomarker variable names}
+
+\item{ModelScores}{a vector of true score levels (max size among all biomarkers)}
+
+\item{prob_dist}{a vector of probabilities of correctly classifying a biomarker level}
+
+\item{verbose}{\code{\link[=logical]{logical()}} indicating whether to print debugging information}
+
+\item{...}{
+  Arguments passed on to \code{\link[=compute_prob_dist]{compute_prob_dist}}
+  \describe{
+    \item{\code{prob_correct}}{the probability of correctly classifying the underlying biomarker level: p(obs = true)}
+  }}
 }
 \description{
-Title
+Compute probabilities of true biomarker levels
 }

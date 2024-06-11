@@ -1,2 +1,133 @@
+authors:
+  - name: Douglas Ezra Morrison
+    affiliation:
+      - ref: ucdphs
+    corresponding: true
+    email: demorrison@ucdavis.edu
+  - name: Matthew Ponzini
+    affiliation:
+      - ref: ucdphs
+  - name: Ellery R Santos
+    affiliation:
+      - ref: ucdmind
+  - name: Hazel Maridith Barlahan Biag
+    affiliation:
+      - ref: ucdmind
+  - name: Glenda Espinal
+    affiliation:
+      - ref: ucdmind
+  - name: Flora Tassone
+    affiliation:
+      - ref: ucdmind
+      - ref: ucdbiochem
+  - name: David Hassl
+    affiliation:
+      - ref: ucdmind
+      - ref: ucdpsych
+  - name: Andrea Schneider
+    affiliation:
+      - ref: ucdmind
+  - name: James Bourgeois
+  - name: Randi Hagerman
+    affiliation:
+      - ref: ucdmind
+      - ref: ucdpeds
+  - name: Kyoungmi Kim
+    affiliation:
+      - ref: ucdphs
+affiliations:
+  - id: ucdphs
+    name: University of California, Davis
+    department: Department of Public Health Sciences
+    city: Davis
+    state: CA
+    country: USA
+  - id: ucdmind
+    department: MIND Institute
+    name: University of California, Davis
+    city: Davis
+    state: CA
+    country: USA
+  - id: ucdbiochem
+    department: Department of Biochemistry and Molecular Medicine
+    name: University of California, Davis School of Medicine
+    city: Davis
+    state: CA
+    country: USA
+  - id: ucdpsych
+    department: Department of Psychiatry and Behavioral Sciences
+    name: University of California, Davis
+    city: Davis
+    state: CA
+    country: USA
+  - id: ucdpeds
+    department: Department of Pediatrics
+    name: University of California, Davis Medical Center
+    city: Davis
+    state: CA
+    country: USA
 project:
   execute-dir: project
+format:
+  docx:
+    # reference-doc: template1.docx
+    toc: false
+    echo: false
+    # fig-format: svg
+    fig-dpi: 300
+    # dpi: 300
+    toc-depth: 4
+    cap-location: top
+    fig-cap-location: top
+    tbl-cap-location: top
+    number-sections: true
+    number-depth: 3
+    link-citations: true
+    date: last-modified
+    date-format: "[Last modified:] YYYY-MM-DD: H:mm:ss (A)"
+    embed-resources: true
+    appendix-style: plain
+    mainfont: serif
+  pdf:
+    documentclass: scrartcl
+  html:
+    toc: true
+    # fig-format: svg
+    toc-float: true
+    toc-depth: 4
+    embed-resources: true
+    appendix-style: plain
+    mainfont: serif
+    theme:
+       light:
+         - cosmo
+         - custom.scss
+       dark:
+         - darkly
+         - custom.scss
+    css: custom.scss
+    number-sections: true
+    number-depth: 3
+    html-math-method: mathjax
+    cap-location: top
+    fig-cap-location: top
+    tbl-cap-location: top
+    code-fold: true
+    echo: false
+    date: last-modified
+    date-format: "[Last modified:] YYYY-MM-DD: H:mm:ss (A)"
+bibliography: ../references.bib
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+    R.options:
+      dev: svg
+execute:
+  warning: false
+  message: false
+  cache: false
+  freeze: auto  # re-render only when source changes
+filters:
+  - docx-landscape.lua
+  - authors-block

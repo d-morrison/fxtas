@@ -1,5 +1,5 @@
-#' Title
-#'
+#' Plot positional variance diagram
+#' @inheritParams format_results_list
 #' @param samples_sequence
 #' @param samples_f
 #' @param n_samples
@@ -25,12 +25,12 @@
 #' @param save_kwargs
 #' @param results
 #' @param biomarker_levels
-#' @param biomarker_groups
+#' @param biomarker_groups biomarker groupings
 #' @param biomarker_events_table
 #' @param biomarker_event_names
 #' @param biomarker_plot_order
 #' @param synchronize_y_axes
-#'
+#' @inheritDotParams plot.PF
 #' @return
 #' @export
 #'
@@ -42,7 +42,7 @@ plot_positional_var = function(
         biomarker_event_names = biomarker_event_names),
     samples_f = results$samples_f,
     n_samples = results$ml_subtype |> nrow(),
-    score_vals,
+    score_vals = build_score_vals(biomarker_levels),
     biomarker_labels = names(biomarker_levels),
     biomarker_groups = NULL,
     biomarker_levels = NULL,
@@ -50,7 +50,7 @@ plot_positional_var = function(
       biomarker_levels |> get_biomarker_events_table(),
     biomarker_event_names =
       biomarker_events_table |> pull(biomarker_level),
-    biomarker_plot_order = biomarker_event_names |> sort(),
+    biomarker_plot_order = NULL,
     ml_f_EM = NULL,
     cval = FALSE,
     subtype_order = NULL,
@@ -69,7 +69,7 @@ plot_positional_var = function(
     separate_subtypes=FALSE,
     save_path=NULL,
     save_kwargs=NULL,
-    synchronize_y_axes = TRUE,
+    synchronize_y_axes = FALSE,
     ...)
 {
 
@@ -225,9 +225,16 @@ plot_positional_var = function(
         biomarker_order = biomarker_plot_order
       ) |>
       mutate(
-        `event name` =
-          glue("<i style='color:{group_color}'>{`event name`}</i>"),
-        `event name` = factor(`event name`, levels = `event name` |> unique())
+        `event label` =
+          glue("<i style='color:{group_color}'>{`row number and name`}</i>"),
+        `event label` = if_else(
+          .data$biomarker_group == "stage",
+          paste0("**", .data$`event label`, "**"),
+          .data$`event label`
+        ),
+        `event label` =
+          .data$`event label` |>
+          factor(levels = .data$`event label` |> unique())
       )
 
 
@@ -239,7 +246,7 @@ plot_positional_var = function(
     PF.plot =
       PFs  |>
       plot.PF(...) +
-      ggtitle(title_i)
+      ggplot2::ggtitle(title_i)
 
 
     figs[[i]] = structure(
@@ -250,6 +257,20 @@ plot_positional_var = function(
     #https://medium.com/@tobias.stalder.geo/plot-rgb-satellite-imagery-in-true-color-with-ggplot2-in-r-10bdb0e4dd1f
 
   }
+
+  if(length(figs) == 1)
+  {
+    figs = figs[[1]]
+  } else
+  {
+    class(figs) = c("PVD.list", class(figs))
+  }
+
+  figs = figs |>
+    structure(
+      biomarker_event_names = biomarker_event_names
+    )
+
   return(figs)
 
 }

@@ -1,20 +1,20 @@
-#' Title
+#' Build a formula for [table1::table1()]
 #'
-#' @param vars
-#' @param stratum
+#' @param vars row variables
+#' @param strata column variables
 #'
-#' @return
+#' @returns a [formula()] object
 #' @export
 #'
 #' @examples
 #' stratified_formula(c("Sepal.Length" ,"Sepal.Width"), "Species")
-stratified_formula = function(vars, stratum)
+stratified_formula = function(vars, strata)
 {
   paste(
     "~",
-    paste(formulaic::add.backtick(vars), collapse = " + "),
+    vars |> collapse_vars(),
     "|",
-    formulaic::add.backtick(stratum)
+    strata |> collapse_vars()
   ) |>
     formula()
 }

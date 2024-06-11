@@ -11,7 +11,7 @@ clean_numeric(x, NA_codes = c(777, 888, 999, extra_codes), extra_codes = NULL)
 
 \item{NA_codes}{numeric values that should be turned into to NAs}
 
-\item{extra_codes}{codes besides 777, 888, 999 to turn into NAs; has no effect if the `NA_codes` argument is changed from default by the user.}
+\item{extra_codes}{codes besides 777, 888, 999 to turn into NAs; has no effect if the \code{NA_codes} argument is changed from default by the user.}
 }
 \description{
 Replace missing codes (e.g., 777, 888, 999) with NAs in a numeric variable

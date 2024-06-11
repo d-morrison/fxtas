@@ -1,7 +1,7 @@
 #' Title
 #'
 #' @param ModelScores
-#' @param DataScores
+#' @param DataScores a list of possible scores
 #' @param biomarkers
 #' @param prob_correct
 #'

@@ -1,0 +1,22 @@
+```{r}
+#| label: tbl-lifestyle
+#| tbl-cap: "Drug use characteristics"
+
+vars = c("Drug use",
+         "Marijuana use",
+         "Alcohol use/abuse",
+         "# of drinks per day now",
+         if(show_missingness_reasons) "# of drinks per day now: missingness reasons"
+         )
+
+table1(na.is.category = FALSE, overall = FALSE,
+  NA.label = NA.label1,
+  stratified_formula(vars, column_var),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  footnote = paste0(
+    '"Alcohol Abuse" in GP3 (`mds_psy_alco`) ',
+    'and "Alcohol Use" in GP4 (`new_mds_psy_alco`) ',
+    'were combined as "Alcohol use/abuse".'),
+  data = v1_usable)
+
+```

@@ -3,6 +3,10 @@
 ^data-raw$
 dev_history.R
 ^dev$
+^misc$
+^output$
+^output*$
+^outputOLD$
 $run_dev.*
 ^LICENSE\.md$
 ^README\.Rmd$
@@ -13,3 +17,10 @@ $run_dev.*
 ^fxtas.*\.tar\.gz$
 ^fxtas.*\.tgz$
 ^vignettes/articles$
+^\.git$
+^\.github$
+^\.pkgdown$
+^cran-comment\.md$
+^cran-comments\.md$
+^pkgdown$
+^_pkgdown\.yml$

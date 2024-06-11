@@ -6,6 +6,7 @@ library(dplyr)
 conflicted::conflict_prefer("label", "Hmisc")
 conflicted::conflict_prefer("not", "magrittr")
 conflicted::conflicts_prefer(dplyr::filter)
+conflicted::conflicts_prefer(dplyr::last)
 library(tidyr)
 # dupes = gp3 |> semi_join(gp4, by = c("subj_id", "redcap_event_name"))
 # if(nrow(dupes) != 0) browser(message("why are there duplicate records?"))
@@ -53,8 +54,16 @@ readr::write_csv(decreased_age2, "inst/extdata/decreased_age2.csv")
 
 usethis::use_data(gp34, overwrite = TRUE)
 
-visit1 =
+gp34_v1 =
   gp34 |>
   get_visit1()
 
-usethis::use_data(visit1, overwrite = TRUE)
+usethis::use_data(gp34_v1, overwrite = TRUE)
+
+gp34_multivisit_only =
+  gp34 |>
+  filter(!is.na(`FXS ID`)) |>
+  filter(.by = `FXS ID`, n() > 1)
+
+usethis::use_data(gp34_multivisit_only, overwrite = TRUE)
+

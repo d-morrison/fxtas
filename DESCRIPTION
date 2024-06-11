@@ -1,6 +1,6 @@
 Package: fxtas
 Title: FXTAS
-Version: 0.0.0.9000
+Version: 0.0.0.9003
 Authors@R: 
     person("Douglas Ezra", "Morrison", , "demorrison@ucdavis.edu", role = c("cre", "aut"))
 Description: PKG_DESC.
@@ -8,39 +8,49 @@ License: MIT + file LICENSE
 URL: https://github.com/d-morrison/fxtas
 BugReports: https://github.com/d-morrison/fxtas/issues
 Imports: 
+    and,
+    arsenal,
+    cli,
     colorspace,
     config (>= 0.3.1),
     dplyr,
     forcats,
+    formulaic,
     fs,
+    ggnewscale,
     ggplot2,
     ggtext,
     glue,
     golem (>= 0.3.4),
+    here,
     magrittr,
     plotly,
+    purrr,
     rcartocolor,
     RColorBrewer,
     readxl,
     reticulate,
     shiny (>= 1.7.2),
+    splitTools,
+    table1,
     tibble,
     tidyr,
     tidyselect,
+    veccompare,
     viridis
 Suggests: 
-    formulaic,
     knitr,
     pander,
-    purrr,
     rmarkdown,
+    scales,
     testthat (>= 3.0.0),
-    tidyverse
+    tidyverse,
+    VennDiagram
 Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
 LazyData: true
-RoxygenNote: 7.2.3.9000
+RoxygenNote: 7.3.1
 Depends: 
     R (>= 2.10)
 VignetteBuilder: knitr
@@ -50,4 +60,5 @@ Config/reticulate/autoconfigure:
       list(package = "scipy")
     )
   )
+Config/build/copy-method: link
 Roxygen: list(markdown = TRUE)

@@ -2,15 +2,17 @@
 % Please edit documentation in R/compute_prob_correct.R
 \name{compute_prob_correct}
 \alias{compute_prob_correct}
-\title{Title}
+\title{Compute each biomarker's probability of being recorded at its baseline level}
 \usage{
-compute_prob_correct(dataset, biomarkers, DataScores, max_prob = 1)
+compute_prob_correct(dataset, biomarker_levels, max_prob = 1)
 }
 \arguments{
-\item{dataset}{Should be just the control data?}
+\item{dataset}{a \code{\link[=data.frame]{data.frame()}}; should be just control data}
 
-\item{max_prob}{}
+\item{biomarker_levels}{a list containing the levels of each biomarker}
+
+\item{max_prob}{a maximum value for the baseline probability}
 }
 \description{
-Title
+Compute each biomarker's probability of being recorded at its baseline level
 }

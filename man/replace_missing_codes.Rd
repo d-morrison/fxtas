@@ -10,7 +10,8 @@ replace_missing_codes(
     "Asked by clinician, but no answer from subject (99)",
     "Question not asked at time of data entry; check records (777)", "NA (888)",
     "No Response (999)", "Missing/Refused (999)"),
-  replacement = levels(x)[1]
+  replacement = levels(x)[1],
+  mapping = setNames(rep(replacement, length(missing_codes)), missing_codes)
 )
 }
 \arguments{
@@ -18,7 +19,9 @@ replace_missing_codes(
 
 \item{missing_codes}{a vector of strings}
 
-\item{replacement}{a string variable or `NA`}
+\item{replacement}{a string variable or \code{NA}}
+
+\item{mapping}{a named string vector}
 }
 \description{
 The default is to use the reference level of the factor.

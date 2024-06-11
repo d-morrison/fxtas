@@ -1,27 +1,47 @@
-plot.PF = function(PFs, size.y = 12)
+#' Create positional variance diagram (PVD)
+#'
+#' @param PFs a "PF" object (created by `compute_position_frequencies()`)
+#' @param size.y size of biomarker event labels
+#' @param color_label label for legend color scale
+#'
+#' @return a "PVD" object (extends [ggplot2::ggplot()])
+#' @export
+#'
+plot.PF = function(
+    PFs,
+    size.y = 10,
+    color_label = "Pr(stage)")
 {
-  PFs |>
+  to_return =
+    PFs |>
     mutate(
       position = as.numeric(position)
     ) |>
     ggplot(
       aes(
         x = position,
-        y = `event name`,
+        y = `event label`,
         fill = proportion
       )) +
-    geom_tile() +
+    ggplot2::geom_tile() +
     # scale_fill_identity() +
-    scale_fill_gradient(low = "gray", high = "red")+
-    scale_y_discrete(limits = rev) +
-    xlab('SuStaIn Stage') +
-    ylab(NULL) +
-    theme_bw() +
-    theme(
+    ggplot2::scale_fill_gradient(
+      low = "gray",
+      high = "red")+
+    ggplot2::scale_y_discrete(limits = rev) +
+    ggplot2::xlab('SuStaIn Stage') +
+    ggplot2::ylab(NULL) +
+    ggplot2::theme_bw() +
+    ggplot2::theme(
       legend.position = "bottom",
       axis.text.y =
-        element_markdown(hjust=0, size = size.y)
+        ggtext::element_markdown(
+          hjust = 0,
+          size = size.y)
     ) +
-    labs(fill = "Pr(stage)")
+    ggplot2::labs(fill = color_label)
+
+  to_return |>
+    structure(class = c("PVD", class(to_return)))
 }
 

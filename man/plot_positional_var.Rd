@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_positional_variance.R
 \name{plot_positional_var}
 \alias{plot_positional_var}
-\title{Title}
+\title{Plot positional variance diagram}
 \usage{
 plot_positional_var(
   results,
@@ -10,13 +10,13 @@ plot_positional_var(
     biomarker_event_names),
   samples_f = results$samples_f,
   n_samples = nrow(results$ml_subtype),
-  score_vals,
+  score_vals = build_score_vals(biomarker_levels),
   biomarker_labels = names(biomarker_levels),
   biomarker_groups = NULL,
   biomarker_levels = NULL,
   biomarker_events_table = get_biomarker_events_table(biomarker_levels),
   biomarker_event_names = pull(biomarker_events_table, biomarker_level),
-  biomarker_plot_order = sort(biomarker_event_names),
+  biomarker_plot_order = NULL,
   ml_f_EM = NULL,
   cval = FALSE,
   subtype_order = NULL,
@@ -35,13 +35,31 @@ plot_positional_var(
   separate_subtypes = FALSE,
   save_path = NULL,
   save_kwargs = NULL,
-  synchronize_y_axes = TRUE,
+  synchronize_y_axes = FALSE,
   ...
 )
 }
 \arguments{
-\item{synchronize_y_axes}{}
+\item{results}{pickle file contents}
+
+\item{biomarker_labels}{biomarker labels}
+
+\item{biomarker_groups}{biomarker groupings}
+
+\item{biomarker_levels}{biomarker levels}
+
+\item{biomarker_events_table}{table of biomarker events (excluding base level)}
+
+\item{biomarker_event_names}{vector of biomarker event names}
+
+\item{...}{
+  Arguments passed on to \code{\link[=plot.PF]{plot.PF}}
+  \describe{
+    \item{\code{PFs}}{a "PF" object (created by \code{compute_position_frequencies()})}
+    \item{\code{size.y}}{size of biomarker event labels}
+    \item{\code{color_label}}{label for legend color scale}
+  }}
 }
 \description{
-Title
+Plot positional variance diagram
 }

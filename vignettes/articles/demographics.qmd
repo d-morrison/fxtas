@@ -1,0 +1,23 @@
+```{r}
+#| label: "tbl-demographics"
+#| tbl-cap: "Demographics by CGG repeats level"
+
+vars = c(
+  # "Study",
+  "Age at visit",
+  # "# visits",
+  # column_var,
+  "Primary Ethnicity",
+  "Primary Race"
+  # "ApoE"
+  
+)
+v1_usable = trax_gp34_v1 |> filter(CGG < 200)
+column_var = "FX3*"
+table1(
+  na.is.category = TRUE, overall = FALSE,
+  NA.label = "Missing",
+  stratified_formula(vars, c("FX*", "Gender")),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  data = v1_usable)
+```
