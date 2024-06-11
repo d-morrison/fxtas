@@ -106,7 +106,7 @@ gp34_v1_controls =  v1_usable |> filter(CGG < 55)
 
 ### Study cohorts
 
-Research participants were recruited between 2007? and 2023?  
+Research participants were recruited between 2007??? and 2023???
 for two longitudinal cohorts (GP and Trax).
 Inclusion criteria were:
 
@@ -151,19 +151,24 @@ nlevs =
 
 ### Biomarkers of neurodegenerative events
 
-We analyzed baseline measurements of `r length(biomarker_levels)` biomarkers (@tbl-biomarker-list) with a total of `r nrow(biomarker_events_table)` non-baseline levels; 
-each level above baseline constitutes an outcome event in the disease progression modelling analysis (@sec-Statistical-analysis).
-@tbl-tremors - @tbl-autoimmune summarize the biomarker data, 
+We analyzed baseline measurements of `r length(biomarker_levels)` biomarkers (@tbl-biomarker-list) during the longitudinal follow-up period
+with a total of `r nrow(biomarker_events_table)` non-baseline levels; 
+each level above baseline constitutes an outcome event 
+in the disease progression modelling analysis (@sec-Statistical-analysis).
+[Supplementary Tables @tbl-tremors - @tbl-autoimmune] 
+summarize the biomarker data, 
 stratified by CGG (`r unique(v1_usable$"FX3*")`) 
 and Sex (`r unique(v1_usable$Gender)`).
 
 ## Statistical analysis {#sec-Statistical-analysis}
 
-We applied  the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2018uncovering; @young2021ordinal] to our dataset to find event sequences and subtypes for FXTAS patients. This algorithm combines disease progression modelling [@fonteijn2012event] and unsupervised clustering [@lazarsfeld1950logical; @mclachlan2019finite] to model event onset sequences using a cross-sectional sample of a patient population. The algorithm simultaneously clusters individuals into latent subtypes and characterizes the trajectory that best defines each subtype, thus capturing heterogeneity in both disease subtype and disease stage.
+We applied a data-driven event-based model using the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2018uncovering; @young2021ordinal] to our data to estimate event sequences and subtypes for FXTAS patients. This algorithm combines disease progression modelling [@fonteijn2012event] and unsupervised clustering [@lazarsfeld1950logical; @mclachlan2019finite] to model event onset sequences using a cross-sectional sample of a patient population. The algorithm simultaneously clusters individuals into latent subtypes and characterizes the trajectory that best defines each subtype, thus capturing heterogeneity in both disease subtype and disease stage.
 Ordinal SuStaIn uses Markov Chain Monte Carlo (MCMC) sampling to estimate the Bayesian posterior probability of each possible event sequence for each subtype given the training dataset, assuming a uniform prior distribution over the set of all possible patterns. 
 
-We fit models stratified by sex, with no latent subtypes (@fig-first-only). We also fit the model stratified by CGG repeats (<100 vs $\ge$ 100), also with no latent subtypes (@fig-pvd-by-cgg).
-We then fit the models stratified by both sex and CGG repeats (<100 vs $\ge$ 100), also with no latent subtypes (@sec-stratified-by-cgg-and-sex).
+We conducted subgroup analyses by fitting models stratified by 
+(1) sex, with no latent subtypes (@fig-first-only), 
+(2) CGG repeats (<100 vs $\ge$ 100), also with no latent subtypes (@fig-pvd-by-cgg), and
+(3) both sex and CGG repeats (<100 vs $\ge$ 100), also with no latent subtypes (@sec-stratified-by-cgg-and-sex).
 
 ### Incomplete data {#sec-incomplete-data}
 
@@ -173,15 +178,28 @@ n_missing = sum(x1 |> is.na())
 # n_obs = sum(x1 |> is.na() |> not()) # not() is deprecated?
 n_obs = sum(!is.na(x1)) 
 n_total = length(x1)
-pct_missing = scales::percent(n_missing/n_total, accuracy = 0.1)
-pct_obs = scales::percent(n_obs/n_total, accuracy = 0.1)
-probs = x1 |> table() |> proportions() |> as.vector() |> scales::percent(n_obs/n_total, accuracy = 0.01) |> 
+pct_missing = scales::percent(n_missing / n_total, accuracy = 0.1)
+pct_obs = scales::percent(n_obs / n_total, accuracy = 0.1)
+probs = x1 |> 
+  table() |> 
+  proportions() |> 
+  as.vector() |> 
+  scales::percent(n_obs/n_total, accuracy = 0.01) |> 
   and::and()
 ```
 
-We handled missing outcome event data by assigning a probability distribution across the possible values of the missing variable that matched the marginal distribution among the cases. 
-For example, `r n_missing` of the `length(x1)` cases (`r pct_missing`) had missing values for Ataxia Severity, and `r n_obs` (`r pct_obs`) had recorded values, distributed among severity levels 0-4 ( @tbl-ex-incomplete-data). 
-For the `r n_missing` cases with missing values, we assigned probabilities of `r probs` to levels `r and::and(0:4)`, respectively.
+We assumed that missing biomarker data 
+were missing completely at random (MCAR) (@rubin1976inference).
+We substituted missing outcome event data 
+by assigning a probability distribution across the 
+possible values of the missing variable 
+that matched the marginal distribution among the cases. 
+For example, `r n_missing` of the `length(x1)` cases (`r pct_missing`) 
+had missing values for Ataxia Severity, 
+and `r n_obs` (`r pct_obs`) had recorded values, 
+distributed among severity levels 0-4 ( @tbl-ex-incomplete-data). 
+For the `r n_missing` cases with missing values, 
+we assigned probabilities of `r probs` to levels `r and::and(0:4)`, respectively.
 
 ```{r}
 #| label: tbl-ex-incomplete-data
@@ -196,7 +214,7 @@ table1(
 
 ### Testing for differences between covariate subgroup strata
 
-To test for event sequence differences between males and females and between lower premutation levels (CGG <100) and higher premutation levels (CGG 100-199), we implemented a permutation test, in which we created 1000 permuted datasets in which the strata variables were randomly shuffled. 
+To test statistical significance for event sequence differences between males and females and between lower premutation levels (CGG <100) and higher premutation levels (CGG 100-199), we implemented a permutation test, in which we created 1000 permuted datasets in which the strata variables were randomly shuffled. 
 We computed the mean log-likelihood of the data for each permuted dataset (averaging across MCMC samples and summing across the strata being compared) and compared the distribution of permuted mean log-likelihoods to the observed log-likelihood calculated from the original (unpermuted) dataset.
 
 ### Latent subtypes
@@ -253,7 +271,7 @@ sustain_output = run_and_save_OSA(
   use_parallel_startpoints = FALSE,
   seed = 1,
   plot = plot_python,
-  rerun = TRUE,
+  rerun = FALSE,
   patient_data = patient_data,
   N_CV_folds = N_CV_folds)
 
@@ -430,6 +448,9 @@ fig_over100_females = extract_figs_from_pickle(size.y = size.y,
 
 # Results
 
+@tbl-demographics describes summary statistics patient characteristics included in the analysis. 
+Our data included XXX Fragile X premutation carriers and XXX controls, XXX males and XXX females, FXTAS stage, biomarkers etc.
+
 ## Stratified by sex
 
 ```{r}
@@ -598,126 +619,23 @@ The missing data contributes to the large amount of uncertainty in the results.
 # Tables {.unnumbered}
 
 ```{r}
-#| tbl-cap: "Biomarkers used in analysis"
-#| label: "tbl-biomarker-list"
+#| label: "tbl-demographics"
+#| tbl-cap: "Demographics by CGG repeats level"
 
-probs_above_baseline_by_gender = 
-  v1_usable |> 
-  summarize(
-    .by = "Gender",
-    across(
-      all_of(biomarker_varnames),
-      ~ mean(.x != levels(.x)[1], na.rm = TRUE)
-           )
-  ) |> 
-  pivot_longer(
-    cols = -Gender, 
-    names_to = "biomarker", 
-    values_to = "Pr(above_baseline)") |>
-  mutate(
-    `Pr(above_baseline)` = 
-      `Pr(above_baseline)` |>  
-      scales::percent(accuracy = 0.01)) |> 
-  pivot_wider(
-    id_cols = "biomarker",
-    names_from = Gender,
-    values_from = `Pr(above_baseline)`)
-
-table_out =
-  biomarker_events_table |> 
-  select(
-    category = biomarker_group, 
-    biomarker, 
-    levels) |> 
-  slice_head(by = biomarker) |> 
-  filter(category != "Stage") |> 
-  left_join(
-    probs_above_baseline_by_gender,
-    by = "biomarker",
-    relationship = "one-to-one"
-  ) |> 
-  mutate(
-    biomarker = 
-      biomarker |> 
-      sub(
-        pattern = "*", 
-        replacement = "", 
-        fixed = TRUE))
-
-table_out |> 
-  flextable::flextable() |>
-  flextable::set_header_labels(
-    values = c("Category", "Biomarker", "Levels", "Female", "Male")
-  ) |>
-  flextable::width(j = ~ biomarker, width = 3) |>
-  flextable::width(j = ~ category + levels, width = 2) |>
-  flextable::theme_booktabs() |>
-  flextable::align(j = ~ biomarker + levels, align = "center", part = "all")
+v1_usable |> make_demographics_table()
 
 ```
 
 {{< pagebreak >}}
 
 ```{r}
-#| label: "tbl-demographics"
-#| tbl-cap: "Demographics by CGG repeats level"
+#| tbl-cap: "Biomarkers used in analysis"
+#| label: "tbl-biomarker-list"
 
-vars = c(
-  # "Study",
-  "Age at visit",
-  # "# visits",
-  # column_var,
-  "Primary Race/Ethnicity",
-  # "Primary Ethnicity",
-  # "Primary Race",
-  "FXTAS Stage (0-5)*"
-  # "ApoE"
-  
-)
-
-# table1(
-#   na.is.category = FALSE, overall = FALSE,
-#   NA.label = "Missing",
-#   stratified_formula(vars, strata = "FX*"),
-#   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-#   data = v1_usable)
-
-
-# create table using gtsummary with p-value for sex difference
-tbl_stat <- gtsummary::tbl_strata(
-  data = v1_usable |>
-    dplyr::select(all_of(vars), Gender, `FX*`),
-  strata = c("Gender"),
-  .tbl_fun = ~ .x %>%
-    gtsummary::tbl_summary(
-      by = `FX*`,
-      type = gtsummary::all_continuous() ~ "continuous2",
-      statistic = list(
-        gtsummary::all_continuous() ~ c("{mean} ({sd})", "{median} [{min}, {max}]")
-      ),
-      digits = list(`Age at visit` ~ c(1, 2)),
-      missing_text = "Missing"
-    )
-)
-
-tbl_pval <- v1_usable |> 
-  dplyr::select(all_of(vars), Gender) |>
-  gtsummary::tbl_summary(
-    by = Gender,
-    missing_text = "Missing"
-  ) |>
-  gtsummary::add_p(
-    pvalue_fun = function(x) gtsummary::style_number(x, digits = 3)
-  ) |>
-  gtsummary::modify_column_hide(columns = c(stat_1, stat_2))
-
-gtsummary::tbl_merge(
-  list(tbl_stat, tbl_pval), tab_spanner = FALSE
-) |>
-  gtsummary::modify_caption(
-    caption = "Demographics by CGG repeats level"
-  )
+v1_usable |> make_biomarkers_table()
 ```
+
+{{< pagebreak >}}
 
 :::
 
@@ -903,8 +821,6 @@ plot_compact_pvd(
 # Supplementary material {.appendix}
 
 {{< pagebreak >}}
-
-## Distribution of CGG repeats
 
 ```{r}
 #| label: fig-hist-CGG-gp34-v1
