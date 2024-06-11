@@ -102,6 +102,8 @@ v1_usable_cases = v1_usable |> filter(CGG >= 55)
 # previously `nrow(v1_usable_cases)` was 221, which was based on incorrectly filtering on a version of CGG that hadn't been backfilled.
 
 gp34_v1_controls =  v1_usable |> filter(CGG < 55)
+males = v1_usable |> filter(Gender == "Male")
+females = v1_usable |> filter(Gender == "Female")
 ```
 
 ### Study cohorts
@@ -449,7 +451,9 @@ fig_over100_females = extract_figs_from_pickle(size.y = size.y,
 # Results
 
 @tbl-demographics describes summary statistics patient characteristics included in the analysis. 
-Our data included XXX Fragile X premutation carriers and XXX controls, XXX males and XXX females, FXTAS stage, biomarkers etc.
+Our data included `r nrow(v1_usable_cases)` Fragile X premutation carriers and `r nrow(gp34_v1_controls)` controls;
+`nrow(males)` males and `nrow(females)` females;
+FXTAS stage, biomarkers etc.
 
 ## Stratified by sex
 
