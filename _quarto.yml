@@ -79,6 +79,7 @@ format:
     toc-depth: 4
     cap-location: top
     fig-cap-location: top
+    appendix-title: "Sup."
     tbl-cap-location: top
     number-sections: true
     number-depth: 3

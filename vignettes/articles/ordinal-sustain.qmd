@@ -102,8 +102,6 @@ v1_usable_cases = v1_usable |> filter(CGG >= 55)
 # previously `nrow(v1_usable_cases)` was 221, which was based on incorrectly filtering on a version of CGG that hadn't been backfilled.
 
 gp34_v1_controls =  v1_usable |> filter(CGG < 55)
-males = v1_usable |> filter(Gender == "Male")
-females = v1_usable |> filter(Gender == "Female")
 ```
 
 ### Study cohorts
@@ -191,7 +189,8 @@ probs = x1 |>
 ```
 
 We assumed that missing biomarker data 
-were missing completely at random (MCAR) (@rubin1976inference).
+were missing completely at random (MCAR) 
+(@rubin1976inference, @little2019statistical).
 We substituted missing outcome event data 
 by assigning a probability distribution across the 
 possible values of the missing variable 
@@ -202,17 +201,6 @@ and `r n_obs` (`r pct_obs`) had recorded values,
 distributed among severity levels 0-4 ( @tbl-ex-incomplete-data). 
 For the `r n_missing` cases with missing values, 
 we assigned probabilities of `r probs` to levels `r and::and(0:4)`, respectively.
-
-```{r}
-#| label: tbl-ex-incomplete-data
-#| tbl-cap: "Distribution of ataxia severity among cases"
-
-table1(
-  na.is.category = FALSE,
-  data = v1_usable_cases, 
-  x = ~ `Ataxia: severity*`)
-```
-
 
 ### Testing for differences between covariate subgroup strata
 
@@ -450,10 +438,20 @@ fig_over100_females = extract_figs_from_pickle(size.y = size.y,
 
 # Results
 
+```{r}
+males = v1_usable |> filter(Gender == "Male")
+females = v1_usable |> filter(Gender == "Female")
+stages = v1_usable_cases |> select(`FXTAS Stage (0-5)*`) |> table()
+
+```
+
 @tbl-demographics describes summary statistics patient characteristics included in the analysis. 
-Our data included `r nrow(v1_usable_cases)` Fragile X premutation carriers and `r nrow(gp34_v1_controls)` controls;
-`nrow(males)` males and `nrow(females)` females;
-FXTAS stage, biomarkers etc.
+Our data included 
+`r nrow(v1_usable_cases)` Fragile X premutation carriers and 
+`r nrow(gp34_v1_controls)` controls;
+`r nrow(males)` males and `r `nrow(females)` females;
+and `r and::and(stages)` carriers at FXTAS stages `r names(stages) |> and::and()`, respectively.
+[@Kyoungmi: you mentioned we should say something about biomarker distributions here, but I'm not sure what exactly to add?]
 
 ## Stratified by sex
 
@@ -823,6 +821,17 @@ plot_compact_pvd(
 ```
 
 # Supplementary material {.appendix}
+
+```{r}
+#| label: tbl-ex-incomplete-data
+#| tbl-cap: "Distribution of ataxia severity among cases"
+
+table1(
+  na.is.category = FALSE,
+  data = v1_usable_cases, 
+  x = ~ `Ataxia: severity*`)
+```
+
 
 {{< pagebreak >}}
 

@@ -8,7 +8,7 @@
 scid_vars_for_table1 = function()
 {
   c(
-    "Was SCID completed?",
+    # "Was SCID completed?",
     "SCID: Mood Disorders",
     # "Bipolar I Disorder (MD01), Lifetime",
     # "Bipolar I Disorder (MD01), Current",

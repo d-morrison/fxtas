@@ -149,41 +149,20 @@ vars = c(
   "Intention tremor",
   "Resting tremor",
   "Postural tremor",
-  "Intermittent tremor",
-  "Any tremor (excluding Head Tremor)"
+  "Intermittent tremor"
+  # "Any tremor (excluding Head Tremor)"
   # "Tremor: Age of onset"
   # "Tremor: Age of onset: missingness reasons"
 )
 table1a(
   
   stratified_formula(vars, column_var),
-  render.continuous=c(
+  render.continuous = c(
     .="N", 
     .="Mean (SD)", 
     .="Median [Min, Max]"),
   data = visit1_cgg_55_199)
 
-```
-
-<br>
-
-```{r}
-#| tbl-cap: "Age of onset for those with 'Some tremors recorded', by sex"
-#| label: "tbl-tremor-ao-by-sex"
-#| 
-vars = c(
-  "Tremor: Age of onset",
-  # "Tremor: Age of onset: missingness reasons",
-  NULL
-)
-
-
-table1a(
-  
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1_cgg_55_199 |> 
-    filter(`Any tremor (excluding Head Tremor)` == "Some tremors recorded"))
 ```
 
 <br>
@@ -213,25 +192,6 @@ table1a(
 
 ```
 
-<br>
-
-```{r}
-#| tbl-cap: "Age of onset for those with a head tremor recorded."
-#| label: "tbl-head-tremor-AO-by-sex"
-vars = c(
-  "Head Tremor: Age of onset",
-  "Head Tremor: Age of onset: missingness reasons"
-  
-)
-
-table1a(
-  
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1_cgg_55_199 |> filter(`Head tremor` == "Yes"))
-
-```
-
 ### Ataxia
 
 ```{r}
@@ -252,25 +212,6 @@ table1a(
 
 ```
 
-<br>
-
-Age of onset and missingness reasons where "Ataxia" = "Yes":
-
-```{r}
-vars = c(
-  # "Ataxia",
-  # "Ataxia: severity",
-  # "Ataxia: severity*"
-  "Ataxia: Age of onset",
-  "Ataxia: Age of onset: missingness reasons"
-)
-
-table1a(
-  
-  stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1_cgg_55_199 |> filter(Ataxia == "Yes"))
-```
 
 <br>
 
