@@ -32,6 +32,8 @@ N_startpoints = 10L
 N_S_max = 8L
 N_S_max_stratified = 2L
 N_CV_folds = 10L
+rerun = TRUE
+# rerun = FALSE
 args = commandArgs(trailingOnly = TRUE)
 message("args = ", args |> paste(collapse = "; "))
 if(N_CV_folds == 0)
@@ -142,6 +144,7 @@ sustain_output = run_and_save_OSA(
   dataset_name = dataset_name,
   use_parallel_startpoints = FALSE,
   plot = FALSE,
+  rerun = rerun,
   patient_data = patient_data,
   N_CV_folds = N_CV_folds,
   CV_fold_nums = CV_fold_nums)

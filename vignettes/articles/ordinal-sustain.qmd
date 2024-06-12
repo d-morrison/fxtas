@@ -446,7 +446,7 @@ stages = v1_usable_cases |> select(`FXTAS Stage (0-5)*`) |> table()
 ```
 
 @tbl-demographics describes summary statistics patient characteristics included in the analysis. 
-Our data included 
+Our data included: 
 `r nrow(v1_usable_cases)` Fragile X premutation carriers and 
 `r nrow(gp34_v1_controls)` controls;
 `r nrow(males)` males and `r `nrow(females)` females;
