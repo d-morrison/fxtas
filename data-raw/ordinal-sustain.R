@@ -163,6 +163,7 @@ sustain_output_males = run_and_save_OSA(
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
   dataset_name = "males",
+  rerun = rerun,
   use_parallel_startpoints = FALSE,
   plot = FALSE)
 
@@ -176,13 +177,13 @@ sustain_output_females = run_and_save_OSA(
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   patient_data = patient_data |> filter(Gender == "Female"),
-
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max_stratified,
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
   dataset_name = "females",
+  rerun = rerun,
   use_parallel_startpoints = FALSE,
   plot = FALSE)
 
@@ -202,6 +203,7 @@ sustain_output_cgg100plus = run_and_save_OSA(
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
   dataset_name = "over100",
+  rerun = rerun,
   use_parallel_startpoints = FALSE,
   plot = FALSE)
 
@@ -221,6 +223,7 @@ sustain_output_cgg100minus = run_and_save_OSA(
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
   dataset_name = "under100",
+  rerun = rerun,
   use_parallel_startpoints = FALSE,
   plot = FALSE)
 
@@ -241,6 +244,7 @@ sustain_output_cgg100plus_males = run_and_save_OSA(
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
   dataset_name = "over100_Male",
+  rerun = rerun,
   use_parallel_startpoints = FALSE,
   plot = FALSE)
 
@@ -264,6 +268,7 @@ sustain_output_cgg100minus_males = run_and_save_OSA(
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
   dataset_name = "under100_Male",
+  rerun = rerun,
   use_parallel_startpoints = FALSE,
   plot = FALSE)
 
@@ -284,6 +289,7 @@ sustain_output_cgg100plus_females = run_and_save_OSA(
   N_S_max = N_S_max_stratified,
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
+  rerun = rerun,
   dataset_name = "over100_Female",
   use_parallel_startpoints = FALSE,
   plot = FALSE)
@@ -305,6 +311,7 @@ sustain_output_cgg100minus_females = run_and_save_OSA(
   N_S_max = N_S_max_stratified,
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
+  rerun = rerun,
   dataset_name = "under100_Female",
   use_parallel_startpoints = FALSE,
   plot = FALSE)

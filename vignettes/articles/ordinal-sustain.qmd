@@ -474,11 +474,35 @@ pval_sex_gp34_v1 = permutation_test(
 
 ```
 
-@fig-first-only shows the estimated event sequences stratified by sex. We found statistically significant evidence of a difference in event sequences between males and females (p = `r pval_sex_gp34_v1`). 
-It appears that males develop cerebral, cerebellar, and splenium white matter hyperintensity at an earlier stage of the event sequence than females (events 6, 7, and 8 for males versus 9, 1)
-ataxia severity earlier in the event sequence than females, while females experience MRI events earlier in the event sequence than males.^[There are probably other patterns worth noting here; clinical folks, please add your observations from the results here.]
+@fig-first-only shows the estimated event sequences stratified by sex. 
+We found statistically significant evidence of a difference in event sequences between males and females (p = `r pval_sex_gp34_v1`). 
+It appears that males develop cerebral, cerebellar, and splenium white matter hyperintensity at an earlier stage of the event sequence than females 
+(events 6, 7, and 8 for males versus 9, 1)
+ataxia severity earlier in the event sequence than females, 
+while females experience MRI events earlier in the event sequence than males.
+^[There are probably other patterns worth noting here; clinical folks, please add your observations from the results here.]
 
-## Stratified by CGG repeats
+
+```{r}
+#| label: "fig-first-only"
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: "Estimated event sequence models, stratified by sex, first visits only"
+#| fig-cap-location: top
+
+plot_compact_pvd(
+  figs = list(
+    fig_males_first,
+    fig_females_first
+  ),
+  facet_label = c("Males <br>", "Females <br>"),
+  y_text_size = 11
+)
+
+```
+
+## Stratified by CGG repeats within sex
 
 ```{r}
 #| label: p-val-test-cgg
@@ -642,35 +666,6 @@ v1_usable |> make_biomarkers_table()
 :::
 
 # Figures {.unnumbered}
-
-```{r}
-#| label: "fig-first-only"
-#| column: page
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
-#| fig-cap: "Estimated event sequence models, stratified by sex, first visits only"
-#| fig-cap-location: top
-
-# layout-ncol: 2
-# fig-subcap:
-#   - "Males"
-#   - "Females"
-
-
-# fig_both_first |> print()
-# fig_males_first |> print()
-# fig_females_first |> print()
-
-plot_compact_pvd(
-  figs = list(
-    fig_males_first,
-    fig_females_first
-  ),
-  facet_label = c("Males <br>", "Females <br>"),
-  y_text_size = 11
-)
-
-```
 
 {{< pagebreak >}}
 
