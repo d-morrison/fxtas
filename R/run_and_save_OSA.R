@@ -12,7 +12,7 @@ run_and_save_OSA = function(
     verbose = TRUE,
     N_S_max,
     rerun = FALSE,
-    rda_filename = "data.RData"),
+    rda_filename = "data.RData",
     ...)
 {
 
