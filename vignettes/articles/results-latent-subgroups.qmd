@@ -1,9 +1,4 @@
----
-output: html_document
-editor_options: 
-  chunk_output_type: console
----
-### Results for latent subtypes analysis {#sec-latent-subtypes .appendix}
+## Latent subtypes
 
 ```{r}
 #| label: set-optimal-subtypes
@@ -15,7 +10,9 @@ results_cv_max = extract_results_from_pickle(
   output_folder = output_folder)
 ```
 
-Based on the CVIC criterion (@sec-cvic), it appears that `r n_s` subtypes is the optimal number for the full, unstratified dataset.
+Based on the CVIC criterion [Supplementary section @sec-cvic], it appears that `r n_s` subtypes is the optimal number for the full, unstratified dataset (@fig-cvic).
+For easier clinical interpretation, we chose to analyze the results with only 6 subtypes.
+
 @fig-pvd_optimal shows positional variance diagrams (PVDs) for each of the subtype clusters detected under this assumption, and @tbl-sg_demos shows the demographics of the patients clustered in each subtype. Patients in the "Type 0" category were too early in the disease process to be classified into a subtype.
 
 ```{r}

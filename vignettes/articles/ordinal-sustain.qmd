@@ -207,9 +207,9 @@ we assigned probabilities of `r probs` to levels `r and::and(0:4)`, respectively
 To test statistical significance for event sequence differences between males and females and between lower premutation levels (CGG <100) and higher premutation levels (CGG 100-199), we implemented a permutation test, in which we created 1000 permuted datasets in which the strata variables were randomly shuffled. 
 We computed the mean log-likelihood of the data for each permuted dataset (averaging across MCMC samples and summing across the strata being compared) and compared the distribution of permuted mean log-likelihoods to the observed log-likelihood calculated from the original (unpermuted) dataset.
 
-### Latent subtypes
+### Latent subtypes {#sec-methods-latent-subtypes}
 
-We also fit the model on the full dataset (not stratified by sex or CGG) for 2-`r N_S_max` latent subtypes, each with their own ordering (@fig-pvd_optimal). We determined the optimal number of latent subtypes for this dataset using the CVIC criterion (@sec-cvic). More details are provided in @sec-subtypes.
+We also fit the model on the full dataset (not stratified by sex or CGG) for 2-`r N_S_max` latent subtypes, each with their own ordering (@fig-pvd_optimal). We determined the optimal number of latent subtypes for this dataset using the CVIC criterion (@sec-cvic). We performed `r N_CV_folds`-fold cross-validation on the unstratified data, and calculated the CVIC for 1-`r N_S_max` latent subtypes. More details are provided in @sec-subtypes.
 
 ### Longitudinal subsets
 
@@ -509,51 +509,7 @@ We did not find statistically significant evidence of a difference in event sequ
 
 ## Stratified by CGG and Sex {#sec-stratified-by-cgg-and-sex}
 
-```{r}
-#| label: p-val-test-cgg-male
-output_folder = "output/output.fixed_CV/"
-
-permuted_test_stats = collect_permutation_test_stats(
-  output_folder = output_folder,
-  stratifying_levels = "Male",
-  permuting_variables = "FX3")
-
-observed_test_stat = get_observed_permutation_test_stat(
-  output_folder,
-  dataset_names = c('under100_Male', 'over100_Male'))
-
-pval_male_cgg_gp34_v1 = permutation_test(
-  observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats
-)
-
-# autoplot(pval_male_cgg_gp34_v1)
-
-```
-
-We found significant evidence of a difference between CGG < 100 and CGG ≥ 100 among males (p = `r pval_male_cgg_gp34_v1`). @fig-pvd-by-cgg-male shows the corresponding stratified models.
-
-```{r}
-#| label: p-val-test-cgg-female
-output_folder = "output/output.fixed_CV/"
-
-permuted_test_stats = collect_permutation_test_stats(
-  output_folder = output_folder,
-  stratifying_levels = "Female",
-  permuting_variables = "FX3")
-
-observed_test_stat = get_observed_permutation_test_stat(
-  output_folder,
-  dataset_names = c('under100_Female', 'over100_Female'))
-
-pval_female_cgg_gp34_v1 = permutation_test(
-  observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats
-)
-
-```
-
-We did not find statistically significant evidence of a difference between CGG < 100 and CGG ≥ 100 among females (p = `r pval_female_cgg_gp34_v1`). @fig-pvd-by-cgg-female shows the estimated stratified models.
+### Comparing sexes stratified by CGG
 
 ```{r}
 #| label: p-val-test-sex-under100
@@ -602,6 +558,58 @@ pval_over100_sex_gp34_v1 = permutation_test(
 ```
 
 We did not find statistically significant evidence of a difference between males and females among those with CGG < 100 (p `r pval_over100_sex_gp34_v1`). @fig-pvd-by-gender-cgg_over100 shows the estimated stratified models.
+
+### Comparing CGG levels stratified by sex
+
+```{r}
+#| label: p-val-test-cgg-male
+output_folder = "output/output.fixed_CV/"
+
+permuted_test_stats = collect_permutation_test_stats(
+  output_folder = output_folder,
+  stratifying_levels = "Male",
+  permuting_variables = "FX3")
+
+observed_test_stat = get_observed_permutation_test_stat(
+  output_folder,
+  dataset_names = c('under100_Male', 'over100_Male'))
+
+pval_male_cgg_gp34_v1 = permutation_test(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats
+)
+
+# autoplot(pval_male_cgg_gp34_v1)
+
+```
+
+We found significant evidence of a difference between CGG < 100 and CGG ≥ 100 among males (p = `r pval_male_cgg_gp34_v1`). @fig-pvd-by-cgg-male shows the corresponding stratified models.
+
+```{r}
+#| label: p-val-test-cgg-female
+output_folder = "output/output.fixed_CV/"
+
+permuted_test_stats = collect_permutation_test_stats(
+  output_folder = output_folder,
+  stratifying_levels = "Female",
+  permuting_variables = "FX3")
+
+observed_test_stat = get_observed_permutation_test_stat(
+  output_folder,
+  dataset_names = c('under100_Female', 'over100_Female'))
+
+pval_female_cgg_gp34_v1 = permutation_test(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats
+)
+
+```
+
+We did not find statistically significant evidence of a difference between CGG < 100 and CGG ≥ 100 among females (p = `r pval_female_cgg_gp34_v1`). @fig-pvd-by-cgg-female shows the estimated stratified models.
+
+## Latent Subtypes
+
+{{< include results-latent-subgroups.qmd >}}
 
 # Discussion
 
@@ -814,6 +822,18 @@ plot_compact_pvd(
 
 ```
 
+{{< pagebreak >}}
+
+```{r}
+#| fig-cap: "Cross-validation information criterion"
+#| label: fig-cvic
+#| eval: !expr fit_models
+
+temp = sustain_output |> attr("CV")
+temp$CVIC |> plot_CVIC()
+
+```
+
 # Supplementary material {.appendix}
 
 ```{r}
@@ -922,23 +942,6 @@ CVIC_{\mathcal C} =
 \right\}
 $$
 
-#### CVIC for the full dataset {.appendix}
-
-We performed `r N_CV_folds`-fold cross-validation on the unstratified data, and calculated the CVIC for 1-`r N_S_max` latent subtypes.
-
-```{r}
-#| fig-cap: "Cross-validation information criterion"
-#| label: fig-cvic
-#| eval: !expr fit_models
-
-temp = sustain_output |> attr("CV")
-temp$CVIC |> plot_CVIC()
-
-```
-
-It appears that the model reaches optimum CVIC at `r which.min(temp$CVIC)` subtypes. 
-For clinical interpretation, we did not want to go beyond 6 subtypes.
-
 ## Out-of-fold log-likelihood distribution {.appendix}
 
 We also evaluated the consistency of our cross-validation procedure by looking at the distribution of test-set log-likelihood across folds (@fig-boxplot-loglik-cv); following @young2018uncovering, we calculated out-of-sample log-likelihood as:
@@ -960,14 +963,14 @@ $$
 #| fig-cap: "Test set log-likelihood across folds"
 #| label: fig-boxplot-loglik-cv
 #| eval: !expr fit_models
-temp$loglike_matrix |> 
-  plot_cv_loglik()
+
+temp$loglike_matrix |> plot_cv_loglik()
 
 ```
 
 {{< pagebreak >}}
 
-{{< include results-latent-subgroups.qmd >}}
+
 
 ::: landscape
 ## Additional data tables {.appendix}
