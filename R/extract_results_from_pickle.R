@@ -24,12 +24,12 @@ extract_results_from_pickle = function(
 
   if(file.exists(rds_path))
   {
-    cli::cli_inform("loading {basename} results from RDS file:")
+    cli::cli_inform("\nloading {basename} results from RDS file:")
     cat(rds_path)
     results = readRDS(rds_path)
   } else
   {
-    cli::cli_inform("loading {basename} results from pickle file.")
+    cli::cli_inform("\nloading {basename} results from pickle file.")
     results00 =
       fs::path(output_folder, "pickle_files", picklename) |>
       py_load_object() |>

@@ -3,7 +3,7 @@
 # 3: permuting variable (must be a quoted column name, such as "Gender" - 1st argument to analyze_permutations.sbatch
 # 2: stratifying level (can be "") - 2nd argument to analyze_permutations.sbatch
 
-message('Starting at: ', Sys.time())
+cli::cli_inform('\nStarting at: {Sys.time()}')
 
 library(fxtas)
 library(dplyr)

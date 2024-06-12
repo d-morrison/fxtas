@@ -1,6 +1,6 @@
 ## ----setup-------------------------------------------------------------------------------------------
 #| message: false
-message('Starting at: ', Sys.time())
+cli::cli_inform('\nStarting at: {Sys.time()}')
 
 library(reticulate)
 # reticulate::use_condaenv("fxtas39", required = TRUE)

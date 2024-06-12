@@ -9,7 +9,7 @@
 
 ## ----setup-------------------------------------------------------------------------------------------
 #| message: false
-message('Starting at: ', Sys.time())
+cli::cli_inform('\nStarting at: {Sys.time()}')
 
 args = commandArgs(trailingOnly = TRUE)
 message("args = ", args |> paste(collapse = "; "))
