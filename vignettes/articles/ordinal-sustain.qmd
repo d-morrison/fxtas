@@ -502,7 +502,7 @@ plot_compact_pvd(
 
 ```
 
-## Stratified by CGG repeats within sex
+## Stratified by CGG repeats
 
 ```{r}
 #| label: p-val-test-cgg

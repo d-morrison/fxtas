@@ -36,6 +36,12 @@ run_and_save_OSA = function(
     osa_output |> saveRDS(rds_path)
   }
 
+  temp = extract_results_from_pickles(
+    n_s = 1:N_S_max,
+    rda_filename = paste0(dataset_name, ".RData"),
+    dataset_name = dataset_name,
+    output_folder = output_folder)
+
   return(osa_output)
 
 }
