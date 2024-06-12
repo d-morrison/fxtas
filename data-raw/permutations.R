@@ -194,6 +194,6 @@ for (cur_stratum in 1:nrow(strata))
 
 }
 
-message('Ending at: ', Sys.time())
+cli::cli_inform('\nEnding at: {Sys.time()}')
 
 

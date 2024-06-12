@@ -317,4 +317,4 @@ sustain_output_cgg100minus_females = run_and_save_OSA(
   use_parallel_startpoints = FALSE,
   plot = FALSE)
 
-message('Ending at: ', Sys.time())
+cli::cli_inform('\nEnding at: {Sys.time()}')
