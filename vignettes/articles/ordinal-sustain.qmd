@@ -482,26 +482,6 @@ ataxia severity earlier in the event sequence than females,
 while females experience MRI events earlier in the event sequence than males.
 ^[There are probably other patterns worth noting here; clinical folks, please add your observations from the results here.]
 
-
-```{r}
-#| label: "fig-first-only"
-#| column: page
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
-#| fig-cap: "Estimated event sequence models, stratified by sex, first visits only"
-#| fig-cap-location: top
-
-plot_compact_pvd(
-  figs = list(
-    fig_males_first,
-    fig_females_first
-  ),
-  facet_label = c("Males <br>", "Females <br>"),
-  y_text_size = 11
-)
-
-```
-
 ## Stratified by CGG repeats
 
 ```{r}
@@ -666,6 +646,25 @@ v1_usable |> make_biomarkers_table()
 :::
 
 # Figures {.unnumbered}
+
+```{r}
+#| label: "fig-first-only"
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: "Estimated event sequence models, stratified by sex, first visits only"
+#| fig-cap-location: top
+
+plot_compact_pvd(
+  figs = list(
+    fig_males_first,
+    fig_females_first
+  ),
+  facet_label = c("Males <br>", "Females <br>"),
+  y_text_size = 11
+)
+
+```
 
 {{< pagebreak >}}
 

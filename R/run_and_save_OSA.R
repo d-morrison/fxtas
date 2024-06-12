@@ -12,6 +12,7 @@ run_and_save_OSA = function(
     verbose = TRUE,
     N_S_max,
     rerun = FALSE,
+    rda_filename = "data.RData"),
     ...)
 {
 
@@ -38,7 +39,7 @@ run_and_save_OSA = function(
 
   temp = extract_results_from_pickles(
     n_s = 1:N_S_max,
-    rda_filename = paste0(dataset_name, ".RData"),
+    rda_filename = rda_filename,
     dataset_name = dataset_name,
     output_folder = output_folder)
 
