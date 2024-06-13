@@ -119,7 +119,9 @@ according to the procedures approved by the
 University of California Davis Institutional Review Board.  
 
 The primary event sequence analysis included baseline data from 297 participants 
-(`r nrow(v1_usable_cases)` Fragile X premutation carriers and `r nrow(gp34_v1_controls)`  controls) from the two cohorts. 
+(`r nrow(v1_usable_cases)` Fragile X premutation carriers 
+and `r nrow(gp34_v1_controls)`  controls) 
+from the two cohorts. 
 
 [Supplemental Figure @fig-hist-CGG-gp34-v1] shows the distribution of CGG repeats 
 among the participants included in the analysis. 
