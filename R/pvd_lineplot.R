@@ -1,83 +1,73 @@
-figs = list(fig_males_first, fig_females_first)
-
-
-
-alluvial_plot <- function(figs){
+pvd_lineplot <- function(figs, alpha_nochange = 0.25,
+                          left_facet, right_facet, y_title_size = 12,
+                          y_size = 10, x_size = 12){
   if(length(figs) == 1){
     # extract data from pvd fig object
     dataset <- dplyr::bind_rows(figs[[1]]$data, .id = "facet")
   } else {
+    # update list names
+    names(figs) <- c(left_facet, right_facet)
     # extract data from list of pvd fig object
     dataset <- dplyr::bind_rows(
       lapply(
-        1:length(figs),
-        function(x) figs[[x]]$data
+        figs,
+        function(x) x$data
       ),
       .id = "facet"
-    )
+    ) |>
+      mutate(
+        facet = factor(facet, levels = names(figs))
+      )
   }
 
-  dataset <- dataset |>
+  # additional processing
+  plot_dataset <- dataset |>
     mutate(
+      # extract order number
       Order = stringi::stri_extract_first_regex(
         `row number and name`, "[0-9]+"
       ) |>
-        as.numeric() |>
-        factor(),
+        as.integer(),
+      # right justify left facet, left justify right facet
       hjust = ifelse(
-        facet == 1,
+        facet == left_facet,
         1,
         0
       ),
+      # made FXTAS Stage label bold
       `event label` = ifelse(
         biomarker == "FXTAS Stage (0-5)*",
         paste0("<b>", `event label`, "</b>"),
         as.character(`event label`)
       )
-    )
-
-  dataset_changed <- dataset |>
-    dplyr::select(
-      facet, `event name`, biomarker, Order, group_color
     ) |>
+    dplyr::select(`event name`, facet, Order, biomarker, group_color, `event label`, hjust) |>
     unique() |>
-    pivot_wider(
-      id_cols = c(`event name`, biomarker, group_color),
-      names_from = facet,
-      values_from = Order,
-      names_prefix = "facet_"
+    arrange(`event name`, facet) |>
+    mutate(
+      Changed = n_distinct(Order) != 1,
+      # (Order - dplyr::lag(Order)) != 0,
+      .by = `event name`
     ) |>
     mutate(
-      Changed = ifelse(
-        facet_1 == facet_2, "No", "Yes"
-      )
-    ) |>
-    # filter(Changed == "Yes" | biomarker == "FXTAS Stage (0-5)*") |>
-    # dplyr::select(-Changed) |>
-    pivot_longer(
-      cols = c(facet_1, facet_2),
-      names_to = "facet",
-      values_to = "Order"
-    ) |>
-    mutate(
-      facet = gsub("facet_", "", facet),
       linesize = ifelse(
         biomarker == "FXTAS Stage (0-5)*",
         2,
         1
       ),
       alpha = ifelse(
-        Changed == "Yes",
+        Changed,
         1,
-        0.25
+        alpha_nochange
       )
     )
 
+  # plot
   ggplot(
-    dataset,
+    plot_dataset,
     aes(
       x = facet,
-      y = Order
+      y = Order |> factor()
     )
   ) +
     ggtext::geom_richtext(
@@ -89,32 +79,29 @@ alluvial_plot <- function(figs){
       label.color = NA
     ) +
     geom_line(
-      data = dataset_changed,
       aes(
-        x = facet,
-        y = Order,
         group = `event name`
       ),
-      color = dataset_changed$group_color,
-      linewidth = dataset_changed$linesize,
-      # alpha = dataset_changed$alpha,
-      inherit.aes = FALSE
+      color = plot_dataset$group_color,
+      linewidth = plot_dataset$linesize,
+      alpha = plot_dataset$alpha
     ) +
     scale_y_discrete(limits = rev) +
+    labs(y = "Stage") +
     theme_classic() +
     theme(
-      legend.position = "none"
+      legend.position = "none",
+      axis.title.x = element_blank(),
+      axis.title.y = element_text(size = y_title_size),
+      axis.text.y = element_text(size = y_size),
+      axis.text.x = element_text(size = x_size)
+
     )
 
 }
 
 
-alluvial_plot(
-  figs = list(
-    fig_males_first,
-    fig_females_first
-  )
-)
+
 
 
 
