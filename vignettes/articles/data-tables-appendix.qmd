@@ -1,3 +1,53 @@
+### Wechsler Adult Intelligence Scale (WAIS)  {.appendix}
+
+```{r}
+#| label: tbl-wais
+#| tbl-cap: "Wechsler Adult Intelligence Scale (WAIS)"
+vars = c(
+  # "Verbal: IQ Score",
+  "Verbal Comprehension: Composite Score (VCI)",
+  
+  "Perceptual Reasoning: Composite Score (PRI)",
+  "Working Memory: Composite Score (WMI)", 
+  "Processing Speed: Composite Score (PSI)",
+  
+  # "Full Scale: IQ Score",
+  "Full Scale: Composite Score (FSIQ)"
+)
+
+if(show_missingness_reasons)
+{
+  vars = vars |> 
+    sapply(
+      F = function(x) 
+        grep(
+          value =  TRUE, 
+          fixed = TRUE, 
+          pattern = x, 
+          x = names(v1_usable))) |> as.vector()
+}
+
+table1::t1flex(
+  table1(
+    na.is.category = FALSE, 
+    overall = FALSE,
+    NA.label = NA.label1,
+    stratified_formula(vars, column_var),
+    # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min, Max]"),
+    data = v1_usable
+  )
+) |>
+  flextable::width(
+    width = 2
+  ) |>
+  flextable::width(
+    j = 2:7,
+    width = 1.25
+  )
+
+
+```
+
 ### Drug use {.appendix}
 
 {{< include table_drug_use.qmd >}}

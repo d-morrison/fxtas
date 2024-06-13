@@ -1064,5 +1064,4 @@ temp$loglike_matrix |> plot_cv_loglik()
 ## Additional data tables {.appendix}
 
 {{< include exploration.qmd >}}
-{{< include data-tables-appendix.qmd >}}
 :::
