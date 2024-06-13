@@ -13,7 +13,7 @@ args = commandArgs(trailingOnly = TRUE)
 if(length(args) == 0)
 {
   message('no arguments found')
-  permutations = 1:1000
+  permutations = 1:1020
   permuting_variables = "FX3*"
   stratifying_level = "Male"
 } else
