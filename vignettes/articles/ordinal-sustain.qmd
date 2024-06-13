@@ -173,6 +173,7 @@ We conducted subgroup analyses by fitting models stratified by
 ### Incomplete data {#sec-incomplete-data}
 
 ```{r}
+#| label: count-incomplete-data
 x1 = v1_usable_cases |> pull(`Ataxia: severity`)
 n_missing = sum(x1 |> is.na())
 # n_obs = sum(x1 |> is.na() |> not()) # not() is deprecated?
@@ -439,6 +440,7 @@ fig_over100_females = extract_figs_from_pickle(size.y = size.y,
 # Results
 
 ```{r}
+#| label: basic-summary-stats
 males = v1_usable |> filter(Gender == "Male")
 females = v1_usable |> filter(Gender == "Female")
 stages = v1_usable_cases |> select(`FXTAS Stage (0-5)*`) |> table()
@@ -609,7 +611,21 @@ We did not find statistically significant evidence of a difference between CGG <
 
 ## Latent Subtypes
 
-{{< include results-latent-subgroups.qmd >}}
+```{r}
+#| label: set-optimal-subtypes
+n_s = n_s_optimal = 6
+
+results_cv_max = extract_results_from_pickle(
+  n_s = n_s,
+  dataset_name = dataset_name,
+  output_folder = output_folder)
+```
+
+Based on the CVIC criterion [Supplementary section @sec-cvic], it appears that `r n_s` subtypes is the optimal number for the full, unstratified dataset (@fig-cvic).
+For easier clinical interpretation, we chose to analyze the results with only 6 subtypes.
+
+@fig-pvd_optimal shows positional variance diagrams (PVDs) for each of the subtype clusters detected under this assumption, and @tbl-sg_demos shows the demographics of the patients clustered in each subtype. Patients in the "Type 0" category were too early in the disease process to be classified into a subtype.
+
 
 # Discussion
 
@@ -650,6 +666,22 @@ v1_usable |> make_biomarkers_table()
 ```
 
 {{< pagebreak >}}
+
+```{r}
+#| tbl-cap: !expr glue::glue("Subtype demographics ({n_s} subtypes)")
+#| label: tbl-sg_demos
+#| results: asis
+
+
+set.seed(2)
+table_subtype_by_demographics(
+  patient_data,
+  subtype_and_stage_table = 
+    results_cv_max$subtype_and_stage_table
+)
+
+```
+
 
 :::
 
@@ -832,6 +864,57 @@ plot_compact_pvd(
 temp = sustain_output |> attr("CV")
 temp$CVIC |> plot_CVIC()
 
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| label: extract-PVD-optimal
+figs = extract_figs_from_pickle(size.y = size.y,
+  n_s = n_s,
+  dataset_name = dataset_name,
+  output_folder = output_folder)
+```
+
+
+```{r}
+#| label: "fig-pvd_optimal"
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: !expr glue::glue("positional variance diagrams for {n_s_optimal} subtypes")
+#| fig-cap-location: top
+#| column: page
+library(ggplot2)
+
+# figs |> print_PVDs()
+
+plot_compact_pvd(
+  figs = figs,
+  tile_height = 2,
+  facet_label_prefix = NULL,
+  y_text_size = 8
+)
+
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| label: fig-stage-by-age
+#| fig-cap: "Estimated progression stage by age and latent subtype"
+#| include: true
+
+stages = 
+  results_cv_max$subtype_and_stage_table |> 
+  mutate(
+    age = patient_data$`Age at visit`,
+    id = patient_data$`FXS ID`
+  )
+
+library(ggplot2)
+stages |>
+  graph_stage_by_age()
+  
 ```
 
 # Supplementary material {.appendix}

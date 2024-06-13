@@ -117,7 +117,7 @@ format:
     echo: false
     date: last-modified
     date-format: "[Last modified:] YYYY-MM-DD: H:mm:ss (A)"
-bibliography: ../references.bib
+bibliography: vignettes/references.bib
 knitr:
   opts_chunk:
     collapse: true

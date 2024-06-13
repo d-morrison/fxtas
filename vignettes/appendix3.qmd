@@ -1,0 +1,73 @@
+---
+title: "Test"
+format: 
+  pdf:
+    number-sections: true
+    number-depth: 4
+editor: visual
+---
+
+# Section 1
+
+Text
+
+# Section 2
+
+Text
+
+See @fig-plot
+
+See @fig-another-plot
+
+see @tbl-my-tab
+
+\setcounter{section}{0}
+\renewcommand{\thesection}{\Alph{section}}
+
+\setcounter{table}{0}
+\renewcommand{\thetable}{A\arabic{table}}
+
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{A\arabic{figure}}
+
+# First Appendix {.appendix}
+
+## More Results
+
+Text
+
+## Even More Results
+
+Text
+
+## Plot
+
+\newpage
+
+```{r}
+#| label: fig-plot
+#| fig-cap: A plot
+
+plot(1:10)
+```
+
+\newpage
+
+```{r}
+#| label: fig-another-plot
+#| fig-cap: Another plot
+
+plot(rnorm(100))
+
+```
+
+## Table
+
+\newpage
+
+```{r}
+#| label: tbl-my-tab
+#| tbl-cap: A table
+
+knitr::kable(head(mtcars))
+```
