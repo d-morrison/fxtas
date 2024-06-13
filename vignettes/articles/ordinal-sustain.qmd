@@ -223,11 +223,19 @@ and then multiplying by two to create a two-sided test.
 
 ### Latent subtypes {#sec-methods-latent-subtypes}
 
-We also fit the model on the full dataset (not stratified by sex or CGG) for 2-`r N_S_max` latent subtypes, each with their own ordering (@fig-pvd_optimal). We determined the optimal number of latent subtypes for this dataset using the CVIC criterion (@sec-cvic). We performed `r N_CV_folds`-fold cross-validation on the unstratified data, and calculated the CVIC for 1-`r N_S_max` latent subtypes. More details are provided in the Supplementary Materials (@sec-subtypes).
+We also fit the model on the full dataset (not stratified by sex or CGG) for 2-`r N_S_max` latent subtypes, 
+each with their own ordering (@fig-pvd_chosen_subtypes). 
+We determined the optimal number of latent subtypes for this dataset using the CVIC criterion (@sec-cvic). 
+We performed `r N_CV_folds`-fold cross-validation on the unstratified data, and calculated the CVIC for 1-`r N_S_max` latent subtypes. 
+More details are provided in the Supplementary Materials (@sec-subtypes).
 
 ### Longitudinal subsets
 
-We also fit the Ordinal SuStaIn model, stratified by sex, including all longitudinal repeated measurements of the same participants over time ([ Supplementary Section @sec-longitudinal-results]). Including later observations might help the model clarify the later stages of the event sequence. However, correlation between repeated observations of the same individuals are not accounted for by the Ordinal SuStaIn model, which assumes that all observations are statistically independent, so including repeated measurements will lead to exaggerated estimates of precision.
+We also fit the Ordinal SuStaIn model, stratified by sex, including all longitudinal repeated measurements of the same participants over time ([ Supplementary Section @sec-longitudinal-results]). 
+Including later observations might help the model clarify the later stages of the event sequence. 
+However, correlation between repeated observations of the same individuals are not accounted for by the Ordinal SuStaIn model, 
+which assumes that all observations are statistically independent, 
+so including repeated measurements will lead to exaggerated estimates of precision.
 
 ### Visualizing modeling results
 
@@ -632,18 +640,20 @@ We did not find statistically significant evidence of a difference between CGG <
 
 ```{r}
 #| label: set-optimal-subtypes
-n_s = n_s_selected = 6
+temp = sustain_output |> attr("CV")
+n_s_min_CVIC = which.min(temp$CVIC)
+n_s_selected = 4
 
 results_cv_max = extract_results_from_pickle(
-  n_s = n_s,
+  n_s = n_s_selected,
   dataset_name = dataset_name,
   output_folder = output_folder)
 ```
 
-Based on the CVIC criterion ([Supplementary section @sec-cvic]), it appears that `r n_s` subtypes is the optimal number for the full, unstratified dataset (@fig-cvic).
-For easier clinical interpretation, we chose to analyze the results with only 6 subtypes.
+Based on the CVIC criterion ([Supplementary section @sec-cvic]), it appears that `r n_s_min_CVIC` subtypes is the optimal number for the full, unstratified dataset (@fig-cvic).
+For easier clinical interpretation, we chose to analyze the results with only `r n_s_selected` subtypes.
 
-@fig-pvd_optimal shows positional variance diagrams (PVDs) for each of the subtype clusters detected under this assumption, and @tbl-sg_demos shows the demographics of the patients clustered in each subtype. Patients in the "Type 0" category were too early in the disease process to be classified into a subtype.
+@fig-pvd_chosen_subtypes shows positional variance diagrams (PVDs) for each of the subtype clusters detected under this assumption, and @tbl-sg_demos shows the demographics of the patients clustered in each subtype. Patients in the "Type 0" category were too early in the disease process to be classified into a subtype.
 
 # Discussion
 
@@ -686,7 +696,7 @@ v1_usable |> make_biomarkers_table()
 {{< pagebreak >}}
 
 ```{r}
-#| tbl-cap: !expr glue::glue("Subtype demographics ({n_s} subtypes)")
+#| tbl-cap: !expr glue::glue("Subtype demographics ({n_s_selected} subtypes)")
 #| label: tbl-sg_demos
 #| results: asis
 
@@ -879,7 +889,6 @@ plot_compact_pvd(
 #| label: fig-cvic
 #| eval: !expr fit_models
 
-temp = sustain_output |> attr("CV")
 temp$CVIC |> plot_CVIC()
 
 ```
@@ -887,17 +896,17 @@ temp$CVIC |> plot_CVIC()
 {{< pagebreak >}}
 
 ```{r}
-#| label: extract-PVD-optimal
+#| label: extract-PVD-selected-subtypes
 figs = extract_figs_from_pickle(
   size.y = size.y,
-  n_s = n_s,
+  n_s = n_s_selected,
   dataset_name = dataset_name,
   output_folder = output_folder)
 ```
 
 
 ```{r}
-#| label: "fig-pvd_optimal"
+#| label: "fig-pvd_chosen_subtypes"
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
 #| fig-cap: !expr glue::glue("positional variance diagrams for {n_s_selected} subtypes")
