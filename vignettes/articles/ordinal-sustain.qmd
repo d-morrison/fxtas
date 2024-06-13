@@ -111,7 +111,8 @@ max_year = max(year_range)
 
 Research participants were recruited between `r min_year` and `r max_year`
 for two longitudinal cohorts (GP and Trax).
-The inclusion criteria were: age 40 years or greater; [clinical team, please complete this section].
+The inclusion criteria were: age 40 years or greater; 
+[CLINICAL TEAM: please complete this section].
 
 Written informed consent was obtained from all participants 
 according to the procedures approved by the 
