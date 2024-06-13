@@ -102,11 +102,14 @@ v1_usable_cases = v1_usable |> filter(CGG >= 55)
 # previously `nrow(v1_usable_cases)` was 221, which was based on incorrectly filtering on a version of CGG that hadn't been backfilled.
 
 gp34_v1_controls =  v1_usable |> filter(CGG < 55)
+year_range = v1_usable$`Visit Date` |> year() |> range()
+min_year = min(year_range)
+max_year = max(year_range)
 ```
 
 ### Study cohorts
 
-Research participants were recruited between 2007??? and 2023???
+Research participants were recruited between `r min_year` and `r max_year`
 for two longitudinal cohorts (GP and Trax).
 The inclusion criteria were: age 40 years or greater; [clinical team, please complete this section].
 
