@@ -17,7 +17,7 @@ message("args = ", args |> paste(collapse = "; "))
 if(length(args) == 0)
 {
   message('no arguments found')
-  permutation_seeds = 1:1000
+  permutation_seeds = 1:1020
   permuting_variables = "Gender"
   stratifying_variables = NULL
 

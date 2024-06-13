@@ -102,13 +102,17 @@ v1_usable_cases = v1_usable |> filter(CGG >= 55)
 # previously `nrow(v1_usable_cases)` was 221, which was based on incorrectly filtering on a version of CGG that hadn't been backfilled.
 
 gp34_v1_controls =  v1_usable |> filter(CGG < 55)
+year_range = v1_usable$`Visit Date` |> year() |> range()
+min_year = min(year_range)
+max_year = max(year_range)
 ```
 
 ### Study cohorts
 
-Research participants were recruited between 2007??? and 2023???
+Research participants were recruited between `r min_year` and `r max_year`
 for two longitudinal cohorts (GP and Trax).
-The inclusion criteria were: age 40 years or greater; [clinical team, please complete this section].
+The inclusion criteria were: age 40 years or greater; 
+[CLINICAL TEAM: please complete this section].
 
 Written informed consent was obtained from all participants 
 according to the procedures approved by the 
@@ -202,8 +206,18 @@ we assigned probabilities of `r probs` to levels `r and::and(0:4)`, respectively
 
 ### Testing for differences between covariate subgroup strata
 
-To test statistical significance for event sequence differences between males and females and between lower premutation levels (CGG <100) and higher premutation levels (CGG 100-199), we implemented a permutation test, in which we created 1000 permuted datasets in which the strata variables were randomly shuffled. 
-We computed the mean log-likelihood of the data for each permuted dataset (averaging across MCMC samples and summing across the strata being compared) and compared the distribution of permuted mean log-likelihoods to the observed log-likelihood calculated from the original (unpermuted) dataset.
+To test statistical significance for event sequence differences between males and females 
+and between lower premutation levels (CGG <100) and higher premutation levels (CGG 100-199), 
+we implemented a permutation test, 
+'in which we created 1000 permuted datasets in which the strata variables were randomly shuffled. 
+We computed the mean log-likelihood of the data for each permuted dataset 
+(averaging across MCMC samples and summing across the strata being compared) 
+and compared the distribution of permuted mean log-likelihoods to the observed log-likelihood calculated from the original (unpermuted) dataset.
+We computed the p-value by 
+first computing the percentile of the observed mean log-likelihood 
+relative to the empirical distribution of the permuted mean log-likelihoods,
+subtracting that percentile from 1 if larger than 0.5,
+and then multiplying by two to create a two-sided test.
 
 ### Latent subtypes {#sec-methods-latent-subtypes}
 
@@ -259,7 +273,7 @@ sustain_output = run_and_save_OSA(
   use_parallel_startpoints = FALSE,
   seed = 1,
   plot = plot_python,
-  rerun = FALSE,
+  rerun = TRUE,
   patient_data = patient_data,
   N_CV_folds = N_CV_folds)
 
@@ -483,10 +497,8 @@ pval_sex_gp34_v1 = permutation_test(
 
 @fig-first-only shows the estimated event sequences stratified by sex. 
 We found statistically significant evidence of a difference in event sequences between males and females (p = `r pval_sex_gp34_v1`). 
-It appears that males develop cerebral, cerebellar, and splenium white matter hyperintensity at an earlier stage of the event sequence than females 
-(events 6, 7, and 8 for males versus 9, 1)
-ataxia severity earlier in the event sequence than females, 
-while females experience MRI events earlier in the event sequence than males.
+It appears that males develop cerebral, cerebellar, and splenium white matter hyperintensity at an earlier stage of the event sequence than females,
+and that ataxia severity increases occur earlier in the event sequence for males than females.
 ^[There are probably other patterns worth noting here; clinical folks, please add your observations from the results here.]
 
 ## Stratified by CGG repeats
@@ -700,7 +712,7 @@ table_subtype_by_demographics(
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: "Estimated event sequence models, stratified by sex, first visits only"
+#| fig-cap: "Estimated event sequence models, stratified by sex"
 #| fig-cap-location: top
 
 plot_compact_pvd(
@@ -721,7 +733,7 @@ plot_compact_pvd(
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only"
+#| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+)"
 #| fig-cap-location: top
 
 # layout-ncol: 2
@@ -751,7 +763,7 @@ plot_compact_pvd(
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only, males only"
+#| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+), males only"
 #| fig-cap-location: top
 
 # layout-ncol: 2
@@ -781,7 +793,7 @@ plot_compact_pvd(
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); first visits only, females only"
+#| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+); females only"
 #| fig-cap-location: top
 
 # layout-ncol: 2
@@ -811,7 +823,7 @@ plot_compact_pvd(
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: "Estimated event sequences, stratified by sex, for CGG repeats <100; first visits only"
+#| fig-cap: "Estimated event sequences, stratified by sex, for CGG repeats <100"
 #| fig-cap-location: top
 
 # layout-ncol: 2
@@ -840,7 +852,7 @@ plot_compact_pvd(
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: "Estimated event sequences, stratified by sex, for CGG repeats ≥100; first visits only"
+#| fig-cap: "Estimated event sequences, stratified by sex, for CGG repeats ≥100"
 #| fig-cap-location: top
 
 # layout-ncol: 2
