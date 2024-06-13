@@ -189,7 +189,7 @@ probs =
   table() |> 
   proportions() |> 
   as.vector() |> 
-  scales::percent(accuracy = 0.01) |> 
+  scales::percent(accuracy = 0.1) |> 
   and::and()
 ```
 
@@ -203,7 +203,7 @@ that matched the marginal distribution among the cases.
 For example, `r n_missing` of the `r `length(x1)` cases (`r pct_missing`) 
 had missing values for Ataxia Severity, 
 and `r n_obs` (`r pct_obs`) had recorded values, 
-distributed among severity levels 0-4 ( @tbl-ex-incomplete-data). 
+distributed among severity levels 0-4 ([Supplementary Table @tbl-ex-incomplete-data]). 
 For the `r n_missing` cases with missing values, 
 we assigned probabilities of `r probs` to Ataxia Severity levels `r and::and(0:4)`, respectively.
 
@@ -369,11 +369,11 @@ sustain_output_cgg100plus = run_and_save_OSA(
 #| label: "cgg_under_100"
 #| include: false
 #| eval: !expr fit_models
+
 sustain_output_cgg100minus = run_and_save_OSA(
   biomarker_levels = biomarker_levels, 
   prob_correct = prob_correct, 
   patient_data = patient_data |> filter(`CGG` < 100),
-  
   SuStaInLabels = biomarker_varnames,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max_stratified, 
