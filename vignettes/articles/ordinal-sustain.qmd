@@ -108,10 +108,7 @@ gp34_v1_controls =  v1_usable |> filter(CGG < 55)
 
 Research participants were recruited between 2007??? and 2023???
 for two longitudinal cohorts (GP and Trax).
-Inclusion criteria were:
-
-- age 40 years or greater
-- [clinical team, please complete this section]
+The inclusion criteria were: age 40 years or greater; [clinical team, please complete this section].
 
 Written informed consent was obtained from all participants 
 according to the procedures approved by the 
@@ -120,7 +117,7 @@ University of California Davis Institutional Review Board.
 The primary event sequence analysis included baseline data from 297 participants 
 (`r nrow(v1_usable_cases)` Fragile X premutation carriers and `r nrow(gp34_v1_controls)`  controls) from the two cohorts. 
 
-@fig-hist-CGG-gp34-v1 shows the distribution of CGG repeats 
+[Supplemental Figure @fig-hist-CGG-gp34-v1] shows the distribution of CGG repeats 
 among the participants included in the analysis. 
 @tbl-demographics provides demographic information about the study participants. 
 
@@ -155,7 +152,7 @@ We analyzed baseline measurements of `r length(biomarker_levels)` biomarkers (@t
 with a total of `r nrow(biomarker_events_table)` non-baseline levels; 
 each level above baseline constitutes an outcome event 
 in the disease progression modelling analysis (@sec-Statistical-analysis).
-[Supplementary Tables @tbl-tremors - @tbl-autoimmune] 
+[Supplemental Tables @tbl-tremors] - [-@tbl-autoimmune] 
 summarize the biomarker data, 
 stratified by CGG (`r unique(v1_usable$"FX3*")`) 
 and Sex (`r unique(v1_usable$Gender)`).
@@ -165,9 +162,9 @@ and Sex (`r unique(v1_usable$Gender)`).
 We applied a data-driven event-based model using the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2018uncovering; @young2021ordinal] to our data to estimate event sequences and subtypes for FXTAS patients. This algorithm combines disease progression modelling [@fonteijn2012event] and unsupervised clustering [@lazarsfeld1950logical; @mclachlan2019finite] to model event onset sequences using a cross-sectional sample of a patient population. The algorithm simultaneously clusters individuals into latent subtypes and characterizes the trajectory that best defines each subtype, thus capturing heterogeneity in both disease subtype and disease stage.
 Ordinal SuStaIn uses Markov Chain Monte Carlo (MCMC) sampling to estimate the Bayesian posterior probability of each possible event sequence for each subtype given the training dataset, assuming a uniform prior distribution over the set of all possible patterns. 
 
-We conducted subgroup analyses by fitting models stratified by 
-(1) sex, with no latent subtypes (@fig-first-only), 
-(2) CGG repeats (<100 vs $\ge$ 100), also with no latent subtypes (@fig-pvd-by-cgg), and
+We conducted subgroup analyses by fitting models stratified by: 
+(1) sex, with no latent subtypes (@fig-first-only);
+(2) CGG repeats (<100 vs $\ge$ 100), with no latent subtypes (@fig-pvd-by-cgg);
 (3) both sex and CGG repeats (<100 vs $\ge$ 100), also with no latent subtypes (@sec-stratified-by-cgg-and-sex).
 
 ### Incomplete data {#sec-incomplete-data}
@@ -210,17 +207,18 @@ We computed the mean log-likelihood of the data for each permuted dataset (avera
 
 ### Latent subtypes {#sec-methods-latent-subtypes}
 
-We also fit the model on the full dataset (not stratified by sex or CGG) for 2-`r N_S_max` latent subtypes, each with their own ordering (@fig-pvd_optimal). We determined the optimal number of latent subtypes for this dataset using the CVIC criterion (@sec-cvic). We performed `r N_CV_folds`-fold cross-validation on the unstratified data, and calculated the CVIC for 1-`r N_S_max` latent subtypes. More details are provided in @sec-subtypes.
+We also fit the model on the full dataset (not stratified by sex or CGG) for 2-`r N_S_max` latent subtypes, each with their own ordering (@fig-pvd_optimal). We determined the optimal number of latent subtypes for this dataset using the CVIC criterion (@sec-cvic). We performed `r N_CV_folds`-fold cross-validation on the unstratified data, and calculated the CVIC for 1-`r N_S_max` latent subtypes. More details are provided in the Supplementary Materials (@sec-subtypes).
 
 ### Longitudinal subsets
 
-We also fit the Ordinal SuStaIn model, stratified by sex, including all longitudinal repeated measurements of the same participants over time (@sec-longitudinal-results). Including later observations might help the model clarify the later stages of the event sequence. However, correlation between repeated observations of the same individuals are not accounted for by the Ordinal SuStaIn model, which assumes that all observations are statistically independent, so including repeated measurements will lead to exaggerated estimates of precision.
+We also fit the Ordinal SuStaIn model, stratified by sex, including all longitudinal repeated measurements of the same participants over time ([ Supplementary Section @sec-longitudinal-results]). Including later observations might help the model clarify the later stages of the event sequence. However, correlation between repeated observations of the same individuals are not accounted for by the Ordinal SuStaIn model, which assumes that all observations are statistically independent, so including repeated measurements will lead to exaggerated estimates of precision.
 
 ### Visualizing modeling results
 
 We visualized the results of Ordinal SuStaIn analysis using "positional variance diagrams" (PVDs), which are heatmaps with biomarker events on the y-axis and sequence positions on the x-axis. 
-
-The PVD's color scale indicates the Bayesian posterior probability that a particular biomarker event (y-axis) appears at a particular position along the progression sequence (x-axis). Red indicates a more probable sequence position, and gray indicates a less probable position.
+The PVD's color scale indicates the Bayesian posterior probability that a particular biomarker event (y-axis) appears at a particular position along the progression sequence (x-axis). 
+Brighter colors indicate a more probable sequence position, and paler colors indicate a less probable position. 
+The colors indicate the ordinal levels of progression.
 
 ```{r}
 #| label: get-control-dists
@@ -252,7 +250,6 @@ prob_correct =
 sustain_output = run_and_save_OSA(
   biomarker_levels = biomarker_levels, 
   prob_correct = prob_correct, 
-  
   SuStaInLabels = biomarker_varnames,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max, 
@@ -385,57 +382,65 @@ results_v1 = extract_results_from_pickles(
   dataset_name = "sample_data",
   output_folder = "output/output.fixed_CV")
 
-fig_females_first = extract_figs_from_pickle(size.y = size.y,
+fig_females_first = extract_figs_from_pickle(
+  size.y = size.y,
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "females",
   output_folder = "output/output.fixed_CV")
 
-fig_males_first = extract_figs_from_pickle(size.y = size.y,
+fig_males_first = extract_figs_from_pickle(
+  size.y = size.y,
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "males",
   output_folder = "output/output.fixed_CV")
 
-fig_both_first = extract_figs_from_pickle(size.y = size.y,
+fig_both_first = extract_figs_from_pickle(
+  size.y = size.y,
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "sample_data",
   output_folder = "output/output.fixed_CV")
 
-fig_under100 = extract_figs_from_pickle(size.y = size.y,
+fig_under100 = extract_figs_from_pickle(
+  size.y = size.y,
   n_s = 1,
   dataset_name = "under100",
   output_folder = output_folder)
 
-fig_over100 = extract_figs_from_pickle(size.y = size.y,
+fig_over100 = extract_figs_from_pickle(
+  size.y = size.y,
   n_s = 1,
   dataset_name = "over100",
   output_folder = output_folder)
 
-fig_under100_males = extract_figs_from_pickle(size.y = size.y,
+fig_under100_males = extract_figs_from_pickle(
+  size.y = size.y,
   n_s = 1,
   dataset_name = "under100_Male",
   output_folder = output_folder)
 
-fig_over100_males = extract_figs_from_pickle(size.y = size.y,
+fig_over100_males = extract_figs_from_pickle(
+  size.y = size.y,
   n_s = 1,
   dataset_name = "over100_Male",
   output_folder = output_folder)
 
 
-fig_under100_females = extract_figs_from_pickle(size.y = size.y,
+fig_under100_females = extract_figs_from_pickle(
+  size.y = size.y,
   n_s = 1,
   dataset_name = "under100_Female",
   output_folder = output_folder)
 
-fig_over100_females = extract_figs_from_pickle(size.y = size.y,
+fig_over100_females = extract_figs_from_pickle(
+  size.y = size.y,
   n_s = 1,
   dataset_name = "over100_Female",
   output_folder = output_folder)
 
 ```
-
 
 # Results
 
@@ -559,7 +564,7 @@ pval_over100_sex_gp34_v1 = permutation_test(
 
 ```
 
-We did not find statistically significant evidence of a difference between males and females among those with CGG < 100 (p `r pval_over100_sex_gp34_v1`). @fig-pvd-by-gender-cgg_over100 shows the estimated stratified models.
+We found statistically significant evidence of a difference between males and females among those with CGG < 100 (p `r pval_over100_sex_gp34_v1`). @fig-pvd-by-gender-cgg_over100 shows the estimated stratified models.
 
 ### Comparing CGG levels stratified by sex
 
@@ -613,7 +618,7 @@ We did not find statistically significant evidence of a difference between CGG <
 
 ```{r}
 #| label: set-optimal-subtypes
-n_s = n_s_optimal = 6
+n_s = n_s_selected = 6
 
 results_cv_max = extract_results_from_pickle(
   n_s = n_s,
@@ -625,7 +630,6 @@ Based on the CVIC criterion [Supplementary section @sec-cvic], it appears that `
 For easier clinical interpretation, we chose to analyze the results with only 6 subtypes.
 
 @fig-pvd_optimal shows positional variance diagrams (PVDs) for each of the subtype clusters detected under this assumption, and @tbl-sg_demos shows the demographics of the patients clustered in each subtype. Patients in the "Type 0" category were too early in the disease process to be classified into a subtype.
-
 
 # Discussion
 
@@ -870,7 +874,8 @@ temp$CVIC |> plot_CVIC()
 
 ```{r}
 #| label: extract-PVD-optimal
-figs = extract_figs_from_pickle(size.y = size.y,
+figs = extract_figs_from_pickle(
+  size.y = size.y,
   n_s = n_s,
   dataset_name = dataset_name,
   output_folder = output_folder)
@@ -881,7 +886,7 @@ figs = extract_figs_from_pickle(size.y = size.y,
 #| label: "fig-pvd_optimal"
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("positional variance diagrams for {n_s_optimal} subtypes")
+#| fig-cap: !expr glue::glue("positional variance diagrams for {n_s_selected} subtypes")
 #| fig-cap-location: top
 #| column: page
 library(ggplot2)
