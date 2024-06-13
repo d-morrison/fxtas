@@ -458,7 +458,7 @@ Our data included:
 `r nrow(gp34_v1_controls)` controls;
 `r nrow(males)` males and `r `nrow(females)` females;
 and `r and::and(stages)` carriers at FXTAS stages `r names(stages) |> and::and()`, respectively.
-[@Kyoungmi: you mentioned we should say something about biomarker distributions here, but I'm not sure what exactly to add?]
+[Kyoungmi: you mentioned we should say something about biomarker distributions here, but I'm not sure what exactly to add?]
 
 ## Stratified by sex
 
@@ -626,7 +626,7 @@ results_cv_max = extract_results_from_pickle(
   output_folder = output_folder)
 ```
 
-Based on the CVIC criterion [Supplementary section @sec-cvic], it appears that `r n_s` subtypes is the optimal number for the full, unstratified dataset (@fig-cvic).
+Based on the CVIC criterion ([Supplementary section @sec-cvic]), it appears that `r n_s` subtypes is the optimal number for the full, unstratified dataset (@fig-cvic).
 For easier clinical interpretation, we chose to analyze the results with only 6 subtypes.
 
 @fig-pvd_optimal shows positional variance diagrams (PVDs) for each of the subtype clusters detected under this assumption, and @tbl-sg_demos shows the demographics of the patients clustered in each subtype. Patients in the "Type 0" category were too early in the disease process to be classified into a subtype.
@@ -640,7 +640,7 @@ As described in the methods (@sec-incomplete-data),
 we used a uniform distribution to impute the underlying values of these missing data. 
 The missing data contributes to the large amount of uncertainty in the results.
 
-[to be added]
+[more discussion to be added]
 
 # References {.unnumbered}
 
