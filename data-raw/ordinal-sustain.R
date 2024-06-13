@@ -1,6 +1,6 @@
 ## ----setup-------------------------------------------------------------------------------------------
 #| message: false
-cli::cli_inform('\nStarting at: {Sys.time()}')
+cli::cli_alert_info('\nStarting at: {Sys.time()}')
 
 library(reticulate)
 # reticulate::use_condaenv("fxtas39", required = TRUE)
@@ -317,4 +317,4 @@ sustain_output_cgg100minus_females = run_and_save_OSA(
   use_parallel_startpoints = FALSE,
   plot = FALSE)
 
-cli::cli_inform('\nEnding at: {Sys.time()}')
+cli::cli_alert_info('\nEnding at: {Sys.time()}')

@@ -9,7 +9,7 @@
 
 ## ----setup-------------------------------------------------------------------------------------------
 #| message: false
-cli::cli_inform('\nStarting at: {Sys.time()}')
+cli::cli_alert_info('\nStarting at: {Sys.time()}')
 
 args = commandArgs(trailingOnly = TRUE)
 message("args = ", args |> paste(collapse = "; "))
@@ -31,14 +31,14 @@ if(length(args) == 0)
 
 }
 
-cli::cli_inform("permuting variables: {permuting_variables}")
+cli::cli_alert_info("permuting variables: {permuting_variables}")
 
 if(is.null(stratifying_variables))
 {
-  cli::cli_inform("no stratifying variables provided")
+  cli::cli_alert_info("no stratifying variables provided")
 } else
 {
-  cli::cli_inform("stratifying variables: {stratifying_variables}")
+  cli::cli_alert_info("stratifying variables: {stratifying_variables}")
 }
 
 library(reticulate)
@@ -194,6 +194,6 @@ for (cur_stratum in 1:nrow(strata))
 
 }
 
-cli::cli_inform('\nEnding at: {Sys.time()}')
+cli::cli_alert_info('\nEnding at: {Sys.time()}')
 
 

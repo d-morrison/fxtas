@@ -3,7 +3,7 @@
 # 3: permuting variable (must be a quoted column name, such as "Gender" - 1st argument to analyze_permutations.sbatch
 # 2: stratifying level (can be "") - 2nd argument to analyze_permutations.sbatch
 
-cli::cli_inform('\nStarting at: {Sys.time()}')
+cli::cli_alert_info('\nStarting at: {Sys.time()}')
 
 library(fxtas)
 library(dplyr)
@@ -29,8 +29,8 @@ if(length(args) == 0)
 
 }
 
-cli::cli_inform("permuting variables: {permuting_variables}")
-cli::cli_inform("stratifying level: {stratifying_level}")
+cli::cli_alert_info("permuting variables: {permuting_variables}")
+cli::cli_alert_info("stratifying level: {stratifying_level}")
 
 output_folder =
   fs::path(
