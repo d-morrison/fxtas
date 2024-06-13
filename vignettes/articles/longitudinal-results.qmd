@@ -14,8 +14,6 @@ We also rearranged these results by subset type:
 - all visits (@fig-all-visits)
 
 
-::: landscape
-
 ```{r}
 fig_females_all = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
@@ -191,5 +189,3 @@ stages |> graph_stage_by_age()
 
 
 ```
-
-:::

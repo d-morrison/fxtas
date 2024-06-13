@@ -706,7 +706,11 @@ table_subtype_by_demographics(
   patient_data,
   subtype_and_stage_table = 
     results_cv_max$subtype_and_stage_table
-)
+) |>
+  gtsummary::as_flex_table() |>
+  flextable::width(width = 1.75) |>
+  flextable::width(j = 2:9, width = 0.75) |>
+  flextable::width(j = 10, width = 1)
 
 ```
 
@@ -1087,5 +1091,4 @@ temp$loglike_matrix |> plot_cv_loglik()
 ## Additional data tables {.appendix}
 
 {{< include exploration.qmd >}}
-{{< include data-tables-appendix.qmd >}}
 :::

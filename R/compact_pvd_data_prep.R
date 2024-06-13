@@ -19,6 +19,7 @@ compact_pvd_data_prep <- function(figs){
 
   # determine biomarker event order
   event_order <- dataset |>
+    filter(facet == 1) |>
     dplyr::select(`row number and name`, `event name`, biomarker) |>
     mutate(
       Order = sub("\\D*(\\d+).*", "\\1", `row number and name`) |> as.numeric()
