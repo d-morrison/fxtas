@@ -682,7 +682,10 @@ table_subtype_by_demographics(
   patient_data,
   subtype_and_stage_table = 
     results_cv_max$subtype_and_stage_table
-)
+) |>
+  gtsummary::as_flex_table() |>
+  flextable::width(width = 2) |>
+  flextable::width(j = 2:10, width = 1)
 
 ```
 
