@@ -184,11 +184,12 @@ n_obs = sum(!is.na(x1))
 n_total = length(x1)
 pct_missing = scales::percent(n_missing / n_total, accuracy = 0.1)
 pct_obs = scales::percent(n_obs / n_total, accuracy = 0.1)
-probs = x1 |> 
+probs = 
+  x1 |> 
   table() |> 
   proportions() |> 
   as.vector() |> 
-  scales::percent(n_obs/n_total, accuracy = 0.01) |> 
+  scales::percent(accuracy = 0.01) |> 
   and::and()
 ```
 
@@ -199,12 +200,12 @@ We substituted missing outcome event data
 by assigning a probability distribution across the 
 possible values of the missing variable 
 that matched the marginal distribution among the cases. 
-For example, `r n_missing` of the `length(x1)` cases (`r pct_missing`) 
+For example, `r n_missing` of the `r `length(x1)` cases (`r pct_missing`) 
 had missing values for Ataxia Severity, 
 and `r n_obs` (`r pct_obs`) had recorded values, 
 distributed among severity levels 0-4 ( @tbl-ex-incomplete-data). 
 For the `r n_missing` cases with missing values, 
-we assigned probabilities of `r probs` to levels `r and::and(0:4)`, respectively.
+we assigned probabilities of `r probs` to Ataxia Severity levels `r and::and(0:4)`, respectively.
 
 ### Testing for differences between covariate subgroup strata
 
