@@ -709,8 +709,8 @@ table_subtype_by_demographics(
 ) |>
   gtsummary::as_flex_table() |>
   flextable::width(width = 1.75) |>
-  flextable::width(j = 2:9, width = 0.75) |>
-  flextable::width(j = 10, width = 1)
+  flextable::width(j = 2:6, width = 0.75) |>
+  flextable::width(j = 7, width = 1)
 
 ```
 
