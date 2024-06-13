@@ -1,12 +1,12 @@
 pvd_lineplot <- function(figs, alpha_nochange = 0.25,
-                          left_facet, right_facet, y_title_size = 12,
-                          y_size = 10, x_size = 12){
+                          facet_labels = names(figs), y_title_size = 12,
+                         y_text_size = 10, x_text_size = 12){
   if(length(figs) == 1){
     # extract data from pvd fig object
     dataset <- dplyr::bind_rows(figs[[1]]$data, .id = "facet")
   } else {
     # update list names
-    names(figs) <- c(left_facet, right_facet)
+    names(figs) <- facet_labels
     # extract data from list of pvd fig object
     dataset <- dplyr::bind_rows(
       lapply(
@@ -30,7 +30,7 @@ pvd_lineplot <- function(figs, alpha_nochange = 0.25,
         as.integer(),
       # right justify left facet, left justify right facet
       hjust = ifelse(
-        facet == left_facet,
+        facet == facet_labels[1],
         1,
         0
       ),
@@ -93,8 +93,8 @@ pvd_lineplot <- function(figs, alpha_nochange = 0.25,
       legend.position = "none",
       axis.title.x = element_blank(),
       axis.title.y = element_text(size = y_title_size),
-      axis.text.y = element_text(size = y_size),
-      axis.text.x = element_text(size = x_size)
+      axis.text.y = element_text(size = y_text_size),
+      axis.text.x = element_text(size = x_text_size)
 
     )
 
