@@ -128,7 +128,7 @@ execute:
   warning: false
   message: false
   cache: false
-  freeze: auto  # re-render only when source changes
+  freeze: false  # re-render only when source changes
 filters:
   - docx-landscape.lua
   - authors-block

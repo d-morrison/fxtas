@@ -78,7 +78,10 @@ order_biomarkers = function(position_frequencies)
     arrange(`event name`, desc(proportion), position) |>
     slice_head(by = `event name`) |>
     arrange(position, desc(proportion), `event name`) |>
-    mutate(`row number and name` = paste(dplyr::row_number(), .data$`event name`, sep = ": "))
+    mutate(
+      row_num = dplyr::row_number(),
+      `row number and name` =
+        paste(.data$row_num, .data$`event name`, sep = ": "))
 
 }
 
