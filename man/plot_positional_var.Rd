@@ -23,7 +23,7 @@ plot_positional_var(
   biomarker_order = NULL,
   title_font_size = 12,
   stage_font_size = 10,
-  stage_label = "SuStaIn Stage",
+  stage_label = "Stage Number",
   stage_rot = 0,
   stage_interval = 1,
   label_font_size = 10,

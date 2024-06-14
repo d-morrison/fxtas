@@ -79,6 +79,7 @@ format:
     toc-depth: 4
     cap-location: top
     fig-cap-location: top
+    appendix-title: "Sup."
     tbl-cap-location: top
     number-sections: true
     number-depth: 3
@@ -101,11 +102,11 @@ format:
     theme:
        light:
          - cosmo
-         - custom.scss
+         - vignettes/custom.scss
        dark:
          - darkly
-         - custom.scss
-    css: custom.scss
+         - vignettes/custom.scss
+    css: vignettes/custom.scss
     number-sections: true
     number-depth: 3
     html-math-method: mathjax
@@ -116,7 +117,7 @@ format:
     echo: false
     date: last-modified
     date-format: "[Last modified:] YYYY-MM-DD: H:mm:ss (A)"
-bibliography: ../references.bib
+bibliography: vignettes/references.bib
 knitr:
   opts_chunk:
     collapse: true
@@ -127,7 +128,7 @@ execute:
   warning: false
   message: false
   cache: false
-  freeze: auto  # re-render only when source changes
+  freeze: false  # re-render only when source changes
 filters:
   - docx-landscape.lua
   - authors-block

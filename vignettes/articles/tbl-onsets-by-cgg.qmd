@@ -1,0 +1,39 @@
+
+```{r}
+#| tbl-cap: "Age of onset for those with 'Some tremors recorded'."
+#| label: "tbl-tremor-ao"
+#| 
+vars = c(
+         "Tremor: Age of onset",
+         # "Tremor: Age of onset: missingness reasons",
+         NULL
+         )
+
+
+table1(na.is.category = FALSE, overall = FALSE,
+       NA.label = NA.label1,
+       stratified_formula(vars, column_var),
+       # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+       data = v1_usable |> 
+         filter(`Any tremor (excluding Head Tremor)` == "Some tremors recorded"))
+```
+
+```{r}
+#| label: tbl-ataxia-AO-by-cgg
+#| tbl-cap: "Ataxia age of onset by CGG level"
+vars = c(
+  # "Ataxia",
+  # "Ataxia: severity",
+  # "Ataxia: severity*"
+  "Ataxia: Age of onset"
+  # "Ataxia: Age of onset: missingness reasons"
+)
+
+table1(na.is.category = FALSE, overall = FALSE,
+       NA.label = NA.label1,
+       stratified_formula(vars, column_var),
+       # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+       data = v1_usable |> filter(Ataxia == "Yes"))
+```
+
+<br>

@@ -7,7 +7,7 @@ plot_compact_pvd <- function(
     tile_height = 1,
     y_text_size = 9,
     # facet_label_size = 8,
-    facet_label_prefix = NULL,
+    facet_label_prefix = names(figs),
     legend.position = "none",
     scale_colors = c("red", "blue", "purple4", "darkgreen", "magenta")
 ){

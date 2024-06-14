@@ -1,4 +1,4 @@
-message('Starting at: ', Sys.time())
+cli::cli_alert_info('\nStarting at: {Sys.time()}')
 
 library(reticulate)
 py_config()

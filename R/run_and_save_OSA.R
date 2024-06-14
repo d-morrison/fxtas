@@ -12,6 +12,7 @@ run_and_save_OSA = function(
     verbose = TRUE,
     N_S_max,
     rerun = FALSE,
+    rda_filename = "data.RData",
     ...)
 {
 
@@ -20,12 +21,12 @@ run_and_save_OSA = function(
 
   if(file.exists(rds_path) && !rerun)
   {
-    if(verbose) cli::cli_inform("Found RDS file for {rds_filebase}; loading...")
+    if(verbose) cli::cli_alert_info("Found RDS file for {rds_filebase}; loading...")
     osa_output = readRDS(rds_path)
     testthat::expect_equal(dim(osa_output$samples_sequence)[1], N_S_max)
   } else
   {
-    if(verbose) cli::cli_inform("RDS file for {rds_filebase} not found; running OSA.")
+    if(verbose) cli::cli_alert_info("RDS file for {rds_filebase} not found; running OSA.")
     osa_output = run_OSA(
       dataset_name = dataset_name,
       output_folder = output_folder,
@@ -35,6 +36,12 @@ run_and_save_OSA = function(
     )
     osa_output |> saveRDS(rds_path)
   }
+
+  temp = extract_results_from_pickles(
+    n_s = 1:N_S_max,
+    rda_filename = rda_filename,
+    dataset_name = dataset_name,
+    output_folder = output_folder)
 
   return(osa_output)
 

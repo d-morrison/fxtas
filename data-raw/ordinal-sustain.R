@@ -1,6 +1,6 @@
 ## ----setup-------------------------------------------------------------------------------------------
 #| message: false
-message('Starting at: ', Sys.time())
+cli::cli_alert_info('\nStarting at: {Sys.time()}')
 
 library(reticulate)
 # reticulate::use_condaenv("fxtas39", required = TRUE)
@@ -32,6 +32,8 @@ N_startpoints = 10L
 N_S_max = 8L
 N_S_max_stratified = 2L
 N_CV_folds = 10L
+rerun = TRUE
+# rerun = FALSE
 args = commandArgs(trailingOnly = TRUE)
 message("args = ", args |> paste(collapse = "; "))
 if(N_CV_folds == 0)
@@ -120,6 +122,7 @@ prob_correct =
 if(length(args) == 0 || args[1] == 1)
 {
   save.image(file = fs::path(output_folder, "data.RData"))
+  save.image(file = fs::path(output_folder, paste0(dataset_name, ".RData")))
   patient_data     |> saveRDS(file = fs::path(output_folder, "data.rds"))
   biomarker_levels |> saveRDS(file = fs::path(output_folder, "biomarker_levels.rds"))
   biomarker_groups |> saveRDS(file = fs::path(output_folder, "biomarker_groups.rds"))
@@ -142,6 +145,7 @@ sustain_output = run_and_save_OSA(
   dataset_name = dataset_name,
   use_parallel_startpoints = FALSE,
   plot = FALSE,
+  rerun = rerun,
   patient_data = patient_data,
   N_CV_folds = N_CV_folds,
   CV_fold_nums = CV_fold_nums)
@@ -160,6 +164,7 @@ sustain_output_males = run_and_save_OSA(
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
   dataset_name = "males",
+  rerun = rerun,
   use_parallel_startpoints = FALSE,
   plot = FALSE)
 
@@ -173,13 +178,13 @@ sustain_output_females = run_and_save_OSA(
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   patient_data = patient_data |> filter(Gender == "Female"),
-
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max_stratified,
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
   dataset_name = "females",
+  rerun = rerun,
   use_parallel_startpoints = FALSE,
   plot = FALSE)
 
@@ -199,6 +204,7 @@ sustain_output_cgg100plus = run_and_save_OSA(
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
   dataset_name = "over100",
+  rerun = rerun,
   use_parallel_startpoints = FALSE,
   plot = FALSE)
 
@@ -218,6 +224,7 @@ sustain_output_cgg100minus = run_and_save_OSA(
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
   dataset_name = "under100",
+  rerun = rerun,
   use_parallel_startpoints = FALSE,
   plot = FALSE)
 
@@ -238,6 +245,7 @@ sustain_output_cgg100plus_males = run_and_save_OSA(
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
   dataset_name = "over100_Male",
+  rerun = rerun,
   use_parallel_startpoints = FALSE,
   plot = FALSE)
 
@@ -261,6 +269,7 @@ sustain_output_cgg100minus_males = run_and_save_OSA(
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
   dataset_name = "under100_Male",
+  rerun = rerun,
   use_parallel_startpoints = FALSE,
   plot = FALSE)
 
@@ -281,6 +290,7 @@ sustain_output_cgg100plus_females = run_and_save_OSA(
   N_S_max = N_S_max_stratified,
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
+  rerun = rerun,
   dataset_name = "over100_Female",
   use_parallel_startpoints = FALSE,
   plot = FALSE)
@@ -302,8 +312,9 @@ sustain_output_cgg100minus_females = run_and_save_OSA(
   N_S_max = N_S_max_stratified,
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
+  rerun = rerun,
   dataset_name = "under100_Female",
   use_parallel_startpoints = FALSE,
   plot = FALSE)
 
-message('Ending at: ', Sys.time())
+cli::cli_alert_info('\nEnding at: {Sys.time()}')
