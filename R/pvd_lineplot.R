@@ -1,5 +1,9 @@
+#' Plot change in Stage ranking
+#' @export
+
 pvd_lineplot <- function(figs, alpha_nochange = 0.25,
                           facet_labels = names(figs), y_title_size = 12,
+                         text_size = 3.4,
                          y_text_size = 10, x_text_size = 12){
   if(length(figs) == 1){
     # extract data from pvd fig object
@@ -59,14 +63,23 @@ pvd_lineplot <- function(figs, alpha_nochange = 0.25,
         Changed,
         1,
         alpha_nochange
+      ),
+      facet_order = case_when(
+        facet == facet_labels[1] ~ 1,
+        facet == facet_labels[2] ~ 1.15
       )
     )
+
+  facet_x_labels <- c(
+    glue::glue('<p "style = text-align: right">{facet_labels[1]}</p>'),
+    paste0('<p "style = text-align: left">', facet_labels[2], "</p>")
+  )
 
   # plot
   ggplot(
     plot_dataset,
     aes(
-      x = facet,
+      x = facet_order,
       y = Order |> factor()
     )
   ) +
@@ -76,7 +89,8 @@ pvd_lineplot <- function(figs, alpha_nochange = 0.25,
         hjust = hjust
       ),
       fill = NA,
-      label.color = NA
+      label.color = NA,
+      size = text_size
     ) +
     geom_line(
       aes(
@@ -86,16 +100,21 @@ pvd_lineplot <- function(figs, alpha_nochange = 0.25,
       linewidth = plot_dataset$linesize,
       alpha = plot_dataset$alpha
     ) +
+    scale_x_continuous(
+      limits = c(0.65, 1.5),
+      breaks = c(1, 1.15),
+      labels = facet_x_labels
+    ) +
     scale_y_discrete(limits = rev) +
     labs(y = "Stage") +
     theme_classic() +
     theme(
       legend.position = "none",
       axis.title.x = element_blank(),
-      axis.title.y = element_text(size = y_title_size),
-      axis.text.y = element_text(size = y_text_size),
-      axis.text.x = element_text(size = x_text_size)
-
+      axis.title.y = ggtext::element_markdown(size = y_title_size),
+      axis.text.y = ggtext::element_markdown(size = y_text_size),
+      axis.text.x = ggtext::element_markdown(size = x_text_size,
+                                             hjust = plot_dataset[["hjust"]])
     )
 
 }
