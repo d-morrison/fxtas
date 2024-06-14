@@ -1020,8 +1020,8 @@ This figure compares the mean log-likelihood for the sex-stratified model
 to the distribution of mean log-likelihoods when sex is permuted.
 Only `r n_perm_over_obs` out of `r length(perm_stats)` permuted mean-log-likelihoods 
 were larger than the observed mean-log-likelihood
-(`r pct_obs_over_perm |> scales::percent(accuracy = 0.1)`),
-resulting in a two-sided p-value of $2 \times `r pct_obs_over_perm` = `r 2*pct_obs_over_perm`$.
+(`r pct_perm_over_obs |> scales::percent(accuracy = 0.1)`),
+resulting in a two-sided p-value of $2 \times `r pct_perm_over_obs` = `r 2*pct_perm_over_obs`$.
 
 {{< pagebreak >}}
 
@@ -1137,6 +1137,11 @@ temp$loglike_matrix |> plot_cv_loglik()
 
 ::: landscape
 ## Additional data tables {.appendix}
+
+The following tables summarize the distributions of the biomarkers 
+that we analyzed in this paper, stratified by sex and CGG level.
+
+{{< pagebreak >}}
 
 {{< include exploration.qmd >}}
 :::
