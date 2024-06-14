@@ -770,28 +770,35 @@ plot_compact_pvd(
 {{< pagebreak >}}
 
 ```{r}
-#| label: "fig-pvd-by-cgg"
+#| label: "fig-first-only-lineplot"
+#| fig-cap: "Estimated event sequence models, stratified by sex: comparison of most likely orderings"
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap-location: top
+
+list(
+    "Males" = fig_males_first,
+    "Females" = fig_females_first
+  ) |> 
+pvd_lineplot()
+
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| label: fig-pvd-by-cgg
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
 #| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+)"
-#| fig-cap-location: top
 
-# layout-ncol: 2
-# fig-subcap:
-#   - "CGG < 100"
-#   - "CGG 100+"
-
-# fig_both_first |> print() 
-# fig_under100 |> print()
-# fig_over100 |> print()
-
-plot_compact_pvd(
-  figs = list(
+list(
     fig_under100,
     fig_over100
-  ),
-  facet_label = c("CGG < 100 <br>", "CGG &ge; 100 <br>"),
+  ) |> 
+plot_compact_pvd(
+  facet_label_prefix = c("CGG < 100 <br>", "CGG &ge; 100 <br>"),
   y_text_size = 11
 )
 
@@ -800,7 +807,23 @@ plot_compact_pvd(
 {{< pagebreak >}}
 
 ```{r}
-#| label: "fig-pvd-by-cgg-male"
+#| label: fig-cgg-lineplot
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: "Estimated event sequences, stratified by CGG repeats (<100 vs 100+): comparison of orderings"
+
+list(
+  "CGG < 100" = fig_under100,
+  "CGG &ge; 100" = fig_over100) |>
+  pvd_lineplot()
+
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| label: fig-pvd-by-cgg-male
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
@@ -830,7 +853,7 @@ plot_compact_pvd(
 {{< pagebreak >}}
 
 ```{r}
-#| label: "fig-pvd-by-cgg-female"
+#| label: fig-pvd-by-cgg-female
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
@@ -860,7 +883,7 @@ plot_compact_pvd(
 {{< pagebreak >}}
 
 ```{r}
-#| label: "fig-pvd-by-gender-cgg_under100"
+#| label: fig-pvd-by-gender-cgg_under100
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
@@ -889,7 +912,7 @@ plot_compact_pvd(
 {{< pagebreak >}}
 
 ```{r}
-#| label: "fig-pvd-by-gender-cgg_over100"
+#| label: fig-pvd-by-gender-cgg_over100
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
@@ -939,7 +962,7 @@ figs = extract_figs_from_pickle(
 
 
 ```{r}
-#| label: "fig-pvd_chosen_subtypes"
+#| label: fig-pvd_chosen_subtypes
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
 #| fig-cap: !expr glue::glue("positional variance diagrams for {n_s_selected} subtypes")
