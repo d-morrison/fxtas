@@ -501,7 +501,7 @@ stages = v1_usable_cases |> select(`FXTAS Stage (0-5)*`) |> table()
 Our data included: 
 `r nrow(v1_usable_cases)` Fragile X premutation carriers and 
 `r nrow(gp34_v1_controls)` controls;
-`r nrow(males)` males and `r `nrow(females)` females;
+`r nrow(males)` males and `r nrow(females)` females;
 and `r and::and(stages)` carriers at FXTAS stages `r names(stages) |> and::and()`, respectively.
 
 (**Kyoungmi: in your previous comments, you mentioned we should say something about biomarker distributions here, but I'm not sure what exactly to add?**)
