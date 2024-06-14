@@ -13,6 +13,8 @@ We also rearranged these results by subset type:
 - first visits only (@fig-first-only)
 - all visits (@fig-all-visits)
 
+Note that clinical events which never occur in a dataset cannot be placed into the event sequence, 
+so the set of modeled events varies by data subset.
 
 ```{r}
 #| label: extract figs
@@ -123,10 +125,8 @@ plot_compact_pvd(
 
 ### All patients, all visits  {.appendix}
 
-@fig-all-visits shows the event sequences that we estimated from each data subset. Note that clinical events which never occur in a dataset cannot be placed into the event sequence, so the set of modeled events varies by data subset.
-
-We note that Parkinsonian features mostly appear after FXTAS stage 4 for females, whereas they occur before stage 4 for males.
-
+@fig-all-visits shows the event sequences that we estimated from each data subset.
+Parkinsonian features mostly appear after FXTAS stage 4 for females, whereas they occur before stage 4 for males.
 Similarly, clinically-elevated SCL90 values appear before FXTAS stage 1 for females, whereas they occur after stage 3 for males.
 
 {{< pagebreak >}}

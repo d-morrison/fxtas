@@ -120,8 +120,7 @@ University of California Davis Institutional Review Board.
 
 The primary event sequence analysis included baseline-visit data 
 from 297 participants from the two cohorts,
-consisting of   
-`r nrow(v1_usable_cases)` Fragile X premutation carriers 
+consisting of `r nrow(v1_usable_cases)` Fragile X premutation carriers 
 and `r nrow(gp34_v1_controls)`  controls. 
 
 [Supplemental Figure @fig-hist-CGG-gp34-v1] shows the distribution of CGG repeats 

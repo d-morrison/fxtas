@@ -102,11 +102,11 @@ format:
     theme:
        light:
          - cosmo
-         - custom.scss
+         - vignettes/custom.scss
        dark:
          - darkly
-         - custom.scss
-    css: custom.scss
+         - vignettes/custom.scss
+    css: vignettes/custom.scss
     number-sections: true
     number-depth: 3
     html-math-method: mathjax
