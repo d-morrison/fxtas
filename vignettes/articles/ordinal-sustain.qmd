@@ -74,7 +74,7 @@ pvd_line_height = 10
 pvd_line_width = 8
 size.y = 11
 N_startpoints = 10L
-N_S_max = 7L
+N_S_max = 8L
 N_S_max_stratified = 2L
 N_CV_folds = 10L
 
@@ -793,10 +793,17 @@ results_cv_max = extract_results_from_pickle(
   output_folder = output_folder)
 ```
 
-Based on the CVIC criterion ([Supplementary section @sec-cvic]), it appears that `r n_s_min_CVIC` subtypes is the optimal number for the full, unstratified dataset (@fig-cvic).
-For easier clinical interpretation, we chose to analyze the results with only `r n_s_selected` subtypes.
+Based on the CVIC criterion ([Supplementary section @sec-cvic]), it appears that `r n_s_min_CVIC` subtypes is the optimal number for the full, unstratified dataset (@fig-cvic). The out-of-fold log-likelihood (Supplementary Material @#eq-def-oof-llik) showed substantial fold-to-fold variation.
+Between `r broman::spell_out(n_s_selected)` and `r broman::spell_out(N_S_max)` latent subgroups, 
+the distribution of OOFLL appears to be
+approximately unchanging and the CVIC appears approximately flat.
+From these results, it does not appear that there is much benefit to including
+more than `r broman::spell_out(n_s_selected)` latent subgroups for this dataset.
+Therefore, for easier clinical interpretation, we chose to analyze the results with only `r n_s_selected` subtypes.
 
 @fig-pvd_chosen_subtypes shows positional variance diagrams (PVDs) for each of the subtype clusters detected under this assumption, and @tbl-sg_demos shows the demographics of the patients clustered in each subtype. Patients in the "Type 0" category were too early in the disease process to be classified into a subtype.
+
+Females were more likely to be in latent subtype 2 (39% versus 24%), whereas males were more likely to be in in subtype 3 (29% versus 12%). Subtypes 1 and 4 were equally prevalent among men and women.
 
 # Discussion
 
@@ -1110,6 +1117,18 @@ temp$CVIC |> plot_CVIC()
 
 {{< pagebreak >}}
 
+
+```{r}
+#| fig-cap: "Test set log-likelihood across folds"
+#| label: fig-oofll
+#| eval: !expr fit_models
+
+temp$loglike_matrix |> plot_cv_loglik()
+
+```
+
+{{< pagebreak >}}
+
 ```{r}
 #| label: extract-PVD-selected-subtypes
 figs = extract_figs_from_pickle(
@@ -1281,7 +1300,7 @@ CVIC_{\mathcal C} =
 \right\}
 $${#eq-def-cvic}
 
-## Out-of-fold log-likelihood distribution {.appendix}
+## Out-of-fold log-likelihood distribution {#sec-oofll .appendix}
 
 We also evaluated the consistency of our cross-validation procedure by looking at the distribution of out-of-fold log-likelihood ("OOFLL") across cross-validation folds; following @young2018uncovering, we calculated out-of-sample log-likelihood as:
 
@@ -1297,24 +1316,8 @@ $$
 \hat{P}_{(-k)}(C_i = c, S_c = s)
 $$ {#eq-def-oof-llik}
 
-{{< pagebreak >}}
-
-@fig-boxplot-loglik-cv shows the distribution of the OOFLL statistic
+@fig-oofll shows the distribution of the OOFLL statistic
 as a function of number of latent subgroups.
-Between four and eight latent subgroups, 
-the distribution of OOFLL appears to be
-approximately unchanging.
-From these results, it does not appear that there is much benefit to including
-more than four latent subgroups for this dataset.
-
-```{r}
-#| fig-cap: "Test set log-likelihood across folds"
-#| label: fig-boxplot-loglik-cv
-#| eval: !expr fit_models
-
-temp$loglike_matrix |> plot_cv_loglik()
-
-```
 
 {{< pagebreak >}}
 

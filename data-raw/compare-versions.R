@@ -1,6 +1,6 @@
 picklename  = "sample_data_fold0_subtype0.pickle"
 # picklename = "sample_data_subtype0.pickle"
-picklenameOLD = paste(picklename, "OLD")
+picklenameOLD = paste(picklename, "6-13")
 output_folder =
   "output/output.fixed_CV/" |>
   fs::dir_create()
@@ -15,12 +15,6 @@ results_new_local =
   py_load_object() |>
   force()
 
-results_new_server =
-  fs::path("~/Downloads", picklename) |>
-  py_load_object() |>
-  force()
-
-all.equal(results_new_local, results_new_server)
 all.equal(results_old, results_new_local)
 
 results_old_local$samples_likelihood[1,]

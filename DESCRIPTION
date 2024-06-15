@@ -10,6 +10,7 @@ BugReports: https://github.com/d-morrison/fxtas/issues
 Imports: 
     and,
     arsenal,
+    broman,
     cli,
     colorspace,
     config (>= 0.3.1),
