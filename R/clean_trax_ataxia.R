@@ -10,7 +10,6 @@ clean_trax_ataxia = function(data)
       `Ataxia: severity` =
         dplyr::case_when(
           `Ataxia: severity` %in% c("888","999") ~ 0,
-          `Ataxia: severity` == "2.5" ~ 2,
           TRUE ~ `Ataxia: severity`
         ),
 
@@ -37,6 +36,10 @@ clean_trax_ataxia = function(data)
 
       `Ataxia: severity*` =
         `Ataxia: severity` |>
+        case_when(
+          `Ataxia: severity` == "2.5" ~ 2,
+          TRUE ~ `Ataxia: severity`
+        ) |>
         factor()
 
     )
