@@ -66,11 +66,14 @@ pvd_lineplot <- function(figs,
       linesize = ifelse(biomarker == "FXTAS Stage (0-5)*",
                         2,
                         1),
-      alpha = ifelse(Changed,
-                     alpha_change,
-                     alpha_nochange),
+      alpha = ifelse(
+        Changed | (biomarker == "FXTAS Stage (0-5)*") ,
+        alpha_change,
+        alpha_nochange
+      ),
       facet_order = case_when(facet == facet_labels[1] ~ 1,
-                              facet == facet_labels[2] ~ 1.15)
+                              facet == facet_labels[2] ~ 1.15
+      )
     )
 
   facet_x_labels <- c(

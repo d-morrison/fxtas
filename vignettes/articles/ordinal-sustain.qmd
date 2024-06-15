@@ -1364,15 +1364,13 @@ $$ {#eq-def-oof-llik}
 @fig-oofll shows the distribution of the OOFLL statistic
 as a function of number of latent subgroups.
 
-{{< pagebreak >}}
-
-::: landscape
 ## Additional data tables {.appendix}
 
 The following tables summarize the distributions of the biomarkers 
 that we analyzed in this paper, stratified by sex and CGG level.
 
-{{< pagebreak >}}
+::: landscape
 
 {{< include exploration.qmd >}}
+
 :::
