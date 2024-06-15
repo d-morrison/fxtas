@@ -603,7 +603,12 @@ Data pre-processing and results post-processing were performed in R 4.4.0 (@rcor
 using the `tidyverse` packages (@tidyverse).
 The `reticulate` package (@reticulate) was used to create a programming interface between 
 Python and R.
-The code implementing these analyses is available online at <https://github.com/d-morrison/fxtas>.
+The code used to perform this analysis is available online at <https://github.com/d-morrison/fxtas>.
+
+## Data availability
+
+The data used in this analysis may be provided upon request from the 
+corresponding author.
 
 # Results
 
