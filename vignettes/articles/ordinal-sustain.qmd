@@ -74,6 +74,8 @@ pvd_line_height = 10
 pvd_line_width = 8
 size.y = 11
 N_startpoints = 10L
+# use_parallel_startpoints = TRUE
+use_parallel_startpoints = FALSE # couldn't get parallel to work, 2024/06/15
 N_S_max = 8L
 N_S_max_stratified = 2L
 N_CV_folds = 10L
@@ -315,7 +317,7 @@ sustain_output = run_and_save_OSA(
   N_iterations_MCMC = N_iterations_MCMC, 
   output_folder = output_folder, 
   dataset_name = dataset_name, 
-  use_parallel_startpoints = FALSE,
+  use_parallel_startpoints = use_parallel_startpoints,
   seed = 1,
   plot = plot_python,
   rerun = rerun,
@@ -340,7 +342,7 @@ sustain_output_males = run_and_save_OSA(
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
   dataset_name = "males",
-  use_parallel_startpoints = FALSE,
+  use_parallel_startpoints = use_parallel_startpoints,
   seed = 1,
   plot = plot_python,
   rerun = rerun,
@@ -366,7 +368,7 @@ sustain_output_females = run_and_save_OSA(
   N_iterations_MCMC = N_iterations_MCMC, 
   output_folder = output_folder, 
   dataset_name = "females", 
-  use_parallel_startpoints = FALSE,
+  use_parallel_startpoints = use_parallel_startpoints,
   seed = 1,
   plot = plot_python,
   rerun = rerun,
@@ -391,7 +393,7 @@ sustain_output_cgg100plus = run_and_save_OSA(
   N_iterations_MCMC = N_iterations_MCMC, 
   output_folder = output_folder, 
   dataset_name = "over100", 
-  use_parallel_startpoints = FALSE,
+  use_parallel_startpoints = use_parallel_startpoints,
   seed = 1,
   plot = plot_python)
 
@@ -413,7 +415,7 @@ sustain_output_cgg100minus = run_and_save_OSA(
   N_iterations_MCMC = N_iterations_MCMC, 
   output_folder = output_folder, 
   dataset_name = "under100", 
-  use_parallel_startpoints = FALSE,
+  use_parallel_startpoints = use_parallel_startpoints,
   seed = 1,
   plot = plot_python)
 
@@ -438,7 +440,7 @@ sustain_output_cgg100minus_males = run_and_save_OSA(
   output_folder = output_folder,
   dataset_name = "under100_Male",
   rerun = rerun,
-  use_parallel_startpoints = FALSE,
+  use_parallel_startpoints = use_parallel_startpoints,
   plot = plot_python)
 ```
 
@@ -460,7 +462,7 @@ sustain_output_cgg100plus_males = run_and_save_OSA(
   output_folder = output_folder,
   dataset_name = "over100_Male",
   rerun = rerun,
-  use_parallel_startpoints = FALSE,
+  use_parallel_startpoints = use_parallel_startpoints,
   plot = plot_python)
 ```
 
@@ -482,7 +484,7 @@ sustain_output_cgg100minus_females = run_and_save_OSA(
   output_folder = output_folder,
   rerun = rerun,
   dataset_name = "under100_Female",
-  use_parallel_startpoints = FALSE,
+  use_parallel_startpoints = use_parallel_startpoints,
   plot = plot_python)
 ```
 
@@ -505,7 +507,7 @@ sustain_output_cgg100plus_females = run_and_save_OSA(
   output_folder = output_folder,
   rerun = rerun,
   dataset_name = "over100_Female",
-  use_parallel_startpoints = FALSE,
+  use_parallel_startpoints = use_parallel_startpoints,
   plot = plot_python)
 ```
 
@@ -793,7 +795,7 @@ results_cv_max = extract_results_from_pickle(
   output_folder = output_folder)
 ```
 
-Based on the CVIC criterion ([Supplementary section @sec-cvic]), it appears that `r n_s_min_CVIC` subtypes is the optimal number for the full, unstratified dataset (@fig-cvic). The out-of-fold log-likelihood (Supplementary Material @#eq-def-oof-llik) showed substantial fold-to-fold variation.
+Based on the CVIC criterion ([Supplementary section @sec-cvic]), it appears that `r n_s_min_CVIC` subtypes is the optimal number for the full, unstratified dataset (@fig-cvic). The out-of-fold log-likelihood (Supplementary Material @eq-def-oof-llik) showed substantial fold-to-fold variation.
 Between `r broman::spell_out(n_s_selected)` and `r broman::spell_out(N_S_max)` latent subgroups, 
 the distribution of OOFLL appears to be
 approximately unchanging and the CVIC appears approximately flat.
@@ -1120,6 +1122,7 @@ temp$CVIC |> plot_CVIC()
 
 ```{r}
 #| fig-cap: "Test set log-likelihood across folds"
+#| fig-height: 6
 #| label: fig-oofll
 #| eval: !expr fit_models
 

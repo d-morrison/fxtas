@@ -52,10 +52,15 @@ run_OSA = function(
     ...)
 {
 
-  if(verbose) message("starting `run_OSA ()`")
+  if(verbose)
+  {
+    cli::cli_alert_info("starting `run_OSA ()`")
+    cli::cli_alert_info("\n`use_parallel_startpoints` = {use_parallel_startpoints}\n")
+  }
 
   # reticulate::use_virtualenv("r-pySuStaIn")
   # pySuStaIn = reticulate::import("pySuStaIn")
+
   sustain_input = pySuStaIn$OrdinalSustain(
     prob_nl = prob_score[ , , 1],
     prob_score = prob_score[ , , -1, drop = FALSE],

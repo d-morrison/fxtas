@@ -19,7 +19,7 @@ plot_cv_loglik = function(cv_loglik)
     ggplot(aes(x = `# subgroups`, y = loglik, col = fold)) +
     xlab("# latent subgroups") +
     geom_point() +
-    geom_line(aes(group = fold)) +
+    geom_line(aes(group = fold, linetype = fold)) +
     # geom_boxplot() +
     theme_bw() +
     theme(legend.position = "bottom") +
