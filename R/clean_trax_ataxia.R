@@ -8,10 +8,10 @@ clean_trax_ataxia = function(data)
 
       # setting missing codes as 0s:
       `Ataxia: severity` =
-        dplyr::if_else(
-          condition = `Ataxia: severity` %in% c(888,999),
-          true = 0,
-          false = `Ataxia: severity`
+        dplyr::case_when(
+          `Ataxia: severity` %in% c("888","999") ~ 0,
+          `Ataxia: severity` == "2.5" ~ 2,
+          TRUE ~ `Ataxia: severity`
         ),
 
       `Ataxia: severity` =
