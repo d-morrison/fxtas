@@ -18,6 +18,13 @@ text-align: center;
 </style>
 ```
 
+# Abstract {.unnumbered}
+
+The fragile X-associated tremor/ataxia syndrome (FXTAS) is a relatively newly discovered neurodegenerative disorder caused by the premutation (55 to 200 CGG repeats) in the FMR1 gene.
+A currently open question is: In what sequential order do FXTAS symptoms typically appear, how does that sequence vary between participants, and what baseline characteristics predict that order?
+Here, we applied the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm to find event sequences for FXTAS patients.
+We found substantial differences in order of onset depending on sex and CGG repeat number.
+
 # Introduction
 
 The fragile X-associated tremor/ataxia syndrome (FXTAS) is a relatively newly discovered neurodegenerative disorder caused by the premutation (55 to 200 CGG repeats) in the FMR1 gene [@hagerman2001intention]. 
@@ -31,7 +38,8 @@ The prevalence of the premutation is approximately 1 in 148 to 200 females in th
 A currently open question is: In what sequential order do FXTAS symptoms typically appear, how does that sequence vary between participants, and what baseline characteristics predict that order?
 Here, we apply the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2021ordinal] to find event sequences for FXTAS patients.
 
-```{r, include = FALSE}
+```{r}
+#| include: false
 #| label: setup
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -42,7 +50,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r libraries}
+```{r}
+#| label: libraries
 #| message: false
 # devtools::load_all()
 library(fxtas)
@@ -56,7 +65,7 @@ library(magrittr)
 
 ```{r}
 #| label: "set run parameters"
-#| 
+
 fit_models = TRUE
 # fit_models = FALSE
 run_CV =  TRUE
@@ -244,7 +253,7 @@ In order to test for statistical significant evidence of differences in event se
 between males and females
 and 
 between lower premutation levels (CGG <100) and higher premutation levels (CGG 100-199),
-we implemented a permutation test.
+we implemented a permutation test (@welch1990construction).
 We first created 1000 permuted datasets in which we randomly shuffled the variable being tested.
 We computed the mean log-likelihood of the data for each permuted dataset 
 (averaging across MCMC samples and summing across the strata being compared) 
@@ -305,9 +314,9 @@ prob_correct =
 
 ```
 
-```{r "run OSA from R"}
+```{r}
 #| message: false
-#| label: model-all-data
+#| label: model-all-subgroups-first-visits
 #| include: false
 #| eval: !expr fit_models
 
@@ -331,7 +340,7 @@ sustain_output = run_and_save_OSA(
 
 ```{r}
 #| message: false
-#| label: model-males
+#| label: model-males-v1
 #| include: false
 #| eval: !expr fit_models
 
@@ -603,7 +612,7 @@ Data pre-processing and results post-processing were performed in R 4.4.0 (@rcor
 using the `tidyverse` packages (@tidyverse).
 The `reticulate` package (@reticulate) was used to create a programming interface between 
 Python and R.
-The code used to perform this analysis is available online at <https://github.com/d-morrison/fxtas>.
+The code used to perform this analysis is available at <https://github.com/d-morrison/fxtas>.
 
 ## Data availability
 
@@ -659,7 +668,7 @@ Cognitive declines, as measured by SWM and PAL, also occur at earlier FXTAS stag
 Ataxia occurs prior to Stage 1 for females and after Stage 2 for males.
 However, Ataxia severity 1 occurs earlier for males (between Stages 2-3) than for females (between Stages 3-4).
 
-MRI biomarkers of decline and Parkinsonian features also appear at earlier stages for males than for females
+MRI biomarkers of decline and Parkinsonian features also appear at earlier stages for males than for females.
 
 ## Stratified by CGG repeats
 
@@ -795,9 +804,17 @@ pval_female_cgg_gp34_v1 = permutation_test(
   permuted_test_stats = permuted_test_stats
 )
 
+n_over100_Female = 
+  v1_usable |> 
+  filter(
+   Gender == "Female",
+   CGG >= 100
+  ) |> 
+  nrow()
+
 ```
 
-We did not find statistically significant evidence of a difference between CGG < 100 and CGG ≥ 100 among females (p = `r pval_female_cgg_gp34_v1`). @fig-pvd-by-cgg-female shows the estimated stratified models, and @fig-pvd-by-cgg-female-change compares the maximum likelihood estimates. Here again, sample size was an issue, especially for females with CGG ≥ 100.
+We did not find statistically significant evidence of a difference between CGG < 100 and CGG ≥ 100 among females (p = `r pval_female_cgg_gp34_v1`). @fig-pvd-by-cgg-female shows the estimated stratified models, and @fig-pvd-by-cgg-female-change compares the maximum likelihood estimates. Here again, sample size was an issue, especially since the available data included only `r n_over100_Female` females with CGG ≥ 100.
 
 ## Latent Subtypes
 
