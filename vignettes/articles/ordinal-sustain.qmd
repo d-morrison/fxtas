@@ -63,8 +63,8 @@ run_CV =  TRUE
 # run_CV = FALSE
 
 rerun = TRUE
-# rerun = FALSE
-
+rerun = FALSE
+# 
 plot_python = TRUE
 # plot_python = FALSE
 
@@ -261,9 +261,12 @@ A detailed numerical example of this procedure is provided in the Supplementary 
 
 We also fit the model on the full dataset (not stratified by sex or CGG) 
 for 2-`r N_S_max` latent subtypes, 
-each with their own ordering (@fig-pvd_chosen_subtypes). 
-We determined the optimal number of latent subtypes for this dataset using the CVIC criterion (@sec-cvic). 
-We performed `r N_CV_folds`-fold cross-validation on the unstratified data, and calculated the CVIC for 1-`r N_S_max` latent subtypes. 
+each with their own ordering. 
+We determined the optimal number of latent subtypes for this dataset using 
+the CVIC criterion (Supplementary Materials @sec-cvic) and 
+the OOFLL criterion (Supplementary Materials @sec-oofll).
+We performed `r N_CV_folds`-fold cross-validation on the unstratified data, 
+and calculated the CVIC and OOFLL for 1-`r N_S_max` latent subtypes. 
 More details are provided in the Supplementary Materials (@sec-subtypes).
 
 ### Longitudinal subsets
