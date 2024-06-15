@@ -595,6 +595,16 @@ fig_over100_females = extract_figs_from_pickle(
 
 ```
 
+## Software
+
+The Ordinal Sustain analysis was performed in Python 3.9 (@python3) 
+using the `pySuStaIn` package (@aksman2021pysustain).
+Data pre-processing and results post-processing were performed in R 4.4.0 (@rcore) 
+using the `tidyverse` packages (@tidyverse).
+The `reticulate` package (@reticulate) was used to create a programming interface between 
+Python and R.
+The code implementing these analyses is available online at <https://github.com/d-morrison/fxtas>.
+
 # Results
 
 ```{r}
@@ -1306,7 +1316,7 @@ CVIC_{\mathcal C} =
 \right\}
 $${#eq-def-cvic}
 
-## Out-of-fold log-likelihood distribution {#sec-oofll .appendix}
+### Out-of-fold log-likelihood criterion {#sec-oofll .appendix}
 
 We also evaluated the consistency of our cross-validation procedure by looking at the distribution of out-of-fold log-likelihood ("OOFLL") across cross-validation folds; following @young2018uncovering, we calculated out-of-sample log-likelihood as:
 
