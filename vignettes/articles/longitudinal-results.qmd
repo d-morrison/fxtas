@@ -70,25 +70,11 @@ fig_both_mv_only = extract_figs_from_pickle(size.y = size.y,
 #| fig-cap: !expr glue::glue("Estimated event sequences for males, by data subset. {compact_fig_caption}")
 #| fig-cap-location: top
 
-# layout-ncol: 2
-# fig-subcap:
-#   - "First visits only"
-#   - "All visits" 
-
-# fig_males_first |> print()
-# 
-# fig_males_all |> print()
-
-# fig_males_mv_only |> print()
-
-plot_compact_pvd(
-  figs = list(
-    fig_males_first,
-    fig_males_all
-  ),
-  facet_label = c("Males, First Visit Only", "Males, All Visits"),
-  y_text_size = 11
-)
+list(
+    "Males, First Visit Only" = fig_males_first,
+    "Males, All Visits" = fig_males_all
+  ) |> 
+plot_compact_pvd(y_text_size = 11)
 
 ```
 
@@ -102,14 +88,11 @@ plot_compact_pvd(
 #| fig-cap: "Change in estimated event sequences for males by data subset"
 #| fig-cap-location: top
 
-pvd_lineplot(
-  figs = list(
-    fig_males_first,
-    fig_males_all
-  ),
-  facet_label = c("Males, First Visit Only", "Males, All Visits"),
-  y_text_size = 11
-)
+list(
+    "Males, First Visit Only" = fig_males_first,
+    "Males, All Visits" = fig_males_all
+  ) |> 
+pvd_lineplot(y_text_size = 11)
 ```
 
 ### Females {.appendix}
@@ -122,25 +105,11 @@ pvd_lineplot(
 #| fig-width: !expr pvd_width
 #| fig-cap-location: top
 
-# layout-ncol: 2
-# fig-subcap:
-#   - "First visits only"
-#   - "All visits" 
-
-# fig_females_first |> print()
-# 
-# fig_females_all |> print()
-
-# fig_females_mv_only |> print()
-
-plot_compact_pvd(
-  figs = list(
-    fig_females_first,
-    fig_females_all
-  ),
-  facet_label = c("Females, First Visit Only", "Females, All Visits"),
-  y_text_size = 11
-)
+list(
+    "Females, First Visit Only" = fig_females_first,
+    "Females, All Visits" = fig_females_all
+  ) |> 
+plot_compact_pvd(y_text_size = 11)
 ```
 
 {{< pagebreak >}}
@@ -153,21 +122,20 @@ plot_compact_pvd(
 #| fig-cap: "Change in estimated event sequences for females by data subset"
 #| fig-cap-location: top
 
-pvd_lineplot(
-  figs = list(
-    fig_females_first,
-    fig_females_all
-  ),
-  facet_label = c("Females, First Visit Only", "Females, All Visits"),
-  y_text_size = 11
-)
+list(
+    "Females, First Visit Only" = fig_females_first,
+    "Females, All Visits" = fig_females_all
+  ) |> 
+pvd_lineplot(y_text_size = 11)
 ```
 
 ### All patients, all visits  {.appendix}
 
 @fig-all-visits shows the event sequences that we estimated from each data subset.
-Parkinsonian features mostly appear after FXTAS stage 4 for females, whereas they occur before stage 4 for males.
-Similarly, clinically-elevated SCL90 values appear before FXTAS stage 1 for females, whereas they occur after stage 3 for males.
+Parkinsonian features mostly appear after FXTAS stage 4 for females, 
+whereas they occur before stage 4 for males.
+Similarly, clinically-elevated SCID values appear before FXTAS stage 1 for females, 
+whereas they occur after stage 3 for males.
 
 {{< pagebreak >}}
 
@@ -179,23 +147,11 @@ Similarly, clinically-elevated SCL90 values appear before FXTAS stage 1 for fema
 #| fig-cap: !expr glue::glue("Estimated event sequences - all visits. {compact_fig_caption}")
 #| fig-cap-location: top
 
-# layout-ncol: 2
-# fig-subcap:
-#   - "Males only" 
-#   - "Females only"
-
-# fig_both_all |> print()
-# fig_males_all |> print()
-# fig_females_all |> print()
-
-plot_compact_pvd(
-  figs = list(
-    fig_males_all,
-    fig_females_all
-  ),
-  facet_label = c("Males", "Females"),
-  y_text_size = 11
-)
+list(
+    "Males" = fig_males_all,
+    "Females" = fig_females_all
+  ) |> 
+plot_compact_pvd(y_text_size = 11)
 ```
 
 {{< pagebreak >}}
@@ -208,14 +164,11 @@ plot_compact_pvd(
 #| fig-cap: "Change in estimated event sequences - all visits"
 #| fig-cap-location: top
 
-pvd_lineplot(
-  figs = list(
-    fig_males_all,
-    fig_females_all
-  ),
-  facet_label = c("Males", "Females"),
-  y_text_size = 11
-)
+list(
+    "Males" = fig_males_all,
+    "Females" = fig_females_all
+  ) |> 
+pvd_lineplot(y_text_size = 11)
 ```
 
 {{< pagebreak >}}
@@ -247,6 +200,5 @@ stages =
 
 library(ggplot2)
 stages |> graph_stage_by_age()
-
 
 ```
