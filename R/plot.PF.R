@@ -29,7 +29,7 @@ plot.PF = function(
       low = "gray",
       high = "red")+
     ggplot2::scale_y_discrete(limits = rev) +
-    ggplot2::xlab('SuStaIn Stage') +
+    ggplot2::xlab('Stage Number') +
     ggplot2::ylab(NULL) +
     ggplot2::theme_bw() +
     ggplot2::theme(
