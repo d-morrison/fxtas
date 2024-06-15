@@ -63,7 +63,7 @@ run_CV =  TRUE
 # run_CV = FALSE
 
 rerun = TRUE
-# rerun = FALSE
+rerun = FALSE
 
 plot_python = TRUE
 # plot_python = FALSE
@@ -74,7 +74,7 @@ pvd_line_height = 10
 pvd_line_width = 8
 size.y = 11
 N_startpoints = 10L
-N_S_max = 8L
+N_S_max = 7L
 N_S_max_stratified = 2L
 N_CV_folds = 10L
 
@@ -432,7 +432,7 @@ sustain_output_cgg100minus_males = run_and_save_OSA(
       `CGG` < 100,
       Gender == "Male"),
 
-  SuStaInLabels = SuStaInLabels,
+  SuStaInLabels = biomarker_varnames,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max_stratified,
   N_iterations_MCMC = N_iterations_MCMC,
@@ -454,13 +454,35 @@ sustain_output_cgg100plus_males = run_and_save_OSA(
     filter(
       `CGG` >= 100,
       Gender == "Male"),
-  SuStaInLabels = SuStaInLabels,
+  SuStaInLabels = biomarker_varnames,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max_stratified,
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
   dataset_name = "over100_Male",
   rerun = rerun,
+  use_parallel_startpoints = FALSE,
+  plot = plot_python)
+```
+
+
+```{r}
+#| message: false
+#| label: "cgg_under_100 & Female"
+#| include: false
+sustain_output_cgg100minus_females = run_and_save_OSA(
+  biomarker_levels = biomarker_levels,
+  prob_correct = prob_correct,
+  patient_data = patient_data |>
+    filter(`CGG` < 100,
+           Gender == "Female"),
+  SuStaInLabels = biomarker_varnames,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified,
+  N_iterations_MCMC = N_iterations_MCMC,
+  output_folder = output_folder,
+  rerun = rerun,
+  dataset_name = "under100_Female",
   use_parallel_startpoints = FALSE,
   plot = plot_python)
 ```
@@ -477,7 +499,7 @@ sustain_output_cgg100plus_females = run_and_save_OSA(
       `CGG` >= 100,
       Gender == "Female"),
 
-  SuStaInLabels = SuStaInLabels,
+  SuStaInLabels = biomarker_varnames,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max_stratified,
   N_iterations_MCMC = N_iterations_MCMC,
@@ -487,28 +509,6 @@ sustain_output_cgg100plus_females = run_and_save_OSA(
   use_parallel_startpoints = FALSE,
   plot = plot_python)
 ```
-
-```{r}
-#| message: false
-#| label: "cgg_under_100 & Female"
-#| include: false
-sustain_output_cgg100minus_females = run_and_save_OSA(
-  biomarker_levels = biomarker_levels,
-  prob_correct = prob_correct,
-  patient_data = patient_data |>
-    filter(`CGG` < 100,
-           Gender == "Female"),
-  SuStaInLabels = SuStaInLabels,
-  N_startpoints = N_startpoints,
-  N_S_max = N_S_max_stratified,
-  N_iterations_MCMC = N_iterations_MCMC,
-  output_folder = output_folder,
-  rerun = rerun,
-  dataset_name = "under100_Female",
-  use_parallel_startpoints = FALSE,
-  plot = plot_python)
-```
-
 
 ```{r}
 #| label: save-image
