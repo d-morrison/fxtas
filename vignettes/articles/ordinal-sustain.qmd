@@ -63,7 +63,7 @@ run_CV =  TRUE
 # run_CV = FALSE
 
 rerun = TRUE
-rerun = FALSE
+# rerun = FALSE
 
 plot_python = TRUE
 # plot_python = FALSE
@@ -331,10 +331,9 @@ sustain_output = run_and_save_OSA(
 #| eval: !expr fit_models
 
 sustain_output_males = run_and_save_OSA(
-  biomarker_levels = biomarker_levels,
-  prob_correct = prob_correct,
   patient_data = patient_data |> filter(Gender == "Male"),
-  
+  prob_correct = prob_correct,
+  biomarker_levels = biomarker_levels,
   SuStaInLabels = biomarker_varnames,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max_stratified,
