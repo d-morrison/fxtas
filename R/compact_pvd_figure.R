@@ -152,7 +152,7 @@ compact_pvd_figure <- function(
     # frame x axis
     scale_x_continuous(expand = expansion(add = c(0.5, 2))) +
     # update axis labels
-    labs(x = "Stage Number") +
+    labs(x = "Sequential order") +
     # wrap over facet levels
     facet_wrap(
       ~facet,

@@ -226,7 +226,7 @@ table1(
 ### MRI  {.appendix}
 
 ```{r}
-#| label: tab-mri
+#| label: tbl-mri
 #| tbl-cap: "MRI variables by Sex and CGG level"
 vars = c(
   # "Cerebral Atrophy",

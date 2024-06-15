@@ -62,8 +62,11 @@ fit_models = TRUE
 run_CV =  TRUE
 # run_CV = FALSE
 
-# plot_python = TRUE
-plot_python = FALSE
+rerun = TRUE
+# rerun = FALSE
+
+plot_python = TRUE
+# plot_python = FALSE
 
 pvd_height = 8
 pvd_width = 10
@@ -315,7 +318,7 @@ sustain_output = run_and_save_OSA(
   use_parallel_startpoints = FALSE,
   seed = 1,
   plot = plot_python,
-  rerun = FALSE,
+  rerun = rerun,
   patient_data = patient_data,
   N_CV_folds = N_CV_folds)
 
@@ -341,7 +344,7 @@ sustain_output_males = run_and_save_OSA(
   use_parallel_startpoints = FALSE,
   seed = 1,
   plot = plot_python,
-  rerun = FALSE,
+  rerun = rerun,
   fig_size = c(20, 10)
 )
 
@@ -367,7 +370,7 @@ sustain_output_females = run_and_save_OSA(
   use_parallel_startpoints = FALSE,
   seed = 1,
   plot = plot_python,
-  rerun = FALSE,
+  rerun = rerun,
   fig_size = c(20,10))
 
 ```
@@ -391,7 +394,7 @@ sustain_output_cgg100plus = run_and_save_OSA(
   dataset_name = "over100", 
   use_parallel_startpoints = FALSE,
   seed = 1,
-  plot = FALSE)
+  plot = plot_python)
 
 ```
 
@@ -413,9 +416,99 @@ sustain_output_cgg100minus = run_and_save_OSA(
   dataset_name = "under100", 
   use_parallel_startpoints = FALSE,
   seed = 1,
-  plot = FALSE)
+  plot = plot_python)
 
 ```
+
+```{r}
+#| message: false
+#| label: "cgg_under_100 & Male"
+#| include: false
+sustain_output_cgg100minus_males = run_and_save_OSA(
+  biomarker_levels = biomarker_levels,
+  prob_correct = prob_correct,
+  patient_data = patient_data |>
+    filter(
+      `CGG` < 100,
+      Gender == "Male"),
+
+  SuStaInLabels = SuStaInLabels,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified,
+  N_iterations_MCMC = N_iterations_MCMC,
+  output_folder = output_folder,
+  dataset_name = "under100_Male",
+  rerun = rerun,
+  use_parallel_startpoints = FALSE,
+  plot = plot_python)
+```
+
+```{r}
+#| message: false
+#| label: "cgg_over_100 & Male"
+#| include: false
+sustain_output_cgg100plus_males = run_and_save_OSA(
+  biomarker_levels = biomarker_levels,
+  prob_correct = prob_correct,
+  patient_data = patient_data |>
+    filter(
+      `CGG` >= 100,
+      Gender == "Male"),
+  SuStaInLabels = SuStaInLabels,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified,
+  N_iterations_MCMC = N_iterations_MCMC,
+  output_folder = output_folder,
+  dataset_name = "over100_Male",
+  rerun = rerun,
+  use_parallel_startpoints = FALSE,
+  plot = plot_python)
+```
+
+```{r}
+#| message: false
+#| label: "cgg_over_100 & Female"
+#| include: false
+sustain_output_cgg100plus_females = run_and_save_OSA(
+  biomarker_levels = biomarker_levels,
+  prob_correct = prob_correct,
+  patient_data = patient_data |>
+    filter(
+      `CGG` >= 100,
+      Gender == "Female"),
+
+  SuStaInLabels = SuStaInLabels,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified,
+  N_iterations_MCMC = N_iterations_MCMC,
+  output_folder = output_folder,
+  rerun = rerun,
+  dataset_name = "over100_Female",
+  use_parallel_startpoints = FALSE,
+  plot = plot_python)
+```
+
+```{r}
+#| message: false
+#| label: "cgg_under_100 & Female"
+#| include: false
+sustain_output_cgg100minus_females = run_and_save_OSA(
+  biomarker_levels = biomarker_levels,
+  prob_correct = prob_correct,
+  patient_data = patient_data |>
+    filter(`CGG` < 100,
+           Gender == "Female"),
+  SuStaInLabels = SuStaInLabels,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified,
+  N_iterations_MCMC = N_iterations_MCMC,
+  output_folder = output_folder,
+  rerun = rerun,
+  dataset_name = "under100_Female",
+  use_parallel_startpoints = FALSE,
+  plot = plot_python)
+```
+
 
 ```{r}
 #| label: save-image
@@ -537,14 +630,17 @@ pval_sex_gp34_v1 = permutation_test(
 
 ```
 
-@fig-first-only shows the estimated event sequences stratified by sex. 
+@fig-first-only shows the estimated event sequences stratified by sex, and @fig-first-only-change compares the estimated sequences.
 We found statistically significant evidence of a difference in event sequences 
 between males and females (p = `r pval_sex_gp34_v1`). 
 It appears that 
-mood disorders typically occur after FXTAS Stage 3 in males
-males develop cerebellar and splenium white matter hyperintensity prior to FXTAS Stage 2, ,
-and that ataxia severity increases occur earlier in the event sequence for males than females.
-^[There are probably other patterns worth noting here; clinical folks, please add your observations from the results here.]
+premutation females typically develop threshhold-level Mood Disorder and Anxiety symptoms prior to FXTAS Stage 1,
+whereas males typically develop these symptoms between FXTAS Stages 3 and 4.
+Cognitive declines, as measured by SWM and PAL, also occur at earlier FXTAS stages for females.
+Ataxia occurs prior to Stage 1 for females and after Stage 2 for males.
+However, Ataxia severity 1 occurs earlier for males (between Stages 2-3) than for females (between Stages 3-4).
+
+MRI biomarkers of decline and Parkinsonian features also appear at earlier stages for males than for females
 
 ## Stratified by CGG repeats
 
@@ -570,7 +666,6 @@ pval_cgg_gp34_v1 = permutation_test(
 We did not find statistically significant evidence of a difference in event sequences 
 between CGG < 100 and CGG > 100,  (p = `r pval_cgg_gp34_v1`).
 @fig-pvd-by-cgg shows the estimated sequence models stratified by CGG repeat level.
-
 
 ## Stratified by CGG and Sex {#sec-stratified-by-cgg-and-sex}
 
@@ -600,7 +695,12 @@ pval_under100_sex_gp34_v1 = permutation_test(
 
 We found statistically significant evidence of a difference between males and females 
 among those with CGG < 100 (p = `r pval_under100_sex_gp34_v1`). 
-@fig-pvd-by-gender-cgg_under100 shows the estimated stratified models.
+@fig-pvd-by-gender-cgg_under100 shows the stratified models with uncertainty quantified, and @fig-pvd-by-gender-cgg_under100-change compares the maximum likelihood estimates of the stratified sequences.
+Several psychiatric disorders (as measured by SCID) occur prior to FXTAS Stage 0 among females with CGG < 100, but at later FXTAS stages for males with CGG < 100.
+MRI biomarkers appear to occur at later stages for females.
+
+
+
 
 ```{r}
 #| label: p-val-test-sex-over100
@@ -626,7 +726,9 @@ pval_over100_sex_gp34_v1 = permutation_test(
 
 We did not find statistically significant evidence of a difference between males and females 
 among those with CGG > 100 (p `r pval_over100_sex_gp34_v1`). 
-@fig-pvd-by-gender-cgg_over100 shows the estimated stratified models.
+@fig-pvd-by-gender-cgg_over100 shows the estimated stratified models, 
+and @fig-pvd-by-gender-cgg_over100-change compares the maximum likelihood estimates of the sequences. 
+The small sample sizes for these these subgroups made detecting differences difficult.
 
 ### Comparing CGG levels stratified by sex
 
@@ -652,7 +754,9 @@ pval_male_cgg_gp34_v1 = permutation_test(
 
 ```
 
-We found significant evidence of a difference between CGG < 100 and CGG ≥ 100 among males (p = `r pval_male_cgg_gp34_v1`). @fig-pvd-by-cgg-male shows the corresponding stratified models.
+We found significant evidence of a difference between CGG < 100 and CGG ≥ 100 among males (p = `r pval_male_cgg_gp34_v1`). @fig-pvd-by-cgg-male shows the corresponding stratified models and 
+@fig-pvd-by-cgg-male-change compares the maximum likelihood estimates of the sequences for these two subgroups.
+Males with CGG ≥ 100 experienced MRI biomarkers at earlier FXTAS stages than males with CGG < 100, whereas postural tremor, resting tremor, and intermittent tremor all tended to occur at earlier FXTAS stages for males with CGG < 100.
 
 ```{r}
 #| label: p-val-test-cgg-female
@@ -674,7 +778,7 @@ pval_female_cgg_gp34_v1 = permutation_test(
 
 ```
 
-We did not find statistically significant evidence of a difference between CGG < 100 and CGG ≥ 100 among females (p = `r pval_female_cgg_gp34_v1`). @fig-pvd-by-cgg-female shows the estimated stratified models.
+We did not find statistically significant evidence of a difference between CGG < 100 and CGG ≥ 100 among females (p = `r pval_female_cgg_gp34_v1`). @fig-pvd-by-cgg-female shows the estimated stratified models, and @fig-pvd-by-cgg-female-change compares the maximum likelihood estimates. Here again, sample size was an issue, especially for females with CGG ≥ 100.
 
 ## Latent Subtypes
 
@@ -809,7 +913,7 @@ list(
     fig_over100
   ) |> 
 plot_compact_pvd(
-  facet_label_prefix = c("CGG < 100 <br>", "CGG &ge; 100 <br>"),
+  facet_label_prefix = c("CGG &lt; 100 <br>", "CGG &ge; 100 <br>"),
   y_text_size = 11
 )
 
@@ -826,7 +930,7 @@ plot_compact_pvd(
 #| fig-cap-location: top
 
 list(
-  "CGG < 100" = fig_under100,
+  "CGG &lt; 100" = fig_under100,
   "CGG &ge; 100" = fig_over100) |>
 pvd_lineplot(y_text_size = 11)
 
@@ -843,7 +947,7 @@ pvd_lineplot(y_text_size = 11)
 #| fig-cap-location: top
 
 list(
-    "Males, CGG < 100 <br>" = fig_under100_males,
+    "Males, CGG &lt; 100 <br>" = fig_under100_males,
     "Males, CGG &ge; 100  <br>" = fig_over100_males
   ) |> 
 plot_compact_pvd(y_text_size = 11)
@@ -861,7 +965,7 @@ plot_compact_pvd(y_text_size = 11)
 #| fig-cap-location: top
 
 list(
-    "Males, CGG < 100" = fig_under100_males,
+    "Males, CGG &lt; 100" = fig_under100_males,
     "Males, CGG &ge; 100" = fig_over100_males
   ) |> 
 pvd_lineplot(y_text_size = 11)
@@ -883,7 +987,7 @@ plot_compact_pvd(
     fig_under100_females,
     fig_over100_females
   ),
-  facet_label = c("Females, CGG < 100  <br>", "Females, CGG &ge; 100  <br>"),
+  facet_label = c("Females, CGG &lt; 100  <br>", "Females, CGG &ge; 100  <br>"),
   y_text_size = 11
 )
 
@@ -904,7 +1008,7 @@ pvd_lineplot(
     fig_under100_females,
     fig_over100_females
   ),
-  facet_label = c("Females, CGG < 100", "Females, CGG &ge; 100"),
+  facet_label = c("Females, CGG &lt; 100", "Females, CGG &ge; 100"),
   y_text_size = 11
 )
 
@@ -925,7 +1029,7 @@ plot_compact_pvd(
     fig_under100_males,
     fig_under100_females
   ),
-  facet_label = c("CGG < 100, Males  <br>", "CGG < 100, Females  <br>"),
+  facet_label = c("CGG &lt; 100, Males  <br>", "CGG &lt; 100, Females  <br>"),
   y_text_size = 11
 )
 
@@ -946,7 +1050,7 @@ pvd_lineplot(
     fig_under100_males,
     fig_under100_females
   ),
-  facet_label = c("CGG < 100, Males", "CGG < 100, Females"),
+  facet_label = c("CGG &lt; 100, Males", "CGG &lt; 100, Females"),
   y_text_size = 11
 )
 
