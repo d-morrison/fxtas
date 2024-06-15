@@ -11,8 +11,9 @@
 #' @export
 
 pvd_lineplot <- function(figs, alpha_nochange = 0.25,
-                          facet_labels = names(figs), y_title_size = 12,
-                         text_size = 3.4,
+                         facet_labels = names(figs),
+                         text_size = 3.4, y_lab = "Sequential order",
+                         y_title_size = 12,
                          y_text_size = 10, x_text_size = 12){
   if(length(figs) == 1){
     # extract data from pvd fig object
@@ -81,7 +82,7 @@ pvd_lineplot <- function(figs, alpha_nochange = 0.25,
 
   facet_x_labels <- c(
     glue::glue('<p "style = text-align: right">{facet_labels[1]}</p>'),
-    paste0('<p "style = text-align: left">', facet_labels[2], "</p>")
+    glue::glue('<p "style = text-align: left">{facet_labels[2]}</p>')
   )
 
   # plot
@@ -115,7 +116,7 @@ pvd_lineplot <- function(figs, alpha_nochange = 0.25,
       labels = facet_x_labels
     ) +
     scale_y_discrete(limits = rev) +
-    labs(y = "Stage") +
+    labs(y = y_lab) +
     theme_classic() +
     theme(
       legend.position = "none",
