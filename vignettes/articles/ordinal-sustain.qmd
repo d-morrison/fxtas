@@ -920,14 +920,6 @@ pvd_lineplot(
 #| fig-cap: !expr glue::glue("Estimated event sequences, stratified by sex, for CGG repeats <100. {compact_fig_caption}")
 #| fig-cap-location: top
 
-# layout-ncol: 2
-# fig-subcap:
-#   - "Males, CGG < 100"
-#   - "Females, CGG < 100"
-
-# fig_under100_males |> print()
-# fig_under100_females |> print()
-
 plot_compact_pvd(
   figs = list(
     fig_under100_males,
@@ -970,14 +962,6 @@ pvd_lineplot(
 #| fig-cap: !expr glue::glue("Estimated event sequences, stratified by sex, for CGG repeats ≥100. {compact_fig_caption}")
 #| fig-cap-location: top
 
-# layout-ncol: 2
-# fig-subcap:
-#   - "Males, CGG ≥ 100"
-#   - "Females, CGG ≥ 100"
-
-# fig_over100_males |> print()
-# fig_over100_females |> print()
-
 plot_compact_pvd(
   figs = list(
     fig_over100_males,
@@ -998,14 +982,6 @@ plot_compact_pvd(
 #| fig-width: !expr pvd_line_width
 #| fig-cap: "Change in estimated event sequences by sex, for CGG repeats ≥100"
 #| fig-cap-location: top
-
-# layout-ncol: 2
-# fig-subcap:
-#   - "Males, CGG ≥ 100"
-#   - "Females, CGG ≥ 100"
-
-# fig_over100_males |> print()
-# fig_over100_females |> print()
 
 pvd_lineplot(
   figs = list(
