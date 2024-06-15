@@ -540,7 +540,9 @@ pval_sex_gp34_v1 = permutation_test(
 @fig-first-only shows the estimated event sequences stratified by sex. 
 We found statistically significant evidence of a difference in event sequences 
 between males and females (p = `r pval_sex_gp34_v1`). 
-It appears that males develop cerebral, cerebellar, and splenium white matter hyperintensity at an earlier stage of the event sequence than females,
+It appears that 
+mood disorders typically occur after FXTAS Stage 3 in males
+males develop cerebellar and splenium white matter hyperintensity prior to FXTAS Stage 2, ,
 and that ataxia severity increases occur earlier in the event sequence for males than females.
 ^[There are probably other patterns worth noting here; clinical folks, please add your observations from the results here.]
 
@@ -826,9 +828,7 @@ plot_compact_pvd(
 list(
   "CGG < 100" = fig_under100,
   "CGG &ge; 100" = fig_over100) |>
-pvd_lineplot(
-  y_text_size = 11
-)
+pvd_lineplot(y_text_size = 11)
 
 ```
 
@@ -842,21 +842,17 @@ pvd_lineplot(
 #| fig-cap: !expr glue::glue("Estimated event sequences, stratified by CGG repeats (<100 vs 100+), males only. {compact_fig_caption}")
 #| fig-cap-location: top
 
-plot_compact_pvd(
-  figs = list(
-    fig_under100_males,
-    fig_over100_males
-  ),
-  facet_label = c("Males, CGG < 100 <br>", "Males, CGG &ge; 100  <br>"),
-  y_text_size = 11
-)
+list(
+    "Males, CGG < 100 <br>" = fig_under100_males,
+    "Males, CGG &ge; 100  <br>" = fig_over100_males
+  ) |> 
+plot_compact_pvd(y_text_size = 11)
 
 ```
 
 {{< pagebreak >}}
 
 ```{r}
-
 #| label: "fig-pvd-by-cgg-male-change"
 #| column: page
 #| fig-height: !expr pvd_line_height
@@ -864,14 +860,11 @@ plot_compact_pvd(
 #| fig-cap: "Change in estimated event sequences by CGG repeats (<100 vs 100+), males only"
 #| fig-cap-location: top
 
-pvd_lineplot(
-  figs = list(
-    fig_under100_males,
-    fig_over100_males
-  ),
-  facet_label = c("Males, CGG < 100", "Males, CGG &ge; 100"),
-  y_text_size = 11
-)
+list(
+    "Males, CGG < 100" = fig_under100_males,
+    "Males, CGG &ge; 100" = fig_over100_males
+  ) |> 
+pvd_lineplot(y_text_size = 11)
 
 ```
 
@@ -1087,6 +1080,8 @@ stages |>
   graph_stage_by_age()
   
 ```
+
+{{< pagebreak >}}
 
 # Supplementary material {.appendix}
 
