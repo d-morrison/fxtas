@@ -107,7 +107,7 @@ table_out =
 
 control_data =
   df |>
-  filter(`FX*` == "CGG < 55") |>
+  filter(`FX*` == "CGG <55") |>
   select(all_of(biomarker_varnames))
 
 patient_data =

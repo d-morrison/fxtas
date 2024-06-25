@@ -20,14 +20,14 @@ text-align: center;
 
 # Abstract {.unnumbered}
 
-The fragile X-associated tremor/ataxia syndrome (FXTAS) is a relatively newly discovered neurodegenerative disorder caused by the premutation (55 to 200 CGG repeats) in the FMR1 gene.
-A currently open question is: In what sequential order do FXTAS symptoms typically appear, how does that sequence vary between participants, and what baseline characteristics predict that order?
-Here, we applied the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm to find event sequences for FXTAS patients.
-We found substantial differences in order of onset depending on sex and CGG repeat number.
+The fragile X-associated tremor/ataxia syndrome (FXTAS) is a  neurodegenerative disorder caused by the premutation (55 to 200 CGG repeats) in the FMR1 gene.
+A currently open question is: In what sequential order do FXTAS symptoms typically appear, how does that sequence vary between participants and between males and females?
+Here, we applied the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm to identify the sequential events of neurophenotypic symptoms presented in observed data collected in FXTAS patients.
+We found substantial differences in order of events depending on sex and CGG repeat number.
 
 # Introduction
 
-The fragile X-associated tremor/ataxia syndrome (FXTAS) is a relatively newly discovered neurodegenerative disorder caused by the premutation (55 to 200 CGG repeats) in the FMR1 gene [@hagerman2001intention]. 
+The fragile X-associated tremor/ataxia syndrome (FXTAS) is a neurodegenerative disorder caused by the premutation (55 to 200 CGG repeats) in the FMR1 gene [@hagerman2001intention]. 
 The premutation is associated with elevation of the FMR1 mRNA, and this leads to RNA toxicity including oxidative stress, mitochondrial dysfunction, calcium dysregulation and sequestration of proteins important to neuronal function.
 Proteins and neurofilaments sequester with the excess FMR1 mRNA, leading to the formation of eosinophilic, tau negative intranuclear inclusions in neurons and astrocytes throughout the CNS and even in the peripheral nervous system [@greco2006neuropathology; @hunter2012capturing]. 
 FXTAS usually begins in the 60s, and as premutation carriers age, the prevalence of FXTAS increases from approximately 40% in males in their 60s to 75% in their 80s [@jacquemont2004penetrance].
@@ -120,12 +120,13 @@ output_folder =
 full_data = trax_gp34_v1
 n_missing_CGG = full_data$CGG |> is.na() |> sum()
 n_above_200 = sum(full_data$CGG >= 200, na.rm = TRUE)
-v1_usable = full_data |> filter(CGG < 200)
+v1_usable = full_data |> filter(CGG < 200) |> 
+  mutate(`FX3*` = `FX3*` |> droplevels())
 v1_usable_cases = v1_usable |> filter(CGG >= 55)
 # note: there are 231 records in `visit1` with CGG >= 55, but 4 have CGG >= 200
 # previously `nrow(v1_usable_cases)` was 221, which was based on incorrectly filtering on a version of CGG that hadn't been backfilled.
 
-gp34_v1_controls =  v1_usable |> filter(CGG < 55)
+gp34_v1_controls =  v1_usable |> filter(CGG <55)
 year_range = v1_usable$`Visit Date` |> year() |> range()
 min_year = min(year_range)
 max_year = max(year_range)
@@ -136,20 +137,18 @@ max_year = max(year_range)
 Research participants were recruited between `r min_year` and `r max_year`
 for two longitudinal cohorts (GP and Trax).
 The inclusion criteria were: age 40 years or greater; 
-[CLINICAL TEAM: please complete this section].
+**CLINICAL TEAM: please complete this section and fill in detailed descriptions of the GP and Trax cohorts. Cite refs as needed**.
+@tbl-demographics provides demographic information about the study participants. 
+
 
 Written informed consent was obtained from all participants 
 according to the procedures approved by the 
 University of California Davis Institutional Review Board.  
 
-The primary event sequence analysis included baseline-visit data 
+The primary event sequence analysis included baseline visit data 
 from 297 participants from the two cohorts,
 consisting of `r nrow(v1_usable_cases)` Fragile X premutation carriers 
 and `r nrow(gp34_v1_controls)`  controls. 
-
-[Supplemental Figure @fig-hist-CGG-gp34-v1] shows the distribution of CGG repeats 
-among the participants included in the analysis. 
-@tbl-demographics provides demographic information about the study participants. 
 
 ```{r}
 #| label: "biomarker-events"
@@ -178,15 +177,17 @@ nlevs =
 
 ### Biomarkers of neurodegenerative events
 
-We analyzed first measurements of `r length(biomarker_levels)`
+We analyzed measurements of `r length(biomarker_levels)`
 ordinal biomarkers (@tbl-biomarker-list)
 with a total of `r nrow(biomarker_events_table)` non-baseline levels.
 Each ordinal level above baseline constitutes an outcome event 
 in the disease progression modelling analysis (@sec-Statistical-analysis).
 [Supplemental Tables @tbl-tremors] - [-@tbl-autoimmune] 
 summarize the biomarker data, 
-stratified by CGG (`r unique(v1_usable$"FX3*")`) 
-and Sex (`r unique(v1_usable$Gender)`).
+stratified by 
+CGG repeat size (`r levels(v1_usable$"FX3*")`) 
+and 
+Sex (`r unique(v1_usable$Gender)`).
 
 ## Statistical analysis {#sec-Statistical-analysis}
 
@@ -209,11 +210,11 @@ assuming a uniform prior distribution over the set of all possible patterns.
 
 We conducted subgroup analyses by fitting models stratified by: 
 (1) sex (@fig-first-only);
-(2) CGG repeats (<100 vs $\ge$ 100) (@fig-pvd-by-cgg);
-(3) both sex and CGG repeats (<100 vs $\ge$ 100) (@sec-stratified-by-cgg-and-sex).
+(2) CGG repeats (<100 vs ≥100) (@fig-pvd-by-cgg);
+(3) both sex and CGG repeats (<100 vs ≥100) (@sec-stratified-by-cgg-and-sex).
 For these subgroup analyses, we did not search for latent clusters.
 
-### Incomplete data {#sec-incomplete-data}
+### Imputation of data {#sec-incomplete-data}
 
 ```{r}
 #| label: count-incomplete-data
@@ -234,53 +235,64 @@ probs =
 ```
 
 We assumed that missing biomarker data 
-were missing completely at random (MCAR) 
+were missing at random (MAR) 
 (@rubin1976inference, @little2019statistical).
 We substituted missing outcome event data 
 by assigning a probability distribution across the 
 possible values of the missing variable 
-that matched the marginal distribution among the cases. 
-For example, `r n_missing` of the `r `length(x1)` cases (`r pct_missing`) 
+that matched the marginal distribution of observed data among the cases. 
+For example, 
+`r n_missing` of the `r length(x1)` cases (`r pct_missing`) 
 had missing values for Ataxia Severity, 
 and `r n_obs` (`r pct_obs`) had recorded values, 
-distributed among severity levels 0-4 ([Supplementary Table @tbl-ex-incomplete-data]). 
+distributed among severity levels 0-4 
+([Supplementary Table @tbl-ex-incomplete-data]). 
 For the `r n_missing` cases with missing values, 
-we assigned probabilities of `r probs` to Ataxia Severity levels `r and::and(0:4)`, respectively.
+we assigned probabilities of `r probs` 
+to Ataxia Severity levels `r and::and(0:4)`, respectively, 
+and missing values were imputed under the marginal distribution.
 
 ### Statistical hypothesis tests
 
-In order to test for statistical significant evidence of differences in event sequences
+To test for statistical significant evidence of differences in event sequences
 between males and females
 and 
-between lower premutation levels (CGG <100) and higher premutation levels (CGG 100-199),
-we implemented a permutation test (@welch1990construction).
-We first created 1000 permuted datasets in which we randomly shuffled the variable being tested.
-We computed the mean log-likelihood of the data for each permuted dataset 
-(averaging across MCMC samples and summing across the strata being compared) 
+between lower (CGG <100) and higher premutation levels (CGG 100-199),
+we implemented a permutation test (@welch1990construction)  
+to calculate a p-value that is the probability of observing a difference 
+at least as extreme as the test statistic 
+given that the null hypothesis of no difference is true.
+We first created 1000 permuted datasets 
+in which we randomly shuffled the variable being tested.
+We computed the mean log-likelihood of the data 
+for each permuted dataset 
+(averaging across MCMC samples and 
+summing across the strata being compared) 
 and compared the distribution of permuted mean log-likelihoods 
-to the observed log-likelihood calculated from the original (unpermuted) dataset.
+to the observed log-likelihood 
+calculated from the original (unpermuted) dataset.
 We computed the p-value 
 by first computing the percentile of the observed mean log-likelihood 
 relative to the empirical distribution of the permuted mean log-likelihoods,
 subtracting that percentile from 1 if larger than 0.5,
-and then multiplying by two to create a two-sided test.
+and then multiplying by two to calulate a two-sided test statistic.
 A detailed numerical example of this procedure is provided in the Supplementary Materials (@sec-permutation-test).
 
 ### Latent subtypes {#sec-methods-latent-subtypes}
 
-We also fit the model on the full dataset (not stratified by sex or CGG) 
+We also fitted the model on the full dataset (not stratified by sex or CGG) 
 for 2-`r N_S_max` latent subtypes, 
 each with their own ordering. 
 We determined the optimal number of latent subtypes for this dataset using 
 the CVIC criterion (Supplementary Materials @sec-cvic) and 
 the OOFLL criterion (Supplementary Materials @sec-oofll).
-We performed `r N_CV_folds`-fold cross-validation on the unstratified data, 
+We performed `r N_CV_folds`-fold cross-validation on the unstratified data
 and calculated the CVIC and OOFLL for 1-`r N_S_max` latent subtypes. 
 More details are provided in the Supplementary Materials (@sec-subtypes).
 
 ### Longitudinal subsets
 
-We also fit the Ordinal SuStaIn model, stratified by sex, 
+We also fitted the Ordinal SuStaIn model, stratified by sex, 
 including all longitudinal repeated measurements 
 of the same participants over time 
 ([Supplementary Section @sec-longitudinal-results]). 
@@ -289,7 +301,7 @@ might help the model clarify the later stages of the event sequence.
 However, correlations between repeated observations of the same individuals 
 are not accounted for by the Ordinal SuStaIn model, 
 which assumes that all observations are statistically independent, 
-so including repeated measurements will lead to exaggerated estimates of precision.
+so including repeated measurements could lead to exaggerated estimates of precision.
 
 ### Visualizing modeling results
 
@@ -303,7 +315,7 @@ The colors indicate the ordinal levels of progression.
 
 control_data = 
   df |> 
-  filter(`FX*` == "CGG < 55") |> 
+  filter(`FX*` == "CGG <55") |> 
   select(all_of(biomarker_varnames))
 
 patient_data = 
