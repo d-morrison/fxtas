@@ -660,7 +660,20 @@ Our data included:
 `r nrow(males)` males and `r nrow(females)` females;
 and `r and::and(stages)` carriers at FXTAS stages `r names(stages) |> and::and()`, respectively.
 
-(**Kyoungmi: in your previous comments, you mentioned we should say something about biomarker distributions here, but I'm not sure what exactly to add?**)
+```{r}
+#| label: prebuild_biomarkers-table
+#| include: false
+biomarkers_table = 
+  v1_usable |> 
+  make_biomarkers_table(
+    biomarker_varnames = biomarker_varnames)
+
+# biomarkers_table |> 
+#   filter(`p-value` < 0.05)
+
+```
+
+We found significant evidence of sex differences in proportions of events at baseline visit for `r report_sex_differences(biomarkers_table)`.
 
 ## Stratified by sex
 
@@ -892,7 +905,7 @@ The missing data contributes to the large amount of uncertainty in the results.
 #| label: "tbl-demographics"
 #| tbl-cap: "Descriptive statistics of patient characteristics by CGG repeats level"
 
-v1_usable |> make_demographics_table()
+demographics_table = v1_usable |> make_demographics_table()
 
 ```
 
@@ -902,9 +915,7 @@ v1_usable |> make_demographics_table()
 #| tbl-cap: "Biomarkers used in analysis"
 #| label: "tbl-biomarker-list"
 
-v1_usable |> 
-  make_biomarkers_table(
-    biomarker_varnames = biomarker_varnames)
+as_flextable(biomarkers_table)
 ```
 
 {{< pagebreak >}}
@@ -937,7 +948,7 @@ table_subtype_by_demographics(
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("Estimated event sequence models, stratified by sex. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("Estimated event sequences, stratified by sex. {compact_fig_caption}")
 #| fig-cap-location: top
 
 plot_compact_pvd(
@@ -1276,6 +1287,7 @@ v1_usable |> graph_CGG_repeats(rows = vars(Gender))
 ## Hypothesis testing {.appendix #sec-permutation-test}
 
 ```{r}
+#| label: hypothesis-tests
 obs_stat = pval_sex_gp34_v1  |> attr("observed_test_stat")
 perm_stats = pval_sex_gp34_v1  |> attr("permuted_test_stats")
 n_perm_over_obs = sum(perm_stats >= obs_stat)

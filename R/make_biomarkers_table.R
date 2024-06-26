@@ -11,6 +11,25 @@ make_biomarkers_table = function(
     data,
     biomarker_varnames)
 {
+
+  # compute p-values by gender
+  pvals = numeric()
+
+  for(cur in biomarker_varnames)
+  {
+    pvals[cur] =
+      data |>
+      mutate(
+        across(
+          all_of(biomarker_varnames),
+          ~ .x != levels(.x)[1])) |>
+      select(cur, Gender) |>
+      table() |>
+      fisher.test()  |>
+      magrittr::use_series("p.value")
+
+  }
+
   probs_above_baseline_by_gender =
     data |>
     summarize(
@@ -31,7 +50,10 @@ make_biomarkers_table = function(
     pivot_wider(
       id_cols = "biomarker",
       names_from = Gender,
-      values_from = `Pr(above_baseline)`)
+      values_from = `Pr(above_baseline)`) |>
+    mutate(
+      "p-value" = pvals[biomarker]
+    )
 
   table_out =
     biomarker_events_table |>
@@ -55,14 +77,7 @@ make_biomarkers_table = function(
           fixed = TRUE))
 
   table_out |>
-    flextable::flextable() |>
-    flextable::set_header_labels(
-      values = c("Category", "Biomarker", "Levels", "Female*", "Male*")
-    ) |>
-    flextable::width(j = ~ biomarker, width = 3) |>
-    flextable::width(j = ~ category + levels, width = 2) |>
-    flextable::theme_booktabs() |>
-    flextable::align(j = ~ biomarker + levels, align = "center", part = "all") |>
-    flextable::add_footer("*: % of participants with biomarker levels above baseline (left-most) level")
+    structure(class = union('biomarkers_table', class(table_out)))
+
 
 }

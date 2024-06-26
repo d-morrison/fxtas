@@ -33,6 +33,9 @@ biomarker_events_table =
     biomarker_levels,
     biomarker_groups)
 
-v1_usable |> make_biomarkers_table(biomarker_varnames = biomarker_varnames)
+biomarkers_table = 
+  v1_usable |> make_biomarkers_table(biomarker_varnames = biomarker_varnames)
 
 ```
+
+We found significant evidence of sex differences in `r report_sex_differences(biomarkers_table)`.
