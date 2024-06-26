@@ -89,6 +89,8 @@ N_S_max = 8L
 N_S_max_stratified = 2L
 N_CV_folds = 10L
 
+n_permutations = 1000
+
 compact_fig_caption <- paste0(
   "The different colors correspond to the different levels above baseline. ",
   "Red corresponds to the first level, blue to the second level, ",
@@ -262,7 +264,7 @@ we implemented a permutation test (@welch1990construction)
 to calculate a p-value that is the probability of observing a difference 
 at least as extreme as the test statistic 
 given that the null hypothesis of no difference is true.
-We first created 1000 permuted datasets 
+We first created `r n_permutations` permuted datasets 
 in which we randomly shuffled the variable being tested.
 We computed the mean log-likelihood of the data 
 for each permuted dataset 
@@ -276,7 +278,9 @@ by first computing the percentile of the observed mean log-likelihood
 relative to the empirical distribution of the permuted mean log-likelihoods,
 subtracting that percentile from 1 if larger than 0.5,
 and then multiplying by two to calulate a two-sided test statistic.
-A detailed numerical example of this procedure is provided in the Supplementary Materials (@sec-permutation-test).
+We declared significance if the p-value was less than or equal to 0.05.
+A detailed numerical example of this procedure 
+is provided in the Supplementary Materials (@sec-permutation-test).
 
 ### Latent subtypes {#sec-methods-latent-subtypes}
 
@@ -680,7 +684,8 @@ observed_test_stat = get_observed_permutation_test_stat(
 
 pval_sex_gp34_v1 = permutation_test(
   observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
 )
 
 ```
@@ -714,7 +719,8 @@ observed_test_stat = get_observed_permutation_test_stat(
 
 pval_cgg_gp34_v1 = permutation_test(
   observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
 )
 # autoplot(pval_sex_gp34_v1)
 ```
@@ -747,7 +753,8 @@ observed_test_stat = get_observed_permutation_test_stat(
 
 pval_under100_sex_gp34_v1 = permutation_test(
   observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
 )
 
 # autoplot(pval_under100_sex_gp34_v1)
@@ -777,7 +784,8 @@ observed_test_stat = get_observed_permutation_test_stat(
 
 pval_over100_sex_gp34_v1 = permutation_test(
   observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
 )
 
 # autoplot(pval_over100_sex_gp34_v1)
@@ -808,7 +816,8 @@ observed_test_stat = get_observed_permutation_test_stat(
 
 pval_male_cgg_gp34_v1 = permutation_test(
   observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
 )
 
 # autoplot(pval_male_cgg_gp34_v1)
@@ -839,7 +848,8 @@ observed_test_stat = get_observed_permutation_test_stat(
 
 pval_female_cgg_gp34_v1 = permutation_test(
   observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
 )
 
 n_over100_Female = 
