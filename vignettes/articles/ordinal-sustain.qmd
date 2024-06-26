@@ -651,6 +651,10 @@ corresponding author.
 males = v1_usable |> filter(Gender == "Male")
 females = v1_usable |> filter(Gender == "Female")
 stages = v1_usable_cases |> select(`FXTAS Stage (0-5)*`) |> table()
+biomarkers_table = 
+  v1_usable |> 
+  make_biomarkers_table(
+    biomarker_varnames = biomarker_varnames)
 ```
 
 @tbl-demographics describes summary statistics of patient characteristics included in the analysis. 
@@ -658,22 +662,7 @@ Our data included:
 `r nrow(v1_usable_cases)` Fragile X premutation carriers and 
 `r nrow(gp34_v1_controls)` controls;
 `r nrow(males)` males and `r nrow(females)` females;
-and `r and::and(stages)` carriers at FXTAS stages `r names(stages) |> and::and()`, respectively.
-
-```{r}
-#| label: prebuild_biomarkers-table
-#| include: false
-biomarkers_table = 
-  v1_usable |> 
-  make_biomarkers_table(
-    biomarker_varnames = biomarker_varnames)
-
-# biomarkers_table |> 
-#   filter(`p-value` < 0.05)
-
-```
-
-We found significant evidence of sex differences in proportions of events at baseline visit for `r report_sex_differences(biomarkers_table)`.
+and `r and::and(stages)` carriers at FXTAS stages `r names(stages) |> and::and()`, respectively. We found significant evidence of sex differences in proportions of events at baseline visit for `r report_sex_differences(biomarkers_table)`.
 
 ## Stratified by sex
 
@@ -696,15 +685,16 @@ pval_sex_gp34_v1 = permutation_test(
 
 ```
 
-@fig-first-only shows the estimated event sequences stratified by sex, and @fig-first-only-change compares the estimated sequences.
+@fig-first-only shows the estimated event sequences stratified by sex and compares the estimated sequences between males and females.
 We found statistically significant evidence of a difference in event sequences 
-between males and females (p = `r pval_sex_gp34_v1`). 
+between males and females (p = `r pval_sex_gp34_v1`) (@fig-first-only-2). 
 It appears that 
-premutation females typically develop threshhold-level Mood Disorder and Anxiety symptoms prior to FXTAS Stage 1,
-whereas males typically develop these symptoms between FXTAS Stages 3 and 4.
-Cognitive declines, as measured by SWM and PAL, also occur at earlier FXTAS stages for females.
-Ataxia occurs prior to Stage 1 for females and after Stage 2 for males.
-However, Ataxia severity 1 occurs earlier for males (between Stages 2-3) than for females (between Stages 3-4).
+female premutation carriers developed threshhold-level Mood Disorder symptoms prior to FXTAS Stage 1 diagnosis,
+whereas male carriers developed these symptoms between FXTAS Stages 3 and 4.
+Cognitive declines, as measured by SWM and PAL also occurred at earlier FXTAS stages for females.
+Ataxia occurred prior to Stage 1 for females and after Stage 2 for males.
+However, Ataxia severity 1 occurred earlier for males (between Stages 2-3) than for females (between Stages 3-4).
+Advanced degrees of Ataxia severity also occurred earlier in the event sequence for males than females. 
 
 MRI biomarkers of decline and Parkinsonian features also appear at earlier stages for males than for females.
 
@@ -729,8 +719,10 @@ pval_cgg_gp34_v1 = permutation_test(
 # autoplot(pval_sex_gp34_v1)
 ```
 
-We did not find statistically significant evidence of a difference in event sequences 
-between CGG < 100 and CGG > 100,  (p = `r pval_cgg_gp34_v1`).
+@fig-pvd-by-cgg shows the estimated sequences stratified by CGG repeat level. 
+Although we did not find statistically significant evidence of a difference in event sequences 
+between CGG < 100 and CGG ≥ 100,  (p = `r pval_cgg_gp34_v1`), 
+some differences were noted (@fig-pvd-by-cgg-2).
 @fig-pvd-by-cgg shows the estimated sequence models stratified by CGG repeat level.
 
 ## Stratified by CGG and Sex {#sec-stratified-by-cgg-and-sex}
@@ -948,8 +940,13 @@ table_subtype_by_demographics(
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("Estimated event sequences, stratified by sex. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences models, stratified by sex and (b) positional differences in estimated event sequence between sexes. {compact_fig_caption}")
+#| layout-ncol: 1
+#| fig-subcap: 
+#|    - ""
+#|    - ""
 #| fig-cap-location: top
+
 
 plot_compact_pvd(
   figs = list(
@@ -959,18 +956,6 @@ plot_compact_pvd(
   facet_label = c("Males <br>", "Females <br>"),
   y_text_size = 11
 )
-
-```
-
-{{< pagebreak >}}
-
-```{r}
-#| label: "fig-first-only-change"
-#| column: page
-#| fig-height: !expr pvd_line_height
-#| fig-width: !expr pvd_line_width
-#| fig-cap: "Change in estimated event sequence models by sex"
-#| fig-cap-location: top
 
 list(
     "Males" = fig_males_first,

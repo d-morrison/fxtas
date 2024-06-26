@@ -10,32 +10,28 @@ n_missing_CGG = full_data$CGG |> is.na() |> sum()
 n_above_200 = sum(full_data$CGG >= 200, na.rm = TRUE)
 v1_usable = full_data |> filter(CGG < 200) |> 
   mutate(`FX3*` = `FX3*` |> droplevels())
+compact_fig_caption = "banana"
 ```
 
+see @fig-fig1-2
 
 ```{r}
-#| label: "tbl-demographics"
-#| tbl-cap: "test"
+#| label: fig-fig1
+#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences models, stratified by sex and (b) positional differences in estimated event sequence between sexes. {compact_fig_caption}")
+#| layout-ncol: 1
+#| fig-cap-location: top
+#| fig-subcap: 
+#|    - ""
+#|    - ""
 
-biomarker_groups = compile_biomarker_groups_table()
-
-biomarker_varnames = 
-  biomarker_groups |> 
-  pull("biomarker")
-
-biomarker_levels = 
-  v1_usable |> 
-  dplyr::select(all_of(biomarker_varnames)) |> 
-  lapply(F = levels)
-
-biomarker_events_table =
-  construct_biomarker_events_table(
-    biomarker_levels,
-    biomarker_groups)
-
-biomarkers_table = 
-  v1_usable |> make_biomarkers_table(biomarker_varnames = biomarker_varnames)
-
+plot(1:10)
+plot(10:1)
 ```
 
-We found significant evidence of sex differences in `r report_sex_differences(biomarkers_table)`.
+```{r}
+#| label: fig-fig2
+#| fig-cap: !expr glue::glue("(a) banana (b) split")
+#| fig-cap-location: top
+plot(1:10)
+```
+
