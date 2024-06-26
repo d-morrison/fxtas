@@ -927,7 +927,7 @@ demographics_table = v1_usable |> make_demographics_table()
 #| tbl-cap: "Biomarkers used in analysis"
 #| label: "tbl-biomarker-list"
 
-as_flextable(biomarkers_table)
+flex_biomarkers_table(biomarkers_table)
 ```
 
 {{< pagebreak >}}
