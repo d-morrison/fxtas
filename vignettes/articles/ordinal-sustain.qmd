@@ -721,9 +721,12 @@ pval_cgg_gp34_v1 = permutation_test(
 
 @fig-pvd-by-cgg shows the estimated sequences stratified by CGG repeat level. 
 Although we did not find statistically significant evidence of a difference in event sequences 
-between CGG < 100 and CGG ≥ 100,  (p = `r pval_cgg_gp34_v1`), 
+between CGG < 100 and CGG ≥ 100 (p = `r pval_cgg_gp34_v1`), 
 some differences were noted (@fig-pvd-by-cgg-2).
-@fig-pvd-by-cgg shows the estimated sequence models stratified by CGG repeat level.
+SWM between errors occured prior to Stage 1 in participants with CGG repeats <100, 
+where it occurred between stage 4 and 5 in those with CGG repeats ≥ 100.
+Postural, resting, head, and intermittent tremor occurred earlier in those with CGG repeats <100 compared to those with CGG repeats ≥ 100.  
+Several psychiatric disorders (as measured by SCID) occurred later in the event sequence in participants with CGG repeats < 100 compared to those with CGG repeats ≥ 100. 
 
 ## Stratified by CGG and Sex {#sec-stratified-by-cgg-and-sex}
 
@@ -751,14 +754,13 @@ pval_under100_sex_gp34_v1 = permutation_test(
 
 ```
 
+
+@fig-pvd-by-gender-cgg_under100 shows the estimated event sequences for CGG < 100 stratified by sex and compares the estiamted event sequences between males and females.
 We found statistically significant evidence of a difference between males and females 
 among those with CGG < 100 (p = `r pval_under100_sex_gp34_v1`). 
-@fig-pvd-by-gender-cgg_under100 shows the stratified models with uncertainty quantified, and @fig-pvd-by-gender-cgg_under100-change compares the maximum likelihood estimates of the stratified sequences.
-Several psychiatric disorders (as measured by SCID) occur prior to FXTAS Stage 0 among females with CGG < 100, but at later FXTAS stages for males with CGG < 100.
-MRI biomarkers appear to occur at later stages for females.
-
-
-
+Several psychiatric disorders (as measured by SCID) occurred prior to FXTAS Stage 1 among females with CGG < 100, 
+but at later FXTAS stages for males with CGG < 100.
+MRI biomarkers appearred to occur at later stages in females compared to males.
 
 ```{r}
 #| label: p-val-test-sex-over100
@@ -783,10 +785,11 @@ pval_over100_sex_gp34_v1 = permutation_test(
 ```
 
 We did not find statistically significant evidence of a difference between males and females 
-among those with CGG > 100 (p `r pval_over100_sex_gp34_v1`). 
+among those with CGG ≥ 100 (p = `r pval_over100_sex_gp34_v1`). 
 @fig-pvd-by-gender-cgg_over100 shows the estimated stratified models, 
-and @fig-pvd-by-gender-cgg_over100-change compares the maximum likelihood estimates of the sequences. 
-The small sample sizes for these these subgroups made detecting differences difficult.
+and compares the estimates of the sequences. 
+It should noted that the significant differences for these subgroups 
+needs to be declared with caution due to the small sample sizes.
 
 ### Comparing CGG levels stratified by sex
 
@@ -812,9 +815,14 @@ pval_male_cgg_gp34_v1 = permutation_test(
 
 ```
 
-We found significant evidence of a difference between CGG < 100 and CGG ≥ 100 among males (p = `r pval_male_cgg_gp34_v1`). @fig-pvd-by-cgg-male shows the corresponding stratified models and 
-@fig-pvd-by-cgg-male-change compares the maximum likelihood estimates of the sequences for these two subgroups.
-Males with CGG ≥ 100 experienced MRI biomarkers at earlier FXTAS stages than males with CGG < 100, whereas postural tremor, resting tremor, and intermittent tremor all tended to occur at earlier FXTAS stages for males with CGG < 100.
+We found significant evidence of a difference between CGG < 100 
+and CGG ≥ 100 among males (p = `r pval_male_cgg_gp34_v1`). 
+@fig-pvd-by-cgg-male shows the corresponding stratified models and  
+compares the estimates of the sequences for these two subgroups.
+Males with CGG ≥ 100 experienced MRI biomarkers at earlier FXTAS stages 
+than males with CGG < 100, 
+whereas postural tremor, resting tremor, and intermittent tremor 
+all tended to occur at earlier FXTAS stages for males with CGG < 100.
 
 ```{r}
 #| label: p-val-test-cgg-female
@@ -844,7 +852,9 @@ n_over100_Female =
 
 ```
 
-We did not find statistically significant evidence of a difference between CGG < 100 and CGG ≥ 100 among females (p = `r pval_female_cgg_gp34_v1`). @fig-pvd-by-cgg-female shows the estimated stratified models, and @fig-pvd-by-cgg-female-change compares the maximum likelihood estimates. Here again, sample size was an issue, especially since the available data included only `r n_over100_Female` females with CGG ≥ 100.
+We did not find statistically significant evidence of a difference between CGG < 100 and CGG ≥ 100 among females (p = `r pval_female_cgg_gp34_v1`). 
+@fig-pvd-by-cgg-female shows the estimated stratified models and compares the estimates. 
+Here again, sample size was an issue, especially since the available data included only `r n_over100_Female` females with CGG ≥ 100.
 
 ## Latent Subtypes
 
@@ -860,17 +870,27 @@ results_cv_max = extract_results_from_pickle(
   output_folder = output_folder)
 ```
 
-Based on the CVIC criterion ([Supplementary section @sec-cvic]), it appears that `r n_s_min_CVIC` subtypes is the optimal number for the full, unstratified dataset (@fig-cvic). The out-of-fold log-likelihood (Supplementary Material @eq-def-oof-llik) showed substantial fold-to-fold variation.
+Based on the CVIC criterion ([Supplementary section @sec-cvic]), 
+`r n_s_min_CVIC` subtypes were suggested to be the optimal number for the full, unstratified dataset (@fig-cvic). The out-of-fold log-likelihood (Supplementary Material @eq-def-oof-llik) showed substantial fold-to-fold variation.
 Between `r broman::spell_out(n_s_selected)` and `r broman::spell_out(N_S_max)` latent subgroups, 
 the distribution of OOFLL appears to be
 approximately unchanging and the CVIC appears approximately flat.
-From these results, it does not appear that there is much benefit to including
+From these results, it did not appear that there is much benefit to including
 more than `r broman::spell_out(n_s_selected)` latent subgroups for this dataset.
 Therefore, for easier clinical interpretation, we chose to analyze the results with only `r n_s_selected` subtypes.
 
-@fig-pvd_chosen_subtypes shows positional variance diagrams (PVDs) for each of the subtype clusters detected under this assumption, and @tbl-sg_demos shows the demographics of the patients clustered in each subtype. Patients in the "Type 0" category were too early in the disease process to be classified into a subtype.
+```{r}
+n_type_0 = results_cv_max$subtype_and_stage_table |> filter(ml_subtype == "Type 0") |> nrow()
 
-Females were more likely to be in latent subtype 2 (39% versus 24%), whereas males were more likely to be in in subtype 3 (29% versus 12%). Subtypes 1 and 4 were equally prevalent among men and women.
+```
+
+@fig-pvd_chosen_subtypes shows positional variance diagrams (PVDs) for each of the subtype clusters detected under this assumption, and @tbl-sg_demos shows the demographics of the patients clustered in each subtype. 
+`r n_type_0` patients appeared to be too early in the disease process 
+to be accurately classified into a subtype and were excluded from @tbl-sg_demos.
+
+
+Females were more likely to be classified in latent subtype 2 (39% versus 24%), 
+whereas males dominated in subtype 3 (29% versus 12%). Subtypes 1 and 4 were equally prevalent among men and women.
 
 # Discussion
 
