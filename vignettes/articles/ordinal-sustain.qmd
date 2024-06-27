@@ -1240,7 +1240,7 @@ figs = extract_figs_from_pickle(
 #| column: page
 library(ggplot2)
 
-# figs |> print_PVDs()
+subtype_figs <- figs |> print_PVDs()
 
 plot_compact_pvd(
   figs = figs,
@@ -1248,6 +1248,46 @@ plot_compact_pvd(
   facet_label_prefix = NULL,
   y_text_size = 8
 )
+```
+
+```{r}
+#| label: fig-pvd_chosen_subtypes
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: !expr glue::glue("Change in estimated event sequence between subtypes.")
+#| layout-ncol: 3
+#| layout-nrow: 1
+#| fig-subcap: 
+#|    - "Subtype 2 compared to Subtype 1"
+#|    - "Subtype 3 compared to Subtype 1"
+#|    - "Subtype 4 compared to Subtype 1"
+#| fig-cap-location: top
+#| column: page
+
+pvd_lineplot(
+  figs = list(
+    figs[[1]],
+    figs[[2]]
+  ),
+  facet_labels = c("Subtype 1", "Subtype 2")
+)
+
+pvd_lineplot(
+  figs = list(
+    figs[[1]],
+    figs[[3]]
+  ),
+  facet_labels = c("Subtype 1", "Subtype 3")
+)
+
+pvd_lineplot(
+  figs = list(
+    figs[[1]],
+    figs[[4]]
+  ),
+  facet_labels = c("Subtype 1", "Subtype 4")
+)
+
 ```
 
 {{< pagebreak >}}
