@@ -55,7 +55,8 @@ make_demographics_table = function(data)
     gtsummary::add_p(
       pvalue_fun = function(x) gtsummary::style_number(x, digits = 3)
     ) |>
-    gtsummary::modify_column_hide(columns = c(stat_1, stat_2))
+    gtsummary::modify_column_hide(columns = c(stat_1, stat_2)) |>
+    gtsummary::separate_p_footnotes()
 
   gtsummary::tbl_merge(
     list(tbl_stat, tbl_pval), tab_spanner = FALSE

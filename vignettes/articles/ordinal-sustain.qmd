@@ -767,7 +767,7 @@ We found statistically significant evidence of a difference between males and fe
 among those with CGG < 100 (p = `r pval_under100_sex_gp34_v1`). 
 Several psychiatric disorders (as measured by SCID) occurred prior to FXTAS Stage 1 among females with CGG < 100, 
 but at later FXTAS stages for males with CGG < 100.
-MRI biomarkers appearred to occur at later stages in females compared to males.
+MRI biomarkers appeared to occur at later stages in females compared to males.
 
 ```{r}
 #| label: p-val-test-sex-over100
@@ -954,6 +954,7 @@ table_subtype_by_demographics(
   subtype_and_stage_table = 
     results_cv_max$subtype_and_stage_table
 ) |>
+  gtsummary::separate_p_footnotes() |>
   gtsummary::as_flex_table() |>
   flextable::width(width = 1.75) |>
   flextable::width(j = 2:6, width = 0.75) |>
@@ -1247,7 +1248,6 @@ plot_compact_pvd(
   facet_label_prefix = NULL,
   y_text_size = 8
 )
-
 ```
 
 {{< pagebreak >}}
