@@ -1,0 +1,526 @@
+---
+title: "Format Testing"
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "#>" 
+project: 
+  execute-dir: project
+filters:
+  - ../docx-landscape.lua
+---
+
+```{=html}
+<style>
+.quarto-figure-center > figure {
+text-align: center;
+}
+</style>
+```
+
+# Introduction
+
+The fragile X-associated tremor/ataxia syndrome (FXTAS) is a relatively newly discovered neurodegenerative disorder caused by the premutation (55 to 200 CGG repeats) in the FMR1 gene [@hagerman2001intention]. 
+The premutation is associated with elevation of the FMR1 mRNA, and this leads to RNA toxicity including oxidative stress, mitochondrial dysfunction, calcium dysregulation and sequestration of proteins important to neuronal function.
+Proteins and neurofilaments sequester with the excess FMR1 mRNA, leading to the formation of eosinophilic, tau negative intranuclear inclusions in neurons and astrocytes throughout the CNS and even in the peripheral nervous system [@greco2006neuropathology; @hunter2012capturing]. 
+FXTAS usually begins in the 60s, and as premutation carriers age, the prevalence of FXTAS increases from approximately 40% in males in their 60s to 75% in their 80s [@jacquemont2004penetrance].
+Females with the premutation are also at risk for FXTAS, but the prevalence is lower; approximately 16 to 20% may develop FXTAS, but it is less severe than in the males [@tassone2023insight]. 
+The higher the CGG repeat within the premutation range the earlier the onset of FXTAS and the earlier the age of death [@greco2006neuropathology].
+The prevalence of the premutation is approximately 1 in 148 to 200 females in the general population and one in 290 to 855 males (@maenner2013fmr1; @hunter2014epidemiology).
+
+A currently open question is: In what sequential time-order do FXTAS symptoms typically appear, how does that sequence vary between participants, and what baseline characteristics predict that order?
+Here, we apply the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2021ordinal] to find event sequences for FXTAS patients.
+
+```{r, include = FALSE}
+#| label: setup
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  # fig.width = 7, 
+  # fig.height = 10,
+  include = TRUE
+)
+```
+
+```{r libraries}
+#| message: false
+# devtools::load_all()
+library(fxtas)
+reticulate::use_condaenv("fxtas39",required = TRUE)
+library(tidyverse)
+library(reticulate)
+library(pander)
+library(table1)
+```
+
+```{r}
+#| label: "set run parameters"
+#| 
+fit_models = TRUE
+# fit_models = FALSE
+run_CV =  TRUE
+# run_CV = FALSE
+
+pvd_height = 8
+pvd_width = 12
+size.y = 11
+N_startpoints = 10L
+N_S_max = 8L
+N_S_max_stratified = 2L
+N_CV_folds = 10L
+
+# column_var = "Recruited in study phase"
+# column_var = "FX3*"
+column_var = c("Gender", "FX3*")
+
+N_iterations_MCMC = 1e5L
+dataset_name = 'sample_data'
+root_dir = here::here()
+setwd(root_dir)
+output_folder = 
+  "output/output.fixed_CV/" |> 
+  fs::dir_create()
+```
+
+# Methods
+
+## Data
+
+```{r}
+#| label: subset-data
+
+full_data = trax_gp34_v1
+n_missing_CGG = full_data$CGG |> is.na() |> sum()
+n_above_200 = sum(full_data$CGG >= 200, na.rm = TRUE)
+v1_usable = full_data |> filter(CGG < 200)
+v1_usable_cases = v1_usable |> filter(CGG >= 55)
+# note: there are 231 records in `visit1` with CGG >= 55, but 4 have CGG >= 200
+# previously `nrow(v1_usable_cases)` was 221, which was based on incorrectly filtering on a version of CGG that hadn't been backfilled.
+
+gp34_v1_controls =  v1_usable |> filter(CGG < 55)
+```
+
+### Study cohorts
+
+The data come from the GP, GP4, and Trax studies. In the primary analyses, we analyzed one visit record per participant, using the earliest visit available across the two studies with age at visit $\ge 40$ years, resulting in `r nrow(full_data)` observations in total. 
+However, `r n_missing_CGG` individuals did not have CGG values available, and `r n_above_200` had full fragile X syndrome mutation (≥200 CGG repeats), so only `r nrow(v1_usable)` individuals 
+(`r nrow(v1_usable_cases)` cases and 
+`r nrow(gp34_v1_controls)` controls) were included in the event sequence analysis. 
+@fig-hist-CGG-gp34-v1 shows the distribution of CGG repeats among the participants included in the analysis. 
+@tbl-demographics provides demographic information about the study participants. 
+
+```{r}
+#| label: "biomarker-events"
+biomarker_groups = compile_biomarker_groups_table()
+
+biomarker_varnames = 
+  biomarker_groups |> 
+  pull("biomarker")
+
+biomarker_levels = 
+  v1_usable |> 
+  dplyr::select(all_of(biomarker_varnames)) |> 
+  lapply(F = levels)
+
+df = v1_usable
+
+biomarker_events_table =
+  construct_biomarker_events_table(
+    biomarker_levels,
+    biomarker_groups)
+
+nlevs = 
+  biomarker_levels |> sapply(length)
+
+```
+
+### Biomarkers of neurodegenerative events
+
+We analyzed `r length(biomarker_levels)` biomarkers (@tbl-biomarker-list) with a total of `r nrow(biomarker_events_table)` non-baseline levels; each level above baseline constitutes an outcome event in the disease progression modelling analysis (@sec-Statistical-analysis).
+@tbl-tremors - @tbl-autoimmune summarize the biomarker data, stratified by CGG (`r unique(v1_usable$"FX3*")`) 
+and Sex (`r unique(v1_usable$Gender)`).
+
+## Statistical analysis {#sec-Statistical-analysis}
+
+We applied  the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2018uncovering; @young2021ordinal] to our dataset to find event sequences and subtypes for FXTAS patients. This algorithm combines disease progression modelling [@fonteijn2012event] and unsupervised clustering [@lazarsfeld1950logical; @mclachlan2019finite] to model event onset sequences using a cross-sectional sample of a patient population. The algorithm simultaneously clusters individuals into latent subtypes and characterizes the trajectory that best defines each subtype, thus capturing heterogeneity in both disease subtype and disease stage.
+Ordinal SuStaIn uses Markov Chain Monte Carlo (MCMC) sampling to estimate the Bayesian posterior probability of each possible event sequence for each subtype given the training dataset, assuming a uniform prior distribution over the set of all possible patterns. 
+
+We fit models stratified by sex, with no latent subtypes (@fig-first-only). We also fit the model stratified by CGG repeats (<100 vs $\ge$ 100), also with no latent subtypes (@fig-pvd-by-cgg).
+We then fit the models stratified by both sex and CGG repeats (<100 vs $\ge$ 100), also with no latent subtypes (@sec-stratified-by-cgg-and-sex).
+
+### Incomplete data
+
+```{r}
+x1 = v1_usable_cases |> pull(`Ataxia: severity`)
+n_missing = sum(x1 |> is.na())
+# n_obs = sum(x1 |> is.na() |> not()) # not() is deprecated?
+n_obs = sum(!is.na(x1)) 
+n_total = length(x1)
+pct_missing = scales::percent(n_missing/n_total, accuracy = 0.1)
+pct_obs = scales::percent(n_obs/n_total, accuracy = 0.1)
+probs = x1 |> table() |> proportions() |> as.vector() |> scales::percent(n_obs/n_total, accuracy = 0.01) |> 
+  and::and()
+```
+
+We handled missing outcome event data by assigning a probability distribution across the possible values of the missing variable that matched the marginal distribution among the cases. 
+For example, `r n_missing` of the `length(x1)` cases (`r pct_missing`) had missing values for Ataxia Severity, and `r n_obs` (`r pct_obs`) had recorded values, distributed among severity levels 0-4 ( @tbl-ex-incomplete-data). 
+For the `r n_missing` cases with missing values, we assigned probabilities of `r probs` to levels `r and::and(0:4)`, respectively.
+
+```{r}
+#| label: tbl-ex-incomplete-data
+#| tbl-cap: "Distribution of ataxia severity among cases"
+
+table1(
+  na.is.category = FALSE,
+  data = v1_usable_cases, 
+  x = ~ `Ataxia: severity*`)
+```
+
+
+### Testing for differences between covariate subgroup strata
+
+To test for event sequence differences between males and females and between lower premutation levels (CGG <100) and higher premutation levels (CGG 100-199), we implemented a permutation test, in which we created 1000 permuted datasets in which the strata variables were randomly shuffled. 
+We computed the mean log-likelihood of the data for each permuted dataset (averaging across MCMC samples and summing across the strata being compared) and compared the distribution of permuted mean log-likelihoods to the observed log-likelihood calculated from the original (unpermuted) dataset.
+
+### Latent subtypes
+
+We also fit the model on the full dataset (not stratified by sex or CGG) for 2-`r N_S_max` latent subtypes, each with their own ordering (@fig-pvd_optimal). We determined the optimal number of latent subtypes for this dataset using the CVIC criterion (@sec-cvic). More details are provided in @sec-subtypes.
+
+### Longitudinal subsets
+
+We also fit the Ordinal SuStaIn model, stratified by sex, including all longitudinal repeated measurements of the same participants over time (@sec-longitudinal-results). Including later observations might help the model clarify the later stages of the event sequence. However, correlation between repeated observations of the same individuals are not accounted for by the Ordinal SuStaIn model, which assumes that all observations are statistically independent, so including repeated measurements will lead to exaggerated estimates of precision.
+
+### Visualizing modeling results
+
+We visualized the results of Ordinal SuStaIn analysis using "positional variance diagrams" (PVDs), which are heatmaps with biomarker events on the y-axis and sequence positions on the x-axis. 
+
+The PVD's color scale indicates the Bayesian posterior probability that a particular biomarker event (y-axis) appears at a particular position along the progression sequence (x-axis). Red indicates a more probable sequence position, and gray indicates a less probable position.
+
+```{r}
+#| label: get-control-dists
+
+control_data = 
+  df |> 
+  filter(`FX*` == "CGG < 55") |> 
+  select(all_of(biomarker_varnames))
+
+patient_data = 
+  df |> 
+  # na.omit() |>
+  filter(`FX*` == "CGG >= 55")
+
+prob_correct = 
+  control_data |> 
+  compute_prob_correct(
+    max_prob = .95,
+    biomarker_levels = biomarker_levels)
+
+```
+
+```{r}
+#| label: extract-figs
+
+fig_females_first = extract_figs_from_pickle(size.y = size.y,
+  n_s = 1,
+  rda_filename = "data.RData",
+  dataset_name = "females",
+  output_folder = "output/output.fixed_CV")
+
+fig_males_first = extract_figs_from_pickle(size.y = size.y,
+  n_s = 1,
+  rda_filename = "data.RData",
+  dataset_name = "males",
+  output_folder = "output/output.fixed_CV")
+
+```
+
+# Tables {.unnumbered}
+
+::: landscape
+
+```{r}
+#| tbl-cap: "Biomarkers used in analysis"
+#| label: "tbl-biomarker-list"
+
+probs_above_baseline_by_gender = 
+  v1_usable |> 
+  summarize(
+    .by = "Gender",
+    across(
+      all_of(biomarker_varnames),
+      ~ mean(.x != levels(.x)[1], na.rm = TRUE)
+           )
+  ) |> 
+  pivot_longer(
+    cols = -Gender, 
+    names_to = "biomarker", 
+    values_to = "Pr(above_baseline)") |>
+  mutate(
+    `Pr(above_baseline)` = 
+      `Pr(above_baseline)` |>  
+      scales::percent(accuracy = 0.01)) |> 
+  pivot_wider(
+    id_cols = "biomarker",
+    names_from = Gender,
+    values_from = `Pr(above_baseline)`)
+
+table_out =
+  biomarker_events_table |> 
+  select(
+    category = biomarker_group, 
+    biomarker, 
+    levels) |> 
+  slice_head(by = biomarker) |> 
+  filter(category != "Stage") |> 
+  left_join(
+    probs_above_baseline_by_gender,
+    by = "biomarker",
+    relationship = "one-to-one"
+  ) |> 
+  mutate(
+    biomarker = 
+      biomarker |> 
+      sub(
+        pattern = "*", 
+        replacement = "", 
+        fixed = TRUE))
+
+table_out |> 
+  flextable::flextable() |>
+  flextable::set_header_labels(
+    values = c("Category", "Biomarker", "Levels", "Female", "Male")
+  ) |>
+  flextable::width(j = ~ biomarker, width = 3) |>
+  flextable::width(j = ~ category + levels, width = 2) |>
+  flextable::theme_booktabs() |>
+  flextable::align(j = ~ biomarker + levels, align = "center", part = "all")
+  
+
+```
+
+
+```{r}
+#| label: "tbl-demographics"
+#| tbl-cap: "Demographics by CGG repeats level"
+
+vars = c(
+  # "Study",
+  "Age at visit",
+  # "# visits",
+  # column_var,
+  "Primary Race/Ethnicity",
+  # "Primary Ethnicity",
+  # "Primary Race",
+  "FXTAS Stage (0-5)*"
+  # "ApoE"
+  
+)
+
+# table1(
+#   na.is.category = FALSE, overall = FALSE,
+#   NA.label = "Missing",
+#   stratified_formula(vars, strata = "FX*"),
+#   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+#   data = v1_usable)
+
+
+# create table using gtsummary with p-value for sex difference
+tbl_stat <- gtsummary::tbl_strata(
+  data = v1_usable |>
+    dplyr::select(all_of(vars), Gender, `FX*`),
+  strata = c("Gender"),
+  .tbl_fun = ~ .x %>%
+    gtsummary::tbl_summary(
+      by = `FX*`,
+      type = gtsummary::all_continuous() ~ "continuous2",
+      statistic = list(
+        gtsummary::all_continuous() ~ c("{mean} ({sd})", "{median} [{min}, {max}]")
+      ),
+      digits = list(`Age at visit` ~ c(1, 2)),
+      missing_text = "Missing"
+    )
+)
+
+tbl_pval <- v1_usable |> 
+  dplyr::select(all_of(vars), Gender) |>
+  gtsummary::tbl_summary(
+    by = Gender,
+    missing_text = "Missing"
+  ) |>
+  gtsummary::add_p(
+    pvalue_fun = function(x) gtsummary::style_number(x, digits = 3)
+  ) |>
+  gtsummary::modify_column_hide(columns = c(stat_1, stat_2))
+
+gtsummary::tbl_merge(
+  list(tbl_stat, tbl_pval), tab_spanner = FALSE
+) |>
+  gtsummary::modify_caption(
+    caption = "Demographics by CGG repeats level"
+  )
+```
+
+
+
+{{< pagebreak >}}
+
+# Figures {.unnumbered}
+
+```{r}
+#| label: "fig-first-only-1"
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: "Estimated event sequence models, stratified by sex, first visits only"
+#| fig-cap-location: top
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "Males"
+#   - "Females"
+
+
+# fig_both_first |> print()
+# fig_males_first |> print()
+# fig_females_first |> print()
+
+plot_compact_pvd(
+  figs = list(
+    fig_males_first,
+    fig_females_first
+  ),
+  facet_label = c("Males <br>", "Females <br>"),
+  legend.position = "none",
+  y_text_size = 12
+)
+
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| label: "fig-first-only-2"
+#| fig-height: 10
+#| fig-width: 20
+#| fig-cap: "Estimated event sequence models, stratified by sex, first visits only"
+#| fig-cap-location: top
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "Males"
+#   - "Females"
+
+
+# fig_both_first |> print()
+# fig_males_first |> print()
+# fig_females_first |> print()
+
+plot_compact_pvd(
+  figs = list(
+    fig_males_first,
+    fig_females_first
+  ),
+  facet_label = c("Males <br>", "Females <br>"),
+  legend.position = "none",
+  y_text_size = 12
+)
+
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| label: "fig-first-only-3"
+#| fig-height: !expr pvd_height
+#| fig-width: 16
+#| fig-cap: "Estimated event sequence models, stratified by sex, first visits only"
+#| fig-cap-location: top
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "Males"
+#   - "Females"
+
+
+# fig_both_first |> print()
+# fig_males_first |> print()
+# fig_females_first |> print()
+
+plot_compact_pvd(
+  figs = list(
+    fig_males_first,
+    fig_females_first
+  ),
+  facet_label = c("Males <br>", "Females <br>"),
+  legend.position = "none",
+  y_text_size = 12
+)
+
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| label: "fig-first-only-4"
+#| fig-height: 10
+#| fig-width: 18
+#| fig-cap: "Estimated event sequence models, stratified by sex, first visits only"
+#| fig-cap-location: top
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "Males"
+#   - "Females"
+
+
+# fig_both_first |> print()
+# fig_males_first |> print()
+# fig_females_first |> print()
+
+plot_compact_pvd(
+  figs = list(
+    fig_males_first,
+    fig_females_first
+  ),
+  facet_label = c("Males <br>", "Females <br>"),
+  legend.position = "none",
+  y_text_size = 12
+)
+
+```
+
+:::
+
+{{< pagebreak >}}
+
+```{r}
+#| label: "fig-first-only-5"
+#| column: page
+#| fig-height: 10
+#| fig-width: 8
+#| fig-cap: "Estimated event sequence models, stratified by sex, first visits only"
+#| fig-cap-location: top
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "Males"
+#   - "Females"
+
+
+# fig_both_first |> print()
+# fig_males_first |> print()
+# fig_females_first |> print()
+
+plot_compact_pvd(
+  figs = list(
+    fig_males_first,
+    fig_females_first
+  ),
+  facet_label = c("Males <br>", "Females <br>"),
+  legend.position = "none",
+  y_text_size = 12
+)
+
+```
+
+{{< pagebreak >}}
