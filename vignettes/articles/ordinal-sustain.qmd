@@ -1240,7 +1240,7 @@ figs = extract_figs_from_pickle(
 #| column: page
 library(ggplot2)
 
-subtype_figs <- figs |> print_PVDs()
+# subtype_figs <- figs |> print_PVDs()
 
 plot_compact_pvd(
   figs = figs,
@@ -1251,7 +1251,7 @@ plot_compact_pvd(
 ```
 
 ```{r}
-#| label: fig-pvd_chosen_subtypes
+#| label: fig-pvd_chosen_subtypes_changes
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
 #| fig-cap: !expr glue::glue("Change in estimated event sequence between subtypes.")
