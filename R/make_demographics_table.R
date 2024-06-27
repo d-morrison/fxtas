@@ -59,8 +59,5 @@ make_demographics_table = function(data)
 
   gtsummary::tbl_merge(
     list(tbl_stat, tbl_pval), tab_spanner = FALSE
-  ) |>
-    gtsummary::modify_caption(
-      caption = "Demographics by CGG repeats level"
-    )
+  )
 }

@@ -18,9 +18,16 @@ text-align: center;
 </style>
 ```
 
+# Abstract {.unnumbered}
+
+The fragile X-associated tremor/ataxia syndrome (FXTAS) is a  neurodegenerative disorder caused by the premutation (55 to 200 CGG repeats) in the FMR1 gene.
+A currently open question is: In what sequential order do FXTAS symptoms typically appear, how does that sequence vary between participants and between males and females?
+Here, we applied the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm to identify the sequential events of neurophenotypic symptoms presented in observed data collected in FXTAS patients.
+We found substantial differences in order of events depending on sex and CGG repeat number.
+
 # Introduction
 
-The fragile X-associated tremor/ataxia syndrome (FXTAS) is a relatively newly discovered neurodegenerative disorder caused by the premutation (55 to 200 CGG repeats) in the FMR1 gene [@hagerman2001intention]. 
+The fragile X-associated tremor/ataxia syndrome (FXTAS) is a neurodegenerative disorder caused by the premutation (55 to 200 CGG repeats) in the FMR1 gene [@hagerman2001intention]. 
 The premutation is associated with elevation of the FMR1 mRNA, and this leads to RNA toxicity including oxidative stress, mitochondrial dysfunction, calcium dysregulation and sequestration of proteins important to neuronal function.
 Proteins and neurofilaments sequester with the excess FMR1 mRNA, leading to the formation of eosinophilic, tau negative intranuclear inclusions in neurons and astrocytes throughout the CNS and even in the peripheral nervous system [@greco2006neuropathology; @hunter2012capturing]. 
 FXTAS usually begins in the 60s, and as premutation carriers age, the prevalence of FXTAS increases from approximately 40% in males in their 60s to 75% in their 80s [@jacquemont2004penetrance].
@@ -31,7 +38,8 @@ The prevalence of the premutation is approximately 1 in 148 to 200 females in th
 A currently open question is: In what sequential order do FXTAS symptoms typically appear, how does that sequence vary between participants, and what baseline characteristics predict that order?
 Here, we apply the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2021ordinal] to find event sequences for FXTAS patients.
 
-```{r, include = FALSE}
+```{r}
+#| include: false
 #| label: setup
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -42,7 +50,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r libraries}
+```{r}
+#| label: libraries
 #| message: false
 # devtools::load_all()
 library(fxtas)
@@ -56,14 +65,17 @@ library(magrittr)
 
 ```{r}
 #| label: "set run parameters"
-#| 
+
 fit_models = TRUE
 # fit_models = FALSE
 run_CV =  TRUE
 # run_CV = FALSE
 
-# plot_python = TRUE
-plot_python = FALSE
+rerun = TRUE
+rerun = FALSE
+# 
+plot_python = TRUE
+# plot_python = FALSE
 
 pvd_height = 8
 pvd_width = 10
@@ -71,9 +83,13 @@ pvd_line_height = 10
 pvd_line_width = 8
 size.y = 11
 N_startpoints = 10L
+# use_parallel_startpoints = TRUE
+use_parallel_startpoints = FALSE # couldn't get parallel to work, 2024/06/15
 N_S_max = 8L
 N_S_max_stratified = 2L
 N_CV_folds = 10L
+
+n_permutations = 1000
 
 compact_fig_caption <- paste0(
   "The different colors correspond to the different levels above baseline. ",
@@ -106,12 +122,13 @@ output_folder =
 full_data = trax_gp34_v1
 n_missing_CGG = full_data$CGG |> is.na() |> sum()
 n_above_200 = sum(full_data$CGG >= 200, na.rm = TRUE)
-v1_usable = full_data |> filter(CGG < 200)
+v1_usable = full_data |> filter(CGG < 200) |> 
+  mutate(`FX3*` = `FX3*` |> droplevels())
 v1_usable_cases = v1_usable |> filter(CGG >= 55)
 # note: there are 231 records in `visit1` with CGG >= 55, but 4 have CGG >= 200
 # previously `nrow(v1_usable_cases)` was 221, which was based on incorrectly filtering on a version of CGG that hadn't been backfilled.
 
-gp34_v1_controls =  v1_usable |> filter(CGG < 55)
+gp34_v1_controls =  v1_usable |> filter(CGG <55)
 year_range = v1_usable$`Visit Date` |> year() |> range()
 min_year = min(year_range)
 max_year = max(year_range)
@@ -122,20 +139,18 @@ max_year = max(year_range)
 Research participants were recruited between `r min_year` and `r max_year`
 for two longitudinal cohorts (GP and Trax).
 The inclusion criteria were: age 40 years or greater; 
-[CLINICAL TEAM: please complete this section].
+**CLINICAL TEAM: please complete this section and fill in detailed descriptions of the GP and Trax cohorts. Cite refs as needed**.
+@tbl-demographics provides demographic information about the study participants. 
+
 
 Written informed consent was obtained from all participants 
 according to the procedures approved by the 
 University of California Davis Institutional Review Board.  
 
-The primary event sequence analysis included baseline-visit data 
+The primary event sequence analysis included baseline visit data 
 from 297 participants from the two cohorts,
 consisting of `r nrow(v1_usable_cases)` Fragile X premutation carriers 
 and `r nrow(gp34_v1_controls)`  controls. 
-
-[Supplemental Figure @fig-hist-CGG-gp34-v1] shows the distribution of CGG repeats 
-among the participants included in the analysis. 
-@tbl-demographics provides demographic information about the study participants. 
 
 ```{r}
 #| label: "biomarker-events"
@@ -164,15 +179,17 @@ nlevs =
 
 ### Biomarkers of neurodegenerative events
 
-We analyzed first measurements of `r length(biomarker_levels)`
+We analyzed measurements of `r length(biomarker_levels)`
 ordinal biomarkers (@tbl-biomarker-list)
 with a total of `r nrow(biomarker_events_table)` non-baseline levels.
 Each ordinal level above baseline constitutes an outcome event 
 in the disease progression modelling analysis (@sec-Statistical-analysis).
 [Supplemental Tables @tbl-tremors] - [-@tbl-autoimmune] 
 summarize the biomarker data, 
-stratified by CGG (`r unique(v1_usable$"FX3*")`) 
-and Sex (`r unique(v1_usable$Gender)`).
+stratified by 
+CGG repeat size (`r levels(v1_usable$"FX3*")`) 
+and 
+Sex (`r unique(v1_usable$Gender)`).
 
 ## Statistical analysis {#sec-Statistical-analysis}
 
@@ -195,11 +212,11 @@ assuming a uniform prior distribution over the set of all possible patterns.
 
 We conducted subgroup analyses by fitting models stratified by: 
 (1) sex (@fig-first-only);
-(2) CGG repeats (<100 vs $\ge$ 100) (@fig-pvd-by-cgg);
-(3) both sex and CGG repeats (<100 vs $\ge$ 100) (@sec-stratified-by-cgg-and-sex).
+(2) CGG repeats (<100 vs ≥100) (@fig-pvd-by-cgg);
+(3) both sex and CGG repeats (<100 vs ≥100) (@sec-stratified-by-cgg-and-sex).
 For these subgroup analyses, we did not search for latent clusters.
 
-### Incomplete data {#sec-incomplete-data}
+### Imputation of data {#sec-incomplete-data}
 
 ```{r}
 #| label: count-incomplete-data
@@ -220,60 +237,87 @@ probs =
 ```
 
 We assumed that missing biomarker data 
-were missing completely at random (MCAR) 
+were missing at random (MAR) 
 (@rubin1976inference, @little2019statistical).
 We substituted missing outcome event data 
 by assigning a probability distribution across the 
 possible values of the missing variable 
-that matched the marginal distribution among the cases. 
-For example, `r n_missing` of the `r `length(x1)` cases (`r pct_missing`) 
+that matched the marginal distribution of observed data among the cases. 
+For example, 
+`r n_missing` of the `r length(x1)` cases (`r pct_missing`) 
 had missing values for Ataxia Severity, 
 and `r n_obs` (`r pct_obs`) had recorded values, 
-distributed among severity levels 0-4 ([Supplementary Table @tbl-ex-incomplete-data]). 
+distributed among severity levels 0-4 
+([Supplementary Table @tbl-ex-incomplete-data]). 
 For the `r n_missing` cases with missing values, 
-we assigned probabilities of `r probs` to Ataxia Severity levels `r and::and(0:4)`, respectively.
+we assigned probabilities of `r probs` 
+to Ataxia Severity levels `r and::and(0:4)`, respectively, 
+and missing values were imputed under the marginal distribution.
 
 ### Statistical hypothesis tests
 
-In order to test for statistical significant evidence of differences in event sequences
+To test for statistical significant evidence of differences in event sequences
 between males and females
 and 
-between lower premutation levels (CGG <100) and higher premutation levels (CGG 100-199),
-we implemented a permutation test.
-We first created 1000 permuted datasets in which we randomly shuffled the variable being tested.
-We computed the mean log-likelihood of the data for each permuted dataset 
-(averaging across MCMC samples and summing across the strata being compared) 
+between lower (CGG <100) and higher premutation levels (CGG 100-199),
+we implemented a permutation test (@welch1990construction)  
+to calculate a p-value that is the probability of observing a difference 
+at least as extreme as the test statistic 
+given that the null hypothesis of no difference is true.
+We first created `r n_permutations` permuted datasets 
+in which we randomly shuffled the variable being tested.
+We computed the mean log-likelihood of the data 
+for each permuted dataset 
+(averaging across MCMC samples and 
+summing across the strata being compared) 
 and compared the distribution of permuted mean log-likelihoods 
-to the observed log-likelihood calculated from the original (unpermuted) dataset.
+to the observed log-likelihood 
+calculated from the original (unpermuted) dataset.
 We computed the p-value 
 by first computing the percentile of the observed mean log-likelihood 
 relative to the empirical distribution of the permuted mean log-likelihoods,
 subtracting that percentile from 1 if larger than 0.5,
-and then multiplying by two to create a two-sided test.
-A detailed numerical example of this procedure is provided in the Supplementary Materials (@sec-permutation-test).
+and then multiplying by two to calulate a two-sided test statistic.
+We declared significance if the p-value was less than or equal to 0.05.
+A detailed numerical example of this procedure 
+is provided in the Supplementary Materials (@sec-permutation-test).
 
 ### Latent subtypes {#sec-methods-latent-subtypes}
 
-We also fit the model on the full dataset (not stratified by sex or CGG) 
+We also fitted the model on the full dataset (not stratified by sex or CGG) 
 for 2-`r N_S_max` latent subtypes, 
-each with their own ordering (@fig-pvd_chosen_subtypes). 
-We determined the optimal number of latent subtypes for this dataset using the CVIC criterion (@sec-cvic). 
-We performed `r N_CV_folds`-fold cross-validation on the unstratified data, and calculated the CVIC for 1-`r N_S_max` latent subtypes. 
+each with their own ordering. 
+We determined the optimal number of latent subtypes for this dataset using 
+the CVIC criterion (Supplementary Materials @sec-cvic) and 
+the OOFLL criterion (Supplementary Materials @sec-oofll).
+We performed `r N_CV_folds`-fold cross-validation on the unstratified data
+and calculated the CVIC and OOFLL for 1-`r N_S_max` latent subtypes. 
 More details are provided in the Supplementary Materials (@sec-subtypes).
 
 ### Longitudinal subsets
 
-We also fit the Ordinal SuStaIn model, stratified by sex, including all longitudinal repeated measurements of the same participants over time ([ Supplementary Section @sec-longitudinal-results]). 
-Including later observations might help the model clarify the later stages of the event sequence. 
-However, correlation between repeated observations of the same individuals are not accounted for by the Ordinal SuStaIn model, 
+We also fitted the Ordinal SuStaIn model, stratified by sex, 
+including all longitudinal repeated measurements 
+of the same participants over time 
+([Supplementary Section @sec-longitudinal-results]). 
+Including later observations 
+might help the model clarify the later stages of the event sequence. 
+However, correlations between repeated observations of the same individuals 
+are not accounted for by the Ordinal SuStaIn model, 
 which assumes that all observations are statistically independent, 
-so including repeated measurements will lead to exaggerated estimates of precision.
+so including repeated measurements could lead to exaggerated estimates of precision.
 
 ### Visualizing modeling results
 
-We visualized the results of Ordinal SuStaIn analysis using "positional variance diagrams" (PVDs), which are heatmaps with biomarker events on the y-axis and sequence positions on the x-axis. 
+We visualized the results of Ordinal SuStaIn analysis using "positional variance diagrams" (PVDs), 
+which are heatmaps 
+with biomarker events on the y-axis 
+and sequence positions of events, 
+with each event occurring at some point in continuing time relative to other events in sequence, on the x-axis.
+It should be pointed out that the exact onset times of the events cannot be determined by the method we used for this analysis.
 The PVD's color scale indicates the Bayesian posterior probability that a particular biomarker event (y-axis) appears at a particular position along the progression sequence (x-axis). 
-Brighter colors indicate a more probable sequence position, and paler colors indicate a less probable position. 
+Color intensity presents the likelihood of sequence position. 
+That is, brighter colors indicate a more probable sequence position, and paler colors indicate a less probable position. 
 The colors indicate the ordinal levels of progression.
 
 ```{r}
@@ -281,7 +325,7 @@ The colors indicate the ordinal levels of progression.
 
 control_data = 
   df |> 
-  filter(`FX*` == "CGG < 55") |> 
+  filter(`FX*` == "CGG <55") |> 
   select(all_of(biomarker_varnames))
 
 patient_data = 
@@ -297,9 +341,9 @@ prob_correct =
 
 ```
 
-```{r "run OSA from R"}
+```{r}
 #| message: false
-#| label: model-all-data
+#| label: model-all-subgroups-first-visits
 #| include: false
 #| eval: !expr fit_models
 
@@ -312,10 +356,10 @@ sustain_output = run_and_save_OSA(
   N_iterations_MCMC = N_iterations_MCMC, 
   output_folder = output_folder, 
   dataset_name = dataset_name, 
-  use_parallel_startpoints = FALSE,
+  use_parallel_startpoints = use_parallel_startpoints,
   seed = 1,
   plot = plot_python,
-  rerun = FALSE,
+  rerun = rerun,
   patient_data = patient_data,
   N_CV_folds = N_CV_folds)
 
@@ -323,25 +367,24 @@ sustain_output = run_and_save_OSA(
 
 ```{r}
 #| message: false
-#| label: model-males
+#| label: model-males-v1
 #| include: false
 #| eval: !expr fit_models
 
 sustain_output_males = run_and_save_OSA(
-  biomarker_levels = biomarker_levels,
-  prob_correct = prob_correct,
   patient_data = patient_data |> filter(Gender == "Male"),
-  
+  prob_correct = prob_correct,
+  biomarker_levels = biomarker_levels,
   SuStaInLabels = biomarker_varnames,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max_stratified,
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
   dataset_name = "males",
-  use_parallel_startpoints = FALSE,
+  use_parallel_startpoints = use_parallel_startpoints,
   seed = 1,
   plot = plot_python,
-  rerun = FALSE,
+  rerun = rerun,
   fig_size = c(20, 10)
 )
 
@@ -355,7 +398,8 @@ sustain_output_males = run_and_save_OSA(
 #| eval: !expr fit_models
 
 sustain_output_females = run_and_save_OSA(
-  biomarker_levels = biomarker_levels, prob_correct = prob_correct, 
+  biomarker_levels = biomarker_levels, 
+  prob_correct = prob_correct, 
   patient_data = patient_data |> filter(Gender == "Female"),
   
   SuStaInLabels = biomarker_varnames,
@@ -364,10 +408,10 @@ sustain_output_females = run_and_save_OSA(
   N_iterations_MCMC = N_iterations_MCMC, 
   output_folder = output_folder, 
   dataset_name = "females", 
-  use_parallel_startpoints = FALSE,
+  use_parallel_startpoints = use_parallel_startpoints,
   seed = 1,
   plot = plot_python,
-  rerun = FALSE,
+  rerun = rerun,
   fig_size = c(20,10))
 
 ```
@@ -380,7 +424,8 @@ sustain_output_females = run_and_save_OSA(
 #| eval: !expr fit_models
 
 sustain_output_cgg100plus = run_and_save_OSA(
-  biomarker_levels = biomarker_levels, prob_correct = prob_correct, 
+  biomarker_levels = biomarker_levels, 
+  prob_correct = prob_correct, 
   patient_data = patient_data |> filter(`CGG` >= 100),
   
   SuStaInLabels = biomarker_varnames,
@@ -389,9 +434,9 @@ sustain_output_cgg100plus = run_and_save_OSA(
   N_iterations_MCMC = N_iterations_MCMC, 
   output_folder = output_folder, 
   dataset_name = "over100", 
-  use_parallel_startpoints = FALSE,
+  use_parallel_startpoints = use_parallel_startpoints,
   seed = 1,
-  plot = FALSE)
+  plot = plot_python)
 
 ```
 
@@ -411,10 +456,100 @@ sustain_output_cgg100minus = run_and_save_OSA(
   N_iterations_MCMC = N_iterations_MCMC, 
   output_folder = output_folder, 
   dataset_name = "under100", 
-  use_parallel_startpoints = FALSE,
+  use_parallel_startpoints = use_parallel_startpoints,
   seed = 1,
-  plot = FALSE)
+  plot = plot_python)
 
+```
+
+```{r}
+#| message: false
+#| label: "cgg_under_100 & Male"
+#| include: false
+sustain_output_cgg100minus_males = run_and_save_OSA(
+  biomarker_levels = biomarker_levels,
+  prob_correct = prob_correct,
+  patient_data = patient_data |>
+    filter(
+      `CGG` < 100,
+      Gender == "Male"),
+
+  SuStaInLabels = biomarker_varnames,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified,
+  N_iterations_MCMC = N_iterations_MCMC,
+  output_folder = output_folder,
+  dataset_name = "under100_Male",
+  rerun = rerun,
+  use_parallel_startpoints = use_parallel_startpoints,
+  plot = plot_python)
+```
+
+```{r}
+#| message: false
+#| label: "cgg_over_100 & Male"
+#| include: false
+sustain_output_cgg100plus_males = run_and_save_OSA(
+  biomarker_levels = biomarker_levels,
+  prob_correct = prob_correct,
+  patient_data = patient_data |>
+    filter(
+      `CGG` >= 100,
+      Gender == "Male"),
+  SuStaInLabels = biomarker_varnames,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified,
+  N_iterations_MCMC = N_iterations_MCMC,
+  output_folder = output_folder,
+  dataset_name = "over100_Male",
+  rerun = rerun,
+  use_parallel_startpoints = use_parallel_startpoints,
+  plot = plot_python)
+```
+
+
+```{r}
+#| message: false
+#| label: "cgg_under_100 & Female"
+#| include: false
+sustain_output_cgg100minus_females = run_and_save_OSA(
+  biomarker_levels = biomarker_levels,
+  prob_correct = prob_correct,
+  patient_data = patient_data |>
+    filter(`CGG` < 100,
+           Gender == "Female"),
+  SuStaInLabels = biomarker_varnames,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified,
+  N_iterations_MCMC = N_iterations_MCMC,
+  output_folder = output_folder,
+  rerun = rerun,
+  dataset_name = "under100_Female",
+  use_parallel_startpoints = use_parallel_startpoints,
+  plot = plot_python)
+```
+
+```{r}
+#| message: false
+#| label: "cgg_over_100 & Female"
+#| include: false
+sustain_output_cgg100plus_females = run_and_save_OSA(
+  biomarker_levels = biomarker_levels,
+  prob_correct = prob_correct,
+  patient_data = patient_data |>
+    filter(
+      `CGG` >= 100,
+      Gender == "Female"),
+
+  SuStaInLabels = biomarker_varnames,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified,
+  N_iterations_MCMC = N_iterations_MCMC,
+  output_folder = output_folder,
+  rerun = rerun,
+  dataset_name = "over100_Female",
+  use_parallel_startpoints = use_parallel_startpoints,
+  plot = plot_python)
 ```
 
 ```{r}
@@ -498,6 +633,21 @@ fig_over100_females = extract_figs_from_pickle(
 
 ```
 
+## Software
+
+The Ordinal Sustain analysis was performed in Python 3.9 (@python3) 
+using the `pySuStaIn` package (@aksman2021pysustain).
+Data pre-processing and results post-processing were performed in R 4.4.0 (@rcore) 
+using the `tidyverse` packages (@tidyverse).
+The `reticulate` package (@reticulate) was used to create a programming interface between 
+Python and R.
+The code used to perform this analysis is available at <https://github.com/d-morrison/fxtas>.
+
+## Data availability
+
+The data used in this analysis may be provided upon request from the 
+corresponding author.
+
 # Results
 
 ```{r}
@@ -505,16 +655,18 @@ fig_over100_females = extract_figs_from_pickle(
 males = v1_usable |> filter(Gender == "Male")
 females = v1_usable |> filter(Gender == "Female")
 stages = v1_usable_cases |> select(`FXTAS Stage (0-5)*`) |> table()
+biomarkers_table = 
+  v1_usable |> 
+  make_biomarkers_table(
+    biomarker_varnames = biomarker_varnames)
 ```
 
-@tbl-demographics describes summary statistics patient characteristics included in the analysis. 
+@tbl-demographics describes summary statistics of patient characteristics included in the analysis. 
 Our data included: 
 `r nrow(v1_usable_cases)` Fragile X premutation carriers and 
 `r nrow(gp34_v1_controls)` controls;
 `r nrow(males)` males and `r nrow(females)` females;
-and `r and::and(stages)` carriers at FXTAS stages `r names(stages) |> and::and()`, respectively.
-
-(**Kyoungmi: in your previous comments, you mentioned we should say something about biomarker distributions here, but I'm not sure what exactly to add?**)
+and `r and::and(stages)` carriers at FXTAS stages `r names(stages) |> and::and()`, respectively. We found significant evidence of sex differences in proportions of events at baseline visit for `r report_sex_differences(biomarkers_table)`.
 
 ## Stratified by sex
 
@@ -532,17 +684,24 @@ observed_test_stat = get_observed_permutation_test_stat(
 
 pval_sex_gp34_v1 = permutation_test(
   observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
 )
 
 ```
 
-@fig-first-only shows the estimated event sequences stratified by sex. 
+@fig-first-only shows the estimated event sequences stratified by sex and compares the estimated sequences between males and females.
 We found statistically significant evidence of a difference in event sequences 
-between males and females (p = `r pval_sex_gp34_v1`). 
-It appears that males develop cerebral, cerebellar, and splenium white matter hyperintensity at an earlier stage of the event sequence than females,
-and that ataxia severity increases occur earlier in the event sequence for males than females.
-^[There are probably other patterns worth noting here; clinical folks, please add your observations from the results here.]
+between males and females (p = `r pval_sex_gp34_v1`) (@fig-first-only-2). 
+It appears that 
+female premutation carriers developed threshhold-level Mood Disorder symptoms prior to FXTAS Stage 1 diagnosis,
+whereas male carriers developed these symptoms between FXTAS Stages 3 and 4.
+Cognitive declines, as measured by SWM and PAL also occurred at earlier FXTAS stages for females.
+Ataxia occurred prior to Stage 1 for females and after Stage 2 for males.
+However, Ataxia severity 1 occurred earlier for males (between Stages 2-3) than for females (between Stages 3-4).
+Advanced degrees of Ataxia severity also occurred earlier in the event sequence for males than females. 
+
+MRI biomarkers of decline and Parkinsonian features also appear at earlier stages for males than for females.
 
 ## Stratified by CGG repeats
 
@@ -560,15 +719,20 @@ observed_test_stat = get_observed_permutation_test_stat(
 
 pval_cgg_gp34_v1 = permutation_test(
   observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
 )
 # autoplot(pval_sex_gp34_v1)
 ```
 
-We did not find statistically significant evidence of a difference in event sequences 
-between CGG < 100 and CGG > 100,  (p = `r pval_cgg_gp34_v1`).
-@fig-pvd-by-cgg shows the estimated sequence models stratified by CGG repeat level.
-
+@fig-pvd-by-cgg shows the estimated sequences stratified by CGG repeat level. 
+Although we did not find statistically significant evidence of a difference in event sequences 
+between CGG < 100 and CGG ≥ 100 (p = `r pval_cgg_gp34_v1`), 
+some differences were noted (@fig-pvd-by-cgg-2).
+SWM between errors occured prior to Stage 1 in participants with CGG repeats <100, 
+where it occurred between stage 4 and 5 in those with CGG repeats ≥ 100.
+Postural, resting, head, and intermittent tremor occurred earlier in those with CGG repeats <100 compared to those with CGG repeats ≥ 100.  
+Several psychiatric disorders (as measured by SCID) occurred later in the event sequence in participants with CGG repeats < 100 compared to those with CGG repeats ≥ 100. 
 
 ## Stratified by CGG and Sex {#sec-stratified-by-cgg-and-sex}
 
@@ -589,16 +753,21 @@ observed_test_stat = get_observed_permutation_test_stat(
 
 pval_under100_sex_gp34_v1 = permutation_test(
   observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
 )
 
 # autoplot(pval_under100_sex_gp34_v1)
 
 ```
 
+
+@fig-pvd-by-gender-cgg_under100 shows the estimated event sequences for CGG < 100 stratified by sex and compares the estiamted event sequences between males and females.
 We found statistically significant evidence of a difference between males and females 
 among those with CGG < 100 (p = `r pval_under100_sex_gp34_v1`). 
-@fig-pvd-by-gender-cgg_under100 shows the estimated stratified models.
+Several psychiatric disorders (as measured by SCID) occurred prior to FXTAS Stage 1 among females with CGG < 100, 
+but at later FXTAS stages for males with CGG < 100.
+MRI biomarkers appearred to occur at later stages in females compared to males.
 
 ```{r}
 #| label: p-val-test-sex-over100
@@ -615,7 +784,8 @@ observed_test_stat = get_observed_permutation_test_stat(
 
 pval_over100_sex_gp34_v1 = permutation_test(
   observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
 )
 
 # autoplot(pval_over100_sex_gp34_v1)
@@ -623,8 +793,11 @@ pval_over100_sex_gp34_v1 = permutation_test(
 ```
 
 We did not find statistically significant evidence of a difference between males and females 
-among those with CGG > 100 (p `r pval_over100_sex_gp34_v1`). 
-@fig-pvd-by-gender-cgg_over100 shows the estimated stratified models.
+among those with CGG ≥ 100 (p = `r pval_over100_sex_gp34_v1`). 
+@fig-pvd-by-gender-cgg_over100 shows the estimated stratified models, 
+and compares the estimates of the sequences. 
+It should noted that the significant differences for these subgroups 
+needs to be declared with caution due to the small sample sizes.
 
 ### Comparing CGG levels stratified by sex
 
@@ -643,14 +816,22 @@ observed_test_stat = get_observed_permutation_test_stat(
 
 pval_male_cgg_gp34_v1 = permutation_test(
   observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
 )
 
 # autoplot(pval_male_cgg_gp34_v1)
 
 ```
 
-We found significant evidence of a difference between CGG < 100 and CGG ≥ 100 among males (p = `r pval_male_cgg_gp34_v1`). @fig-pvd-by-cgg-male shows the corresponding stratified models.
+We found significant evidence of a difference between CGG < 100 
+and CGG ≥ 100 among males (p = `r pval_male_cgg_gp34_v1`). 
+@fig-pvd-by-cgg-male shows the corresponding stratified models and  
+compares the estimates of the sequences for these two subgroups.
+Males with CGG ≥ 100 experienced MRI biomarkers at earlier FXTAS stages 
+than males with CGG < 100, 
+whereas postural tremor, resting tremor, and intermittent tremor 
+all tended to occur at earlier FXTAS stages for males with CGG < 100.
 
 ```{r}
 #| label: p-val-test-cgg-female
@@ -667,12 +848,23 @@ observed_test_stat = get_observed_permutation_test_stat(
 
 pval_female_cgg_gp34_v1 = permutation_test(
   observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
 )
+
+n_over100_Female = 
+  v1_usable |> 
+  filter(
+   Gender == "Female",
+   CGG >= 100
+  ) |> 
+  nrow()
 
 ```
 
-We did not find statistically significant evidence of a difference between CGG < 100 and CGG ≥ 100 among females (p = `r pval_female_cgg_gp34_v1`). @fig-pvd-by-cgg-female shows the estimated stratified models.
+We did not find statistically significant evidence of a difference between CGG < 100 and CGG ≥ 100 among females (p = `r pval_female_cgg_gp34_v1`). 
+@fig-pvd-by-cgg-female shows the estimated stratified models and compares the estimates. 
+Here again, sample size was an issue, especially since the available data included only `r n_over100_Female` females with CGG ≥ 100.
 
 ## Latent Subtypes
 
@@ -688,10 +880,27 @@ results_cv_max = extract_results_from_pickle(
   output_folder = output_folder)
 ```
 
-Based on the CVIC criterion ([Supplementary section @sec-cvic]), it appears that `r n_s_min_CVIC` subtypes is the optimal number for the full, unstratified dataset (@fig-cvic).
-For easier clinical interpretation, we chose to analyze the results with only `r n_s_selected` subtypes.
+Based on the CVIC criterion ([Supplementary section @sec-cvic]), 
+`r n_s_min_CVIC` subtypes were suggested to be the optimal number for the full, unstratified dataset (@fig-cvic). The out-of-fold log-likelihood (Supplementary Material @eq-def-oof-llik) showed substantial fold-to-fold variation.
+Between `r broman::spell_out(n_s_selected)` and `r broman::spell_out(N_S_max)` latent subgroups, 
+the distribution of OOFLL appears to be
+approximately unchanging and the CVIC appears approximately flat.
+From these results, it did not appear that there is much benefit to including
+more than `r broman::spell_out(n_s_selected)` latent subgroups for this dataset.
+Therefore, for easier clinical interpretation, we chose to analyze the results with only `r n_s_selected` subtypes.
 
-@fig-pvd_chosen_subtypes shows positional variance diagrams (PVDs) for each of the subtype clusters detected under this assumption, and @tbl-sg_demos shows the demographics of the patients clustered in each subtype. Patients in the "Type 0" category were too early in the disease process to be classified into a subtype.
+```{r}
+n_type_0 = results_cv_max$subtype_and_stage_table |> filter(ml_subtype == "Type 0") |> nrow()
+
+```
+
+@fig-pvd_chosen_subtypes shows positional variance diagrams (PVDs) for each of the subtype clusters detected under this assumption, and @tbl-sg_demos shows the demographics of the patients clustered in each subtype. 
+`r n_type_0` patients appeared to be too early in the disease process 
+to be accurately classified into a subtype and were excluded from @tbl-sg_demos.
+
+
+Females were more likely to be classified in latent subtype 2 (39% versus 24%), 
+whereas males dominated in subtype 3 (29% versus 12%). Subtypes 1 and 4 were equally prevalent among men and women.
 
 # Discussion
 
@@ -716,9 +925,9 @@ The missing data contributes to the large amount of uncertainty in the results.
 
 ```{r}
 #| label: "tbl-demographics"
-#| tbl-cap: "Demographics by CGG repeats level"
+#| tbl-cap: "Descriptive statistics of patient characteristics by CGG repeats level"
 
-v1_usable |> make_demographics_table()
+demographics_table = v1_usable |> make_demographics_table()
 
 ```
 
@@ -728,7 +937,7 @@ v1_usable |> make_demographics_table()
 #| tbl-cap: "Biomarkers used in analysis"
 #| label: "tbl-biomarker-list"
 
-v1_usable |> make_biomarkers_table()
+flex_biomarkers_table(biomarkers_table)
 ```
 
 {{< pagebreak >}}
@@ -761,8 +970,13 @@ table_subtype_by_demographics(
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("Estimated event sequence models, stratified by sex. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences models, stratified by sex and (b) positional differences in estimated event sequence between sexes. {compact_fig_caption}")
+#| layout-ncol: 1
+#| fig-subcap: 
+#|    - ""
+#|    - ""
 #| fig-cap-location: top
+
 
 plot_compact_pvd(
   figs = list(
@@ -772,18 +986,6 @@ plot_compact_pvd(
   facet_label = c("Males <br>", "Females <br>"),
   y_text_size = 11
 )
-
-```
-
-{{< pagebreak >}}
-
-```{r}
-#| label: "fig-first-only-change"
-#| column: page
-#| fig-height: !expr pvd_line_height
-#| fig-width: !expr pvd_line_width
-#| fig-cap: "Change in estimated event sequence models by sex"
-#| fig-cap-location: top
 
 list(
     "Males" = fig_males_first,
@@ -807,7 +1009,7 @@ list(
     fig_over100
   ) |> 
 plot_compact_pvd(
-  facet_label_prefix = c("CGG < 100 <br>", "CGG &ge; 100 <br>"),
+  facet_label_prefix = c("CGG &lt; 100 <br>", "CGG &ge; 100 <br>"),
   y_text_size = 11
 )
 
@@ -824,11 +1026,9 @@ plot_compact_pvd(
 #| fig-cap-location: top
 
 list(
-  "CGG < 100" = fig_under100,
+  "CGG &lt; 100" = fig_under100,
   "CGG &ge; 100" = fig_over100) |>
-pvd_lineplot(
-  y_text_size = 11
-)
+pvd_lineplot(y_text_size = 11)
 
 ```
 
@@ -842,21 +1042,17 @@ pvd_lineplot(
 #| fig-cap: !expr glue::glue("Estimated event sequences, stratified by CGG repeats (<100 vs 100+), males only. {compact_fig_caption}")
 #| fig-cap-location: top
 
-plot_compact_pvd(
-  figs = list(
-    fig_under100_males,
-    fig_over100_males
-  ),
-  facet_label = c("Males, CGG < 100 <br>", "Males, CGG &ge; 100  <br>"),
-  y_text_size = 11
-)
+list(
+    "Males, CGG &lt; 100 <br>" = fig_under100_males,
+    "Males, CGG &ge; 100  <br>" = fig_over100_males
+  ) |> 
+plot_compact_pvd(y_text_size = 11)
 
 ```
 
 {{< pagebreak >}}
 
 ```{r}
-
 #| label: "fig-pvd-by-cgg-male-change"
 #| column: page
 #| fig-height: !expr pvd_line_height
@@ -864,14 +1060,11 @@ plot_compact_pvd(
 #| fig-cap: "Change in estimated event sequences by CGG repeats (<100 vs 100+), males only"
 #| fig-cap-location: top
 
-pvd_lineplot(
-  figs = list(
-    fig_under100_males,
-    fig_over100_males
-  ),
-  facet_label = c("Males, CGG < 100", "Males, CGG &ge; 100"),
-  y_text_size = 11
-)
+list(
+    "Males, CGG &lt; 100" = fig_under100_males,
+    "Males, CGG &ge; 100" = fig_over100_males
+  ) |> 
+pvd_lineplot(y_text_size = 11)
 
 ```
 
@@ -890,7 +1083,7 @@ plot_compact_pvd(
     fig_under100_females,
     fig_over100_females
   ),
-  facet_label = c("Females, CGG < 100  <br>", "Females, CGG &ge; 100  <br>"),
+  facet_label = c("Females, CGG &lt; 100  <br>", "Females, CGG &ge; 100  <br>"),
   y_text_size = 11
 )
 
@@ -911,7 +1104,7 @@ pvd_lineplot(
     fig_under100_females,
     fig_over100_females
   ),
-  facet_label = c("Females, CGG < 100", "Females, CGG &ge; 100"),
+  facet_label = c("Females, CGG &lt; 100", "Females, CGG &ge; 100"),
   y_text_size = 11
 )
 
@@ -927,20 +1120,12 @@ pvd_lineplot(
 #| fig-cap: !expr glue::glue("Estimated event sequences, stratified by sex, for CGG repeats <100. {compact_fig_caption}")
 #| fig-cap-location: top
 
-# layout-ncol: 2
-# fig-subcap:
-#   - "Males, CGG < 100"
-#   - "Females, CGG < 100"
-
-# fig_under100_males |> print()
-# fig_under100_females |> print()
-
 plot_compact_pvd(
   figs = list(
     fig_under100_males,
     fig_under100_females
   ),
-  facet_label = c("CGG < 100, Males  <br>", "CGG < 100, Females  <br>"),
+  facet_label = c("CGG &lt; 100, Males  <br>", "CGG &lt; 100, Females  <br>"),
   y_text_size = 11
 )
 
@@ -961,7 +1146,7 @@ pvd_lineplot(
     fig_under100_males,
     fig_under100_females
   ),
-  facet_label = c("CGG < 100, Males", "CGG < 100, Females"),
+  facet_label = c("CGG &lt; 100, Males", "CGG &lt; 100, Females"),
   y_text_size = 11
 )
 
@@ -976,14 +1161,6 @@ pvd_lineplot(
 #| fig-width: !expr pvd_width
 #| fig-cap: !expr glue::glue("Estimated event sequences, stratified by sex, for CGG repeats ≥100. {compact_fig_caption}")
 #| fig-cap-location: top
-
-# layout-ncol: 2
-# fig-subcap:
-#   - "Males, CGG ≥ 100"
-#   - "Females, CGG ≥ 100"
-
-# fig_over100_males |> print()
-# fig_over100_females |> print()
 
 plot_compact_pvd(
   figs = list(
@@ -1006,14 +1183,6 @@ plot_compact_pvd(
 #| fig-cap: "Change in estimated event sequences by sex, for CGG repeats ≥100"
 #| fig-cap-location: top
 
-# layout-ncol: 2
-# fig-subcap:
-#   - "Males, CGG ≥ 100"
-#   - "Females, CGG ≥ 100"
-
-# fig_over100_males |> print()
-# fig_over100_females |> print()
-
 pvd_lineplot(
   figs = list(
     fig_over100_males,
@@ -1033,6 +1202,19 @@ pvd_lineplot(
 #| eval: !expr fit_models
 
 temp$CVIC |> plot_CVIC()
+
+```
+
+{{< pagebreak >}}
+
+
+```{r}
+#| fig-cap: "Test set log-likelihood across folds"
+#| fig-height: 6
+#| label: fig-oofll
+#| eval: !expr fit_models
+
+temp$loglike_matrix |> plot_cv_loglik()
 
 ```
 
@@ -1088,6 +1270,8 @@ stages |>
   
 ```
 
+{{< pagebreak >}}
+
 # Supplementary material {.appendix}
 
 ```{r}
@@ -1118,6 +1302,7 @@ v1_usable |> graph_CGG_repeats(rows = vars(Gender))
 ## Hypothesis testing {.appendix #sec-permutation-test}
 
 ```{r}
+#| label: hypothesis-tests
 obs_stat = pval_sex_gp34_v1  |> attr("observed_test_stat")
 perm_stats = pval_sex_gp34_v1  |> attr("permuted_test_stats")
 n_perm_over_obs = sum(perm_stats >= obs_stat)
@@ -1207,7 +1392,7 @@ CVIC_{\mathcal C} =
 \right\}
 $${#eq-def-cvic}
 
-## Out-of-fold log-likelihood distribution {.appendix}
+### Out-of-fold log-likelihood criterion {#sec-oofll .appendix}
 
 We also evaluated the consistency of our cross-validation procedure by looking at the distribution of out-of-fold log-likelihood ("OOFLL") across cross-validation folds; following @young2018uncovering, we calculated out-of-sample log-likelihood as:
 
@@ -1223,34 +1408,16 @@ $$
 \hat{P}_{(-k)}(C_i = c, S_c = s)
 $$ {#eq-def-oof-llik}
 
-{{< pagebreak >}}
-
-@fig-boxplot-loglik-cv shows the distribution of the OOFLL statistic
+@fig-oofll shows the distribution of the OOFLL statistic
 as a function of number of latent subgroups.
-Between four and eight latent subgroups, 
-the distribution of OOFLL appears to be
-approximately unchanging.
-From these results, it does not appear that there is much benefit to including
-more than four latent subgroups for this dataset.
 
-```{r}
-#| fig-cap: "Test set log-likelihood across folds"
-#| label: fig-boxplot-loglik-cv
-#| eval: !expr fit_models
-
-temp$loglike_matrix |> plot_cv_loglik()
-
-```
-
-{{< pagebreak >}}
-
-::: landscape
 ## Additional data tables {.appendix}
 
 The following tables summarize the distributions of the biomarkers 
 that we analyzed in this paper, stratified by sex and CGG level.
 
-{{< pagebreak >}}
+::: landscape
 
 {{< include exploration.qmd >}}
+
 :::
