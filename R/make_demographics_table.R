@@ -42,7 +42,9 @@ make_demographics_table = function(data)
         statistic = list(
           gtsummary::all_continuous() ~ c("{mean} ({sd})", "{median} [{min}, {max}]")
         ),
-        digits = list(`Age at visit` ~ c(1, 2)),
+        # round mean to 1 digit, SD to 2 digits, Median and Range to 0
+        digits = list(`Age at visit` ~ c(1, 2, 0, 0, 0),
+                      CGG ~ c(1, 2, 0, 0, 0)),
         missing_text = "Missing"
       )
   )

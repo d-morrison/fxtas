@@ -927,7 +927,7 @@ The missing data contributes to the large amount of uncertainty in the results.
 #| label: "tbl-demographics"
 #| tbl-cap: "Descriptive statistics of patient characteristics by CGG repeats level"
 
-demographics_table = v1_usable |> make_demographics_table()
+v1_usable |> make_demographics_table()
 
 ```
 
@@ -1250,10 +1250,12 @@ plot_compact_pvd(
 )
 ```
 
+{{< pagebreak >}}
+
 ```{r}
 #| label: fig-pvd_chosen_subtypes_changes
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
+#| fig-height: !expr pvd_line_height
+#| fig-width: !expr pvd_line_width
 #| fig-cap: !expr glue::glue("Change in estimated event sequence between subtypes.")
 #| layout-ncol: 3
 #| layout-nrow: 1
