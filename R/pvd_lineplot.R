@@ -1,4 +1,13 @@
 #' Plot change in Stage ranking
+#'
+#' @param figs
+#' @param alpha_nochange
+#' @param facet_labels
+#' @param y_title_size
+#' @param text_size
+#' @param y_text_size
+#' @param x_text_size
+#'
 #' @export
 
 pvd_lineplot <- function(figs, alpha_nochange = 0.25,
