@@ -694,7 +694,7 @@ pval_sex_gp34_v1 = permutation_test(
 We found statistically significant evidence of a difference in event sequences 
 between males and females (p = `r pval_sex_gp34_v1`) (@fig-first-only-2). 
 It appears that 
-female premutation carriers developed threshhold-level Mood Disorder symptoms prior to FXTAS Stage 1 diagnosis,
+female premutation carriers developed threshold-level Mood Disorder symptoms prior to FXTAS Stage 1 diagnosis,
 whereas male carriers developed these symptoms between FXTAS Stages 3 and 4.
 Cognitive declines, as measured by SWM and PAL also occurred at earlier FXTAS stages for females.
 Ataxia occurred prior to Stage 1 for females and after Stage 2 for males.
@@ -729,10 +729,14 @@ pval_cgg_gp34_v1 = permutation_test(
 Although we did not find statistically significant evidence of a difference in event sequences 
 between CGG < 100 and CGG ≥ 100 (p = `r pval_cgg_gp34_v1`), 
 some differences were noted (@fig-pvd-by-cgg-2).
-SWM between errors occured prior to Stage 1 in participants with CGG repeats <100, 
+SWM between errors occurred prior to Stage 1 in participants with CGG repeats <100, 
 where it occurred between stage 4 and 5 in those with CGG repeats ≥ 100.
 Postural, resting, head, and intermittent tremor occurred earlier in those with CGG repeats <100 compared to those with CGG repeats ≥ 100.  
 Several psychiatric disorders (as measured by SCID) occurred later in the event sequence in participants with CGG repeats < 100 compared to those with CGG repeats ≥ 100. 
+After stratifying by sex, it appeared that both males and females 
+
+These differences appeared to be more pronounced among males than females 
+([Supplementary Figures @]).
 
 ## Stratified by CGG and Sex {#sec-stratified-by-cgg-and-sex}
 

@@ -13,6 +13,14 @@ extract_figs_from_pickle = function(
     ...)
 {
 
+  # results = extract_results_from_pickle(
+  #   n_s = n_s,
+  #   dataset_name = dataset_name,
+  #   output_folder = output_folder,
+  #   rda_filename = rda_filename,
+  #   picklename = picklename,
+  #   ...)
+
   results00 =
     fs::path(output_folder, "pickle_files", picklename) |>
     py_load_object() |>
