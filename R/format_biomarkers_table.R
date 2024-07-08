@@ -32,6 +32,5 @@ flex_biomarkers_table = function(x)
       value = "Fisher's exact test" |> flextable::as_paragraph(),
       ref_symbols = 'b',
       part = "header"
-    ) |>
-    print()
+    )
 }

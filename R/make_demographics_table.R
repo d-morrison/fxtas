@@ -16,7 +16,8 @@ make_demographics_table = function(data)
     "Primary Race/Ethnicity",
     # "Primary Ethnicity",
     # "Primary Race",
-    "FXTAS Stage (0-5)*"
+    "FXTAS Stage (0-5)*",
+    "CGG"
     # "ApoE"
 
   )
@@ -41,7 +42,9 @@ make_demographics_table = function(data)
         statistic = list(
           gtsummary::all_continuous() ~ c("{mean} ({sd})", "{median} [{min}, {max}]")
         ),
-        digits = list(`Age at visit` ~ c(1, 2)),
+        # round mean to 1 digit, SD to 2 digits, Median and Range to 0
+        digits = list(`Age at visit` ~ c(1, 2, 0, 0, 0),
+                      CGG ~ c(1, 2, 0, 0, 0)),
         missing_text = "Missing"
       )
   )
@@ -55,7 +58,8 @@ make_demographics_table = function(data)
     gtsummary::add_p(
       pvalue_fun = function(x) gtsummary::style_number(x, digits = 3)
     ) |>
-    gtsummary::modify_column_hide(columns = c(stat_1, stat_2))
+    gtsummary::modify_column_hide(columns = c(stat_1, stat_2)) |>
+    gtsummary::separate_p_footnotes()
 
   gtsummary::tbl_merge(
     list(tbl_stat, tbl_pval), tab_spanner = FALSE

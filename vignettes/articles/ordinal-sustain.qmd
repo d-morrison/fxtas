@@ -767,7 +767,7 @@ We found statistically significant evidence of a difference between males and fe
 among those with CGG < 100 (p = `r pval_under100_sex_gp34_v1`). 
 Several psychiatric disorders (as measured by SCID) occurred prior to FXTAS Stage 1 among females with CGG < 100, 
 but at later FXTAS stages for males with CGG < 100.
-MRI biomarkers appearred to occur at later stages in females compared to males.
+MRI biomarkers appeared to occur at later stages in females compared to males.
 
 ```{r}
 #| label: p-val-test-sex-over100
@@ -927,7 +927,7 @@ The missing data contributes to the large amount of uncertainty in the results.
 #| label: "tbl-demographics"
 #| tbl-cap: "Descriptive statistics of patient characteristics by CGG repeats level"
 
-demographics_table = v1_usable |> make_demographics_table()
+v1_usable |> make_demographics_table()
 
 ```
 
@@ -954,6 +954,7 @@ table_subtype_by_demographics(
   subtype_and_stage_table = 
     results_cv_max$subtype_and_stage_table
 ) |>
+  gtsummary::separate_p_footnotes() |>
   gtsummary::as_flex_table() |>
   flextable::width(width = 1.75) |>
   flextable::width(j = 2:6, width = 0.75) |>
@@ -1002,7 +1003,13 @@ pvd_lineplot(y_text_size = 11)
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("Estimated event sequences, stratified by CGG repeats (<100 vs 100+). {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences, stratified by CGG repeats (<100 vs 100+) and (b) positional differences in estimated event sequence between CGG repeats. {compact_fig_caption}")
+#| layout-ncol: 1
+#| fig-subcap: 
+#|    - ""
+#|    - ""
+#| fig-cap-location: top
+
 
 list(
     fig_under100,
@@ -1013,23 +1020,11 @@ plot_compact_pvd(
   y_text_size = 11
 )
 
-```
-
-{{< pagebreak >}}
-
-```{r}
-#| label: "fig-pvd-by-cgg-change"
-#| column: page
-#| fig-height: !expr pvd_line_height
-#| fig-width: !expr pvd_line_width
-#| fig-cap: "Change in estimated event sequences by CGG repeats (<100 vs 100+)"
-#| fig-cap-location: top
 
 list(
   "CGG &lt; 100" = fig_under100,
   "CGG &ge; 100" = fig_over100) |>
 pvd_lineplot(y_text_size = 11)
-
 ```
 
 {{< pagebreak >}}
@@ -1039,33 +1034,26 @@ pvd_lineplot(y_text_size = 11)
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("Estimated event sequences, stratified by CGG repeats (<100 vs 100+), males only. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences, stratified by CGG repeats (<100 vs 100+) and (b) positional differences in estimated event sequence between CGG repeats, males only. {compact_fig_caption}")
+#| layout-ncol: 1
+#| fig-subcap: 
+#|    - ""
+#|    - ""
 #| fig-cap-location: top
 
+# compact pvd
 list(
     "Males, CGG &lt; 100 <br>" = fig_under100_males,
     "Males, CGG &ge; 100  <br>" = fig_over100_males
   ) |> 
 plot_compact_pvd(y_text_size = 11)
 
-```
-
-{{< pagebreak >}}
-
-```{r}
-#| label: "fig-pvd-by-cgg-male-change"
-#| column: page
-#| fig-height: !expr pvd_line_height
-#| fig-width: !expr pvd_line_width
-#| fig-cap: "Change in estimated event sequences by CGG repeats (<100 vs 100+), males only"
-#| fig-cap-location: top
-
+# lineplot of event sequences
 list(
     "Males, CGG &lt; 100" = fig_under100_males,
     "Males, CGG &ge; 100" = fig_over100_males
   ) |> 
 pvd_lineplot(y_text_size = 11)
-
 ```
 
 {{< pagebreak >}}
@@ -1075,9 +1063,14 @@ pvd_lineplot(y_text_size = 11)
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("Estimated event sequences, stratified by CGG repeats (<100 vs 100+); females only. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences, stratified by CGG repeats (<100 vs 100+) and (b) positional differences in estimated event sequence between CGG repeats; females only. {compact_fig_caption}")
+#| layout-ncol: 1
+#| fig-subcap: 
+#|    - ""
+#|    - ""
 #| fig-cap-location: top
 
+# compact pvd
 plot_compact_pvd(
   figs = list(
     fig_under100_females,
@@ -1087,18 +1080,7 @@ plot_compact_pvd(
   y_text_size = 11
 )
 
-```
-
-{{< pagebreak >}}
-
-```{r}
-#| label: "fig-pvd-by-cgg-female-change"
-#| column: page
-#| fig-height: !expr pvd_line_height
-#| fig-width: !expr pvd_line_width
-#| fig-cap: "Change in estimated event sequences by CGG repeats (<100 vs 100+); females only"
-#| fig-cap-location: top
-
+# lineplot of event sequences
 pvd_lineplot(
   figs = list(
     fig_under100_females,
@@ -1107,7 +1089,6 @@ pvd_lineplot(
   facet_label = c("Females, CGG &lt; 100", "Females, CGG &ge; 100"),
   y_text_size = 11
 )
-
 ```
 
 {{< pagebreak >}}
@@ -1117,9 +1098,15 @@ pvd_lineplot(
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("Estimated event sequences, stratified by sex, for CGG repeats <100. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences, stratified by sex and (b) positional differences in estimated event sequence between sexes, for CGG repeats <100. {compact_fig_caption}")
+#| layout-ncol: 1
+#| fig-subcap: 
+#|    - ""
+#|    - ""
 #| fig-cap-location: top
 
+
+# compact pvd
 plot_compact_pvd(
   figs = list(
     fig_under100_males,
@@ -1129,18 +1116,7 @@ plot_compact_pvd(
   y_text_size = 11
 )
 
-```
-
-{{< pagebreak >}}
-
-```{r}
-#| label: "fig-pvd-by-gender-cgg_under100-change"
-#| column: page
-#| fig-height: !expr pvd_line_height
-#| fig-width: !expr pvd_line_width
-#| fig-cap: "Change in estimated event sequences by sex, for CGG repeats <100"
-#| fig-cap-location: top
-
+# lineplot of event sequences
 pvd_lineplot(
   figs = list(
     fig_under100_males,
@@ -1149,7 +1125,6 @@ pvd_lineplot(
   facet_label = c("CGG &lt; 100, Males", "CGG &lt; 100, Females"),
   y_text_size = 11
 )
-
 ```
 
 {{< pagebreak >}}
@@ -1159,9 +1134,14 @@ pvd_lineplot(
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("Estimated event sequences, stratified by sex, for CGG repeats ≥100. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences, stratified by sex and (b) positional differences in estimated event sequence between sexes, for CGG repeats ≥100. {compact_fig_caption}")
+#| layout-ncol: 1
+#| fig-subcap: 
+#|    - ""
+#|    - ""
 #| fig-cap-location: top
 
+# compact pvd
 plot_compact_pvd(
   figs = list(
     fig_over100_males,
@@ -1171,18 +1151,7 @@ plot_compact_pvd(
   y_text_size = 11
 )
 
-```
-
-{{< pagebreak >}}
-
-```{r}
-#| label: "fig-pvd-by-gender-cgg_over100-change"
-#| column: page
-#| fig-height: !expr pvd_line_height
-#| fig-width: !expr pvd_line_width
-#| fig-cap: "Change in estimated event sequences by sex, for CGG repeats ≥100"
-#| fig-cap-location: top
-
+# lineplot of event sequences
 pvd_lineplot(
   figs = list(
     fig_over100_males,
@@ -1239,13 +1208,54 @@ figs = extract_figs_from_pickle(
 #| column: page
 library(ggplot2)
 
-# figs |> print_PVDs()
+# subtype_figs <- figs |> print_PVDs()
 
 plot_compact_pvd(
   figs = figs,
   tile_height = 2,
   facet_label_prefix = NULL,
   y_text_size = 8
+)
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| label: fig-pvd_chosen_subtypes_changes
+#| fig-height: !expr pvd_line_height
+#| fig-width: !expr pvd_line_width
+#| fig-cap: !expr glue::glue("Change in estimated event sequence between subtypes.")
+#| layout-ncol: 3
+#| layout-nrow: 1
+#| fig-subcap: 
+#|    - "Subtype 2 compared to Subtype 1"
+#|    - "Subtype 3 compared to Subtype 1"
+#|    - "Subtype 4 compared to Subtype 1"
+#| fig-cap-location: top
+#| column: page
+
+pvd_lineplot(
+  figs = list(
+    figs[[1]],
+    figs[[2]]
+  ),
+  facet_labels = c("Subtype 1", "Subtype 2")
+)
+
+pvd_lineplot(
+  figs = list(
+    figs[[1]],
+    figs[[3]]
+  ),
+  facet_labels = c("Subtype 1", "Subtype 3")
+)
+
+pvd_lineplot(
+  figs = list(
+    figs[[1]],
+    figs[[4]]
+  ),
+  facet_labels = c("Subtype 1", "Subtype 4")
 )
 
 ```
