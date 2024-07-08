@@ -436,7 +436,8 @@ sustain_output_cgg100plus = run_and_save_OSA(
   dataset_name = "over100", 
   use_parallel_startpoints = use_parallel_startpoints,
   seed = 1,
-  plot = plot_python)
+  plot = plot_python,
+  fig_size = fig_size)
 
 ```
 
@@ -458,7 +459,7 @@ sustain_output_cgg100minus = run_and_save_OSA(
   dataset_name = "under100", 
   use_parallel_startpoints = use_parallel_startpoints,
   seed = 1,
-  plot = plot_python)
+  plot = plot_python,   fig_size = fig_size)
 
 ```
 
@@ -482,7 +483,7 @@ sustain_output_cgg100minus_males = run_and_save_OSA(
   dataset_name = "under100_Male",
   rerun = rerun,
   use_parallel_startpoints = use_parallel_startpoints,
-  plot = plot_python)
+  plot = plot_python,   fig_size = fig_size)
 ```
 
 ```{r}
@@ -504,7 +505,7 @@ sustain_output_cgg100plus_males = run_and_save_OSA(
   dataset_name = "over100_Male",
   rerun = rerun,
   use_parallel_startpoints = use_parallel_startpoints,
-  plot = plot_python)
+  plot = plot_python,   fig_size = fig_size)
 ```
 
 
@@ -526,7 +527,7 @@ sustain_output_cgg100minus_females = run_and_save_OSA(
   rerun = rerun,
   dataset_name = "under100_Female",
   use_parallel_startpoints = use_parallel_startpoints,
-  plot = plot_python)
+  plot = plot_python,   fig_size = fig_size)
 ```
 
 ```{r}
@@ -549,7 +550,7 @@ sustain_output_cgg100plus_females = run_and_save_OSA(
   rerun = rerun,
   dataset_name = "over100_Female",
   use_parallel_startpoints = use_parallel_startpoints,
-  plot = plot_python)
+  plot = plot_python,   fig_size = fig_size)
 ```
 
 ```{r}
