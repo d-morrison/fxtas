@@ -1,5 +1,7 @@
 ---
-format: html
+format: docx
+filters:
+  - ../../docx-landscape.lua
 ---
 
 ```{r}
@@ -15,18 +17,35 @@ compact_fig_caption = "banana"
 
 see @fig-fig1-2
 
-```{r}
-#| label: fig-fig1
-#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences models, stratified by sex and (b) positional differences in estimated event sequence between sexes. {compact_fig_caption}")
-#| layout-ncol: 1
-#| fig-cap-location: top
-#| fig-subcap: 
-#|    - ""
-#|    - ""
+::: landscape 
 
+:::: {#fig-fig1 layout-ncol=2 layout-nrow=1}
+
+::: {#fig-fig1-1}
+
+```{r}
 plot(1:10)
+```
+
+Positional variance diagrams by latent subtype. `r compact_fig_caption`
+
+:::
+
+::: {#fig-fig1-2}
+
+```{r}
 plot(10:1)
 ```
+
+:::
+
+Latent subgroup models: 
+(a) Estimated event sequences models, stratified by sex and 
+(b) positional differences in estimated event sequence between sexes. 
+
+::::
+
+:::
 
 ```{r}
 #| label: fig-fig2

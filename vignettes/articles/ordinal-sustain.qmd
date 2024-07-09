@@ -914,10 +914,10 @@ results_cv_max = extract_results_from_pickle(
   output_folder = output_folder)
 ```
 
-Based on the CVIC criterion ([Supplementary section @sec-cvic]), 
+Based on the CVIC criterion (Supplementary Materials, @sec-cvic), 
 `r n_s_min_CVIC` subtypes were suggested to be the optimal number for the full, 
-unstratified dataset (@fig-cvic-1). 
-The out-of-fold log-likelihood (Supplementary Material @eq-def-oof-llik) showed substantial fold-to-fold variation.
+unstratified dataset (Supplementary Materials, @fig-cvic-1). 
+The out-of-fold log-likelihood (Supplementary Materials, @eq-def-oof-llik) showed substantial fold-to-fold variation (Supplementary Materials, @fig-cvic-2).
 Between `r broman::spell_out(n_s_selected)` and `r broman::spell_out(N_S_max)` latent subgroups, 
 the distribution of OOFLL appears to be
 approximately unchanging and the CVIC appears approximately flat.
@@ -1140,23 +1140,6 @@ pvd_lineplot(
 
 ```
 
-{{< pagebreak >}}
-
-```{r}
-#| fig-cap: "Selection criteria for number of latent subtypes"
-#| fig-subcap: 
-#|    - "Cross-validation information criterion"
-#|    - "Test set log-likelihood across folds"
-#| label: fig-cvic
-#| layout-ncol: 2
-#| eval: !expr fit_models
-
-temp$CVIC |> plot_CVIC()
-temp$loglike_matrix |> plot_cv_loglik()
-```
-
-{{< pagebreak >}}
-
 ```{r}
 #| label: extract-PVD-selected-subtypes
 figs = extract_figs_from_pickle(
@@ -1166,14 +1149,21 @@ figs = extract_figs_from_pickle(
   output_folder = output_folder)
 ```
 
-
 ```{r}
 #| label: fig-pvd_chosen_subtypes
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("positional variance diagrams for {n_s_selected} subtypes. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("positional variance diagrams for {n_s_selected} subtypes and comparisons of event sequences between subtypes. {compact_fig_caption}") 
 #| fig-cap-location: top
+#| layout-ncol: 1
+#| layout-nrow: 4
+#| fig-subcap: 
+#|    - "Positional variance diagrams by latent subtype."
+#|    - "Subtype 2 compared to Subtype 1"
+#|    - "Subtype 3 compared to Subtype 1"
+#|    - "Subtype 4 compared to Subtype 1"
 #| column: page
+
 library(ggplot2)
 
 # subtype_figs <- figs |> print_PVDs()
@@ -1184,23 +1174,6 @@ plot_compact_pvd(
   facet_label_prefix = NULL,
   y_text_size = 8
 )
-```
-
-::: landscape
-
-```{r}
-#| label: fig-pvd_chosen_subtypes_changes
-#| fig-height: !expr pvd_line_height
-#| fig-width: !expr pvd_line_width
-#| fig-cap: !expr glue::glue("Change in estimated event sequence between subtypes.")
-#| layout-ncol: 1
-#| layout-nrow: 3
-#| fig-subcap: 
-#|    - "Subtype 2 compared to Subtype 1"
-#|    - "Subtype 3 compared to Subtype 1"
-#|    - "Subtype 4 compared to Subtype 1"
-#| fig-cap-location: top
-#| column: page
 
 pvd_lineplot(
   figs = list(
@@ -1227,8 +1200,6 @@ pvd_lineplot(
 )
 
 ```
-
-:::
 
 {{< pagebreak >}}
 
@@ -1465,6 +1436,22 @@ stages |>
   
 ```
 
+::: landscape
+
+```{r}
+#| fig-cap: "Selection criteria for number of latent subtypes"
+#| fig-subcap: 
+#|    - "Cross-validation information criterion"
+#|    - "Test set log-likelihood across folds"
+#| label: fig-cvic
+#| layout-ncol: 2
+#| eval: !expr fit_models
+
+temp$CVIC |> plot_CVIC()
+temp$loglike_matrix |> plot_cv_loglik()
+```
+
+:::
 
 ## Additional data tables {.appendix}
 
