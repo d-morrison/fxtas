@@ -17,9 +17,7 @@ compact_fig_caption = "banana"
 
 see @fig-fig1-2
 
-::: landscape 
-
-:::: {#fig-fig1 layout-ncol=2 layout-nrow=1}
+:::: {#fig-fig1 layout-ncol=1}
 
 ::: {#fig-fig1-1}
 
@@ -45,7 +43,6 @@ Latent subgroup models:
 
 ::::
 
-:::
 
 ```{r}
 #| label: fig-fig2
@@ -54,3 +51,19 @@ Latent subgroup models:
 plot(1:10)
 ```
 
+::: landscape 
+
+```{r}
+#| label: "fig-first-only"
+#| column: page
+#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences models, stratified by sex and (b) positional differences in estimated event sequence between sexes. {compact_fig_caption}")
+#| layout-ncol: 1
+#| fig-subcap: 
+#|    - " "
+#|    - " "
+#| fig-cap-location: top
+plot(1:10)
+plot(2:11)
+```
+
+:::

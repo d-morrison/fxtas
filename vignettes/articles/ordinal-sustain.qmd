@@ -150,8 +150,9 @@ University of California Davis Institutional Review Board.
 
 The primary event sequence analysis included baseline visit data 
 from 297 participants from the two cohorts,
-consisting of `r nrow(v1_usable_cases)` Fragile X premutation carriers 
-and `r nrow(gp34_v1_controls)`  controls. 
+consisting of 
+`r nrow(v1_usable_cases)` Fragile X premutation carriers and 
+`r nrow(gp34_v1_controls)`  controls. 
 
 ```{r}
 #| label: "biomarker-events"
@@ -196,10 +197,10 @@ Sex (`r unique(v1_usable$Gender)`).
 
 We applied an event-based model to our data using the 
 Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm 
-[@young2018uncovering; @young2021ordinal] 
+[@young2021ordinal] 
  to estimate event orderings and subtypes for FXTAS patients. 
 Ordinal SuStaIn is a data-driven algorithm that combines 
-disease progression modelling [@fonteijn2012event] 
+event-based disease progression modelling [@fonteijn2012event] 
 and unsupervised clustering [@lazarsfeld1950logical; @mclachlan2019finite] 
 to model event onset sequences 
 using cross-sectional samples of patient and control populations. 
@@ -945,13 +946,37 @@ differences in subtype distributions between CGG < 100 versus ≥ 100.
 
 # Discussion
 
-## Missing data
+## Main findings
+
+## Clinical interpretation
+
+## Limitations
+
+### Missing data
 
 We had substantial amounts of missing data. 
 As described in the methods (@sec-incomplete-data),
 we used the marginal distribution of each biomarker among cases
 to impute the underlying values of these missing data. 
 The missing data contributes to the large amount of uncertainty in the results.
+
+### Discretizing numeric biomarkers
+
+In order to apply the Ordinal SuStaIn algorithm, 
+we categorized some biomarkers that were originally measured as numbers.
+In doing so, we sacrificed some granular information. 
+The z-score SuStaIn algorithm (@young2018uncovering) 
+is designed to be used with 
+There are other methods available for analyzing continuous measures (), 
+and it may be possible to fit a model that combines both cotninous and ordinal outcomes. 
+Possible future work could attempt this combination.
+
+### Comparison with longitudinal data
+
+
+
+We don’t really have accurate data for age onset, so we cannot easily confirm our results. Additional research including longitudinal data collecting age of onset would be needed to to verify our findings.
+
 
 [more discussion to be added]
 
@@ -1015,8 +1040,8 @@ table_subtype_by_demographics(
 #| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences models, stratified by sex and (b) positional differences in estimated event sequence between sexes. {compact_fig_caption}")
 #| layout-ncol: 1
 #| fig-subcap: 
-#|    - ""
-#|    - ""
+#|    - "Estimated event sequences models, stratified by sex"
+#|    - "Positional differences in estimated event sequence between sexes"
 #| fig-cap-location: top
 
 
