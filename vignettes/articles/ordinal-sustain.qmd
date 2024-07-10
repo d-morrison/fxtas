@@ -948,6 +948,10 @@ differences in subtype distributions between CGG < 100 versus ≥ 100.
 
 ## Main findings
 
+The main findings of this analysis were substantial differences in order of onset
+between males and females, 
+and between low premutation (CGG 55-99) versus high premutation (CGG 100-199) among males.
+
 ## Clinical interpretation
 
 ## Limitations
@@ -965,20 +969,20 @@ The missing data contributes to the large amount of uncertainty in the results.
 In order to apply the Ordinal SuStaIn algorithm, 
 we categorized some biomarkers that were originally measured as numbers.
 In doing so, we sacrificed some granular information. 
-The z-score SuStaIn algorithm (@young2018uncovering) 
-is designed to be used with 
-There are other methods available for analyzing continuous measures (), 
-and it may be possible to fit a model that combines both cotninous and ordinal outcomes. 
-Possible future work could attempt this combination.
+There are other variations of the SuStaIn algorithm, 
+such as z-score SuStaIn (@young2018uncovering) 
+which are designed to be used with continuous biomarker measurements,
+and it might be feasible to combine Ordinal SuStaIn and z-score SuStaIn
+to fit an event-based model with both continuous and ordinal outcomes. 
 
 ### Comparison with longitudinal data
 
-
-
-We don’t really have accurate data for age onset, so we cannot easily confirm our results. Additional research including longitudinal data collecting age of onset would be needed to to verify our findings.
-
-
-[more discussion to be added]
+Our data come from the GP and Trax studies, which are longitudinal cohort studies
+with infrequent followup visits.
+These studies do not collect precise information about timing of symptom onsets, 
+so it is not feasible to use the longitudinal data to confirm the results from the Ordinal SuStaIn analysis.
+Additional research including longitudinal data collecting precise ages of onset 
+would be needed to to verify our findings.
 
 # References {.unnumbered}
 
@@ -991,7 +995,7 @@ We don’t really have accurate data for age onset, so we cannot easily confirm 
 
 ```{r}
 #| label: "tbl-demographics"
-#| tbl-cap: "Descriptive statistics of patient characteristics by CGG repeats level"
+#| tbl-cap: "Descriptive statistics of patient characteristics by CGG repeats level. P-values represent tests for differences in distributions of characteristics between sexes, ignoring CGG repeat level."
 
 v1_usable |> make_demographics_table()
 
@@ -1040,8 +1044,8 @@ table_subtype_by_demographics(
 #| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences models, stratified by sex and (b) positional differences in estimated event sequence between sexes. {compact_fig_caption}")
 #| layout-ncol: 1
 #| fig-subcap: 
-#|    - "Estimated event sequences models, stratified by sex"
-#|    - "Positional differences in estimated event sequence between sexes"
+#|    - " "
+#|    - " "
 #| fig-cap-location: top
 
 
@@ -1069,7 +1073,7 @@ pvd_lineplot(y_text_size = 11)
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences, stratified by CGG repeats (<100 vs 100+) and (b) positional differences in estimated event sequence between CGG repeats. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences, stratified by CGG repeats (<100 vs 100+) and (b) differences in event sequences between CGG repeat sizes. {compact_fig_caption}")
 #| layout-ncol: 1
 #| fig-subcap: 
 #|    - ""
@@ -1100,7 +1104,7 @@ pvd_lineplot(y_text_size = 11)
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences, stratified by sex and (b) positional differences in estimated event sequence between sexes, for CGG repeats <100. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences, stratified by sex and (b) differences in event sequences between sexes, for CGG repeats <100. {compact_fig_caption}")
 #| layout-ncol: 1
 #| fig-subcap: 
 #|    - ""
@@ -1136,7 +1140,7 @@ pvd_lineplot(
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences, stratified by sex and (b) positional differences in estimated event sequence between sexes, for CGG repeats ≥100. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences, stratified by sex and (b) differences in event sequences between sexes, for CGG repeats ≥100. {compact_fig_caption}")
 #| layout-ncol: 1
 #| fig-subcap: 
 #|    - ""
@@ -1165,20 +1169,13 @@ pvd_lineplot(
 
 ```
 
-```{r}
-#| label: extract-PVD-selected-subtypes
-figs = extract_figs_from_pickle(
-  size.y = size.y,
-  n_s = n_s_selected,
-  dataset_name = dataset_name,
-  output_folder = output_folder)
-```
+{{< pagebreak >}}
 
 ```{r}
 #| label: fig-pvd_chosen_subtypes
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("positional variance diagrams for {n_s_selected} subtypes and comparisons of event sequences between subtypes. {compact_fig_caption}") 
+#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences, stratified by sex and (b-d) differences in event sequences between sexes, for {n_s_selected} latent subtypes. {compact_fig_caption}") 
 #| fig-cap-location: top
 #| layout-ncol: 1
 #| layout-nrow: 4
@@ -1188,10 +1185,14 @@ figs = extract_figs_from_pickle(
 #|    - "Subtype 3 compared to Subtype 1"
 #|    - "Subtype 4 compared to Subtype 1"
 #| column: page
+#| 
+figs = extract_figs_from_pickle(
+  size.y = size.y,
+  n_s = n_s_selected,
+  dataset_name = dataset_name,
+  output_folder = output_folder)
 
 library(ggplot2)
-
-# subtype_figs <- figs |> print_PVDs()
 
 plot_compact_pvd(
   figs = figs,
@@ -1240,16 +1241,6 @@ table1(
   x = ~ `Ataxia: severity*`)
 ```
 
-
-{{< pagebreak >}}
-
-```{r}
-#| label: fig-hist-CGG-gp34-v1
-#| fig-cap: "Distribution of CGG repeats by sex, among study participants included in analysis"
-#| warning: false
-
-v1_usable |> graph_CGG_repeats(rows = vars(Gender))
-```
 
 {{< pagebreak >}}
 

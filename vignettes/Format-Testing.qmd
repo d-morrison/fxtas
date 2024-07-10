@@ -106,7 +106,6 @@ The data come from the GP, GP4, and Trax studies. In the primary analyses, we an
 However, `r n_missing_CGG` individuals did not have CGG values available, and `r n_above_200` had full fragile X syndrome mutation (≥200 CGG repeats), so only `r nrow(v1_usable)` individuals 
 (`r nrow(v1_usable_cases)` cases and 
 `r nrow(gp34_v1_controls)` controls) were included in the event sequence analysis. 
-@fig-hist-CGG-gp34-v1 shows the distribution of CGG repeats among the participants included in the analysis. 
 @tbl-demographics provides demographic information about the study participants. 
 
 ```{r}

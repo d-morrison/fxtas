@@ -51,7 +51,8 @@ fix_CGG = function(dataset)
 
   if(nrow(duplicates) != 0) browser(message("why are there duplicates?"))
 
-  dataset |>
+  dataset =
+    dataset |>
     left_join(
       newCGG |> select(-Study),
       by = "FXS ID",
@@ -91,5 +92,10 @@ fix_CGG = function(dataset)
     rename(
       `CGG (before backfill)` = CGG,
       CGG = `CGG (backfilled)`
+    ) |>
+    mutate(
+      CGG = CGG |> structure(label = "CGG repeats")
     )
+
+  return(dataset)
 }

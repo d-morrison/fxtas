@@ -22,14 +22,6 @@ make_demographics_table = function(data)
 
   )
 
-  # table1(
-  #   na.is.category = FALSE, overall = FALSE,
-  #   NA.label = "Missing",
-  #   stratified_formula(vars, strata = "FX*"),
-  #   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  #   data = data)
-
-
   # create table using gtsummary with p-value for sex difference
   tbl_stat <- gtsummary::tbl_strata(
     data = data |>

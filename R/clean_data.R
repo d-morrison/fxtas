@@ -152,5 +152,6 @@ clean_data = function(dataset)
         "MRI: Cerebral",
         "MRI: Cerebellar"
       )
-    )
+    ) |>
+    clean_gender() # droplevels() removes attributes
 }
