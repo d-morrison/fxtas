@@ -36,7 +36,16 @@ The higher the CGG repeat within the premutation range the earlier the onset of 
 The prevalence of the premutation is approximately 1 in 148 to 200 females in the general population and one in 290 to 855 males (@maenner2013fmr1; @hunter2014epidemiology).
 
 A currently open question is: In what sequential order do FXTAS symptoms typically appear, how does that sequence vary between participants, and what baseline characteristics predict that order?
-Here, we apply the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2021ordinal] to find event sequences for FXTAS patients.
+Here, we apply the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2021ordinal] 
+to find event sequences for FXTAS patients.
+Ordinal SuStaIn is a data-driven analytic approach 
+which analyzes cross-sectional biomarker data 
+to simultaneously 
+(1) estimate the ordering of onset for biomarkers of disease progression events and 
+(2) cluster study participants into latent subtypes with different event orderings.
+Ordinal SuStaIn has been used in other diseases (Alzheimers, [other diseases](https://scholar.google.com/scholar?cites=995536064967683113&as_sdt=5,39&sciodt=0,39&hl=en>)), but not previously for Fragile X Syndrome. 
+We now apply it to a cross-sectional data set of Fragile X premutation carriers,
+to study the sequential ordering of disease progression events in Fragile X premutation.
 
 ```{r}
 #| include: false
