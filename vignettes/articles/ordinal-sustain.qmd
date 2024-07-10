@@ -43,7 +43,8 @@ which analyzes cross-sectional biomarker data
 to simultaneously 
 (1) estimate the ordering of onset for biomarkers of disease progression events and 
 (2) cluster study participants into latent subtypes with different event orderings.
-Ordinal SuStaIn has been used in other diseases (Alzheimers, [other diseases](https://scholar.google.com/scholar?cites=995536064967683113&as_sdt=5,39&sciodt=0,39&hl=en>)), but not previously for Fragile X Syndrome. 
+Ordinal SuStaIn has been used in other diseases (Alzheimers, [other diseases](https://scholar.google.com/scholar?cites=995536064967683113&as_sdt=5,39&sciodt=0,39&hl=en>)), 
+but not previously for Fragile X Syndrome. 
 We now apply it to a cross-sectional data set of Fragile X premutation carriers,
 to study the sequential ordering of disease progression events in Fragile X premutation.
 
