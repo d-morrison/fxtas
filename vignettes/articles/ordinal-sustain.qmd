@@ -985,6 +985,10 @@ so it is not feasible to use the longitudinal data to confirm the results from t
 Additional research including longitudinal data collecting precise ages of onset 
 would be needed to to verify our findings.
 
+# Supplementary material {.unnumbered}
+
+Supplementary material is available at Brain online.
+
 # References {.unnumbered}
 
 ::: {#refs}
