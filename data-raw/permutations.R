@@ -102,7 +102,7 @@ biomarker_levels = df |> get_levels(biomarker_varnames)
 
 control_data =
   df |>
-  dplyr::filter(CGG < 55) |>
+  dplyr::filter(CGG <55) |>
   select(all_of(biomarker_varnames))
 
 patient_data =

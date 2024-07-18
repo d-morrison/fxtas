@@ -14,7 +14,7 @@ heatmap_table_to_plot = function(heatmap_table)
     )) +
     scale_fill_identity() +
     scale_y_discrete(limits = rev) +
-    xlab('Stage Number') +
+    xlab('Sequential order') +
     ylab(NULL) +
     geom_raster(show.legend = FALSE) +
     theme_bw()

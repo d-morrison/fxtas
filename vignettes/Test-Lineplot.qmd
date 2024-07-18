@@ -1,0 +1,393 @@
+---
+title: "Event sequences in Fragile X-associated tremor/ataxia syndrome"
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "#>" 
+project: 
+  execute-dir: project
+filters:
+  - ../docx-landscape.lua
+---
+
+```{=html}
+<style>
+.quarto-figure-center > figure {
+text-align: center;
+}
+</style>
+```
+
+```{r, include = FALSE}
+#| label: setup
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  # fig.width = 7, 
+  # fig.height = 10,
+  include = TRUE
+)
+```
+
+```{r libraries}
+#| message: false
+# devtools::load_all()
+library(fxtas)
+reticulate::use_condaenv("fxtas39",required = TRUE)
+library(tidyverse)
+library(reticulate)
+library(pander)
+library(table1)
+library(magrittr)
+```
+
+```{r}
+#| label: "set run parameters"
+#| 
+fit_models = TRUE
+# fit_models = FALSE
+run_CV =  TRUE
+# run_CV = FALSE
+
+# plot_python = TRUE
+plot_python = FALSE
+
+pvd_height = 10
+pvd_width = 8
+size.y = 11
+N_startpoints = 10L
+N_S_max = 8L
+N_S_max_stratified = 2L
+N_CV_folds = 10L
+
+compact_fig_caption <- paste0(
+  "The different colors correspond to the different levels above baseline. ",
+  "Red corresponds to the first level, blue to the second level, ",
+  "purple to the third level, green to the fourth level, ",
+  "and magenta to the fifth level above baseline. ",
+  "See @tbl-biomarker-list for the levels of each biomarker."
+)
+
+# column_var = "Recruited in study phase"
+# column_var = "FX3*"
+column_var = c("Gender", "FX3*")
+
+N_iterations_MCMC = 1e5L
+dataset_name = 'sample_data'
+root_dir = here::here()
+setwd(root_dir)
+output_folder = 
+  "output/output.fixed_CV/" |> 
+  fs::dir_create()
+```
+
+```{r}
+#| label: subset-data
+
+full_data = trax_gp34_v1
+n_missing_CGG = full_data$CGG |> is.na() |> sum()
+n_above_200 = sum(full_data$CGG >= 200, na.rm = TRUE)
+v1_usable = full_data |> filter(CGG < 200)
+v1_usable_cases = v1_usable |> filter(CGG >= 55)
+# note: there are 231 records in `visit1` with CGG >= 55, but 4 have CGG >= 200
+# previously `nrow(v1_usable_cases)` was 221, which was based on incorrectly filtering on a version of CGG that hadn't been backfilled.
+
+gp34_v1_controls =  v1_usable |> filter(CGG < 55)
+year_range = v1_usable$`Visit Date` |> year() |> range()
+min_year = min(year_range)
+max_year = max(year_range)
+```
+
+```{r}
+#| label: "biomarker-events"
+biomarker_groups = compile_biomarker_groups_table()
+
+biomarker_varnames = 
+  biomarker_groups |> 
+  pull("biomarker")
+
+biomarker_levels = 
+  v1_usable |> 
+  dplyr::select(all_of(biomarker_varnames)) |> 
+  lapply(F = levels)
+
+df = v1_usable
+
+biomarker_events_table =
+  construct_biomarker_events_table(
+    biomarker_levels,
+    biomarker_groups)
+
+nlevs = 
+  biomarker_levels |> sapply(length)
+
+```
+
+```{r}
+#| label: get-control-dists
+
+control_data = 
+  df |> 
+  filter(`FX*` == "CGG < 55") |> 
+  select(all_of(biomarker_varnames))
+
+patient_data = 
+  df |> 
+  # na.omit() |>
+  filter(`FX*` == "CGG >= 55")
+
+prob_correct = 
+  control_data |> 
+  compute_prob_correct(
+    max_prob = .95,
+    biomarker_levels = biomarker_levels)
+
+```
+
+
+```{r}
+#| label: extract-figs
+
+results_v1 = extract_results_from_pickles(
+  n_s = 1:N_S_max,
+  rda_filename = "data.RData",
+  dataset_name = "sample_data",
+  output_folder = "output/output.fixed_CV")
+
+fig_females_first = extract_figs_from_pickle(
+  size.y = size.y,
+  n_s = 1,
+  rda_filename = "data.RData",
+  dataset_name = "females",
+  output_folder = "output/output.fixed_CV")
+
+fig_males_first = extract_figs_from_pickle(
+  size.y = size.y,
+  n_s = 1,
+  rda_filename = "data.RData",
+  dataset_name = "males",
+  output_folder = "output/output.fixed_CV")
+
+fig_both_first = extract_figs_from_pickle(
+  size.y = size.y,
+  n_s = 1,
+  rda_filename = "data.RData",
+  dataset_name = "sample_data",
+  output_folder = "output/output.fixed_CV")
+
+fig_under100 = extract_figs_from_pickle(
+  size.y = size.y,
+  n_s = 1,
+  dataset_name = "under100",
+  output_folder = output_folder)
+
+fig_over100 = extract_figs_from_pickle(
+  size.y = size.y,
+  n_s = 1,
+  dataset_name = "over100",
+  output_folder = output_folder)
+
+fig_under100_males = extract_figs_from_pickle(
+  size.y = size.y,
+  n_s = 1,
+  dataset_name = "under100_Male",
+  output_folder = output_folder)
+
+fig_over100_males = extract_figs_from_pickle(
+  size.y = size.y,
+  n_s = 1,
+  dataset_name = "over100_Male",
+  output_folder = output_folder)
+
+
+fig_under100_females = extract_figs_from_pickle(
+  size.y = size.y,
+  n_s = 1,
+  dataset_name = "under100_Female",
+  output_folder = output_folder)
+
+fig_over100_females = extract_figs_from_pickle(
+  size.y = size.y,
+  n_s = 1,
+  dataset_name = "over100_Female",
+  output_folder = output_folder)
+
+```
+
+{{< pagebreak >}}
+
+# Figures {.unnumbered}
+
+```{r}
+#| label: "fig-first-only-change-long"
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: "Change in estimated event sequence models by sex"
+#| fig-cap-location: top
+
+pvd_lineplot(
+  figs = list(
+    fig_males_first,
+    fig_females_first
+  ),
+  facet_label = c("Males", "Females"),
+  text_size = 3.3,
+  y_text_size = 11
+)
+
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| label: "fig-pvd-by-cgg-change-long"
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: "Change in estimated event sequences by CGG repeats (<100 vs 100+)"
+#| fig-cap-location: top
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "CGG < 100"
+#   - "CGG 100+"
+
+# fig_both_first |> print() 
+# fig_under100 |> print()
+# fig_over100 |> print()
+
+pvd_lineplot(
+  figs = list(
+    fig_under100,
+    fig_over100
+  ),
+  facet_label = c("CGG < 100", "CGG &ge; 100"),
+  text_size = 3.35,
+  y_text_size = 11
+)
+
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| label: "fig-pvd-by-cgg-male-change-long"
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: "Change in estimated event sequences by CGG repeats (<100 vs 100+), males only"
+#| fig-cap-location: top
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "Males, CGG < 100"
+#   - "Males, CGG ≥ 100"
+
+# fig_males_first |> print() 
+# fig_under100_males |> print()
+# fig_over100_males |> print()
+
+pvd_lineplot(
+  figs = list(
+    fig_under100_males,
+    fig_over100_males
+  ),
+  facet_label = c("Males, CGG < 100", "Males, CGG &ge; 100"),
+  text_size = 3.4,
+  y_text_size = 11
+)
+
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| label: "fig-pvd-by-cgg-female-change-long"
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: "Change in estimated event sequences by CGG repeats (<100 vs 100+); females only"
+#| fig-cap-location: top
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "Females, CGG < 100"
+#   - "Females, CGG ≥ 100"
+
+# fig_females_first |> print() 
+# fig_under100_females |> print()
+# fig_over100_females |> print()
+
+pvd_lineplot(
+  figs = list(
+    fig_under100_females,
+    fig_over100_females
+  ),
+  facet_label = c("Females, CGG < 100", "Females, CGG &ge; 100"),
+  text_size = 3.4,
+  y_text_size = 11
+)
+
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| label: "fig-pvd-by-gender-cgg_under100-change-long"
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: "Change in estimated event sequences by sex, for CGG repeats <100"
+#| fig-cap-location: top
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "Males, CGG < 100"
+#   - "Females, CGG < 100"
+
+# fig_under100_males |> print()
+# fig_under100_females |> print()
+
+pvd_lineplot(
+  figs = list(
+    fig_under100_males,
+    fig_under100_females
+  ),
+  facet_label = c("CGG < 100, Males", "CGG < 100, Females"),
+  text_size = 3.4,
+  y_text_size = 11
+)
+
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| label: "fig-pvd-by-gender-cgg_over100-change-long"
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: "Change in estimated event sequences by sex, for CGG repeats ≥100"
+#| fig-cap-location: top
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "Males, CGG ≥ 100"
+#   - "Females, CGG ≥ 100"
+
+# fig_over100_males |> print()
+# fig_over100_females |> print()
+
+pvd_lineplot(
+  figs = list(
+    fig_over100_males,
+    fig_over100_females
+  ),
+  facet_label = c("CGG &ge; 100, Males", "CGG &ge; 100, Females"),
+  text_size = 3.4,
+  y_text_size = 11
+)
+
+```
+

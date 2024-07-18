@@ -56,7 +56,7 @@ synchronize_y_axes = FALSE
 
 The data come from the GP and GP4 studies. We analyzed one visit record per participant, using the earliest visit available across the two studies with age at visit $\ge 40$ years, resulting in `r nrow(visit1)` observations in total. However, `r visit1$"FX*" |> is.na() |> sum()` individuals did not have CGG values available, so only `r visit1$"FX*" |> not_na() |> sum()` individuals 
 (`r (visit1$"FX**" == "CGG >= 55")|> sum()` cases and 
-`r (visit1$"FX**" == "CGG < 55")|> sum()` controls) were included in the event sequence analysis.
+`r (visit1$"FX**" == "CGG <55")|> sum()` controls) were included in the event sequence analysis.
 
 ```{r}
 
@@ -155,7 +155,7 @@ ModelScores = compute_ModelScores(biomarker_levels)
 
 control_data = 
   df |> 
-  filter(`FX*` == "CGG < 55") |> 
+  filter(`FX*` == "CGG <55") |> 
   select(all_of(biomarker_varnames))
 
 patient_data = 

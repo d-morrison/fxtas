@@ -4,10 +4,15 @@
 \alias{make_biomarkers_table}
 \title{Make biomarkers table}
 \usage{
-make_biomarkers_table(data)
+make_biomarkers_table(data, biomarker_varnames)
 }
 \arguments{
-\item{data}{}
+\item{data}{a \code{\link[=data.frame]{data.frame()}} containing the columns specified by \code{biomarker_varnames} as well as \code{"Gender"}}
+
+\item{biomarker_varnames}{a \code{\link[=character]{character()}} vector matching a subset of the column names in \code{data}}
+}
+\value{
+a \code{\link[flextable:flextable]{flextable::flextable()}}
 }
 \description{
 Make biomarkers table

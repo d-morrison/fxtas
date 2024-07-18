@@ -21,6 +21,7 @@
 #' @importFrom dplyr select
 #' @importFrom dplyr slice_head
 #' @importFrom dplyr tibble
+#' @importFrom flextable as_flextable
 #' @importFrom forcats fct_na_level_to_value
 #' @importFrom forcats fct_other
 #' @importFrom fs path

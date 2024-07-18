@@ -151,5 +151,6 @@ clean_trax_data = function(dataset)
                  "SCID: Psychotic",
                  # mri domains
                  "MRI: Cerebral", "MRI: Cerebellar")
-    )
+    ) |>
+    clean_gender()
 }
