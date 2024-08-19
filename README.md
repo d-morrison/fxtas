@@ -12,7 +12,9 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 <!-- badges: end -->
 
 The goal of `fxtas` is to apply the Ordinal SuStaIn algorithm (Young et
-al. (2021)) to study disease progression in Fragile X Syndrome.
+al. (2021)) to study disease progression in Fragile X Syndrome,  
+as described in Morrison et al (not yet published), “Event sequences in
+Fragile X-associated tremor/ataxia syndrome”.
 
 ## Installation
 
@@ -26,8 +28,23 @@ devtools::install_github("d-morrison/fxtas")
 
 ## Running the analyses
 
-The primary analyses are implemented in the file `ordinal-sustain.qmd`
-in the `vignettes/articles` subfolder.
+The manuscript *Event sequences in Fragile X-associated tremor/ataxia
+syndrome* is implemented in the file `ordinal-sustain.qmd` in the
+`vignettes/articles` subfolder, which incorporates several subfiles in
+this repository. The `data-raw` folder contains numerous auxiliary
+scripts, including:
+
+- data preprocessing scripts:
+  - `gp3.r`
+  - `gp4.r`
+  - `gp34.R`
+  - `trax.R`
+- [SLURM](https://slurm.schedmd.com/documentation.html) batch scripts
+  and corresponding R scripts for pre-running the computation-heavy
+  sections of the analysis on an appropriately-preconfigured distributed
+  computing server.
+  - If the corresponding output files have not been pre-generated,
+    `ordinal-sustain.qmd` should produce them
 
 # References
 
