@@ -993,7 +993,7 @@ with infrequent followup visits.
 These studies do not collect precise information about timing of symptom onsets, 
 so it is not feasible to use the longitudinal data to confirm the results from the Ordinal SuStaIn analysis.
 Additional research including longitudinal data collecting precise ages of onset 
-would be needed to to verify our findings.
+would be needed to verify our findings.
 
 # Supplementary material {.unnumbered}
 
