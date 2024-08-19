@@ -20,33 +20,91 @@ text-align: center;
 
 # Abstract {.unnumbered}
 
-The fragile X-associated tremor/ataxia syndrome (FXTAS) is a  neurodegenerative disorder caused by the premutation (55 to 200 CGG repeats) in the FMR1 gene.
-A currently open question is: In what sequential order do FXTAS symptoms typically appear, how does that sequence vary between participants and between males and females?
-Here, we applied the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm to identify the sequential events of neurophenotypic symptoms presented in observed data collected in FXTAS patients.
-We found substantial differences in order of events depending on sex and CGG repeat number.
+The fragile X-associated tremor/ataxia syndrome (FXTAS) is a 
+neurodegenerative disorder caused by the 
+premutation (55 to 200 CGG repeats) in the FMR1 gene.
+An open question is: 
+In what sequential order do 
+FXTAS symptoms typically appear, 
+and how does that sequence vary 
+between participants and 
+between males and females?
+Here, we applied the 
+ordinal-outcomes version of the 
+**Su**btype and **St**age **In**ference algorithm ("Ordinal SuStaIn") to 
+identify the sequential events of 
+neurophenotypic symptoms 
+presented in observed data 
+collected in FXTAS patients.
+We found 
+substantial differences in order of events 
+depending on sex and CGG repeat number.
 
 # Introduction
 
-The fragile X-associated tremor/ataxia syndrome (FXTAS) is a neurodegenerative disorder caused by the premutation (55 to 200 CGG repeats) in the FMR1 gene [@hagerman2001intention]. 
-The premutation is associated with elevation of the FMR1 mRNA, and this leads to RNA toxicity including oxidative stress, mitochondrial dysfunction, calcium dysregulation and sequestration of proteins important to neuronal function.
-Proteins and neurofilaments sequester with the excess FMR1 mRNA, leading to the formation of eosinophilic, tau negative intranuclear inclusions in neurons and astrocytes throughout the CNS and even in the peripheral nervous system [@greco2006neuropathology; @hunter2012capturing]. 
-FXTAS usually begins in the 60s, and as premutation carriers age, the prevalence of FXTAS increases from approximately 40% in males in their 60s to 75% in their 80s [@jacquemont2004penetrance].
-Females with the premutation are also at risk for FXTAS, but the prevalence is lower; approximately 16 to 20% may develop FXTAS, but it is less severe than in the males [@tassone2023insight]. 
-The higher the CGG repeat within the premutation range the earlier the onset of FXTAS and the earlier the age of death [@greco2006neuropathology].
-The prevalence of the premutation is approximately 1 in 148 to 200 females in the general population and one in 290 to 855 males (@maenner2013fmr1; @hunter2014epidemiology).
+The fragile X-associated tremor/ataxia syndrome (FXTAS) is a 
+neurodegenerative disorder caused by the 
+premutation (55 to 200 CGG repeats) in the 
+FMR1 gene [@hagerman2001intention]. 
+The premutation is associated with 
+elevation of the FMR1 mRNA, 
+and this leads to 
+RNA toxicity including 
+oxidative stress, 
+mitochondrial dysfunction, 
+calcium dysregulation, and 
+sequestration of proteins important to neuronal function.
+Proteins and neurofilaments sequester with the excess FMR1 mRNA, 
+leading to the formation of 
+eosinophilic, tau negative intranuclear inclusions 
+in neurons and astrocytes throughout the CNS and even 
+in the peripheral nervous system [@greco2006neuropathology; @hunter2012capturing]. 
+FXTAS usually begins in the 60s, 
+and as premutation carriers age, 
+the prevalence of FXTAS increases from approximately 
+40% in males in their 60s to 
+75% in their 80s [@jacquemont2004penetrance].
+Females with the premutation are also at risk for FXTAS, 
+but the prevalence is lower; 
+approximately 16 to 20% may develop FXTAS, 
+but it is less severe than in the males [@tassone2023insight]. 
+The higher the CGG repeat within the premutation range,
+the earlier the onset of FXTAS and 
+the earlier the age of death [@greco2006neuropathology].
+The prevalence of the premutation is approximately 
+one in 148 to 200 females in the general population and 
+one in 290 to 855 males (@maenner2013fmr1; @hunter2014epidemiology).
 
-A currently open question is: In what sequential order do FXTAS symptoms typically appear, how does that sequence vary between participants, and what baseline characteristics predict that order?
-Here, we apply the Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm [@young2021ordinal] 
+A currently open question is: 
+In what sequential order do FXTAS symptoms typically appear, 
+how does that sequence vary between participants, 
+and what baseline characteristics predict that order?
+Here, we apply the 
+ordinal-outcomes version of the 
+**Su**btype and **St**age **In**ference algorithm
+("Ordinal SuStaIn", [@young2018uncovering; @young2021ordinal])
 to find event sequences for FXTAS patients.
-Ordinal SuStaIn is a data-driven analytic approach 
+SuStaIn is a data-driven analytic approach 
 which analyzes cross-sectional biomarker data 
 to simultaneously 
 (1) estimate the ordering of onset for biomarkers of disease progression events and 
 (2) cluster study participants into latent subtypes with different event orderings.
-Ordinal SuStaIn has been used in other diseases (Alzheimers, [other diseases](https://scholar.google.com/scholar?cites=995536064967683113&as_sdt=5,39&sciodt=0,39&hl=en>)), 
+The SuStaIn modeling approach has been applied to 
+Alzheimer's disease 
+[@young2018uncovering; @young2021ordinal; @vogel2021four; @collij2022spatial], 
+Amyotrophic Lateral Sclerosis [@young2023data],
+Parkinson's disease [@zhou2022two],
+primary tauopathies [@scotton2023disease],
+Frontotemporal dementia [@young2018uncovering],
+multiple sclerosis [@eshaghi2021identifying],
+chronic obstructive pulmonary disease (COPD) [@young2020disease],
+and knee osteoarthritis [@li2021identifying],
 but not previously for Fragile X Syndrome. 
-We now apply it to a cross-sectional data set of Fragile X premutation carriers,
-to study the sequential ordering of disease progression events in Fragile X premutation.
+We now apply it to a cross-sectional data set of 
+Fragile X premutation carriers, to 
+study the sequential ordering of 
+disease progression events in 
+Fragile X premutation.
 
 ```{r}
 #| include: false
@@ -153,10 +211,9 @@ The inclusion criteria were: age 40 years or greater;
 **CLINICAL TEAM: please complete this section and fill in detailed descriptions of the GP and Trax cohorts. Cite refs as needed**.
 @tbl-demographics provides demographic information about the study participants. 
 
-
 Written informed consent was obtained from all participants 
 according to the procedures approved by the 
-University of California Davis Institutional Review Board.  
+University of California, Davis Institutional Review Board.  
 
 The primary event sequence analysis included baseline visit data 
 from 297 participants from the two cohorts,
@@ -205,17 +262,21 @@ Sex (`r unique(v1_usable$Gender)`).
 
 ## Statistical analysis {#sec-Statistical-analysis}
 
-We applied an event-based disease progression model to our data using the 
+We applied a discrete event-based disease progression model [@young2014data] to our data using the 
 Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm 
 [@young2021ordinal] 
 to estimate event orderings and subtypes for FXTAS patients. 
-Ordinal SuStaIn is a data-driven algorithm that combines 
+Ordinal SuStaIn is a version of the general SuStaIn model [@young2018uncovering], 
+customized for analyzing ordinal biomarker data.
+SuStaIn is a data-driven unsupervised learning algorithm 
+that combines 
 event-based disease progression modelling [@fonteijn2012event] 
 and unsupervised clustering [@lazarsfeld1950logical; @mclachlan2019finite] 
 to model event onset sequences 
 using cross-sectional samples of patient and control populations. 
-The algorithm simultaneously clusters individuals into latent subtypes 
-and characterizes the event ordering that best defines each subtype, 
+The algorithm simultaneously 
+clusters individuals into latent subtypes and 
+characterizes the event ordering that best defines each subtype, 
 thus capturing heterogeneity in both disease subtype and disease stage.
 Ordinal SuStaIn uses Markov Chain Monte Carlo (MCMC) sampling to estimate 
 the Bayesian posterior probability of each possible event sequence 
@@ -657,12 +718,11 @@ fig_over100_females = extract_figs_from_pickle(
 
 ## Software
 
-The Ordinal Sustain analysis was performed in Python 3.9 (@python3) 
-using the `pySuStaIn` package (@aksman2021pysustain).
+The Ordinal Sustain analysis was performed using the Python programming language, version 3.9 (@python3) 
+with the `pySuStaIn` package (@aksman2021pysustain).
 Data pre-processing and results post-processing were performed in R 4.4.0 (@rcore) 
 using the `tidyverse` packages (@tidyverse).
-The `reticulate` package (@reticulate) was used to create a programming interface between 
-Python and R.
+The `reticulate` package (@reticulate) was used to create an application programming interface between Python and R.
 The code used to perform this analysis is available at <https://github.com/d-morrison/fxtas>.
 
 ## Data availability

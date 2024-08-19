@@ -7,7 +7,7 @@ authors:
   - name: Matthew Ponzini
     affiliation:
       - ref: ucdphs
-  - name: Ellery R Santos
+  - name: Ellery R. Santos
     affiliation:
       - ref: ucdmind
   - name: Hazel Maridith Barlahan Biag
@@ -27,7 +27,9 @@ authors:
   - name: Andrea Schneider
     affiliation:
       - ref: ucdmind
-  - name: James Bourgeois
+  - name: James A. Bourgeois
+    affiliation:
+      - ref: ucdpsych
   - name: Randi Hagerman
     affiliation:
       - ref: ucdmind
@@ -45,25 +47,25 @@ affiliations:
   - id: ucdmind
     department: MIND Institute
     name: University of California, Davis
-    city: Davis
+    city: Sacramento
     state: CA
     country: USA
   - id: ucdbiochem
     department: Department of Biochemistry and Molecular Medicine
     name: University of California, Davis School of Medicine
-    city: Davis
+    city: Sacramento
     state: CA
     country: USA
   - id: ucdpsych
     department: Department of Psychiatry and Behavioral Sciences
     name: University of California, Davis
-    city: Davis
+    city: Sacramento
     state: CA
     country: USA
   - id: ucdpeds
     department: Department of Pediatrics
     name: University of California, Davis Medical Center
-    city: Davis
+    city: Sacramento
     state: CA
     country: USA
 project:
