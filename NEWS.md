@@ -1,5 +1,6 @@
 # fxtas (development version)
 
+* fixed `create_any_tremor()` to handle NAs before or after `fix_factors()`.
 * renamed "Any Autoimmune" to "any autoimmune disorder"
 * decapitalized "MMSE Total Score" to "MMSE total score"
 * decapitalized "Head tremor" to "head tremor"
