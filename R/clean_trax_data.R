@@ -35,7 +35,7 @@ clean_trax_data = function(dataset)
     categorize_BDS() |>
 
     # make_vars_numeric(regex = "BDS-2 Total Score") |>
-    # make_vars_numeric(regex = "MMSE Total Score") |>
+    # make_vars_numeric(regex = "MMSE total score") |>
 
     # `Drugs used` is unstructured text, with typos; unusable
     # fix_drugs_used() |>

@@ -186,15 +186,15 @@ table1(na.is.category = FALSE, overall = FALSE,
 #| label: tbl-mmse
 #| tbl-cap: "Mini-Mental State Examination (MMSE)"
 # vars = grep(
-#   "MMSE Total Score", 
+#   "MMSE total score", 
 #   value = TRUE, 
 #   names(trax_gp34_all), 
 #   fixed = TRUE)
 
 vars = c(
-  "MMSE Total Score", 
-  # "MMSE Total Score: missingness reasons", 
-  "MMSE Total Score*")
+  "MMSE total score", 
+  # "MMSE total score: missingness reasons", 
+  "MMSE total score*")
 
 table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,

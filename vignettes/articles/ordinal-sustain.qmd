@@ -22,18 +22,18 @@ text-align: center;
 
 The fragile X-associated tremor/ataxia syndrome (FXTAS) is a 
 neurodegenerative disorder caused by the 
-premutation (55 to 200 CGG repeats) in the FMR1 gene.
+premutation (55 to 200 CGG repeats) in the *FMR1* gene.
 An open question is: 
 In what sequential order do 
 FXTAS symptoms typically appear, 
 and how does that sequence vary 
-between participants and 
+among participants and 
 between males and females?
 Here, we applied the 
 ordinal-outcomes version of the 
 **Su**btype and **St**age **In**ference algorithm ("Ordinal SuStaIn") to 
 identify the sequential events of 
-neurophenotypic symptoms 
+neuropsychiatric phenotype symptoms 
 presented in observed data 
 collected in FXTAS patients.
 We found 
@@ -45,40 +45,43 @@ depending on sex and CGG repeat number.
 The fragile X-associated tremor/ataxia syndrome (FXTAS) is a 
 neurodegenerative disorder caused by the 
 premutation (55 to 200 CGG repeats) in the 
-FMR1 gene [@hagerman2001intention]. 
+*FMR1* gene [@hagerman2001intention]. 
 The premutation is associated with 
-elevation of the FMR1 mRNA, 
-and this leads to 
+elevation of the *FMR1* mRNA. 
+This elevation leads to 
 RNA toxicity including 
 oxidative stress, 
 mitochondrial dysfunction, 
 calcium dysregulation, and 
 sequestration of proteins important to neuronal function.
-Proteins and neurofilaments sequester with the excess FMR1 mRNA, 
+Proteins and neurofilaments sequester with the excess *FMR1* mRNA, 
 leading to the formation of 
-eosinophilic, tau negative intranuclear inclusions 
-in neurons and astrocytes throughout the CNS and even 
-in the peripheral nervous system [@greco2006neuropathology; @hunter2012capturing]. 
-FXTAS usually begins in the 60s, 
+eosinophilic, tau-negative intranuclear inclusions 
+in neurons and astrocytes throughout the CNS and
+in the peripheral nervous system (PNS) [@greco2006neuropathology; @hunter2012capturing]. 
+FXTAS *usually* begins in the 60s,
+(though some patients have an earlier onset),
 and as premutation carriers age, 
 the prevalence of FXTAS increases from approximately 
 40% in males in their 60s to 
 75% in their 80s [@jacquemont2004penetrance].
 Females with the premutation are also at risk for FXTAS, 
 but the prevalence is lower; 
-approximately 16 to 20% may develop FXTAS, 
+approximately 20% may develop FXTAS, 
 but it is less severe than in the males [@tassone2023insight]. 
-The higher the CGG repeat within the premutation range,
-the earlier the onset of FXTAS and 
-the earlier the age of death [@greco2006neuropathology].
-The prevalence of the premutation is approximately 
-one in 148 to 200 females in the general population and 
-one in 290 to 855 males (@maenner2013fmr1; @hunter2014epidemiology).
+In general, 
+the higher the CGG repeat number within the premutation range,
+the earlier onset of FXTAS, 
+and earlier death [@greco2006neuropathology].
+The prevalence of the premutation is estimated at 
+one in 148 to 200 females and 
+one in 290 to 855 males 
+in the general population (@maenner2013fmr1; @hunter2014epidemiology).
 
 A currently open question is: 
 In what sequential order do FXTAS symptoms typically appear, 
-how does that sequence vary between participants, 
-and what baseline characteristics predict that order?
+how does that sequence vary among participants, 
+and do specific baseline characteristics predict the order of presentation?
 Here, we apply the 
 ordinal-outcomes version of the 
 **Su**btype and **St**age **In**ference algorithm
@@ -262,16 +265,21 @@ Sex (`r unique(v1_usable$Gender)`).
 
 ## Statistical analysis {#sec-Statistical-analysis}
 
-We applied a discrete event-based disease progression model [@young2014data] to our data using the 
+We applied a 
+discrete event-based disease progression model 
+[@fonteijn2011event; @fonteijn2012event; @oxtoby2023data] 
+to our data using the 
 Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm 
 [@young2021ordinal] 
 to estimate event orderings and subtypes for FXTAS patients. 
-Ordinal SuStaIn is a version of the general SuStaIn model [@young2018uncovering], 
-customized for analyzing ordinal biomarker data.
-SuStaIn is a data-driven unsupervised learning algorithm 
+Ordinal SuStaIn is a version of the SuStaIn modeling algorithm [@young2018uncovering],
+adapted for analyzing ordinal-valued data.
+SuStaIn is a data-driven statistical modeling algorithm 
 that combines 
-event-based disease progression modelling [@fonteijn2012event] 
-and unsupervised clustering [@lazarsfeld1950logical; @mclachlan2019finite] 
+event-based disease progression modelling 
+[@fonteijn2011event; @fonteijn2012event; @oxtoby2023data]
+and latent-cluster finite mixture modeling 
+[@pearson1894contributions; @lazarsfeld1950logical; @mclachlan2019finite] 
 to model event onset sequences 
 using cross-sectional samples of patient and control populations. 
 The algorithm simultaneously 
@@ -383,12 +391,12 @@ so including repeated measurements could lead to exaggerated estimates of precis
 ### Visualizing modeling results
 
 We visualized the results of Ordinal SuStaIn analysis 
-using "positional variance diagrams" (PVDs), 
-which are heatmaps with biomarker events on the y-axis 
-and sequence positions of events, 
-with each event occurring at some point in continuing time 
-relative to other events in sequence, on the x-axis.
-It should be pointed out that the exact onset times of the events 
+using "positional variance diagrams" (PVDs).
+PVDs are heatmaps with biomarker events on the y-axis 
+and sequence positions of events on the x-axis.
+Each event occurs at some point in continuing time 
+relative to other events in sequence.
+The exact onset times of the events 
 cannot be determined by the method we used for this analysis.
 The PVD's color scale indicates the Bayesian posterior probability that 
 a particular biomarker event (y-axis) 
@@ -749,7 +757,9 @@ Our data included:
 `r nrow(v1_usable_cases)` Fragile X premutation carriers and 
 `r nrow(gp34_v1_controls)` controls;
 `r nrow(males)` males and `r nrow(females)` females;
-and `r and::and(stages)` carriers at FXTAS stages `r names(stages) |> and::and()`, respectively. We found significant evidence of sex differences in proportions of events at baseline visit for `r report_sex_differences(biomarkers_table)`.
+and `r and::and(stages)` carriers at 
+FXTAS stages `r names(stages) |> and::and()`, respectively. 
+We found significant evidence of sex differences in proportions of events at baseline visit for `r report_sex_differences(biomarkers_table)`.
 
 ## Stratified by sex {#sec-methods-strat-sex}
 
@@ -783,7 +793,7 @@ Cognitive declines, as measured by SWM and PAL also occurred at earlier FXTAS st
 Ataxia occurred prior to Stage 1 for females and after Stage 2 for males.
 However, Ataxia severity 1 occurred earlier for males (between Stages 2-3) than for females (between Stages 3-4).
 Advanced degrees of Ataxia severity also occurred earlier in the event sequence for males than females. 
-MRI biomarkers of decline and Parkinsonian features also appear at earlier stages for males than for females.
+MRI biomarkers of decline and parkinsonian features also appear at earlier stages for males than for females.
 
 ## Stratified by CGG repeats {#sec-methods-strat-cgg}
 

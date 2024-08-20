@@ -7,7 +7,7 @@
 #'
 #' @examples
 #' vars = c(
-#' "Parkinsonian features",
+#' "parkinsonian features",
 #' "Parkinsonian features: missingness reasons")
 #' vars |> remove_missingness_reason_vars()
 remove_missingness_reason_vars = function(vars)

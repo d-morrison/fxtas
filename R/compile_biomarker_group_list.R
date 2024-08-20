@@ -27,8 +27,14 @@ compile_biomarker_group_list = function(dataset = trax_gp34_v1)
     # "Any tremor (excluding Head Tremor)"
   )
 
-  parkinsons_vars =
-    grep("Parkinson", value = TRUE, names(dataset))
+  parkinsonian_vars =
+    c(
+      "parkinsonian features",
+      "Masked faces",
+      "Increased tone",
+      "Pill rolling tremor",
+      "Stiff gait")
+
 
   mri_vars = c(
     # "Cerebral Atrophy",
@@ -58,7 +64,6 @@ compile_biomarker_group_list = function(dataset = trax_gp34_v1)
   ataxia = c(
     "Ataxia",
     "Ataxia: severity*"
-    # grep("Parkinson", value = TRUE, names(visit1))
   )
 
   scid_vars =
@@ -87,7 +92,7 @@ compile_biomarker_group_list = function(dataset = trax_gp34_v1)
 
   scores =
     c(
-      "MMSE Total Score*",
+      "MMSE total score*",
       "BDS-2 Total Score*") |>
     intersect(names(dataset))
 
@@ -127,7 +132,8 @@ kinesia_vars = c(
       Tremors = tremors,
       Ataxia = ataxia,
       Stage = "FXTAS Stage (0-5)*",
-      Parkinsons = parkinsons_vars,
+      Parkinsonian = parkinsonian_vars,
+      Parkinsons = "Parkinsons",
       # cancer = cancer_vars,
       MRI = mri_vars,
       Scores = scores,
