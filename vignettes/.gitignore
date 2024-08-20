@@ -1,3 +1,10 @@
 *.html
 *.R
 /.quarto/
+test.docx
+test.qmd
+ordinal-sustain.docx
+exploration.docx
+*_cache
+~$dinal-sustain.docx
+test_graphs_docx.docx

@@ -7,6 +7,10 @@ format_samples_sequence = function(
     biomarker_levels =
       results$biomarker_levels)
 {
+  n_events = dim(samples_sequence)[2]
+  stopifnot(n_events == length(biomarker_event_names))
+  stopifnot(is.numeric(samples_sequence))
+
   samples_sequence[] = biomarker_event_names[samples_sequence + 1]
   dimnames(samples_sequence) =
     # dim(samples_sequence) |>

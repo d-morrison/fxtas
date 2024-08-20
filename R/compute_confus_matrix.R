@@ -64,6 +64,9 @@ compute_position_frequencies = function(samples_sequence)
       proportion = n / nrow(samples_sequence)) |>
     select(-n)
 
+  class(results) =
+    c("PF", class(results))
+
   return(results)
 }
 
@@ -74,7 +77,11 @@ order_biomarkers = function(position_frequencies)
     position_frequencies |>
     arrange(`event name`, desc(proportion), position) |>
     slice_head(by = `event name`) |>
-    arrange(position, desc(proportion), `event name`)
+    arrange(position, desc(proportion), `event name`) |>
+    mutate(
+      row_num = dplyr::row_number(),
+      `row number and name` =
+        paste(.data$row_num, .data$`event name`, sep = ": "))
 
 }
 
@@ -86,13 +93,22 @@ arrange_position_frequencies = function(
   {
     biomarker_order =
       position_frequencies |>
-      order_biomarkers() |>
-      pull(`event name`)
+      order_biomarkers() |> pull("event name")
   }
 
   position_frequencies |>
     mutate(
-      `event name` =
-        factor(`event name`, levels = biomarker_order)) |>
-    arrange(`event name`)
+      "event name" =
+        .data$`event name`|>
+        factor(
+          levels = biomarker_order),
+      "row number and name" =
+        paste(
+          as.numeric(.data$`event name`),
+          .data$`event name`, sep = ") ")
+    ) |>
+    arrange(`event name`) |>
+    relocate(
+      "row number and name",
+      .before = "event name")
 }

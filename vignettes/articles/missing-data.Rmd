@@ -1,0 +1,579 @@
+---
+title: "Missing Data in FXTAS study"
+output:
+  html_document:
+    df_print: paged
+    toc: true
+    toc_depth: 4
+    toc_float: true
+    number_sections: true
+  word_document:
+    number_sections: yes
+---
+
+```{r, include = FALSE}
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  comment = "#>",
+  fig.width = 7.5,
+  fig.height = 4
+)
+
+```
+
+```{r setup}
+library(fxtas)
+library(pander)
+library(table1)
+library(dplyr)
+library(magrittr)
+library(scales)
+
+NA.label1 = "Missing (see breakdown below)"
+conflicts_prefer(scales::percent)
+# load_all()
+```
+
+## ApoE
+
+```{r}
+apoe.n = gp34 |> missing_pattern_by_ID(variable = "ApoE")
+```
+
+Many participants (`r sum(apoe.n$all_missing)` of `r nrow(apoe.n)`, `r apoe.n$all_missing |> mean() |> percent(.1)`) have no ApoE results.
+
+## CGG
+
+```{r}
+cgg.n = gp34 |> missing_pattern_by_ID(variable = "CGG")
+```
+
+Many participants (`r sum(cgg.n$all_missing)` of `r nrow(cgg.n)`, `r cgg.n$all_missing |> mean() |> percent(.1)`) have no CGG results.
+
+## Lifestyle
+
+**Question:** What should we do with codes 888 and 999 for these variables? Should they be treated as "Never used" or as actual missing values? What about missing data (field empty in RedCap)? Can we fill in any data using the unstructured data in  "Drugs used" (`mds_psy_drug_notes`)?
+
+
+```{r}
+vars = c("Drug use",
+         "Marijuana use",
+         "Alcohol use/abuse",
+         "# of drinks per day now",
+         "# of drinks per day now: missingness reasons")
+
+table1(na.is.category = FALSE, 
+  NA.label = NA.label1,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+## Cancer
+
+**Question:** Can we fill in any data for Skin Cancer, Melanoma, or "Other Cancer"?
+
+**Question:** What should we do with codes 888 and 999 for these variables? Should they be treated as "Never used" or as actual missing values? What about blank entries (empty fields in RedCap)?
+
+```{r}
+vars = c(
+  "Thyroid Cancer",
+  "Skin Cancer",
+  "Melanoma",
+  "Prostate Cancer",
+  "Other Cancer"
+  
+)
+
+table1(na.is.category = FALSE, 
+  NA.label = NA.label1,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+```
+
+
+## Surgery
+
+**Question:** Can we categorize the surgery data into a binary variable for GP4? (There are currently multiple surgery variables, `new_mds_med_sur1`, `new_mds_med_sur2`, etc., all with unstructured data.)
+
+**Question:** Can we categorize surgery types into a small set of indicator variables?
+
+**Question:** Can we extract age at surgery and surgery dates from the unstructured text?
+
+**Question:** Do we have a source of anesthesia data for GP3?
+
+**Question:** Can we categorize anesthesia into a binary variable (yes/no), summarizing across all fields in GP4 (`new_mds_med_anes1`, `new_mds_med_anes2`, etc.)?
+
+**Question:** What should we do with missing codes and blanks?
+
+```{r}
+
+vars = 
+  c(
+    "Surgery",
+    "Anesthesia (medic_surg_anes)", 
+    "Anesthesia (new_mds_med_anes1)"
+    # "Other Cancer (detailed)", # don't include in table
+    # "Surgery",
+    # "Surgery type",
+    # "Surgery: Type/Age",
+    # "Surgery 2: Type/Age",
+    # "Surgery 3: Type/Age",
+    # "Surgery 4: Type/Age",
+    # "Surgery 5: Type/Age",
+  )
+# grep(pattern = "surgery", ignore.case = TRUE, x = names(gp34), value = TRUE)
+
+library(table1)
+table1(na.is.category = FALSE, 
+  NA.label = NA.label1,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+```
+
+## Tremors
+
+**Question:** What should we do with missing codes and blanks?
+
+```{r}
+vars = c(
+  
+  "Intention tremor",
+  "Resting tremor",
+  "Postural tremor",
+  "Intermittent tremor",
+  "Any tremor",
+  "Tremor: Age of onset"
+  # "Tremor: Age of onset: missingness reasons"
+)
+table1(na.is.category = FALSE, 
+  NA.label = NA.label1,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+Age of onset missingness reasons where any of the four above tremor types = "Yes":
+
+```{r}
+
+table1(na.is.category = FALSE, 
+  NA.label = NA.label1,
+  stratified_formula("Tremor: Age of onset: missingness reasons", "Recruited in study phase"),
+  data = visit1 |> filter(`Any tremor` == "Some Tremors Recorded"))
+
+```
+
+## Head tremors
+
+**Question:** Can we get any data on head tremor for GP3?
+
+```{r}
+vars = c(
+  "Head tremor",
+  "Head Tremor: Age of onset"
+  
+)
+table1(na.is.category = FALSE, 
+  NA.label = NA.label1,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+Age of onset missingness reasons where "Head tremor" = "Yes":
+
+```{r}
+
+table1(na.is.category = FALSE, 
+  NA.label = NA.label1,
+  stratified_formula("Head Tremor: Age of onset: missingness reasons", "Recruited in study phase"),
+  data = visit1 |> filter(`Head tremor` == "Yes"))
+
+```
+
+
+
+## Ataxia
+
+**Question:** What should we do with missing codes and blanks?
+
+```{r}
+
+vars = c(
+  "Ataxia",
+  "Ataxia: severity",
+  "Ataxia: severity*",
+  "Ataxia: Age of onset",
+  "Ataxia: Age of onset: missingness reasons"
+)
+
+table1(na.is.category = FALSE, 
+  NA.label = NA.label1,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+## Parkinsons
+
+**Question:** Can we fill in Parkinsons (formal diagnosis) for GP3?
+
+**Question:** What should we do with missing codes and blanks?
+
+```{r}
+
+vars = grep("Parkinson", value = TRUE, names(gp34))
+
+table1(na.is.category = FALSE, 
+  NA.label = NA.label1,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+## FXTAS Stage
+
+**Question:** What should we do with missing codes and blanks?
+
+```{r}
+
+vars = "FXTAS Stage (0-5)"
+
+table1(na.is.category = FALSE, 
+  NA.label = NA.label1,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+# gp34 |> 
+#   filter(`FXTAS Stage (0-5)` %in% c(NA, "No Response (999)", "Missing (empty in RedCap)")) |> 
+#   select(`FXS ID`, `Event Name`, `Visit Date`) |> 
+#   arrange() |> 
+#   readr::write_csv("inst/extdata/missing_FXTAS_stage.csv")
+
+```
+
+## BDS2
+
+**Question:** What should we do with missing codes and blanks?
+
+```{r}
+
+vars = grep("BDS-2 Total Score", value = TRUE, names(gp34), fixed = TRUE)
+
+table1(na.is.category = FALSE, 
+  NA.label = NA.label1,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+## MMSE
+
+**Question:** What should we do with blanks?
+
+```{r}
+
+vars = grep("MMSE Total Score", value = TRUE, names(gp34), fixed = TRUE)
+
+table1(na.is.category = FALSE, 
+  NA.label = NA.label1,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+## SCID
+
+**Question:** What should we do with missing codes and blanks?
+
+**Question:** Should we interpret "lifelong" age of onset (code 555) as since age 0?
+
+
+```{r}
+
+vars = c(
+  "Was SCID completed?",
+  "Bipolar I Disorder (MD01), Lifetime",
+  "Bipolar I Disorder (MD01), Current",
+  "Bipolar II Disorder (MD02), Lifetime",
+  "Bipolar II Disorder (MD02), Current",
+  "Other Bipolar Disorder (MD03), Current",
+  "Other Bipolar Disorder (MD03), Lifetime",
+  "Major Depressive Disorder (MD04), Lifetime",
+  "Major Depressive Disorder (MD04), Current",
+  "Mood Disorder Due to GMC (MD07), Lifetime",
+  "Mood Disorder Due to GMC (MD07), Current",
+  "Substance-Induced Mood Dis. (MD08), Lifetime",
+  "Substance-Induced Mood Dis. (MD08), Current",
+  "Primary Psychotic Symptoms (PS01), Lifetime",
+  "Primary Psychotic Symptoms (PS01), Current"
+)
+
+table1(na.is.category = FALSE, 
+  NA.label = NA.label1,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+## SCL90
+
+**Question:** What should we do with missing codes and blanks?
+
+**Question:** Do we want to include "SCL90: Interpersonal Sensitivity" (was included in data extract, wasn't on Word doc list)?
+
+```{r}
+
+vars = c(
+  # grep("score", value = TRUE, names(gp34), ignore.case = TRUE) |> sort(),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90: Somatization"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90: Obsessive-Compulsive"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90: Depression"), 
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90: Anxiety"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90: Hostility"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90: Phobia"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90: Paranoid Ideation",),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90: Psychoticism"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90: Global Severity Index"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90: Interpersonal Sensitivity"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90: Positive Symptom Distress Index"),
+  grep(value = TRUE, fixed = TRUE, names(gp34), pattern = "SCL90: Positive Symptom Total")
+)
+
+table1(na.is.category = FALSE, 
+  NA.label = NA.label1,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+## MRI
+
+**Question:** What should we do with missing codes and blanks? Can we use results from subsequent visits to fill in earlier visits?
+
+**Question:** Do we want to include "SCL90: Interpersonal Sensitivity" in the analysis? (It was included in data extract but wasn't in the Word document "FXTAS event sequence RH.docx").
+
+```{r}
+
+vars = c(
+  "Cerebral Atrophy",
+  "Cerebellar Atrophy",
+  "Cerebral WM Hyperintensity",
+  "Cerebellar WM Hyperintensity",
+  "MCP-WM Hyperintensity",
+  "Pons-WM Hyperintensity",
+  "Sub-Insular WM Hyperintensity",
+  "Periventricular WM Hyperintensity",
+  "Splenium (CC)-WM Hyperintensity",
+  "Genu (CC)-WM Hyperintensity",
+  "Corpus Callosum-Thickness"
+)
+
+table1(na.is.category = FALSE, 
+  NA.label = NA.label1,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+## WAIS 3/4
+
+**Question:** Can we combine "Verbal: IQ Score" (`wais_verb_iq`) and "Verbal Comprehension: Composite Score (VCI)" (`wais4_verbcomp_cs`)?
+
+**Question:** Can we combine "Full Scale: IQ Score" (`wais_fullscale_iq`) and "Full Scale: Composite Score (FSIQ)" (`wais4_fullscale_cs`)?
+
+**Question:** Do we have any data for perceptual reasoning, working memory, or processing speed for GP3?
+
+```{r}
+
+vars = c(
+  "Verbal: IQ Score",
+  "Verbal Comprehension: Composite Score (VCI)",
+  
+  "Perceptual Reasoning: Composite Score (PRI)",
+  "Working Memory: Composite Score (WMI)", 
+  "Processing Speed: Composite Score (PSI)",
+  
+  "Full Scale: IQ Score",
+  "Full Scale: Composite Score (FSIQ)"
+) |> sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> as.vector()
+
+table1(na.is.category = FALSE, 
+  NA.label = NA.label1,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+
+```
+
+## CANTAB
+
+**Question:** All of these scores are completely missing in GP4 and almost entirely missing in GP3; do we have a way to fill in the missing data?
+
+**Question:** The score "WMS Letter-Number Sequencing" is listed in the word document, but I didn't find it in the RedCap report. I saw a few seemingly-relevant variables in RedCap, but I wasn't sure which one to use?
+
+
+```{r}
+
+# table1(na.is.category = FALSE, 
+#   NA.label = NA.label1,
+#   stratified_formula("Drugs used", "Recruited in study phase"),
+#   data = visit1)
+
+
+cantab_vars = c(
+  "SWM Between errors",
+  "SST Median correct RT on GO trials",
+  "RVP A signal detection",
+  "OTS Problems solved on first choice",
+  "PAL Total errors (adjusted)",
+  "RTI Five-choice movement time") 
+# |> 
+#   sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> 
+# as.vector()
+
+table1(na.is.category = FALSE, 
+  NA.label = "Missing (empty in RedCap)",
+  stratified_formula(cantab_vars, "Recruited in study phase"),
+  data = visit1)
+```
+
+## Thyroid and other autoimmune diseases
+
+**Question:** "Medical history of thyroid disease and age of onset" is listed in the word doc, but I wasn't sure which corresponding variables to analyze.
+
+**Question:** "ANA positive", "Raynauds Syndrome", and "Pulmonary Fibrosis" are completely missing in GP3; can we fill these in somehow?
+
+**Question:** What should we do with the NA codes and blanks?
+
+```{r}
+
+# table1(na.is.category = FALSE, 
+#   NA.label = NA.label1,
+#   stratified_formula("Drugs used", "Recruited in study phase"),
+#   data = visit1)
+
+
+vars = c(
+  
+  "Lupus",
+  "Rheumatoid arthritis",
+  "Multiple Sclerosis: Workup",
+  "ANA positive",
+  "Sjogrens Syndrome",
+  "Raynauds Syndrome",
+  "Pulmonary Fibrosis"
+  # "Immunological Notes"
+  
+  
+)
+
+table1(na.is.category = FALSE, 
+  NA.label = NA.label1,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+```
+
+## Other variables
+
+**Question:** I didn't see any variables for:
+* "Kinesia One score for Rt and Lt hands for all types of tremor." 
+* "Purdue pegboard for reaction time"
+* "MOCA"
+
+Do we have variables for these scores?
+
+## Demographics
+
+There is substantial missingness in both `Primary Ethnicity` and `Primary Race`; not sure if we will need these variables:
+
+```{r}
+
+vars = c(
+  "Age at visit",
+  "# visits",
+  # "Recruited in study phase",
+  "Gender",
+  "Primary Ethnicity",
+  "Primary Race"
+  
+)
+
+table1(na.is.category = FALSE, 
+  NA.label = NA.label1,
+  stratified_formula(vars, "Recruited in study phase"),
+  data = visit1)
+```
+
+**Question:** For `age of onset` = "lifelong (555)", what numeric value should we use? Age 0?
+
+# Visit dates
+
+We also started looking at the longitudinal data, and had some questions about the visit dates:
+
+## Missing visit dates
+
+```{r}
+
+tab = gp34 |> filter(is.na(`Visit Date`)) |> 
+  select(Study:`Visit Date`)
+
+```
+
+There are `r nrow(tab)` records with missing visit dates.
+
+**Question:** Can these missing dates be filled in?
+
+```{r}
+pander(tab)
+```
+
+
+
+## Duplicate visit dates
+
+```{r}
+
+tab = gp34 |> 
+  group_by(`FXS ID`, `Visit Date`) |> 
+  filter(n() > 1, !is.na(`Visit Date`[1])) |> 
+  select(Study:`Visit Date`) |> 
+  split(~`FXS ID`)
+
+```
+
+There are `r length(tab)` duplicate visit dates.
+
+**Question:** Are these duplicate values correct?
+
+```{r, results = "asis"}
+pander(tab)
+```
+
+
+
+## Visits out of event sequence
+
+```{r}
+ooo = gp34 |>
+  select(`FXS ID`, `Visit Date`, `Event Name`) |>
+  group_by(`FXS ID`) |>
+  filter(is.unsorted(`Event Name`[`Event Name` != "GP4 - Single Visit"])) |>
+  # filter(any(`decreased age`, na.rm = TRUE)) |>
+  # ungroup() |>
+  split(~`FXS ID`)
+```
+
+`r length(ooo)` participants have visits occurring out of chronological order (e.g., GP4 Visit1 before GP3 Visit 1).
+
+**Question:** Are these records correct?
+
+```{r, results = "asis"}
+
+pander(ooo)
+```
+

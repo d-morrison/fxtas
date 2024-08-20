@@ -19,7 +19,7 @@ replace_missing_codes(
 
 \item{missing_codes}{a vector of strings}
 
-\item{replacement}{a string variable or `NA`}
+\item{replacement}{a string variable or \code{NA}}
 
 \item{mapping}{a named string vector}
 }

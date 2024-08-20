@@ -1,0 +1,23 @@
+
+
+### Multivisit patients only, all visits
+
+@fig-mv-only shows the event sequences that we estimated using only the data from patients with more than one visit.
+
+```{r}
+#| label: "fig-mv-only"
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-cap: "Estimated event sequences - multivisit patients only"
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "Unstratified"
+#|   - "Males only" 
+#|   - "Females only"
+
+fig_both_mv_only |> print()
+fig_males_mv_only |> print()
+fig_females_mv_only |> print()
+
+```

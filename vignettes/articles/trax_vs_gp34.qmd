@@ -1,0 +1,145 @@
+---
+title: "Event sequences in Fragile X-associated tremor/ataxia syndrome"
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "#>" 
+    R.options:  
+      dev: svg
+
+project:
+  execute-dir: project
+---
+
+```{=html}
+<style>
+.quarto-figure-center > figure {
+text-align: center;
+}
+</style>
+```
+
+# Methods
+
+Here, we fit the Ordinal SuStaIn model [@young2021ordinal] on three datasets:
+
+- GP + GP4, males only, first visit only
+- Trax + GP + GP4, males only, first visit only
+- Trax (already all males), first visit only
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  # fig.width = 7, 
+  # fig.height = 10,
+  include = TRUE
+)
+```
+
+```{r setup}
+#| message: false
+devtools::load_all()
+# library(fxtas)
+library(tidyverse)
+library(reticulate)
+use_condaenv("fxtas39")
+# py_config()
+library(pander)
+```
+
+```{r "build-figs"}
+fig_male = extract_figs_from_pickle(size.y = size.y,
+  n_s = 1,
+  dataset_name = "males",
+  output_folder = "output/output.longest")
+```
+
+```{r}
+fig_male_trax_gp34 = extract_figs_from_pickle(size.y = size.y,
+  n_s = 1,
+  dataset_name = "sample_data",
+  output_folder = "output/trax_gp34_males_v1")
+
+fig_trax_only = extract_figs_from_pickle(size.y = size.y,
+  n_s = 1,
+  dataset_name = "trax_visit1",
+  output_folder = "output/trax_visit1")
+```
+
+# Results
+
+@fig-pvd1 shows the event sequences that we estimated from each dataset. Note that clinical events which never occur in a dataset cannot be placed into the event sequence, so the set of modeled events varies by data subset. Additionally, since we only used the earliest visit for each individual across all the datasets in each analysis, some of the events included in the GP+GP4 1st visits dataset were not observed in the GP+GP4+Trax 1st visits dataset.
+
+```{r "extract-event-lists"}
+gp34_events = fig_male |> attr("biomarker_event_names")
+trax_events = fig_trax_only |> attr("biomarker_event_names")
+trax_gp34_events = fig_male_trax_gp34 |> attr("biomarker_event_names")
+```
+
+```{r}
+missing1 = setdiff(gp34_events, trax_events)
+missing2 = setdiff(gp34_events, trax_gp34_events)
+```
+
+Specifically,  compared to the GP+GP4 dataset, the Trax+GP+GP4 dataset included `r length(missing2)` fewer event types:
+
+```{r}
+print(missing2 |> sort())
+```
+
+Compared to the GP+GP4 1st visits dataset, the Trax data included `r length(missing1)` fewer event types:
+
+```{r}
+print(missing1 |> sort())
+```
+
+
+
+```{r}
+#| include: false
+library(VennDiagram)
+temp = venn.diagram(
+  x = list(gp34_events, trax_events, trax_gp34_events),
+  category.names = c("GP+GP4" , "Trax" , "GP+GP4+Trax"),
+  filename = "output/venn_dagram.png",
+  output=TRUE
+)
+```
+
+```{r}
+#| label: "fig-pvd1"
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-cap: "Estimated event sequence models - males only: gp34, trax, and gp34+trax"
+#| fig-cap-location: top
+#| layout-ncol: 3
+#| fig-subcap:
+#|   - "GP+GP4 males only"
+#|   - "Trax+GP+GP4, males only" 
+#|   - "Trax only"
+
+fig_male = extract_figs_from_pickle(size.y = size.y,
+  n_s = 1,
+  dataset_name = "males",
+  output_folder = "output/output.longest") |> 
+  print()
+
+fig_male_trax_gp34 = extract_figs_from_pickle(size.y = size.y,
+  n_s = 1,
+  dataset_name = "sample_data",
+  output_folder = "output/trax_gp34_males_v1") |> 
+  print()
+
+fig_trax_only = extract_figs_from_pickle(size.y = size.y,
+  n_s = 1,
+  dataset_name = "trax_visit1",
+  output_folder = "output/trax_visit1") |> 
+  print()
+
+```
+
+# References {.unnumbered}
+
+::: {#refs}
+:::

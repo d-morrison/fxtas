@@ -88,12 +88,8 @@ Ps should be non-zero.
 
 ```{r}
 
-ModelScores = DataScores = 
-  df |> 
-  select(all_of(biomarker_varnames)) |> 
-  # lapply(F = levels)
-  compute_score_levels()
-
+ModelScores = compute_ModelScores(biomarker_levels)
+  
 control_data = 
   df |> 
   filter(`FX*` == "CGG < 55") |> 
@@ -108,18 +104,7 @@ prob_correct =
   control_data |> 
   compute_prob_correct(
     max_prob = .95,
-    biomarkers = biomarker_varnames,
-    DataScores = DataScores)
-
-prob_dist = compute_prob_dist(
-  ModelScores,
-  DataScores,
-  biomarker_varnames,
-  prob_correct
-)
-
-prob_nl_dist = prob_dist[1, , ]
-prob_score_dist = prob_dist[-1, , ]
+    biomarker_levels = biomarker_levels)
 
 ```
 
@@ -128,9 +113,8 @@ prob_score_dist = prob_dist[-1, , ]
 prob_score0 = compute_prob_scores(
   dataset = patient_data,
   biomarker_varnames,
-  ModelScores,
-  DataScores,
-  prob_dist
+  ModelScores = ModelScores,
+  prob_correct = prob_correct
 )
 
 prob_nl = prob_score0[,,1]
@@ -142,17 +126,7 @@ prob_score = prob_score0[,,-1, drop = FALSE]
 
 # sapply(X = biomarker_varnames, F = function(x) 1:nlevs[x])
 
-score_vals = matrix(
-  ModelScores[-1] |> as.numeric(),
-  byrow = TRUE,
-  nrow = length(biomarker_varnames),
-  ncol = length(ModelScores) - 1,
-  dimnames = list(biomarker_varnames, ModelScores[-1]))
-
-for (i in biomarker_varnames)
-{
-  score_vals[i,score_vals[i,] > nlevs[i]-1] = 0
-}
+score_vals = build_score_vals(biomarker_levels)
 
 ```
 
@@ -229,7 +203,7 @@ figs = plot_positional_var(
     samples_sequence = py$samples_sequence,
     samples_f = py$samples_f,
     n_samples = nrow(patient_data),
-    score_vals = score_vals,
+    
     biomarker_labels = SuStaInLabels)
 print(figs[[1]])
 print(figs[[2]])

@@ -1,0 +1,61 @@
+## Testing for differences among strata {#sec-permutation .appendix}
+
+We tested for differences between subgroups using a permutation test. 
+For example, to test for differences in event sequences between males and females, we randomly permuted the `Sex` variable in our dataset 1000 times. 
+For each random permutation, we calculated the mean log-likelihood of the data (averaging across MCMC samples from the posterior distribution of possible event sequences and summing across "Male" and "Female" subsets). 
+We then compared the distribution of permuted mean log-likelihoods to the observed mean log-likelihood.
+
+```{r}
+library(fxtas)
+output_folder = fs::path(here::here(), "output/output.fixed_CV")
+output_folder |> fs::path("pickle_files") |> dir()
+
+
+if(FALSE)
+{
+  results_females_first = extract_results_from_pickle(
+    n_s = 1,
+    rda_filename = "data.RData",
+    dataset_name = "females",
+    output_folder = output_folder)
+
+  results_males_first = extract_results_from_pickle(
+    n_s = 1,
+    rda_filename = "data.RData",
+    dataset_name = "females",
+    output_folder = output_folder)
+
+  llik_females = results_females_first$samples_likelihood
+  llik_males = results_males_first$samples_likelihood
+
+  test_stat = mean(llik_females) + mean(llik_males)
+}
+
+
+n_permutations = 1000
+permuted_test_stats = numeric(length = n_permutations)
+for (p in 1:n_permutations)
+{
+  message('analyzing permutation ', p)
+  results_females_first = extract_results_from_pickle(
+    n_s = 1,
+    rda_filename = "data.RData",
+    dataset_name = paste("females", p, sep = "_p"),
+    output_folder = output_folder)
+
+  results_males_first = extract_results_from_pickle(
+    n_s = 1,
+    rda_filename = "data.RData",
+    dataset_name = paste("males", p, sep = "_p"),
+    output_folder = output_folder)
+
+  llik_females = results_females_first$samples_likelihood
+  llik_males = results_males_first$samples_likelihood
+  cur_test_stat = mean(llik_females) + mean(llik_males)
+  permuted_test_stats[p] = cur_test_stat
+}
+
+save.image(file = "permutations.RData")
+
+
+```

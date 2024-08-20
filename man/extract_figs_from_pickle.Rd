@@ -2,20 +2,39 @@
 % Please edit documentation in R/extract_figs_from_pickle.R
 \name{extract_figs_from_pickle}
 \alias{extract_figs_from_pickle}
-\title{Title}
+\title{Extact PVDs from pickle file}
 \usage{
 extract_figs_from_pickle(
   n_s = 1,
   dataset_name = "sample_data",
   output_folder = "output",
+  rda_filename = "data.RData",
   picklename = paste0(dataset_name, "_subtype", n_s - 1, ".pickle"),
-  results = py_load_object(fs::path(output_folder, "pickle_files", picklename)),
   ...
 )
 }
 \arguments{
-\item{...}{}
+\item{n_s}{helps construct \code{picklename} by identifying number of latent subgroups}
+
+\item{dataset_name}{root name of dataset}
+
+\item{output_folder}{where to find the dataset}
+
+\item{rda_filename}{name of rda file containing environment used to run analyses}
+
+\item{picklename}{the name of the pickle file to open}
+
+\item{...}{
+  Arguments passed on to \code{\link[=plot_positional_var]{plot_positional_var}}
+  \describe{
+    \item{\code{biomarker_groups}}{biomarker groupings}
+    \item{\code{results}}{pickle file contents}
+    \item{\code{biomarker_labels}}{biomarker labels}
+    \item{\code{biomarker_levels}}{biomarker levels}
+    \item{\code{biomarker_events_table}}{table of biomarker events (excluding base level)}
+    \item{\code{biomarker_event_names}}{vector of biomarker event names}
+  }}
 }
 \description{
-Title
+Extact PVDs from pickle file
 }

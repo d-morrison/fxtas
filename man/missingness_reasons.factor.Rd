@@ -12,7 +12,7 @@ missingness_reasons.factor(x, x.clean = replace_missing_codes_with_NAs(x))
 \item{x.clean}{the cleaned vector}
 }
 \value{
-a vector containing the values of x corresponding to `NA`s in x.clean,
+a vector containing the values of x corresponding to \code{NA}s in x.clean,
 }
 \description{
 Compute missingness reasons for a vector of factor variables

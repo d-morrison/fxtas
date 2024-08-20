@@ -1,0 +1,192 @@
+Here we compared the longitudinal models to the cross-sectional models (estimated using each participant's earliest visit):
+
+- Males only (@fig-males):
+  * first visits only (@fig-males)
+  * all visits (@fig-males)
+
+- Females only (@fig-females):
+  * first visits only (@fig-females)
+  * all visits (@fig-females)
+
+We also rearranged these results by subset type:
+
+- first visits only (@fig-first-only)
+- all visits (@fig-all-visits)
+
+Note that clinical events which never occur in a dataset cannot be placed into the event sequence, 
+so the set of modeled events varies by data subset.
+
+```{r}
+#| label: extract figs
+fig_females_all = extract_figs_from_pickle(size.y = size.y,
+  n_s = 1,
+  rda_filename = "gp34_longitudinal.RData",
+  dataset_name = "females",
+  output_folder = "output/gp34_longitudinal")
+
+fig_females_mv_only = extract_figs_from_pickle(size.y = size.y,
+  n_s = 1,
+  rda_filename = "gp34_multivisit_only.RData",
+  dataset_name = "females",
+  output_folder = "output/gp34_multivisit_only")
+
+
+fig_males_all = extract_figs_from_pickle(size.y = size.y,
+  n_s = 1,
+  rda_filename = "gp34_longitudinal.RData",
+  dataset_name = "males",
+  output_folder = "output/gp34_longitudinal")
+
+fig_males_mv_only = extract_figs_from_pickle(size.y = size.y,
+  n_s = 1,
+  rda_filename = "gp34_multivisit_only.RData",
+  dataset_name = "males",
+  output_folder = "output/gp34_multivisit_only")
+
+
+fig_both_all = extract_figs_from_pickle(size.y = size.y,
+  n_s = 1,
+  rda_filename = "gp34_longitudinal.RData",
+  dataset_name = "gp34_longitudinal",
+  output_folder = "output/gp34_longitudinal")
+
+fig_both_mv_only = extract_figs_from_pickle(size.y = size.y,
+  n_s = 1,
+  rda_filename = "gp34_multivisit_only.RData",
+  dataset_name = "gp34_multivisit_only",
+  output_folder = "output/gp34_multivisit_only")
+
+```
+
+### Males {.appendix}
+
+@fig-males shows estimated event sequences for males, depending on which subset of the data we use to fit the model.
+
+```{r}
+#| label: fig-males
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: "Estimated event sequences for males, by data subset"
+#| fig-cap-location: top
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "First visits only"
+#   - "All visits" 
+
+# fig_males_first |> print()
+# 
+# fig_males_all |> print()
+
+# fig_males_mv_only |> print()
+
+plot_compact_pvd(
+  figs = list(
+    fig_males_first,
+    fig_males_all
+  ),
+  facet_label = c("Males, First Visit Only", "Males, All Visits"),
+  y_text_size = 11
+)
+
+```
+
+### Females {.appendix}
+
+```{r}
+#| label: fig-females
+#| fig-cap: "Estimated event sequences for females, by data subset"
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap-location: top
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "First visits only"
+#   - "All visits" 
+
+# fig_females_first |> print()
+# 
+# fig_females_all |> print()
+
+# fig_females_mv_only |> print()
+
+plot_compact_pvd(
+  figs = list(
+    fig_females_first,
+    fig_females_all
+  ),
+  facet_label = c("Females, First Visit Only", "Females, All Visits"),
+  y_text_size = 11
+)
+```
+
+### All patients, all visits  {.appendix}
+
+@fig-all-visits shows the event sequences that we estimated from each data subset.
+Parkinsonian features mostly appear after FXTAS stage 4 for females, whereas they occur before stage 4 for males.
+Similarly, clinically-elevated SCL90 values appear before FXTAS stage 1 for females, whereas they occur after stage 3 for males.
+
+{{< pagebreak >}}
+
+```{r}
+#| label: "fig-all-visits"
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: "Estimated event sequences - all visits"
+#| fig-cap-location: top
+
+# layout-ncol: 2
+# fig-subcap:
+#   - "Males only" 
+#   - "Females only"
+
+# fig_both_all |> print()
+# fig_males_all |> print()
+# fig_females_all |> print()
+
+plot_compact_pvd(
+  figs = list(
+    fig_males_all,
+    fig_females_all
+  ),
+  facet_label = c("Males", "Females"),
+  y_text_size = 11
+)
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| label: fig-stage-by-age-longitudinal
+#| fig-cap: "Progression stage by age, estimated using longitudinal data"
+#| include: true
+
+patient_data1 = 
+  trax_gp34_all |>
+  filter(
+    CGG < 200, 
+    CGG >= 55)
+
+results_both_all = extract_results_from_pickle(
+  n_s = 1,
+  rda_filename = "gp34_longitudinal.RData",
+  dataset_name = "gp34_longitudinal",
+  output_folder = "output/gp34_longitudinal")
+
+stages = 
+  results_both_all$subtype_and_stage_table |> 
+  mutate(
+    age = patient_data1$`Age at visit`,
+    id = patient_data1$`FXS ID`
+  ) |> 
+  arrange(id, age)
+
+library(ggplot2)
+stages |> graph_stage_by_age()
+
+
+```

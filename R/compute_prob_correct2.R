@@ -2,7 +2,7 @@
 #'
 #' @param dataset Should be just the control data?
 #' @param biomarkers
-#' @param DataScores
+#' @param DataScores a list of possible scores
 #' @param max_prob
 #'
 #' @return

@@ -1,0 +1,136 @@
+### Wechsler Adult Intelligence Scale (WAIS)  {.appendix}
+
+```{r}
+#| label: tbl-wais
+#| tbl-cap: "Wechsler Adult Intelligence Scale (WAIS)"
+vars = c(
+  # "Verbal: IQ Score",
+  "Verbal Comprehension: Composite Score (VCI)",
+  
+  "Perceptual Reasoning: Composite Score (PRI)",
+  "Working Memory: Composite Score (WMI)", 
+  "Processing Speed: Composite Score (PSI)",
+  
+  # "Full Scale: IQ Score",
+  "Full Scale: Composite Score (FSIQ)"
+)
+
+if(show_missingness_reasons)
+{
+  vars = vars |> 
+    sapply(
+      F = function(x) 
+        grep(
+          value =  TRUE, 
+          fixed = TRUE, 
+          pattern = x, 
+          x = names(v1_usable))) |> as.vector()
+}
+
+table1::t1flex(
+  table1(
+    na.is.category = FALSE, 
+    overall = FALSE,
+    NA.label = NA.label1,
+    stratified_formula(vars, column_var),
+    # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min, Max]"),
+    data = v1_usable
+  )
+) |>
+  flextable::width(
+    width = 2
+  ) |>
+  flextable::width(
+    j = 2:7,
+    width = 1.25
+  )
+
+
+```
+
+### Drug use {.appendix}
+
+{{< include table_drug_use.qmd >}}
+
+### Kinesia  {.appendix}
+
+```{r}
+#| label: tbl-kinesia
+#| tbl-cap: "Kinesia"
+kinesia_vars = c(
+  "Kinesia Left Rest Tremor",
+  "Kinesia Left Postural Tremor",
+  "Kinesia Left Kinetic Tremor",
+  "Kinesia Right Rest Tremor",
+  "Kinesia Right Postural Tremor",
+  "Kinesia Right Kinetic Tremor"
+)
+kinesia_vars = 
+  c(kinesia_vars,
+    paste0(kinesia_vars, "*")) |> 
+  sort()
+
+table1::t1flex(
+  table1(na.is.category = FALSE, overall = FALSE,
+       NA.label = NA.label1,
+       stratified_formula(kinesia_vars, column_var),
+       data = v1_usable)
+) |>
+  flextable::width(
+    width = 2
+  ) |>
+  flextable::width(
+    j = 2:7,
+    width = 1.25
+  )
+
+
+
+```
+
+
+### Purdue pegboard for reaction time  {.appendix}
+
+```{r}
+#| label: tbl-purdue-pegboard
+#| tbl-cap: "Purdue pegboard for reaction time"
+purdue_vars = c(
+  "Purdue pegboard 1st Trial Total, R+L+B",
+  if(show_missingness_reasons) "Purdue pegboard 1st Trial Total, R+L+B: missingness reasons"
+)
+table1::t1flex(
+  table1(na.is.category = FALSE, overall = FALSE,
+       NA.label = NA.label1,
+       stratified_formula(purdue_vars, column_var),
+       # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+       data = v1_usable)
+) |>
+  flextable::width(
+    width = 2
+  ) |>
+  flextable::width(
+    j = 2:7,
+    width = 1.25
+  )
+
+
+```
+
+
+### MOCA total score  {.appendix}
+
+```{r}
+#| label: tbl-moca-total-score
+#| tbl-cap: "MOCA total score"
+moca_vars = c(
+  "MOCA Total score",
+  if(show_missingness_reasons)"MOCA Total score: missingness reasons"
+)
+table1(na.is.category = FALSE, overall = FALSE,
+       NA.label = NA.label1,
+       stratified_formula(moca_vars, column_var),
+       # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+       data = v1_usable)
+
+```
+

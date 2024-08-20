@@ -5,19 +5,23 @@
 \alias{visit1}
 \title{Visit 1}
 \format{
-## `visit1`
+\subsection{\code{visit1}}{
+
 A data frame with nrow rows and ncol columns:
 \describe{
- \item{col1}{col1name}
+\item{col1}{col1name}
+}
 }
 }
 \source{
+\if{html}{\out{
 <url>
+}}
 }
 \usage{
 visit1
 }
 \description{
-First visit for each participant from `gp34`
+First visit for each participant from \code{gp34}
 }
 \keyword{datasets}
