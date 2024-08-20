@@ -22,6 +22,7 @@ Imports:
     ggtext,
     glue,
     golem (>= 0.3.4),
+    gtsummary,
     here,
     magrittr,
     plotly,
@@ -50,7 +51,7 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
 LazyData: true
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Depends: 
     R (>= 2.10)
 VignetteBuilder: knitr
