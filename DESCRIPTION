@@ -24,6 +24,7 @@ Imports:
     ggtext,
     glue,
     golem (>= 0.3.4),
+    gtsummary,
     here,
     labelled,
     magrittr,
