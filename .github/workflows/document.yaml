@@ -1,26 +1,19 @@
-# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
-# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    paths: ["R/**"]
+    branches: [main, master]
+  pull_request:
 
-name: Document
-
-permissions: read-all
+name: "Documentation check"
 
 jobs:
-  document:
+  docs-check:
     runs-on: ubuntu-latest
     env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_PAT: ${{ github.token }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@v4
 
-      - name: Setup R
-        uses: r-lib/actions/setup-r@v2
+      - uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
 
@@ -34,11 +27,17 @@ jobs:
         run: roxygen2::roxygenise()
         shell: Rscript {0}
 
-      - name: Commit and push changes
+      - name: Check for changed files
         run: |
-          git config --local user.name "$GITHUB_ACTOR"
-          git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          git add man/\* NAMESPACE DESCRIPTION
-          git commit -m "Update documentation" || echo "No changes to commit"
-          git pull --ff-only
-          git push origin
+          git add --all
+          changes=$(git diff-index HEAD --name-only -- man/ NAMESPACE DESCRIPTION)
+          if [ -n "$changes" ]; then
+            echo "Changes found after documenting."
+            git --no-pager diff
+            echo "$changes"
+            echo "Please update documentation."
+            exit 1
+          else
+            echo "No changes found after documenting."
+            exit 0
+          fi
