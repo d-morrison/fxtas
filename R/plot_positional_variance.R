@@ -36,10 +36,7 @@
 #'
 plot_positional_var = function(
     results,
-    samples_sequence =
-      format_samples_sequence(
-        results = results,
-        biomarker_event_names = biomarker_event_names),
+    samples_sequence = results$samples_sequence,
     samples_f = results$samples_f,
     n_samples = results$ml_subtype |> nrow(),
     score_vals = build_score_vals(biomarker_levels),

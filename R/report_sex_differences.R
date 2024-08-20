@@ -12,7 +12,7 @@ report_sex_differences = function(table)
     filter(`p-value` < 0.05) |>
     mutate(
       comparison = glue::glue(
-        "{biomarker} ",
+        '"{biomarker}" ',
         "({Female} of females versus {Male} of males",
         ", p-value {`p-value` |> scales::label_pvalue()()})"
       )) |>

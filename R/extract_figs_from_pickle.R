@@ -13,18 +13,13 @@ extract_figs_from_pickle = function(
     ...)
 {
 
-  # results = extract_results_from_pickle(
-  #   n_s = n_s,
-  #   dataset_name = dataset_name,
-  #   output_folder = output_folder,
-  #   rda_filename = rda_filename,
-  #   picklename = picklename,
-  #   ...)
-
-  results00 =
-    fs::path(output_folder, "pickle_files", picklename) |>
-    py_load_object() |>
-    force()
+  results = extract_results_from_pickle(
+    n_s = n_s,
+    dataset_name = dataset_name,
+    output_folder = output_folder,
+    rda_filename = rda_filename,
+    picklename = picklename,
+    ...)
 
   biomarker_groups =
     output_folder |>
@@ -37,7 +32,7 @@ extract_figs_from_pickle = function(
     readr::read_rds()
 
   plot_positional_var(
-    results = results00,
+    results = results,
     biomarker_groups = biomarker_groups,
     biomarker_levels = biomarker_levels,
     ...)

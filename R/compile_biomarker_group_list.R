@@ -24,7 +24,7 @@ compile_biomarker_group_list = function(dataset = trax_gp34_v1)
     "Resting tremor",
     "Postural tremor",
     "Intermittent tremor"
-    # "Any tremor (excluding Head Tremor)"
+    # "Any tremor (excluding head)"
   )
 
   parkinsonian_vars =
@@ -115,7 +115,7 @@ compile_biomarker_group_list = function(dataset = trax_gp34_v1)
     # "Raynauds Syndrome",
     # "Pulmonary Fibrosis" # no events
     ## "Immunological Notes"
-    "Any Autoimmune"
+    "any autoimmune disorder"
 )
 
 kinesia_vars = c(

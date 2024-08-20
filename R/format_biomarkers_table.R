@@ -9,6 +9,7 @@ flex_biomarkers_table = function(x)
 {
   x |>
     mutate(
+      biomarker = Hmisc::capitalize(biomarker),
       "p-value" = `p-value` |> scales::label_pvalue()()
     ) |>
   flextable::flextable() |>

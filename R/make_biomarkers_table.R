@@ -74,8 +74,7 @@ make_biomarkers_table = function(
         sub(
           pattern = "*",
           replacement = "",
-          fixed = TRUE) |>
-        Hmisc::capitalize())
+          fixed = TRUE))
 
   table_out |>
     structure(class = union('biomarkers_table', class(table_out)))

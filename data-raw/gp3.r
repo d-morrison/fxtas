@@ -685,4 +685,5 @@ if(FALSE)
 #Setting Units
 
 gp3 = tibble(dataset)
-usethis::use_data(gp3, overwrite = TRUE)
+waldo::compare(y = gp3, x = fxtas::gp3, ignore_attr = "problems")
+# usethis::use_data(gp3, overwrite = TRUE)

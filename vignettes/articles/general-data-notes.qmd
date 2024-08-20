@@ -1,6 +1,30 @@
 
 ## General data processing notes {.appendix}
 
+### Composite variables {.appendix}
+
+"any autoimmune disorder" includes:
+    -   "Lupus",
+    -   "Rheumatoid arthritis",
+    -   "Multiple Sclerosis: Workup",
+    -   "ANA positive",
+    -   "Sjogrens Syndrome",
+    -   "Raynauds Syndrome",
+    -   "Pulmonary Fibrosis"
+    
+"Any tremor (excluding head)" includes:
+    -   "Intention tremor",
+    -   "Resting tremor",
+    -   "Postural tremor",
+    -   "Intermittent tremor"
+    
+"Any cancer" includes:
+    -   "Thyroid Cancer",
+    -   "Skin Cancer",
+    -   "Melanoma",
+    -   "Prostate Cancer",
+    -   "Other Cancer"
+
 ### Missing codes {.appendix}
 
 The missing codes 777, 888, and 999 were converted to `NA` for all variables, unless noted otherwise below.

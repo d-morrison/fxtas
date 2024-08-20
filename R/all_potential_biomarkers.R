@@ -14,7 +14,7 @@ all_potential_biomarkers = function(dataset = gp34)
     "Resting tremor",
     "Postural tremor",
     "Intermittent tremor",
-    "Any tremor (excluding Head Tremor)"
+    "Any tremor (excluding head)"
   )
 
   parkinsonian_vars =
@@ -88,7 +88,7 @@ all_potential_biomarkers = function(dataset = gp34)
     "Hypothyroid", # removed after call 2023-09-13
     "Hyperthyroid", # removed after call 2023-09-13
     "Thyroid problems",
-    "Any Autoimmune",
+    "any autoimmune disorder",
     "Lupus",
     "Rheumatoid arthritis",
     "Multiple Sclerosis: Workup",

@@ -2,7 +2,7 @@ test_that("`extract_figs_from_pickle()` produces stable results", {
   here::here() |>
     fs::path("output/output.fixed_CV") |>
     extract_figs_from_pickle(output_folder = _) |>
-    ggsave(
+    ggplot2::ggsave(
       filename = tempfile(),
       device = "svg",
       width = 10,

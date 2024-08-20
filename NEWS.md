@@ -1,5 +1,14 @@
 # fxtas (development version)
 
+* renamed "Any Autoimmune" to "any autoimmune disorder"
+* decapitalized "MMSE Total Score" to "MMSE total score"
+* decapitalized "Head tremor" to "head tremor"
+* decapitalized "Parkinsonian features" to "parkinsonian features"
+* removed "Parkinsonian features: " prefix from:
+  - "Masked faces",
+  - "Increased tone",
+  - "Pill rolling tremor",
+  - "Stiff gait"
 * Renamed "CGG (backfilled)" to CGG
 * Renamed "ApoE (backfilled)" to ApoE
 * Now using most recent ApoE value

@@ -13,7 +13,7 @@ create_any_autoimmune = function(
 {
   dataset |>
     mutate(
-      "Any Autoimmune" = case_when(
+      "any autoimmune disorder" = case_when(
         dplyr::if_any(
           .cols = all_of(autoimmune_dz),
           .fns = ~ . %in% "Yes"
