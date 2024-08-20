@@ -26,17 +26,20 @@ extract_results_from_pickle = function(
 
   if(file.exists(rds_path))
   {
-    cli::cli_alert_info("\nloading {basename} results from RDS file:\n{rds_path}\n")
+    cli::cli_inform("\nloading {basename} results from RDS file:\n{rds_path}\n")
     results = readRDS(rds_path)
   } else
   {
-    cli::cli_alert_info("\nloading {basename} results from pickle file:\n{picklename}\n")
+    cli::cli_inform("\nloading {basename} results from pickle file:\n{picklename}\n")
     results00 =
       fs::path(output_folder, "pickle_files", picklename) |>
       py_load_object() |>
       force()
 
-    load(fs::path(output_folder, rda_filename))  # be careful; might mask `results`
+    biomarker_levels =
+      output_folder |>
+      fs::path("biomarker_levels.rds") |>
+      readr::read_rds()
 
     if (format_results)
     {

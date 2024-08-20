@@ -614,7 +614,7 @@ if(FALSE)
   # label(dataset$mds_neu_atax_sev)="Ataxia: severity"
   # label(dataset$new_mds_ne_ga)="Ataxia"
   # label(dataset$new_mds_med_park)="Parkinsons"
-  # label(dataset$mds_ne_pf)="Parkinsonian features:"
+  # label(dataset$mds_ne_pf)="parkinsonian features:"
   # label(dataset$mds_ne_pfmf)="Masked faces"
   # label(dataset$mds_ne_pfit)="Increased tone"
   # label(dataset$mds_ne_pfprt)="Pill rolling tremor"
