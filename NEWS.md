@@ -3,7 +3,6 @@
 * fixed `create_any_tremor()` to handle NAs before or after `fix_factors()`.
 * renamed "Any Autoimmune" to "any autoimmune disorder" and make it "Yes"/"No"
 * decapitalized "MMSE Total Score" to "MMSE total score"
-* decapitalized "Head tremor" to "head tremor"
 * decapitalized "Parkinsonian features" to "parkinsonian features"
 * removed "Parkinsonian features: " prefix from:
   - "Masked faces",
