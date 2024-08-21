@@ -4,12 +4,14 @@
 \alias{make_biomarkers_table}
 \title{Make biomarkers table}
 \usage{
-make_biomarkers_table(data, biomarker_varnames)
+make_biomarkers_table(data, biomarker_varnames, biomarker_events_table)
 }
 \arguments{
 \item{data}{a \code{\link[=data.frame]{data.frame()}} containing the columns specified by \code{biomarker_varnames} as well as \code{"Gender"}}
 
-\item{biomarker_varnames}{a \code{\link[=character]{character()}} vector matching a subset of the column names in \code{data}}
+\item{biomarker_varnames}{a \link{character} vector matching a subset of the column names in \code{data}}
+
+\item{biomarker_events_table}{\link{data.frame} from \code{\link[=construct_biomarker_events_table]{construct_biomarker_events_table()}}}
 }
 \value{
 a \code{\link[flextable:flextable]{flextable::flextable()}}

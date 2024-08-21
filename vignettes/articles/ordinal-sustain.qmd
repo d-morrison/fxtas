@@ -246,7 +246,7 @@ df = v1_usable
 biomarker_events_table =
   construct_biomarker_events_table(
     biomarker_levels,
-    biomarker_groups)
+    biomarker_groups = biomarker_groups)
 
 nlevs = 
   biomarker_levels |> sapply(length)
@@ -753,7 +753,8 @@ stages = v1_usable_cases |> select(`FXTAS Stage (0-5)*`) |> table()
 biomarkers_table = 
   v1_usable |> 
   make_biomarkers_table(
-    biomarker_varnames = biomarker_varnames)
+    biomarker_varnames = biomarker_varnames,
+    biomarker_events_table = biomarker_events_table)
 ```
 
 @tbl-demographics describes summary statistics of patient characteristics included in the analysis. 
@@ -1130,10 +1131,10 @@ table_subtype_by_demographics(
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences models, stratified by sex and (b) positional differences in estimated event sequence between sexes. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("**Event sequence models stratified by sex. \\(a\\)** Estimated event sequences models, stratified by sex. **(b)** Positional differences in estimated event sequence between sexes. {compact_fig_caption}")
 #| layout-ncol: 1
 #| fig-subcap: 
-#|    - " "
+#|    - "(a)"
 #|    - " "
 #| fig-cap-location: top
 
@@ -1193,7 +1194,7 @@ pvd_lineplot(y_text_size = 11)
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences, stratified by sex and (b) differences in event sequences between sexes, for CGG repeats <100. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("**Event sequences stratified by sex.** **\\(a\\)** Estimated event sequences, stratified by sex. **(b)** Differences in event sequences between sexes, for CGG repeats <100. {compact_fig_caption}")
 #| layout-ncol: 1
 #| fig-subcap: 
 #|    - ""
