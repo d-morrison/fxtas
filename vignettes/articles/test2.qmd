@@ -1,85 +1,13 @@
 ---
-format: pdf
-filters:
-  - ../../docx-landscape.lua
+title: "Authors-block Example"
 ---
 
-# section 1
+# Abstract {.unnumbered}
+{{< lipsum 1 >}}
 
 ```{r}
-devtools::load_all()
-library(tidyverse)
-full_data = trax_gp34_v1
-n_missing_CGG = full_data$CGG |> is.na() |> sum()
-n_above_200 = sum(full_data$CGG >= 200, na.rm = TRUE)
-v1_usable = full_data |> filter(CGG < 200) |> 
-  mutate(`FX3*` = `FX3*` |> droplevels())
-compact_fig_caption = "banana"
-```
-
-see @fig-fig1-2
-
-:::: {#fig-fig1 layout-ncol=1}
-
-::: {#fig-fig1-1}
-
-```{r}
+#| fig-cap: "**short heading**. More detail."
+#| label: fig-1
 plot(1:10)
 ```
 
-Positional variance diagrams by latent subtype. `r compact_fig_caption`
-
-:::
-
-::: {#fig-fig1-2}
-
-```{r}
-plot(10:1)
-```
-
-:::
-
-Latent subgroup models: 
-(a) Estimated event sequences models, stratified by sex and 
-(b) positional differences in estimated event sequence between sexes. 
-
-::::
-
-
-```{r}
-#| label: fig-fig2
-#| fig-cap: !expr glue::glue("(a) banana (b) split")
-#| fig-cap-location: top
-plot(1:10)
-```
-
-::: landscape 
-
-```{r}
-#| label: "fig-first-only"
-#| column: page
-#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences models, stratified by sex and (b) positional differences in estimated event sequence between sexes. {compact_fig_caption}")
-#| layout-ncol: 1
-#| fig-subcap: 
-#|    - " "
-#|    - " "
-#| fig-cap-location: top
-plot(1:10)
-plot(2:11)
-```
-
-:::
-
-
-\setcounter{section}{0}
-\renewcommand{\thesection}{\Alph{section}}
-
-\setcounter{table}{0}
-\renewcommand{\thetable}{A\arabic{table}}
-
-\setcounter{figure}{0}
-\renewcommand{\thefigure}{A\arabic{figure}}
-
-# appendix test {.appendix}
-
-hello there

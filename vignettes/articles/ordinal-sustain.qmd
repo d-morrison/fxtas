@@ -18,6 +18,8 @@ text-align: center;
 </style>
 ```
 
+{{< pagebreak >}}
+
 # Abstract {.unnumbered}
 
 The fragile X-associated tremor/ataxia syndrome (FXTAS) is a 
@@ -39,6 +41,8 @@ collected in FXTAS patients.
 We found 
 substantial differences in order of events 
 depending on sex and CGG repeat number.
+
+{{< pagebreak >}}
 
 # Introduction
 
@@ -1098,7 +1102,7 @@ flex_biomarkers_table(biomarkers_table)
 {{< pagebreak >}}
 
 ```{r}
-#| tbl-cap: !expr glue::glue("Demographics of latent subtype clusters identified by Ordinal SuStaIn ({n_s_selected} subtypes)")
+#| tbl-cap: !expr glue::glue("Demographics of {n_s_selected} latent subtype clusters identified by Ordinal SuStaIn. {n_type_0} patients appeared to be too early in the disease process to be accurately classified into a subtype and were excluded from this table")
 #| label: tbl-sg_demos
 #| results: asis
 

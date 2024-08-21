@@ -208,14 +208,18 @@ plot_positional_var = function(
       samples_sequence[subtype_order[i],,] |>
       t() |>
       compute_position_frequencies() |>
+      simplify_biomarker_names(cols = "event name") |>
+
       # get biomarker names
       left_join(
-        biomarker_events_table,
+        biomarker_events_table |>
+          simplify_biomarker_names(cols = c("biomarker", "biomarker_level")),
         by = c("event name" = "biomarker_level")
       ) |>
       # get biomarker groups and colors
       left_join(
-        biomarker_groups,
+        biomarker_groups |>
+          simplify_biomarker_names(cols = "biomarker"),
         by = c("biomarker")
       ) |>
       arrange_position_frequencies(

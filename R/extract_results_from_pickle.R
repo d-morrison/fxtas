@@ -27,7 +27,7 @@ extract_results_from_pickle = function(
   if(file.exists(rds_path))
   {
     cli::cli_inform("\nloading {basename} results from RDS file:\n{rds_path}\n")
-    results = readRDS(rds_path)
+    results = readr::read_rds(rds_path)
   } else
   {
     cli::cli_inform("\nloading {basename} results from pickle file:\n{picklename}\n")
