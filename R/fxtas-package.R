@@ -20,6 +20,7 @@
 #' @importFrom dplyr row_number
 #' @importFrom dplyr select
 #' @importFrom dplyr slice_head
+#' @importFrom dplyr summarize
 #' @importFrom dplyr tibble
 #' @importFrom flextable as_flextable
 #' @importFrom forcats fct_na_level_to_value

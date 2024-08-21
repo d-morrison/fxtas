@@ -14,11 +14,11 @@ create_any_autoimmune = function(
   dataset |>
     mutate(
       "any autoimmune disorder" = case_when(
-        dplyr::if_any(.cols = all_of(autoimmune_dz), .fns = ~ . %in% "Yes") ~ TRUE,
-        dplyr::if_all(.cols = all_of(autoimmune_dz), .fns = ~ is.na(.)) ~ NA,
-        TRUE ~ FALSE
+        dplyr::if_any(.cols = all_of(autoimmune_dz), .fns = ~ . %in% "Yes") ~ "Yes",
+        dplyr::if_all(.cols = all_of(autoimmune_dz), .fns = ~ is.na(.)) ~ NA_character_,
+        .default = "No"
       ) |>
         factor() |>
-        relevel(ref = "No autoimmune recorded")
+        relevel(ref = "No")
     )
 }
