@@ -80,7 +80,7 @@ and earlier death [@greco2006neuropathology].
 The prevalence of the premutation is estimated at 
 one in 148 to 200 females and 
 one in 290 to 855 males 
-in the general population (@maenner2013fmr1; @hunter2014epidemiology).
+in the general population [@maenner2013fmr1; @hunter2014epidemiology].
 
 A currently open question is: 
 In what sequential order do FXTAS symptoms typically appear, 
@@ -325,7 +325,7 @@ probs =
 
 We assumed that missing biomarker data 
 were missing at random (MAR) 
-(@rubin1976inference, @little2019statistical).
+[@rubin1976inference, @little2019statistical].
 We substituted missing outcome event data 
 by assigning a probability distribution across the 
 possible values of the missing variable 
@@ -347,7 +347,7 @@ To test for statistical significant evidence of differences in event sequences
 between males and females
 and 
 between lower (CGG <100) and higher premutation levels (CGG 100-199),
-we implemented a permutation test (@welch1990construction)
+we implemented a permutation test [@welch1990construction]
 to calculate a p-value that is the probability of observing a difference 
 at least as extreme as the test statistic 
 given that the null hypothesis of no difference is true.
@@ -732,11 +732,11 @@ fig_over100_females = extract_figs_from_pickle(
 
 ## Software
 
-The Ordinal Sustain analysis was performed using the Python programming language, version 3.9 (@python3) 
-with the `pySuStaIn` package (@aksman2021pysustain).
-Data pre-processing and results post-processing were performed in R 4.4.0 (@rcore) 
-using the `tidyverse` packages (@tidyverse).
-The `reticulate` package (@reticulate) was used to create an application programming interface between Python and R.
+The Ordinal Sustain analysis was performed using the Python programming language, version 3.9 [@python3] 
+with the `pySuStaIn` package [@aksman2021pysustain].
+Data pre-processing and results post-processing were performed in R 4.4.0 [@rcore] 
+using the `tidyverse` packages [@tidyverse].
+The `reticulate` package [@reticulate] was used to create an application programming interface between Python and R.
 The code used to perform this analysis is available at <https://github.com/d-morrison/fxtas>.
 
 ## Data availability
@@ -1064,7 +1064,7 @@ In order to apply the Ordinal SuStaIn algorithm,
 we categorized some biomarkers that were originally measured as numbers.
 In doing so, we sacrificed some granular information. 
 There are other variations of the SuStaIn algorithm, 
-such as z-score SuStaIn (@young2018uncovering) 
+such as z-score SuStaIn [@young2018uncovering] 
 which are designed to be used with continuous biomarker measurements,
 and it might be feasible to combine Ordinal SuStaIn and z-score SuStaIn
 to fit an event-based model with both continuous and ordinal outcomes. 
