@@ -151,7 +151,7 @@ trax_labels = c(
   scid_ps01cur="Primary Psychotic Symptoms (PS01), Current",
   scid_ps01lif="Primary Psychotic Symptoms (PS01), Lifetime",
   # new SCID variables (03-2024)
-  scid_md05lif="Dysthymic Disorder (MD05)",
+  scid_md05lif="Dysthymic Disorder (MD05), Lifetime",
   scid_md06lif="Depressive Disorder NOS (MD06), Lifetime",
   scid_md06cur="Depressive Disorder NOS (MD06) Current",
   scid_sud17lif="Alcohol (SUD17), Lifetime",

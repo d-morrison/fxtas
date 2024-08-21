@@ -168,10 +168,10 @@ N_CV_folds = 10L
 n_permutations = 1000
 
 compact_fig_caption <- paste0(
-  "The different colors correspond to the different levels above baseline. ",
-  "Red corresponds to the first level, blue to the second level, ",
+  "The different colors correspond to the different clinically elevated levels. ",
+  "Red corresponds to the first clinically elevated level, blue to the second level, ",
   "purple to the third level, green to the fourth level, ",
-  "and magenta to the fifth level above baseline. ",
+  "and magenta to the fifth level. ",
   "See @tbl-biomarker-list for the levels of each biomarker."
 )
 
@@ -257,8 +257,8 @@ nlevs =
 
 We analyzed measurements of `r length(biomarker_levels)`
 ordinal biomarkers (@tbl-biomarker-list)
-with a total of `r nrow(biomarker_events_table)` non-baseline levels.
-Each ordinal level above baseline constitutes an outcome event 
+with a total of `r nrow(biomarker_events_table)` clinically elevated levels.
+Each clinically elevated ordinal level (above the reference level) constitutes an outcome event 
 in the disease progression modelling analysis (@sec-Statistical-analysis).
 [Supplemental Tables @tbl-tremors] - [-@tbl-autoimmune] 
 summarize the biomarker data, 
@@ -266,6 +266,7 @@ stratified by
 CGG repeat size (`r levels(v1_usable$"FX3*")`) 
 and 
 Sex (`r unique(v1_usable$Gender)`).
+In order to simplify the analysis and produce more robust results, we created composite variables for `"any autoimmune disorder"` and five domains of the Structured Clinical Interview for DSM Disorders (SCID) (details in Supplementary Materials, @sec-composites).
 
 ## Statistical analysis {#sec-Statistical-analysis}
 
@@ -764,7 +765,7 @@ Our data included:
 `r nrow(males)` males and `r nrow(females)` females;
 and `r and::and(stages)` carriers at 
 FXTAS stages `r names(stages) |> and::and()`, respectively. 
-We found significant evidence of sex differences in proportions of events at baseline visit for `r report_sex_differences(biomarkers_table)`.
+We found significant evidence of sex differences in proportions of clinically elevated (non-reference) biomarker levels at baseline visit for `r report_sex_differences(biomarkers_table)`.
 
 ## Stratified by sex {#sec-methods-strat-sex}
 
@@ -794,10 +795,10 @@ between males and females (p = `r pval_sex_gp34_v1`) (@fig-first-only-2).
 It appears that 
 female premutation carriers developed threshold-level Mood Disorder symptoms prior to FXTAS Stage 1 diagnosis,
 whereas male carriers developed these symptoms between FXTAS Stages 3 and 4.
-Cognitive declines, as measured by SWM and PAL also occurred at earlier FXTAS stages for females.
+Cognitive decline, as measured by SWM and PAL also occurred at earlier FXTAS stages for females.
 Ataxia occurred prior to Stage 1 for females and after Stage 2 for males.
-However, Ataxia severity 1 occurred earlier for males (between Stages 2-3) than for females (between Stages 3-4).
-Advanced degrees of Ataxia severity also occurred earlier in the event sequence for males than females. 
+However, ataxia severity level 1 occurred earlier for males (between Stages 2-3) than for females (between Stages 3-4).
+Advanced degrees of ataxia severity also occurred earlier in the event sequence for males than females. 
 MRI biomarkers of decline and parkinsonian features also appear at earlier stages for males than for females.
 
 ## Stratified by CGG repeats {#sec-methods-strat-cgg}
@@ -982,9 +983,9 @@ pval_over100_sex_gp34_v1 = permutation_test(
 
 We did not find statistically significant evidence of a difference between males and females 
 among those with CGG ≥ 100 (p = `r pval_over100_sex_gp34_v1`). 
-@fig-pvd-by-gender-cgg_over100 shows the estimated stratified models, 
+@fig-pvd-by-gender-cgg_over100 shows the estimated stratified models 
 and compares the estimates of the sequences. 
-It should noted that the significant differences for these subgroups 
+The significant differences for these subgroups 
 needs to be declared with caution due to the small sample sizes.
 
 ## Latent Subtypes
@@ -1048,7 +1049,8 @@ We had substantial amounts of missing data.
 As described in the methods (@sec-incomplete-data),
 we used the marginal distribution of each biomarker among cases
 to impute the underlying values of these missing data. 
-The missing data contributes to the large amount of uncertainty in the results.
+The missing data contributes to the 
+large amount of uncertainty in the results.
 
 ### Discretizing numeric biomarkers
 
@@ -1085,7 +1087,7 @@ Supplementary material is available at Brain online.
 
 ```{r}
 #| label: "tbl-demographics"
-#| tbl-cap: "Descriptive statistics of patient characteristics by CGG repeats level. P-values represent tests for differences in distributions of characteristics between sexes, ignoring CGG repeat level."
+#| tbl-cap: "**Descriptive statistics of patient characteristics by CGG repeats level.** p-values represent tests for differences in distributions of characteristics between sexes, ignoring CGG repeat level."
 
 v1_usable |> make_demographics_table()
 
@@ -1131,10 +1133,10 @@ table_subtype_by_demographics(
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("**Event sequence models stratified by sex. \\(a\\)** Estimated event sequences models, stratified by sex. **(b)** Positional differences in estimated event sequence between sexes. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("**Event sequence models stratified by sex. \\(a\\)** Uncertainty in estimated event sequences models. **(b)** Positional differences in estimated event sequence between sexes. {compact_fig_caption}")
 #| layout-ncol: 1
 #| fig-subcap: 
-#|    - "(a)"
+#|    - " "
 #|    - " "
 #| fig-cap-location: top
 
@@ -1166,8 +1168,8 @@ pvd_lineplot(y_text_size = 11)
 #| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences, stratified by CGG repeats (<100 vs 100+) and (b) differences in event sequences between CGG repeat sizes. {compact_fig_caption}")
 #| layout-ncol: 1
 #| fig-subcap: 
-#|    - ""
-#|    - ""
+#|    - " "
+#|    - " "
 #| fig-cap-location: top
 
 

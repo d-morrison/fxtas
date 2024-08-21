@@ -23,7 +23,7 @@ flex_biomarkers_table = function(x)
     flextable::footnote(
       i = 1,
       j = 4:5,
-      value = "% of participants with biomarker levels above baseline (left-most) level" |> flextable::as_paragraph(),
+      value = "% of participants with clinically elevated biomarker levels" |> flextable::as_paragraph(),
       ref_symbols = "a",
       part = "header"
     ) |>

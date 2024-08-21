@@ -123,7 +123,9 @@ nlevs =
 
 ```
 
-We analyzed `r length(biomarker_levels)` biomarkers (@tbl-biomarker-list) with a total of `r nrow(biomarker_events_table)` non-baseline levels; each level above baseline constitutes an outcome event in the disease progression modelling analysis (@sec-Statistical-analysis).
+We analyzed `r length(biomarker_levels)` biomarkers (@tbl-biomarker-list) 
+with a total of `r nrow(biomarker_events_table)` clinically elevated levels; 
+each level above reference constitutes an outcome event in the disease progression modelling analysis (@sec-Statistical-analysis).
 
 ```{r}
 #| tbl-cap: "Biomarkers used in analysis"

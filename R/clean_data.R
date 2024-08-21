@@ -97,7 +97,7 @@ clean_data = function(dataset)
         "Substance-Induced Mood Dis. (MD08), Lifetime",
         "Primary Psychotic Symptoms (PS01), Current",
         "Primary Psychotic Symptoms (PS01), Lifetime",
-        "Dysthymic Disorder (MD05)",
+        "Dysthymic Disorder (MD05), Lifetime",
         "Depressive Disorder NOS (MD06), Lifetime",
         "Depressive Disorder NOS (MD06) Current",
         "Alcohol (SUD17), Lifetime",
