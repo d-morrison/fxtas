@@ -29,7 +29,7 @@ Specifically:
 - "Mood Disorder Due to GMC (MD07), Lifetime"   
 - "Substance-Induced Mood Dis. (MD08), Lifetime"
 
-`"SCID: Substance Use"` combines:
+`"SCID: Substance Use Disorders"` combines:
 
 - "Alcohol (SUD17), Lifetime"                     
 - "Sedative-Hypnotic-Anxiolytic (SUD18), Lifetime"
@@ -41,7 +41,7 @@ Specifically:
 - "Poly Drug (SUD24), Lifetime"                   
 - "Other (SUD25), Lifetime"   
 
-`SCID: Anxiety` combines:
+`SCID: Anxiety Disorders` combines:
 
 - "Panic Disorder (ANX26), Lifetime"           
 - "Agoraphobia without Panic (ANX27), Lifetime"
@@ -54,7 +54,7 @@ Specifically:
 - "Substance-Induced Anxiety (ANX34), Lifetime"
 - "Anxiety Disorder NOS (ANX35), Lifetime"  
 
-`SCID: Somatization` combines:
+`SCID: Somatization Disorders` combines:
 
 - "Somatization Disorder (SOM36)"      
 - "Pain Disorder (SOM37)"              
@@ -62,7 +62,7 @@ Specifically:
 - "Body Dysmorphic (SOM40)"            
 - "Hypochondriasis (SOM39)" 
 
-`SCID: Psychotic` is simply a renaming of "Primary Psychotic Symptoms (PS01), Lifetime".
+(`SCID: Psychotic Symptoms` is not a composite variable; instead, it is simply a shortened label for "Primary Psychotic Symptoms (PS01), Lifetime".)
 
 <!-- "any autoimmune disorder" includes: -->
 <!--     -   "Lupus", -->

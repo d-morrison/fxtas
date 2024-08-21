@@ -22,7 +22,7 @@ all_potential_biomarkers = function(dataset = gp34)
       "parkinsonian features",
       "Masked faces",
       "Increased tone",
-      "Pill rolling tremor",
+      "Pill-rolling tremor",
       "Stiff gait")
 
   mri_vars = c(

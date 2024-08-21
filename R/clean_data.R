@@ -144,10 +144,10 @@ clean_data = function(dataset)
         "Hypochondriasis (SOM39)",
         # scid domains
         "SCID: Mood Disorders",
-        "SCID: Anxiety",
-        "SCID: Substance Use",
-        "SCID: Somatization",
-        "SCID: Psychotic",
+        "SCID: Anxiety Disorders",
+        "SCID: Substance Use Disorders",
+        "SCID: Somatization Disorders",
+        "SCID: Psychotic Symptoms",
         # mri domains
         "MRI: Cerebral",
         "MRI: Cerebellar"

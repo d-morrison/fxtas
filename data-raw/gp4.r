@@ -495,7 +495,7 @@ labels = c(subj_id = "FXS ID",
            new_mds_ne_pf = "parkinsonian features",
            new_mds_ne_pfmf = "Masked faces",
            new_mds_ne_pfit = "Increased tone",
-           new_mds_ne_pfprt = "Pill rolling tremor",
+           new_mds_ne_pfprt = "Pill-rolling tremor",
            new_mds_ne_pfsg = "Stiff gait",
            new_mds_fxtas_stage = "FXTAS Stage (0-5)",
            bds2_score = "BDS-2 Total Score",
@@ -623,7 +623,7 @@ names(dataset) = labels[names(dataset)]
   # label(dataset$new_mds_ne_pf)="parkinsonian features"
   # label(dataset$new_mds_ne_pfmf)="Masked faces"
   # label(dataset$new_mds_ne_pfit)="Increased tone"
-  # label(dataset$new_mds_ne_pfprt)="Pill rolling tremor"
+  # label(dataset$new_mds_ne_pfprt)="Pill-rolling tremor"
   # label(dataset$new_mds_ne_pfsg)="Stiff gait"
   # label(dataset$new_mds_fxtas_stage)="FXTAS Stage (0-5)"
   # label(dataset$bds2_score)="BDS-2 Total Score"

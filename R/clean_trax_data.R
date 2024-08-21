@@ -145,10 +145,10 @@ clean_trax_data = function(dataset)
                  "Body Dysmorphic (SOM40)",
                  "Hypochondriasis (SOM39)",
                  # scid domains
-                 "SCID: Mood Disorders", "SCID: Anxiety",
-                 "SCID: Substance Use",
-                 "SCID: Somatization",
-                 "SCID: Psychotic",
+                 "SCID: Mood Disorders", "SCID: Anxiety Disorders",
+                 "SCID: Substance Use Disorders",
+                 "SCID: Somatization Disorders",
+                 "SCID: Psychotic Symptoms",
                  # mri domains
                  "MRI: Cerebral", "MRI: Cerebellar")
     ) |>

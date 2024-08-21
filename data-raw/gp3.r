@@ -437,7 +437,7 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            mds_ne_pf = "parkinsonian features",
            mds_ne_pfmf = "Masked faces",
            mds_ne_pfit = "Increased tone",
-           mds_ne_pfprt = "Pill rolling tremor",
+           mds_ne_pfprt = "Pill-rolling tremor",
            mds_ne_pfsg = "Stiff gait",
            mds_fxtas_stage = "FXTAS Stage (0-5)",
            bds2_score = "BDS-2 Total Score",
@@ -617,7 +617,7 @@ if(FALSE)
   # label(dataset$mds_ne_pf)="parkinsonian features:"
   # label(dataset$mds_ne_pfmf)="Masked faces"
   # label(dataset$mds_ne_pfit)="Increased tone"
-  # label(dataset$mds_ne_pfprt)="Pill rolling tremor"
+  # label(dataset$mds_ne_pfprt)="Pill-rolling tremor"
   # label(dataset$mds_ne_pfsg)="Stiff gait"
   # label(dataset$mds_fxtas_stage)="FXTAS Stage (0-5)"
   # label(dataset$bds2_score)="BDS-2 Total Score"

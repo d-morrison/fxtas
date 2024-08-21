@@ -258,7 +258,8 @@ nlevs =
 We analyzed measurements of `r length(biomarker_levels)`
 ordinal biomarkers (@tbl-biomarker-list)
 with a total of `r nrow(biomarker_events_table)` clinically elevated levels.
-Each clinically elevated ordinal level (above the reference level) constitutes an outcome event 
+Each clinically elevated ordinal level (above the reference level) 
+constitutes an outcome event 
 in the disease progression modelling analysis (@sec-Statistical-analysis).
 [Supplemental Tables @tbl-tremors] - [-@tbl-autoimmune] 
 summarize the biomarker data, 
@@ -765,7 +766,12 @@ Our data included:
 `r nrow(males)` males and `r nrow(females)` females;
 and `r and::and(stages)` carriers at 
 FXTAS stages `r names(stages) |> and::and()`, respectively. 
-We found significant evidence of sex differences in proportions of clinically elevated (non-reference) biomarker levels at baseline visit for `r report_sex_differences(biomarkers_table)`.
+@tbl-biomarker-list lists the biomarkers and their ordinal levels
+and reports proportions of clinically elevated levels at baseline visit, 
+stratified by sex.
+We found significant evidence of sex differences in 
+proportions of clinically elevated (non-reference) biomarker levels 
+at baseline visit for `r report_sex_differences(biomarkers_table)`.
 
 ## Stratified by sex {#sec-methods-strat-sex}
 
@@ -1096,8 +1102,8 @@ v1_usable |> make_demographics_table()
 {{< pagebreak >}}
 
 ```{r}
-#| tbl-cap: "Biomarkers used in analysis"
-#| label: "tbl-biomarker-list"
+#| tbl-cap: "**Biomarkers used in analysis**, with proportions of clinically elevated levels at baseline visit, stratified by sex."
+#| label: tbl-biomarker-list
 
 flex_biomarkers_table(biomarkers_table)
 ```

@@ -32,7 +32,7 @@ compile_biomarker_group_list = function(dataset = trax_gp34_v1)
       "parkinsonian features",
       "Masked faces",
       "Increased tone",
-      "Pill rolling tremor",
+      "Pill-rolling tremor",
       "Stiff gait")
 
 
@@ -76,10 +76,10 @@ compile_biomarker_group_list = function(dataset = trax_gp34_v1)
       # "Substance-Induced Mood Dis. (MD08), Lifetime", # no positives
       # "Primary Psychotic Symptoms (PS01), Lifetime"
       "SCID: Mood Disorders",
-      "SCID: Substance Use",
-      "SCID: Anxiety",
-      "SCID: Somatization"
-      # "SCID: Psychotic" # exclude, only 2 at sub-threshold & 0 at threshold
+      "SCID: Substance Use Disorders",
+      "SCID: Anxiety Disorders",
+      "SCID: Somatization Disorders"
+      # "SCID: Psychotic Symptoms" # exclude, only 2 at sub-threshold & 0 at threshold
     )
 
   cantab_vars = c(

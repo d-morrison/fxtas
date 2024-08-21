@@ -134,7 +134,8 @@ pvd_lineplot(y_text_size = 11)
 @fig-all-visits shows the event sequences that we estimated from each data subset.
 Parkinsonian features mostly appear after FXTAS stage 4 for females, 
 whereas they occur before stage 4 for males.
-Similarly, clinically-elevated SCID values appear before FXTAS stage 1 for females, 
+Similarly, clinically elevated SCID values 
+appear before FXTAS stage 1 for females, 
 whereas they occur after stage 3 for males.
 
 {{< pagebreak >}}
