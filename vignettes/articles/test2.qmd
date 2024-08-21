@@ -5,6 +5,8 @@ title: "Authors-block Example"
 # Abstract {.unnumbered}
 {{< lipsum 1 >}}
 
+reference here [@hagerman2001intention].
+
 ```{r}
 #| fig-cap: "**short heading**. More detail."
 #| label: fig-1

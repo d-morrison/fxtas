@@ -75,6 +75,7 @@ project:
 format:
   docx:
     reference-doc: vignettes/Brain_template_32021.docx
+    csl: vignettes/brain.csl
     toc: false
     echo: false
     # fig-format: svg
