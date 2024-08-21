@@ -20,47 +20,47 @@ Specifically:
 
 `SCID: Mood Disorders` combines:
 
-- "Bipolar I Disorder (MD01), Lifetime"         
-- "Bipolar II Disorder (MD02), Lifetime"        
-- "Other Bipolar Disorder (MD03), Lifetime"     
-- "Major Depressive Disorder (MD04), Lifetime"  
+- "Bipolar I Disorder (MD01), Lifetime" 
+- "Bipolar II Disorder (MD02), Lifetime"
+- "Other Bipolar Disorder (MD03), Lifetime" 
+- "Major Depressive Disorder (MD04), Lifetime"
 - "Dysthymic Disorder (MD05), Lifetime"
-- "Depressive Disorder NOS (MD06), Lifetime"  
-- "Mood Disorder Due to GMC (MD07), Lifetime"   
+- "Depressive Disorder NOS (MD06), Lifetime"
+- "Mood Disorder Due to GMC (MD07), Lifetime" 
 - "Substance-Induced Mood Dis. (MD08), Lifetime"
 
 `"SCID: Substance Use Disorders"` combines:
 
-- "Alcohol (SUD17), Lifetime"                     
+- "Alcohol (SUD17), Lifetime" 
 - "Sedative-Hypnotic-Anxiolytic (SUD18), Lifetime"
-- "Cannabis (SUD19), Lifetime"                    
-- "Stimulants (SUD20), Lifetime"                  
-- "Opiod (SUD21), Lifetime"                       
-- "Cocaine (SUD22), Lifetime"                     
-- "Hallucinogenics/ PCP (SUD23), Lifetime"        
-- "Poly Drug (SUD24), Lifetime"                   
-- "Other (SUD25), Lifetime"   
+- "Cannabis (SUD19), Lifetime"
+- "Stimulants (SUD20), Lifetime"
+- "Opiod (SUD21), Lifetime"
+- "Cocaine (SUD22), Lifetime"
+- "Hallucinogenics/ PCP (SUD23), Lifetime"
+- "Poly Drug (SUD24), Lifetime"
+- "Other (SUD25), Lifetime"
 
 `SCID: Anxiety Disorders` combines:
 
-- "Panic Disorder (ANX26), Lifetime"           
+- "Panic Disorder (ANX26), Lifetime"
 - "Agoraphobia without Panic (ANX27), Lifetime"
-- "Social Phobia (ANX28), Lifetime"            
-- "Specific Phobia (ANX29), Lifetime"          
-- "Obsessive Compulsive (ANX30), Lifetime"     
-- "Posttraumatic Stress (ANX31), Lifetime"     
-- "Generalized Anxiety (ANX32), Current Only"  
-- "Anxiety Due to GMC (ANX33), Lifetime"       
+- "Social Phobia (ANX28), Lifetime"
+- "Specific Phobia (ANX29), Lifetime"
+- "Obsessive Compulsive (ANX30), Lifetime"
+- "Posttraumatic Stress (ANX31), Lifetime"
+- "Generalized Anxiety (ANX32), Current Only"
+- "Anxiety Due to GMC (ANX33), Lifetime"
 - "Substance-Induced Anxiety (ANX34), Lifetime"
-- "Anxiety Disorder NOS (ANX35), Lifetime"  
+- "Anxiety Disorder NOS (ANX35), Lifetime"
 
 `SCID: Somatization Disorders` combines:
 
-- "Somatization Disorder (SOM36)"      
-- "Pain Disorder (SOM37)"              
+- "Somatization Disorder (SOM36)"
+- "Pain Disorder (SOM37)"
 - "Undifferentiated Somatoform (SOM38)"
-- "Body Dysmorphic (SOM40)"            
-- "Hypochondriasis (SOM39)" 
+- "Body Dysmorphic (SOM40)"
+- "Hypochondriasis (SOM39)"
 
 (`SCID: Psychotic Symptoms` is not a composite variable; instead, it is simply a shortened label for "Primary Psychotic Symptoms (PS01), Lifetime".)
 

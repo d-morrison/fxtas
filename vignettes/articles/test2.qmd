@@ -8,8 +8,13 @@ title: "Authors-block Example"
 reference here [@hagerman2001intention].
 
 ```{r}
-#| fig-cap: "**short heading**. More detail."
+#| fig-cap: !expr glue::glue("**Event sequences stratified by CGG repeats among females. (a)** Estimated event sequences, stratified by CGG repeats (<100 vs 100+). **(b)** Positional differences in estimated event sequence between CGG repeats.")
 #| label: fig-1
+#| layout-ncol: 1
+#| fig-subcap: 
+#|    - ""
+#|    - ""
 plot(1:10)
+plot(1:11)
 ```
 

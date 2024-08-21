@@ -153,8 +153,8 @@ plot_python = TRUE
 # plot_python = FALSE
 
 fig_size = c(20, 10)
-pvd_height = 8
-pvd_width = 10
+pvd_height = 7.5
+pvd_width = 6
 pvd_line_height = 10
 pvd_line_width = 8
 size.y = 11
@@ -1108,10 +1108,10 @@ v1_usable |> make_demographics_table()
 flex_biomarkers_table(biomarkers_table)
 ```
 
-{{< pagebreak >}}
+:::
 
 ```{r}
-#| tbl-cap: !expr glue::glue("Demographics of {n_s_selected} latent subtype clusters identified by Ordinal SuStaIn. {n_type_0} patients appeared to be too early in the disease process to be accurately classified into a subtype and were excluded from this table")
+#| tbl-cap: !expr glue::glue("**Demographics of {n_s_selected} latent subtype clusters identified by Ordinal SuStaIn.** {n_type_0} patients appeared to be too early in the disease process to be accurately classified into a subtype and were excluded from this table.")
 #| label: tbl-sg_demos
 #| results: asis
 
@@ -1130,8 +1130,6 @@ table_subtype_by_demographics(
 
 ```
 
-:::
-
 # Figures {.unnumbered}
 
 ```{r}
@@ -1139,7 +1137,7 @@ table_subtype_by_demographics(
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("**Event sequence models stratified by sex. \\(a\\)** Uncertainty in estimated event sequences models. **(b)** Positional differences in estimated event sequence between sexes. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("**Event sequence models stratified by sex. (a)** Uncertainty in estimated event sequences models. **(b)** Positional differences in estimated event sequence between sexes. {compact_fig_caption}")
 #| layout-ncol: 1
 #| fig-subcap: 
 #|    - " "
@@ -1171,7 +1169,7 @@ pvd_lineplot(y_text_size = 11)
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences, stratified by CGG repeats (<100 vs 100+) and (b) differences in event sequences between CGG repeat sizes. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("**Event sequences stratified by CGG repeats  (<100 vs 100+). (a)** Estimated event sequences. {compact_fig_caption} **(b)** differences in event sequences between CGG repeat sizes.")
 #| layout-ncol: 1
 #| fig-subcap: 
 #|    - " "
@@ -1202,7 +1200,7 @@ pvd_lineplot(y_text_size = 11)
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("**Event sequences stratified by sex.** **\\(a\\)** Estimated event sequences, stratified by sex. **(b)** Differences in event sequences between sexes, for CGG repeats <100. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("**Event sequences stratified by sex, for CGG repeats <100.** **(a)** Estimated event sequences, stratified by sex. {compact_fig_caption} **(b)** Differences in event sequences between sexes, for CGG repeats <100.")
 #| layout-ncol: 1
 #| fig-subcap: 
 #|    - ""
@@ -1238,7 +1236,7 @@ pvd_lineplot(
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences, stratified by sex and (b) differences in event sequences between sexes, for CGG repeats ≥100. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("**Event sequences stratified by sex, for CGG repeats ≥100. (a)** Estimated event sequences, stratified by sex. {compact_fig_caption} **(b)** Differences in event sequences between sexes, for CGG repeats ≥100.")
 #| layout-ncol: 1
 #| fig-subcap: 
 #|    - ""
@@ -1273,7 +1271,7 @@ pvd_lineplot(
 #| label: fig-pvd_chosen_subtypes
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences, stratified by sex and (b-d) differences in event sequences between sexes, for {n_s_selected} latent subtypes. {compact_fig_caption}") 
+#| fig-cap: !expr glue::glue("**Event sequences stratified by sex, for {n_s_selected} latent subtypes. (a)** Estimated event sequences, stratified by sex. {compact_fig_caption} **(b-d)** Differences in event sequences between sexes.") 
 #| fig-cap-location: top
 #| layout-ncol: 1
 #| layout-nrow: 4
@@ -1339,7 +1337,7 @@ when Ataxia severity was recorded.
 
 ```{r}
 #| label: tbl-ex-incomplete-data
-#| tbl-cap: "Distribution of ataxia severity among cases"
+#| tbl-cap: "**Distribution of ataxia severity among cases.**"
 
 table1(
   na.is.category = FALSE,
@@ -1361,7 +1359,7 @@ table1(
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences, stratified by CGG repeats (<100 vs 100+) and (b) positional differences in estimated event sequence between CGG repeats, males only. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("**Event sequences stratified by CGG repeats (<100 vs 100+), males only. (a)** Estimated event sequences. {compact_fig_caption} **(b)** Positional differences in estimated event sequence between CGG repeat levels.")
 #| layout-ncol: 1
 #| fig-subcap: 
 #|    - ""
@@ -1390,7 +1388,7 @@ pvd_lineplot(y_text_size = 11)
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences, stratified by CGG repeats (<100 vs 100+) and (b) positional differences in estimated event sequence between CGG repeats; females only. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("**Event sequences stratified by CGG repeats among females. (a)** Estimated event sequences, stratified by CGG repeats (<100 vs 100+). {compact_fig_caption} **(b)** Positional differences in estimated event sequence between CGG repeats.")
 #| layout-ncol: 1
 #| fig-subcap: 
 #|    - ""
@@ -1441,7 +1439,7 @@ resulting in a two-sided p-value of $2 \times `r pct_perm_over_obs` = `r 2*pct_p
 {{< pagebreak >}}
 
 ```{r}
-#| fig-cap: "Histogram of mean log-likelihoods for GP34 visit 1 data, permuted by sex"
+#| fig-cap: "**Histogram of mean log-likelihoods for GP34 visit 1 data, permuted by sex.**"
 #| label: fig-permute-llik-sex
 
 pval_sex_gp34_v1 |> autoplot() |> print()
