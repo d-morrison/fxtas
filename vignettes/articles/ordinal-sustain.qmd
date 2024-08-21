@@ -153,8 +153,8 @@ plot_python = TRUE
 # plot_python = FALSE
 
 fig_size = c(20, 10)
-pvd_height = 7.5
-pvd_width = 6
+pvd_height = 10
+pvd_width = 8
 pvd_line_height = 10
 pvd_line_width = 8
 size.y = 11
