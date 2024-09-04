@@ -12,9 +12,16 @@ flex_biomarkers_table = function(x)
       biomarker = Hmisc::capitalize(biomarker),
       "p-value" = `p-value` |> scales::label_pvalue()()
     ) |>
-  flextable::flextable() |>
+    flextable::flextable() |>
     flextable::set_header_labels(
-      values = c("Category", "Biomarker", "Levels", "Female", "Male", "p-value")
+      values = c(
+        "Category",
+        "Biomarker",
+        "Defined Ordered Levels",
+        "Female",
+        "Male",
+        "p-value"
+      )
     ) |>
     flextable::width(j = ~ biomarker, width = 3) |>
     flextable::width(j = ~ category + levels, width = 2) |>

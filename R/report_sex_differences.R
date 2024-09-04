@@ -4,6 +4,29 @@
 #'
 #' @returns a [character()] string
 #' @export
+#' @examples
+#' biomarker_groups = compile_biomarker_groups_table()
+#'
+#' biomarker_varnames =
+#'   biomarker_groups |>
+#'   pull("biomarker")
+#'
+#' biomarker_levels =
+#' trax_gp34_v1 |>
+#'  dplyr::select(all_of(biomarker_varnames)) |>
+#'  lapply(F = levels)
+#'
+#' biomarker_events_table =
+#'   construct_biomarker_events_table(
+#'     biomarker_levels,
+#'     biomarker_groups = biomarker_groups)
+#'
+#' table = trax_gp34_v1 |> make_biomarkers_table(
+#'   biomarker_events_table = biomarker_events_table,
+#'   biomarker_varnames = biomarker_varnames
+#'   )
+#'
+#'   table |> report_sex_differences()
 #'
 report_sex_differences = function(table)
 {
@@ -14,11 +37,16 @@ report_sex_differences = function(table)
       biomarker = biomarker |>
         # stringr::str_replace("MMSE total score", "MMSE total score < 26") |>
         stringr::str_replace("Head tremor", "head tremor"),
+      p_val_formatted =
+        `p-value` |>
+        scales::label_pvalue(
+          prefix = paste(c('<', '=', '>'), ''))(),
 
       comparison = glue::glue(
         '"{biomarker}" ',
         "({Female} of females versus {Male} of males",
-        ", p-value {`p-value` |> scales::label_pvalue()()})"
+        ", p-value {p_val_formatted}"
+
       )
     ) |>
     pull(comparison) |>

@@ -93,9 +93,7 @@ biomarker_events_table =
     biomarker_levels,
     biomarker_groups)
 
-## ----------------------------------------------------------------------------------------------------
-#| tbl-cap: "Biomarkers used in analysis"
-#| label: "tbl-biomarker-list"
+cli::cli_inform("Biomarkers used in analysis:")
 table_out =
   biomarker_events_table |>
   select(category = biomarker_group, biomarker, levels) |>
