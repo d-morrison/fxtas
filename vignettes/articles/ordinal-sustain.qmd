@@ -1060,9 +1060,8 @@ and between low premutation (CGG 55-99) versus high premutation (CGG 100-199) am
 ## Clinical interpretation
 
 [Randi, Jim, Andrea, David- we need your help with clinical interpretation of results. Can you please add your interpretation here?]{.comment-start
-author="Ezra and Kyoungmi"}
-[The inclusion criteria were: age 40 years or greater; 
-**`***`Randi, Jim, Andrea, David - we need your help with clinical interpretation of results. Can you please add your interpretation here?`***`**]{.mark} 
+author="Ezra Morrison"}
+[**`***`Randi, Jim, Andrea, David - we need your help with clinical interpretation of results. Can you please add your interpretation here?`***`**]{.mark} 
 []{.comment-end}
 
 ## Limitations
@@ -1387,7 +1386,6 @@ table1(
   x = ~ `Ataxia: severity*`)
 ```
 
-
 {{< pagebreak >}}
 
 {{< include general-data-notes.qmd >}}
@@ -1499,11 +1497,13 @@ In order to use the Ordinal SuStaIn modeling algorithm, we must specify how many
 
 ### Likelihood {.appendix}
 
-The simplest option is to compare the likelihood of the data for the fitted model while varying the number of subtypes used to fit the model. @fig-mcmc-loglik shows the distribution of log-likelihoods from the MCMC samples for the full dataset (not stratified by sex or CGG repeats). Adding up to 6 clusters substantially improves the log-likelihood.
+The simplest option is to compare the likelihood of the data for the fitted model while varying the number of subtypes used to fit the model. 
+@fig-mcmc-loglik shows the distribution of log-likelihoods from the MCMC samples for the full dataset (not stratified by sex or CGG repeats). 
+Adding up to 6 clusters substantially improves the log-likelihood.
 
 ```{r}
-#| fig-height: 4
-#| fig-width: 6
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
 #| label: fig-mcmc-loglik
 #| fig-cap: log-likelihoods of MCMC samples, by number of subtypes
 #| eval: !expr fit_models
