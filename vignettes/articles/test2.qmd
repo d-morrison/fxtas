@@ -1,37 +1,20 @@
 ---
-format: html
+title: "Authors-block Example"
 ---
 
-```{r}
-devtools::load_all()
-library(tidyverse)
-full_data = trax_gp34_v1
-n_missing_CGG = full_data$CGG |> is.na() |> sum()
-n_above_200 = sum(full_data$CGG >= 200, na.rm = TRUE)
-v1_usable = full_data |> filter(CGG < 200) |> 
-  mutate(`FX3*` = `FX3*` |> droplevels())
-compact_fig_caption = "banana"
-```
+# Abstract {.unnumbered}
+{{< lipsum 1 >}}
 
-see @fig-fig1-2
+reference here [@hagerman2001intention].
 
 ```{r}
-#| label: fig-fig1
-#| fig-cap: !expr glue::glue("\\(a\\) Estimated event sequences models, stratified by sex and (b) positional differences in estimated event sequence between sexes. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("**Event sequences stratified by CGG repeats among females. (a)** Estimated event sequences, stratified by CGG repeats (<100 vs 100+). **(b)** Positional differences in estimated event sequence between CGG repeats.")
+#| label: fig-1
 #| layout-ncol: 1
-#| fig-cap-location: top
 #| fig-subcap: 
 #|    - ""
 #|    - ""
-
 plot(1:10)
-plot(10:1)
-```
-
-```{r}
-#| label: fig-fig2
-#| fig-cap: !expr glue::glue("(a) banana (b) split")
-#| fig-cap-location: top
-plot(1:10)
+plot(1:11)
 ```
 

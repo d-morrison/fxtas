@@ -27,10 +27,13 @@ run_and_save_OSA = function(
   } else
   {
 
-    if(verbose)
+    if (verbose)
     {
-      if(!file.exists(rds_path)) cli::cli_alert_info("RDS file for {rds_filebase} not found.")
-      if(rerun) cli::cli_alert_info("`rerun = TRUE`.")
+      if (!file.exists(rds_path))
+      {
+        cli::cli_alert_info("RDS file for {rds_filebase} not found.")
+      }
+      if (rerun) cli::cli_alert_info("`rerun = TRUE`.")
     }
 
     osa_output = run_OSA(

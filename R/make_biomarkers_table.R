@@ -1,15 +1,41 @@
 #' Make biomarkers table
 #'
+#' @param biomarker_events_table [data.frame] from [construct_biomarker_events_table()]
 #' @param data a [data.frame()] containing the columns specified by `biomarker_varnames` as well as `"Gender"`
-#' @param biomarker_varnames a [character()] vector matching a subset of the column names in `data`
+#' @param biomarker_varnames a [character] vector matching a subset of the column names in `data`
 #'
 #' @returns a [flextable::flextable()]
 #' @export
 #'
 #' @examples
+#' biomarker_groups = compile_biomarker_groups_table()
+#'
+#' biomarker_varnames =
+#'   biomarker_groups |>
+#'   pull("biomarker")
+#'
+#' biomarker_levels =
+#' trax_gp34_v1 |>
+#'  dplyr::select(all_of(biomarker_varnames)) |>
+#'  lapply(F = levels)
+#'
+#' biomarker_events_table =
+#'   construct_biomarker_events_table(
+#'     biomarker_levels,
+#'     biomarker_groups = biomarker_groups)
+#'
+#' trax_gp34_v1 |> make_biomarkers_table(
+#'   biomarker_events_table = biomarker_events_table,
+#'   biomarker_varnames = biomarker_varnames
+#'   )
+#'
 make_biomarkers_table = function(
     data,
-    biomarker_varnames)
+    biomarker_varnames =
+      compile_biomarker_groups_table() |>
+      pull("biomarker"),
+    biomarker_events_table
+)
 {
 
   # compute p-values by gender
@@ -20,10 +46,8 @@ make_biomarkers_table = function(
     pvals[cur] =
       data |>
       mutate(
-        across(
-          all_of(biomarker_varnames),
-          ~ .x != levels(.x)[1])) |>
-      select(cur, Gender) |>
+        above_baseline = .data[[cur]] != levels(.data[[cur]])[1]) |>
+      select(above_baseline, Gender) |>
       table() |>
       fisher.test()  |>
       magrittr::use_series("p.value")
@@ -32,7 +56,7 @@ make_biomarkers_table = function(
 
   probs_above_baseline_by_gender =
     data |>
-    summarize(
+    dplyr::summarize(
       .by = "Gender",
       across(
         all_of(biomarker_varnames),

@@ -14,11 +14,16 @@ all_potential_biomarkers = function(dataset = gp34)
     "Resting tremor",
     "Postural tremor",
     "Intermittent tremor",
-    "Any tremor (excluding Head Tremor)"
+    "Any tremor (excluding head)"
   )
 
-  parkinsons_vars =
-    grep("Parkinson", value = TRUE, names(dataset))
+  parkinsonian_vars =
+    c(
+      "parkinsonian features",
+      "Masked faces",
+      "Increased tone",
+      "Pill-rolling tremor",
+      "Stiff gait")
 
   mri_vars = c(
     "Cerebral Atrophy",
@@ -69,7 +74,7 @@ all_potential_biomarkers = function(dataset = gp34)
 
   scores =
     c(
-      "MMSE Total Score*",
+      "MMSE total score*",
       "BDS-2 Total Score*")
 
   scl90_vars =
@@ -83,7 +88,7 @@ all_potential_biomarkers = function(dataset = gp34)
     "Hypothyroid", # removed after call 2023-09-13
     "Hyperthyroid", # removed after call 2023-09-13
     "Thyroid problems",
-    "Any Autoimmune",
+    "any autoimmune disorder",
     "Lupus",
     "Rheumatoid arthritis",
     "Multiple Sclerosis: Workup",
@@ -108,7 +113,8 @@ all_potential_biomarkers = function(dataset = gp34)
       tremors = tremors,
       ataxia = ataxia,
       stage = "FXTAS Stage (0-5)*",
-      Parkinsons = parkinsons_vars,
+      Parkinsonian = parkinsonian_vars,
+      Parkinsons = "Parkinsons",
       cancer = cancer_vars,
       MRI = mri_vars,
       scores = scores,

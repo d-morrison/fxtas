@@ -28,7 +28,7 @@ clean_data = function(dataset)
     categorize_BDS() |>
 
     # make_vars_numeric(regex = "BDS-2 Total Score") |>
-    # make_vars_numeric(regex = "MMSE Total Score") |>
+    # make_vars_numeric(regex = "MMSE total score") |>
 
     # `Drugs used` is unstructured text, with typos; unusable
     # fix_drugs_used() |>
@@ -97,7 +97,7 @@ clean_data = function(dataset)
         "Substance-Induced Mood Dis. (MD08), Lifetime",
         "Primary Psychotic Symptoms (PS01), Current",
         "Primary Psychotic Symptoms (PS01), Lifetime",
-        "Dysthymic Disorder (MD05)",
+        "Dysthymic Disorder (MD05), Lifetime",
         "Depressive Disorder NOS (MD06), Lifetime",
         "Depressive Disorder NOS (MD06) Current",
         "Alcohol (SUD17), Lifetime",
@@ -144,13 +144,14 @@ clean_data = function(dataset)
         "Hypochondriasis (SOM39)",
         # scid domains
         "SCID: Mood Disorders",
-        "SCID: Anxiety",
-        "SCID: Substance Use",
-        "SCID: Somatization",
-        "SCID: Psychotic",
+        "SCID: Anxiety Disorders",
+        "SCID: Substance Use Disorders",
+        "SCID: Somatization Disorders",
+        "SCID: Psychotic Symptoms",
         # mri domains
         "MRI: Cerebral",
         "MRI: Cerebellar"
       )
-    )
+    ) |>
+    clean_gender() # droplevels() removes attributes
 }

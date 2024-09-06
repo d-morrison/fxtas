@@ -17,7 +17,7 @@ Note that clinical events which never occur in a dataset cannot be placed into t
 so the set of modeled events varies by data subset.
 
 ```{r}
-#| label: extract figs
+#| label: extract-figs-longitud
 fig_females_all = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   rda_filename = "gp34_longitudinal.RData",
@@ -67,26 +67,18 @@ fig_both_mv_only = extract_figs_from_pickle(size.y = size.y,
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("Estimated event sequences for males, by data subset. {compact_fig_caption}")
+#| fig-cap: !expr glue::glue("**Event sequences models for males, by data subset. (a)** {compact_fig_caption} **(b)** Change in estimated event sequences for males by data subset.")
 #| fig-cap-location: top
+#| layout-ncol: 1
+#| fig-subcap: 
+#|    - " "
+#|    - " "
 
 list(
     "Males, First Visit Only" = fig_males_first,
     "Males, All Visits" = fig_males_all
   ) |> 
 plot_compact_pvd(y_text_size = 11)
-
-```
-
-{{< pagebreak >}}
-
-```{r}
-#| label: "fig-males-change"
-#| column: page
-#| fig-height: !expr pvd_line_height
-#| fig-width: !expr pvd_line_width
-#| fig-cap: "Change in estimated event sequences for males by data subset"
-#| fig-cap-location: top
 
 list(
     "Males, First Visit Only" = fig_males_first,
@@ -134,7 +126,8 @@ pvd_lineplot(y_text_size = 11)
 @fig-all-visits shows the event sequences that we estimated from each data subset.
 Parkinsonian features mostly appear after FXTAS stage 4 for females, 
 whereas they occur before stage 4 for males.
-Similarly, clinically-elevated SCID values appear before FXTAS stage 1 for females, 
+Similarly, clinically elevated SCID values 
+appear before FXTAS stage 1 for females, 
 whereas they occur after stage 3 for males.
 
 {{< pagebreak >}}

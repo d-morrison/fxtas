@@ -51,7 +51,7 @@ scid_vars = c(
     "Substance-Induced Mood Dis. (MD08), Lifetime",         
     "Primary Psychotic Symptoms (PS01), Current",         
     "Primary Psychotic Symptoms (PS01), Lifetime",
-    "Dysthymic Disorder (MD05)",         
+    "Dysthymic Disorder (MD05), Lifetime",         
     "Depressive Disorder NOS (MD06), Lifetime",         
     "Depressive Disorder NOS (MD06) Current",         
     "Alcohol (SUD17), Lifetime",         
@@ -240,8 +240,8 @@ Using only `lifetime` variables or variables without `current`/`lifetime` distin
 ```{r, results='asis'}
 summary(
   arsenal::tableby(
-    `FX**` ~ `SCID: Mood Disorders` + `SCID: Substance Use` + 
-      `SCID: Anxiety` + `SCID: Somatization` + `SCID: Psychotic`,
+    `FX**` ~ `SCID: Mood Disorders` + `SCID: Substance Use Disorders` + 
+      `SCID: Anxiety Disorders` + `SCID: Somatization Disorders` + `SCID: Psychotic Symptoms`,
     data = scid_domains,
     test = FALSE
   )

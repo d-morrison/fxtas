@@ -46,7 +46,7 @@ vars = c(
   "Resting tremor",
   "Postural tremor",
   "Intermittent tremor"
-  # "Any tremor (excluding Head Tremor)"
+  # "Any tremor (excluding head)"
   # "Tremor: Age of onset"
   # if(show_missingness_reasons) "Tremor: Age of onset: missingness reasons"
 )
@@ -186,15 +186,15 @@ table1(na.is.category = FALSE, overall = FALSE,
 #| label: tbl-mmse
 #| tbl-cap: "Mini-Mental State Examination (MMSE)"
 # vars = grep(
-#   "MMSE Total Score", 
+#   "MMSE total score", 
 #   value = TRUE, 
 #   names(trax_gp34_all), 
 #   fixed = TRUE)
 
 vars = c(
-  "MMSE Total Score", 
-  # "MMSE Total Score: missingness reasons", 
-  "MMSE Total Score*")
+  "MMSE total score", 
+  # "MMSE total score: missingness reasons", 
+  "MMSE total score*")
 
 table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
@@ -270,10 +270,10 @@ We used categorization cutoffs taken from [@talebi2020cambridge].
 cantab_vars = c(
   "SWM Between errors",
   "SWM Between errors*",
-  "SST Median correct RT on GO trials",
-  "RVP A signal detection",
-  "RVP A signal detection*",
-  "OTS Problems solved on first choice",
+  # "SST Median correct RT on GO trials",
+  # "RVP A signal detection",
+  # "RVP A signal detection*",
+  # "OTS Problems solved on first choice",
   "PAL Total errors (adjusted)",
   "PAL Total errors (adjusted)*",
   "RTI Five-choice movement time",
@@ -316,7 +316,7 @@ vars = c(
   # "Sjogrens Syndrome",
   # "Raynauds Syndrome",
   # "Pulmonary Fibrosis",
-  "Any Autoimmune"
+  "any autoimmune disorder"
 )
 
 table1(

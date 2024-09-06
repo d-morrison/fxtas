@@ -9,11 +9,19 @@ flex_biomarkers_table = function(x)
 {
   x |>
     mutate(
+      biomarker = Hmisc::capitalize(biomarker),
       "p-value" = `p-value` |> scales::label_pvalue()()
     ) |>
-  flextable::flextable() |>
+    flextable::flextable() |>
     flextable::set_header_labels(
-      values = c("Category", "Biomarker", "Levels", "Female", "Male", "p-value")
+      values = c(
+        "Category",
+        "Biomarker",
+        "Defined Ordered Levels",
+        "Female",
+        "Male",
+        "p-value"
+      )
     ) |>
     flextable::width(j = ~ biomarker, width = 3) |>
     flextable::width(j = ~ category + levels, width = 2) |>
@@ -22,7 +30,7 @@ flex_biomarkers_table = function(x)
     flextable::footnote(
       i = 1,
       j = 4:5,
-      value = "% of participants with biomarker levels above baseline (left-most) level" |> flextable::as_paragraph(),
+      value = "% of participants with clinically elevated biomarker levels" |> flextable::as_paragraph(),
       ref_symbols = "a",
       part = "header"
     ) |>

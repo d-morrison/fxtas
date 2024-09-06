@@ -323,7 +323,7 @@ vars = c(
   "Resting tremor",
   "Postural tremor",
   "Intermittent tremor",
-  "Any tremor (excluding Head Tremor)"
+  "Any tremor (excluding head)"
   # "Tremor: Age of onset"
   # "Tremor: Age of onset: missingness reasons"
 )
@@ -357,7 +357,7 @@ table1(na.is.category = FALSE,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1 |> 
-    filter(`Any tremor (excluding Head Tremor)` == "Some tremors recorded"),
+    filter(`Any tremor (excluding head)` == "Some tremors recorded"),
   footnote = footnote)
 ```
 
@@ -379,16 +379,16 @@ table1(na.is.category = FALSE,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1 |> 
-    filter(`Any tremor (excluding Head Tremor)` == "No tremors recorded" |
-             is.na(`Any tremor (excluding Head Tremor)`)),
+    filter(`Any tremor (excluding head)` == "No tremors recorded" |
+             is.na(`Any tremor (excluding head)`)),
   footnote = footnote)
 ```
 
 ```{r}
 # store number
 n_age_NoTremor <- visit1 |> 
-  filter((is.na(`Any tremor (excluding Head Tremor)`) | 
-            `Any tremor (excluding Head Tremor)` == "No tremors recorded") & 
+  filter((is.na(`Any tremor (excluding head)`) | 
+            `Any tremor (excluding head)` == "No tremors recorded") & 
            !is.na(`Tremor: Age of onset`)) |> 
   nrow()
 ```
@@ -397,10 +397,10 @@ The `r n_age_NoTremor` patients with Age of Onset without having any tremor reco
 
 ```{r}
 gp34 |> 
-  filter((is.na(`Any tremor (excluding Head Tremor)`) | 
-            `Any tremor (excluding Head Tremor)` == "No tremors recorded") &
+  filter((is.na(`Any tremor (excluding head)`) | 
+            `Any tremor (excluding head)` == "No tremors recorded") &
            !is.na(`Tremor: Age of onset`)) |> 
-  dplyr::select(`FXS ID`, `Event Name`, `Any tremor (excluding Head Tremor)`, 
+  dplyr::select(`FXS ID`, `Event Name`, `Any tremor (excluding head)`, 
                 `Tremor: Age of onset`) |> 
   pander()
 ```
@@ -651,7 +651,7 @@ table1(na.is.category = FALSE,
 ```{r}
 
 vars = grep(
-  "MMSE Total Score", 
+  "MMSE total score", 
   value = TRUE, 
   names(gp34), 
   fixed = TRUE)
@@ -822,7 +822,7 @@ vars = c(
   "Sjogrens Syndrome",
   "Raynauds Syndrome",
   "Pulmonary Fibrosis",
-  "Any Autoimmune"
+  "any autoimmune disorder"
 )
 
 table1(na.is.category = FALSE, 
