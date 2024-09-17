@@ -41,6 +41,6 @@ trax_gp34_all |>
 ```
 
 * There's no data for the female controls
-* We dont't have many repeated measurements
+* We don't have many repeated measurements
 * 
 

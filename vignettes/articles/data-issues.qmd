@@ -1,6 +1,5 @@
 ---
 title: "visit date issues"
-editor: visual
 ---
 
 ```{r setup}
@@ -88,7 +87,7 @@ table1(na.is.category = FALSE,
   data = visit1)
 ```
 
-## APOE
+## ApoE
 
 ```{r}
 apoe.n = gp34 |> missing_pattern_by_ID(variable = "ApoE")
@@ -629,8 +628,6 @@ table1(na.is.category = FALSE,
 
 ## BDS2
 
-
-
 ```{r}
 
 vars = grep("BDS-2 Total Score", value = TRUE, names(gp34), fixed = TRUE)
@@ -645,8 +642,6 @@ table1(na.is.category = FALSE,
 ```
 
 ## MMSE
-
-
 
 ```{r}
 

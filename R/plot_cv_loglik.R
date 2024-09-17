@@ -1,6 +1,6 @@
 #' Plot cross-validated per-fold log-likelihood distributions
 #'
-#' @param cv_loglik [matrix()] with rows corresponding to cross-validation folds and columsn corresponding to number of latent subgroups
+#' @param cv_loglik [matrix()] with rows corresponding to cross-validation folds and columns corresponding to number of latent subgroups
 #'
 #' @return a [ggplot2::ggplot()]
 #' @export

@@ -49,6 +49,7 @@ Suggests:
     pander,
     rmarkdown,
     scales,
+    spelling,
     testthat (>= 3.0.0),
     tidyverse,
     VennDiagram
