@@ -15,7 +15,7 @@ or Pulmonary Fibrosis; otherwise, `"No"` for no autoimmune diseases recorded.
 The MRI variables are combined into composite variables taking the most severe score within a brain region.  
 
 -   MRI Cerebellar: the most severe score of Cerebellar atrophy, Cerebellar WM hyperintensity, and MCP-WM hyperintensitity.  
--   MRI Cerebral: the most severe score of Cerebral atrophy, Cerebral WM hyperintensity, Pons-WM hyperintensity, Sub-insular WM hyperintensity, Preiventricular WM hyperintensity.  
+-   MRI Cerebral: the most severe score of Cerebral atrophy, Cerebral WM hyperintensity, Pons-WM hyperintensity, Sub-insular WM hyperintensity, Periventricular WM hyperintensity.  
 
 
 Splenium-WM hyperintensity, Genu-WM hyperintensity, and Corpus Callosum-Thickness remain as separate fields.  
