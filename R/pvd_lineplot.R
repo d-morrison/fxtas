@@ -11,8 +11,8 @@
 #' @export
 
 pvd_lineplot <- function(figs,
-                         alpha_nochange = 0.25,
-                         alpha_change = 0.75,
+                         min_alpha = 0.25,
+                         max_alpha = 1,
                          facet_labels = names(figs),
                          text_size = 3.4,
                          y_lab = "Sequential order",
@@ -59,21 +59,29 @@ pvd_lineplot <- function(figs,
                   hjust) |>
     unique() |>
     arrange(`event name`, facet) |>
-    mutate(Changed = n_distinct(Order) != 1,
-           # (Order - dplyr::lag(Order)) != 0,
-           .by = `event name`) |>
+    mutate(
+      # logical: did sequence change
+      Changed = n_distinct(Order) != 1,
+      # magnitude of sequence change
+      Change = abs(diff(Order)),
+      .by = `event name`
+    ) |>
     mutate(
       linesize = ifelse(biomarker == "FXTAS Stage (0-5)*",
                         2,
                         1),
-      alpha = ifelse(
-        Changed | (biomarker == "FXTAS Stage (0-5)*") ,
-        alpha_change,
-        alpha_nochange
-      ),
       facet_order = case_when(facet == facet_labels[1] ~ 1,
                               facet == facet_labels[2] ~ 1.15
       )
+    )
+
+  # alpha scaling #
+  max_order <- max(plot_dataset$Order)
+  alpha_mult <- ((max_alpha - min_alpha) / (max_order - 1))
+
+  plot_dataset <- plot_dataset |>
+    dplyr::mutate(
+      alpha = (Change * alpha_mult) + min_alpha
     )
 
   facet_x_labels <- c(
