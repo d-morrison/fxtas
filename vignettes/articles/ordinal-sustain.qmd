@@ -1,5 +1,5 @@
 ---
-title: "Event sequences in Fragile X-associated tremor/ataxia syndrome"
+title: "Development and progression of Fragile X-associated tremor/ataxia syndrome revealed by ordinal outcomes analysis"
 knitr:
   opts_chunk: 
     collapse: true
@@ -35,8 +35,8 @@ Here, we applied the
 ordinal-outcomes version of the 
 **Su**btype and **St**age **In**ference algorithm ("Ordinal SuStaIn") to 
 identify the sequential events of 
-neuropsychiatric phenotype symptoms 
-presented in observed data 
+clinical and brain MRI changes
+in observed data 
 collected in FXTAS patients.
 We found 
 substantial differences in order of events 
