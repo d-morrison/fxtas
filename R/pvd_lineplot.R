@@ -13,6 +13,7 @@
 pvd_lineplot <- function(figs,
                          min_alpha = 0.25,
                          max_alpha = 1,
+                         stage_alpha = 1,
                          facet_labels = names(figs),
                          text_size = 3.4,
                          y_lab = "Sequential order",
@@ -63,16 +64,24 @@ pvd_lineplot <- function(figs,
       # logical: did sequence change
       Changed = n_distinct(Order) != 1,
       # magnitude of sequence change
-      Change = abs(diff(Order)),
+      Change = -diff(Order),
       .by = `event name`
     ) |>
     mutate(
       linesize = ifelse(biomarker == "FXTAS Stage (0-5)*",
-                        2,
+                        1.5,
                         1),
       facet_order = case_when(facet == facet_labels[1] ~ 1,
                               facet == facet_labels[2] ~ 1.15
-      )
+      ),
+      # colors of choice
+      Change_color = dplyr::case_when(
+        `biomarker` == "FXTAS Stage (0-5)*" ~ -2,
+        Change < 0 ~ -1,
+        Change > 0 ~ 1,
+        Change == 0 ~ 0
+      ) |>
+        factor()
     )
 
   # alpha scaling #
@@ -81,7 +90,10 @@ pvd_lineplot <- function(figs,
 
   plot_dataset <- plot_dataset |>
     dplyr::mutate(
-      alpha = (Change * alpha_mult) + min_alpha
+      alpha = dplyr::case_when(
+        biomarker == "FXTAS Stage (0-5)*" ~ stage_alpha,
+        .default = (abs(Change) * alpha_mult) + min_alpha
+      )
     )
 
   facet_x_labels <- c(
@@ -101,8 +113,8 @@ pvd_lineplot <- function(figs,
       size = text_size
     ) +
     geom_line(
-      aes(group = `event name`),
-      color = plot_dataset$group_color,
+      aes(group = `event name`, color = Change_color),
+      # color = plot_dataset$group_color,
       linewidth = plot_dataset$linesize,
       alpha = plot_dataset$alpha
     ) +
@@ -111,6 +123,7 @@ pvd_lineplot <- function(figs,
       breaks = c(1, 1.15),
       labels = facet_x_labels
     ) +
+    scale_color_manual(values = c("grey25", "#F8766D", "grey70","#00BFC4")) +
     scale_y_discrete(limits = rev, breaks=NULL) +
     labs(y = y_lab) +
     theme_classic() +
