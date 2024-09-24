@@ -1,8 +1,4 @@
-test.pdf
-ordinal-sustain.aux
-ordinal-sustain.log
-ordinal-sustain.pdf
-ordinal-sustain.tex
-test2.pdf
-test2.tex
-test.tex
+*.aux
+*.log
+*.pdf
+*.tex
