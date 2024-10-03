@@ -32,13 +32,13 @@ After the clinical and MRI evaluation,
 each patient received a stage designation of FXTAS ranging from 0 to 5 
 according to stages identified by @bacalman2006psychiatric  
 focused on tremor and ataxia severity. 
-Stage 0 represents subclinical or uncertain tremor; 
-Stage 1 is mild tremor without significant interference with 
+Stage 1 represents subclinical or uncertain tremor; 
+Stage 2 is mild tremor without significant interference with 
 activities of daily living (ADLs); 
-Stage 2 is significant tremor that interferes with ADLs and significant ataxia; 
-Stage 3 is significant ataxia needing a cane or walker;
-Stage 4 is needing a wheelchair;
-and Stage 5 is bedridden.
+Stage 3 is significant tremor that interferes with ADLs and significant ataxia; 
+Stage 4 is significant ataxia needing a cane or walker;
+Stage 5 is needing a wheelchair;
+and Stage 6 is bedridden.
 
 Written informed consent was obtained from all participants 
 according to the procedures approved by the 
