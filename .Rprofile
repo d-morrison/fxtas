@@ -1,4 +1,4 @@
-message('starting package .profile')
+message('starting package .Rprofile')
 Sys.setlocale(category = "LC_COLLATE", locale = "en_US.UTF-8")
 
 if (interactive()) {
@@ -20,4 +20,10 @@ if (interactive()) {
   conflicted::conflict_prefer("is_in", "magrittr")
   qs <- function() q(save="no")
 }
-message('ending package .profile')
+
+default_theme =
+  ggplot2::theme_bw()
+
+ggplot2::theme_set(default_theme)
+
+message('ending package .Rprofile')

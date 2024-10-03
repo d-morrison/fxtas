@@ -1,0 +1,33 @@
+---
+title: "parkinsonian-features"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(fxtas)
+```
+
+```{r}
+library(tidyverse)
+parkinsonian_vars =
+    c(
+      "parkinsonian features",
+      "Masked faces",
+      "Increased tone",
+      "Pill-rolling tremor",
+      "Stiff gait")
+parkinsonian_data = 
+  trax_gp34_all |> select(all_of(parkinsonian_vars))
+parkinsonian_data |> summary()
+parkinsonian_data |> filter(`parkinsonian features` == "Yes") |> 
+  select(-`parkinsonian features`) |> ftable(row.vars = 1:2)
+
+parkinsonian_data |> filter(`parkinsonian features` == "No")
+```
+

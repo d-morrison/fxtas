@@ -21,3 +21,7 @@ data-raw/out
 _freeze
 *~$*
 *.docx
+.Rdata
+.httr-oauth
+.DS_Store
+.quarto

@@ -4,12 +4,14 @@
 \alias{permutation_test}
 \title{Compute permutation test p-value}
 \usage{
-permutation_test(permuted_test_stats, observed_test_stat)
+permutation_test(permuted_test_stats, observed_test_stat, n_permutations = Inf)
 }
 \arguments{
 \item{permuted_test_stats}{a \code{\link[=numeric]{numeric()}} vector}
 
 \item{observed_test_stat}{a \code{\link[=numeric]{numeric()}} with length 1}
+
+\item{n_permutations}{how many permutations to use (\code{Inf} means use all in \code{permuted_test_stats})}
 }
 \value{
 a \code{\link[=numeric]{numeric()}}

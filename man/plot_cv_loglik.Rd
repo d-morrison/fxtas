@@ -7,7 +7,7 @@
 plot_cv_loglik(cv_loglik)
 }
 \arguments{
-\item{cv_loglik}{\code{\link[=matrix]{matrix()}} with rows corresponding to cross-validation folds and columsn corresponding to number of latent subgroups}
+\item{cv_loglik}{\code{\link[=matrix]{matrix()}} with rows corresponding to cross-validation folds and columns corresponding to number of latent subgroups}
 }
 \value{
 a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}

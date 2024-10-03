@@ -1,0 +1,42 @@
+---
+title: "followup-schedule"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(fxtas)
+```
+
+```{r}
+library(dplyr)
+temp = trax_gp34_all |> 
+  select(Study, `Visit Date`, `FXS ID`) |>
+  arrange(`FXS ID`, `Visit Date`) |> 
+  mutate(.by = `FXS ID`, 
+         difftime = `Visit Date` - dplyr::lag(`Visit Date`)) |> 
+  filter(difftime > 7)
+
+```
+
+```{r}
+library(ggplot2)
+temp |> 
+  ggplot() +
+  aes(
+    x = difftime
+  ) + 
+  geom_histogram() +
+  facet_wrap(~Study) +
+  geom_vline(xintercept = 365, col = 'red')
+```
+
+```{r}
+temp$difftime |> quantile(p = .25, na.rm = TRUE)
+```
+

@@ -18,15 +18,15 @@ create_scid_domains(
     "Substance-Induced Mood Dis. (MD08), Lifetime", 
     
     "Primary Psychotic Symptoms (PS01), Current",
-    "Primary Psychotic Symptoms (PS01), Lifetime", "Dysthymic Disorder (MD05)",
+    "Primary Psychotic Symptoms (PS01), Lifetime", "Dysthymic Disorder (MD05), Lifetime",
     "Depressive Disorder NOS (MD06), Lifetime", "Depressive Disorder NOS (MD06) Current",
     "Alcohol (SUD17), Lifetime", "Alcohol (SUD17) Current",
     "Sedative-Hypnotic-Anxiolytic (SUD18), Lifetime",
     "Sedative-Hypnotic-Anxiolytic (SUD18), Current", "Cannabis (SUD19), Lifetime",
     "Cannabis (SUD19),Current", "Stimulants (SUD20), Lifetime",
-    "Stimulants (SUD20) Current", "Opiod (SUD21), Lifetime", 
+    "Stimulants (SUD20) Current", "Opioid (SUD21), Lifetime", 
     
-    "Cocaine (SUD22), Lifetime", "Opiod (SUD21), Current",
+    "Cocaine (SUD22), Lifetime", "Opioid (SUD21), Current",
     "Hallucinogenics/ PCP (SUD23), Lifetime", "Cocaine (SUD22) Current",
     "Hallucinogenics/ PCP (SUD23), Current", "Poly Drug (SUD24), Lifetime",
     "Poly Drug (SUD24), Current", "Other (SUD25), Lifetime", "Other (SUD25), Current",

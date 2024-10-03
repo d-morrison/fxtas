@@ -17,7 +17,7 @@ Note that clinical events which never occur in a dataset cannot be placed into t
 so the set of modeled events varies by data subset.
 
 ```{r}
-#| label: extract figs
+#| label: extract-figs-longitud
 fig_females_all = extract_figs_from_pickle(size.y = size.y,
   n_s = 1,
   rda_filename = "gp34_longitudinal.RData",
@@ -67,67 +67,68 @@ fig_both_mv_only = extract_figs_from_pickle(size.y = size.y,
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: "Estimated event sequences for males, by data subset"
+#| fig-cap: !expr glue::glue("**Event sequences models for males, by data subset. (a)** {compact_fig_caption} **(b)** Change in estimated event sequences for males by data subset.")
 #| fig-cap-location: top
+#| layout-ncol: 1
+#| fig-subcap: 
+#|    - " "
+#|    - " "
 
-# layout-ncol: 2
-# fig-subcap:
-#   - "First visits only"
-#   - "All visits" 
+list(
+    "Males, First Visit Only" = fig_males_first,
+    "Males, All Visits" = fig_males_all
+  ) |> 
+plot_compact_pvd(y_text_size = 11)
 
-# fig_males_first |> print()
-# 
-# fig_males_all |> print()
-
-# fig_males_mv_only |> print()
-
-plot_compact_pvd(
-  figs = list(
-    fig_males_first,
-    fig_males_all
-  ),
-  facet_label = c("Males, First Visit Only", "Males, All Visits"),
-  y_text_size = 11
-)
-
+list(
+    "Males, First Visit Only" = fig_males_first,
+    "Males, All Visits" = fig_males_all
+  ) |> 
+pvd_lineplot(y_text_size = 11)
 ```
 
 ### Females {.appendix}
 
 ```{r}
 #| label: fig-females
-#| fig-cap: "Estimated event sequences for females, by data subset"
+#| fig-cap: !expr glue::glue("Estimated event sequences for females, by data subset. {compact_fig_caption}")
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
 #| fig-cap-location: top
 
-# layout-ncol: 2
-# fig-subcap:
-#   - "First visits only"
-#   - "All visits" 
+list(
+    "Females, First Visit Only" = fig_females_first,
+    "Females, All Visits" = fig_females_all
+  ) |> 
+plot_compact_pvd(y_text_size = 11)
+```
 
-# fig_females_first |> print()
-# 
-# fig_females_all |> print()
+{{< pagebreak >}}
 
-# fig_females_mv_only |> print()
+```{r}
+#| label: "fig-females-change"
+#| column: page
+#| fig-height: !expr pvd_line_height
+#| fig-width: !expr pvd_line_width
+#| fig-cap: "Change in estimated event sequences for females by data subset"
+#| fig-cap-location: top
 
-plot_compact_pvd(
-  figs = list(
-    fig_females_first,
-    fig_females_all
-  ),
-  facet_label = c("Females, First Visit Only", "Females, All Visits"),
-  y_text_size = 11
-)
+list(
+    "Females, First Visit Only" = fig_females_first,
+    "Females, All Visits" = fig_females_all
+  ) |> 
+pvd_lineplot(y_text_size = 11)
 ```
 
 ### All patients, all visits  {.appendix}
 
 @fig-all-visits shows the event sequences that we estimated from each data subset.
-Parkinsonian features mostly appear after FXTAS stage 4 for females, whereas they occur before stage 4 for males.
-Similarly, clinically-elevated SCL90 values appear before FXTAS stage 1 for females, whereas they occur after stage 3 for males.
+Parkinsonian features mostly appear after FXTAS stage 4 for females, 
+whereas they occur before stage 4 for males.
+Similarly, clinically elevated SCID values 
+appear before FXTAS stage 1 for females, 
+whereas they occur after stage 3 for males.
 
 {{< pagebreak >}}
 
@@ -136,26 +137,31 @@ Similarly, clinically-elevated SCL90 values appear before FXTAS stage 1 for fema
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: "Estimated event sequences - all visits"
+#| fig-cap: !expr glue::glue("Estimated event sequences - all visits. {compact_fig_caption}")
 #| fig-cap-location: top
 
-# layout-ncol: 2
-# fig-subcap:
-#   - "Males only" 
-#   - "Females only"
+list(
+    "Males" = fig_males_all,
+    "Females" = fig_females_all
+  ) |> 
+plot_compact_pvd(y_text_size = 11)
+```
 
-# fig_both_all |> print()
-# fig_males_all |> print()
-# fig_females_all |> print()
+{{< pagebreak >}}
 
-plot_compact_pvd(
-  figs = list(
-    fig_males_all,
-    fig_females_all
-  ),
-  facet_label = c("Males", "Females"),
-  y_text_size = 11
-)
+```{r}
+#| label: "fig-all-visits-change"
+#| column: page
+#| fig-height: !expr pvd_line_height
+#| fig-width: !expr pvd_line_width
+#| fig-cap: "Change in estimated event sequences - all visits"
+#| fig-cap-location: top
+
+list(
+    "Males" = fig_males_all,
+    "Females" = fig_females_all
+  ) |> 
+pvd_lineplot(y_text_size = 11)
 ```
 
 {{< pagebreak >}}
@@ -187,6 +193,5 @@ stages =
 
 library(ggplot2)
 stages |> graph_stage_by_age()
-
 
 ```

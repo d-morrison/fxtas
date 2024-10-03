@@ -31,7 +31,7 @@ N_S_max = 1L
 N_S_max_stratified = 1L
 N_CV_folds = 0L
 N_iterations_MCMC = 1e5L
-dataset_name = 'gp34_longitudinal'
+dataset_name = 'trax_gp34_longitudinal'
 root_dir = here::here()
 setwd(root_dir)
 output_folder =
@@ -66,7 +66,7 @@ biomarker_events_table =
 
 control_data =
   df |>
-  filter(`FX*` == "CGG < 55") |>
+  filter(`FX*` == "CGG <55") |>
   select(all_of(biomarker_varnames))
 
 patient_data =
@@ -80,7 +80,8 @@ prob_correct =
     max_prob = .95,
     biomarker_levels = biomarker_levels)
 
-save.image(file = fs::path(output_folder, paste0(dataset_name, ".RData")))
+rda_filename = paste0(dataset_name, ".RData")
+save.image(file = fs::path(output_folder, rda_filename))
 patient_data     |> saveRDS(file = fs::path(output_folder, "data.rds"))
 biomarker_levels |> saveRDS(file = fs::path(output_folder, "biomarker_levels.rds"))
 biomarker_groups |> saveRDS(file = fs::path(output_folder, "biomarker_groups.rds"))
@@ -91,6 +92,7 @@ biomarker_groups |> saveRDS(file = fs::path(output_folder, "biomarker_groups.rds
 #| label: model-all-data
 #| include: false
 sustain_output = run_and_save_OSA(
+  rda_filename = rda_filename,
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   SuStaInLabels = SuStaInLabels,
@@ -112,6 +114,7 @@ sustain_output = run_and_save_OSA(
 #| label: model-males
 #| include: false
 sustain_output_males = run_and_save_OSA(
+  rda_filename = rda_filename,
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   patient_data = patient_data |> filter(Gender == "Male"),
@@ -132,6 +135,7 @@ sustain_output_males = run_and_save_OSA(
 #| label: model-females
 #| include: false
 sustain_output_females = run_and_save_OSA(
+  rda_filename = rda_filename,
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   patient_data =
@@ -154,6 +158,7 @@ sustain_output_females = run_and_save_OSA(
 #| label: "cgg_over_100"
 #| include: false
 sustain_output_cgg100plus = run_and_save_OSA(
+  rda_filename = rda_filename,
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   patient_data = patient_data |>
@@ -176,6 +181,7 @@ sustain_output_cgg100plus = run_and_save_OSA(
 #| label: "cgg_under_100"
 #| include: false
 sustain_output_cgg100minus = run_and_save_OSA(
+  rda_filename = rda_filename,
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   patient_data = patient_data |>

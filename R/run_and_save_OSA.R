@@ -1,4 +1,4 @@
-#' @title Run the Ordinal SusTaIn algorithm (OSA) or load results from presaved .rds file if available
+#' @title Run the Ordinal SuStaIn algorithm (OSA) or load results from presaved .rds file if available
 #' @params rerun whether to force a rerun of the python code
 #' @inheritParams run_OSA
 #' @inheritDotParams run_OSA
@@ -26,7 +26,16 @@ run_and_save_OSA = function(
     testthat::expect_equal(dim(osa_output$samples_sequence)[1], N_S_max)
   } else
   {
-    if(verbose) cli::cli_alert_info("RDS file for {rds_filebase} not found; running OSA.")
+
+    if (verbose)
+    {
+      if (!file.exists(rds_path))
+      {
+        cli::cli_alert_info("RDS file for {rds_filebase} not found.")
+      }
+      if (rerun) cli::cli_alert_info("`rerun = TRUE`.")
+    }
+
     osa_output = run_OSA(
       dataset_name = dataset_name,
       output_folder = output_folder,

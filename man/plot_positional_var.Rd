@@ -6,8 +6,7 @@
 \usage{
 plot_positional_var(
   results,
-  samples_sequence = format_samples_sequence(results = results, biomarker_event_names =
-    biomarker_event_names),
+  samples_sequence = results$samples_sequence,
   samples_f = results$samples_f,
   n_samples = nrow(results$ml_subtype),
   score_vals = build_score_vals(biomarker_levels),
@@ -23,7 +22,7 @@ plot_positional_var(
   biomarker_order = NULL,
   title_font_size = 12,
   stage_font_size = 10,
-  stage_label = "Stage Number",
+  stage_label = "Sequential order",
   stage_rot = 0,
   stage_interval = 1,
   label_font_size = 10,

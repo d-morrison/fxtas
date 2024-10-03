@@ -41,6 +41,6 @@ variables =
 
     "BDS-2 Total Score",
 
-    "MMSE Total Score"
+    "MMSE total score"
 
   )

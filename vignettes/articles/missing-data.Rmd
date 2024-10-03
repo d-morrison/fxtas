@@ -278,7 +278,7 @@ table1(na.is.category = FALSE,
 
 ```{r}
 
-vars = grep("MMSE Total Score", value = TRUE, names(gp34), fixed = TRUE)
+vars = grep("MMSE total score", value = TRUE, names(gp34), fixed = TRUE)
 
 table1(na.is.category = FALSE, 
   NA.label = NA.label1,

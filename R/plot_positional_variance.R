@@ -36,10 +36,7 @@
 #'
 plot_positional_var = function(
     results,
-    samples_sequence =
-      format_samples_sequence(
-        results = results,
-        biomarker_event_names = biomarker_event_names),
+    samples_sequence = results$samples_sequence,
     samples_f = results$samples_f,
     n_samples = results$ml_subtype |> nrow(),
     score_vals = build_score_vals(biomarker_levels),
@@ -57,7 +54,7 @@ plot_positional_var = function(
     biomarker_order = NULL,
     title_font_size = 12,
     stage_font_size = 10,
-    stage_label = 'Stage Number',
+    stage_label = 'Sequential order',
     stage_rot=0,
     stage_interval=1,
     label_font_size=10,
@@ -211,14 +208,18 @@ plot_positional_var = function(
       samples_sequence[subtype_order[i],,] |>
       t() |>
       compute_position_frequencies() |>
+      simplify_biomarker_names(cols = "event name") |>
+
       # get biomarker names
       left_join(
-        biomarker_events_table,
+        biomarker_events_table |>
+          simplify_biomarker_names(cols = c("biomarker", "biomarker_level")),
         by = c("event name" = "biomarker_level")
       ) |>
       # get biomarker groups and colors
       left_join(
-        biomarker_groups,
+        biomarker_groups |>
+          simplify_biomarker_names(cols = "biomarker"),
         by = c("biomarker")
       ) |>
       arrange_position_frequencies(

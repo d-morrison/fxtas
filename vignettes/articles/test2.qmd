@@ -1,39 +1,20 @@
 ---
 title: "Authors-block Example"
-
-authors:
-  - name: John Doe
-    affiliations:
-      - ref: jdct
-    corresponding: true
-    email: john.doe@jdct.edu
-    orcid: 0000-1111-2222-3333
-    equal-contributor: true
-  - name: John Roe
-    affiliations:
-      - ref: jdct
-    orcid: 0000-3333-2222-1111
-  - name: Jane Roe
-    affiliations:
-      - ref: jdct
-      - ref: iot
-    orcid: 0000-2222-1111-3333
-    equal-contributor: true
-
-affiliations:
-  - id: jdct
-    department: John Doe Center for Technology
-    name: John Doe University
-    city: Doetown
-    state: Germany
-  - id: iot
-    name: Institute of Technology, John Doe University, Doetown, Germany.
-
-filters:
-  - authors-block
-
-format:
-  docx: default
-  pdf:
-    keep-tex: true
 ---
+
+# Abstract {.unnumbered}
+{{< lipsum 1 >}}
+
+reference here [@hagerman2001intention].
+
+```{r}
+#| fig-cap: !expr glue::glue("**Event sequences stratified by CGG repeats among females. (a)** Estimated event sequences, stratified by CGG repeats (<100 vs 100+). **(b)** Positional differences in estimated event sequence between CGG repeats.")
+#| label: fig-1
+#| layout-ncol: 1
+#| fig-subcap: 
+#|    - ""
+#|    - ""
+plot(1:10)
+plot(1:11)
+```
+

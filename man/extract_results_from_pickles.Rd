@@ -11,6 +11,7 @@ extract_results_from_pickles(
   rda_filename = "data.RData",
   basename = paste0(dataset_name, "_subtype", n_s - 1),
   picklename = paste0(basename, ".pickle"),
+  format_results = TRUE,
   ...
 )
 }
@@ -24,6 +25,8 @@ extract_results_from_pickles(
 \item{rda_filename}{name of rda file containing environment used to run analyses}
 
 \item{picklename}{the name of the pickle file to open}
+
+\item{format_results}{whether to apply \code{\link[=format_results_list]{format_results_list()}} to results before returning}
 }
 \description{
 Extract results from multiple pickle files

@@ -17,7 +17,7 @@ Remove variable
 }
 \examples{
 vars = c(
-"Parkinsonian features",
-"Parkinsonian features: missingness reasons")
+"parkinsonian features",
+"parkinsonian features: missingness reasons")
 vars |> remove_missingness_reason_vars()
 }
