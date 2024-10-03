@@ -1,7 +1,7 @@
 ---
 title: "Development and progression of Fragile X-associated tremor/ataxia
 syndrome revealed by Ordinal SuStaIn analysis"
-
+reference-doc: ../Brain_template_2022.docx
 ---
 
 ```{=html}
@@ -81,8 +81,8 @@ n_permutations = 1000
 compact_fig_caption <- paste(
   "Positional variance diagrams of estimated event sequences models and uncertainty.",
   "Color intensity represents the likelihood of sequence position.",
-  "The brighter the color, the more likely that the corresponding", 
-  "biomarker event occurs in that position in the sequence."
+  "The brighter the color, the more likely that the corresponding ", 
+  "event occurs in that position in the sequence."
 )
 
 # column_var = "Recruited in study phase"
@@ -96,6 +96,9 @@ setwd(root_dir)
 output_folder = 
   "output/output.fixed_CV/" |> 
   fs::dir_create()
+
+event_name = "symptom"
+event_name_sentence_start = stringr::str_to_sentence(event_name)
 ```
 
 # Materials and methods
@@ -125,10 +128,18 @@ max_year = max(year_range)
 {{< include _sec_study_cohorts.qmd >}}
 
 The primary event sequence analysis included baseline visit data 
-from 297 participants from the two cohorts,
+from `r nrow(v1_usable)` participants from the two cohorts,
 consisting of 
 `r nrow(v1_usable_cases)` fragile X premutation carriers and 
-`r nrow(gp34_v1_controls)`  controls. 
+`r nrow(gp34_v1_controls)` controls. 
+[@David R Hessl, does this passage answer your question about the purpose of the controls?]{.comment-start
+author="Ezra Morrison"}
+The controls' data are used to estimate the distribution of the analyzed symptoms 
+among non-FXTAS individuals,
+and the cases' data are then used to estimate FXTAS event sequences,
+using the estimated control distributions to account for random variation
+in observed symptoms unrelated to the underlying event sequence.
+[]{.comment-end}
 @tbl-demographics provides demographic information about the study participants.
 
 ```{r}
@@ -156,23 +167,28 @@ nlevs =
 
 ```
 
-### Biomarkers of neurodegenerative events
+### `r event_name_sentence_start` of neurodegenerative events
 
-We analyzed measurements of `r length(biomarker_levels)`
-ordinal biomarkers (@tbl-biomarker-list)
-with a total of `r nrow(biomarker_events_table)` clinically elevated levels.
-[Would another term be better? 
-for example, "characteristic", "outcome", "symptom", "event", etc.?]{.comment-start
-author="Ezra Morrison"}
-Herein the term “biomarker” refers to a broad range of medical signs 
-or indications of medical state observed from patients.
-[]{.comment-end}
-Each clinically elevated ordinal level (above the reference level) 
+We analyzed measurements of 
+`r length(biomarker_levels)` ordinal `r event_name`s
+with a total of `r sum(nlevs)` levels, 
+listed in @tbl-biomarker-list.
+Herein the term "`r event_name`s" refers to 
+a broad range of medical signs 
+or indications of medical state 
+observed from patients.
+Each "clinically elevated" ordinal level 
+(above the first-listed, reference level) 
 constitutes an outcome event 
-in the disease progression modelling analysis (@sec-Statistical-analysis).
-For "any autoimmune disorder" and five domains of the Structured Clinical Interview for DSM Disorders (SCID), we created composite variables and used them in the analysis (details in Supplementary Materials, @sec-composites).
+in the disease progression modelling analysis 
+(@sec-Statistical-analysis).
+For "any autoimmune disorder" and 
+five domains of the Structured Clinical Interview for DSM Disorders (SCID), 
+we created composite variables 
+and used them in the analysis 
+(details in Supplementary Materials, @sec-composites).
 [Supplemental Tables @tbl-tremors] - [-@tbl-autoimmune] 
-summarize the biomarker data, 
+summarize the `r event_name` data, 
 stratified by 
 CGG repeat size (`r levels(v1_usable$"FX3*")`) 
 and 
@@ -232,9 +248,14 @@ probs =
   
 ```
 
-We assumed that missing biomarker data 
+We assumed that missing `r event_name` data 
 were missing at random (MAR) 
 [@rubin1976inference, @little2019statistical].
+The study protocols changed over the years (`r min_year` - `r max_year`) 
+as new evaluation instruments were adopted; 
+much of the missingness was due to 
+adding additional measures in later stages of the studies. 
+The MAR assumption thus seems plausible.
 We substituted missing outcome event data 
 by assigning a probability distribution across the 
 possible values of the missing variable 
@@ -243,7 +264,7 @@ For example,
 `r n_missing` of the `r length(x1)` cases (`r pct_missing`) 
 had missing values for Ataxia Severity, 
 and `r n_obs` (`r pct_obs`) had recorded values, 
-distributed among severity levels 0-4 
+distributed among Ataxia Severity levels 0-4 
 ([Supplementary Table @tbl-ex-incomplete-data]). 
 For the `r n_missing` cases with missing values, 
 we assigned probabilities of `r probs |> and::and()` 
@@ -274,7 +295,7 @@ We computed the empirical p-value
 by first computing the percentile of the observed mean log-likelihood 
 relative to the empirical distribution of the permuted mean log-likelihoods,
 subtracting that percentile from 1 if larger than 0.5,
-and then multiplying by two to calulate a two-sided test statistic.
+and then multiplying by two to calculate a two-sided test statistic.
 We declared significance if the p-value was less than or equal to 0.05.
 A detailed numerical example of this procedure 
 is provided in the Supplementary Materials (@sec-permutation-test).
@@ -285,8 +306,12 @@ We also fitted the model on the full dataset (not stratified by sex or CGG)
 for 2-`r N_S_max` latent subtypes, 
 each with their own ordering. 
 We determined the optimal number of latent subtypes for this dataset using 
-the CVIC criterion (Supplementary Materials @sec-cvic) and 
-the OOFLL criterion (Supplementary Materials @sec-oofll).
+the CVIC criterion [@young2018uncovering]
+(summarized in Supplementary Materials @sec-cvic) 
+and the OOFLL criterion [@young2018uncovering]
+(summarized in Supplementary Materials @sec-oofll),
+both of which measure how well models containing a given number of subtypes
+extend to new data not used in training.
 We performed `r N_CV_folds`-fold cross-validation on the unstratified data
 and calculated the CVIC and OOFLL for 1-`r N_S_max` latent subtypes. 
 More details are provided in the Supplementary Materials (@sec-subtypes).
@@ -1043,7 +1068,13 @@ v1_usable |> make_demographics_table()
 {{< pagebreak >}}
 
 ```{r}
-#| tbl-cap: "**Biomarkers included in analysis,** with proportions of clinically elevated levels at baseline visit, stratified by sex."
+#| tbl-cap: |
+#|    **Symptoms included in analysis.** 
+#|    The first level listed in each row of column "Defined Ordered Levels" 
+#|    is the "reference level" for the corresponding symptom,
+#|    and subsequent levels are considered "clinically elevated levels".
+#|    Columns "Female" and "Male" list proportions of clinically elevated levels 
+#|    at baseline visit, stratified by sex.
 #| label: tbl-biomarker-list
 
 flex_biomarkers_table(biomarkers_table)
@@ -1421,9 +1452,17 @@ lliks |>
 
 ### Cross-Validation Information Criterion {#sec-cvic .appendix}
 
-Since models with fewer subtypes are limited special cases of models with more subtypes (i.e., "nested models"), the likelihood of the training data is guaranteed to improve as we increase the number of subtypes. However, using too many subtypes means there is less data available for each subtype, possibly leading to a model that does not generalize well to new data (i.e., a model that is "overfit" to the training data).
+Since models with fewer subtypes are limited special cases of models with more subtypes 
+(i.e., "nested models"), the likelihood of the training data is guaranteed to improve 
+as we increase the number of subtypes. 
+However, using too many subtypes means there is less data available for each subtype, 
+possibly leading to a model that does not generalize well to new data 
+(i.e., a model that is "overfit" to the training data).
 
-To avoid overfitting, @young2018uncovering recommends choosing the optimal number using the Cross-Validation Information Criterion (CVIC) (@eq-def-cvic).
+To avoid overfitting, 
+Young et al [-@young2018uncovering] recommends 
+choosing the optimal number 
+using the Cross-Validation Information Criterion (CVIC) (@eq-def-cvic).
 
 Let:
 
@@ -1455,7 +1494,11 @@ $${#eq-def-cvic}
 
 ### Out-of-fold log-likelihood criterion {#sec-oofll .appendix}
 
-We also evaluated the consistency of our cross-validation procedure by looking at the distribution of out-of-fold log-likelihood ("OOFLL") across cross-validation folds; following @young2018uncovering, we calculated out-of-sample log-likelihood as:
+We also evaluated the consistency of our cross-validation procedure 
+by looking at the distribution of out-of-fold log-likelihood ("OOFLL") 
+across cross-validation folds; 
+following Young et al [-@young2018uncovering], 
+we calculated out-of-sample log-likelihood as:
 
 $$
 \ell_{\mathcal C, k} = 

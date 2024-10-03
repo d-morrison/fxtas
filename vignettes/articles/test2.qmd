@@ -1,20 +1,16 @@
 ---
-title: "Authors-block Example"
+title: "reference hyperlink example"
+reference-doc: ../Brain_template_2022.docx
 ---
 
-# Abstract {.unnumbered}
-{{< lipsum 1 >}}
+# main text
 
 reference here [@hagerman2001intention].
 
-```{r}
-#| fig-cap: !expr glue::glue("**Event sequences stratified by CGG repeats among females. (a)** Estimated event sequences, stratified by CGG repeats (<100 vs 100+). **(b)** Positional differences in estimated event sequence between CGG repeats.")
-#| label: fig-1
-#| layout-ncol: 1
-#| fig-subcap: 
-#|    - ""
-#|    - ""
-plot(1:10)
-plot(1:11)
-```
+the CVIC criterion 
+(@young2018uncovering; summarized in Supplementary Materials @sec-cvic) 
 
+# references {.unnumbered}
+
+::: {#refs}
+:::
