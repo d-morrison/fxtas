@@ -22,97 +22,13 @@ text-align: center;
 
 # Abstract {.unnumbered}
 
-The fragile X-associated tremor/ataxia syndrome (FXTAS) is a 
-neurodegenerative disorder caused by the 
-premutation (55 to 200 CGG repeats) in the *FMR1* gene.
-An open question is: 
-In what sequential order do 
-FXTAS symptoms typically appear, 
-and how does that sequence vary 
-among participants and 
-between males and females?
-Here, we applied the 
-ordinal-outcomes version of the 
-**Su**btype and **St**age **In**ference algorithm ("Ordinal SuStaIn") to 
-identify the sequential events of 
-clinical and brain MRI changes
-in observed data 
-collected in FXTAS patients.
-We found 
-substantial differences in order of events 
-depending on sex and CGG repeat number.
+{{< include _sec_abstract.qmd >}}
 
 {{< pagebreak >}}
 
 # Introduction
 
-The fragile X-associated tremor/ataxia syndrome (FXTAS) is a 
-neurodegenerative disorder caused by the 
-premutation (55 to 200 CGG repeats) in the 
-fragile X messenger ribonucleoprotein (*FMR1*) gene [@hagerman2001intention]. 
-The premutation is associated with 
-elevation of the *FMR1* mRNA. 
-[Need citations here]{.comment-start
-author="Ezra Morrison"}
-This elevation leads to 
-RNA toxicity including 
-oxidative stress, 
-mitochondrial dysfunction, 
-calcium dysregulation, and 
-sequestration of proteins important to neuronal function.
-[]{.comment-end}
-Proteins and neurofilaments sequester with the excess *FMR1* mRNA, 
-leading to the formation of 
-eosinophilic, tau-negative intranuclear inclusions 
-in neurons and astrocytes throughout the CNS and
-in the peripheral nervous system (PNS) [@greco2006neuropathology; @hunter2012capturing]. 
-FXTAS *usually* begins in the 60s,
-though some patients have an earlier onset.
-As premutation carriers age, 
-the prevalence of FXTAS increases from approximately 
-40% in males in their 60s to 
-75% in their 80s [@jacquemont2004penetrance].
-Females with the premutation are also at risk for FXTAS, 
-but the prevalence is lower; 
-approximately 20% may develop FXTAS, 
-and it is usually less severe than in males [@tassone2023insight]. 
-In general, 
-the higher the CGG repeat number within the premutation range,
-the earlier onset of FXTAS, 
-and earlier death [@greco2006neuropathology].
-The prevalence of the premutation is estimated at 
-one in 148 to 200 females and 
-one in 290 to 855 males 
-in the general population [@maenner2013fmr1; @hunter2014epidemiology].
-
-The present study attempts to address the following questions: 
-1) In what sequential order do FXTAS symptoms and brain changes typically appear;
-2) how does that sequence vary among participants;
-and 3) do specific baseline characteristics predict the order of presentation?
-Here, we applied the ordinal-outcomes version of the 
-**Su**btype and **St**age **In**ference algorithm
-("Ordinal SuStaIn" [@young2018uncovering; @young2021ordinal])
-to find event sequences in a cohort of FXTAS patients.
-SuStaIn is a data-driven analytic approach 
-which was originally developed to 
-analyze cross-sectional biomarker data 
-to simultaneously 
-(1) estimate the ordering of onset for biomarkers of disease progression events and 
-(2) cluster study participants into latent subtypes with different event orderings.
-The SuStaIn modeling approach has been applied to 
-Alzheimer's disease 
-[@young2018uncovering; @young2021ordinal; @vogel2021four; @collij2022spatial], 
-amyotrophic lateral sclerosis [@young2023data],
-Parkinson's disease [@zhou2022two],
-primary tauopathies [@scotton2023disease],
-frontotemporal dementia [@young2018uncovering],
-multiple sclerosis [@eshaghi2021identifying],
-chronic obstructive pulmonary disease (COPD) [@young2020disease],
-and knee osteoarthritis [@li2021identifying],
-but not previously for FXTAS. 
-We here apply it to a cross-sectional data set of 
-premutation carriers diagnosed with FXTAS of different stages 
-to study the sequential ordering of FXTAS symptomatic events.
+{{< include _sec_intro.qmd >}}
 
 ```{r}
 #| include: false
