@@ -8,12 +8,38 @@ in Fragile X Premutation Carriers study
 The GP study includes males and females with FXTAS from ages 40-85 at entry,
 and they are followed every 2 years
 to document phenotypic progression over time.
+The Trajectories study includes males 
+with the premutation ages 40 through the 80s 
+followed longitudinally with varying intervals averaging about 2.5 years apart. 
+Most carriers enter the study with no evidence of FXTAS; 
+approximately 25-30% developed the disease to date.
 
-[**Ellery, Glenda, etc:**
-please complete this section
-and fill in detailed descriptions of the GP and Trax cohorts.
-Cite refs as needed]{.comment-start
-author="Ezra Morrison"}
-[The inclusion criteria were: age 40 years or greater;
-**`***`Ellery, Glenda, etc: please complete this section and fill in detailed descriptions of the GP and Trax cohorts. Cite refs as needed.`***`**]{.mark}
-[]{.comment-end}
+Each evaluation includes 
+a detailed medical history, 
+neurological examination, 
+neuropsychological testing including the 
+WAIS IV, 
+Behavior Dyscontrol Scale (BDS2), 
+Mini Mental State Exam (MMSE) and 
+Cambridge Automated Neuropsychological Test Battery (CANTAB); 
+Structured Clinical Interview for DSM Disorders (SCID), 
+motor testing, 
+and MRI assessment 
+[@johnson2022fxtas_by_sex; 
+@winarni2024apolipoproteine; 
+@elias2024enlarged].
+After the clinical and MRI evaluation,
+each patient received a stage designation of FXTAS ranging from 0 to 5 
+according to stages identified by @bacalman2006psychiatric  
+focused on tremor and ataxia severity. 
+Stage 1 represents subclinical or uncertain tremor; 
+Stage 2 is mild tremor without significant interference with 
+activities of daily living (ADLs); 
+Stage 3 is significant tremor that interferes with ADLs and significant ataxia; 
+Stage 4 is significant ataxia needing a cane or walker;
+and Stage 5 is needing a wheelchair and stage 6 is bedridden.
+
+Written informed consent was obtained from all participants 
+according to the procedures approved by the 
+University of California, Davis Institutional Review Board.  
+

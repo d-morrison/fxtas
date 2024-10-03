@@ -124,16 +124,12 @@ max_year = max(year_range)
 
 {{< include _sec_study_cohorts.qmd >}}
 
-Written informed consent was obtained from all participants 
-according to the procedures approved by the 
-University of California, Davis Institutional Review Board.  
-
 The primary event sequence analysis included baseline visit data 
 from 297 participants from the two cohorts,
 consisting of 
-`r nrow(v1_usable_cases)` Fragile X premutation carriers and 
+`r nrow(v1_usable_cases)` fragile X premutation carriers and 
 `r nrow(gp34_v1_controls)`  controls. 
-@tbl-demographics provides demographic information about the study participants. 
+@tbl-demographics provides demographic information about the study participants.
 
 ```{r}
 #| label: "biomarker-events"
