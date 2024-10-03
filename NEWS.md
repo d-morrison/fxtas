@@ -1,5 +1,11 @@
 # fxtas (development version)
 
+## Manuscript
+
+* removed repeated measures analysis
+
+## Data processing
+
 * added "Disorder" suffix to SCID composite variables, on Dr. Bourgeois's recommendation.
 * fixed `create_any_tremor()` to handle NAs before or after `fix_factors()`.
 * renamed "Any Autoimmune" to "any autoimmune disorder" and make it "Yes"/"No"
