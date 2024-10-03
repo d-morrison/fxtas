@@ -306,9 +306,9 @@ We also fitted the model on the full dataset (not stratified by sex or CGG)
 for 2-`r N_S_max` latent subtypes, 
 each with their own ordering. 
 We determined the optimal number of latent subtypes for this dataset using 
-the CVIC criterion [@young2018uncovering]
+the Cross-Validation Information Criterion (CVIC) [@young2018uncovering]
 (summarized in Supplementary Materials @sec-cvic) 
-and the OOFLL criterion [@young2018uncovering]
+and the Out-Of-Fold Log-Likelihood (OOFLL) criterion [@young2018uncovering]
 (summarized in Supplementary Materials @sec-oofll),
 both of which measure how well models containing a given number of subtypes
 extend to new data not used in training.
@@ -316,19 +316,7 @@ We performed `r N_CV_folds`-fold cross-validation on the unstratified data
 and calculated the CVIC and OOFLL for 1-`r N_S_max` latent subtypes. 
 More details are provided in the Supplementary Materials (@sec-subtypes).
 
-### Longitudinal subsets
-
-We also fitted the Ordinal SuStaIn model, stratified by sex, 
-including all longitudinal repeated measurements 
-of the same participants over time 
-([Supplementary Section @sec-longitudinal-results]). 
-Including later observations 
-might help the model clarify the later stages of the event sequence. 
-However, 
-correlations between repeated observations of the same individuals 
-are not accounted for by the Ordinal SuStaIn model, 
-which assumes that all observations are statistically independent, 
-so we should note that including repeated measurements could lead to exaggerated estimates of precision.
+<!-- {{< include _methods_longitudinal.qmd >}} -->
 
 ### Visualizing modeling results
 
@@ -1418,9 +1406,9 @@ pval_sex_gp34_v1 |> autoplot() |> print()
 
 {{< pagebreak >}}
 
-## Results with repeated measures {#sec-longitudinal-results .appendix}
+<!-- ## Results with repeated measures {#sec-longitudinal-results .appendix} -->
 
-{{< include longitudinal-results.qmd >}}
+<!-- {{< include longitudinal-results.qmd >}} -->
 
 ## Detecting latent subtypes {#sec-subtypes .appendix}
 
