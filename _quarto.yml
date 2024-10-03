@@ -150,5 +150,5 @@ execute:
   cache: false
   freeze: false  # re-render only when source changes
 filters:
-  - docx-landscape.lua
+  - vignettes/docx-landscape.lua
   - authors-block
