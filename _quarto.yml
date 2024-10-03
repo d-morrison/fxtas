@@ -89,7 +89,7 @@ project:
   execute-dir: project
 format:
   docx:
-    reference-doc: vignettes/Brain_template_32021.docx
+    reference-doc: vignettes/Brain_template_2022.docx
     csl: vignettes/brain.csl
     toc: false
     echo: false
