@@ -33,7 +33,7 @@ among participants and
 between males and females?
 Here, we applied the 
 ordinal-outcomes version of the 
-**Su**btype and **St**age **In**ference algorithm ("Ordinal SuStaIn") to 
+Subtype and Stage Inference algorithm ("Ordinal SuStaIn") to 
 identify the sequential events of 
 neuropsychiatric phenotype symptoms 
 presented in observed data 
@@ -88,7 +88,7 @@ how does that sequence vary among participants,
 and do specific baseline characteristics predict the order of presentation?
 Here, we apply the 
 ordinal-outcomes version of the 
-**Su**btype and **St**age **In**ference algorithm
+Subtype and Stage Inference algorithm
 ("Ordinal SuStaIn" [@young2018uncovering; @young2021ordinal])
 to find event sequences for FXTAS patients.
 SuStaIn is a data-driven analytic approach 
@@ -286,7 +286,7 @@ We applied a
 discrete event-based disease progression model 
 [@fonteijn2011event; @fonteijn2012event; @oxtoby2023data] 
 to our data using the 
-Ordinal **Su**btype and **St**age **In**ference ("SuStaIn") algorithm 
+Ordinal Subtype and Stage Inference ("SuStaIn") algorithm 
 [@young2021ordinal] 
 to estimate event orderings and subtypes for FXTAS patients. 
 Ordinal SuStaIn is a version of the SuStaIn modeling algorithm [@young2018uncovering],
