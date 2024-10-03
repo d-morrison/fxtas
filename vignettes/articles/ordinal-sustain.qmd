@@ -1,13 +1,6 @@
 ---
-title: "Event sequences in Fragile X-associated tremor/ataxia syndrome"
-knitr:
-  opts_chunk: 
-    collapse: true
-    comment: "#>" 
-project: 
-  execute-dir: project
-filters:
-  - ../../docx-landscape.lua
+title: "Development and progression of Fragile X-associated tremor/ataxia syndrome revealed by Ordinal SuStaIn analysis"
+
 ---
 
 ```{=html}
@@ -950,7 +943,9 @@ Therefore, for easier clinical interpretation,
 we chose to analyze the results with only `r n_s_selected` subtypes.
 
 ```{r}
-n_type_0 = results_cv_max$subtype_and_stage_table |> filter(ml_subtype == "Type 0") |> nrow()
+n_type_0 = results_cv_max$subtype_and_stage_table |> 
+  filter(ml_subtype == "Type 0") |> 
+  nrow()
 
 ```
 

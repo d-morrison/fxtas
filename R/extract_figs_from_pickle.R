@@ -18,8 +18,7 @@ extract_figs_from_pickle = function(
     dataset_name = dataset_name,
     output_folder = output_folder,
     rda_filename = rda_filename,
-    picklename = picklename,
-    ...)
+    picklename = picklename)
 
   biomarker_groups =
     output_folder |>

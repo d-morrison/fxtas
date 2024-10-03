@@ -46,7 +46,7 @@ extract_results_from_pickle = function(
     results =
       results00 |>
       format_results_list(
-        biomarker_levels = biomarker_levels,  # these come from the load() call,
+        biomarker_levels = biomarker_levels,
         ...
       )
 

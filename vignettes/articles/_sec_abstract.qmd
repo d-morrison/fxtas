@@ -11,8 +11,8 @@ Here, we applied the
 ordinal-outcomes version of the
 Subtype and Stage Inference algorithm ("Ordinal SuStaIn") to
 identify the sequential events of
-neuropsychiatric phenotype symptoms
-presented in observed data
+clinical and brain MRI changes
+in observed data
 collected in FXTAS patients.
 We found
 substantial differences in order of events

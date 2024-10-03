@@ -22,10 +22,13 @@ authors:
     affiliations:
       - ref: ucdmind
       - ref: ucdbiochem
-  - name: David Hassl
+  - name: David Hessl
     affiliations:
       - ref: ucdmind
       - ref: ucdpsych
+  - name: Susan Rivera
+    affiliations:
+      - ref: umdpsychology
   - name: Andrea Schneider
     affiliation:
       - ref: ucdmind
@@ -41,6 +44,18 @@ authors:
       - ref: ucdphs
 
 affiliations:
+  - id: umdpsychology
+    name: Department of Psychology, College of Behavioral and Social Sciences, University of Maryland, College Park, MD, United States
+    department: Department of Psychology
+    city: College Park
+    state: MD
+    country: United States
+  - id: ucdmind
+    department: MIND Institute
+    name: MIND Institute, University of California, Davis, Sacramento, CA, United States
+    city: Sacramento
+    state: CA
+    country: United States
   - id: ucdphs
     name: Department of Public Health Sciences, School of Medicine, University of California, Davis, CA, United States
     department: Department of Public Health Sciences
@@ -74,7 +89,7 @@ project:
   execute-dir: project
 format:
   docx:
-    reference-doc: vignettes/Brain_template_32021.docx
+    reference-doc: vignettes/Brain_template_2022.docx
     csl: vignettes/brain.csl
     toc: false
     echo: false
