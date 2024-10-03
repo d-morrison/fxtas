@@ -6,8 +6,9 @@
 \usage{
 pvd_lineplot(
   figs,
-  alpha_nochange = 0.25,
-  alpha_change = 0.75,
+  min_alpha = 0.25,
+  max_alpha = 1,
+  stage_alpha = 1,
   facet_labels = names(figs),
   text_size = 3.4,
   y_lab = "Sequential order",

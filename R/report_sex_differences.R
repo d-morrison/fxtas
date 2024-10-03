@@ -35,8 +35,12 @@ report_sex_differences = function(table)
     filter(`p-value` < 0.05) |>
     mutate(
       biomarker = biomarker |>
+        stringr::str_replace(
+          "SWM Between errors",
+          "the CANTAB subtest of Spatial Working Memory (SWM) Between errors") |>
         # stringr::str_replace("MMSE total score", "MMSE total score < 26") |>
         stringr::str_replace("Head tremor", "head tremor"),
+
       p_val_formatted =
         `p-value` |>
         scales::label_pvalue(

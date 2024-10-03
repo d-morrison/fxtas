@@ -97,8 +97,8 @@ output_folder =
   "output/output.fixed_CV/" |> 
   fs::dir_create()
 
-event_name = "symptom"
-event_name_sentence_start = stringr::str_to_sentence(event_name)
+outcomes_name = "symptom"
+outcomes_name_sentence_start = stringr::str_to_sentence(outcomes_name)
 ```
 
 # Materials and methods
@@ -167,13 +167,13 @@ nlevs =
 
 ```
 
-### `r event_name_sentence_start` of neurodegenerative events
+### `r outcomes_name_sentence_start` of neurodegenerative events
 
 We analyzed measurements of 
-`r length(biomarker_levels)` ordinal `r event_name`s
+`r length(biomarker_levels)` ordinal `r outcomes_name`s
 with a total of `r sum(nlevs)` levels, 
 listed in @tbl-biomarker-list.
-Herein the term "`r event_name`s" refers to 
+Herein the term "`r outcomes_name`s" refers to 
 a broad range of medical signs 
 or indications of medical state 
 observed from patients.
@@ -188,7 +188,7 @@ we created composite variables
 and used them in the analysis 
 (details in Supplementary Materials, @sec-composites).
 [Supplemental Tables @tbl-tremors] - [-@tbl-autoimmune] 
-summarize the `r event_name` data, 
+summarize the `r outcomes_name` data, 
 stratified by 
 CGG repeat size (`r levels(v1_usable$"FX3*")`) 
 and 
@@ -248,7 +248,7 @@ probs =
   
 ```
 
-We assumed that missing `r event_name` data 
+We assumed that missing `r outcomes_name` data 
 were missing at random (MAR) 
 [@rubin1976inference, @little2019statistical].
 The study protocols changed over the years (`r min_year` - `r max_year`) 
@@ -276,8 +276,7 @@ of the observed data.
 
 To test for statistical significant evidence of differences in event sequences
 between males and females
-and 
-between lower (CGG <100) and higher premutation levels (CGG 100-199),
+and between lower (CGG <100) and higher premutation levels (CGG 100-199),
 we implemented a permutation test [@welch1990construction]
 to calculate a p-value that is the probability of observing a difference 
 at least as extreme as the test statistic 
@@ -684,11 +683,11 @@ Our data included:
 `r nrow(males)` males and `r nrow(females)` females;
 and `r and::and(stages)` carriers at 
 FXTAS stages `r names(stages) |> and::and()`, respectively. 
-@tbl-biomarker-list lists the biomarkers and their ordinal levels
+@tbl-biomarker-list lists the `r outcomes_name`s and their ordinal levels
 and reports proportions of clinically elevated levels at baseline visit, 
 stratified by sex.
 We found significant evidence of sex differences in 
-proportions of clinically elevated (non-reference) biomarker levels 
+proportions of clinically elevated (non-reference) `r outcomes_name` levels 
 at baseline visit for `r report_sex_differences(biomarkers_table)`.
 
 ## Stratified by sex {#sec-methods-strat-sex}
