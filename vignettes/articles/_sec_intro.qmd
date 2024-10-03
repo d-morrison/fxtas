@@ -42,7 +42,7 @@ The present study attempts to address the following questions:
 2) how does that sequence vary among participants;
 and 3) do specific baseline characteristics predict the order of presentation?
 Here, we applied the ordinal-outcomes version of the
-**Su**btype and **St**age **In**ference algorithm
+Subtype and Stage Inference algorithm
 ("Ordinal SuStaIn" [@young2018uncovering; @young2021ordinal])
 to find event sequences in a cohort of FXTAS patients.
 SuStaIn is a data-driven analytic approach

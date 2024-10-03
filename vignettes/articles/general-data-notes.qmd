@@ -45,7 +45,7 @@ Specifically:
 - Sedative-Hypnotic-Anxiolytic (SUD18), Lifetime
 - Cannabis (SUD19), Lifetime
 - Stimulants (SUD20), Lifetime
-- Opiod (SUD21), Lifetime
+- Opioid (SUD21), Lifetime
 - Cocaine (SUD22), Lifetime
 - Hallucinogenics/ PCP (SUD23), Lifetime
 - Poly Drug (SUD24), Lifetime
