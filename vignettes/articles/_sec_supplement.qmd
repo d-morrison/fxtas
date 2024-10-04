@@ -1,3 +1,33 @@
+## Details of Ordinal SuStaIn
+
+The Ordinal SuStaIn approach [@young2021ordinal] uses a scored events model, 
+which assumes that for each `r outcomes_name`,
+there are a discrete number of underlying ordinal levels of severity,
+but the measured versions of the `r outcomes_name`s may contain some amount of noise.
+For example, an individual who is really at Ataxia Severity level 2 may be 
+incorrectly assessed as being at Ataxia Severity level 1, depending on
+the patient's temporary disease status on the day of the exam or
+inter-rater differences.
+
+The first step in applying the Ordinal SuStaIn algorithm is to determine,
+for each `r outcomes_name`, the probability that an individual is "correctly scored" 
+at their "true underlying level".
+In this analysis, we assumed that all controls are truly at the reference levels
+for each `r outcomes_name`, 
+and we estimated the probability of correct scoring as the proportion of controls
+who were assessed as being at the reference level.
+It is crucial to allow some possibility of incorrect scoring, 
+so we capped the estimated correct scoring probabilities at 
+`r max_prob_correct *100`% (@tbl-prob-correct).
+
+```{r}
+#| label: tbl-prob-correct
+#| tbl-cap: |
+#|   **Proportions of controls at baseline levels, and 
+#|   corresponding estimates of probability of correct scoring.**s
+
+prob_correct |> attr("data")
+```
 
 ## Imputation of missing data {.appendix}
 

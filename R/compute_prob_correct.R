@@ -4,7 +4,10 @@
 #' @param biomarker_levels a list containing the levels of each biomarker
 #' @param max_prob a maximum value for the baseline probability
 #'
-#' @returns a named [numeric()] vector corresponding to the elements of `biomarker_levels`
+#' @returns a [structure()] that is fundamentally
+#' a named [numeric()] vector corresponding to the elements of `biomarker_levels`,
+#' but also contains a [tibble::tbl_df] as attribute `data`
+#' (easier than fixing all uses of this function)
 #' @export
 #'
 compute_prob_correct = function(dataset, biomarker_levels, max_prob = 1)

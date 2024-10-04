@@ -359,10 +359,11 @@ patient_data =
   # na.omit() |>
   filter(`FX*` == "CGG >= 55")
 
+max_prob_correct = .95
 prob_correct = 
   control_data |> 
   compute_prob_correct(
-    max_prob = .95,
+    max_prob = max_prob_correct,
     biomarker_levels = biomarker_levels)
 
 ```
