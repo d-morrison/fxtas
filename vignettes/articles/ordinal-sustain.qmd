@@ -89,6 +89,14 @@ compact_fig_caption <- paste(
   "event occurs in that position in the sequence."
 )
 
+compact_fig_cap2 = paste0(
+  "Red lines indicate biomarkers that moved to later positions between the ",
+  "left-hand subgroup and the right-hand subgroup. Blue lines indicate ",
+  "biomarkers that moved to earlier positions. ",
+  "Line opacity levels indicate the number of positions changed ",
+  "(more opaque = more change.)"
+)
+
 # column_var = "Recruited in study phase"
 # column_var = "FX3*"
 column_var = c("Gender", "FX3*")
@@ -964,6 +972,8 @@ Subtypes 1 and 4 were equally prevalent among men and women.
 We did not find statistically significant evidence of 
 differences in subtype distributions between CGG < 100 versus ≥ 100.
 
+
+
 # Discussion
 
 ## Main findings
@@ -1147,7 +1157,7 @@ table_subtype_by_demographics(
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("**Event sequence models stratified by sex. (a)** {compact_fig_caption} **(b)** Positional differences in estimated event sequence between sexes.")
+#| fig-cap: !expr glue::glue("**Event sequence models stratified by sex. (a)** {compact_fig_caption} **(b)** Positional differences in estimated event sequence between sexes. {compact_fig_cap2}")
 #| layout-ncol: 1
 #| fig-subcap: 
 #|    - " "
@@ -1395,7 +1405,7 @@ table1(
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("**Event sequences stratified by CGG repeats (<100 vs 100+), males only. (a)** {compact_fig_caption} **(b)** Positional differences in estimated event sequence between CGG repeat levels.")
+#| fig-cap: !expr glue::glue("**Event sequences stratified by CGG repeats (<100 vs 100+), males only. (a)** {compact_fig_caption} **(b)** Positional differences in estimated event sequence between CGG repeat levels. {compact_fig_cap2}")
 #| layout-ncol: 1
 #| fig-subcap: 
 #|    - ""
@@ -1424,7 +1434,14 @@ pvd_lineplot(y_text_size = 11)
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("**Event sequences stratified by CGG repeats among females. (a)** Estimated event sequences, stratified by CGG repeats (<100 vs 100+). {compact_fig_caption} **(b)** Positional differences in estimated event sequence between CGG repeats.")
+#| fig-cap: !expr 
+#|    glue::glue(
+#|      "**Event sequences stratified by CGG repeats among females.**
+#|      **(a)** Estimated event sequences, 
+#|      stratified by CGG repeats (<100 vs 100+).
+#|      {compact_fig_caption} 
+#|      **(b)** Positional differences in estimated event sequence 
+#|      between CGG repeats. {compact_fig_cap2}")
 #| layout-ncol: 1
 #| fig-subcap: 
 #|    - ""
