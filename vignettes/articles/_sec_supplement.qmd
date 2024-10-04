@@ -1,4 +1,4 @@
-## Details of Ordinal SuStaIn
+## Details of Ordinal SuStaIn {.appendix}
 
 The Ordinal SuStaIn approach [@young2021ordinal] uses a scored events model, 
 which assumes that for each `r outcomes_name`,
