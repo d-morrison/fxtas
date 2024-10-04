@@ -135,7 +135,7 @@ from `r nrow(v1_usable)` participants from the two cohorts,
 consisting of 
 `r nrow(v1_usable_cases)` fragile X premutation carriers and 
 `r nrow(gp34_v1_controls)` controls. 
-[@David R Hessl, does this passage answer your question about the purpose of the controls?]{.comment-start
+[David R Hessl, does this passage answer your question about the purpose of the controls?]{.comment-start
 author="Ezra Morrison"}
 The controls' data are used to estimate the distribution of the analyzed symptoms 
 among non-FXTAS individuals,
@@ -1583,15 +1583,28 @@ as a function of number of latent subgroups.
 
 @fig-stage-by-age shows estimated disease progression stage 
 (that is, number of events experienced)
-by age at visit and estimated latent subtype. 
-Patients whose visit occurred at a later age 
+by age at visit and estimated latent subtype,
+with a 
+Locally Estimated Scatterplot Smoothing (LOESS) 
+non-parametric regression curve superimposed [@cleveland1992local].
+This graph is a model diagnostic; if the model fits the data well,
+then older patients should on average be classified as being farther 
+along in their disease progression, resulting in an upwards trend.
+Types 1, 3 and 4 appear to show such an upwards trend.
+Type 2 has a less clear trend, but does not show substantial evidence
+of lack of fit.
+In all four subtypes, patients whose visit occurred at a later age 
 tend to be at a later estimated stage of disease progression.
 The upwards trend of progression stage with age
 indicates that the estimated models are plausible.
 
 ```{r}
 #| label: fig-stage-by-age
-#| fig-cap: "Estimated progression stage by age and latent subtype"
+#| fig-cap: |
+#|    **Estimated progression stage by age and latent subtype.**
+#|    The blue line is a Locally Estimated Scatterplot Smoothing (LOESS) 
+#|    non-parametric regression curve.
+#|    
 #| include: true
 
 stages = 

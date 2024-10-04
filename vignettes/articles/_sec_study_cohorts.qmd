@@ -1,10 +1,10 @@
 Research participants were recruited between `r min_year` and `r max_year`
 for two longitudinal cohorts:
 the Genotype-Phenotype Study in Fragile X Families
-("GP"; funded by NICHD HD036071) and
+("GP"; funded by NICHD HD036071; PI Hagerman) and
 the Trajectories and Markers of Neurodegeneration
 in Fragile X Premutation Carriers study
-("TRAX"; funded by NINDS NS110100).
+("TRAX"; funded by NINDS NS110100; PI Rivera).
 The GP study includes males and females with FXTAS from ages 40-85 at entry,
 and they are followed every 2 years
 to document phenotypic progression over time.
