@@ -37,6 +37,7 @@ Imports:
     reticulate,
     shiny (>= 1.7.2),
     splitTools,
+    ssdtools (>= 2.0.0),
     stringr,
     table1,
     tibble,
@@ -69,3 +70,5 @@ Config/reticulate/autoconfigure:
   )
 Config/build/copy-method: link
 Roxygen: list(markdown = TRUE)
+Remotes:  
+    bcgov/ssdtools

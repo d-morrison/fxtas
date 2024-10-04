@@ -24,6 +24,7 @@ test_that("compute_prob_correct() produces consistent results", {
     compute_prob_correct(
       max_prob = .95,
       biomarker_levels = biomarker_levels) |>
-    expect_snapshot_value(style = "deparse")
+    attr("data") |>
+    ssdtools:::expect_snapshot_data(name = "prob-correct")
 
 })
