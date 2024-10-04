@@ -1152,8 +1152,6 @@ table_subtype_by_demographics(
 
 # Figures {.unnumbered}
 
-::: landscape
-
 ```{r}
 #| label: "fig-first-only"
 #| column: page
@@ -1188,8 +1186,6 @@ list(
 pvd_lineplot(y_text_size = 11)
 
 ```
-
-:::
 
 {{< pagebreak >}}
 
