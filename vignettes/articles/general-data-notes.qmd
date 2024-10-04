@@ -25,7 +25,7 @@ Splenium-WM hyperintensity, Genu-WM hyperintensity, and Corpus Callosum-Thicknes
 
 Similarly, we combined individual SCID disorders into composite variables,
 taking the highest level ("Absent", "Sub-Threshold", or "Threshold") 
-among the constit,ent individual disorders.
+among the constituent individual disorders.
 Specifically:
 
 "SCID: Mood Disorders" combines:

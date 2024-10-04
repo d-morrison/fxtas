@@ -49,8 +49,10 @@ SuStaIn is a data-driven analytic approach
 which was originally developed to
 analyze cross-sectional biomarker data
 to simultaneously
-(1) estimate the ordering of onset for biomarkers of disease progression events and
-(2) cluster study participants into latent subtypes with different event orderings.
+(1) estimate the ordering of onset 
+for biomarkers of disease progression events and
+(2) cluster study participants into 
+latent subtypes with different event orderings.
 The SuStaIn modeling approach has been applied to
 Alzheimer's disease
 [@young2018uncovering; @young2021ordinal; @vogel2021four; @collij2022spatial],

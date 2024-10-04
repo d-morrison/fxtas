@@ -78,10 +78,14 @@ N_CV_folds = 10L
 
 n_permutations = 1000
 
+outcomes_name = "symptom"
+outcomes_name_sentence_start = stringr::str_to_sentence(outcomes_name)
+
 compact_fig_caption <- paste(
   "Positional variance diagrams of estimated event sequences models and uncertainty.",
   "Color intensity represents the likelihood of sequence position.",
-  "The brighter the color, the more likely that the corresponding ", 
+  "The brighter the color, the more likely that the corresponding", 
+  outcomes_name,
   "event occurs in that position in the sequence."
 )
 
@@ -97,8 +101,7 @@ output_folder =
   "output/output.fixed_CV/" |> 
   fs::dir_create()
 
-outcomes_name = "symptom"
-outcomes_name_sentence_start = stringr::str_to_sentence(outcomes_name)
+
 ```
 
 # Materials and methods
@@ -308,8 +311,8 @@ We determined the optimal number of latent subtypes for this dataset using
 the Cross-Validation Information Criterion (CVIC) [@young2018uncovering]
 (summarized in Supplementary Materials @sec-cvic) 
 and the Out-Of-Fold Log-Likelihood (OOFLL) criterion [@young2018uncovering]
-(summarized in Supplementary Materials @sec-oofll),
-both of which measure how well models containing a given number of subtypes
+(summarized in Supplementary Materials @sec-oofll);
+both criteria quantify how well models containing a given number of subtypes
 extend to new data not used in training.
 We performed `r N_CV_folds`-fold cross-validation on the unstratified data
 and calculated the CVIC and OOFLL for 1-`r N_S_max` latent subtypes. 
@@ -971,10 +974,55 @@ and between low premutation (CGG 55-99) versus high premutation (CGG 100-199) am
 
 ## Clinical interpretation
 
-[Randi, Jim, Andrea, David- we need your help with clinical interpretation of results. Can you please add your interpretation here?]{.comment-start
-author="Ezra Morrison"}
-[**`***`Randi, Jim, Andrea, David - we need your help with clinical interpretation of results. Can you please add your interpretation here?`***`**]{.mark} 
-[]{.comment-end}
+This data shows more significant involvement in males than females, as predicted,
+but a remarkable finding is the predominance of the psychiatric problems 
+that occur early in females 
+and often before the onset of tremor and ataxia compared to the males.
+These symptoms, particularly mood disorders, 
+can often occur even before the diagnosis of FXTAS in the females,
+and the stress involved with mood disorders may be a precipitating feature 
+for the onset of FXTAS.
+In addition, females may exerience early cognitive problems,
+particularly involving executive dysfunction and memory,
+as seen by the SWM and PAL scores that occur early on in the females.
+From a clinical perspective,
+we have seen significant psychiatric problems 
+leading into some cognitive deficits in memory and EF abilities, 
+but these females may not meet the criteria of FXTAS diagnosis, 
+because of the absence of significant tremor and/or ataxia. 
+However, if white matter disease emerges on MRI particularly in the splenium 
+or in the periventricular area,
+then this demonstrates the onset of the neuropathology of FXTAS, 
+even if there is no tremor or ataxia yet. 
+This suggests that the diagnostic criteria for FXTAS 
+is different in females compared to males,
+particularly for early cases.
+The diagnostic criteria for FXTAS was determined with the study of males only 
+[@jacquemont2003fragile]. 
+Subsequent criteria for the diagnosis of FXTAS was modified [@hall2014emerging]
+to include the involvement of the splenium,
+which is seen in the majority of females with FXTAS 
+[@apartis2012fxtas; @schneider2020women].
+Hall et al [-@hall2014emerging] also added the feature of neuropathy, 
+which occurs in the majority of FXTAS patients,
+but it is a common finding in the elderly with many causes,
+so it is just a minor criteria for FXTAS. 
+Although the diagnostic criteria have been modified somewhat for the females,
+there may be subsequent changes in the early stages of FXTAS 
+as further follow-up studies are able to separate 
+the psychiatric problems in females seen early on here 
+from more significant neuropathology associated with 
+extended features of FXTAS over time.
+As new treatments for FXTAS develop, 
+the earlier the diagnosis, 
+the more likely the treatment will be effective.
+
+The finding of only minimal differences 
+between 55-99 vs 100-199 CGG repeats is surprising, 
+since several studies have found that the higher the CGG repeats,
+the earlier the onset and the faster the progression of FXTAS 
+[@greco2006neuropathology; @leehey2008fmr1; @tassone2023insight]. 
+Perhaps the cut off of 100 is too high for this distinction to be made.
 
 ## Limitations
 
@@ -982,7 +1030,8 @@ author="Ezra Morrison"}
 
 We had substantial amounts of missing data. 
 As described in the methods (@sec-incomplete-data),
-we used the marginal distribution of the observed data for each biomarker among cases
+we used the marginal distribution of 
+the observed data for each `r outcomes_name` among cases
 to impute the underlying values of these missing data. 
 The missing data could contribute to uncertainty in the results.
 
@@ -990,12 +1039,12 @@ The missing data could contribute to uncertainty in the results.
 
 Our data contained both continuous and ordinal variables.
 In order to apply the Ordinal SuStaIn algorithm, 
-we categorized some biomarkers that were originally measured as 
-continuous values.
+we categorized some `r outcomes_name`s 
+that were originally measured as continuous values.
 In doing so, we likely sacrificed some granular information. 
 There are other variations of the SuStaIn algorithm, 
 such as z-score SuStaIn [@young2018uncovering] 
-which are designed to be used with only continuous biomarker measurements.
+which are designed to be used with only continuous measurements.
 Further development is warranted to combine Ordinal SuStaIn and z-score SuStaIn
 to fit an event-based model with both continuous and ordinal data. 
 
@@ -1021,8 +1070,10 @@ from the principal investigators of the two cohorts.
 # Funding {.unnumbered}
 
 This study was supported by the 
-National Institute of Child Health and Human Development (NICHD), 
-grant number P50HD103256 (Abbeduto),
+National Institute of Child Health and Human Development 
+(NICHD, grant numbers HD036071 (Hagerman) and P50HD103256 (Abbeduto))
+and the National Institute of Neurological Disorders and Stroke 
+(NINDS, grant number NS110100 (Rivera)),
 through the University of California Davis 
 Medical Investigation of Neurodevelopmental Disorder (MIND) Institute’s 
 Intellectual and Developmental Disabilities Research Center (IDDRC).
@@ -1239,6 +1290,9 @@ pvd_lineplot(
 #|    - "Subtype 2 compared to Subtype 1"
 #|    - "Subtype 3 compared to Subtype 1"
 #|    - "Subtype 4 compared to Subtype 1"
+#|    - "Subtype 2 compared to Subtype 3"
+#|    - "Subtype 2 compared to Subtype 4"
+#|    - "Subtype 3 compared to Subtype 4"
 #| column: page
 #| 
 figs = extract_figs_from_pickle(
@@ -1278,6 +1332,30 @@ pvd_lineplot(
     figs[[4]]
   ),
   facet_labels = c("Subtype 1", "Subtype 4")
+)
+
+pvd_lineplot(
+  figs = list(
+    figs[[2]],
+    figs[[3]]
+  ),
+  facet_labels = c("Subtype 2", "Subtype 3")
+)
+
+pvd_lineplot(
+  figs = list(
+    figs[[2]],
+    figs[[4]]
+  ),
+  facet_labels = c("Subtype 2", "Subtype 4")
+)
+
+pvd_lineplot(
+  figs = list(
+    figs[[3]],
+    figs[[4]]
+  ),
+  facet_labels = c("Subtype 3", "Subtype 4")
 )
 
 ```
@@ -1397,7 +1475,8 @@ resulting in a two-sided p-value of $2 \times `r pct_perm_over_obs` = `r 2*pct_p
 {{< pagebreak >}}
 
 ```{r}
-#| fig-cap: "**Histogram of mean log-likelihoods for GP34 visit 1 data, permuted by sex.**"
+#| fig-cap: |
+#|     **Histogram of mean log-likelihoods for data permuted by sex.**
 #| label: fig-permute-llik-sex
 
 pval_sex_gp34_v1 |> autoplot() |> print()
@@ -1547,7 +1626,7 @@ temp$loglike_matrix |> plot_cv_loglik()
 
 ## Additional data tables {.appendix}
 
-The following tables summarize the distributions of the biomarkers 
+The following tables summarize the distributions of the `r outcomes_name`s 
 that we analyzed in this paper, stratified by sex and CGG level.
 
 ::: landscape
