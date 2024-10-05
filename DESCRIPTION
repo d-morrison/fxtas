@@ -43,6 +43,7 @@ Imports:
     tibble,
     tidyr,
     tidyselect,
+    vdiffr,
     veccompare,
     viridis
 Suggests: 
@@ -70,5 +71,5 @@ Config/reticulate/autoconfigure:
   )
 Config/build/copy-method: link
 Roxygen: list(markdown = TRUE)
-Remotes:  
+Remotes: 
     bcgov/ssdtools

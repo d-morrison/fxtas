@@ -129,7 +129,7 @@ pvd_lineplot <- function(figs,
     theme_classic() +
     theme(
       legend.position = "none",
-      axis.title.x = element_blank(),
+      axis.title.x = ggplot2::element_blank(),
       axis.title.y = ggtext::element_markdown(size = y_title_size),
       axis.text.y = ggtext::element_markdown(size = y_text_size),
       axis.text.x = ggtext::element_markdown(size = x_text_size,

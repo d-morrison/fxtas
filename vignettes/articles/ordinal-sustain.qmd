@@ -772,9 +772,10 @@ n_100_199 =
 ```
 
 @fig-pvd-by-cgg shows the estimated sequences stratified by CGG repeat level. 
-Although we did not find statistically significant evidence of a difference in event sequences 
+We did not find statistically significant evidence of a difference in event sequences 
 between CGG < 100 and CGG ≥ 100 (p = `r pval_cgg_gp34_v1`), 
-some differences were noted (@fig-pvd-by-cgg-1 and [(b)](#fig-pvd-by-cgg-2)).
+but some potential differences were noted 
+(@fig-pvd-by-cgg-1 and [(b)](#fig-pvd-by-cgg-2)).
 SWM between errors occurred prior to Stage 1 
 in participants with CGG repeats <100,
 whereas it occurred between stage 4 and 5 in those with CGG repeats ≥ 100
