@@ -7,6 +7,7 @@
 #' @importFrom dplyr arrange
 #' @importFrom dplyr as_tibble
 #' @importFrom dplyr between
+#' @importFrom dplyr bind_rows
 #' @importFrom dplyr count
 #' @importFrom dplyr filter
 #' @importFrom dplyr if_all
