@@ -1,0 +1,124 @@
+
+
+```{r}
+#| label: p-val-test-cgg
+output_folder = "output/output.fixed_CV/"
+
+permuted_test_stats = collect_permutation_test_stats(
+  output_folder = output_folder,
+  permuting_variables = "FX3")
+
+observed_test_stat = get_observed_permutation_test_stat(
+  output_folder,
+  dataset_names = c('under100', 'over100'))
+
+pval_cgg_gp34_v1 = permutation_test(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
+)
+
+counts =
+  trax_gp34_v1 |>
+  select(`FX3*`, `SWM Between errors*`) |>
+  table()
+
+n_100_199 =
+  trax_gp34_v1$CGG |>
+  between(100,199) |>
+  sum(na.rm = TRUE)
+
+# autoplot(pval_sex_gp34_v1)
+```
+
+@fig-pvd-by-cgg shows the estimated sequences stratified by CGG repeat level.
+We did not find statistically significant evidence of a difference in event sequences
+between CGG < 100 and CGG ≥ 100 (p = `r pval_cgg_gp34_v1`),
+but some potential differences were noted
+(@fig-pvd-by-cgg-1 and [(b)](#fig-pvd-by-cgg-2)).
+SWM between errors occurred prior to Stage 1
+in participants with CGG repeats <100,
+whereas it occurred between stage 4 and 5 in those with CGG repeats ≥ 100
+(@fig-pvd-by-cgg-2).
+Postural, resting, head, and intermittent tremor occurred earlier
+in those with CGG repeats <100 compared to those with CGG repeats ≥100.
+Several psychiatric disorders (as measured by SCID) occurred
+later in the event sequence in participants with CGG repeats <100
+compared to those with CGG repeats ≥100.
+
+```{r}
+#| label: p-val-test-cgg-male
+output_folder = "output/output.fixed_CV/"
+
+permuted_test_stats = collect_permutation_test_stats(
+  output_folder = output_folder,
+  stratifying_levels = "Male",
+  permuting_variables = "FX3")
+
+observed_test_stat = get_observed_permutation_test_stat(
+  output_folder,
+  dataset_names = c('under100_Male', 'over100_Male'))
+
+pval_male_cgg_gp34_v1 = permutation_test(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
+)
+
+```
+
+
+```{r}
+#| label: p-val-test-cgg-female
+output_folder = "output/output.fixed_CV/"
+
+permuted_test_stats = collect_permutation_test_stats(
+  output_folder = output_folder,
+  stratifying_levels = "Female",
+  permuting_variables = "FX3")
+
+observed_test_stat = get_observed_permutation_test_stat(
+  output_folder,
+  dataset_names = c('under100_Female', 'over100_Female'))
+
+pval_female_cgg_gp34_v1 = permutation_test(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
+)
+
+n_over100_Female =
+  v1_usable |>
+  filter(
+   Gender == "Female",
+   CGG >= 100
+  ) |>
+  nrow()
+
+```
+
+These differences were more evident among males than females
+(Supplementary Materials, @sec-cgg-strat-sex).
+When we fitted models for subgroup analyses by sex and CGG repeats level,
+the models for males showed the same patterns described above,
+except for head tremor
+(we found no difference in head tremor onset between CGG levels).
+[Supplementary Figure @fig-pvd-by-cgg-male]
+shows the corresponding stratified models and
+compares the estimates of the sequences for these two subgroups.
+We found significant evidence of an overall difference between CGG <100
+and CGG ≥100 among males (p = `r pval_male_cgg_gp34_v1`).
+
+We did not find statistically significant evidence of
+a difference between CGG <100 and CGG ≥100 among females
+(p = `r pval_female_cgg_gp34_v1`).
+[Supplementary Figure @fig-pvd-by-cgg-female]
+shows the estimated stratified models
+and compares the estimates.
+Females had later onset of SWM Between Errors for CGG repeats ≥100
+and later onset of intermittent tremors for CGG repeats <100,
+but did not show evidence of the other patterns observed for males and
+for the models without sex-stratification.
+Limited sample size was an issue;
+the available data included only `r n_over100_Female` females with CGG ≥100.
+
