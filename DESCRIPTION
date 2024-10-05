@@ -47,6 +47,7 @@ Imports:
     veccompare,
     viridis
 Suggests: 
+    devtag (>= 0.0.0.9000),
     knitr,
     pander,
     rmarkdown,
@@ -71,6 +72,7 @@ Config/reticulate/autoconfigure:
   )
 Config/build/copy-method: link
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
-Remotes: 
-    bcgov/ssdtools
+Remotes:  
+    bcgov/ssdtools,
+    moodymudskipper/devtag
 Config/Needs/build: moodymudskipper/devtag
