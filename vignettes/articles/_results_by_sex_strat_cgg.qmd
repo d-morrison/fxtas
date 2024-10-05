@@ -63,3 +63,77 @@ The significant differences found for these subgroups
 need to be declared with caution due to the small sample sizes
 and large uncertainty..
 
+
+{{< pagebreak >}}
+
+```{r}
+#| label: fig-pvd-by-gender-cgg_under100
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: !expr glue::glue("**Event sequences stratified by sex, for CGG repeats <100.** **(a)** {compact_fig_caption} **(b)** Differences in event sequences between sexes, for CGG repeats <100.")
+#| layout-ncol: 1
+#| fig-subcap: 
+#|    - ""
+#|    - ""
+#| fig-cap-location: top
+
+
+# compact pvd
+plot_compact_pvd(
+  figs = list(
+    fig_under100_males,
+    fig_under100_females
+  ),
+  facet_label = c("CGG &lt; 100, Males  <br>", "CGG &lt; 100, Females  <br>"),
+  y_text_size = 11
+)
+
+# lineplot of event sequences
+pvd_lineplot(
+  figs = list(
+    fig_under100_males,
+    fig_under100_females
+  ),
+  facet_label = c("CGG &lt; 100, Males", "CGG &lt; 100, Females"),
+  y_text_size = 11
+)
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| label: fig-pvd-by-gender-cgg_over100
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: !expr glue::glue("**Event sequences stratified by sex, for CGG repeats ≥100. (a)** {compact_fig_caption} **(b)** Differences in event sequences between sexes, for CGG repeats ≥100.")
+#| layout-ncol: 1
+#| fig-subcap: 
+#|    - ""
+#|    - ""
+#| fig-cap-location: top
+
+# compact pvd
+plot_compact_pvd(
+  figs = list(
+    fig_over100_males,
+    fig_over100_females
+  ),
+  facet_label = c("CGG &ge; 100, Males  <br>", "CGG &ge; 100, Females  <br>"),
+  y_text_size = 11
+)
+
+# lineplot of event sequences
+pvd_lineplot(
+  figs = list(
+    fig_over100_males,
+    fig_over100_females
+  ),
+  facet_label = c("CGG &ge; 100, Males", "CGG &ge; 100, Females"),
+  y_text_size = 11
+)
+
+```
+
+{{< pagebreak >}}

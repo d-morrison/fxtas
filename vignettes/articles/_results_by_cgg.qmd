@@ -122,3 +122,35 @@ for the models without sex-stratification.
 Limited sample size was an issue;
 the available data included only `r n_over100_Female` females with CGG ≥100.
 
+{{< pagebreak >}}
+
+```{r}
+#| label: "fig-pvd-by-cgg"
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: !expr glue::glue("**Event sequences stratified by CGG repeats  (<100 vs 100+). (a)** {compact_fig_caption} **(b)** differences in event sequences between CGG repeat sizes.")
+#| layout-ncol: 1
+#| fig-subcap: 
+#|    - " "
+#|    - " "
+#| fig-cap-location: top
+
+
+list(
+    fig_under100,
+    fig_over100
+  ) |> 
+plot_compact_pvd(
+  facet_label_prefix = c("CGG &lt; 100 <br>", "CGG &ge; 100 <br>"),
+  y_text_size = 11
+)
+
+
+list(
+  "CGG &lt; 100" = fig_under100,
+  "CGG &ge; 100" = fig_over100) |>
+pvd_lineplot(y_text_size = 11)
+```
+
+{{< pagebreak >}}
