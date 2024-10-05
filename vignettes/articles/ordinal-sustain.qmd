@@ -451,160 +451,6 @@ sustain_output_females = run_and_save_OSA(
 
 ```
 
-
-```{r}
-#| message: false
-#| label: "cgg_over_100"
-#| include: false
-#| eval: !expr fit_models
-
-sustain_output_cgg100plus = run_and_save_OSA(
-  biomarker_levels = biomarker_levels, 
-  prob_correct = prob_correct, 
-  patient_data = patient_data |> filter(`CGG` >= 100),
-  
-  SuStaInLabels = biomarker_varnames,
-  N_startpoints = N_startpoints,
-  N_S_max = N_S_max_stratified, 
-  N_iterations_MCMC = N_iterations_MCMC, 
-  output_folder = output_folder, 
-  dataset_name = "over100", 
-  use_parallel_startpoints = use_parallel_startpoints,
-  seed = 1,
-  plot = plot_python,
-  fig_size = fig_size)
-
-```
-
-```{r}
-#| message: false
-#| label: "cgg_under_100"
-#| include: false
-#| eval: !expr fit_models
-
-sustain_output_cgg100minus = run_and_save_OSA(
-  biomarker_levels = biomarker_levels, 
-  prob_correct = prob_correct, 
-  patient_data = patient_data |> filter(`CGG` < 100),
-  SuStaInLabels = biomarker_varnames,
-  N_startpoints = N_startpoints,
-  N_S_max = N_S_max_stratified, 
-  N_iterations_MCMC = N_iterations_MCMC, 
-  output_folder = output_folder, 
-  dataset_name = "under100", 
-  use_parallel_startpoints = use_parallel_startpoints,
-  seed = 1,
-  plot = plot_python,   
-  fig_size = fig_size)
-
-```
-
-```{r}
-#| message: false
-#| label: "cgg_under_100 & Male"
-#| include: false
-sustain_output_cgg100minus_males = run_and_save_OSA(
-  biomarker_levels = biomarker_levels,
-  prob_correct = prob_correct,
-  patient_data = patient_data |>
-    filter(
-      `CGG` < 100,
-      Gender == "Male"),
-
-  SuStaInLabels = biomarker_varnames,
-  N_startpoints = N_startpoints,
-  N_S_max = N_S_max_stratified,
-  N_iterations_MCMC = N_iterations_MCMC,
-  output_folder = output_folder,
-  dataset_name = "under100_Male",
-  rerun = rerun,
-  use_parallel_startpoints = use_parallel_startpoints,
-  plot = plot_python,   
-  fig_size = fig_size)
-```
-
-```{r}
-#| message: false
-#| label: "cgg_over_100 & Male"
-#| include: false
-sustain_output_cgg100plus_males = run_and_save_OSA(
-  biomarker_levels = biomarker_levels,
-  prob_correct = prob_correct,
-  patient_data = patient_data |>
-    filter(
-      `CGG` >= 100,
-      Gender == "Male"),
-  SuStaInLabels = biomarker_varnames,
-  N_startpoints = N_startpoints,
-  N_S_max = N_S_max_stratified,
-  N_iterations_MCMC = N_iterations_MCMC,
-  output_folder = output_folder,
-  dataset_name = "over100_Male",
-  rerun = rerun,
-  use_parallel_startpoints = use_parallel_startpoints,
-  plot = plot_python,   
-  fig_size = fig_size)
-```
-
-
-```{r}
-#| message: false
-#| label: "cgg_under_100 & Female"
-#| include: false
-sustain_output_cgg100minus_females = run_and_save_OSA(
-  biomarker_levels = biomarker_levels,
-  prob_correct = prob_correct,
-  patient_data = patient_data |>
-    filter(`CGG` < 100,
-           Gender == "Female"),
-  SuStaInLabels = biomarker_varnames,
-  N_startpoints = N_startpoints,
-  N_S_max = N_S_max_stratified,
-  N_iterations_MCMC = N_iterations_MCMC,
-  output_folder = output_folder,
-  rerun = rerun,
-  dataset_name = "under100_Female",
-  use_parallel_startpoints = use_parallel_startpoints,
-  plot = plot_python,   
-  fig_size = fig_size)
-```
-
-```{r}
-#| message: false
-#| label: "cgg_over_100 & Female"
-#| include: false
-sustain_output_cgg100plus_females = run_and_save_OSA(
-  biomarker_levels = biomarker_levels,
-  prob_correct = prob_correct,
-  patient_data = patient_data |>
-    filter(
-      `CGG` >= 100,
-      Gender == "Female"),
-
-  SuStaInLabels = biomarker_varnames,
-  N_startpoints = N_startpoints,
-  N_S_max = N_S_max_stratified,
-  N_iterations_MCMC = N_iterations_MCMC,
-  output_folder = output_folder,
-  rerun = rerun,
-  dataset_name = "over100_Female",
-  use_parallel_startpoints = use_parallel_startpoints,
-  plot = plot_python,   
-  fig_size = fig_size)
-```
-
-```{r}
-#| label: save-image
-fs::path_package("fxtas", "extdata") |> 
-  fs::path("ordinal-sustain-results.rda") |> 
-  save.image()
-
-# fs::path_package("fxtas", "extdata") |>
-#   fs::path("ordinal-sustain-results.rda") |>
-#   load()
-
-```
-
 ```{r}
 #| label: extract-figs
 
@@ -1107,3 +953,15 @@ pvd_lineplot(
 # Supplementary material {.appendix}
 
 {{< include _sec_supplement.qmd >}}
+
+```{r}
+#| label: save-image
+fs::path_package("fxtas", "extdata") |> 
+  fs::path("ordinal-sustain-results.rda") |> 
+  save.image()
+
+# fs::path_package("fxtas", "extdata") |>
+#   fs::path("ordinal-sustain-results.rda") |>
+#   load()
+
+```

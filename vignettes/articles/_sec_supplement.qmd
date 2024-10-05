@@ -60,11 +60,15 @@ table1(
 
 {{< include _results_by_cgg.qmd >}}
 
-## Comparing sexes stratified by CGG level {.appendix #sec-stratified-by-cgg-and-sex}
+## Results stratified by sex and CGG repeats {.appendix}
+
+{{< include _results_by_sex_and_cgg.qmd >}}
+
+### Comparing sexes stratified by CGG level {.appendix #sec-stratified-by-cgg-and-sex}
 
 {{< include _results_by_sex_strat_cgg.qmd >}}
 
-## Comparing CGG levels stratified by sex {.appendix #sec-cgg-strat-sex}
+### Comparing CGG levels stratified by sex {.appendix #sec-cgg-strat-sex}
 
 {{< include _results_cgg_strat_sex.qmd >}}
 

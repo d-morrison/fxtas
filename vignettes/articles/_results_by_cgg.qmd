@@ -1,4 +1,51 @@
 
+```{r}
+#| message: false
+#| label: "cgg_over_100"
+#| include: false
+#| eval: !expr fit_models
+
+sustain_output_cgg100plus = run_and_save_OSA(
+  biomarker_levels = biomarker_levels, 
+  prob_correct = prob_correct, 
+  patient_data = patient_data |> filter(`CGG` >= 100),
+  
+  SuStaInLabels = biomarker_varnames,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified, 
+  N_iterations_MCMC = N_iterations_MCMC, 
+  output_folder = output_folder, 
+  dataset_name = "over100", 
+  use_parallel_startpoints = use_parallel_startpoints,
+  seed = 1,
+  plot = plot_python,
+  fig_size = fig_size)
+
+```
+
+```{r}
+#| message: false
+#| label: "cgg_under_100"
+#| include: false
+#| eval: !expr fit_models
+
+sustain_output_cgg100minus = run_and_save_OSA(
+  biomarker_levels = biomarker_levels, 
+  prob_correct = prob_correct, 
+  patient_data = patient_data |> filter(`CGG` < 100),
+  SuStaInLabels = biomarker_varnames,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified, 
+  N_iterations_MCMC = N_iterations_MCMC, 
+  output_folder = output_folder, 
+  dataset_name = "under100", 
+  use_parallel_startpoints = use_parallel_startpoints,
+  seed = 1,
+  plot = plot_python,   
+  fig_size = fig_size)
+
+```
+
 
 ```{r}
 #| label: p-val-test-cgg
