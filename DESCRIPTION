@@ -70,6 +70,7 @@ Config/reticulate/autoconfigure:
     )
   )
 Config/build/copy-method: link
-Roxygen: list(markdown = TRUE)
+Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
 Remotes: 
     bcgov/ssdtools
+Config/Needs/build: moodymudskipper/devtag
