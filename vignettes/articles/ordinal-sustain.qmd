@@ -262,7 +262,8 @@ probs =
 We assumed that missing `r outcomes_name` data 
 were missing at random (MAR) 
 [@rubin1976inference, @little2019statistical].
-The study protocols changed over the years (`r min_year` - `r max_year`) 
+The study protocols changed over the years 
+(`r min_year` - `r max_year`) 
 as new evaluation instruments were adopted; 
 much of the missingness was due to 
 adding additional measures in later stages of the studies. 
@@ -270,7 +271,8 @@ The MAR assumption thus seems plausible.
 We substituted missing outcome event data 
 by assigning a probability distribution across the 
 possible values of the missing variable 
-that matched the marginal distribution of observed data among the cases. 
+that matched the marginal distribution of observed data 
+among the cases. 
 For example, 
 `r n_missing` of the `r length(x1)` cases (`r pct_missing`) 
 had missing values for Ataxia Severity, 
@@ -285,11 +287,14 @@ of the observed data.
 
 ### Statistical hypothesis tests
 
-To test for statistical significant evidence of differences in event sequences
+To test for statistical significant evidence of differences 
+in event sequences
 between males and females
-and between lower (CGG <100) and higher premutation levels (CGG 100-199),
+and between lower (CGG <100) 
+and higher premutation levels (CGG 100-199),
 we implemented a permutation test [@welch1990construction]
-to calculate a p-value that is the probability of observing a difference 
+to calculate a p-value that is 
+the probability of observing a difference 
 at least as extreme as the test statistic 
 given that the null hypothesis of no difference is true.
 We first created `r n_permutations` permuted datasets 
@@ -298,12 +303,15 @@ We computed the mean log-likelihood of the data
 for each permuted dataset 
 (averaging across MCMC samples and 
 summing across the strata being compared) 
-and compared the distribution of permuted mean log-likelihoods 
+and compared 
+the distribution of permuted mean log-likelihoods 
 to the observed log-likelihood 
 calculated from the original (unpermuted) dataset.
 We computed the empirical p-value 
-by first computing the percentile of the observed mean log-likelihood 
-relative to the empirical distribution of the permuted mean log-likelihoods,
+by first computing the percentile of 
+the observed mean log-likelihood 
+relative to the empirical distribution of 
+the permuted mean log-likelihoods,
 subtracting that percentile from 1 if larger than 0.5,
 and then multiplying by two to calculate a two-sided test statistic.
 We declared significance if the p-value was less than or equal to 0.05.
