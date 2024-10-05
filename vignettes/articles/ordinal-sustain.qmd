@@ -738,13 +738,22 @@ difference in event sequences
 between males and females (p = `r pval_sex_gp34_v1`) 
 (@fig-first-only-1 and [(b)](#fig-first-only-2)). 
 It appears that 
-female premutation carriers developed threshold-level Mood Disorder symptoms prior to FXTAS Stage 1 diagnosis,
-whereas male carriers developed these symptoms between FXTAS Stages 3 and 4 (@fig-first-only-2).
-Cognitive decline, as measured by SWM and PAL also occurred at earlier FXTAS stages for females.
-Ataxia occurred prior to Stage 1 for females and after Stage 2 for males.
-However, ataxia severity level 1 occurred earlier for males (between Stages 2-3) than for females (between Stages 3-4).
-Advanced degrees of ataxia severity also occurred earlier in the event sequence for males than females. 
-MRI biomarkers of decline and parkinsonian features also appear at earlier stages for males than for females.
+female premutation carriers developed 
+threshold-level Mood Disorder symptoms 
+prior to FXTAS Stage 1 diagnosis,
+whereas male carriers developed these symptoms 
+between FXTAS Stages 3 and 4 (@fig-first-only-2).
+Cognitive decline, as measured by SWM and PAL,
+also occurred at earlier FXTAS stages for females.
+Ataxia occurred prior to Stage 1 for females 
+and after Stage 2 for males.
+However, ataxia severity level 1 occurred 
+earlier for males (between Stages 2-3) 
+than for females (between Stages 3-4).
+Advanced degrees of ataxia severity also occurred 
+earlier in the event sequence for males than females. 
+MRI biomarkers of decline and parkinsonian features 
+also appear at earlier stages for males than for females.
 
 ## Stratified by CGG repeats {#sec-methods-strat-cgg}
 
