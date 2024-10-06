@@ -235,10 +235,13 @@ assuming a uniform prior distribution
 over the set of all possible orderings. 
 
 We conducted subgroup analyses by fitting models stratified by: 
-(1) sex (@sec-methods-strat-sex);
-(2) CGG repeats (<100 vs ≥100) ([Supplementary @sec-methods-strat-cgg]);
-(3) both sex and CGG repeats (<100 vs ≥100) ([Supplementary @sec-stratified-by-cgg-and-sex]).
-For these subgroup analyses, we did not search for latent clusters.
+
+1. sex (@sec-methods-strat-sex);
+2. CGG repeats (<100 vs ≥100) ([Supplementary @sec-methods-strat-cgg]);
+3. both sex and CGG repeats (<100 vs ≥100) 
+   ([Supplementary @sec-stratified-by-cgg-and-sex]).
+
+In these subgroup analyses, we did not search for latent clusters.
 
 ### Imputation of data {#sec-incomplete-data}
 

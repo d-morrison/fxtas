@@ -1,4 +1,4 @@
-## Details of Ordinal SuStaIn {.appendix}
+## Scored events model {.appendix}
 
 The Ordinal SuStaIn approach [@young2021ordinal] uses a scored events model, 
 which assumes that for each `r outcomes_name`,
@@ -38,8 +38,6 @@ prob_correct |> attr("data")
 study participants with Fragile X premutation (55-199 CGG repeats),
 when Ataxia severity was recorded.
 
-
-
 ```{r}
 #| label: tbl-ex-incomplete-data
 #| tbl-cap: "**Distribution of ataxia severity among cases.**"
@@ -53,26 +51,6 @@ table1(
 {{< pagebreak >}}
 
 {{< include general-data-notes.qmd >}}
-
-{{< pagebreak >}}
-
-## Results stratified by CGG repeats {.appendix #sec-methods-strat-cgg}
-
-{{< include _results_by_cgg.qmd >}}
-
-## Results stratified by sex and CGG repeats {.appendix}
-
-{{< include _results_by_sex_and_cgg.qmd >}}
-
-### Comparing sexes stratified by CGG level {.appendix #sec-stratified-by-cgg-and-sex}
-
-{{< include _results_by_sex_strat_cgg.qmd >}}
-
-### Comparing CGG levels stratified by sex {.appendix #sec-cgg-strat-sex}
-
-{{< include _results_cgg_strat_sex.qmd >}}
-
-{{< pagebreak >}}
 
 ## Hypothesis testing {.appendix #sec-permutation-test}
 
@@ -257,6 +235,22 @@ temp$loglike_matrix |> plot_cv_loglik()
 
 :::
 
+## Analyses stratified by CGG repeats {.appendix #sec-methods-strat-cgg}
+
+{{< include _results_by_cgg.qmd >}}
+
+## Analyses stratified by sex and CGG repeats {.appendix}
+
+{{< include _results_by_sex_and_cgg.qmd >}}
+
+### Comparing sexes stratified by CGG level {.appendix #sec-stratified-by-cgg-and-sex}
+
+{{< include _results_by_sex_strat_cgg.qmd >}}
+
+### Comparing CGG levels stratified by sex {.appendix #sec-cgg-strat-sex}
+
+{{< include _results_cgg_strat_sex.qmd >}}
+
 ## Additional data tables {.appendix}
 
 The following tables summarize the distributions of the `r outcomes_name`s
@@ -267,103 +261,6 @@ that we analyzed in this paper, stratified by sex and CGG level.
 {{< include exploration.qmd >}}
 
 :::
-
-## Imputation of missing data {.appendix}
-
-@tbl-ex-incomplete-data shows the distribution of Ataxia severity among
-study participants with Fragile X premutation (55-199 CGG repeats),
-when Ataxia severity was recorded.
-
-
-
-```{r}
-#| label: tbl-ex-incomplete-data
-#| tbl-cap: "**Distribution of ataxia severity among cases.**"
-
-table1(
-  na.is.category = FALSE,
-  data = v1_usable_cases,
-  x = ~ `Ataxia: severity*`)
-```
-
-{{< pagebreak >}}
-
-{{< include general-data-notes.qmd >}}
-
-{{< pagebreak >}}
-
-## Comparing CGG levels stratified by sex {.appendix #sec-cgg-strat-sex}
-
-```{r}
-#| label: fig-pvd-by-cgg-male
-#| column: page
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("**Event sequences stratified by CGG repeats (<100 vs 100+), males only. (a)** {compact_fig_caption} **(b)** Positional differences in estimated event sequence between CGG repeat levels. {compact_fig_cap2}")
-#| layout-ncol: 1
-#| fig-subcap:
-#|    - ""
-#|    - ""
-#| fig-cap-location: top
-
-# compact pvd
-list(
-    "Males, CGG &lt; 100 <br>" = fig_under100_males,
-    "Males, CGG &ge; 100  <br>" = fig_over100_males
-  ) |>
-plot_compact_pvd(y_text_size = 11)
-
-# lineplot of event sequences
-list(
-    "Males, CGG &lt; 100" = fig_under100_males,
-    "Males, CGG &ge; 100" = fig_over100_males
-  ) |>
-pvd_lineplot(y_text_size = 11)
-```
-
-{{< pagebreak >}}
-
-```{r}
-#| label: fig-pvd-by-cgg-female
-#| column: page
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
-#| fig-cap: !expr
-#|    glue::glue(
-#|      "**Event sequences stratified by CGG repeats among females.**
-#|      **(a)** Estimated event sequences,
-#|      stratified by CGG repeats (<100 vs 100+).
-#|      {compact_fig_caption}
-#|      **(b)** Positional differences in estimated event sequence
-#|      between CGG repeats. {compact_fig_cap2}")
-#| layout-ncol: 1
-#| fig-subcap:
-#|    - ""
-#|    - ""
-#| fig-cap-location: top
-
-# compact pvd
-plot_compact_pvd(
-  figs = list(
-    fig_under100_females,
-    fig_over100_females
-  ),
-  facet_label = c("Females, CGG &lt; 100  <br>", "Females, CGG &ge; 100  <br>"),
-  y_text_size = 11
-)
-
-# lineplot of event sequences
-pvd_lineplot(
-  figs = list(
-    fig_under100_females,
-    fig_over100_females
-  ),
-  facet_label = c("Females, CGG &lt; 100", "Females, CGG &ge; 100"),
-  y_text_size = 11
-)
-```
-
-{{< pagebreak >}}
 
 ## Hypothesis testing {.appendix #sec-permutation-test}
 
