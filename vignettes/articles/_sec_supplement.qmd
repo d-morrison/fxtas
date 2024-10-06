@@ -82,10 +82,6 @@ pval_sex_gp34_v1 |> autoplot() |> print()
 
 {{< pagebreak >}}
 
-<!-- ## Results with repeated measures {#sec-longitudinal-results .appendix} -->
-
-<!-- {{< include longitudinal-results.qmd >}} -->
-
 ## Detecting latent subtypes {#sec-subtypes .appendix}
 
 In order to use the Ordinal SuStaIn modeling algorithm, we must specify how many latent subtypes to include in the model. There are several metrics for determining the optimal number of subtypes for a given data set.
@@ -251,200 +247,10 @@ temp$loglike_matrix |> plot_cv_loglik()
 
 {{< include _results_cgg_strat_sex.qmd >}}
 
-## Additional data tables {.appendix}
-
-The following tables summarize the distributions of the `r outcomes_name`s
-that we analyzed in this paper, stratified by sex and CGG level.
-
-::: landscape
-
-{{< include exploration.qmd >}}
-
-:::
-
-## Hypothesis testing {.appendix #sec-permutation-test}
-
-```{r}
-#| label: hypothesis-tests
-obs_stat = pval_sex_gp34_v1  |> attr("observed_test_stat")
-perm_stats = pval_sex_gp34_v1  |> attr("permuted_test_stats")
-n_perm_over_obs = sum(perm_stats >= obs_stat)
-pct_perm_over_obs = mean(perm_stats >= obs_stat)
-```
-
-@fig-permute-llik-sex illustrates the permutation test approach that we implemented to compare event orderings between subgroups.
-This figure compares the mean log-likelihood for the sex-stratified model
-to the distribution of mean log-likelihoods when sex is permuted.
-Only `r n_perm_over_obs` out of `r length(perm_stats)` permuted mean-log-likelihoods
-were larger than the observed mean-log-likelihood
-(`r pct_perm_over_obs |> scales::percent(accuracy = 0.1)`),
-resulting in a two-sided p-value of $2 \times `r pct_perm_over_obs` = `r 2*pct_perm_over_obs`$.
-
-{{< pagebreak >}}
-
-```{r}
-#| fig-cap: |
-#|     **Histogram of mean log-likelihoods for data permuted by sex.**
-#| label: fig-permute-llik-sex
-
-pval_sex_gp34_v1 |> autoplot() |> print()
-```
-
-{{< pagebreak >}}
-
 <!-- ## Results with repeated measures {#sec-longitudinal-results .appendix} -->
 
 <!-- {{< include longitudinal-results.qmd >}} -->
 
-## Detecting latent subtypes {#sec-subtypes .appendix}
-
-In order to use the Ordinal SuStaIn modeling algorithm, we must specify how many latent subtypes to include in the model. There are several metrics for determining the optimal number of subtypes for a given data set.
-
-### Likelihood {.appendix}
-
-The simplest option is to compare the likelihood of the data for the fitted model while varying the number of subtypes used to fit the model.
-@fig-mcmc-loglik shows the distribution of log-likelihoods from the MCMC samples for the full dataset (not stratified by sex or CGG repeats).
-Adding up to 6 clusters substantially improves the log-likelihood.
-
-```{r}
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
-#| label: fig-mcmc-loglik
-#| fig-cap: log-likelihoods of MCMC samples, by number of subtypes
-#| eval: !expr fit_models
-
-lliks = results_v1 |>
-  sapply(F = function(x) x$samples_likelihood)
-
-lliks |>
-  graph_likelihoods_v2(alpha = 0.5) |>
-  suppressWarnings()
-
-```
-
-{{< pagebreak >}}
-
-### Cross-Validation Information Criterion {#sec-cvic .appendix}
-
-Since models with fewer subtypes are limited special cases of models with more subtypes
-(i.e., "nested models"), the likelihood of the training data is guaranteed to improve
-as we increase the number of subtypes.
-However, using too many subtypes means there is less data available for each subtype,
-possibly leading to a model that does not generalize well to new data
-(i.e., a model that is "overfit" to the training data).
-
-To avoid overfitting,
-Young et al [-@young2018uncovering] recommends
-choosing the optimal number
-using the Cross-Validation Information Criterion (CVIC) (@eq-def-cvic).
-
-Let:
-
-* $n$ be the number of observations in the dataset
-* $Y_i$ be the observed biomarker values for the $i^{th}$ participant
-* $\mathcal C$ be the number of latent subtypes assumed, with corresponding index $c$.
-* $C_i$ be the latent subtype membership of observation $i$
-* $\mathcal S$ be the set of possible event sequences, indexed by $\mathcal s$
-* $S_c \in \mathcal S$ be the sequence for subtype $c$
-* $K$ be the number of cross-validation folds, with index $k$; typically, $K = 10$.
-* $n_k$ be the number of held-out observations in cross-validation fold $K$; $n_k \approx n/K$
-* $\hat{P}_{(-k)}(C = c)$ be the prior probability that an observation belongs to subtype $c$, estimated using all observations except those in fold $k$.
-
-Then the Cross-Validation Information Criterion (CVIC) is defined as:
-
-$$
-CVIC_{\mathcal C} =
--2 *
-\sum_{k=1}^K
-\sum_{i=1}^{n_k}
-\log
-\left\{
-\sum_{c=1}^\mathcal C
-\sum_{s\in \mathcal S}
-\hat P(Y_i|C_i = c, S_c=s)
-\hat{P}_{(-k)}(C_i = c, S_c = s)
-\right\}
-$${#eq-def-cvic}
-
-### Out-of-fold log-likelihood criterion {#sec-oofll .appendix}
-
-We also evaluated the consistency of our cross-validation procedure
-by looking at the distribution of out-of-fold log-likelihood ("OOFLL")
-across cross-validation folds;
-following Young et al [-@young2018uncovering],
-we calculated out-of-sample log-likelihood as:
-
-$$
-\ell_{\mathcal C, k} =
-\sum_{i = 1}^{n_k}
-\sum_{c=1}^\mathcal C
-\sum_{s\in \mathcal S}
-\log
-\left\{
-\hat P(Y_i|C_i = c, S_c=s)
-\right\}
-\hat{P}_{(-k)}(C_i = c, S_c = s)
-$$ {#eq-def-oof-llik}
-
-@fig-cvic-2 shows the distribution of the OOFLL statistic
-as a function of number of latent subgroups.
-
-@fig-stage-by-age shows estimated disease progression stage
-(that is, number of events experienced)
-by age at visit and estimated latent subtype,
-with a
-Locally Estimated Scatterplot Smoothing (LOESS)
-non-parametric regression curve superimposed [@cleveland1992local].
-This graph is a model diagnostic; if the model fits the data well,
-then older patients should on average be classified as being farther
-along in their disease progression, resulting in an upwards trend.
-Types 1, 3 and 4 appear to show such an upwards trend.
-Type 2 has a less clear trend, but does not show substantial evidence
-of lack of fit.
-In all four subtypes, patients whose visit occurred at a later age
-tend to be at a later estimated stage of disease progression.
-The upwards trend of progression stage with age
-indicates that the estimated models are plausible.
-
-```{r}
-#| label: fig-stage-by-age
-#| fig-cap: |
-#|    **Estimated progression stage by age and latent subtype.**
-#|    The blue line is a Locally Estimated Scatterplot Smoothing (LOESS)
-#|    non-parametric regression curve.
-#|
-#| include: true
-
-stages =
-  results_cv_max$subtype_and_stage_table |>
-  mutate(
-    age = patient_data$`Age at visit`,
-    id = patient_data$`FXS ID`
-  )
-
-library(ggplot2)
-stages |>
-  graph_stage_by_age()
-
-```
-
-::: landscape
-
-```{r}
-#| fig-cap: "Selection criteria for number of latent subtypes"
-#| fig-subcap:
-#|    - "Cross-validation information criterion"
-#|    - "Test set log-likelihood across folds"
-#| label: fig-cvic
-#| layout-ncol: 2
-#| eval: !expr fit_models
-
-temp$CVIC |> plot_CVIC()
-temp$loglike_matrix |> plot_cv_loglik()
-```
-
-:::
-
 ## Additional data tables {.appendix}
 
 The following tables summarize the distributions of the `r outcomes_name`s
@@ -455,3 +261,4 @@ that we analyzed in this paper, stratified by sex and CGG level.
 {{< include exploration.qmd >}}
 
 :::
+
