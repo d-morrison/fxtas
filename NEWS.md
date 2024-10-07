@@ -2,11 +2,16 @@
 
 ## Manuscript
 
+* Incorporated coauthors' feedback from 2024/09/03 draft
+* Added additional line-graph comparison subfigures
+for latent subtype clustering analysis
+* Added more interpretation of subtype analysis results
 * removed repeated measures analysis
 
 ## Data processing
 
-* added "Disorder" suffix to SCID composite variables, on Dr. Bourgeois's recommendation.
+* added "Disorder" suffix to SCID composite variables, 
+on Dr. Bourgeois's recommendation.
 * fixed `create_any_tremor()` to handle NAs before or after `fix_factors()`.
 * renamed "Any Autoimmune" to "any autoimmune disorder" and make it "Yes"/"No"
 * decapitalized "MMSE Total Score" to "MMSE total score"

@@ -657,25 +657,40 @@ differences in subtype distributions between CGG < 100 versus ≥ 100.
 n_events = nrow(biomarker_events_table)
 ```
 
-With `r n_events` symptoms included in the analysis, it is 
-challenging to concisely summarize the differences 
-between the detected subtypes.
+With `r n_events` symptoms included in the analysis, 
+it is challenging to concisely summarize the differences between subtypes, 
+especially given the relatively small sample sizes per subtype 
+and the correspondingly large amounts of uncertainty in their event orderings.
+In this analysis approach, 
+the event onsets are not modeled as a function of participant age;
+instead, each event's onset timing is only modeled relative to the other events.
+Therefore, the sequence differences between the subtypes are all in relative terms: 
+if one event moves earlier in the sequence when comparing one subtype to another, 
+other events are pushed later in the sequence, 
+even if only one event timing
+changes relative to age.
+In order to provide clearer clinical interpretation, 
+we used the FXTAS Stage transitions as reference points,
+and examined the differences in onsets 
+relative to these FXTAS Stage transitions.
 Roughly speaking:
-Subtype 1 appeared to 
-experience mood disorders before FXTAS Stage 1,
-tremors and ataxia between Stages 1 and 4,
+Subtype 1 appeared to experience the onsets of
+mood disorders before FXTAS Stage 1,
+ataxia between Stages 2 and 3,
+head tremors between Stages 3 and 4,
 parkinsonian features between Stages 3 and 4,
-and brain abnormalities between Stages 4 and 5.
+and MRI-detectable brain structure abnormalities between Stages 4 and 5.
 Compared to Subtype 1, Subtype 2 appeared to experience 
 brain abnormalities earlier (between Stages 2 and 4),
-tremors and ataxia later (between Stages 2 and 4).
+head tremors earlier (between Stages 2 and 3).
 parkinsonian features later (between stages 4 and 5),
-and mood disorders later (between Stages 3 and 5),
+and mood disorders later (between Stages 3 and 5).
 Subtype 3 appeared to be a mix of Subtypes 1 and 2,
 with mood disorders early (before Stage 1, like Subtype 1),
-brain abnormalities also early (between Stages 1 and 3, like Subtype 2), 
-and parkinsonian features later (between Stages )
-
+brain abnormalities also early (between Stages 1 and 3, like Subtype 2).
+Subtype 4 appeared to experience 
+ataxia before Stage 1 (earlier than Subtypes 1-3).
+and tremors mostly after Stage 5 (later than Subtypes 1-3).
 
 Subtype 2 appeared to experience 
 MRI abnormalities,
