@@ -630,6 +630,8 @@ From these results, it did not appear that there was much benefit to including
 more than `r broman::spell_out(n_s_selected)` latent subgroups for this dataset.
 Therefore, for easier clinical interpretation, 
 we chose to analyze the results with only `r n_s_selected` subtypes.
+The subtypes are numbered 1-4 in order of estimated relative frequency
+(that is, in order of how many participants were clustered into each subtype).
 
 ```{r}
 n_type_0 = results_cv_max$subtype_and_stage_table |> 
@@ -651,7 +653,63 @@ Subtypes 1 and 4 were equally prevalent among men and women.
 We did not find statistically significant evidence of 
 differences in subtype distributions between CGG < 100 versus ≥ 100.
 
+```{r}
+n_events = nrow(biomarker_events_table)
+```
 
+With `r n_events` symptoms included in the analysis, it is 
+challenging to concisely summarize the differences 
+between the detected subtypes.
+Roughly speaking:
+Subtype 1 appeared to 
+experience mood disorders before FXTAS Stage 1,
+tremors and ataxia between Stages 1 and 4,
+parkinsonian features between Stages 3 and 4,
+and brain abnormalities between Stages 4 and 5.
+Compared to Subtype 1, Subtype 2 appeared to experience 
+brain abnormalities earlier (between Stages 2 and 4),
+tremors and ataxia later (between Stages 2 and 4).
+parkinsonian features later (between stages 4 and 5),
+and mood disorders later (between Stages 3 and 5),
+Subtype 3 appeared to be a mix of Subtypes 1 and 2,
+with mood disorders early (before Stage 1, like Subtype 1),
+brain abnormalities also early (between Stages 1 and 3, like Subtype 2), 
+and parkinsonian features later (between Stages )
+
+
+Subtype 2 appeared to experience 
+MRI abnormalities,
+head tremor,
+and
+substance use
+at earlier FXTAS stages than Subtype 1,
+and appeared to experience 
+mood disorders,
+postural tremor,
+pill rolling tremor,
+stiff gait,
+increased tone, and
+masked faces
+at later FXTAS stages than Subtype 1.
+
+Subtype 3 appeared to experience
+MRI abnormalities
+MRI cerebellar abnormalities
+and cognitive impairment (MMSE score decline)
+even earlier than Subtype 2
+and
+head tremor,
+substance use,
+postural tremor,
+resting tremor
+later than Subtype 2
+
+
+
+
+
+
+earlier in the event sequence than Subtype 1.
 
 # Discussion
 
@@ -872,15 +930,21 @@ pvd_lineplot(y_text_size = 11)
 #| label: fig-pvd_chosen_subtypes
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("**Event sequences stratified by sex, for {n_s_selected} latent subtypes. (a)** {compact_fig_caption} **(b-d)** Differences in event sequences of subtypes 2-{n_s_selected} compared to subtype 1.") 
+#| fig-cap: !expr 
+#|     glue::glue(
+#|     "**Event sequences stratified by sex, 
+#|     for {n_s_selected} latent subtypes.**
+#|     **(a)** {compact_fig_caption} 
+#|     **(b-d)** Differences in event sequences of subtypes 
+#|     2-{n_s_selected} compared to subtype 1.") 
 #| fig-cap-location: top
 #| layout-ncol: 1
 #| layout-nrow: 4
 #| fig-subcap: 
 #|    - "Positional variance diagrams by latent subtype."
-#|    - "Subtype 2 compared to Subtype 1"
-#|    - "Subtype 3 compared to Subtype 1"
-#|    - "Subtype 4 compared to Subtype 1"
+#|    - "Subtype 1 compared to Subtype 2"
+#|    - "Subtype 1 compared to Subtype 3"
+#|    - "Subtype 1 compared to Subtype 4"
 #|    - "Subtype 2 compared to Subtype 3"
 #|    - "Subtype 2 compared to Subtype 4"
 #|    - "Subtype 3 compared to Subtype 4"
@@ -896,17 +960,16 @@ library(ggplot2)
 
 plot_compact_pvd(
   figs = figs,
-  tile_height = 2,
+  tile_height = 1,
   facet_label_prefix = NULL,
   y_text_size = 8
 )
 
 pvd_lineplot(
   figs = list(
-    figs[[1]],
-    figs[[2]]
-  ),
-  facet_labels = c("Subtype 1", "Subtype 2")
+    "Subtype 1" = figs[[1]],
+    "Subtype 2" = figs[[2]]
+  )
 )
 
 pvd_lineplot(

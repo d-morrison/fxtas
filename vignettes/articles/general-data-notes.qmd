@@ -12,14 +12,27 @@ or Pulmonary Fibrosis; otherwise, `"No"` for no autoimmune diseases recorded.
 
 #### MRI variables  
 
-The MRI variables are combined into composite variables taking the most severe score within a brain region.  
+The MRI variables are combined into composite variables 
+taking the most severe score within a brain region. Specifically: 
 
--   MRI Cerebellar: the most severe score of Cerebellar atrophy, Cerebellar WM hyperintensity, and MCP-WM hyperintensity.  
--   MRI Cerebral: the most severe score of Cerebral atrophy, Cerebral WM hyperintensity, Pons-WM hyperintensity, Sub-insular WM hyperintensity, Periventricular WM hyperintensity.  
+-   "MRI Cerebellar" was composited as the most severe score of 
+Cerebellar atrophy, 
+Cerebellar WM hyperintensity, and 
+MCP-WM hyperintensity.
+s
+-   "MRI Cerebral" was composited as the most severe score of 
+Cerebral atrophy, 
+Cerebral WM hyperintensity,
+Pons-WM hyperintensity, 
+Sub-insular WM hyperintensity, and
+Periventricular WM hyperintensity.  
 
-
-Splenium-WM hyperintensity, Genu-WM hyperintensity, and Corpus Callosum-Thickness remain as separate fields.  
-
+Splenium-WM hyperintensity,
+Genu-WM hyperintensity, and 
+Corpus Callosum-Thickness 
+remain as separate fields,
+because they had been coded using
+incompatible Likert scales.
 
 #### SCID composite variables
 
