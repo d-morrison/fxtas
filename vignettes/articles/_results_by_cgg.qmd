@@ -93,6 +93,13 @@ Several psychiatric disorders (as measured by SCID) occurred
 later in the event sequence in participants with CGG repeats <100
 compared to those with CGG repeats ≥100.
 
+The finding of only minimal differences 
+between 55-99 vs 100-199 CGG repeats is surprising, 
+since several studies have found that the higher the CGG repeats,
+the earlier the onset and the faster the progression of FXTAS 
+[@greco2006neuropathology; @leehey2008fmr1; @tassone2023insight]. 
+Perhaps the cut off of 100 is too high for this distinction to be made.
+
 ```{r}
 #| label: p-val-test-cgg-male
 output_folder = "output/output.fixed_CV/"
