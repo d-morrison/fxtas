@@ -28,12 +28,11 @@ who have a normal IQ and no psychiatric diagnosis.
 GP study participants are reassessed every 2 years
 to document phenotypic progression over time.
 
-The Trajectories study includes males 
+The TRAX study includes males 
 with the premutation ages 40 through the 80s 
 followed longitudinally with varying intervals averaging about 2.5 years apart. 
 Most carriers enter the study with no evidence of FXTAS; 
 approximately 25-30% developed the disease to date.
-
 
 Each evaluation includes 
 a detailed medical history, 
@@ -43,7 +42,7 @@ WAIS IV,
 Behavior Dyscontrol Scale (BDS2), 
 Mini Mental State Exam (MMSE) and 
 Cambridge Automated Neuropsychological Test Battery (CANTAB); 
-Structured Clinical Interview for DSM Disorders (SCID), 
+Structured Clinical Interview for DSM-IV Disorders (SCID-IV), 
 motor testing, 
 and MRI assessment 
 [@johnson2022fxtas_by_sex; 

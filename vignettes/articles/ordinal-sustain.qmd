@@ -1,19 +1,8 @@
 ---
-title: "Event sequences in Fragile X-associated tremor/ataxia syndrome"
+title: "Development and progression of Fragile X-associated tremor/ataxia syndrome 
+revealed by Subtype and Stage Inference (SuStaIn) analysis"
 reference-doc: ../Brain_template_2022.docx
 ---
-
-[David proposed the title: 
-"Development and progression of Fragile X-associated tremor/ataxia
-syndrome revealed by Ordinal SuStaIn analysis".
-The ordinal nature of the data seems incidental to me, 
-but maybe it’s worth name-checking the SuStaIn algorithm 
-for Search Engine Optimization purposes?
-Maybe 
-“Modeling Fragile X-associated tremor/ataxia syndrome 
-development and progression using the Subtype and Stage Inference algorithm”?
-]{.comment-start}
-[]{.comment-end}
 
 ```{=html}
 <style>
@@ -734,6 +723,27 @@ between males and females,
 and between low premutation (CGG 55-99) versus high premutation (CGG 100-199) among males.
 
 ## Clinical interpretation
+
+The percentage of 
+lifetime anxiety disorders, 
+mood disorders, 
+and somatoform disorders 
+is far more than 
+[Clinicians: please provide a reference for comparison]{.comment-start}
+usual population expectations for these illnesses 
+[]{.comment-end}.  
+This study design did not fractionate specific lifetime psychiatric illnesses
+(e.g., major depressive disorder, panic disorder, and somatization disorder),
+but these overall lifetime prevalence figures are notable.
+[Clinicians: please provide a reference]{.comment-start}
+Prior studies of mood and anxiety disorders
+[]{.comment-end}
+have demonstrated a higher than expected rate of these illnesses 
+in premutation carriers. 
+The same increase lifetime psychiatric illness burden 
+is seen in other neurodegenerative illnesses 
+(e.g., Parkinson’s disease, multiple sclerosis). 
+While many psychiatric illness have a strong genetic predisposition, the lifetime prevalences here persuasively suggest that the premutation carrier state itself increases the risk of psychiatric illness. As the SCID assesses lifetime illness risk, it is probable that the index episode of psychiatric illness antedated the onset of tremor, ataxia, and major neurocognitive disorder seen in more advanced premutation conditions like FXTAS.  As such, the high lifetime burden of psychiatric illness in this population cannot be plausible attributed solely (perhaps substantially) to an “emotional reaction” to the loss of function associated with these functional impairments but should be understood as a component of the premutation carrier state itself.  It is likely that this intrinsic vulnerability to psychiatric illness is a significant component of the carrier state.  Furthermore, as only a small % of the patients had MMSE scores in the impaired range (please validate, see above comment), it is also unlikely that the high rates of depressive, anxiety (and other) psychiatric illness could be attributed to complications of FXTAS dementia, as the majority of subjects had normal MMSE scores, which would not be consistent with dementia. For example, depressive disorders are a common psychiatric complication of dementia, but few of the depressive disorders found here could be attributed to dementia.  A common sequence of illnesses seen clinically in carriers is depressive and/or anxiety disorders with adult onset, then tremor and ataxia in the 40s, followed by FXTAS dementia in the 60s.  Seen in this light, and knowing the ultimate CNS vulnerability of the carrier state, retrospectively the initial presentation of depressive and/or anxiety disorders could be regarded as a psychiatric prodrome of later full spectrum illness.  This is analogous to the psychotic illness seen in SLE before rheumatologic findings and the depressive disorder that is commonly seen in the 5 years before the motor signs leading to a diagnosis of multiple sclerosis. 
 
 This data shows more significant involvement in males than females, as predicted,
 but a remarkable finding is the predominance of the psychiatric problems 
