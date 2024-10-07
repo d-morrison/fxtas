@@ -5,16 +5,8 @@ the Genotype-Phenotype Study in Fragile X Families
 the Trajectories and Markers of Neurodegeneration
 in Fragile X Premutation Carriers study
 ("TRAX"; funded by NINDS NS110100; PI Rivera).
-The GP study includes males and females with FXTAS from ages 40-85 at entry,
-and they are followed every 2 years
-to document phenotypic progression over time.
-The Trajectories study includes males 
-with the premutation ages 40 through the 80s 
-followed longitudinally with varying intervals averaging about 2.5 years apart. 
-Most carriers enter the study with no evidence of FXTAS; 
-approximately 25-30% developed the disease to date.
 
-The Genotype Phenotype Study is a longitudinal research effort 
+The GP Study is a longitudinal research effort 
 focused on adult male and female carriers of the fragile X premutation, 
 aged 40-85 at entry, 
 who are affected by fragile X-associated tremor/ataxia syndrome (FXTAS). 
@@ -32,6 +24,16 @@ or a diagnosis of ASD (Autism, PDD-NOS, or Asperger’s syndrome).
 who have a normal IQ and no psychiatric diagnosis.
 3.	Adult premutation carriers diagnosed with FXTAS.
 4.	Control individuals without the fragile X premutation.
+
+GP study participants are reassessed every 2 years
+to document phenotypic progression over time.
+
+The Trajectories study includes males 
+with the premutation ages 40 through the 80s 
+followed longitudinally with varying intervals averaging about 2.5 years apart. 
+Most carriers enter the study with no evidence of FXTAS; 
+approximately 25-30% developed the disease to date.
+
 
 Each evaluation includes 
 a detailed medical history, 
