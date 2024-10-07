@@ -212,14 +212,14 @@ and pulmonary fibrosis,
 since these conditions were too rare to analyze separately
 (details in Supplementary Materials, @sec-any-autoimmune).
 We also created composite variables for 
-four domains of the Structured Clinical Interview for DSM Disorders (SCID) 
-(
+four domains of the Structured Clinical Interview for DSM-IV (SCID-IV):
 Mood Disorders, 
 Substance Use Disorders, 
 Anxiety Disorders, and 
-Somatization Disorders;
-there were no participants with psychotic disorders in our data; 
-more details in Supplementary Materials, @sec-scid-composites).
+Somatoform Disorders;
+there were no participants with Psychotic Disorders in our data
+(more details in Supplementary Materials, @sec-scid-composites).
+We used the "Lifetime" variables from SCID-IV to construct these composites.
 We also created composite variables for 
 MRI variables for cerebral and cerebellar abnormalities detected via MRI;
 we did not combine the variables representing corpus callosum MRI abnormalities,

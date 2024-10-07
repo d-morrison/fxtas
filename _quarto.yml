@@ -52,19 +52,19 @@ affiliations:
     country: United States
   - id: ucdmind
     department: MIND Institute
-    name: MIND Institute, University of California, Davis, Sacramento, CA, United States
+    name: MIND Institute, University of California, Davis, Sacramento CA, United States
     city: Sacramento
     state: CA
     country: United States
   - id: ucdphs
-    name: Department of Public Health Sciences, School of Medicine, University of California, Davis, CA, United States
+    name: Department of Public Health Sciences, School of Medicine, University of California, Davis, Davis CA, United States
     department: Department of Public Health Sciences
     city: Davis
     state: CA
     country: United States
   - id: ucdmind
     department: MIND Institute
-    name: MIND Institute, University of California, Davis, Sacramento, CA, United States
+    name: MIND Institute, University of California, Davis, Sacramento CA, United States
     city: Sacramento
     state: CA
     country: United States
@@ -81,7 +81,7 @@ affiliations:
     country: United States
   - id: ucdpeds
     department: Department of Pediatrics
-    name: Department of Pediatrics, University of California, Davis Medical Center, Sacramento, CA, United States
+    name: Department of Pediatrics, University of California, Davis Medical Center, Sacramento CA, United States
     city: Sacramento
     state: CA
     country: United States
