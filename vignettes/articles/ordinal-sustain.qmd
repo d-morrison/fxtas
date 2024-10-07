@@ -574,7 +574,8 @@ biomarkers_table =
     biomarker_events_table = biomarker_events_table)
 ```
 
-@tbl-demographics describes summary statistics of patient characteristics included in the analysis. 
+@tbl-demographics describes summary statistics of patient characteristics 
+included in the analysis. 
 Our data included: 
 `r nrow(v1_usable_cases)` Fragile X premutation carriers and 
 `r nrow(gp34_v1_controls)` controls;
