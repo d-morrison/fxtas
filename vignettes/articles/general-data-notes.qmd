@@ -79,7 +79,7 @@ Specifically:
 - Substance-Induced Anxiety (ANX34), Lifetime
 - Anxiety Disorder NOS (ANX35), Lifetime
 
-"SCID: Somatization Disorders" combines:
+"SCID: Somatoform Disorders" combines:
 
 - Somatization Disorder (SOM36)
 - Pain Disorder (SOM37)

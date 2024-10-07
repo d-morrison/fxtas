@@ -42,7 +42,7 @@ scid_vars_for_table1 = function()
     #   "Other (SUD25), Lifetime",
     #   "Other (SUD25), Current",
     "SCID: Anxiety Disorders",
-    "SCID: Somatization Disorders",
+    "SCID: Somatoform Disorders",
     "SCID: Psychotic Symptoms"
     # "Primary Psychotic Symptoms (PS01), Lifetime",
     # "Primary Psychotic Symptoms (PS01), Current"

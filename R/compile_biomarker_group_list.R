@@ -78,7 +78,7 @@ compile_biomarker_group_list = function(dataset = trax_gp34_v1)
       "SCID: Mood Disorders",
       "SCID: Substance Use Disorders",
       "SCID: Anxiety Disorders",
-      "SCID: Somatization Disorders"
+      "SCID: Somatoform Disorders"
       # "SCID: Psychotic Symptoms" # exclude, only 2 at sub-threshold & 0 at threshold
     )
 
