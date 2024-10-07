@@ -12,6 +12,11 @@ text-align: center;
 </style>
 ```
 
+Target journal: 
+[Brain (Original Articles)](https://academic.oup.com/brain/pages/general_instructions)
+Word limit for main text: 6000
+Display items: 8
+
 {{< pagebreak >}}
 
 # Abstract {.unnumbered}
@@ -194,7 +199,7 @@ constitutes an outcome event
 in the disease progression modelling analysis 
 (@sec-Statistical-analysis).
 
-we created a composite variable "any autoimmune disorder" combining
+We created a composite variable "any autoimmune disorder" combining
 lupus, rheumatoid arthritis, 
 multiple sclerosis, ANA positivity, Sjogren's syndrome, Raynaud's syndrome, 
 and pulmonary fibrosis, 

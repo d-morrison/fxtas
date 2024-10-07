@@ -27,9 +27,14 @@ so we capped the estimated correct scoring probabilities at
 #| label: tbl-prob-correct
 #| tbl-cap: |
 #|   **Proportions of controls at baseline levels, and 
-#|   corresponding estimates of probability of correct scoring.**s
+#|   corresponding estimates of probability of correct scoring.**
 
-prob_correct |> attr("data")
+prob_correct |> attr("data") |>
+  mutate(
+    "# at baseline (%)" = glue::glue("{`# at baseline`}/{`# obs`}, ({round(`% at baseline`* 100, 1)})")
+  ) |>
+  select(Biomarker = biomarker, `# at baseline (%)`, "Pr(correct)" = prob_correct) |>
+  pander::pander()
 ```
 
 ## Imputation of missing data {.appendix}
