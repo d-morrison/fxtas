@@ -1,6 +1,6 @@
 ---
 title: "Development and progression of Fragile X-associated tremor/ataxia syndrome 
-revealed by Subtype and Stage Inference (SuStaIn) analysis"
+revealed by Subtype and Stage Inference analysis"
 reference-doc: ../Brain_template_2022.docx
 ---
 
