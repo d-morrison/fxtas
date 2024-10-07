@@ -35,8 +35,6 @@ Display items: 8
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  # fig.width = 7, 
-  # fig.height = 10,
   include = TRUE
 )
 ```
@@ -44,9 +42,8 @@ knitr::opts_chunk$set(
 ```{r}
 #| label: libraries
 #| message: false
-# devtools::load_all()
 library(fxtas)
-reticulate::use_condaenv("fxtas39",required = TRUE)
+reticulate::use_condaenv("fxtas39", required = TRUE)
 library(tidyverse)
 library(reticulate)
 library(pander)
@@ -57,18 +54,15 @@ library(magrittr)
 ```{r}
 #| label: "set run parameters"
 
-fit_models = TRUE
-# fit_models = FALSE
-run_CV =  TRUE
-# run_CV = FALSE
+fit_models <- TRUE
+run_CV <- TRUE
 
-rerun = TRUE
-rerun = FALSE
+rerun  <- TRUE
+rerun <- FALSE
 # 
-plot_python = TRUE
-# plot_python = FALSE
-
+plot_python <- TRUE
 fig_size = c(20, 10)
+
 pvd_height = 10
 pvd_width = 8
 pvd_line_height = 10
@@ -256,10 +250,11 @@ over the set of all possible orderings.
 
 We conducted subgroup analyses by fitting models stratified by: 
 
-1. sex (@sec-methods-strat-sex);
-2. CGG repeats (<100 vs ≥100) ([Supplementary @sec-methods-strat-cgg]);
+1. sex (@sec-methods-strat-sex)
+2. CGG repeats (<100 vs ≥100) 
+   ([Supplementary Materials, @sec-methods-strat-cgg])
 3. both sex and CGG repeats (<100 vs ≥100) 
-   ([Supplementary @sec-stratified-by-cgg-and-sex]).
+   ([Supplementary Materials, @sec-stratified-by-cgg-and-sex]).
 
 In these subgroup analyses, we did not search for latent clusters.
 
