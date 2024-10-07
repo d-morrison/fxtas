@@ -16,7 +16,8 @@ Most participants are recruited
 through the Fragile X Research and Treatment Center at the MIND Institute, 
 including both family members already engaged with our clinical and research programs 
 and new families who contact us for clinical services or information about our research.
-To be included in the study, participants must fall into one of the following categories:
+To be included in the study, 
+participants must fall into one of the following categories:
 
 1.	Premutation carriers with developmental challenges (IQ < 80) 
 or a diagnosis of ASD (Autism, PDD-NOS, or Asperger’s syndrome).
@@ -28,13 +29,21 @@ who have a normal IQ and no psychiatric diagnosis.
 GP study participants are reassessed every 2 years
 to document phenotypic progression over time.
 
-The TRAX study includes males 
-with the premutation ages 40 through the 80s 
-followed longitudinally with varying intervals averaging about 2.5 years apart. 
-Most carriers enter the study with no evidence of FXTAS; 
-approximately 25-30% developed the disease to date.
+Participants in TRAX study includes 67 Male Premutation Carriers 
+ranging from 40-82 years (Mean=60.2) 
+and 32 Male Healthy Controls ages 40-75 (Mean 57.7) at baseline (visit 1). 
+An important goal of the recruitment process was 
+the inclusion of Premutation Carriers who do not yet have FXTAS at enrollment. 
+During phone screening, detailed interviewing with potential participants suggested than none of the enrolled PC had FXTAS based upon criterion of evidence of either tremor or ataxia with any degree of impairment in functioning. 
+Despite the screening, 
+11 of the 67 PC demonstrated at least equivocal/intermittent tremor and/or ataxia and 
+functional interference (FXTAS Stage 2 or higher) at visit 1 after neurological examination. 
+Overall, 88 participants returned for 2-5 follow up visits over a total duration of 1 to 9 years (Mean=4.6 years) with varying intervals averaging about 2.5 years apart.  
+Of the PC participants without evidence of FXTAS at baseline who have follow-up visits to date, 
+28 “phenoconverted” and developed FXTAS (tremor and/or ataxia and functional interference).
 
-Each evaluation includes 
+In both studies, 
+each evaluation includes 
 a detailed medical history, 
 neurological examination, 
 neuropsychological testing including the 
