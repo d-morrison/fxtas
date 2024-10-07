@@ -1,4 +1,4 @@
-## Scored events model {.appendix}
+## Scored events model {.appendix #sec-scored-events-model}
 
 The Ordinal SuStaIn approach [@young2021ordinal] uses a scored events model, 
 which assumes that for each `r outcomes_name`,
@@ -29,11 +29,17 @@ so we capped the estimated correct scoring probabilities at
 #|   **Proportions of controls at baseline levels, and 
 #|   corresponding estimates of probability of correct scoring.**
 
+panderOptions("table.split.table", Inf)
 prob_correct |> attr("data") |>
   mutate(
-    "# at baseline (%)" = glue::glue("{`# at baseline`}/{`# obs`}, ({round(`% at baseline`* 100, 1)})")
+    `% at baseline` = round(`% at baseline` * 100, 1) |> paste0("%"),
+    prob_correct = round(prob_correct * 100, 1) |> paste0("%")
   ) |>
-  select(Biomarker = biomarker, `# at baseline (%)`, "Pr(correct)" = prob_correct) |>
+  select(Biomarker = biomarker, 
+         `# controls with data` = `# obs`,
+         `# at baseline`,
+         `% at baseline`,
+         "Est. Pr(correct)" = prob_correct) |>
   pander::pander()
 ```
 

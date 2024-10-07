@@ -148,14 +148,12 @@ from `r nrow(v1_usable)` participants from the two cohorts,
 consisting of 
 `r nrow(v1_usable_cases)` fragile X premutation carriers and 
 `r nrow(gp34_v1_controls)` controls. 
-[David R Hessl, does this passage answer your question about the purpose of the controls?]{.comment-start
-author="Ezra Morrison"}
-The controls' data are used to estimate the distribution of the analyzed symptoms 
-among non-FXTAS individuals,
-and the cases' data are then used to estimate FXTAS event sequences,
+The controls' data are used to estimate 
+the distribution of the analyzed `r outcomes_name`s among non-FXTAS individuals 
+(details in Supplementary Material, @sec-scored-events-model).
+Then, the cases' data are  used to estimate FXTAS event sequences,
 using the estimated control distributions to account for random variation
 in observed symptoms unrelated to the underlying event sequence.
-[]{.comment-end}
 @tbl-demographics provides demographic information about the study participants.
 
 ```{r}
