@@ -1,0 +1,13 @@
+### Longitudinal subsets
+
+We also fitted the Ordinal SuStaIn model, stratified by sex,
+including all longitudinal repeated measurements
+of the same participants over time
+([Supplementary Section @sec-longitudinal-results]).
+Including later observations
+might help the model clarify the later stages of the event sequence.
+However,
+correlations between repeated observations of the same individuals
+are not accounted for by the Ordinal SuStaIn model,
+which assumes that all observations are statistically independent,
+so we should note that including repeated measurements could lead to exaggerated estimates of precision.

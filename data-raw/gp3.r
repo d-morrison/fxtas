@@ -685,5 +685,12 @@ if(FALSE)
 #Setting Units
 
 gp3 = tibble(dataset)
-waldo::compare(y = gp3, x = fxtas::gp3, ignore_attr = "problems")
-# usethis::use_data(gp3, overwrite = TRUE)
+test = waldo::compare(y = gp3,
+                      x = fxtas::gp3,
+                      ignore_attr = "problems") |> print()
+
+if (length(test) > 0) {
+  browser("are you sure you want to overwrite?")
+}
+
+usethis::use_data(gp3, overwrite = TRUE)

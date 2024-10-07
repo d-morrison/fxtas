@@ -163,11 +163,11 @@ table1(na.is.category = FALSE, overall = FALSE,
 
 ```
 
-### Behavior Dimensions Scale - Second Edition (BDS-2) {.appendix}
+### Behavior Dyscontrol Scale - Second Edition (BDS-2) {.appendix}
 
 ```{r}
 #| label: tbl-bds2
-#| tbl-cap: "Behavior Dimensions Scale - Second Edition (BDS-2)"
+#| tbl-cap: "Behavior Dyscontrol Scale - Second Edition (BDS-2)"
 vars = c("BDS-2 Total Score", "BDS-2 Total Score*")
 
 

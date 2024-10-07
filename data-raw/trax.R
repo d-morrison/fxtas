@@ -557,6 +557,15 @@ trax <- dplyr::bind_rows(
   # clean trax data
   clean_trax_data()
 
+test = waldo::compare(y = trax,
+                      x = fxtas::trax,
+                      ignore_attr = "problems") |> print()
+
+if (length(test) > 0) {
+  browser("are you sure you want to overwrite?")
+}
+
+
 # get first visit
 trax_visit1 <- trax |>
   get_visit1()

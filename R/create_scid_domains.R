@@ -119,7 +119,7 @@ create_scid_domains <- function(
       `SCID: Mood Disorders` = pmax(!!!rlang::syms(scid_md_vars_lif), na.rm = TRUE),
       `SCID: Substance Use Disorders` = pmax(!!!rlang::syms(scid_sud_vars_lif), na.rm = TRUE),
       `SCID: Anxiety Disorders` = pmax(!!!rlang::syms(scid_anx_vars_lif), na.rm = TRUE),
-      `SCID: Somatization Disorders` = pmax(!!!rlang::syms(scid_somatic_vars_lif), na.rm = TRUE),
+      `SCID: Somatoform Disorders` = pmax(!!!rlang::syms(scid_somatic_vars_lif), na.rm = TRUE),
       `SCID: Psychotic Symptoms` = pmax(!!!rlang::syms(scid_psych_vars_lif), na.rm = TRUE)
     )
 }

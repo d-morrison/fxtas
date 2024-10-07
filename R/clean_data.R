@@ -146,7 +146,7 @@ clean_data = function(dataset)
         "SCID: Mood Disorders",
         "SCID: Anxiety Disorders",
         "SCID: Substance Use Disorders",
-        "SCID: Somatization Disorders",
+        "SCID: Somatoform Disorders",
         "SCID: Psychotic Symptoms",
         # mri domains
         "MRI: Cerebral",

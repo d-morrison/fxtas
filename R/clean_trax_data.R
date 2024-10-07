@@ -147,7 +147,7 @@ clean_trax_data = function(dataset)
                  # scid domains
                  "SCID: Mood Disorders", "SCID: Anxiety Disorders",
                  "SCID: Substance Use Disorders",
-                 "SCID: Somatization Disorders",
+                 "SCID: Somatoform Disorders",
                  "SCID: Psychotic Symptoms",
                  # mri domains
                  "MRI: Cerebral", "MRI: Cerebellar")

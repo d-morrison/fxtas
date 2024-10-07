@@ -3,29 +3,44 @@
 
 ### Composite variables {#sec-composites .appendix}
 
-#### Any autoimmune disorder {.appendix}
+#### Any autoimmune disorder {.appendix #sec-any-autoimmune}
 
 Due to the rare nature of individual autoimmune diseases, a composite 
-variable (`"any autoimmune disorder"`)was created for analysis: `"Yes"` if a patient had any of Lupus, Rheumatoid arthritis, 
+variable (`"any autoimmune disorder"`)was created for analysis: 
+`"Yes"` if a patient had any of Lupus, Rheumatoid arthritis, 
 Multiple Sclerosis, ANA positive, Sjogren's Syndrome, Raynaud's Syndrome, 
-or Pulmonary Fibrosis; otherwise, `"No"` for no autoimmune diseases recorded.
+or Pulmonary Fibrosis; otherwise, 
+`"No"` for no autoimmune diseases recorded.
 
-#### MRI variables  
+#### MRI variables {#sec-mri-composites}
 
-The MRI variables are combined into composite variables taking the most severe score within a brain region.  
+The MRI variables are combined into composite variables 
+taking the most severe score within a brain region. Specifically: 
 
--   MRI Cerebellar: the most severe score of Cerebellar atrophy, Cerebellar WM hyperintensity, and MCP-WM hyperintensity.  
--   MRI Cerebral: the most severe score of Cerebral atrophy, Cerebral WM hyperintensity, Pons-WM hyperintensity, Sub-insular WM hyperintensity, Periventricular WM hyperintensity.  
+-   "MRI Cerebellar" was composited as the most severe score of 
+Cerebellar atrophy, 
+Cerebellar WM hyperintensity, and 
+MCP-WM hyperintensity.
+s
+-   "MRI Cerebral" was composited as the most severe score of 
+Cerebral atrophy, 
+Cerebral WM hyperintensity,
+Pons-WM hyperintensity, 
+Sub-insular WM hyperintensity, and
+Periventricular WM hyperintensity.  
 
+Splenium-WM hyperintensity,
+Genu-WM hyperintensity, and 
+Corpus Callosum-Thickness 
+remain as separate fields,
+because they had been coded using
+incompatible Likert scales.
 
-Splenium-WM hyperintensity, Genu-WM hyperintensity, and Corpus Callosum-Thickness remain as separate fields.  
-
-
-#### SCID composite variables
+#### SCID composite variables {#sec-scid-composites}
 
 Similarly, we combined individual SCID disorders into composite variables,
 taking the highest level ("Absent", "Sub-Threshold", or "Threshold") 
-among the constit,ent individual disorders.
+among the constituent individual disorders.
 Specifically:
 
 "SCID: Mood Disorders" combines:
@@ -64,7 +79,7 @@ Specifically:
 - Substance-Induced Anxiety (ANX34), Lifetime
 - Anxiety Disorder NOS (ANX35), Lifetime
 
-"SCID: Somatization Disorders" combines:
+"SCID: Somatoform Disorders" combines:
 
 - Somatization Disorder (SOM36)
 - Pain Disorder (SOM37)

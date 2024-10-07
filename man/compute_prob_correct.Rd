@@ -13,6 +13,12 @@ compute_prob_correct(dataset, biomarker_levels, max_prob = 1)
 
 \item{max_prob}{a maximum value for the baseline probability}
 }
+\value{
+a \code{\link[=structure]{structure()}} that is fundamentally
+a named \code{\link[=numeric]{numeric()}} vector corresponding to the elements of \code{biomarker_levels},
+but also contains a \link[tibble:tbl_df-class]{tibble::tbl_df} as attribute \code{data}
+(easier than fixing all uses of this function)
+}
 \description{
 Compute each biomarker's probability of being recorded at its baseline level
 }
