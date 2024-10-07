@@ -181,7 +181,7 @@ nlevs =
 
 ```
 
-### `r outcomes_name_sentence_start` of neurodegenerative events
+### `r outcomes_name_sentence_start`s of neurodegenerative events
 
 We analyzed measurements of 
 `r length(biomarker_levels)` ordinal `r outcomes_name`s
