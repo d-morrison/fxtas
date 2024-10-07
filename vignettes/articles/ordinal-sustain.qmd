@@ -1,8 +1,19 @@
 ---
-title: "Development and progression of Fragile X-associated tremor/ataxia
-syndrome revealed by Ordinal SuStaIn analysis"
+title: "Event sequences in Fragile X-associated tremor/ataxia syndrome"
 reference-doc: ../Brain_template_2022.docx
 ---
+
+[David proposed the title: 
+"Development and progression of Fragile X-associated tremor/ataxia
+syndrome revealed by Ordinal SuStaIn analysis".
+The ordinal nature of the data seems incidental to me, 
+but maybe it’s worth name-checking the SuStaIn algorithm 
+for Search Engine Optimization purposes?
+Maybe 
+“Modeling Fragile X-associated tremor/ataxia syndrome 
+development and progression using the Subtype and Stage Inference algorithm”?
+]{.comment-start}
+[]{.comment-end}
 
 ```{=html}
 <style>
@@ -582,7 +593,9 @@ pval_sex_gp34_v1 = permutation_test(
 
 ```
 
-@fig-first-only shows the estimated event sequences stratified by sex and compares the estimated sequences between males and females.
+@fig-first-only shows the estimated event sequences 
+stratified by sex 
+and compares the estimated sequences between males and females.
 We found statistically significant evidence of a 
 difference in event sequences 
 between males and females (p = `r pval_sex_gp34_v1`) 
@@ -603,7 +616,7 @@ than for females (between Stages 3-4).
 Advanced degrees of ataxia severity also occurred 
 earlier in the event sequence for males than females. 
 MRI biomarkers of decline and parkinsonian features 
-also appear at earlier stages for males than for females.
+also appear to onset at earlier FXTAS stages for males than for females.
 
 ## Latent Subtypes
 
@@ -622,8 +635,10 @@ results_cv_max = extract_results_from_pickle(
 Based on the CVIC criterion (Supplementary Materials, @sec-cvic), 
 `r n_s_min_CVIC` subtypes were suggested to be the optimal number for the full, 
 unstratified dataset (Supplementary Materials, @fig-cvic-1). 
-The out-of-fold log-likelihood (Supplementary Materials, @eq-def-oof-llik) showed substantial fold-to-fold variation (Supplementary Materials, @fig-cvic-2).
-Between `r broman::spell_out(n_s_selected)` and `r broman::spell_out(N_S_max)` latent subgroups, 
+The out-of-fold log-likelihood (Supplementary Materials, @eq-def-oof-llik) 
+showed substantial fold-to-fold variation (Supplementary Materials, @fig-cvic-2).
+Between `r broman::spell_out(n_s_selected)` and `r broman::spell_out(N_S_max)` 
+latent subgroups, 
 the distribution of OOFLL appears to be
 approximately unchanging and the CVIC appears approximately flat.
 From these results, it did not appear that there was much benefit to including
@@ -674,57 +689,23 @@ we used the FXTAS Stage transitions as reference points,
 and examined the differences in onsets 
 relative to these FXTAS Stage transitions.
 Roughly speaking:
-Subtype 1 appeared to experience the onsets of
-mood disorders before FXTAS Stage 1,
+Subtype 1 appeared to experience 
+early mood disorders (before FXTAS Stage 1),
 ataxia between Stages 2 and 3,
 head tremors between Stages 3 and 4,
 parkinsonian features between Stages 3 and 4,
-and MRI-detectable brain structure abnormalities between Stages 4 and 5.
+and white matter disease phenotypes between Stages 4 and 5.
 Compared to Subtype 1, Subtype 2 appeared to experience 
-brain abnormalities earlier (between Stages 2 and 4),
-head tremors earlier (between Stages 2 and 3).
-parkinsonian features later (between stages 4 and 5),
-and mood disorders later (between Stages 3 and 5).
-Subtype 3 appeared to be a mix of Subtypes 1 and 2,
-with mood disorders early (before Stage 1, like Subtype 1),
-brain abnormalities also early (between Stages 1 and 3, like Subtype 2).
-Subtype 4 appeared to experience 
-ataxia before Stage 1 (earlier than Subtypes 1-3).
-and tremors mostly after Stage 5 (later than Subtypes 1-3).
-
-Subtype 2 appeared to experience 
-MRI abnormalities,
-head tremor,
-and
-substance use
-at earlier FXTAS stages than Subtype 1,
-and appeared to experience 
-mood disorders,
-postural tremor,
-pill rolling tremor,
-stiff gait,
-increased tone, and
-masked faces
-at later FXTAS stages than Subtype 1.
-
+white matter disease phenotypes earlier (between Stages 2 and 4),
+memory issues (assessed by SWM) earlier (Stage 3-4 versus 4-5).
+and SCID disorders later (between Stages 3 and 5).
+Subtype 2 might be described as "memory-first".
 Subtype 3 appeared to experience
-MRI abnormalities
-MRI cerebellar abnormalities
-and cognitive impairment (MMSE score decline)
-even earlier than Subtype 2
-and
-head tremor,
-substance use,
-postural tremor,
-resting tremor
-later than Subtype 2
-
-
-
-
-
-
-earlier in the event sequence than Subtype 1.
+white matter disease phenotypes early (between Stages 1 and 3),
+and mood disorders late (Stages 4-5).
+Subtype 4 had the fewest participants and was difficult to interpret.
+It may represent a mixture of smaller latent subtypes and/or
+include outlier individuals with unusual event sequences.
 
 # Discussion
 

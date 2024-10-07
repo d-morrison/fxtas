@@ -1,7 +1,7 @@
 Research participants were recruited between `r min_year` and `r max_year`
 for two longitudinal cohorts:
 the Genotype-Phenotype Study in Fragile X Families
-("GP"; funded by NICHD HD036071; PI Hagerman) and
+("GP"; funded by NICHD R01HD036071; PI Hagerman) and
 the Trajectories and Markers of Neurodegeneration
 in Fragile X Premutation Carriers study
 ("TRAX"; funded by NINDS NS110100; PI Rivera).
@@ -13,6 +13,25 @@ with the premutation ages 40 through the 80s
 followed longitudinally with varying intervals averaging about 2.5 years apart. 
 Most carriers enter the study with no evidence of FXTAS; 
 approximately 25-30% developed the disease to date.
+
+The Genotype Phenotype Study is a longitudinal research effort 
+focused on adult male and female carriers of the fragile X premutation, 
+aged 40-85 at entry, 
+who are affected by fragile X-associated tremor/ataxia syndrome (FXTAS). 
+This study is conducted at the UC Davis MIND Institute 
+and is supported by an NIH (NICHD) grant (#R01HD036071; PI Hagerman). 
+Most participants are recruited 
+through the Fragile X Research and Treatment Center at the MIND Institute, 
+including both family members already engaged with our clinical and research programs 
+and new families who contact us for clinical services or information about our research.
+To be included in the study, participants must fall into one of the following categories:
+
+1.	Premutation carriers with developmental challenges (IQ < 80) 
+or a diagnosis of ASD (Autism, PDD-NOS, or Asperger’s syndrome).
+2.	Premutation carriers without developmental issues or ASD, 
+who have a normal IQ and no psychiatric diagnosis.
+3.	Adult premutation carriers diagnosed with FXTAS.
+4.	Control individuals without the fragile X premutation.
 
 Each evaluation includes 
 a detailed medical history, 
