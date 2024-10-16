@@ -37,7 +37,7 @@ report_sex_differences = function(table)
       biomarker = biomarker |>
         stringr::str_replace(
           "Increased tone",
-          "increased tone"
+          "parkinsonian increased tone"
         ) |>
         stringr::str_replace(
           "MMSE total score",
@@ -58,7 +58,7 @@ report_sex_differences = function(table)
       comparison = glue::glue(
         '"{biomarker}" ',
         "({Female} of females versus {Male} of males",
-        ", p-value {p_val_formatted}"
+        ", p-value {p_val_formatted})"
 
       )
     ) |>

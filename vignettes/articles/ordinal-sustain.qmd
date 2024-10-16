@@ -570,10 +570,15 @@ Our data included:
 `r nrow(males)` males and `r nrow(females)` females;
 and `r and::and(stages)` carriers at 
 FXTAS stages `r names(stages) |> and::and()`, respectively. 
+We found no differences between males and females in 
+age at baseline visit, 
+ethnicity/race, 
+FXTAS stage, or
+CGG repeat size.
 @tbl-biomarker-list lists the `r outcomes_name`s and their ordinal levels
 and reports proportions of clinically elevated levels at baseline visit, 
 stratified by sex.
-We found significant evidence of sex differences in 
+We found statistically significant evidence of sex differences in 
 proportions of clinically elevated (non-reference) `r outcomes_name` levels 
 at baseline visit for `r report_sex_differences(biomarkers_table)`.
 
@@ -624,7 +629,7 @@ earlier in the event sequence for males than females.
 MRI biomarkers of decline and parkinsonian features 
 also appear to onset at earlier FXTAS stages for males than for females.
 
-## Latent Subtypes
+## Subtype clustering
 
 ```{r}
 #| label: set-optimal-subtypes
@@ -638,6 +643,11 @@ results_cv_max = extract_results_from_pickle(
   output_folder = output_folder)
 ```
 
+We conducted latent subtype classification analysis to cluster participants 
+that are 
+relatively homogeneous within the same cluster 
+and heterogeneous from other clusters 
+in terms of sequential patterns. 
 Based on the CVIC criterion (Supplementary Materials, @sec-cvic), 
 `r n_s_min_CVIC` subtypes were suggested to be the optimal number for the full, 
 unstratified dataset (Supplementary Materials, @fig-cvic-1). 
