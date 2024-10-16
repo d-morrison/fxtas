@@ -3,7 +3,12 @@ neurodegenerative disorder caused by the
 premutation (55 to 200 CGG repeats) in the
 fragile X messenger ribonucleoprotein (*FMR1*) gene [@hagerman2001intention].
 The premutation is associated with
-elevation of the *FMR1* mRNA.
+elevation of the *FMR1* mRNA 
+[
+@napoli2011altered; 
+@song2016altered;
+@napoli2016altered
+].
 [Need citations here]{.comment-start
 author="Ezra Morrison"}
 This elevation leads to
@@ -37,14 +42,29 @@ one in 148 to 200 females and
 one in 290 to 855 males
 in the general population [@maenner2013fmr1; @hunter2014epidemiology].
 
-The present study attempts to address the following questions:
+The symptoms of FXTAS appear and develop over years in adulthood, 
+usually after age 50. 
+The symptoms of FXTAS include 
+tremors, 
+gait ataxias, 
+neuropathy, 
+cognitive decline, 
+mood instability, 
+and others
+[@hagerman2001intention]. 
+Both the type and severity of FXTAS symptoms vary among individuals. 
+Some patients with FXTAS have multiple symptoms that progress rapidly 
+and others have few symptoms that remain mild over many years. 
+However, the appearing sequence of those symptoms is still understudied. 
+Therefore, the present study attempts to address the following questions:
 1) In what sequential order do FXTAS symptoms and brain changes typically appear;
 2) how does that sequence vary among participants;
 and 3) do specific baseline characteristics predict the order of presentation?
 Here, we applied the ordinal-outcomes version of the
 Subtype and Stage Inference algorithm
 ("Ordinal SuStaIn") [@young2018uncovering; @young2021ordinal]
-to find event sequences in a cohort of FXTAS patients.
+to model event sequential orders of apparent FXTAS symptoms
+in a cohort of FXTAS patients.
 SuStaIn is a data-driven analytic approach
 which was originally developed to
 analyze cross-sectional biomarker data
