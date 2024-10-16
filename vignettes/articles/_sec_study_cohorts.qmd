@@ -5,6 +5,9 @@ the Genotype-Phenotype Study in Fragile X Families
 the Trajectories and Markers of Neurodegeneration
 in Fragile X Premutation Carriers study
 ("TRAX"; funded by NINDS NS110100; PI Rivera).
+Written informed consent was obtained from all participants 
+according to the procedures approved by the 
+University of California, Davis Institutional Review Board.
 
 The GP Study is a longitudinal research effort 
 focused on adult male and female carriers of the fragile X premutation, 
@@ -12,10 +15,12 @@ aged 40-85 at entry,
 who are affected by fragile X-associated tremor/ataxia syndrome (FXTAS). 
 This study is conducted at the UC Davis MIND Institute 
 and is supported by an NIH (NICHD) grant (#R01HD036071; PI Hagerman). 
-Most participants are recruited 
+Most participants have been recruited 
 through the Fragile X Research and Treatment Center at the MIND Institute, 
-including both family members already engaged with our clinical and research programs 
-and new families who contact us for clinical services or information about our research.
+including 
+both family members already engaged with our clinical and research programs 
+and new families 
+who contacted us for clinical services or information about our research.
 To be included in the study, 
 participants must fall into one of the following categories:
 
@@ -29,18 +34,29 @@ who have a normal IQ and no psychiatric diagnosis.
 GP study participants are reassessed every 2 years
 to document phenotypic progression over time.
 
-Participants in TRAX study includes 67 Male Premutation Carriers 
-ranging from 40-82 years (Mean=60.2) 
-and 32 Male Healthy Controls ages 40-75 (Mean 57.7) at baseline (visit 1). 
+Participants in the TRAX longitudinal study includes 
+67 Male premutation carriers ranging from 40-82 years (Mean: 60.2 years) 
+and 32 Male Healthy Controls ages 40-75 (Mean: 57.7 years) at baseline visit. 
+This study is also conducted at the UC Davis MIND Institute. 
 An important goal of the recruitment process was 
-the inclusion of Premutation Carriers who do not yet have FXTAS at enrollment. 
-During phone screening, detailed interviewing with potential participants suggested than none of the enrolled PC had FXTAS based upon criterion of evidence of either tremor or ataxia with any degree of impairment in functioning. 
+the inclusion of premutation carriers 
+who do not yet have FXTAS diagnosis at enrollment. 
+During phone screening, detailed interviewing with potential participants 
+suggested than none of the enrolled premutation carriers had FXTAS 
+based upon criterion of evidence of either tremor or ataxia 
+with any degree of impairment in functioning. 
 Despite the screening, 
-11 of the 67 PC demonstrated at least equivocal/intermittent tremor and/or ataxia and 
-functional interference (FXTAS Stage 2 or higher) at visit 1 after neurological examination. 
-Overall, 88 participants returned for 2-5 follow up visits over a total duration of 1 to 9 years (Mean=4.6 years) with varying intervals averaging about 2.5 years apart.  
-Of the PC participants without evidence of FXTAS at baseline who have follow-up visits to date, 
-28 “phenoconverted” and developed FXTAS (tremor and/or ataxia and functional interference).
+11 of the 67 premutation carriers demonstrated 
+at least equivocal/intermittent tremor and/or ataxia and 
+functional interference (FXTAS Stage 2 or higher) at baseline visit
+after neurological examination. 
+Overall, 88 participants returned for 2-5 follow up visits 
+over a total duration of 1 to 9 years (Mean: 4.6 years) 
+with varying intervals averaging about 2.5 years apart.  
+Of the participants without evidence of FXTAS at baseline 
+who have follow-up visits to date, 
+28 developed FXTAS 
+(tremor and/or ataxia and functional interference).
 
 In both studies, 
 each evaluation includes 
@@ -51,14 +67,17 @@ WAIS IV,
 Behavior Dyscontrol Scale (BDS2), 
 Mini Mental State Exam (MMSE) and 
 Cambridge Automated Neuropsychological Test Battery (CANTAB); 
-Structured Clinical Interview for DSM-IV Disorders (SCID-IV), 
+Structured Clinical Interview for 
+DSM-[Is this correct?]{.comment-start author="Ezra Morrison"}IV[]{.comment-end} 
+Disorders 
+(SCID-IV), 
 motor testing, 
 and MRI assessment 
 [@johnson2022fxtas_by_sex; 
 @winarni2024apolipoproteine; 
 @elias2024enlarged].
 After the clinical and MRI evaluation,
-each patient received a stage designation of FXTAS ranging from 0 to 5 
+each patient received a stage designation of FXTAS ranging from 0 to 6 
 according to stages identified by @bacalman2006psychiatric  
 focused on tremor and ataxia severity. 
 Stage 1 represents subclinical or uncertain tremor; 
@@ -67,9 +86,5 @@ activities of daily living (ADLs);
 Stage 3 is significant tremor that interferes with ADLs and significant ataxia; 
 Stage 4 is significant ataxia needing a cane or walker;
 Stage 5 is needing a wheelchair;
-and Stage 6 is bedridden.
-
-Written informed consent was obtained from all participants 
-according to the procedures approved by the 
-University of California, Davis Institutional Review Board.  
-
+and Stage 6 is bedridden
+(no participants at Stage 6 were included in this study).

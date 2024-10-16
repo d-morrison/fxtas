@@ -137,18 +137,20 @@ max_year = max(year_range)
 
 {{< include _sec_study_cohorts.qmd >}}
 
-The primary event sequence analysis included baseline visit data 
-from `r nrow(v1_usable)` participants from the two cohorts,
+The primary sequence analysis of symptomatic evens included baseline visit data 
+from `r nrow(v1_usable)` participants from the GP and TRAX cohorts,
 consisting of 
 `r nrow(v1_usable_cases)` fragile X premutation carriers and 
 `r nrow(gp34_v1_controls)` controls. 
+@tbl-demographics provides demographic information about the study participants.
 The controls' data are used to estimate 
 the distribution of the analyzed `r outcomes_name`s among non-FXTAS individuals 
+as reference in SuStaIn modeling
 (details in Supplementary Material, @sec-scored-events-model).
 Then, the cases' data are  used to estimate FXTAS event sequences,
 using the estimated control distributions to account for random variation
 in observed symptoms unrelated to the underlying event sequence.
-@tbl-demographics provides demographic information about the study participants.
+
 
 ```{r}
 #| label: "biomarker-events"
@@ -236,7 +238,7 @@ event-based disease progression modelling
 [@fonteijn2011event; @fonteijn2012event; @oxtoby2023data]
 and latent-cluster finite mixture modeling 
 [@pearson1894contributions; @lazarsfeld1950logical; @mclachlan2019finite] 
-to model event onset sequences 
+to model event sequences 
 using cross-sectional samples of patient and control populations. 
 The algorithm simultaneously 
 clusters individuals into latent subtypes and 
@@ -258,7 +260,7 @@ We conducted subgroup analyses by fitting models stratified by:
 
 In these subgroup analyses, we did not search for latent clusters.
 
-### Imputation of data {#sec-incomplete-data}
+### Imputation of missing data {#sec-incomplete-data}
 
 ```{r}
 #| label: count-incomplete-data
@@ -281,11 +283,10 @@ probs =
 We assumed that missing `r outcomes_name` data 
 were missing at random (MAR) 
 [@rubin1976inference, @little2019statistical].
-The study protocols changed over the years 
-(`r min_year` - `r max_year`) 
-as new evaluation instruments were adopted; 
+As the longitudinal cohorts have evolved over several funding cycles,
+new instruments were adopted and added; 
 much of the missingness was due to 
-adding additional measures in later stages of the studies. 
+adding additional measures in later cycles of the studies. 
 The MAR assumption thus seems plausible.
 We substituted missing outcome event data 
 by assigning a probability distribution across the 
@@ -359,14 +360,14 @@ More details are provided in the Supplementary Materials (@sec-subtypes).
 
 We visualized the results of Ordinal SuStaIn analysis 
 using "positional variance diagrams" (PVDs).
-PVDs are heatmaps with biomarker events on the y-axis 
+PVDs are heatmaps with symptomatic events on the y-axis 
 and sequence positions of events on the x-axis.
 Each event is estimated to occur at some point in continuing time 
-relative to other events in sequence.
-The exact onset time of each event
+*relative to* other events in sequence.
+It should be noted that the exact onset time of each event
 cannot be determined by the method we used for this analysis.
 The PVD's color scale indicates the Bayesian posterior probability that 
-a particular biomarker event (y-axis) 
+a particular event (y-axis) 
 appears at a particular position along the progression sequence (x-axis). 
 Color intensity presents the likelihood of sequence position. 
 That is, a brighter color indicates a more probable sequence position, 
