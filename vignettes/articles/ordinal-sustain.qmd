@@ -88,10 +88,10 @@ compact_fig_caption <- paste(
   "event occurs in that position in the sequence."
 )
 
-compact_fig_cap2 = paste0(
+compact_fig_cap2 = glue::glue(
   "Red lines indicate biomarkers that moved to later positions between the ",
   "left-hand subgroup and the right-hand subgroup. Blue lines indicate ",
-  "biomarkers that moved to earlier positions. ",
+  "{outcomes_name}s that moved to earlier positions. ",
   "Line opacity levels indicate the number of positions changed ",
   "(more opaque = more change.)"
 )
