@@ -12,14 +12,14 @@ text-align: center;
 </style>
 ```
 
-Target journal: 
-[Brain (Original Articles)](https://academic.oup.com/brain/pages/general_instructions)
-Word limit for main text: 6000
-Display items: 8
+[Target journal: 
+[Brain (Original Articles)](https://academic.oup.com/brain/pages/general_instructions).
+Word limit for main text: 6000.
+Display items: 8.]{.mark}
 
 {{< pagebreak >}}
 
-# Abstract {.unnumbered}
+# [Abstract word limit: 400]{.comment-start author="Ezra Morrison"} Abstract {.unnumbered} []{.comment-end}
 
 {{< include _sec_abstract.qmd >}}
 
