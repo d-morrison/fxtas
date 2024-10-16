@@ -16,4 +16,4 @@ in observed data
 collected in FXTAS patients.
 We found
 substantial differences in order of events
-depending on sex and CGG repeat number.
+depending on sex.
