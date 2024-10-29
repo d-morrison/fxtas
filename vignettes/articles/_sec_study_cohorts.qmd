@@ -13,7 +13,7 @@ The GP Study is a longitudinal research effort
 focused on adult male and female carriers of the fragile X premutation, 
 aged 40-85 at entry, 
 who are affected by fragile X-associated tremor/ataxia syndrome (FXTAS). 
-This study is conducted at the UC Davis MIND Institute 
+This study is conducted at the University of California, Davis MIND Institute 
 and is supported by an NIH (NICHD) grant (#R01HD036071; PI Hagerman). 
 Most participants have been recruited 
 through the Fragile X Research and Treatment Center at the MIND Institute, 
@@ -37,7 +37,7 @@ to document phenotypic progression over time.
 Participants in the TRAX longitudinal study includes 
 67 Male premutation carriers ranging from 40-82 years (Mean: 60.2 years) 
 and 32 Male Healthy Controls ages 40-75 (Mean: 57.7 years) at baseline visit. 
-This study is also conducted at the UC Davis MIND Institute. 
+This study is also conducted at the University of California, Davis MIND Institute. 
 An important goal of the recruitment process was 
 the inclusion of premutation carriers 
 who do not yet have FXTAS diagnosis at enrollment. 
