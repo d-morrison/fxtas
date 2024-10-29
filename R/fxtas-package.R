@@ -15,6 +15,7 @@
 #' @importFrom dplyr if_else
 #' @importFrom dplyr left_join
 #' @importFrom dplyr mutate
+#' @importFrom dplyr n
 #' @importFrom dplyr pull
 #' @importFrom dplyr relocate
 #' @importFrom dplyr rename

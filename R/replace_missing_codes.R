@@ -2,12 +2,12 @@
 #'
 #' The default is to use the reference level of the factor.
 #'
-#' @param x a vector of factor variables
+#' @param x a [factor] vector
 #' @param missing_codes a vector of strings
 #' @param replacement a string variable or `NA`
 #' @param mapping a named string vector
 #'
-#' @return
+#' @returns a [factor] vector
 #' @export
 #'
 #' @examples

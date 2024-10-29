@@ -1,5 +1,5 @@
 #' @title Run the Ordinal SuStaIn algorithm (OSA) or load results from presaved .rds file if available
-#' @params rerun whether to force a rerun of the python code
+#' @param rerun whether to force a rerun of the python code
 #' @inheritParams run_OSA
 #' @inheritDotParams run_OSA
 #'
