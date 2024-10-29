@@ -13,7 +13,7 @@
 #'
 #' @export
 #' @examples
-#' gp34 |> compile_biomarker_group_list()
+#' test_data |> compile_biomarker_group_list()
 #'
 compile_biomarker_group_list = function(dataset = trax_gp34_v1)
 {
