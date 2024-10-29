@@ -38,6 +38,8 @@ knitr::opts_chunk$set(
   comment = "#>",
   include = TRUE
 )
+
+ggplot2::theme_bw() |> ggplot2::theme_set()
 ```
 
 ```{r}

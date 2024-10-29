@@ -21,9 +21,4 @@ if (interactive()) {
   qs <- function() q(save="no")
 }
 
-default_theme =
-  ggplot2::theme_bw()
-
-ggplot2::theme_set(default_theme)
-
 message('ending package .Rprofile')
