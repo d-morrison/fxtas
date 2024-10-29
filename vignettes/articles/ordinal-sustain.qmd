@@ -297,8 +297,7 @@ For example,
 `r n_missing` of the `r length(x1)` cases (`r pct_missing`) 
 had missing values for Ataxia Severity, 
 and `r n_obs` (`r pct_obs`) had recorded values, 
-distributed among Ataxia Severity levels 0-4 
-([Supplementary Table @tbl-ex-incomplete-data]). 
+distributed among Ataxia Severity levels 0-4.
 For the `r n_missing` cases with missing values, 
 we assigned probabilities of `r probs |> and::and()` 
 to Ataxia Severity levels `r 0:4 |> and::and()`, respectively, 
