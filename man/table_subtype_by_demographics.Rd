@@ -2,16 +2,18 @@
 % Please edit documentation in R/table_subtype_by_demographics.R
 \name{table_subtype_by_demographics}
 \alias{table_subtype_by_demographics}
-\title{Title}
+\title{Create table of demographics statistics by most-likely latent subtype}
 \usage{
 table_subtype_by_demographics(patient_data, subtype_and_stage_table)
 }
 \arguments{
-\item{subtype_and_stage_table}{}
+\item{patient_data}{a \link{data.frame}}
+
+\item{subtype_and_stage_table}{a \link{data.frame}}
 }
 \value{
 A \link[gtsummary:tbl_summary]{gtsummary::tbl_summary}
 }
 \description{
-Title
+Create table of demographics statistics by most-likely latent subtype
 }
