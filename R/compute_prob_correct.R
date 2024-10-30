@@ -71,8 +71,11 @@ compute_prob_correct = function(dataset, biomarker_levels, max_prob = 1)
   return(to_return)
 }
 
-#' Print `prob_correct` objects as Pandoc markdown tables
-#'
+#' @title Print `prob_correct` objects as Pandoc markdown tables
+#' @description This function is a method of the [pander::pander()] function
+#' from the  `pander` package, for `prob_correct` objects
+#' (from [compute_prob_correct()]).
+#' It prints `prob_correct` objects as Pandoc markdown tables.
 #' @param x a `prob_correct` object (from [compute_prob_correct()])
 #' @param ... currently unused
 #'
