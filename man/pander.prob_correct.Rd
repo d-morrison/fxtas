@@ -12,7 +12,10 @@
 \item{...}{currently unused}
 }
 \description{
-Print \code{prob_correct} objects as Pandoc markdown tables
+This function is a method of the \code{\link[pander:pander]{pander::pander()}} function
+from the  \code{pander} package, for \code{prob_correct} objects
+(from \code{\link[=compute_prob_correct]{compute_prob_correct()}}).
+It prints \code{prob_correct} objects as Pandoc markdown tables.
 }
 \examples{
 control_data <-
