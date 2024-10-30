@@ -160,8 +160,7 @@ except for head tremor
 [Supplementary Figure @fig-pvd-by-cgg-male]
 shows the corresponding stratified models and
 compares the estimates of the sequences for these two subgroups.
-We found significant evidence of an overall difference between CGG <100
-and CGG ≥100 among males (p = `r pval_male_cgg_gp34_v1`).
+
 
 We did not find statistically significant evidence of
 a difference between CGG <100 and CGG ≥100 among females

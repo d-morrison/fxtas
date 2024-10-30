@@ -68,6 +68,7 @@ N_CV_folds = 10L
 n_permutations = 1000
 
 outcomes_name = "symptom"
+events_name = "symptomatic events"
 outcomes_name_sentence_start = stringr::str_to_sentence(outcomes_name)
 
 compact_fig_caption <- paste(
@@ -396,7 +397,7 @@ More details are provided in the Supplementary Materials (@sec-subtypes).
 
 We visualized the results of Ordinal SuStaIn analysis 
 using "positional variance diagrams" (PVDs).
-PVDs are heatmaps with symptomatic events on the y-axis 
+PVDs are heatmaps with `r events_name` on the y-axis 
 and sequence positions of events on the x-axis.
 Each event is estimated to occur at some point in continuing time 
 *relative to* other events in sequence.
@@ -608,7 +609,7 @@ We found significant sex differences in
 proportions of clinically elevated (non-reference) `r outcomes_name` levels 
 at baseline visit for `r report_sex_differences(biomarkers_table)`.
 
-## Stratified by sex {#sec-methods-strat-sex}
+## Sex differences in sequential orders {#sec-methods-strat-sex}
 
 ```{r}
 #| label: p-val-test-sex
@@ -630,19 +631,21 @@ pval_sex_gp34_v1 = permutation_test(
 
 ```
 
-@fig-first-only shows the estimated event sequences 
-stratified by sex 
-and compares the estimated sequences between males and females.
+@fig-first-only shows 
+the estimated sequential orders
+of FXTAS `r outcomes_name`s 
+in males and females.
 We found statistically significant evidence of a 
-difference in event sequences 
+difference in sequences of `r events_name`
 between males and females (p = `r pval_sex_gp34_v1`) 
 (@fig-first-only-1 and [(b)](#fig-first-only-2)). 
 It appears that 
 female premutation carriers developed 
-threshold-level Mood Disorder symptoms 
+SCID Mood Disorder symptoms, 
+both sub-threshold-level and threshold-level,
 prior to FXTAS Stage 1 diagnosis,
-whereas male carriers developed these symptoms 
-between FXTAS Stages 3 and 4 (@fig-first-only-2).
+whereas male carriers delayed these symptoms 
+much later between FXTAS Stages 3 and 4 (@fig-first-only-2).
 Cognitive decline, as measured by SWM and PAL,
 also occurred at earlier FXTAS stages for females.
 Ataxia occurred prior to Stage 1 for females 
@@ -654,6 +657,64 @@ Advanced degrees of ataxia severity also occurred
 earlier in the event sequence for males than females. 
 MRI biomarkers of decline and parkinsonian features 
 also appear to onset at earlier FXTAS stages for males than for females.
+
+
+```{r}
+#| label: p-val-test-sex-under100
+output_folder = "output/output.fixed_CV/"
+
+permuted_test_stats = collect_permutation_test_stats(
+  output_folder = output_folder,
+  stratifying_levels = "CGG 55-99",
+  permuting_variables = "Gender")
+
+observed_test_stat = get_observed_permutation_test_stat(
+  output_folder,
+  dataset_names = c('under100_Female', 'under100_Male'))
+
+pval_under100_sex_gp34_v1 = permutation_test(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
+)
+
+```
+
+```{r}
+#| label: p-val-test-sex-over100
+output_folder = "output/output.fixed_CV/"
+
+permuted_test_stats = collect_permutation_test_stats(
+  output_folder = output_folder,
+  stratifying_levels = "CGG 100-199",
+  permuting_variables = "Gender")
+
+observed_test_stat = get_observed_permutation_test_stat(
+  output_folder,
+  dataset_names = c('over100_Female', 'over100_Male'))
+
+pval_over100_sex_gp34_v1 = permutation_test(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
+)
+
+```
+
+When we conducted subgroup analyses by CGG repeat size,
+we found statistically significant evidence of a difference between males and females
+among those with CGG < 100 (p = `r pval_under100_sex_gp34_v1`)
+(Supplementary @fig-pvd-by-gender-cgg_under100).
+Several psychiatric disorders (as measured by SCID) 
+occurred prior to FXTAS Stage 1
+among females with CGG < 100,
+but at later FXTAS stages for males with CGG < 100.
+MRI biomarkers appeared to occur at later stages in females compared to males.
+We did not find statistically significant evidence of a difference between males and females
+among those with CGG ≥ 100 (p = `r pval_over100_sex_gp34_v1`) (Supplementary Materials, @fig-pvd-by-gender-cgg_over100).
+
+We found significant evidence of an overall difference between CGG <100
+and CGG ≥100 among males (p = `r pval_male_cgg_gp34_v1`).
 
 ## Subtype clustering
 
