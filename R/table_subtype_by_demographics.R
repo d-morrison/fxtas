@@ -1,7 +1,7 @@
-#' Title
+#' Create table of demographics statistics by most-likely latent subtype
 #'
-#' @param patient_data
-#' @param subtype_and_stage_table
+#' @param patient_data a [data.frame]
+#' @param subtype_and_stage_table a [data.frame]
 #'
 #' @returns A [gtsummary::tbl_summary]
 #' @export
