@@ -1,6 +1,8 @@
-## Scored events model {.appendix #sec-scored-events-model}
+## Scored events model: estimated probabilities of correct scoring {.appendix #sec-prob-correctly-scored}
 
-
+@tbl-prob-correct shows the estimated proportion of correctly scored individuals
+for each `r outcomes_name`, [@young2021ordinal]
+estimated using the controls data.
 
 ```{r}
 #| label: tbl-prob-correct
