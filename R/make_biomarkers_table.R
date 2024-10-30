@@ -68,13 +68,16 @@ make_biomarkers_table = function(
       names_to = "biomarker",
       values_to = "Pr(above_baseline)") |>
     mutate(
+      # probably want to apply formatting here (after pivoting)
+      # rather than during the summarize step,
+      # so that accuracy is applied per-column:
       `Pr(above_baseline)` =
         `Pr(above_baseline)` |>
         scales::percent(accuracy = 0.1)) |>
     pivot_wider(
       id_cols = "biomarker",
-      names_from = Gender,
-      values_from = `Pr(above_baseline)`) |>
+      names_from = "Gender",
+      values_from = "Pr(above_baseline)") |>
     mutate(
       "p-value" = pvals[biomarker]
     )
