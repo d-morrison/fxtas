@@ -410,6 +410,20 @@ That is, a brighter color indicates a more probable sequence position,
 and a paler color indicates a less probable position. 
 The colors indicate the ordinal levels of progression.
 
+## Software
+
+The Ordinal Sustain analysis was performed using 
+the Python programming language, version 3.9 [@python3] 
+with the `pySuStaIn` package [@aksman2021pysustain].
+Data pre-processing and results post-processing were performed in 
+R 4.4.0 [@rcore] using the `tidyverse` packages [@tidyverse].
+The `reticulate` package [@reticulate] was used to create 
+an application programming interface between Python and R.
+The code used to perform this analysis is available at 
+<https://github.com/d-morrison/fxtas>.
+
+# Results
+
 ```{r}
 #| label: get-control-dists
 
@@ -564,17 +578,6 @@ fig_over100_females = extract_figs_from_pickle(
 
 ```
 
-## Software
-
-The Ordinal Sustain analysis was performed using the Python programming language, version 3.9 [@python3] 
-with the `pySuStaIn` package [@aksman2021pysustain].
-Data pre-processing and results post-processing were performed in R 4.4.0 [@rcore] 
-using the `tidyverse` packages [@tidyverse].
-The `reticulate` package [@reticulate] was used to create an application programming interface between Python and R.
-The code used to perform this analysis is available at <https://github.com/d-morrison/fxtas>.
-
-# Results
-
 ```{r}
 #| label: basic-summary-stats
 stages = v1_usable_cases |> select(`FXTAS Stage (0-5)*`) |> table()
@@ -601,7 +604,7 @@ CGG repeat size.
 @tbl-biomarker-list lists the `r outcomes_name`s and their ordinal levels
 and reports proportions of clinically elevated levels at baseline visit, 
 stratified by sex.
-We found statistically significant evidence of sex differences in 
+We found significant sex differences in 
 proportions of clinically elevated (non-reference) `r outcomes_name` levels 
 at baseline visit for `r report_sex_differences(biomarkers_table)`.
 
