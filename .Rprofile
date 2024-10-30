@@ -18,6 +18,7 @@ if (interactive()) {
   conflicted::conflict_prefer("summarize", "dplyr")
   conflicted::conflict_prefer("select", "dplyr")
   conflicted::conflict_prefer("is_in", "magrittr")
+  conflicted::conflicts_prefer(devtools::lint)
   qs <- function() q(save="no")
 }
 

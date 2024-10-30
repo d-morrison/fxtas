@@ -58,11 +58,11 @@ library(magrittr)
 #| label: "set run parameters"
 
 fit_models <- TRUE
-run_CV <- TRUE
+run_cv <- TRUE
 
 rerun  <- TRUE
 rerun <- FALSE
-# 
+
 plot_python <- TRUE
 fig_size = c(20, 10)
 
