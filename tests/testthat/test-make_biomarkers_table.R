@@ -28,6 +28,6 @@ test_that("`test_biomarkers_table()` produces consistent results", {
       biomarker_varnames = biomarker_varnames,
       biomarker_events_table = biomarker_events_table
     )
-
-  expect_snapshot_value(biomarkers_table, style = "deparse")
+  biomarkers_table |>
+  ssdtools:::expect_snapshot_data(name = "biomarkers_table")
 })

@@ -72,8 +72,9 @@ make_biomarkers_table = function(
       # rather than during the summarize step,
       # so that accuracy is applied per-column:
       `Pr(above_baseline)` =
-        `Pr(above_baseline)` |>
-        scales::percent(accuracy = 0.1)) |>
+        (`Pr(above_baseline)` * 100) |>
+        formatC(digits = 1, format = "f", drop0trailing = TRUE) |>
+        paste0("%")) |>
     pivot_wider(
       id_cols = "biomarker",
       names_from = "Gender",
