@@ -19,8 +19,9 @@ Most participants have been recruited
 through the Fragile X Research and Treatment Center at the MIND Institute, 
 including 
 both family members already engaged with our clinical and research programs 
-and new families 
-who contacted us for clinical services or information about our research.
+and new families who contacted us for 
+clinical services 
+or information about our research.
 To be included in the study, 
 participants must fall into one of the following categories:
 
@@ -37,10 +38,11 @@ to document phenotypic progression over time.
 Participants in the TRAX longitudinal study includes 
 67 Male premutation carriers ranging from 40-82 years (Mean: 60.2 years) 
 and 32 Male Healthy Controls ages 40-75 (Mean: 57.7 years) at baseline visit. 
-This study is also conducted at the University of California, Davis MIND Institute. 
+This study is also conducted at the 
+University of California, Davis MIND Institute. 
 An important goal of the recruitment process was 
 the inclusion of premutation carriers 
-who do not yet have FXTAS diagnosis at enrollment. 
+who do not yet have a FXTAS diagnosis at enrollment. 
 During phone screening, detailed interviewing with potential participants 
 suggested than none of the enrolled premutation carriers had FXTAS 
 based upon criterion of evidence of either tremor or ataxia 
@@ -87,4 +89,4 @@ Stage 3 is significant tremor that interferes with ADLs and significant ataxia;
 Stage 4 is significant ataxia needing a cane or walker;
 Stage 5 is needing a wheelchair;
 and Stage 6 is bedridden
-(no participants at Stage 6 were included in this study).
+(no participants at Stage 6 were included in those studies).
