@@ -1,11 +1,11 @@
-#' Title
+#' Get a list of all potential biomarkers available in dataset
 #'
-#' @param dataset Dataset to extract names from
+#' @param dataset [data.frame] Dataset to extract names from
 #'
-#' @return
+#' @returns a [list]
 #' @export
 #'
-all_potential_biomarkers = function(dataset = gp34)
+all_potential_biomarkers = function(dataset)
 {
   missingness_vars = grep("missingness", names(dataset), value = TRUE)
   tremors = c(

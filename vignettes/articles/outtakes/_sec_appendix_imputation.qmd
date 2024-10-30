@@ -1,0 +1,15 @@
+## Imputation of missing data {.appendix}
+
+@tbl-ex-incomplete-data shows the distribution of Ataxia severity among
+study participants with Fragile X premutation (55-199 CGG repeats),
+when Ataxia severity was recorded.
+
+```{r}
+#| label: tbl-ex-incomplete-data
+#| tbl-cap: "**Distribution of ataxia severity among cases.**"
+
+table1(
+  na.is.category = FALSE,
+  data = v1_usable_cases,
+  x = ~ `Ataxia: severity*`)
+```

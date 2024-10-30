@@ -3,21 +3,26 @@ neurodegenerative disorder caused by the
 premutation (55 to 200 CGG repeats) in the
 fragile X messenger ribonucleoprotein (*FMR1*) gene [@hagerman2001intention].
 The premutation is associated with
-elevation of the *FMR1* mRNA 
-[
-@napoli2011altered; 
-@song2016altered;
-@napoli2016altered
-].
-[Need citations here]{.comment-start
-author="Ezra Morrison"}
+elevation of the *FMR1* mRNA.
 This elevation leads to
 RNA toxicity including
 oxidative stress,
 mitochondrial dysfunction,
 calcium dysregulation, and
-sequestration of proteins important to neuronal function.
-[]{.comment-end}
+sequestration of proteins important to neuronal function
+[
+@napoli2011altered; 
+@song2016altered;
+@napoli2016altered;
+@Giulivi2016;
+@Wang2021ijms22179171;
+@alvarez2017impaired;
+@alvarez2019fragile;
+@gohel2019fmrpolyg;
+@gohel2020emerging;
+@gohel2021expression;
+@robin2017/10.1093/hmg/ddx148
+].
 Proteins and neurofilaments sequester with the excess *FMR1* mRNA,
 leading to the formation of
 eosinophilic, tau-negative intranuclear inclusions
@@ -51,19 +56,20 @@ neuropathy,
 cognitive decline, 
 mood instability, 
 and others
-[@hagerman2001intention]. 
+[@hagerman2001intention].
 Both the type and severity of FXTAS symptoms vary among individuals. 
-Some patients with FXTAS have multiple symptoms that progress rapidly 
+Some patients with FXTAS have multiple symptoms that progress rapidly, 
 and others have few symptoms that remain mild over many years. 
-However, the appearing sequence of those symptoms is still understudied. 
+However, the sequence in which those symptoms appear is still understudied. 
 Therefore, the present study attempts to address the following questions:
 1) In what sequential order do FXTAS symptoms and brain changes typically appear;
 2) how does that sequence vary among participants;
 and 3) do specific baseline characteristics predict the order of presentation?
+
 Here, we applied the ordinal-outcomes version of the
 Subtype and Stage Inference algorithm
 ("Ordinal SuStaIn") [@young2018uncovering; @young2021ordinal]
-to model event sequential orders of apparent FXTAS symptoms
+to model sequential orders of apparent FXTAS symptoms
 in a cohort of FXTAS patients.
 SuStaIn is a data-driven analytic approach
 which was originally developed to
@@ -86,4 +92,4 @@ and knee osteoarthritis [@li2021identifying],
 but not previously for FXTAS.
 We here apply it to a cross-sectional data set of
 premutation carriers diagnosed with FXTAS of different stages
-to study the sequential ordering of FXTAS symptomatic events.
+to study the sequential ordering of FXTAS `r events_name`.

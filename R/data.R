@@ -22,3 +22,28 @@
 #' @source <url>
 "visit1"
 
+#' Test Data - Visit 1
+#'
+#' First visit for each participant from `test_data`
+#'
+#' @format ## `test_data_v1`
+#' A data frame with nrow rows and ncol columns:
+#' \describe{
+#'  \item{col1}{col1name}
+#' }
+#' @source <url>
+"test_data_v1"
+
+
+#' Test Data
+#'
+#' Scrambled data for testing
+#'
+#' @format ## `test_data`
+#' A data frame with nrow rows and ncol columns:
+#' \describe{
+#'  \item{col1}{col1name}
+#' }
+#' @source <url>
+"test_data"
+

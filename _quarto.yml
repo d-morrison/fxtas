@@ -50,6 +50,11 @@ affiliations:
     city: Davis
     state: CA
     country: United States
+  - id: ucdmind
+    department: MIND Institute
+    name: MIND Institute, University of California, Davis, Sacramento CA, United States
+    city: Sacramento
+    state: CA
   - id: umdpsychology
     name: Department of Psychology, College of Behavioral and Social Sciences, University of Maryland, College Park, MD, United States
     department: Department of Psychology
