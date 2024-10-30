@@ -42,6 +42,8 @@ library(knitr)
 ```{r}
 #| label: "set run parameters"
 
+max_prob_correct = .95
+
 fit_models <- TRUE
 run_cv <- TRUE
 
@@ -114,10 +116,14 @@ v1_usable_cases = v1_usable |> filter(CGG >= 55)
 # note: there are 231 records in `visit1` with CGG >= 55, but 4 have CGG >= 200
 # previously `nrow(v1_usable_cases)` was 221, which was based on incorrectly filtering on a version of CGG that hadn't been backfilled.
 
-controls_v1 =  v1_usable |> filter(CGG < 55)
+controls_v1 =  v1_usable |> dplyr::filter(CGG < 55)
 year_range = v1_usable$`Visit Date` |> year() |> range()
 min_year = min(year_range)
 max_year = max(year_range)
+
+control_data = controls_v1
+patient_data = v1_usable_cases
+
 ```
 
 ```{r}
@@ -132,8 +138,6 @@ biomarker_levels =
   v1_usable |> 
   dplyr::select(all_of(biomarker_varnames)) |> 
   lapply(F = levels)
-
-df = v1_usable
 
 biomarker_events_table =
   construct_biomarker_events_table(
@@ -263,12 +267,13 @@ the patient's temporary disease status on the day of the exam or
 inter-rater differences.
 The first step in applying the Ordinal SuStaIn algorithm is to determine,
 for each `r outcomes_name`, the probability that an individual is 
-"correctly scored" at their "true underlying level".
+"correctly scored" at their "true underlying level" [@young2021ordinal].
 In this analysis, we assumed that all controls are truly at the reference levels
 for each `r outcomes_name`, 
-and we estimated the probability of correct scoring as 
+and we estimated the proportion of correctly scored individuals as
 the proportion of controls 
-who were assessed as being at the reference level.
+who were assessed as being at the reference level
+[Supplementary Materials, @tbl-prob-correct].
 It is crucial to allow some possibility of incorrect scoring, 
 so we capped the estimated correct scoring probabilities at 
 `r max_prob_correct *100`%.
@@ -278,7 +283,6 @@ to estimate the Bayesian posterior probability of each possible event sequence
 for each subtype given the training dataset, 
 assuming a uniform prior distribution 
 over the set of all possible orderings.
-
 
 We conducted subgroup analyses by fitting models stratified by: 
 
@@ -406,17 +410,6 @@ The colors indicate the ordinal levels of progression.
 ```{r}
 #| label: get-control-dists
 
-control_data = 
-  df |> 
-  filter(`FX*` == "CGG <55") |> 
-  select(all_of(biomarker_varnames))
-
-patient_data = 
-  df |> 
-  # na.omit() |>
-  filter(`FX*` == "CGG >= 55")
-
-max_prob_correct = .95
 prob_correct = 
   control_data |> 
   compute_prob_correct(
