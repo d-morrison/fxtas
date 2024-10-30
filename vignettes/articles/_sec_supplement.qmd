@@ -8,18 +8,7 @@
 #|   **Proportions of controls at baseline levels, and 
 #|   corresponding estimates of probability of correct scoring.**
 
-panderOptions("table.split.table", Inf)
-prob_correct |> attr("data") |>
-  mutate(
-    `% at baseline` = round(`% at baseline` * 100, 1) |> paste0("%"),
-    prob_correct = round(prob_correct * 100, 1) |> paste0("%")
-  ) |>
-  select(Biomarker = biomarker, 
-         `# controls with data` = `# obs`,
-         `# at baseline`,
-         `% at baseline`,
-         "Est. Pr(correct)" = prob_correct) |>
-  pander::pander()
+prob_correct |> pander::pander()
 ```
 
 ## Imputation of missing data {.appendix}

@@ -22,3 +22,16 @@ but also contains a \link[tibble:tbl_df-class]{tibble::tbl_df} as attribute \cod
 \description{
 Compute each biomarker's probability of being recorded at its baseline level
 }
+\examples{
+control_data <-
+   test_data_v1 |>
+     filter(`FX*` == "CGG <55") |>
+     select(all_of(biomarker_varnames))
+prob_correct =
+  control_data |>
+  compute_prob_correct(
+    max_prob = .95,
+    biomarker_levels = biomarker_levels)
+
+
+}
