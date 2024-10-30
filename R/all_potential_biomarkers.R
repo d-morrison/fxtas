@@ -5,8 +5,8 @@
 #' @returns a [list]
 #' @export
 #'
-all_potential_biomarkers = function(dataset)
-{
+all_potential_biomarkers = function(dataset) {
+
   missingness_vars = grep("missingness", names(dataset), value = TRUE)
   tremors = c(
     "Head tremor",
