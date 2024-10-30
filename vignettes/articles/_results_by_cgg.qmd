@@ -100,57 +100,6 @@ the earlier the onset and the faster the progression of FXTAS
 [@greco2006neuropathology; @leehey2008fmr1; @tassone2023insight]. 
 Perhaps the cut off of 100 is too high for this distinction to be made.
 
-```{r}
-#| label: p-val-test-cgg-male
-output_folder = "output/output.fixed_CV/"
-
-permuted_test_stats = collect_permutation_test_stats(
-  output_folder = output_folder,
-  stratifying_levels = "Male",
-  permuting_variables = "FX3")
-
-observed_test_stat = get_observed_permutation_test_stat(
-  output_folder,
-  dataset_names = c('under100_Male', 'over100_Male'))
-
-pval_male_cgg_gp34_v1 = permutation_test(
-  observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats,
-  n_permutations = n_permutations
-)
-
-```
-
-
-```{r}
-#| label: p-val-test-cgg-female
-output_folder = "output/output.fixed_CV/"
-
-permuted_test_stats = collect_permutation_test_stats(
-  output_folder = output_folder,
-  stratifying_levels = "Female",
-  permuting_variables = "FX3")
-
-observed_test_stat = get_observed_permutation_test_stat(
-  output_folder,
-  dataset_names = c('under100_Female', 'over100_Female'))
-
-pval_female_cgg_gp34_v1 = permutation_test(
-  observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats,
-  n_permutations = n_permutations
-)
-
-n_over100_Female =
-  v1_usable |>
-  filter(
-   Gender == "Female",
-   CGG >= 100
-  ) |>
-  nrow()
-
-```
-
 These differences were more evident among males than females
 (Supplementary Materials, @sec-cgg-strat-sex).
 When we fitted models for subgroup analyses by sex and CGG repeats level,

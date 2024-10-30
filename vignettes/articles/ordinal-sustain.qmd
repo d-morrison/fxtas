@@ -702,7 +702,8 @@ pval_over100_sex_gp34_v1 = permutation_test(
 ```
 
 When we conducted subgroup analyses by CGG repeat size,
-we found statistically significant evidence of a difference between males and females
+we found statistically significant evidence of 
+a difference between males and females
 among those with CGG < 100 (p = `r pval_under100_sex_gp34_v1`)
 (Supplementary @fig-pvd-by-gender-cgg_under100).
 Several psychiatric disorders (as measured by SCID) 
@@ -710,11 +711,83 @@ occurred prior to FXTAS Stage 1
 among females with CGG < 100,
 but at later FXTAS stages for males with CGG < 100.
 MRI biomarkers appeared to occur at later stages in females compared to males.
-We did not find statistically significant evidence of a difference between males and females
-among those with CGG ≥ 100 (p = `r pval_over100_sex_gp34_v1`) (Supplementary Materials, @fig-pvd-by-gender-cgg_over100).
+We did not find statistically significant evidence of 
+a difference between males and females
+among those with CGG ≥ 100 (p = `r pval_over100_sex_gp34_v1`) 
+(Supplementary Materials, @fig-pvd-by-gender-cgg_over100).
+
+
+```{r}
+#| label: p-val-test-cgg-male
+output_folder = "output/output.fixed_CV/"
+
+permuted_test_stats = collect_permutation_test_stats(
+  output_folder = output_folder,
+  stratifying_levels = "Male",
+  permuting_variables = "FX3")
+
+observed_test_stat = get_observed_permutation_test_stat(
+  output_folder,
+  dataset_names = c('under100_Male', 'over100_Male'))
+
+pval_male_cgg_gp34_v1 = permutation_test(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
+)
+
+```
+
+
+```{r}
+#| label: p-val-test-cgg-female
+output_folder = "output/output.fixed_CV/"
+
+permuted_test_stats = collect_permutation_test_stats(
+  output_folder = output_folder,
+  stratifying_levels = "Female",
+  permuting_variables = "FX3")
+
+observed_test_stat = get_observed_permutation_test_stat(
+  output_folder,
+  dataset_names = c('under100_Female', 'over100_Female'))
+
+pval_female_cgg_gp34_v1 = permutation_test(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
+)
+
+n_over100_Female =
+  v1_usable |>
+  filter(
+   Gender == "Female",
+   CGG >= 100
+  ) |>
+  nrow()
+
+```
 
 We found significant evidence of an overall difference between CGG <100
-and CGG ≥100 among males (p = `r pval_male_cgg_gp34_v1`).
+and CGG ≥100 among males (p = `r pval_male_cgg_gp34_v1`) 
+(Supplementary Materials, @fig-pvd-by-cgg-male). 
+SWM between errors occurred prior to Stage 1 in males with CGG repeats <100, 
+whereas it occurred between stage 3 and 4 
+in males with CGG repeats ≥ 100 
+(@fig-pvd-by-cgg-male-2). 
+Postural, 
+resting, 
+and intermittent tremor 
+occurred in earlier FXTAS stages in those with CGG repeats <100 
+compared to those with CGG repeats ≥100.
+Several psychiatric disorders (as measured by SCID) 
+occurred later in the event sequence in participants with CGG repeats <100 
+compared to those with CGG repeats ≥100.  
+However, we did not find a significant difference between CGG <100 and CGG ≥100 
+among females (p = `r pval_female_cgg_gp34_v1`) 
+(Supplementary Materials, @fig-pvd-by-cgg-female). 
+It should be noted that this comparison lacked statistical power 
+given the limited sample size of only `r n_over100_Female` females with CGG ≥100.
 
 ## Subtype clustering
 
