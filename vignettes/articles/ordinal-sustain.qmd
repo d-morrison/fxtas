@@ -13,23 +13,6 @@ text-align: center;
 </style>
 ```
 
-[Target journal: 
-[Brain (Original Articles)](https://academic.oup.com/brain/pages/general_instructions).
-Word limit for main text: 6000.
-Display items: 8.]{.mark}
-
-{{< pagebreak >}}
-
-# [Abstract word limit: 400]{.comment-start author="Ezra Morrison"} Abstract {.unnumbered} []{.comment-end}
-
-{{< include _sec_abstract.qmd >}}
-
-{{< pagebreak >}}
-
-# Introduction
-
-{{< include _sec_intro.qmd >}}
-
 ```{r}
 #| include: false
 #| label: setup
@@ -42,6 +25,7 @@ knitr::opts_chunk$set(
 ggplot2::theme_bw() |> ggplot2::theme_set()
 ```
 
+
 ```{r}
 #| label: libraries
 #| message: false
@@ -53,6 +37,7 @@ library(pander)
 library(table1)
 library(magrittr)
 ```
+
 
 ```{r}
 #| label: "set run parameters"
@@ -86,7 +71,7 @@ outcomes_name_sentence_start = stringr::str_to_sentence(outcomes_name)
 compact_fig_caption <- paste(
   "Positional variance diagrams of estimated event sequences models and uncertainty.",
   "Color intensity represents the likelihood of sequence position.",
-  "The brighter the color, the more likely that the corresponding", 
+  "The brighter the color, the more likely that the corresponding",
   outcomes_name,
   "event occurs in that position in the sequence."
 )
@@ -107,16 +92,12 @@ N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
 root_dir = here::here()
 setwd(root_dir)
-output_folder = 
-  "output/output.fixed_CV/" |> 
+output_folder =
+  "output/output.fixed_CV/" |>
   fs::dir_create()
 
 
 ```
-
-# Materials and methods
-
-## Data
 
 ```{r}
 #| label: subset-data
@@ -124,36 +105,20 @@ output_folder =
 full_data = trax_gp34_v1
 n_missing_CGG = full_data$CGG |> is.na() |> sum()
 n_above_200 = sum(full_data$CGG >= 200, na.rm = TRUE)
-v1_usable = full_data |> filter(CGG < 200) |> 
+v1_usable = full_data |> filter(CGG < 200) |>
   mutate(`FX3*` = `FX3*` |> droplevels())
+v1_usable_males = v1_usable |> filter(Gender == "Male")
+v1_usable_females = v1_usable |> filter(Gender == "Female")
 v1_usable_cases = v1_usable |> filter(CGG >= 55)
+
 # note: there are 231 records in `visit1` with CGG >= 55, but 4 have CGG >= 200
 # previously `nrow(v1_usable_cases)` was 221, which was based on incorrectly filtering on a version of CGG that hadn't been backfilled.
 
-gp34_v1_controls =  v1_usable |> filter(CGG <55)
+controls_v1 =  v1_usable |> filter(CGG < 55)
 year_range = v1_usable$`Visit Date` |> year() |> range()
 min_year = min(year_range)
 max_year = max(year_range)
 ```
-
-### Study cohorts
-
-{{< include _sec_study_cohorts.qmd >}}
-
-The primary sequence analysis of symptomatic evens included baseline visit data 
-from `r nrow(v1_usable)` participants from the GP and TRAX cohorts,
-consisting of 
-`r nrow(v1_usable_cases)` fragile X premutation carriers and 
-`r nrow(gp34_v1_controls)` controls. 
-@tbl-demographics provides demographic information about the study participants.
-The controls' data are used to estimate 
-the distribution of the analyzed `r outcomes_name`s among non-FXTAS individuals 
-as reference in SuStaIn modeling
-(details in Supplementary Material, @sec-scored-events-model).
-Then, the cases' data are  used to estimate FXTAS event sequences,
-using the estimated control distributions to account for random variation
-in observed symptoms unrelated to the underlying event sequence.
-
 
 ```{r}
 #| label: "biomarker-events"
@@ -179,6 +144,43 @@ nlevs =
   biomarker_levels |> sapply(length)
 
 ```
+
+[Target journal: 
+[Brain (Original Articles)](https://academic.oup.com/brain/pages/general_instructions).
+Word limit for main text: 6000.
+Display items: 8.]{.mark}
+
+{{< pagebreak >}}
+
+{{< include _sec_abstract.qmd >}}
+
+{{< pagebreak >}}
+
+# Introduction
+
+{{< include _sec_intro.qmd >}}
+
+# Materials and methods
+
+## Data
+
+### Study cohorts
+
+{{< include _sec_study_cohorts.qmd >}}
+
+The primary sequence analysis of symptomatic evens included baseline visit data 
+from `r nrow(v1_usable)` participants from the GP and TRAX cohorts,
+consisting of 
+`r nrow(v1_usable_cases)` fragile X premutation carriers and 
+`r nrow(controls_v1)` controls. 
+@tbl-demographics provides demographic information about the study participants.
+The controls' data are used to estimate 
+the distribution of the analyzed `r outcomes_name`s among non-FXTAS individuals 
+as reference in SuStaIn modeling
+(details in Supplementary Material, @sec-scored-events-model).
+Then, the cases' data are  used to estimate FXTAS event sequences,
+using the estimated control distributions to account for random variation
+in observed symptoms unrelated to the underlying event sequence.
 
 ### `r outcomes_name_sentence_start`s of neurodegenerative events
 
@@ -554,8 +556,6 @@ The code used to perform this analysis is available at <https://github.com/d-mor
 
 ```{r}
 #| label: basic-summary-stats
-males = v1_usable |> filter(Gender == "Male")
-females = v1_usable |> filter(Gender == "Female")
 stages = v1_usable_cases |> select(`FXTAS Stage (0-5)*`) |> table()
 biomarkers_table = 
   v1_usable |> 
@@ -568,8 +568,8 @@ biomarkers_table =
 included in the analysis. 
 Our data included: 
 `r nrow(v1_usable_cases)` Fragile X premutation carriers and 
-`r nrow(gp34_v1_controls)` controls;
-`r nrow(males)` males and `r nrow(females)` females;
+`r nrow(controls_v1)` controls;
+`r nrow(v1_usable_males)` males and `r nrow(v1_usable_females)` females;
 and `r and::and(stages)` carriers at 
 FXTAS stages `r names(stages) |> and::and()`, respectively. 
 We found no differences between males and females in 
