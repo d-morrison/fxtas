@@ -21,10 +21,9 @@ knitr::opts_chunk$set(
   comment = "#>",
   include = TRUE
 )
-
-ggplot2::theme_bw() |> ggplot2::theme_set()
+pander::panderOptions("table.split.table", Inf)
+ggplot2::theme_set(ggplot2::theme_bw())
 ```
-
 
 ```{r}
 #| label: libraries
@@ -36,6 +35,7 @@ library(reticulate)
 library(pander)
 library(table1)
 library(magrittr)
+library(knitr)
 ```
 
 
