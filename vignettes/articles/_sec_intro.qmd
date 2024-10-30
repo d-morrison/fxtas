@@ -92,4 +92,4 @@ and knee osteoarthritis [@li2021identifying],
 but not previously for FXTAS.
 We here apply it to a cross-sectional data set of
 premutation carriers diagnosed with FXTAS of different stages
-to study the sequential ordering of FXTAS symptomatic events.
+to study the sequential ordering of FXTAS `r events_name`.
