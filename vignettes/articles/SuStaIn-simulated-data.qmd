@@ -1,11 +1,12 @@
 ---
-title: "SuStaIn-ModelFitting"
-output: 
-  rmarkdown::html_vignette:
+title: "SuStaIn Model Fitting"
+format:
+  html:
     toc: true
+    html-math-method: mathjax
 vignette: >
-  %\VignetteIndexEntry{SuStaIn-ModelFitting}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{OS_example}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -21,14 +22,16 @@ knitr::opts_chunk$set(
 library(fxtas)
 library(tidyverse)
 library(reticulate)
+reticulate::use_condaenv("fxtas39", required = TRUE)
 ```
 
 
 # Import data
 
 ```{r}
-
-df = system.file("extdata", "synthetic_data.xlsx", package = "fxtas") |> readxl::read_excel()
+file_path = fs::path_package("extdata/synthetic_data.xlsx", package = "fxtas")
+library(readxl)
+df = file_path |> readxl::read_excel()
 
 SuStaInLabels = biomarkers = c('Biomarker 1', 'Biomarker 2', 'Biomarker 3',
                'Biomarker 4', 'Biomarker 5')
