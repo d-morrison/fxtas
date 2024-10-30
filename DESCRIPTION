@@ -29,6 +29,7 @@ Imports:
     here,
     labelled,
     magrittr,
+    pander,
     plotly,
     purrr,
     rcartocolor,
@@ -50,7 +51,6 @@ Imports:
 Suggests: 
     devtag (>= 0.0.0.9000),
     knitr,
-    pander,
     rmarkdown,
     scales,
     spelling,

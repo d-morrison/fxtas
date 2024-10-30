@@ -52,6 +52,7 @@
 #' @importFrom ggtext element_markdown
 #' @importFrom glue glue
 #' @importFrom magrittr set_names
+#' @importFrom pander pander
 #' @importFrom plotly ggplotly
 #' @importFrom rcartocolor carto_pal
 #' @importFrom readxl read_excel

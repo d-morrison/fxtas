@@ -9,6 +9,17 @@
 #' but also contains a [tibble::tbl_df] as attribute `data`
 #' (easier than fixing all uses of this function)
 #' @export
+#' @examples
+#' control_data <-
+#'    test_data_v1 |>
+#'      filter(`FX*` == "CGG <55") |>
+#'      select(all_of(biomarker_varnames))
+#' prob_correct =
+#'   control_data |>
+#'   compute_prob_correct(
+#'     max_prob = .95,
+#'     biomarker_levels = biomarker_levels)
+#'
 #'
 compute_prob_correct = function(dataset, biomarker_levels, max_prob = 1)
 {
@@ -58,3 +69,40 @@ compute_prob_correct = function(dataset, biomarker_levels, max_prob = 1)
 
   return(to_return)
 }
+
+#' Print `prob_correct` objects as Pandoc markdown tables
+#'
+#' @param x a `prob_correct` object (from [compute_prob_correct()])
+#' @param ... currently unused
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' control_data <-
+#'    test_data_v1 |>
+#'      filter(`FX*` == "CGG <55") |>
+#'      select(all_of(biomarker_varnames))
+#' prob_correct =
+#' control_data |>
+#'   compute_prob_correct(
+#'     max_prob = .95,
+#'     biomarker_levels = biomarker_levels)
+#' prob_correct |> pander()
+
+pander.prob_correct = function(x, ...)
+{
+  x |>
+    attr("data") |>
+    mutate(
+      `% at baseline` = round(`% at baseline` * 100, 1) |> paste0("%"),
+      prob_correct = round(prob_correct * 100, 1) |> paste0("%")
+    ) |>
+    select(Biomarker = biomarker,
+           `# controls with data` = `# obs`,
+           `# at baseline`,
+           `% at baseline`,
+           "Est. Pr(correct)" = prob_correct) |>
+    pander::pander()
+}
+
