@@ -375,19 +375,17 @@ We declared significance if the p-value was less than or equal to 0.05.
 A detailed numerical example of this procedure 
 is provided in the Supplementary Materials (@sec-permutation-test).
 
-### Latent subtypes {#sec-methods-latent-subtypes}
+### Latent subtype clustering {#sec-methods-latent-subtypes}
 
 We also fitted the model on the full dataset (not stratified by sex or CGG) 
-for 2-`r N_S_max` latent subtypes, 
+for 2 - `r N_S_max` latent subtypes, 
 each with their own ordering. 
 We determined the optimal number of latent subtypes for this dataset using 
-the Cross-Validation Information Criterion (CVIC) [@young2018uncovering]
-(summarized in Supplementary Materials @sec-cvic) 
-and the Out-Of-Fold Log-Likelihood (OOFLL) criterion [@young2018uncovering]
-(summarized in Supplementary Materials @sec-oofll);
+the Cross-Validation Information Criterion (CVIC)
+and the Out-Of-Fold Log-Likelihood (OOFLL) criterion [@young2018uncovering];
 both criteria quantify how well models containing a given number of subtypes
 extend to new data not used in training.
-We performed `r N_CV_folds`-fold cross-validation on the unstratified data
+We performed `r N_CV_folds` - fold cross-validation on the unstratified data
 and calculated the CVIC and OOFLL for 1-`r N_S_max` latent subtypes. 
 More details are provided in the Supplementary Materials (@sec-subtypes).
 
@@ -804,23 +802,20 @@ results_cv_max = extract_results_from_pickle(
 ```
 
 We conducted latent subtype classification analysis to cluster participants 
-that are 
-relatively homogeneous within the same cluster 
+that are relatively homogeneous within the same cluster 
 and heterogeneous from other clusters 
-in terms of sequential patterns. 
-Based on the CVIC criterion (Supplementary Materials, @sec-cvic), 
+based on similarities and difference in sequential patterns. 
+Based on the CVIC criterion (Supplementary Materials, @sec-subtypes), 
 `r n_s_min_CVIC` subtypes were suggested to be the optimal number for the full, 
 unstratified dataset (Supplementary Materials, @fig-cvic-1). 
-The out-of-fold log-likelihood (Supplementary Materials, @eq-def-oof-llik) 
+The out-of-fold log-likelihood ("OOFLL") (Supplementary Materials, @sec-subtypes) 
 showed substantial fold-to-fold variation (Supplementary Materials, @fig-cvic-2).
 Between `r broman::spell_out(n_s_selected)` and `r broman::spell_out(N_S_max)` 
 latent subgroups, 
 the distribution of OOFLL appears to be
-approximately unchanging and the CVIC appears approximately flat.
-From these results, it did not appear that there was much benefit to including
-more than `r broman::spell_out(n_s_selected)` latent subgroups for this dataset.
-Therefore, for easier clinical interpretation, 
-we chose to analyze the results with only `r n_s_selected` subtypes.
+approximately unchanging and the CVIC appears approximately flat, 
+and thus for easier clinical interpretation, 
+we chose to classify participants into `r n_s_selected` subtypes.
 The subtypes are numbered 1-4 in order of estimated relative frequency
 (that is, in order of how many participants were clustered into each subtype).
 
@@ -831,11 +826,11 @@ n_type_0 = results_cv_max$subtype_and_stage_table |>
 
 ```
 
-@fig-pvd_chosen_subtypes shows positional variance diagrams (PVDs) 
-for each of the subtype clusters detected under this assumption
+@fig-pvd_chosen_subtypes shows the estimated sequential event orders
+for each of the subtype clusters 
 and differences in event sequences between subtypes. 
 @tbl-sg_demos shows the demographics of the patients clustered in each subtype. 
-`r n_type_0` patients appeared to be too early in the disease process 
+`r n_type_0` patients had experienced too few events 
 to be accurately classified into a subtype and were excluded from @tbl-sg_demos.
 
 Females were more likely to be classified in latent subtype 2 (39% versus 24%), 
@@ -1092,7 +1087,13 @@ flex_biomarkers_table(biomarkers_table)
 :::
 
 ```{r}
-#| tbl-cap: !expr glue::glue("**Demographics of {n_s_selected} latent subtype clusters identified by Ordinal SuStaIn.** {n_type_0} patients appeared to be too early in the disease process to be accurately classified into a subtype and were excluded from this table.")
+#| tbl-cap: !expr 
+#|     glue::glue(
+#|        "**Demographics of {n_s_selected} latent subtype clusters 
+#|        identified by Ordinal SuStaIn.** 
+#|        {n_type_0} patients had experienced too few events 
+#|        to be accurately classified into a subtype 
+#|        and were excluded from this table.")
 #| label: tbl-sg_demos
 #| results: asis
 
