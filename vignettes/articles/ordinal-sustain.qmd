@@ -156,6 +156,10 @@ Display items: 8.]{.mark}
 
 {{< pagebreak >}}
 
+# Abstract {.unnumbered}
+
+[Abstract word limit: 400]{.mark}
+
 {{< include _sec_abstract.qmd >}}
 
 {{< pagebreak >}}
@@ -252,10 +256,11 @@ The algorithm simultaneously
 clusters individuals into latent subtypes and 
 characterizes the event ordering that best defines each subtype, 
 thus capturing heterogeneity in both disease subtype and disease stage.
+
 Ordinal SuStaIn [@young2021ordinal] is 
 a version of the SuStaIn modeling algorithm [@young2018uncovering],
 adapted for analyzing ordinal-valued data using a scored events model.
-Ordinal SuStaIn uses a scored events model, 
+Ordinal SuStaIn uses a "scored events model", 
 which assumes that for each `r outcomes_name`,
 there is a discrete set of 
 underlying ordinal severity levels,
@@ -277,21 +282,17 @@ who were assessed as being at the reference level
 It is crucial to allow some possibility of incorrect scoring, 
 so we capped the estimated correct scoring probabilities at 
 `r max_prob_correct *100`%.
-Ordinal SuStaIn uses 
+Ordinal SuStaIn then uses 
 Markov Chain Monte Carlo (MCMC) sampling [@gelfand1990sampling]
 to estimate the Bayesian posterior probability of each possible event sequence 
 for each subtype given the training dataset, 
 assuming a uniform prior distribution 
-over the set of all possible orderings.
-
-We conducted subgroup analyses by fitting models stratified by: 
-
-1. sex (@sec-methods-strat-sex)
-2. CGG repeats (<100 vs ≥100) 
-   ([Supplementary Materials, @sec-methods-strat-cgg])
-3. both sex and CGG repeats (<100 vs ≥100) 
-   ([Supplementary Materials, @sec-stratified-by-cgg-and-sex]).
-
+over the set of all possible orderings. 
+We conducted subgroup analyses by fitting models stratified by
+sex (@sec-methods-strat-sex), CGG repeats (<100 vs ≥100) 
+(Supplementary Materials, @sec-methods-strat-cgg),
+and combinations of sex and CGG repeats (<100 vs ≥100) 
+(Supplementary Materials, @sec-stratified-by-cgg-and-sex).
 In these subgroup analyses, we did not search for latent clusters.
 
 ### Imputation of missing data {#sec-incomplete-data}
@@ -331,7 +332,9 @@ For example,
 `r n_missing` of the `r length(x1)` cases (`r pct_missing`) 
 had missing values for Ataxia Severity, 
 and `r n_obs` (`r pct_obs`) had recorded values, 
-distributed among Ataxia Severity levels 0-4.
+distributed among Ataxia Severity levels 0-4
+(`r v1_usable_cases$"Ataxia: severity*" |> counts_and_pcts() |> and::and()`,
+respectively).
 For the `r n_missing` cases with missing values, 
 we assigned probabilities of `r probs |> and::and()` 
 to Ataxia Severity levels `r 0:4 |> and::and()`, respectively, 

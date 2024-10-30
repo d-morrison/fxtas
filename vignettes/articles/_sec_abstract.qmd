@@ -1,5 +1,3 @@
-# [Abstract word limit: 400]{.comment-start author="Ezra Morrison"} Abstract {.unnumbered} []{.comment-end}
-
 The fragile X-associated tremor/ataxia syndrome (FXTAS) is a
 neurodegenerative disorder caused by the
 premutation (55 to 200 CGG repeats) in the *FMR1* gene.

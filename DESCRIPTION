@@ -49,6 +49,7 @@ Imports:
     veccompare,
     viridis
 Suggests: 
+    constructive,
     devtag (>= 0.0.0.9000),
     knitr,
     rmarkdown,
