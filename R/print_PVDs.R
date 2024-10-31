@@ -1,8 +1,8 @@
-#' Title
+#' Print a list of PVDs
 #'
-#' @param figs
+#' @param figs a [list] of [ggplot2::ggplot] objects
 #'
-#' @return
+#' @returns `figs`, invisibly
 #' @export
 #'
 print_PVDs = function(figs)
@@ -21,5 +21,7 @@ print_PVDs = function(figs)
         print()
     }
   }
+
+  return(invisible(figs))
 
 }

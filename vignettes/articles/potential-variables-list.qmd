@@ -37,7 +37,7 @@ library(pander)
 ```{r}
 
 biomarker_group_list = 
-  all_potential_biomarkers()
+  all_potential_biomarkers(gp34)
 
 biomarker_groups = 
   biomarker_group_list |> 

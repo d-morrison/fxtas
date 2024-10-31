@@ -23,7 +23,7 @@ BDS-2 Total Score*,40,33,7,0.825,0.825
 SCID: Mood Disorders,35,20,15,0.571429,0.571429
 SCID: Substance Use Disorders,34,29,5,0.852941,0.852941
 SCID: Anxiety Disorders,35,12,23,0.342857,0.342857
-SCID: Somatization Disorders,34,32,2,0.941176,0.941176
+SCID: Somatoform Disorders,34,32,2,0.941176,0.941176
 SWM Between errors*,25,14,11,0.56,0.56
 PAL Total errors (adjusted)*,25,9,16,0.36,0.36
 RTI Five-choice movement time*,25,25,0,1,0.95

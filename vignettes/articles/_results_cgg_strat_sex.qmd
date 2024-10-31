@@ -4,7 +4,14 @@
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("**Event sequences stratified by CGG repeats (<100 vs 100+), males only. (a)** {compact_fig_caption} **(b)** Positional differences in estimated event sequence between CGG repeat levels. {compact_fig_cap2}")
+#| fig-cap: !expr 
+#|     glue::glue(
+#|        "**Event sequences stratified by CGG repeats, among males.**
+#|        **(a)** Estimated event sequences,
+#|        stratified by CGG repeats (<100 vs 100+).
+#|        {compact_fig_caption} 
+#|        **(b)** Positional differences in estimated event sequence 
+#|        between CGG repeat levels. {compact_fig_cap2}")
 #| layout-ncol: 1
 #| fig-subcap:
 #|    - ""
@@ -35,7 +42,7 @@ pvd_lineplot(y_text_size = 11)
 #| fig-width: !expr pvd_width
 #| fig-cap: !expr
 #|    glue::glue(
-#|      "**Event sequences stratified by CGG repeats among females.**
+#|      "**Event sequences stratified by CGG repeats, among females.**
 #|      **(a)** Estimated event sequences,
 #|      stratified by CGG repeats (<100 vs 100+).
 #|      {compact_fig_caption}

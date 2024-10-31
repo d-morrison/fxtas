@@ -23,6 +23,8 @@ run_and_save_OSA(
 
 \item{N_S_max}{maximum number of subtypes, should be 1 or more}
 
+\item{rerun}{whether to force a rerun of the python code}
+
 \item{...}{
   Arguments passed on to \code{\link[=run_OSA]{run_OSA}}
   \describe{

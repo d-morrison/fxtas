@@ -1,5 +1,6 @@
 ---
-title: "Development and progression of Fragile X-associated tremor/ataxia syndrome 
+title: "Development and progression of 
+Fragile X-associated tremor/ataxia syndrome 
 revealed by Subtype and Stage Inference analysis"
 reference-doc: ../Brain_template_2022.docx
 ---
@@ -12,23 +13,6 @@ text-align: center;
 </style>
 ```
 
-[Target journal: 
-[Brain (Original Articles)](https://academic.oup.com/brain/pages/general_instructions).
-Word limit for main text: 6000.
-Display items: 8.]{.mark}
-
-{{< pagebreak >}}
-
-# [Abstract word limit: 400]{.comment-start author="Ezra Morrison"} Abstract {.unnumbered} []{.comment-end}
-
-{{< include _sec_abstract.qmd >}}
-
-{{< pagebreak >}}
-
-# Introduction
-
-{{< include _sec_intro.qmd >}}
-
 ```{r}
 #| include: false
 #| label: setup
@@ -37,6 +21,8 @@ knitr::opts_chunk$set(
   comment = "#>",
   include = TRUE
 )
+pander::panderOptions("table.split.table", Inf)
+ggplot2::theme_set(ggplot2::theme_bw())
 ```
 
 ```{r}
@@ -49,17 +35,21 @@ library(reticulate)
 library(pander)
 library(table1)
 library(magrittr)
+library(knitr)
 ```
+
 
 ```{r}
 #| label: "set run parameters"
 
+max_prob_correct = .95
+
 fit_models <- TRUE
-run_CV <- TRUE
+run_cv <- TRUE
 
 rerun  <- TRUE
 rerun <- FALSE
-# 
+
 plot_python <- TRUE
 fig_size = c(20, 10)
 
@@ -78,12 +68,13 @@ N_CV_folds = 10L
 n_permutations = 1000
 
 outcomes_name = "symptom"
+events_name = "symptomatic events"
 outcomes_name_sentence_start = stringr::str_to_sentence(outcomes_name)
 
 compact_fig_caption <- paste(
   "Positional variance diagrams of estimated event sequences models and uncertainty.",
   "Color intensity represents the likelihood of sequence position.",
-  "The brighter the color, the more likely that the corresponding", 
+  "The brighter the color, the more likely that the corresponding",
   outcomes_name,
   "event occurs in that position in the sequence."
 )
@@ -104,16 +95,12 @@ N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
 root_dir = here::here()
 setwd(root_dir)
-output_folder = 
-  "output/output.fixed_CV/" |> 
+output_folder =
+  "output/output.fixed_CV/" |>
   fs::dir_create()
 
 
 ```
-
-# Materials and methods
-
-## Data
 
 ```{r}
 #| label: subset-data
@@ -121,36 +108,24 @@ output_folder =
 full_data = trax_gp34_v1
 n_missing_CGG = full_data$CGG |> is.na() |> sum()
 n_above_200 = sum(full_data$CGG >= 200, na.rm = TRUE)
-v1_usable = full_data |> filter(CGG < 200) |> 
+v1_usable = full_data |> filter(CGG < 200) |>
   mutate(`FX3*` = `FX3*` |> droplevels())
+v1_usable_males = v1_usable |> filter(Gender == "Male")
+v1_usable_females = v1_usable |> filter(Gender == "Female")
 v1_usable_cases = v1_usable |> filter(CGG >= 55)
+
 # note: there are 231 records in `visit1` with CGG >= 55, but 4 have CGG >= 200
 # previously `nrow(v1_usable_cases)` was 221, which was based on incorrectly filtering on a version of CGG that hadn't been backfilled.
 
-gp34_v1_controls =  v1_usable |> filter(CGG <55)
+controls_v1 =  v1_usable |> dplyr::filter(CGG < 55)
 year_range = v1_usable$`Visit Date` |> year() |> range()
 min_year = min(year_range)
 max_year = max(year_range)
+
+control_data = controls_v1
+patient_data = v1_usable_cases
+
 ```
-
-### Study cohorts
-
-{{< include _sec_study_cohorts.qmd >}}
-
-The primary sequence analysis of symptomatic evens included baseline visit data 
-from `r nrow(v1_usable)` participants from the GP and TRAX cohorts,
-consisting of 
-`r nrow(v1_usable_cases)` fragile X premutation carriers and 
-`r nrow(gp34_v1_controls)` controls. 
-@tbl-demographics provides demographic information about the study participants.
-The controls' data are used to estimate 
-the distribution of the analyzed `r outcomes_name`s among non-FXTAS individuals 
-as reference in SuStaIn modeling
-(details in Supplementary Material, @sec-scored-events-model).
-Then, the cases' data are  used to estimate FXTAS event sequences,
-using the estimated control distributions to account for random variation
-in observed symptoms unrelated to the underlying event sequence.
-
 
 ```{r}
 #| label: "biomarker-events"
@@ -165,8 +140,6 @@ biomarker_levels =
   dplyr::select(all_of(biomarker_varnames)) |> 
   lapply(F = levels)
 
-df = v1_usable
-
 biomarker_events_table =
   construct_biomarker_events_table(
     biomarker_levels,
@@ -176,6 +149,48 @@ nlevs =
   biomarker_levels |> sapply(length)
 
 ```
+
+[Target journal: 
+[Brain (Original Articles)](https://academic.oup.com/brain/pages/general_instructions).
+Word limit for main text: 6000.
+Display items: 8.]{.mark}
+
+{{< pagebreak >}}
+
+# Abstract {.unnumbered}
+
+[Abstract word limit: 400]{.mark}
+
+{{< include _sec_abstract.qmd >}}
+
+{{< pagebreak >}}
+
+# Introduction
+
+{{< include _sec_intro.qmd >}}
+
+# Materials and methods
+
+## Data
+
+### Study cohorts
+
+{{< include _sec_study_cohorts.qmd >}}
+
+The primary sequence analysis of symptomatic evens included baseline visit data 
+from `r nrow(v1_usable)` participant
+s from the GP and TRAX cohorts,
+consisting of 
+`r nrow(v1_usable_cases)` fragile X premutation carriers and 
+`r nrow(controls_v1)` controls. 
+@tbl-demographics provides demographic information about the study participants.
+The controls' data are used to estimate 
+the distribution of the analyzed `r outcomes_name`s among non-FXTAS individuals 
+as reference in SuStaIn modeling
+(more details in @sec-scored-events-model).
+Then, the cases' data are  used to estimate FXTAS event sequences,
+using the estimated control distributions to account for random variation
+in observed symptoms unrelated to the underlying event sequence.
 
 ### `r outcomes_name_sentence_start`s of neurodegenerative events
 
@@ -223,15 +238,13 @@ Sex (`r unique(v1_usable$Gender)`).
 
 ## Statistical analysis {#sec-Statistical-analysis}
 
-We applied a 
-discrete event-based disease progression model 
+### Ordinal SuStaIn model {#sec-scored-events-model}
+
+We applied a discrete event-based disease progression model 
 [@fonteijn2011event; @fonteijn2012event; @oxtoby2023data] 
-to our data using the 
-Ordinal Subtype and Stage Inference ("SuStaIn") algorithm 
+to our data using the Ordinal Subtype and Stage Inference ("SuStaIn") algorithm 
 [@young2021ordinal] 
 to estimate event orderings and subtypes for FXTAS patients. 
-Ordinal SuStaIn is a version of the SuStaIn modeling algorithm [@young2018uncovering],
-adapted for analyzing ordinal-valued data.
 SuStaIn is a data-driven statistical modeling algorithm 
 that combines 
 event-based disease progression modelling 
@@ -244,20 +257,43 @@ The algorithm simultaneously
 clusters individuals into latent subtypes and 
 characterizes the event ordering that best defines each subtype, 
 thus capturing heterogeneity in both disease subtype and disease stage.
-Ordinal SuStaIn uses Markov Chain Monte Carlo (MCMC) sampling 
+
+Ordinal SuStaIn [@young2021ordinal] is 
+a version of the SuStaIn modeling algorithm [@young2018uncovering],
+adapted for analyzing ordinal-valued data using a scored events model.
+Ordinal SuStaIn uses a "scored events model", 
+which assumes that for each `r outcomes_name`,
+there is a discrete set of 
+underlying ordinal severity levels,
+but the measured versions of the `r outcomes_name`s may contain 
+some amount of random noise.
+For example, an individual who is really at Ataxia Severity level 2 may be 
+incorrectly assessed as being at Ataxia Severity level 1, depending on
+the patient's temporary disease status on the day of the exam or
+inter-rater differences.
+The first step in applying the Ordinal SuStaIn algorithm is to determine,
+for each `r outcomes_name`, the probability that an individual is 
+"correctly scored" at their "true underlying level" [@young2021ordinal].
+In this analysis, we assumed that all controls are truly at the reference levels
+for each `r outcomes_name`, 
+and we estimated the proportion of correctly scored individuals as
+the proportion of controls 
+who were assessed as being at the reference level
+[Supplementary Materials, @tbl-prob-correct].
+It is crucial to allow some possibility of incorrect scoring, 
+so we capped the estimated correct scoring probabilities at 
+`r max_prob_correct *100`%.
+Ordinal SuStaIn then uses 
+Markov Chain Monte Carlo (MCMC) sampling [@gelfand1990sampling]
 to estimate the Bayesian posterior probability of each possible event sequence 
 for each subtype given the training dataset, 
 assuming a uniform prior distribution 
 over the set of all possible orderings. 
-
-We conducted subgroup analyses by fitting models stratified by: 
-
-1. sex (@sec-methods-strat-sex)
-2. CGG repeats (<100 vs ≥100) 
-   ([Supplementary Materials, @sec-methods-strat-cgg])
-3. both sex and CGG repeats (<100 vs ≥100) 
-   ([Supplementary Materials, @sec-stratified-by-cgg-and-sex]).
-
+We conducted subgroup analyses by fitting models stratified by
+sex (@sec-methods-strat-sex), CGG repeats (<100 vs ≥100) 
+(Supplementary Materials, @sec-methods-strat-cgg),
+and combinations of sex and CGG repeats (<100 vs ≥100) 
+(Supplementary Materials, @sec-stratified-by-cgg-and-sex).
 In these subgroup analyses, we did not search for latent clusters.
 
 ### Imputation of missing data {#sec-incomplete-data}
@@ -297,8 +333,9 @@ For example,
 `r n_missing` of the `r length(x1)` cases (`r pct_missing`) 
 had missing values for Ataxia Severity, 
 and `r n_obs` (`r pct_obs`) had recorded values, 
-distributed among Ataxia Severity levels 0-4 
-([Supplementary Table @tbl-ex-incomplete-data]). 
+distributed among Ataxia Severity levels 0-4
+(`r v1_usable_cases$"Ataxia: severity*" |> counts_and_pcts() |> and::and()`,
+respectively).
 For the `r n_missing` cases with missing values, 
 we assigned probabilities of `r probs |> and::and()` 
 to Ataxia Severity levels `r 0:4 |> and::and()`, respectively, 
@@ -338,19 +375,17 @@ We declared significance if the p-value was less than or equal to 0.05.
 A detailed numerical example of this procedure 
 is provided in the Supplementary Materials (@sec-permutation-test).
 
-### Latent subtypes {#sec-methods-latent-subtypes}
+### Latent subtype clustering {#sec-methods-latent-subtypes}
 
 We also fitted the model on the full dataset (not stratified by sex or CGG) 
-for 2-`r N_S_max` latent subtypes, 
+for 2 - `r N_S_max` latent subtypes, 
 each with their own ordering. 
 We determined the optimal number of latent subtypes for this dataset using 
-the Cross-Validation Information Criterion (CVIC) [@young2018uncovering]
-(summarized in Supplementary Materials @sec-cvic) 
-and the Out-Of-Fold Log-Likelihood (OOFLL) criterion [@young2018uncovering]
-(summarized in Supplementary Materials @sec-oofll);
+the Cross-Validation Information Criterion (CVIC)
+and the Out-Of-Fold Log-Likelihood (OOFLL) criterion [@young2018uncovering];
 both criteria quantify how well models containing a given number of subtypes
 extend to new data not used in training.
-We performed `r N_CV_folds`-fold cross-validation on the unstratified data
+We performed `r N_CV_folds` - fold cross-validation on the unstratified data
 and calculated the CVIC and OOFLL for 1-`r N_S_max` latent subtypes. 
 More details are provided in the Supplementary Materials (@sec-subtypes).
 
@@ -360,7 +395,7 @@ More details are provided in the Supplementary Materials (@sec-subtypes).
 
 We visualized the results of Ordinal SuStaIn analysis 
 using "positional variance diagrams" (PVDs).
-PVDs are heatmaps with symptomatic events on the y-axis 
+PVDs are heatmaps with `r events_name` on the y-axis 
 and sequence positions of events on the x-axis.
 Each event is estimated to occur at some point in continuing time 
 *relative to* other events in sequence.
@@ -374,20 +409,23 @@ That is, a brighter color indicates a more probable sequence position,
 and a paler color indicates a less probable position. 
 The colors indicate the ordinal levels of progression.
 
+## Software
+
+The Ordinal Sustain analysis was performed using 
+the Python programming language, version 3.9 [@python3] 
+with the `pySuStaIn` package [@aksman2021pysustain].
+Data pre-processing and results post-processing were performed in 
+R 4.4.0 [@rcore] using the `tidyverse` packages [@tidyverse].
+The `reticulate` package [@reticulate] was used to create 
+an application programming interface between Python and R.
+The code used to perform this analysis is available at 
+<https://github.com/d-morrison/fxtas>.
+
+# Results
+
 ```{r}
 #| label: get-control-dists
 
-control_data = 
-  df |> 
-  filter(`FX*` == "CGG <55") |> 
-  select(all_of(biomarker_varnames))
-
-patient_data = 
-  df |> 
-  # na.omit() |>
-  filter(`FX*` == "CGG >= 55")
-
-max_prob_correct = .95
 prob_correct = 
   control_data |> 
   compute_prob_correct(
@@ -539,21 +577,8 @@ fig_over100_females = extract_figs_from_pickle(
 
 ```
 
-## Software
-
-The Ordinal Sustain analysis was performed using the Python programming language, version 3.9 [@python3] 
-with the `pySuStaIn` package [@aksman2021pysustain].
-Data pre-processing and results post-processing were performed in R 4.4.0 [@rcore] 
-using the `tidyverse` packages [@tidyverse].
-The `reticulate` package [@reticulate] was used to create an application programming interface between Python and R.
-The code used to perform this analysis is available at <https://github.com/d-morrison/fxtas>.
-
-# Results
-
 ```{r}
 #| label: basic-summary-stats
-males = v1_usable |> filter(Gender == "Male")
-females = v1_usable |> filter(Gender == "Female")
 stages = v1_usable_cases |> select(`FXTAS Stage (0-5)*`) |> table()
 biomarkers_table = 
   v1_usable |> 
@@ -566,8 +591,8 @@ biomarkers_table =
 included in the analysis. 
 Our data included: 
 `r nrow(v1_usable_cases)` Fragile X premutation carriers and 
-`r nrow(gp34_v1_controls)` controls;
-`r nrow(males)` males and `r nrow(females)` females;
+`r nrow(controls_v1)` controls;
+`r nrow(v1_usable_males)` males and `r nrow(v1_usable_females)` females;
 and `r and::and(stages)` carriers at 
 FXTAS stages `r names(stages) |> and::and()`, respectively. 
 We found no differences between males and females in 
@@ -578,11 +603,11 @@ CGG repeat size.
 @tbl-biomarker-list lists the `r outcomes_name`s and their ordinal levels
 and reports proportions of clinically elevated levels at baseline visit, 
 stratified by sex.
-We found statistically significant evidence of sex differences in 
+We found significant sex differences in 
 proportions of clinically elevated (non-reference) `r outcomes_name` levels 
 at baseline visit for `r report_sex_differences(biomarkers_table)`.
 
-## Stratified by sex {#sec-methods-strat-sex}
+## Sex differences in sequential orders {#sec-methods-strat-sex}
 
 ```{r}
 #| label: p-val-test-sex
@@ -604,19 +629,21 @@ pval_sex_gp34_v1 = permutation_test(
 
 ```
 
-@fig-first-only shows the estimated event sequences 
-stratified by sex 
-and compares the estimated sequences between males and females.
+@fig-first-only shows 
+the estimated sequential orders
+of FXTAS `r outcomes_name`s 
+in males and females.
 We found statistically significant evidence of a 
-difference in event sequences 
+difference in sequences of `r events_name`
 between males and females (p = `r pval_sex_gp34_v1`) 
 (@fig-first-only-1 and [(b)](#fig-first-only-2)). 
 It appears that 
 female premutation carriers developed 
-threshold-level Mood Disorder symptoms 
+SCID Mood Disorder symptoms, 
+both sub-threshold-level and threshold-level,
 prior to FXTAS Stage 1 diagnosis,
-whereas male carriers developed these symptoms 
-between FXTAS Stages 3 and 4 (@fig-first-only-2).
+whereas male carriers delayed these symptoms 
+much later between FXTAS Stages 3 and 4 (@fig-first-only-2).
 Cognitive decline, as measured by SWM and PAL,
 also occurred at earlier FXTAS stages for females.
 Ataxia occurred prior to Stage 1 for females 
@@ -628,6 +655,137 @@ Advanced degrees of ataxia severity also occurred
 earlier in the event sequence for males than females. 
 MRI biomarkers of decline and parkinsonian features 
 also appear to onset at earlier FXTAS stages for males than for females.
+
+
+```{r}
+#| label: p-val-test-sex-under100
+output_folder = "output/output.fixed_CV/"
+
+permuted_test_stats = collect_permutation_test_stats(
+  output_folder = output_folder,
+  stratifying_levels = "CGG 55-99",
+  permuting_variables = "Gender")
+
+observed_test_stat = get_observed_permutation_test_stat(
+  output_folder,
+  dataset_names = c('under100_Female', 'under100_Male'))
+
+pval_under100_sex_gp34_v1 = permutation_test(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
+)
+
+```
+
+```{r}
+#| label: p-val-test-sex-over100
+output_folder = "output/output.fixed_CV/"
+
+permuted_test_stats = collect_permutation_test_stats(
+  output_folder = output_folder,
+  stratifying_levels = "CGG 100-199",
+  permuting_variables = "Gender")
+
+observed_test_stat = get_observed_permutation_test_stat(
+  output_folder,
+  dataset_names = c('over100_Female', 'over100_Male'))
+
+pval_over100_sex_gp34_v1 = permutation_test(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
+)
+
+```
+
+When we conducted subgroup analyses by CGG repeat size,
+we found statistically significant evidence of 
+a difference between males and females
+among those with CGG < 100 (p = `r pval_under100_sex_gp34_v1`)
+(Supplementary @fig-pvd-by-gender-cgg_under100).
+Several psychiatric disorders (as measured by SCID) 
+occurred prior to FXTAS Stage 1
+among females with CGG < 100,
+but at later FXTAS stages for males with CGG < 100.
+MRI biomarkers appeared to occur at later stages in females compared to males.
+We did not find statistically significant evidence of 
+a difference between males and females
+among those with CGG ≥ 100 (p = `r pval_over100_sex_gp34_v1`) 
+(Supplementary Materials, @fig-pvd-by-gender-cgg_over100).
+
+
+```{r}
+#| label: p-val-test-cgg-male
+output_folder = "output/output.fixed_CV/"
+
+permuted_test_stats = collect_permutation_test_stats(
+  output_folder = output_folder,
+  stratifying_levels = "Male",
+  permuting_variables = "FX3")
+
+observed_test_stat = get_observed_permutation_test_stat(
+  output_folder,
+  dataset_names = c('under100_Male', 'over100_Male'))
+
+pval_male_cgg_gp34_v1 = permutation_test(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
+)
+
+```
+
+
+```{r}
+#| label: p-val-test-cgg-female
+output_folder = "output/output.fixed_CV/"
+
+permuted_test_stats = collect_permutation_test_stats(
+  output_folder = output_folder,
+  stratifying_levels = "Female",
+  permuting_variables = "FX3")
+
+observed_test_stat = get_observed_permutation_test_stat(
+  output_folder,
+  dataset_names = c('under100_Female', 'over100_Female'))
+
+pval_female_cgg_gp34_v1 = permutation_test(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
+)
+
+n_over100_Female =
+  v1_usable |>
+  filter(
+   Gender == "Female",
+   CGG >= 100
+  ) |>
+  nrow()
+
+```
+
+We found significant evidence of an overall difference between CGG <100
+and CGG ≥100 among males (p = `r pval_male_cgg_gp34_v1`) 
+(Supplementary Materials, @fig-pvd-by-cgg-male). 
+SWM between errors occurred prior to Stage 1 in males with CGG repeats <100, 
+whereas it occurred between stage 3 and 4 
+in males with CGG repeats ≥ 100 
+(@fig-pvd-by-cgg-male-2). 
+Postural, 
+resting, 
+and intermittent tremor 
+occurred in earlier FXTAS stages in those with CGG repeats <100 
+compared to those with CGG repeats ≥100.
+Several psychiatric disorders (as measured by SCID) 
+occurred later in the event sequence in participants with CGG repeats <100 
+compared to those with CGG repeats ≥100.  
+However, we did not find a significant difference between CGG <100 and CGG ≥100 
+among females (p = `r pval_female_cgg_gp34_v1`) 
+(Supplementary Materials, @fig-pvd-by-cgg-female). 
+It should be noted that this comparison lacked statistical power 
+given the limited sample size of only `r n_over100_Female` females with CGG ≥100.
 
 ## Subtype clustering
 
@@ -644,23 +802,20 @@ results_cv_max = extract_results_from_pickle(
 ```
 
 We conducted latent subtype classification analysis to cluster participants 
-that are 
-relatively homogeneous within the same cluster 
+that are relatively homogeneous within the same cluster 
 and heterogeneous from other clusters 
-in terms of sequential patterns. 
-Based on the CVIC criterion (Supplementary Materials, @sec-cvic), 
+based on similarities and difference in sequential patterns. 
+Based on the CVIC criterion (Supplementary Materials, @sec-subtypes), 
 `r n_s_min_CVIC` subtypes were suggested to be the optimal number for the full, 
 unstratified dataset (Supplementary Materials, @fig-cvic-1). 
-The out-of-fold log-likelihood (Supplementary Materials, @eq-def-oof-llik) 
+The out-of-fold log-likelihood ("OOFLL") (Supplementary Materials, @sec-subtypes) 
 showed substantial fold-to-fold variation (Supplementary Materials, @fig-cvic-2).
 Between `r broman::spell_out(n_s_selected)` and `r broman::spell_out(N_S_max)` 
 latent subgroups, 
 the distribution of OOFLL appears to be
-approximately unchanging and the CVIC appears approximately flat.
-From these results, it did not appear that there was much benefit to including
-more than `r broman::spell_out(n_s_selected)` latent subgroups for this dataset.
-Therefore, for easier clinical interpretation, 
-we chose to analyze the results with only `r n_s_selected` subtypes.
+approximately unchanging and the CVIC appears approximately flat, 
+and thus for easier clinical interpretation, 
+we chose to classify participants into `r n_s_selected` subtypes.
 The subtypes are numbered 1-4 in order of estimated relative frequency
 (that is, in order of how many participants were clustered into each subtype).
 
@@ -671,11 +826,11 @@ n_type_0 = results_cv_max$subtype_and_stage_table |>
 
 ```
 
-@fig-pvd_chosen_subtypes shows positional variance diagrams (PVDs) 
-for each of the subtype clusters detected under this assumption
+@fig-pvd_chosen_subtypes shows the estimated sequential event orders
+for each of the subtype clusters 
 and differences in event sequences between subtypes. 
 @tbl-sg_demos shows the demographics of the patients clustered in each subtype. 
-`r n_type_0` patients appeared to be too early in the disease process 
+`r n_type_0` patients had experienced too few events 
 to be accurately classified into a subtype and were excluded from @tbl-sg_demos.
 
 Females were more likely to be classified in latent subtype 2 (39% versus 24%), 
@@ -932,7 +1087,13 @@ flex_biomarkers_table(biomarkers_table)
 :::
 
 ```{r}
-#| tbl-cap: !expr glue::glue("**Demographics of {n_s_selected} latent subtype clusters identified by Ordinal SuStaIn.** {n_type_0} patients appeared to be too early in the disease process to be accurately classified into a subtype and were excluded from this table.")
+#| tbl-cap: !expr 
+#|     glue::glue(
+#|        "**Demographics of {n_s_selected} latent subtype clusters 
+#|        identified by Ordinal SuStaIn.** 
+#|        {n_type_0} patients had experienced too few events 
+#|        to be accurately classified into a subtype 
+#|        and were excluded from this table.")
 #| label: tbl-sg_demos
 #| results: asis
 

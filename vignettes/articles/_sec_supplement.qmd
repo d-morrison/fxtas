@@ -1,27 +1,8 @@
-## Scored events model {.appendix #sec-scored-events-model}
+## Scored events model: estimated probabilities of correct scoring {.appendix #sec-prob-correctly-scored}
 
-The Ordinal SuStaIn approach [@young2021ordinal] uses a scored events model, 
-which assumes that for each `r outcomes_name`,
-there are a discrete set of 
-underlying ordinal severity levels,
-but the measured versions of the `r outcomes_name`s may contain 
-some amount of random noise.
-For example, an individual who is really at Ataxia Severity level 2 may be 
-incorrectly assessed as being at Ataxia Severity level 1, depending on
-the patient's temporary disease status on the day of the exam or
-inter-rater differences.
-
-The first step in applying the Ordinal SuStaIn algorithm is to determine,
-for each `r outcomes_name`, the probability that an individual is 
-"correctly scored" at their "true underlying level".
-In this analysis, we assumed that all controls are truly at the reference levels
-for each `r outcomes_name`, 
-and we estimated the probability of correct scoring as 
-the proportion of controls 
-who were assessed as being at the reference level.
-It is crucial to allow some possibility of incorrect scoring, 
-so we capped the estimated correct scoring probabilities at 
-`r max_prob_correct *100`% (@tbl-prob-correct).
+@tbl-prob-correct shows the estimated proportion of correctly scored individuals
+for each `r outcomes_name`, [@young2021ordinal]
+estimated using the controls data.
 
 ```{r}
 #| label: tbl-prob-correct
@@ -29,37 +10,9 @@ so we capped the estimated correct scoring probabilities at
 #|   **Proportions of controls at baseline levels, and 
 #|   corresponding estimates of probability of correct scoring.**
 
-panderOptions("table.split.table", Inf)
-prob_correct |> attr("data") |>
-  mutate(
-    `% at baseline` = round(`% at baseline` * 100, 1) |> paste0("%"),
-    prob_correct = round(prob_correct * 100, 1) |> paste0("%")
-  ) |>
-  select(Biomarker = biomarker, 
-         `# controls with data` = `# obs`,
-         `# at baseline`,
-         `% at baseline`,
-         "Est. Pr(correct)" = prob_correct) |>
-  pander::pander()
+prob_correct |> pander::pander()
 ```
 
-## Imputation of missing data {.appendix}
-
-@tbl-ex-incomplete-data shows the distribution of Ataxia severity among
-study participants with Fragile X premutation (55-199 CGG repeats),
-when Ataxia severity was recorded.
-
-```{r}
-#| label: tbl-ex-incomplete-data
-#| tbl-cap: "**Distribution of ataxia severity among cases.**"
-
-table1(
-  na.is.category = FALSE,
-  data = v1_usable_cases,
-  x = ~ `Ataxia: severity*`)
-```
-
-{{< pagebreak >}}
 
 {{< include general-data-notes.qmd >}}
 

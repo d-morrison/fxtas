@@ -1,69 +1,3 @@
-
-```{r}
-#| label: p-val-test-sex-under100
-output_folder = "output/output.fixed_CV/"
-
-permuted_test_stats = collect_permutation_test_stats(
-  output_folder = output_folder,
-  stratifying_levels = "CGG 55-99",
-  permuting_variables = "Gender")
-
-observed_test_stat = get_observed_permutation_test_stat(
-  output_folder,
-  dataset_names = c('under100_Female', 'under100_Male'))
-
-pval_under100_sex_gp34_v1 = permutation_test(
-  observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats,
-  n_permutations = n_permutations
-)
-
-# autoplot(pval_under100_sex_gp34_v1)
-
-```
-
-@fig-pvd-by-gender-cgg_under100 shows the estimated event sequences
-for CGG < 100 stratified by sex
-and compares the estimated event sequences between males and females.
-We found statistically significant evidence of a difference between males and females
-among those with CGG < 100 (p = `r pval_under100_sex_gp34_v1`).
-Several psychiatric disorders (as measured by SCID) occurred prior to FXTAS Stage 1
-among females with CGG < 100,
-but at later FXTAS stages for males with CGG < 100.
-MRI biomarkers appeared to occur at later stages in females compared to males.
-
-```{r}
-#| label: p-val-test-sex-over100
-output_folder = "output/output.fixed_CV/"
-
-permuted_test_stats = collect_permutation_test_stats(
-  output_folder = output_folder,
-  stratifying_levels = "CGG 100-199",
-  permuting_variables = "Gender")
-
-observed_test_stat = get_observed_permutation_test_stat(
-  output_folder,
-  dataset_names = c('over100_Female', 'over100_Male'))
-
-pval_over100_sex_gp34_v1 = permutation_test(
-  observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats,
-  n_permutations = n_permutations
-)
-
-# autoplot(pval_over100_sex_gp34_v1)
-
-```
-
-We did not find statistically significant evidence of a difference between males and females
-among those with CGG ≥ 100 (p = `r pval_over100_sex_gp34_v1`).
-@fig-pvd-by-gender-cgg_over100 shows the estimated stratified models
-and compares the estimates of the sequences.
-The significant differences found for these subgroups
-need to be declared with caution due to the small sample sizes
-and large uncertainty..
-
-
 {{< pagebreak >}}
 
 ```{r}
@@ -136,4 +70,3 @@ pvd_lineplot(
 
 ```
 
-{{< pagebreak >}}
