@@ -1,5 +1,8 @@
 .Rproj.user
-data
+data/trax*
+data/*gp*
+data/visit1.rda
+tests/testthat/_snaps/*.new.md
 inst/doc
 fxtas-PHS-Z1610005F.Rproj
 -PHS-Z1610005F.Rhistory
