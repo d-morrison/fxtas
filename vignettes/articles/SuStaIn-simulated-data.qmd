@@ -130,15 +130,43 @@ prob_score = prob_score0[,,-1]
 
 ```
 
-```{r "score_vals"}
+```{r }
+#| label: build-score-vals-only-observed
+
 biomarker_levels = 
   df |> 
   dplyr::select(all_of(biomarkers)) |> 
   lapply(F = \(x) x |> unique() |> sort())
+score_vals = build_score_vals(biomarker_levels)
+
+score_vals
+
+```
+
+or, to match original example from Alex Young:
+
+```{R}
+#| label: build-score-vals-all-possible
+
+biomarker_levels = list(
+  "Biomarker 1" = 0:3,
+  "Biomarker 2" = 0:3,
+  "Biomarker 3" = 0:3,
+  "Biomarker 4" = 0:3,
+  "Biomarker 5" = 0:3
+)
 
 score_vals = build_score_vals(biomarker_levels)
 
+score_vals
 ```
+
+::: {.callout-warning}
+When switching between these two methods of calculating `score_vals`,
+the number of events in the sequence changes, so the pickle files need 
+to be rebuilt accordingly. 
+Otherwise, we might get errors about array lengths and indices.
+:::
 
 # Run SuStaIn model
 
