@@ -1,27 +1,78 @@
-#' plot compact pvd: figure
-#'
+#' plot_compact_pvd_est2 helpers
 
-compact_pvd_figure <- function(
+#### data prep function ####
+tmp_data_prep <- function(x){
+  tmp <- x$data
+  # determine biomarker event order
+  event_order <- tmp |>
+    dplyr::select(`row number and name`, `event name`, biomarker) |>
+    mutate(
+      Order = sub("\\D*(\\d+).*", "\\1", `row number and name`) |> as.numeric()
+    ) |>
+    mutate(
+      `event order` = min(Order),
+      .by = `biomarker`
+    ) |>
+    # dplyr::select(
+    #   biomarker, position
+    # ) |>
+    arrange(`event order`) |>
+    mutate(
+      biomarker = forcats::fct_inorder(biomarker)
+    ) |>
+    dplyr::select(biomarker, `event order`) |>
+    unique()
+
+  event_order_facet <- tmp |>
+    dplyr::select(`row number and name`, `event name`, biomarker) |>
+    dplyr::mutate(
+      Order = sub("\\D*(\\d+).*", "\\1", `row number and name`) |> as.numeric()
+    ) |>
+    unique()
+
+  plot_dataset <- merge(
+    event_order_facet,
+    tmp,
+    by = c("row number and name", "event name", "biomarker")
+  ) |>
+    dplyr::filter(
+      position == Order
+    ) |>
+    # convert biomarker to factor with event order levels
+    mutate(
+      biomarker = factor(
+        biomarker,
+        levels = levels(event_order$biomarker)
+      )
+    ) |>
+    # arrange by biomarker levels
+    arrange(biomarker) |>
+    # create biomarker labels for figure
+    mutate(
+      biomarker_label = glue::glue(
+        "<i style='color:{group_color}'>{biomarker}</i>"
+      ) |>
+        forcats::fct_inorder()
+    ) |>
+    dplyr::select(
+      biomarker, biomarker_label, position, proportion, level
+    )
+
+  return(plot_dataset)
+}
+
+#### create plot for a given subtype ####
+tmp_func <- function(
     plot_dataset,
-    tile_height,
-    y_text_size,
-    facet_names,
-    # facet_label_size,
-    legend.position,
-    scale_colors
-    ){
-  # set tile width
-  tile_width = 1
-
-  nlevels <- plot_dataset |> pull(level) |> unique() |> length()
-
-  # create level color scales
-  if(length(scale_colors) != nlevels){
-    stop("`scale_colors` must be the same length as the number of levels",
-         " (number of levels = ", nlevels, ")")
-  }
-
-  ## update: add colors as arguments
+    y_position,
+    panel_title,
+    scale_colors = scale_colors,
+    tile_height = tile_height,
+    tile_width = tile_width,
+    y_text_size = y_text_size,
+    legend.position
+){
+  # process color scales
   level2=colorRampPalette(c("white", scale_colors[1])) # level 2
   level3=colorRampPalette(c("white", scale_colors[2])) # level 3
   level4=colorRampPalette(c("white", scale_colors[3])) # level 4
@@ -40,7 +91,6 @@ compact_pvd_figure <- function(
   facet_labeller <- function(variable, value){
     facet_names[value]
   }
-
   # figure
   fig <- ggplot() +
     # layer for biomarker level 2
@@ -148,21 +198,21 @@ compact_pvd_figure <- function(
     ) +
     # guides(fill = guide_legend(title = "Pr(Stage)<sub>6</sub>")) +
     # reverse order of y-axis (biomarkers)
-    ggplot2::scale_y_discrete(limits = rev) +
+    ggplot2::scale_y_discrete(limits = rev, position = y_position) +
     # frame x axis
     ggplot2::scale_x_continuous(expand = ggplot2::expansion(add = c(0.5, 2))) +
     # update axis labels
-    ggplot2::labs(x = "Sequential order") +
+    ggplot2::labs(x = "Sequential order", title = panel_title) +
     # wrap over facet levels
-    ggplot2::facet_wrap(
-      ~facet,
-      labeller = facet_labeller # update facet labels
-    ) +
+    # ggplot2::facet_wrap(
+    #   ~facet,
+    #   labeller = facet_labeller # update facet labels
+    # ) +
     # plot theme
     ggplot2::theme_bw() +
     ggplot2::theme(
       legend.position = legend.position, # add color scale info in figure caption,
-      legend.title = ggtext::element_markdown(), # markdown for legends
+      legend.title = element_markdown(), # markdown for legends
       legend.byrow = TRUE,
       legend.box = 'horizontal',
       legend.justification = ,
@@ -172,7 +222,8 @@ compact_pvd_figure <- function(
         size = y_text_size
       ), # allow markdown for coloring
       # strip.text = ggtext::element_markdown(size = facet_label_size) # allow markdown for labels
-      strip.text = ggtext::element_markdown() # allow markdown for labels
+      # strip.text = ggtext::element_markdown() # allow markdown for labels
+      plot.title = ggtext::element_markdown(hjust = 0.5)
     )
 
   return(fig)
