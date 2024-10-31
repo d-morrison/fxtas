@@ -7,8 +7,8 @@
 #' @export
 #'
 #' @examples
-#' visit1 |> graph_CGG_repeats()
-#' visit1 |> graph_CGG_repeats(cols = vars(Gender))
+#' test_data_v1 |> graph_CGG_repeats()
+#' test_data_v1 |> graph_CGG_repeats(cols = vars(Gender))
 graph_CGG_repeats = function(
     data,
     rows = NULL,
