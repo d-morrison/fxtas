@@ -17,6 +17,7 @@ Imports:
     dplyr,
     flextable,
     forcats,
+    formattable,
     formulaic,
     fs,
     ggnewscale,
@@ -28,6 +29,7 @@ Imports:
     here,
     labelled,
     magrittr,
+    pander,
     plotly,
     purrr,
     rcartocolor,
@@ -47,15 +49,16 @@ Imports:
     veccompare,
     viridis
 Suggests: 
+    constructive,
     devtag (>= 0.0.0.9000),
     knitr,
-    pander,
     rmarkdown,
     scales,
     spelling,
     testthat (>= 3.0.0),
     tidyverse,
-    VennDiagram
+    VennDiagram,
+    writexl
 Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
@@ -72,7 +75,7 @@ Config/reticulate/autoconfigure:
   )
 Config/build/copy-method: link
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
-Remotes:  
+Remotes: 
     bcgov/ssdtools,
     moodymudskipper/devtag
 Config/Needs/build: moodymudskipper/devtag

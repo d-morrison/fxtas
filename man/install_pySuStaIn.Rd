@@ -49,6 +49,7 @@ Its implementation follows the instructions in:
 
 \subsection{\code{pip}}{
 
-\code{pip = TRUE} appears to be necessary, since \code{pySuStaIn} needs to be installed directly from github.com
+\code{pip = TRUE} appears to be necessary,
+since \code{pySuStaIn} needs to be installed directly from <github.com>
 }
 }

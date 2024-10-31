@@ -15,13 +15,16 @@ replace_missing_codes(
 )
 }
 \arguments{
-\item{x}{a vector of factor variables}
+\item{x}{a \link{factor} vector}
 
 \item{missing_codes}{a vector of strings}
 
 \item{replacement}{a string variable or \code{NA}}
 
 \item{mapping}{a named string vector}
+}
+\value{
+a \link{factor} vector
 }
 \description{
 The default is to use the reference level of the factor.

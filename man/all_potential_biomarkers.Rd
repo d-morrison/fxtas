@@ -2,13 +2,16 @@
 % Please edit documentation in R/all_potential_biomarkers.R
 \name{all_potential_biomarkers}
 \alias{all_potential_biomarkers}
-\title{Title}
+\title{Get a list of all potential biomarkers available in dataset}
 \usage{
-all_potential_biomarkers(dataset = gp34)
+all_potential_biomarkers(dataset)
 }
 \arguments{
-\item{dataset}{Dataset to extract names from}
+\item{dataset}{\link{data.frame} Dataset to extract names from}
+}
+\value{
+a \link{list}
 }
 \description{
-Title
+Get a list of all potential biomarkers available in dataset
 }
