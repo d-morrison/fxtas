@@ -1,34 +1,36 @@
 ---
-title: "SuStaIn-ModelFitting"
-output: 
-  rmarkdown::html_vignette:
+title: "SuStaIn Model Fitting"
+format:
+  html:
     toc: true
+    html-math-method: mathjax
 vignette: >
-  %\VignetteIndexEntry{SuStaIn-ModelFitting}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{OS_example}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r}
+#| label: setup
 knitr::opts_chunk$set(
   collapse = TRUE,
   echo = FALSE,
   comment = "#>"
 )
-```
-
-```{r setup}
 library(fxtas)
 library(tidyverse)
 library(reticulate)
+reticulate::use_condaenv("fxtas39", required = TRUE)
 ```
 
 
 # Import data
 
 ```{r}
-
-df = system.file("extdata", "synthetic_data.xlsx", package = "fxtas") |> readxl::read_excel()
+#| label: import-data
+file_path = fs::path_package("extdata/synthetic_data.xlsx", package = "fxtas")
+library(readxl)
+df = file_path |> readxl::read_excel()
 
 SuStaInLabels = biomarkers = c('Biomarker 1', 'Biomarker 2', 'Biomarker 3',
                'Biomarker 4', 'Biomarker 5')
@@ -44,7 +46,7 @@ The objective here is two create to variables:
 Ps should be non-zero. 
 
 ```{r}
-
+#| label: prob-dist
 ModelScores = DataScores = as.character(0:3)
 
 control_data = df |> filter(Category == "Control") |> select(all_of(biomarkers))
@@ -96,7 +98,7 @@ prob_score_dist = prob_dist[-1, , ]
 ```
 
 ```{r}
-
+#| label: prob-score
 prob_score_dims = 
   list(
   ID = df |> filter(Category == "Patient") |> pull(Index),
@@ -128,11 +130,43 @@ prob_score = prob_score0[,,-1]
 
 ```
 
-```{r "score_vals"}
+```{r }
+#| label: build-score-vals-only-observed
+
+biomarker_levels = 
+  df |> 
+  dplyr::select(all_of(biomarkers)) |> 
+  lapply(F = \(x) x |> unique() |> sort())
+score_vals = build_score_vals(biomarker_levels)
+
+score_vals
+
+```
+
+or, to match original example from Alex Young:
+
+```{R}
+#| label: build-score-vals-all-possible
+
+biomarker_levels = list(
+  "Biomarker 1" = 0:3,
+  "Biomarker 2" = 0:3,
+  "Biomarker 3" = 0:3,
+  "Biomarker 4" = 0:3,
+  "Biomarker 5" = 0:3
+)
 
 score_vals = build_score_vals(biomarker_levels)
 
+score_vals
 ```
+
+::: {.callout-warning}
+When switching between these two methods of calculating `score_vals`,
+the number of events in the sequence changes, so the pickle files need 
+to be rebuilt accordingly. 
+Otherwise, we might get errors about array lengths and indices.
+:::
 
 # Run SuStaIn model
 
@@ -185,11 +219,30 @@ samples_likelihood] = sustain_input.run_sustain_algorithm(plot=True)
 
 ```
 
+In R, we can run the algorithm with `run_OSA()`:
 
 ```{r}
+#| label: run-osa-R
 
-likelihoods = as_tibble(py$samples_likelihood) |> 
-  setNames(paste(1:ncol(likelihoods), "subtype(s)")) |> 
+osa_output = run_OSA(
+  patient_data = patient_data,
+  prob_correct = prob_correct,
+  prob_score = prob_score0,
+  score_vals = score_vals,
+  biomarker_levels = biomarker_levels,
+  SuStaInLabels = SuStaInLabels,
+  plot = TRUE,
+  N_S_max = N_S_max
+)
+
+```
+
+```{r}
+#| label: graph-likelihoods
+likelihoods = py$samples_likelihood |> 
+  magrittr::set_colnames(
+    paste(1:ncol(py$samples_likelihood), "subtype(s)")) |> 
+  as_tibble() |> 
   mutate(Iteration = dplyr::row_number())
 
 alpha = 0.5
@@ -224,7 +277,7 @@ ggplot() +
 ```
 
 ```{r}
-
+#| label: graph-likelihoods-2
 likelihoods2 = 
   likelihoods  |> 
   tidyr::pivot_longer(cols = paste(1:ncol(py$samples_likelihood), "subtype(s)"))
@@ -242,39 +295,20 @@ likelihoods2 |>
 
 ```
 
-
-```{python}
-fig0.show()
-```
-
 ### trying `plt.show()`
 
-```{python, fig.width = 8, fig.height = 9}
-plt.show()
+```{python}
+#| label: python.plt.show
+# plt.show() # doesn't work
 ```
 
 
 ### attempting to call the plot function to get the heatmaps
 
 ```{python}
+#| label: plot_positional_var
+
 n_samples = r.prob_nl.shape[0]
-
-```
-
-```{python, include = TRUE, fig.width = 8, fig.height = 9}
-# plt.show()
-
-```
-
-```{python}
-
-# plot_positional_var()
-
-```
-
-
-```{python}
-
 figs, ax = sustain_input.plot_positional_var(
   samples_sequence=samples_sequence,
   samples_f=samples_f,
@@ -284,24 +318,13 @@ figs, ax = sustain_input.plot_positional_var(
   save_path=r.output_folder)
 ```
 
+show figs:
 
-
-```{python, "show figs"}
+```{python}
+#| label: "show figs"
 for fig in figs:
   fig.show()
 
 # py$samples_sequence
-
-```
-
-```{python}
-from numpy  import *   
-A = matrix('1.0 2.0; 3.0 4.0')    
-B = matrix('5.0 6.0')
-C = matrix('1.0 2.0; 3.0 4.0; 5.0 6.0')
-print("A=",A)
-print("B=",B)
-print("C=",C)
-np.hstack((A,B))
 
 ```
