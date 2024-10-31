@@ -54,8 +54,8 @@ run_OSA = function(
 
   if(verbose)
   {
-    cli::cli_alert_info("starting `run_OSA ()`")
-    cli::cli_alert_info("\n`use_parallel_startpoints` = {use_parallel_startpoints}\n")
+    cli::cli_inform("starting `run_OSA()`",
+                    body = "`use_parallel_startpoints` = {use_parallel_startpoints}")
   }
 
   # reticulate::use_virtualenv("r-pySuStaIn")
