@@ -833,11 +833,19 @@ and differences in event sequences between subtypes.
 `r n_type_0` patients had experienced too few events 
 to be accurately classified into a subtype and were excluded from @tbl-sg_demos.
 
-Females were more likely to be classified in latent subtype 2 (39% versus 24%), 
-whereas males dominated in subtype 3 (29% versus 12%). 
-Subtypes 1 and 4 were equally prevalent among men and women.
-We did not find statistically significant evidence of 
-differences in subtype distributions between CGG < 100 versus ≥ 100.
+Subtype clustering analysis showed that 
+subtypes were mainly classified by sex and CGG repeat size, 
+supporting the results above. 
+Subtype 1 appeared more biased towards males (65.01%) 
+and lower CGG repeat size (83.2 ± 15.8) 
+compared to the overall study population 
+(64.5% of males; CGG repeat size = 87.3  ± 18.9) and other subtypes; 
+Subtype 2 appeared biased towards females (53.12% of males) 
+and higher CGG repeat size (90.2 ± 22.3); 
+Subtype 3 appeared over-represented by males (82% of males) 
+and high CGG repeat size (92.4 ± 17.4); 
+and Subtype 4 was biased towards females (60% of males) 
+and lower CGG repeat (82.7 ± 17.3). 
 
 ```{r}
 n_events = nrow(biomarker_events_table)
