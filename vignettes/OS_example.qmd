@@ -1,0 +1,33 @@
+---
+title: "OS example"
+format:
+  html:
+    toc: true
+    html-math-method: mathjax
+vignette: >
+  %\VignetteIndexEntry{OS_example}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(fxtas)
+reticulate::use_condaenv("fxtas39", required = TRUE)
+```
+
+# Import data
+
+```{r}
+file_path = fs::path_package("extdata/synthetic_data.xlsx", package = "fxtas")
+library(readxl)
+synthetic_data <- read_excel(file_path)
+synthetic_data
+```
+
