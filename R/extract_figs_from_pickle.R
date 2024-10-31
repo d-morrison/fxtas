@@ -3,6 +3,8 @@
 #' @inheritDotParams plot_positional_var
 #' @return
 #' @export
+#' @examples
+#' extract_figs_from_pickle(output_folder = "output")
 #'
 extract_figs_from_pickle = function(
     n_s = 1,
