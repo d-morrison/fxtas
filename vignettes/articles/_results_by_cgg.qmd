@@ -46,38 +46,6 @@ sustain_output_cgg100minus = run_and_save_OSA(
 
 ```
 
-
-```{r}
-#| label: p-val-test-cgg
-output_folder = "output/output.fixed_CV/"
-
-permuted_test_stats = collect_permutation_test_stats(
-  output_folder = output_folder,
-  permuting_variables = "FX3")
-
-observed_test_stat = get_observed_permutation_test_stat(
-  output_folder,
-  dataset_names = c('under100', 'over100'))
-
-pval_cgg_gp34_v1 = permutation_test(
-  observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats,
-  n_permutations = n_permutations
-)
-
-counts =
-  trax_gp34_v1 |>
-  select(`FX3*`, `SWM Between errors*`) |>
-  table()
-
-n_100_199 =
-  trax_gp34_v1$CGG |>
-  between(100,199) |>
-  sum(na.rm = TRUE)
-
-# autoplot(pval_sex_gp34_v1)
-```
-
 @fig-pvd-by-cgg shows the estimated sequences stratified by CGG repeat level.
 We did not find statistically significant evidence of a difference in event sequences
 between CGG < 100 and CGG ≥ 100 (p = `r pval_cgg_gp34_v1`),
@@ -106,7 +74,7 @@ When we fitted models for subgroup analyses by sex and CGG repeats level,
 the models for males showed the same patterns described above,
 except for head tremor
 (we found no difference in head tremor onset between CGG levels).
-[Supplementary Figure @fig-pvd-by-cgg-male]
+([Supplementary Figure @fig-pvd-by-cgg-male])
 shows the corresponding stratified models and
 compares the estimates of the sequences for these two subgroups.
 
@@ -114,7 +82,7 @@ compares the estimates of the sequences for these two subgroups.
 We did not find statistically significant evidence of
 a difference between CGG <100 and CGG ≥100 among females
 (p = `r pval_female_cgg_gp34_v1`).
-[Supplementary Figure @fig-pvd-by-cgg-female]
+([Supplementary Figure @fig-pvd-by-cgg-female])
 shows the estimated stratified models
 and compares the estimates.
 Females had later onset of SWM Between Errors for CGG repeats ≥100
