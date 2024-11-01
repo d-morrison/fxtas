@@ -8,6 +8,11 @@ for latent subtype clustering analysis
 * Added more interpretation of subtype analysis results
 * removed repeated measures analysis
 
+## Graphics
+
+* added `biomarker_order` argument to `compact_pvd_data_prep()` 
+(default behavior should be unchanged)
+
 ## Data processing
 
 * added "Disorder" suffix to SCID composite variables, 

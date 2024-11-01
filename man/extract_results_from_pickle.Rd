@@ -37,3 +37,6 @@ extract_results_from_pickle(
 \description{
 Extract results from pickle file
 }
+\examples{
+results = extract_results_from_pickle(output_folder = "output/SuStaIn-simulated-data")
+}

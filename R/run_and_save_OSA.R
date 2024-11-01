@@ -22,7 +22,7 @@ run_and_save_OSA = function(
   if(file.exists(rds_path) && !rerun)
   {
     if(verbose) cli::cli_alert_info("Found RDS file for {rds_filebase}; loading...")
-    osa_output = readRDS(rds_path)
+    osa_output = readr::read_rds(rds_path)
     testthat::expect_equal(dim(osa_output$samples_sequence)[1], N_S_max)
   } else
   {

@@ -4,7 +4,9 @@
 #' @return
 #' @export
 #' @examples
-#' extract_figs_from_pickle(output_folder = "output")
+#' figs = extract_figs_from_pickle(
+#'   output_folder = "output/SuStaIn-simulated-data",
+#'   n = 3)
 #'
 extract_figs_from_pickle = function(
     n_s = 1,

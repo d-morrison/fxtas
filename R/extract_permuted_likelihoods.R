@@ -23,7 +23,7 @@ extract_permuted_likelihoods = function(
     magrittr::set_names(permutations |> as.character())
 
   file_path = fs::path(output_folder, "data.rds")
-  patient_data = readRDS(file = file_path)
+  patient_data = readr::read_rds(file = file_path)
 
   levels =
     patient_data |>

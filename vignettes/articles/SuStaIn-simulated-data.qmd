@@ -3,12 +3,14 @@ title: "SuStaIn Model Fitting"
 format:
   html:
     toc: true
+    number-sections: true
     html-math-method: mathjax
 vignette: >
   %\VignetteIndexEntry{OS_example}
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 ---
+
 
 ```{r}
 #| label: setup
@@ -35,6 +37,11 @@ df = file_path |> readxl::read_excel()
 SuStaInLabels = biomarkers = c('Biomarker 1', 'Biomarker 2', 'Biomarker 3',
                'Biomarker 4', 'Biomarker 5')
 
+biomarker_groups_list = list(
+  "group 1" = c("Biomarker 1", "Biomarker 2"),
+  "group 2" = c("Biomarker 3", "Biomarker 4"),
+  "group 5" = "Biomarker 5"
+)
 ```
 
 # Set up data for new version of SuStaIn
@@ -176,7 +183,7 @@ N_startpoints = 10L
 N_S_max = 3L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
-output_folder = "output" |> fs::dir_create()
+output_folder = "output/SuStaIn-simulated-data" |> fs::dir_create()
 print(output_folder)
 ```
 
@@ -194,7 +201,7 @@ import pySuStaIn
 import os
 
 os.getcwd()
-
+print(r.output_folder)
 sustain_input = pySuStaIn.OrdinalSustain(
     r.prob_nl,
     r.prob_score,
@@ -205,9 +212,8 @@ sustain_input = pySuStaIn.OrdinalSustain(
     r.N_iterations_MCMC, 
     r.output_folder, 
     r.dataset_name, 
-    False,
+    True,
     1)
-
 ```
 
 ```{python "fit-model", fig.width = 8, fig.height = 9}
@@ -229,8 +235,11 @@ osa_output = run_OSA(
   prob_correct = prob_correct,
   prob_score = prob_score0,
   score_vals = score_vals,
+  output_folder = output_folder, 
   biomarker_levels = biomarker_levels,
   SuStaInLabels = SuStaInLabels,
+  N_startpoints = N_startpoints,
+  N_iterations_MCMC = N_iterations_MCMC,
   plot = TRUE,
   N_S_max = N_S_max
 )
@@ -272,8 +281,6 @@ ggplot() +
     )
   )
 
-
-
 ```
 
 ```{r}
@@ -298,7 +305,8 @@ likelihoods2 |>
 ### trying `plt.show()`
 
 ```{python}
-#| label: python.plt.show
+#| label: fig-python.plt.show
+#| fig-cap: "python.plt.show"
 # plt.show() # doesn't work
 ```
 
@@ -306,8 +314,8 @@ likelihoods2 |>
 ### attempting to call the plot function to get the heatmaps
 
 ```{python}
-#| label: plot_positional_var
-
+#| label: fig-plot_positional_var
+#| fig-cap: "calling `plot_positional_var()` directly in python"
 n_samples = r.prob_nl.shape[0]
 figs, ax = sustain_input.plot_positional_var(
   samples_sequence=samples_sequence,
@@ -321,10 +329,49 @@ figs, ax = sustain_input.plot_positional_var(
 show figs:
 
 ```{python}
-#| label: "show figs"
+#| label: fig-show-figs
 for fig in figs:
   fig.show()
 
 # py$samples_sequence
 
 ```
+
+## figs in R
+
+```{r}
+
+figs = extract_figs_from_pickle(
+  output_folder = output_folder,
+  n_s = 3)
+
+plot_compact_pvd(
+  figs = figs,
+  tile_height = 1,
+  facet_label_prefix = NULL,
+  y_text_size = 8,
+  biomarker_order = biomarkers,
+  scale_colors = c("red", "magenta", "blue")
+)
+```
+
+
+```{r}
+#| label: save-files
+
+readr::write_rds(
+  x = biomarker_levels,
+  file = fs::path(output_folder, "biomarker_levels.rds")
+)
+
+biomarker_groups_table = compile_biomarker_groups_table(
+ biomarker_groups_list
+)
+
+readr::write_rds(
+  x = biomarker_groups_table,
+  file = fs::path(output_folder, "biomarker_groups.rds")
+)
+
+```
+

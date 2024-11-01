@@ -31,6 +31,8 @@ test_that("compute_prob_correct() produces consistent results", {
 
 test_that("pander method for `prob_correct` objects produces consistent results", {
 
+  pander::panderOptions("table.split.table", Inf)
+
   full_data = trax_gp34_v1
 
   v1_usable = full_data |> dplyr::filter(CGG < 200)

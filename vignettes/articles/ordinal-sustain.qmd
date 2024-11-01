@@ -820,6 +820,7 @@ The subtypes are numbered 1-4 in order of estimated relative frequency
 (that is, in order of how many participants were clustered into each subtype).
 
 ```{r}
+#| label: compute-n-in-subtype-0
 n_type_0 = results_cv_max$subtype_and_stage_table |> 
   filter(ml_subtype == "Type 0") |> 
   nrow()
@@ -858,7 +859,8 @@ and the correspondingly large amounts of uncertainty in their event orderings.
 In this analysis approach, 
 the event onsets are not modeled as a function of participant age;
 instead, each event's onset timing is only modeled relative to the other events.
-Therefore, the sequence differences between the subtypes are all in relative terms: 
+Therefore, the sequence differences between the subtypes 
+are all in relative terms: 
 if one event moves earlier in the sequence when comparing one subtype to another, 
 other events are pushed later in the sequence, 
 even if only one event timing
