@@ -249,7 +249,7 @@ table1(
   na.is.category = FALSE, 
   overall = FALSE,
   NA.label = NA.label1,
-  droplevels = FALSE,
+  # droplevels = FALSE,
   x = stratified_formula(vars, column_var),
   data = v1_usable_cases)
 
