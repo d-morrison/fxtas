@@ -15,8 +15,6 @@ for (i in colnames(test_data))
   test_data[,i] = test_data[,i] |> sample(replace = FALSE)
 }
 
-
-
 usethis::use_data(test_data, overwrite = TRUE)
 
 devtools::load_all()

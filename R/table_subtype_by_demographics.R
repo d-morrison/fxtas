@@ -31,7 +31,7 @@ table_subtype_by_demographics = function(
 
   patient_data2 |>
     filter(ml_subtype != "Type 0") |>
-    droplevels() |>
+    drop_levels() |>
     dplyr::select(ml_subtype, CGG, `FX3*`, Gender, `Primary Race/Ethnicity`) |>
     gtsummary::tbl_summary(
       by = ml_subtype,
