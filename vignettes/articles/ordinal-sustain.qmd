@@ -110,7 +110,7 @@ n_missing_CGG = full_data$CGG |> is.na() |> sum()
 n_above_200 = sum(full_data$CGG >= 200, na.rm = TRUE)
 v1_usable = full_data |> filter(CGG < 200) |>
   mutate(`FX3*` = `FX3*` |> forcats::fct_drop() |> 
-           labelled::set_label_attribute("CGG Level"))
+           labelled::set_label_attribute("CGG Repeat Level"))
 v1_usable_males = v1_usable |> filter(Gender == "Male")
 v1_usable_females = v1_usable |> filter(Gender == "Female")
 v1_usable_cases = v1_usable |> filter(CGG >= 55)
@@ -282,7 +282,7 @@ for each `r outcomes_name`,
 and we estimated the proportion of correctly scored individuals as
 the proportion of controls 
 who were assessed as being at the reference level
-[Supplementary Table @tbl-prob-correct].
+([Supplementary Table @tbl-prob-correct]).
 It is crucial to allow some possibility of incorrect scoring, 
 so we capped the estimated correct scoring probabilities at 
 `r max_prob_correct *100`%.
@@ -706,7 +706,7 @@ When we conducted subgroup analyses by CGG repeat size,
 we found statistically significant evidence of 
 a difference between males and females
 among those with CGG < 100 (p = `r pval_under100_sex_gp34_v1`)
-(Supplementary @fig-pvd-by-gender-cgg_under100).
+([Supplementary Figure @fig-pvd-by-gender-cgg_under100]).
 Several psychiatric disorders (as measured by SCID) 
 occurred prior to FXTAS Stage 1
 among females with CGG < 100,
@@ -715,7 +715,7 @@ MRI biomarkers appeared to occur at later stages in females compared to males.
 We did not find statistically significant evidence of 
 a difference between males and females
 among those with CGG ≥ 100 (p = `r pval_over100_sex_gp34_v1`) 
-[Supplementary Figure @fig-pvd-by-gender-cgg_over100].
+([Supplementary Figure @fig-pvd-by-gender-cgg_over100]).
 
 
 ```{r}
@@ -771,7 +771,7 @@ n_over100_Female =
 
 We found significant evidence of an overall difference between CGG <100
 and CGG ≥100 among males (p = `r pval_male_cgg_gp34_v1`) 
-[Supplementary Figure @fig-pvd-by-cgg-male]. 
+([Supplementary Figure @fig-pvd-by-cgg-male]). 
 SWM between errors occurred prior to Stage 1 in males with CGG repeats <100, 
 whereas it occurred between stage 3 and 4 
 in males with CGG repeats ≥ 100 
@@ -786,7 +786,7 @@ occurred later in the event sequence in participants with CGG repeats <100
 compared to those with CGG repeats ≥100.  
 However, we did not find a significant difference between CGG <100 and CGG ≥100 
 among females (p = `r pval_female_cgg_gp34_v1`) 
-[Supplementary Figure @fig-pvd-by-cgg-female]. 
+([Supplementary Figure @fig-pvd-by-cgg-female]). 
 It should be noted that this comparison lacked statistical power 
 given the limited sample size of only `r n_over100_Female` females with CGG ≥100.
 
@@ -810,9 +810,11 @@ and heterogeneous from other clusters
 based on similarities and difference in sequential patterns. 
 Based on the CVIC criterion (Supplementary Materials, @sec-subtypes), 
 `r n_s_min_CVIC` subtypes were suggested to be the optimal number for the full, 
-unstratified dataset [Supplementary Figure @fig-cvic-1]. 
+unstratified dataset 
+([Supplementary Figure @fig-cvic-1]). 
 The out-of-fold log-likelihood ("OOFLL") (Supplementary Materials, @sec-subtypes) 
-showed substantial fold-to-fold variation [Supplementary Figure @fig-cvic-2].
+showed substantial fold-to-fold variation 
+([Supplementary Figure @fig-cvic-2]).
 Between `r broman::spell_out(n_s_selected)` and `r broman::spell_out(N_S_max)` 
 latent subgroups, 
 the distribution of OOFLL appears to be
@@ -1006,11 +1008,31 @@ As new treatments for FXTAS develop,
 the earlier the diagnosis, 
 the more likely the treatment will be effective.
 
+```{r}
+#| label: p-val-test-cgg
+output_folder = "output/output.fixed_CV/"
+
+permuted_test_stats = collect_permutation_test_stats(
+  output_folder = output_folder,
+  permuting_variables = "FX3")
+
+observed_test_stat = get_observed_permutation_test_stat(
+  output_folder,
+  dataset_names = c('under100', 'over100'))
+
+pval_cgg_gp34_v1 = permutation_test(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
+)
+
+```
+
 When we compared 
 between 55-99 vs 100-199 CGG repeats in males and females combined, 
 no significant difference was found 
 (p = `r pval_cgg_gp34_v1`) 
-[Supplementary Figure @fig-pvd-by-cgg]. 
+([Supplementary Figure @fig-pvd-by-cgg]). 
 The finding of only minimal differences 
 between 55-99 vs 100-199 CGG repeats is surprising, 
 since several studies have found that the higher the CGG repeats,
@@ -1018,19 +1040,17 @@ the earlier the onset and the faster the progression of FXTAS
 [@greco2006neuropathology; @leehey2008fmr1; @tassone2023insight]. 
 Perhaps the cut off of 100 is too high for this distinction to be made.
 
-## Limitations
-
-### Missing data
-
+This study has several limitations. 
+In the subtype clustering analysis, 
+it was challenging to concisely summarize the differences between subtypes, 
+especially given the relatively small sample sizes per subtype 
+and the correspondingly large amounts of uncertainty in their event orderings. 
 We had substantial amounts of missing data. 
 As described in the methods (@sec-incomplete-data),
 we used the marginal distribution of 
 the observed data for each `r outcomes_name` among cases
 to impute the underlying values of these missing data. 
 The missing data could contribute to uncertainty in the results.
-
-### Discretizing numeric biomarkers
-
 Our data contained both continuous and ordinal variables.
 In order to apply the Ordinal SuStaIn algorithm, 
 we categorized some `r outcomes_name`s 
@@ -1041,9 +1061,6 @@ such as z-score SuStaIn [@young2018uncovering]
 which are designed to be used with only continuous measurements.
 Further development is warranted to combine Ordinal SuStaIn and z-score SuStaIn
 to fit an event-based model with both continuous and ordinal data. 
-
-### Comparison with longitudinal data
-
 Our data come from the GP and Trax studies, 
 which are longitudinal cohort studies
 with infrequent followup visits.
@@ -1051,6 +1068,16 @@ These studies do not collect precise information
 about timing of symptom onsets, 
 so it is not feasible to use the longitudinal data 
 to confirm the results from the Ordinal SuStaIn analysis.
+In our analysis approach,
+the event onsets are not modeled as a function of participant age;
+instead, each event's onset timing is only modeled relative to the other events.
+Therefore, the sequence differences between the subtypes
+are all in relative terms:
+if one event moves earlier in the sequence
+when comparing one subtype to another,
+other events are pushed later in the sequence,
+even if only one event timing
+changes relative to age.
 Additional research including longitudinal data 
 collecting precise ages of onset 
 would be needed to verify our findings.
@@ -1065,12 +1092,13 @@ from the principal investigators of the two cohorts.
 
 This study was supported by the 
 National Institute of Child Health and Human Development 
-(NICHD, grant numbers HD036071 (Hagerman) and P50HD103256 (Abbeduto))
+(NICHD, HD036071) 
+and
+UC Davis MIND Institute’s 
+Intellectual and Developmental Disabilities Research Center (IDDRC) 
+(P50HD103256)
 and the National Institute of Neurological Disorders and Stroke 
-(NINDS, grant number NS110100 (Rivera)),
-through the University of California Davis 
-Medical Investigation of Neurodevelopmental Disorder (MIND) Institute’s 
-Intellectual and Developmental Disabilities Research Center (IDDRC).
+(NINDS, NS110100).
 
 # Competing interests {.unnumbered}
 
@@ -1091,9 +1119,14 @@ Supplementary material is available at Brain online.
 
 ```{r}
 #| label: "tbl-demographics"
-#| tbl-cap: "**Descriptive statistics of patient characteristics by CGG repeat level.** `*`p-values represent tests for sex differences in distributions of characteristics, ignoring CGG repeat level."
+#| tbl-cap: |
+#|    **Descriptive statistics of patient characteristics by CGG repeat level.**
+#|    `*`p-values represent tests for sex differences in distributions of 
+#|    characteristics, all CGG repeat levels combined.
 
-v1_usable |> make_demographics_table()
+v1_usable |> 
+  make_demographics_table() |> 
+  format_demographics_table_as_flextable()
 
 ```
 
