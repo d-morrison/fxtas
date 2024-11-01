@@ -8,6 +8,8 @@ for latent subtype clustering analysis
 * Added more interpretation of subtype analysis results
 * removed repeated measures analysis
 
+## Analysis
+
 ## Graphics
 
 * added `biomarker_order` argument to `compact_pvd_data_prep()` 
