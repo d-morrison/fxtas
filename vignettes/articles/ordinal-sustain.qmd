@@ -282,7 +282,7 @@ for each `r outcomes_name`,
 and we estimated the proportion of correctly scored individuals as
 the proportion of controls 
 who were assessed as being at the reference level
-[Supplementary Materials, @tbl-prob-correct].
+[Supplementary Table @tbl-prob-correct].
 It is crucial to allow some possibility of incorrect scoring, 
 so we capped the estimated correct scoring probabilities at 
 `r max_prob_correct *100`%.
@@ -293,8 +293,8 @@ for each subtype given the training dataset,
 assuming a uniform prior distribution 
 over the set of all possible orderings. 
 We conducted subgroup analyses by fitting models stratified by
-sex (@sec-methods-strat-sex), CGG repeats (<100 vs ≥100) 
-(Supplementary Materials, @sec-methods-strat-cgg),
+sex (@sec-methods-strat-sex), 
+CGG repeats (<100 vs ≥100) (Supplementary Materials, @sec-methods-strat-cgg),
 and combinations of sex and CGG repeats (<100 vs ≥100) 
 (Supplementary Materials, @sec-stratified-by-cgg-and-sex).
 In these subgroup analyses, we did not search for latent clusters.
@@ -715,7 +715,7 @@ MRI biomarkers appeared to occur at later stages in females compared to males.
 We did not find statistically significant evidence of 
 a difference between males and females
 among those with CGG ≥ 100 (p = `r pval_over100_sex_gp34_v1`) 
-(Supplementary Materials, @fig-pvd-by-gender-cgg_over100).
+[Supplementary Figure @fig-pvd-by-gender-cgg_over100].
 
 
 ```{r}
@@ -771,7 +771,7 @@ n_over100_Female =
 
 We found significant evidence of an overall difference between CGG <100
 and CGG ≥100 among males (p = `r pval_male_cgg_gp34_v1`) 
-(Supplementary Materials, @fig-pvd-by-cgg-male). 
+[Supplementary Figure @fig-pvd-by-cgg-male]. 
 SWM between errors occurred prior to Stage 1 in males with CGG repeats <100, 
 whereas it occurred between stage 3 and 4 
 in males with CGG repeats ≥ 100 
@@ -786,7 +786,7 @@ occurred later in the event sequence in participants with CGG repeats <100
 compared to those with CGG repeats ≥100.  
 However, we did not find a significant difference between CGG <100 and CGG ≥100 
 among females (p = `r pval_female_cgg_gp34_v1`) 
-(Supplementary Materials, @fig-pvd-by-cgg-female). 
+[Supplementary Figure @fig-pvd-by-cgg-female]. 
 It should be noted that this comparison lacked statistical power 
 given the limited sample size of only `r n_over100_Female` females with CGG ≥100.
 
@@ -810,9 +810,9 @@ and heterogeneous from other clusters
 based on similarities and difference in sequential patterns. 
 Based on the CVIC criterion (Supplementary Materials, @sec-subtypes), 
 `r n_s_min_CVIC` subtypes were suggested to be the optimal number for the full, 
-unstratified dataset (Supplementary Materials, @fig-cvic-1). 
+unstratified dataset [Supplementary Figure @fig-cvic-1]. 
 The out-of-fold log-likelihood ("OOFLL") (Supplementary Materials, @sec-subtypes) 
-showed substantial fold-to-fold variation (Supplementary Materials, @fig-cvic-2).
+showed substantial fold-to-fold variation [Supplementary Figure @fig-cvic-2].
 Between `r broman::spell_out(n_s_selected)` and `r broman::spell_out(N_S_max)` 
 latent subgroups, 
 the distribution of OOFLL appears to be
@@ -895,30 +895,33 @@ include outlier individuals with unusual event sequences.
 
 # Discussion
 
-The main findings of this analysis were substantial differences in order of onset
-between males and females,
-and the presence of at least four latent subgroups.
-
-## Clinical interpretation
+The present study attempted to arrange the eventual symptoms of FXTAS 
+in their possible appearing sequential orders
+and determine risk factors that impact on the 
+sequential order of presentation among individuals. 
+The main findings of this analysis were 
+substantial differences in sequential order of eventual symptoms
+between males and females
+and in combination of sex and CGG repeat size.
 
 The proportions of 
 lifetime anxiety disorders, 
 mood disorders, 
 and somatoform disorders in this study cohort
 is far more than 
-[Clinicians: please provide a reference for comparison]{.comment-start}
+[Clinicians: please provide a reference for comparison]{.comment-start author="Ezra Morrison"}
 usual population expectations for these illnesses 
 []{.comment-end}. 
 This study design did not fractionate specific lifetime psychiatric illnesses
 (e.g., major depressive disorder, panic disorder, and somatization disorder),
 but these overall lifetime prevalence figures are notable.
-[Clinicians: please provide a reference]{.comment-start}
+[Clinicians: please provide a reference]{.comment-start author="Ezra Morrison"}
 Prior studies of mood and anxiety disorders
 []{.comment-end}
 have demonstrated a higher than expected rate of these illnesses 
 in premutation carriers. 
 The same increase lifetime psychiatric illness burden 
-[Clinicians: please provide a reference]{.comment-start}
+[Clinicians: please provide a reference]{.comment-start author="Ezra Morrison"}
 is seen in other neurodegenerative illnesses 
 (e.g., Parkinson’s disease, multiple sclerosis).
 []{.comment-end}
@@ -1002,6 +1005,18 @@ extended features of FXTAS over time.
 As new treatments for FXTAS develop, 
 the earlier the diagnosis, 
 the more likely the treatment will be effective.
+
+When we compared 
+between 55-99 vs 100-199 CGG repeats in males and females combined, 
+no significant difference was found 
+(p = `r pval_cgg_gp34_v1`) 
+[Supplementary Figure @fig-pvd-by-cgg]. 
+The finding of only minimal differences 
+between 55-99 vs 100-199 CGG repeats is surprising, 
+since several studies have found that the higher the CGG repeats,
+the earlier the onset and the faster the progression of FXTAS 
+[@greco2006neuropathology; @leehey2008fmr1; @tassone2023insight]. 
+Perhaps the cut off of 100 is too high for this distinction to be made.
 
 ## Limitations
 
