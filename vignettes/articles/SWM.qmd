@@ -1,0 +1,46 @@
+---
+title: "SWM Between Errors"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+# library(fxtas)
+devtools::load_all()
+```
+
+```{r}
+library(ggplot2)
+trax_gp34_all |> 
+  filter(CGG < 200) |> 
+  ggplot() +
+  aes(x = CGG, y = `SWM Between errors`) +
+  geom_point()
+```
+
+```{r}
+#| label: fig-swm-by-age-sex-cgg
+#| fig-cap: "SWM Between Errors, by age at visit, CGG level, and sex"
+
+
+trax_gp34_all |> 
+  filter(CGG < 200) |>
+  ggplot() +
+  aes(x = `Age at visit`, y = `SWM Between errors`, group = `FXS ID`) +
+  geom_point(alpha = .5) +
+  geom_line(alpha = .5) +
+  facet_grid(rows = vars(Gender), cols = vars(`FX3*`)) +
+  scale_y_log10(breaks = c(1, 10, 25, 50, 75, 100)) +
+  geom_smooth(aes(group = NULL), method = "loess", formula = "y~x")
+
+```
+
+* There's no data for the female controls
+* We don't have many repeated measurements
+* 
+

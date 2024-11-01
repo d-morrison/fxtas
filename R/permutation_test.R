@@ -1,5 +1,6 @@
 #' Compute permutation test p-value
 #'
+#' @param n_permutations how many permutations to use (`Inf` means use all in `permuted_test_stats`)
 #' @inheritParams plot_permutation_results
 #'
 #' @returns a [numeric()]
@@ -7,8 +8,15 @@
 #'
 permutation_test = function(
     permuted_test_stats,
-    observed_test_stat)
+    observed_test_stat,
+    n_permutations = Inf)
 {
+
+  if(n_permutations < length(permuted_test_stats))
+  {
+    permuted_test_stats = permuted_test_stats[1:n_permutations]
+  }
+
   upper = mean(observed_test_stat >= permuted_test_stats)
   lower = mean(observed_test_stat <= permuted_test_stats)
   pval = 2*min(upper, lower)

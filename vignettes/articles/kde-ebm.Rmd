@@ -55,7 +55,7 @@ categorical_biomarker_directions = c(
 continuous_biomarker_directions = 
   c(
     "Ataxia: severity" = 1,
-    "MMSE Total Score" = -1,
+    "MMSE total score" = -1,
     "BDS-2 Total Score" = -1,
     "SCL90: Somatization" = 1,
     "SCL90: Obsessive-Compulsive" = 1,

@@ -22,7 +22,7 @@ scid_vars_for_table1 = function()
     # "Mood Disorder Due to GMC (MD07), Current",
     # "Substance-Induced Mood Dis. (MD08), Lifetime",
     # "Substance-Induced Mood Dis. (MD08), Current",
-    "SCID: Substance Use",
+    "SCID: Substance Use Disorders",
     # "Alcohol (SUD17), Lifetime",
     #   "Alcohol (SUD17) Current",
     #   "Sedative-Hypnotic-Anxiolytic (SUD18), Lifetime",
@@ -31,9 +31,9 @@ scid_vars_for_table1 = function()
     #   "Cannabis (SUD19),Current",
     #   "Stimulants (SUD20), Lifetime",
     #   "Stimulants (SUD20) Current",
-    #   "Opiod (SUD21), Lifetime",
+    #   "Opioid (SUD21), Lifetime",
     #   "Cocaine (SUD22), Lifetime",
-    #   "Opiod (SUD21), Current",
+    #   "Opioid (SUD21), Current",
     #   "Hallucinogenics/ PCP (SUD23), Lifetime",
     #   "Cocaine (SUD22) Current",
     #   "Hallucinogenics/ PCP (SUD23), Current",
@@ -41,9 +41,9 @@ scid_vars_for_table1 = function()
     #   "Poly Drug (SUD24), Current",
     #   "Other (SUD25), Lifetime",
     #   "Other (SUD25), Current",
-    "SCID: Anxiety",
-    "SCID: Somatization",
-    "SCID: Psychotic"
+    "SCID: Anxiety Disorders",
+    "SCID: Somatoform Disorders",
+    "SCID: Psychotic Symptoms"
     # "Primary Psychotic Symptoms (PS01), Lifetime",
     # "Primary Psychotic Symptoms (PS01), Current"
   )

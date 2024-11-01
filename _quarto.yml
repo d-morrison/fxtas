@@ -1,33 +1,40 @@
 authors:
   - name: Douglas Ezra Morrison
-    affiliation:
+    affiliations:
       - ref: ucdphs
     corresponding: true
     email: demorrison@ucdavis.edu
+    address: One Shields Ave, Davis, CA 95616
+
   - name: Matthew Ponzini
-    affiliation:
+    affiliations:
       - ref: ucdphs
-  - name: Ellery R Santos
-    affiliation:
+  - name: Ellery R. Santos
+    affiliations:
       - ref: ucdmind
   - name: Hazel Maridith Barlahan Biag
-    affiliation:
+    affiliations:
       - ref: ucdmind
   - name: Glenda Espinal
-    affiliation:
+    affiliations:
       - ref: ucdmind
   - name: Flora Tassone
-    affiliation:
+    affiliations:
       - ref: ucdmind
       - ref: ucdbiochem
-  - name: David Hassl
-    affiliation:
+  - name: Susan Rivera
+    affiliations:
+      - ref: umdpsychology
+  - name: David Hessl
+    affiliations:
       - ref: ucdmind
       - ref: ucdpsych
   - name: Andrea Schneider
     affiliation:
       - ref: ucdmind
-  - name: James Bourgeois
+  - name: James A. Bourgeois
+    affiliation:
+      - ref: ucdpsych
   - name: Randi Hagerman
     affiliation:
       - ref: ucdmind
@@ -35,42 +42,48 @@ authors:
   - name: Kyoungmi Kim
     affiliation:
       - ref: ucdphs
+
 affiliations:
   - id: ucdphs
-    name: University of California, Davis
+    name: Department of Public Health Sciences, School of Medicine, University of California, Davis, Davis CA, United States
     department: Department of Public Health Sciences
     city: Davis
     state: CA
-    country: USA
+    country: United States
   - id: ucdmind
     department: MIND Institute
-    name: University of California, Davis
-    city: Davis
+    name: MIND Institute, University of California, Davis, Sacramento CA, United States
+    city: Sacramento
     state: CA
-    country: USA
+  - id: umdpsychology
+    name: Department of Psychology, College of Behavioral and Social Sciences, University of Maryland, College Park, MD, United States
+    department: Department of Psychology
+    city: College Park
+    state: MD
+    country: United States
   - id: ucdbiochem
     department: Department of Biochemistry and Molecular Medicine
-    name: University of California, Davis School of Medicine
-    city: Davis
+    name: Department of Biochemistry and Molecular Medicine, School of Medicine, University of California, Davis, Sacramento CA, United States
     state: CA
-    country: USA
+    country: United States
   - id: ucdpsych
     department: Department of Psychiatry and Behavioral Sciences
-    name: University of California, Davis
-    city: Davis
+    name: Department of Psychiatry and Behavioral Sciences, University of California, Davis Medical Center, Sacramento CA, United States
+    city: Sacramento
     state: CA
-    country: USA
+    country: United States
   - id: ucdpeds
     department: Department of Pediatrics
-    name: University of California, Davis Medical Center
-    city: Davis
+    name: Department of Pediatrics, University of California, Davis Medical Center, Sacramento CA, United States
+    city: Sacramento
     state: CA
-    country: USA
+    country: United States
 project:
   execute-dir: project
 format:
   docx:
-    # reference-doc: template1.docx
+    reference-doc: vignettes/Brain_template_2022.docx
+    csl: vignettes/brain.csl
     toc: false
     echo: false
     # fig-format: svg
@@ -130,5 +143,5 @@ execute:
   cache: false
   freeze: false  # re-render only when source changes
 filters:
-  - docx-landscape.lua
+  - vignettes/docx-landscape.lua
   - authors-block

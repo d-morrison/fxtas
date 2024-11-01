@@ -1,0 +1,14 @@
+we calculated out-of-sample log-likelihood as:
+
+$$
+\ell_{\mathcal C, k} =
+\sum_{i = 1}^{n_k}
+\sum_{c=1}^\mathcal C
+\sum_{s\in \mathcal S}
+\log
+\left\{
+\hat P(Y_i|C_i = c, S_c=s)
+\right\}
+\hat{P}_{(-k)}(C_i = c, S_c = s)
+$$ {#eq-def-oof-llik}
+

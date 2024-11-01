@@ -1,16 +1,62 @@
 #' Make biomarkers table
 #'
-#' @param data
+#' @param biomarker_events_table [data.frame] from [construct_biomarker_events_table()]
+#' @param data a [data.frame()] containing the columns specified by `biomarker_varnames` as well as `"Gender"`
+#' @param biomarker_varnames a [character] vector matching a subset of the column names in `data`
 #'
-#' @return
+#' @returns a [flextable::flextable()]
 #' @export
 #'
 #' @examples
-make_biomarkers_table = function(data)
+#' biomarker_groups = compile_biomarker_groups_table()
+#'
+#' biomarker_varnames =
+#'   biomarker_groups |>
+#'   pull("biomarker")
+#'
+#' biomarker_levels =
+#' trax_gp34_v1 |>
+#'  dplyr::select(all_of(biomarker_varnames)) |>
+#'  lapply(F = levels)
+#'
+#' biomarker_events_table =
+#'   construct_biomarker_events_table(
+#'     biomarker_levels,
+#'     biomarker_groups = biomarker_groups)
+#'
+#' trax_gp34_v1 |> make_biomarkers_table(
+#'   biomarker_events_table = biomarker_events_table,
+#'   biomarker_varnames = biomarker_varnames
+#'   )
+#'
+make_biomarkers_table = function(
+    data,
+    biomarker_varnames =
+      compile_biomarker_groups_table() |>
+      pull("biomarker"),
+    biomarker_events_table
+)
 {
+
+  # compute p-values by gender
+  pvals = numeric()
+
+  for(cur in biomarker_varnames)
+  {
+    pvals[cur] =
+      data |>
+      mutate(
+        above_baseline = .data[[cur]] != levels(.data[[cur]])[1]) |>
+      select(above_baseline, Gender) |>
+      table() |>
+      fisher.test()  |>
+      magrittr::use_series("p.value")
+
+  }
+
   probs_above_baseline_by_gender =
     data |>
-    summarize(
+    dplyr::summarize(
       .by = "Gender",
       across(
         all_of(biomarker_varnames),
@@ -22,13 +68,19 @@ make_biomarkers_table = function(data)
       names_to = "biomarker",
       values_to = "Pr(above_baseline)") |>
     mutate(
+      # probably want to apply formatting here (after pivoting)
+      # rather than during the summarize step,
+      # so that accuracy is applied per-column:
       `Pr(above_baseline)` =
         `Pr(above_baseline)` |>
-        scales::percent(accuracy = 0.01)) |>
+        formattable::percent(drop0trailing = TRUE, digits = 1)) |>
     pivot_wider(
       id_cols = "biomarker",
-      names_from = Gender,
-      values_from = `Pr(above_baseline)`)
+      names_from = "Gender",
+      values_from = "Pr(above_baseline)") |>
+    mutate(
+      "p-value" = pvals[biomarker]
+    )
 
   table_out =
     biomarker_events_table |>
@@ -52,13 +104,7 @@ make_biomarkers_table = function(data)
           fixed = TRUE))
 
   table_out |>
-    flextable::flextable() |>
-    flextable::set_header_labels(
-      values = c("Category", "Biomarker", "Levels", "Female", "Male")
-    ) |>
-    flextable::width(j = ~ biomarker, width = 3) |>
-    flextable::width(j = ~ category + levels, width = 2) |>
-    flextable::theme_booktabs() |>
-    flextable::align(j = ~ biomarker + levels, align = "center", part = "all")
+    structure(class = union('biomarkers_table', class(table_out)))
+
 
 }

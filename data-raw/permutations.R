@@ -65,8 +65,8 @@ py_config()
 #|
 fit_models = TRUE
 # fit_models = FALSE
-run_CV =  TRUE
-# run_CV = FALSE
+run_cv =  TRUE
+# run_cv = FALSE
 
 N_startpoints = 10L
 N_S_max = 8L
@@ -102,7 +102,7 @@ biomarker_levels = df |> get_levels(biomarker_varnames)
 
 control_data =
   df |>
-  dplyr::filter(CGG < 55) |>
+  dplyr::filter(CGG <55) |>
   select(all_of(biomarker_varnames))
 
 patient_data =

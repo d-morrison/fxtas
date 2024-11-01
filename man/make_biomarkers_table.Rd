@@ -4,11 +4,45 @@
 \alias{make_biomarkers_table}
 \title{Make biomarkers table}
 \usage{
-make_biomarkers_table(data)
+make_biomarkers_table(
+  data,
+  biomarker_varnames = pull(compile_biomarker_groups_table(), "biomarker"),
+  biomarker_events_table
+)
 }
 \arguments{
-\item{data}{}
+\item{data}{a \code{\link[=data.frame]{data.frame()}} containing the columns specified by \code{biomarker_varnames} as well as \code{"Gender"}}
+
+\item{biomarker_varnames}{a \link{character} vector matching a subset of the column names in \code{data}}
+
+\item{biomarker_events_table}{\link{data.frame} from \code{\link[=construct_biomarker_events_table]{construct_biomarker_events_table()}}}
+}
+\value{
+a \code{\link[flextable:flextable]{flextable::flextable()}}
 }
 \description{
 Make biomarkers table
+}
+\examples{
+biomarker_groups = compile_biomarker_groups_table()
+
+biomarker_varnames =
+  biomarker_groups |>
+  pull("biomarker")
+
+biomarker_levels =
+trax_gp34_v1 |>
+ dplyr::select(all_of(biomarker_varnames)) |>
+ lapply(F = levels)
+
+biomarker_events_table =
+  construct_biomarker_events_table(
+    biomarker_levels,
+    biomarker_groups = biomarker_groups)
+
+trax_gp34_v1 |> make_biomarkers_table(
+  biomarker_events_table = biomarker_events_table,
+  biomarker_varnames = biomarker_varnames
+  )
+
 }

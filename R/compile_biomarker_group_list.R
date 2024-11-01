@@ -13,7 +13,7 @@
 #'
 #' @export
 #' @examples
-#' gp34 |> compile_biomarker_group_list()
+#' test_data |> compile_biomarker_group_list()
 #'
 compile_biomarker_group_list = function(dataset = trax_gp34_v1)
 {
@@ -24,11 +24,17 @@ compile_biomarker_group_list = function(dataset = trax_gp34_v1)
     "Resting tremor",
     "Postural tremor",
     "Intermittent tremor"
-    # "Any tremor (excluding Head Tremor)"
+    # "Any tremor (excluding head)"
   )
 
-  parkinsons_vars =
-    grep("Parkinson", value = TRUE, names(dataset))
+  parkinsonian_vars =
+    c(
+      "parkinsonian features",
+      "Masked faces",
+      "Increased tone",
+      "Pill-rolling tremor",
+      "Stiff gait")
+
 
   mri_vars = c(
     # "Cerebral Atrophy",
@@ -58,7 +64,6 @@ compile_biomarker_group_list = function(dataset = trax_gp34_v1)
   ataxia = c(
     "Ataxia",
     "Ataxia: severity*"
-    # grep("Parkinson", value = TRUE, names(visit1))
   )
 
   scid_vars =
@@ -71,10 +76,10 @@ compile_biomarker_group_list = function(dataset = trax_gp34_v1)
       # "Substance-Induced Mood Dis. (MD08), Lifetime", # no positives
       # "Primary Psychotic Symptoms (PS01), Lifetime"
       "SCID: Mood Disorders",
-      "SCID: Substance Use",
-      "SCID: Anxiety",
-      "SCID: Somatization"
-      # "SCID: Psychotic" # exclude, only 2 at sub-threshold & 0 at threshold
+      "SCID: Substance Use Disorders",
+      "SCID: Anxiety Disorders",
+      "SCID: Somatoform Disorders"
+      # "SCID: Psychotic Symptoms" # exclude, only 2 at sub-threshold & 0 at threshold
     )
 
   cantab_vars = c(
@@ -87,7 +92,7 @@ compile_biomarker_group_list = function(dataset = trax_gp34_v1)
 
   scores =
     c(
-      "MMSE Total Score*",
+      "MMSE total score*",
       "BDS-2 Total Score*") |>
     intersect(names(dataset))
 
@@ -110,7 +115,7 @@ compile_biomarker_group_list = function(dataset = trax_gp34_v1)
     # "Raynauds Syndrome",
     # "Pulmonary Fibrosis" # no events
     ## "Immunological Notes"
-    "Any Autoimmune"
+    "any autoimmune disorder"
 )
 
 kinesia_vars = c(
@@ -127,7 +132,8 @@ kinesia_vars = c(
       Tremors = tremors,
       Ataxia = ataxia,
       Stage = "FXTAS Stage (0-5)*",
-      Parkinsons = parkinsons_vars,
+      Parkinsonian = parkinsonian_vars,
+      Parkinsons = "Parkinsons",
       # cancer = cancer_vars,
       MRI = mri_vars,
       Scores = scores,

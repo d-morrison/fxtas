@@ -1,0 +1,230 @@
+#' plot_compact_pvd_est2 helpers
+
+#### data prep function ####
+tmp_data_prep <- function(x){
+  tmp <- x$data
+  # determine biomarker event order
+  event_order <- tmp |>
+    dplyr::select(`row number and name`, `event name`, biomarker) |>
+    mutate(
+      Order = sub("\\D*(\\d+).*", "\\1", `row number and name`) |> as.numeric()
+    ) |>
+    mutate(
+      `event order` = min(Order),
+      .by = `biomarker`
+    ) |>
+    # dplyr::select(
+    #   biomarker, position
+    # ) |>
+    arrange(`event order`) |>
+    mutate(
+      biomarker = forcats::fct_inorder(biomarker)
+    ) |>
+    dplyr::select(biomarker, `event order`) |>
+    unique()
+
+  event_order_facet <- tmp |>
+    dplyr::select(`row number and name`, `event name`, biomarker) |>
+    dplyr::mutate(
+      Order = sub("\\D*(\\d+).*", "\\1", `row number and name`) |> as.numeric()
+    ) |>
+    unique()
+
+  plot_dataset <- merge(
+    event_order_facet,
+    tmp,
+    by = c("row number and name", "event name", "biomarker")
+  ) |>
+    dplyr::filter(
+      position == Order
+    ) |>
+    # convert biomarker to factor with event order levels
+    mutate(
+      biomarker = factor(
+        biomarker,
+        levels = levels(event_order$biomarker)
+      )
+    ) |>
+    # arrange by biomarker levels
+    arrange(biomarker) |>
+    # create biomarker labels for figure
+    mutate(
+      biomarker_label = glue::glue(
+        "<i style='color:{group_color}'>{biomarker}</i>"
+      ) |>
+        forcats::fct_inorder()
+    ) |>
+    dplyr::select(
+      biomarker, biomarker_label, position, proportion, level
+    )
+
+  return(plot_dataset)
+}
+
+#### create plot for a given subtype ####
+tmp_func <- function(
+    plot_dataset,
+    y_position,
+    panel_title,
+    scale_colors = scale_colors,
+    tile_height = tile_height,
+    tile_width = tile_width,
+    y_text_size = y_text_size,
+    legend.position
+){
+  # process color scales
+  level2=colorRampPalette(c("white", scale_colors[1])) # level 2
+  level3=colorRampPalette(c("white", scale_colors[2])) # level 3
+  level4=colorRampPalette(c("white", scale_colors[3])) # level 4
+  level5=colorRampPalette(c("white", scale_colors[4])) # level 5
+  level6=colorRampPalette(c("white", scale_colors[5])) # level 6
+
+  level2_scale <- level2(100)
+  level3_scale <- level3(100)
+  level4_scale <- level4(100)
+  level5_scale <- level5(100)
+  level6_scale <- level6(100)
+
+  scale_limits <- c(0, 1)
+
+  # facet labeller - currently throws updated API message
+  facet_labeller <- function(variable, value){
+    facet_names[value]
+  }
+  # figure
+  fig <- ggplot() +
+    # layer for biomarker level 2
+    ggplot2::geom_tile(
+      data = plot_dataset |> filter(level == 2),
+      aes(
+        x = position,
+        y = forcats::fct_inorder(biomarker_label),
+        fill = proportion,
+        width = tile_width,
+        height = tile_height
+      ),
+      alpha = 0.75
+    ) +
+    ggplot2::scale_fill_gradient(
+      low = level2_scale[10],
+      high = level2_scale[100],
+      limits = scale_limits,
+      breaks = c(0, 0.5, 1),
+      guide = ggplot2::guide_colorbar(title = "Pr(Stage)<sub>2</sub>", order = 1)
+    ) +
+    # guides(fill = guide_legend(title = "Pr(Stage)<sub>2</sub>")) +
+    ggnewscale::new_scale_fill() +
+    # layer for biomarker level 3
+    ggplot2::geom_tile(
+      data = plot_dataset |> filter(level == 3),
+      aes(
+        x = position,
+        y = forcats::fct_inorder(biomarker_label),
+        fill = proportion,
+        width = tile_width,
+        height = tile_height
+      ),
+      alpha = 0.75
+    ) +
+    ggplot2::scale_fill_gradient(
+      low = level3_scale[10],
+      high = level3_scale[100],
+      limits = scale_limits,
+      breaks = c(0, 0.5, 1),
+      guide = ggplot2::guide_colorbar(title = "Pr(Stage)<sub>3</sub>", order = 2)
+    ) +
+    # guides(fill = guide_legend(title = "Pr(Stage)<sub>3</sub>")) +
+    ggnewscale::new_scale_fill() +
+    # layer for biomarker level 4
+    ggplot2::geom_tile(
+      data = plot_dataset |> filter(level == 4),
+      aes(
+        x = position,
+        y = forcats::fct_inorder(biomarker_label),
+        fill = proportion,
+        width = tile_width,
+        height = tile_height
+      ),
+      alpha = 0.75
+    ) +
+    scale_fill_gradient(
+      low = level4_scale[10],
+      high = level4_scale[100],
+      limits = scale_limits,
+      breaks = c(0, 0.5, 1),
+      guide = ggplot2::guide_colorbar(title = "Pr(Stage)<sub>4</sub>", order = 3)
+    ) +
+    # guides(fill = guide_legend(title = "Pr(Stage)<sub>4</sub>")) +
+    ggnewscale::new_scale_fill() +
+    # layer for biomarker level 5
+    ggplot2::geom_tile(
+      data = plot_dataset |> filter(level == 5),
+      aes(
+        x = position,
+        y = forcats::fct_inorder(biomarker_label),
+        fill = proportion,
+        width = tile_width,
+        height = tile_height
+      ),
+      alpha = 0.75
+    ) +
+    scale_fill_gradient(
+      low = level5_scale[10],
+      high = level5_scale[100],
+      limits = scale_limits,
+      breaks = c(0, 0.5, 1),
+      guide = ggplot2::guide_colorbar(title = "Pr(Stage)<sub>5</sub>", order = 4)
+    ) +
+    # guides(fill = guide_legend(title = "Pr(Stage)<sub>5</sub>")) +
+    ggnewscale::new_scale_fill() +
+    # layer for biomarker level 6
+    ggplot2::geom_tile(
+      data = plot_dataset |> filter(level == 6),
+      aes(
+        x = position,
+        y = forcats::fct_inorder(biomarker_label),
+        fill = proportion,
+        width = tile_width,
+        height = tile_height
+      ),
+      alpha = 0.75
+    ) +
+    scale_fill_gradient(
+      low = level6_scale[10],
+      high = level6_scale[100],
+      limits = scale_limits,
+      breaks = c(0, 0.5, 1),
+      guide = ggplot2::guide_colorbar(title = "Pr(Stage)<sub>6</sub>", order = 5)
+    ) +
+    # guides(fill = guide_legend(title = "Pr(Stage)<sub>6</sub>")) +
+    # reverse order of y-axis (biomarkers)
+    ggplot2::scale_y_discrete(limits = rev, position = y_position) +
+    # frame x axis
+    ggplot2::scale_x_continuous(expand = ggplot2::expansion(add = c(0.5, 2))) +
+    # update axis labels
+    ggplot2::labs(x = "Sequential order", title = panel_title) +
+    # wrap over facet levels
+    # ggplot2::facet_wrap(
+    #   ~facet,
+    #   labeller = facet_labeller # update facet labels
+    # ) +
+    # plot theme
+    ggplot2::theme_bw() +
+    ggplot2::theme(
+      legend.position = legend.position, # add color scale info in figure caption,
+      legend.title = element_markdown(), # markdown for legends
+      legend.byrow = TRUE,
+      legend.box = 'horizontal',
+      legend.justification = ,
+      legend.margin = ggplot2::margin(0, 0.15, 0, -0.45, "cm"),
+      axis.title.y = ggplot2::element_blank(),
+      axis.text.y = ggtext::element_markdown(
+        size = y_text_size
+      ), # allow markdown for coloring
+      # strip.text = ggtext::element_markdown(size = facet_label_size) # allow markdown for labels
+      # strip.text = ggtext::element_markdown() # allow markdown for labels
+      plot.title = ggtext::element_markdown(hjust = 0.5)
+    )
+
+  return(fig)
+}

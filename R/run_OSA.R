@@ -32,7 +32,7 @@ run_OSA = function(
       prob_correct = prob_correct,
       biomarker_levels = biomarker_levels
     ),
-    score_vals = build_score_vals(biomarker_levels),
+    score_vals = biomarker_levels |> build_score_vals(),
     biomarker_levels = patient_data |> get_levels(varnames = SuStaInLabels),
     SuStaInLabels = names(biomarker_levels),
     N_startpoints = 25,
@@ -52,10 +52,15 @@ run_OSA = function(
     ...)
 {
 
-  if(verbose) message("starting `run_OSA ()`")
+  if(verbose)
+  {
+    cli::cli_inform("starting `run_OSA()`",
+                    body = "`use_parallel_startpoints` = {use_parallel_startpoints}")
+  }
 
   # reticulate::use_virtualenv("r-pySuStaIn")
   # pySuStaIn = reticulate::import("pySuStaIn")
+
   sustain_input = pySuStaIn$OrdinalSustain(
     prob_nl = prob_score[ , , 1],
     prob_score = prob_score[ , , -1, drop = FALSE],

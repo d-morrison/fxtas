@@ -1,6 +1,5 @@
-test.pdf
-ordinal-sustain.aux
-ordinal-sustain.log
-ordinal-sustain.pdf
-ordinal-sustain.tex
+*.aux
+*.log
 *.pdf
+*.tex
+test-wide-figures.qmd
