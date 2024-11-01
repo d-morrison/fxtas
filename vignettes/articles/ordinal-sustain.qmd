@@ -80,8 +80,9 @@ compact_fig_caption <- paste(
 )
 
 compact_fig_cap2 = glue::glue(
-  "Red lines indicate biomarkers that moved to later positions between the ",
-  "left-hand subgroup and the right-hand subgroup. Blue lines indicate ",
+  "Red lines indicate {outcomes_name}s that moved to later positions ",
+  "between the left-hand subgroup and the right-hand subgroup.",
+  "Blue lines indicate ",
   "{outcomes_name}s that moved to earlier positions. ",
   "Line opacity levels indicate the number of positions changed ",
   "(more opaque = more change.)"
@@ -1216,8 +1217,7 @@ pvd_lineplot(y_text_size = 11)
 #| fig-width: !expr pvd_width
 #| fig-cap: !expr 
 #|     glue::glue(
-#|     "**Event sequences stratified by sex, 
-#|     for {n_s_selected} latent subtypes.**
+#|     "**Event sequences for {n_s_selected} latent subtypes.**
 #|     **(a)** {compact_fig_caption} 
 #|     **(b-d)** Differences in event sequences of subtypes 
 #|     2-{n_s_selected} compared to subtype 1.") 

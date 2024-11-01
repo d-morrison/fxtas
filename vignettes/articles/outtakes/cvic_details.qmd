@@ -1,0 +1,28 @@
+
+Let:
+
+* $n$ be the number of observations in the dataset
+* $Y_i$ be the observed biomarker values for the $i^{th}$ participant
+* $\mathcal C$ be the number of latent subtypes assumed, with corresponding index $c$.
+* $C_i$ be the latent subtype membership of observation $i$
+* $\mathcal S$ be the set of possible event sequences, indexed by $\mathcal s$
+* $S_c \in \mathcal S$ be the sequence for subtype $c$
+* $K$ be the number of cross-validation folds, with index $k$; typically, $K = 10$.
+* $n_k$ be the number of held-out observations in cross-validation fold $K$; $n_k \approx n/K$
+* $\hat{P}_{(-k)}(C = c)$ be the prior probability that an observation belongs to subtype $c$, estimated using all observations except those in fold $k$.
+
+Then the Cross-Validation Information Criterion (CVIC) is defined as:
+
+$$
+CVIC_{\mathcal C} =
+-2 *
+\sum_{k=1}^K
+\sum_{i=1}^{n_k}
+\log
+\left\{
+\sum_{c=1}^\mathcal C
+\sum_{s\in \mathcal S}
+\hat P(Y_i|C_i = c, S_c=s)
+\hat{P}_{(-k)}(C_i = c, S_c = s)
+\right\}
+$${#eq-def-cvic}

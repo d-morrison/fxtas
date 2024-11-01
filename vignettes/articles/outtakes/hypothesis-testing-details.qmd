@@ -1,0 +1,30 @@
+
+## Hypothesis testing {.appendix #sec-permutation-test}
+
+```{r}
+#| label: hypothesis-tests
+obs_stat = pval_sex_gp34_v1  |> attr("observed_test_stat")
+perm_stats = pval_sex_gp34_v1  |> attr("permuted_test_stats")
+n_perm_over_obs = sum(perm_stats >= obs_stat)
+pct_perm_over_obs = mean(perm_stats >= obs_stat)
+```
+
+@fig-permute-llik-sex illustrates the permutation test approach that we implemented to compare event orderings between subgroups.
+This figure compares the mean log-likelihood for the sex-stratified model
+to the distribution of mean log-likelihoods when sex is permuted.
+Only `r n_perm_over_obs` out of `r length(perm_stats)` permuted mean-log-likelihoods
+were larger than the observed mean-log-likelihood
+(`r pct_perm_over_obs |> scales::percent(accuracy = 0.1)`),
+resulting in a two-sided p-value of $2 \times `r pct_perm_over_obs` = `r 2*pct_perm_over_obs`$.
+
+{{< pagebreak >}}
+
+```{r}
+#| fig-cap: |
+#|     **Histogram of mean log-likelihoods for data permuted by sex.**
+#| label: fig-permute-llik-sex
+
+pval_sex_gp34_v1 |> autoplot() |> print()
+```
+
+{{< pagebreak >}}

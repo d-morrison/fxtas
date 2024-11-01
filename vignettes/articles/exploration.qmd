@@ -80,14 +80,15 @@ footnote_HT <- paste(
 )
 
 table1(
+  # footnote = footnote_HT,
   na.is.category = FALSE, 
   overall = FALSE,
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = v1_usable |> 
-    filter(!(Study %in% c("Trax Phase 1", "GP3"))),
-  footnote = footnote_HT)
+    filter(!(Study %in% c("Trax Phase 1", "GP3")))
+  )
 
 ```
 
@@ -152,7 +153,7 @@ table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
        stratified_formula(vars, column_var),
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-       footnote = "For categorical analysis, we merged 2.5 into 2, 3.5 into 4, and 4.5 into 5.",
+       # footnote = "For categorical analysis, we merged 2.5 into 2, 3.5 into 4, and 4.5 into 5.",
        data = v1_usable)
 
 # trax_gp34_all |> 
@@ -175,7 +176,7 @@ table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
        stratified_formula(vars, column_var),
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-       footnote = footnote1,
+       # footnote = footnote1,
        data = v1_usable)
 
 ```
@@ -199,7 +200,7 @@ vars = c(
 table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
        stratified_formula(vars, column_var),
-       footnote = footnote1,
+       # footnote = footnote1,
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
        data = v1_usable)
 

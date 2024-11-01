@@ -6,7 +6,7 @@
 #### Any autoimmune disorder {.appendix #sec-any-autoimmune}
 
 Due to the rare nature of individual autoimmune diseases, a composite 
-variable (`"any autoimmune disorder"`)was created for analysis: 
+variable (`"any autoimmune disorder"`) was created for analysis: 
 `"Yes"` if a patient had any of Lupus, Rheumatoid arthritis, 
 Multiple Sclerosis, ANA positive, Sjogren's Syndrome, Raynaud's Syndrome, 
 or Pulmonary Fibrosis; otherwise, 
@@ -15,21 +15,21 @@ or Pulmonary Fibrosis; otherwise,
 #### MRI variables {#sec-mri-composites}
 
 The MRI variables are combined into composite variables 
-taking the most severe score within a brain region. Specifically: 
+taking the most severe score within a brain region.
 
--   "MRI Cerebellar" was composited as the most severe score of 
+- "MRI Cerebellar" was composited as the most severe score of 
 Cerebellar atrophy, 
 Cerebellar WM hyperintensity, and 
 MCP-WM hyperintensity.
-s
--   "MRI Cerebral" was composited as the most severe score of 
+
+- "MRI Cerebral" was composited as the most severe score of 
 Cerebral atrophy, 
 Cerebral WM hyperintensity,
 Pons-WM hyperintensity, 
 Sub-insular WM hyperintensity, and
 Periventricular WM hyperintensity.  
 
-Splenium-WM hyperintensity,
+- Splenium-WM hyperintensity,
 Genu-WM hyperintensity, and 
 Corpus Callosum-Thickness 
 remain as separate fields,
@@ -41,76 +41,46 @@ incompatible Likert scales.
 Similarly, we combined individual SCID disorders into composite variables,
 taking the highest level ("Absent", "Sub-Threshold", or "Threshold") 
 among the constituent individual disorders.
-Specifically:
 
-"SCID: Mood Disorders" combines:
+- "SCID: Mood Disorders" combines:
+Bipolar I Disorder (MD01), Lifetime,
+Bipolar II Disorder (MD02), Lifetime,
+Other Bipolar Disorder (MD03), Lifetime,
+Major Depressive Disorder (MD04), Lifetime,
+Dysthymic Disorder (MD05), Lifetime,
+Depressive Disorder NOS (MD06), Lifetime,
+Mood Disorder Due to GMC (MD07), Lifetime,
+Substance-Induced Mood Dis. (MD08), Lifetime
 
-- Bipolar I Disorder (MD01), Lifetime
-- Bipolar II Disorder (MD02), Lifetime
-- Other Bipolar Disorder (MD03), Lifetime
-- Major Depressive Disorder (MD04), Lifetime
-- Dysthymic Disorder (MD05), Lifetime
-- Depressive Disorder NOS (MD06), Lifetime
-- Mood Disorder Due to GMC (MD07), Lifetime
-- Substance-Induced Mood Dis. (MD08), Lifetime
+- "SCID: Substance Use Disorders" combines
+Alcohol (SUD17), Lifetime,
+Sedative-Hypnotic-Anxiolytic (SUD18), Lifetime,
+Cannabis (SUD19), Lifetime,
+Stimulants (SUD20), Lifetime,
+Opioid (SUD21), Lifetime,
+Cocaine (SUD22), Lifetime,
+Hallucinogenics/ PCP (SUD23), Lifetime,
+Poly Drug (SUD24), Lifetime,
+Other (SUD25), Lifetime
 
-"SCID: Substance Use Disorders" combines:
+- "SCID: Anxiety Disorders" combines
+Panic Disorder (ANX26), Lifetime,
+Agoraphobia without Panic (ANX27), Lifetime,
+Social Phobia (ANX28), Lifetime,
+Specific Phobia (ANX29), Lifetime,
+Obsessive Compulsive (ANX30), Lifetime,
+Posttraumatic Stress (ANX31), Lifetime,
+Generalized Anxiety (ANX32), Current Only,
+Anxiety Due to GMC (ANX33), Lifetime,
+Substance-Induced Anxiety (ANX34), Lifetime,
+Anxiety Disorder NOS (ANX35), Lifetime
 
-- Alcohol (SUD17), Lifetime
-- Sedative-Hypnotic-Anxiolytic (SUD18), Lifetime
-- Cannabis (SUD19), Lifetime
-- Stimulants (SUD20), Lifetime
-- Opioid (SUD21), Lifetime
-- Cocaine (SUD22), Lifetime
-- Hallucinogenics/ PCP (SUD23), Lifetime
-- Poly Drug (SUD24), Lifetime
-- Other (SUD25), Lifetime
+- "SCID: Somatoform Disorders" combines
+Somatization Disorder (SOM36),
+Pain Disorder (SOM37),
+Undifferentiated Somatoform (SOM38),
+Body Dysmorphic (SOM40),
+Hypochondriasis (SOM39)
 
-"SCID: Anxiety Disorders" combines:
+- "SCID: Psychotic Symptoms" consists of only only Primary Psychotic Symptoms (PS01), Lifetime.
 
-- Panic Disorder (ANX26), Lifetime
-- Agoraphobia without Panic (ANX27), Lifetime
-- Social Phobia (ANX28), Lifetime
-- Specific Phobia (ANX29), Lifetime
-- Obsessive Compulsive (ANX30), Lifetime
-- Posttraumatic Stress (ANX31), Lifetime
-- Generalized Anxiety (ANX32), Current Only
-- Anxiety Due to GMC (ANX33), Lifetime
-- Substance-Induced Anxiety (ANX34), Lifetime
-- Anxiety Disorder NOS (ANX35), Lifetime
-
-"SCID: Somatoform Disorders" combines:
-
-- Somatization Disorder (SOM36)
-- Pain Disorder (SOM37)
-- Undifferentiated Somatoform (SOM38)
-- Body Dysmorphic (SOM40)
-- Hypochondriasis (SOM39)
-
-(SCID: Psychotic Symptoms is not a composite variable; instead, it is simply a shortened label for Primary Psychotic Symptoms (PS01), Lifetime.)
-
-<!-- "any autoimmune disorder" includes: -->
-<!--     -   "Lupus", -->
-<!--     -   "Rheumatoid arthritis", -->
-<!--     -   "Multiple Sclerosis: Workup", -->
-<!--     -   "ANA positive", -->
-<!--     -   "Sjogrens Syndrome", -->
-<!--     -   "Raynauds Syndrome", -->
-<!--     -   "Pulmonary Fibrosis" -->
-
-<!-- "Any tremor (excluding head)" includes: -->
-<!--     -   "Intention tremor", -->
-<!--     -   "Resting tremor", -->
-<!--     -   "Postural tremor", -->
-<!--     -   "Intermittent tremor" -->
-
-<!-- "Any cancer" includes: -->
-<!--     -   "Thyroid Cancer", -->
-<!--     -   "Skin Cancer", -->
-<!--     -   "Melanoma", -->
-<!--     -   "Prostate Cancer", -->
-<!--     -   "Other Cancer" -->
-
-### Missing codes {.appendix}
-
-The missing codes 777, 888, and 999 were converted to `NA` for all variables, unless noted otherwise below.

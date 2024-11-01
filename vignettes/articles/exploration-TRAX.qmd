@@ -608,7 +608,7 @@ vars = grep("BDS-2 Total Score", value = TRUE, names(trax), fixed = TRUE)
 table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
-  footnote = footnote1,
+  # footnote = footnote1,
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = trax_visit1)
 
