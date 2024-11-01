@@ -70,15 +70,7 @@ clean_data = function(dataset)
     # clean_ethnicity() |> # fixed upstream during data import
     create_race_ethnicity() |>
 
-    droplevels(
-      except = exceptions_to_droplevels) |>
-
-    ## possible alternative:
-    # mutate(
-    #   across(
-    #     .cols = where(is.factor) & !exceptions_to_droplevels,
-    #     .fns = forcats::fct_drop)
-    # ) |>
+    drop_levels(except = exceptions_to_droplevels) |>
 
     clean_gender() # droplevels() removes attributes
 }

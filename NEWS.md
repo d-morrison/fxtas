@@ -17,6 +17,7 @@ for latent subtype clustering analysis
 
 ## Data processing
 
+* added "label" attribute to `FX3*`
 * added "Disorder" suffix to SCID composite variables, 
 on Dr. Bourgeois's recommendation.
 * fixed `create_any_tremor()` to handle NAs before or after `fix_factors()`.

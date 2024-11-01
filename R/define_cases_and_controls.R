@@ -40,7 +40,7 @@ define_cases_and_controls = function(dataset)
               "CGG 100-199",
               "CGG >= 200")
           )
-        ),
+        ) |> labelled::set_label_attribute("CGG repeat size"),
 
       `FX3**` =
         case_when(
