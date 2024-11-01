@@ -52,6 +52,7 @@
 #' @importFrom ggplot2 ylab
 #' @importFrom ggtext element_markdown
 #' @importFrom glue glue
+#' @importFrom labelled set_label_attribute
 #' @importFrom magrittr set_names
 #' @importFrom pander pander
 #' @importFrom plotly ggplotly

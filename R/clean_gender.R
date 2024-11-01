@@ -12,6 +12,5 @@
 clean_gender = function(data)
 {
   data |>
-    mutate(Gender = Gender |>
-             structure(label = "Sex"))
+    mutate(Gender = Gender |> labelled::set_label_attribute("Sex"))
 }
