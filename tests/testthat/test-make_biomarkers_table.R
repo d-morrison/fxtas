@@ -4,7 +4,7 @@ test_that("`test_biomarkers_table()` produces consistent results", {
   n_missing_CGG = full_data$CGG |> is.na() |> sum()
   n_above_200 = sum(full_data$CGG >= 200, na.rm = TRUE)
   v1_usable = full_data |> filter(CGG < 200) |>
-    mutate(`FX3*` = `FX3*` |> droplevels())
+    mutate(`FX3*` = `FX3*` |> forcats::fct_drop())
 
   biomarker_groups = compile_biomarker_groups_table()
 

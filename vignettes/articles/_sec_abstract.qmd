@@ -17,7 +17,7 @@ collected in FXTAS patients of stage 0-5.
 We included `r length(biomarker_varnames)` neurodegenerative symptoms 
 collected from `r nrow(v1_usable_cases)` premutation carriers 
 and `r nrow(controls_v1)` controls 
-(aged `r min(v1_usable$"Age at visit")` - `r max(v1_usable$"Age at visit")`
+(aged `r min(v1_usable$"Age at visit")` - `r max(v1_usable$"Age at visit") |> round()`
 years old at entry; 
 `r nrow(v1_usable_males)` males 
 and `r nrow(v1_usable_females)` females) 

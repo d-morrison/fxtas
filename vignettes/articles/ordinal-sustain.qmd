@@ -109,7 +109,8 @@ full_data = trax_gp34_v1
 n_missing_CGG = full_data$CGG |> is.na() |> sum()
 n_above_200 = sum(full_data$CGG >= 200, na.rm = TRUE)
 v1_usable = full_data |> filter(CGG < 200) |>
-  mutate(`FX3*` = `FX3*` |> droplevels())
+  mutate(`FX3*` = `FX3*` |> forcats::fct_drop() |> 
+           structure(label = "CGG repeat size"))
 v1_usable_males = v1_usable |> filter(Gender == "Male")
 v1_usable_females = v1_usable |> filter(Gender == "Female")
 v1_usable_cases = v1_usable |> filter(CGG >= 55)
