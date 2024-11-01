@@ -1193,12 +1193,12 @@ figs = extract_figs_from_pickle(
 
 library(ggplot2)
 
-plot_compact_pvd(
+plot_compact_pvd_est2(
   figs = figs,
   tile_height = 1,
-  facet_label_prefix = NULL,
   y_text_size = 8
 )
+
 
 pvd_lineplot(
   figs = list(
