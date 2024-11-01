@@ -51,6 +51,7 @@ table_subtype_by_demographics = function(
       test = list(CGG = "oneway.test"),
       test.args = c(`Primary Race/Ethnicity`) ~ list(simulate.p.value = TRUE)
     ) |>
+    gtsummary::add_stat_label(location = "row") |>
     gtsummary::add_overall() |>
     gtsummary::modify_footnote(gtsummary::all_stat_cols() ~ "n (column %)")
 }
