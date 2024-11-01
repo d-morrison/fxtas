@@ -1,4 +1,5 @@
 #' Plot compact PVD
+#' @inheritDotParams compact_pvd_data_prep
 #' @export
 
 # tmp function using list of extract_figs_from_pickle
@@ -9,10 +10,11 @@ plot_compact_pvd <- function(
     # facet_label_size = 8,
     facet_label_prefix = names(figs),
     legend.position = "none",
-    scale_colors = c("red", "blue", "purple4", "darkgreen", "magenta")
+    scale_colors = c("red", "blue", "purple4", "darkgreen", "magenta"),
+    ...
 ){
   # extract and prep data from fig list
-  plot_dataset <- compact_pvd_data_prep(figs = figs)
+  plot_dataset <- compact_pvd_data_prep(figs = figs, ...)
   # facet labels
   facet_names <- compact_pvd_facet_labels(figs = figs, facet_label_prefix = facet_label_prefix)
   # generate figure

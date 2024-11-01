@@ -51,7 +51,7 @@ collect_permutation_test_stats = function(
 
   for (cur_file in files)
   {
-    permuted_test_stats = readRDS(cur_file)
+    permuted_test_stats = readr::read_rds(cur_file)
     test_stats = test_stats |> c(permuted_test_stats)
   }
 
