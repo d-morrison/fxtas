@@ -30,14 +30,16 @@ flex_biomarkers_table = function(x)
     flextable::footnote(
       i = 1,
       j = 4:5,
-      value = "% of participants with clinically elevated biomarker levels" |> flextable::as_paragraph(),
+      value = "% of participants with clinically elevated levels" |>
+        flextable::as_paragraph(),
       ref_symbols = "a",
       part = "header"
     ) |>
     flextable::footnote(
       i = 1,
       j = 6,
-      value = "Fisher's exact test" |> flextable::as_paragraph(),
+      value = "p-value for significance of sex difference by Fisher's exact test" |>
+        flextable::as_paragraph(),
       ref_symbols = 'b',
       part = "header"
     )
