@@ -381,8 +381,6 @@ the permuted mean log-likelihoods,
 subtracting that percentile from 1 if larger than 0.5,
 and then multiplying by two to calculate a two-sided test statistic.
 We declared significance if the p-value was less than or equal to 0.05.
-A detailed numerical example of this procedure 
-is provided in the Supplementary Materials (@sec-permutation-test).
 
 ### Latent subtype clustering {#sec-methods-latent-subtypes}
 
