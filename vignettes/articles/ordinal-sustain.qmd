@@ -836,7 +836,9 @@ set.seed(2)
 tbl_sg_demos = table_subtype_by_demographics(
   patient_data,
   subtype_and_stage_table = 
-    results_cv_max$subtype_and_stage_table
+    results_cv_max$subtype_and_stage_table,
+  digits = list(CGG = 1,
+                `FX3*` = c(0,1))
 )
 ```
 

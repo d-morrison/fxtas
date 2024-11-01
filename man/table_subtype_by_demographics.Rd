@@ -4,12 +4,58 @@
 \alias{table_subtype_by_demographics}
 \title{Create table of demographics statistics by most-likely latent subtype}
 \usage{
-table_subtype_by_demographics(patient_data, subtype_and_stage_table)
+table_subtype_by_demographics(patient_data, subtype_and_stage_table, ...)
 }
 \arguments{
 \item{patient_data}{a \link{data.frame}}
 
 \item{subtype_and_stage_table}{a \link{data.frame}}
+
+\item{...}{
+  Arguments passed on to \code{\link[gtsummary:tbl_summary]{gtsummary::tbl_summary}}
+  \describe{
+    \item{\code{data}}{(\code{data.frame})\cr A data frame.}
+    \item{\code{by}}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
+A single column from \code{data}. Summary statistics will be stratified by this variable.
+Default is \code{NULL}.}
+    \item{\code{label}}{(\code{\link[gtsummary:syntax]{formula-list-selector}})\cr
+Used to override default labels in summary table, e.g. \code{list(age = "Age, years")}.
+The default for each variable is the column label attribute, \code{attr(., 'label')}.
+If no label has been set, the column name is used.}
+    \item{\code{statistic}}{(\code{\link[gtsummary:syntax]{formula-list-selector}})\cr
+Specifies summary statistics to display for each variable.  The default is
+\code{list(all_continuous() ~ "{median} ({p25}, {p75})", all_categorical() ~ "{n} ({p}\%)")}.
+See below for details.}
+    \item{\code{digits}}{(\code{\link[gtsummary:syntax]{formula-list-selector}})\cr
+Specifies how summary statistics are rounded. Values may be either integer(s)
+or function(s). If not specified, default formatting is assigned
+via \code{assign_summary_digits()}. See below for details.}
+    \item{\code{type}}{(\code{\link[gtsummary:syntax]{formula-list-selector}})\cr
+Specifies the summary type. Accepted value are
+\code{c("continuous", "continuous2", "categorical", "dichotomous")}.
+If not specified, default type is assigned via
+\code{assign_summary_type()}. See below for details.}
+    \item{\code{value}}{(\code{\link[gtsummary:syntax]{formula-list-selector}})\cr
+Specifies the level of a variable to display on a single row.
+The gtsummary type selectors, e.g. \code{all_dichotomous()}, cannot be used
+with this argument. Default is \code{NULL}. See below for details.}
+    \item{\code{missing,missing_text,missing_stat}}{Arguments dictating how and if missing values are presented:
+\itemize{
+\item \code{missing}: must be one of \code{c("ifany", "no", "always")}
+\item \code{missing_text}: string indicating text shown on missing row. Default is \code{"Unknown"}
+\item \code{missing_stat}: statistic to show on missing row. Default is \code{"{N_miss}"}.
+Possible values are \code{N_miss}, \code{N_obs}, \code{N_nonmiss}, \code{p_miss}, \code{p_nonmiss}.
+}}
+    \item{\code{sort}}{(\code{\link[gtsummary:syntax]{formula-list-selector}})\cr
+Specifies sorting to perform for categorical variables.
+Values must be one of \code{c("alphanumeric", "frequency")}.
+Default is \code{all_categorical(FALSE) ~ "alphanumeric"}.}
+    \item{\code{percent}}{(\code{string})\cr
+Indicates the type of percentage to return.
+Must be one of \code{c("column", "row", "cell")}. Default is \code{"column"}.}
+    \item{\code{include}}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
+Variables to include in the summary table. Default is \code{everything()}.}
+  }}
 }
 \value{
 A \link[gtsummary:tbl_summary]{gtsummary::tbl_summary}

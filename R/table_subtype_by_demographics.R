@@ -9,10 +9,12 @@
 #' patient_data = test_data_v1 |> filter(CGG >= 55, CGG < 200)
 #' table = test_subtype_and_stage_table
 #' table_subtype_by_demographics(patient_data, table)
+#' @inheritDotParams gtsummary::tbl_summary
 
 table_subtype_by_demographics = function(
     patient_data,
-    subtype_and_stage_table
+    subtype_and_stage_table,
+    ...
 )
 {
 
@@ -40,7 +42,8 @@ table_subtype_by_demographics = function(
         gtsummary::all_continuous() ~ "{mean} ({sd})"
       ),
       # missing = "no" # do not show missing
-      missing_text = "Missing"
+      missing_text = "Missing",
+      ...
     ) |>
 
     gtsummary::add_p(
