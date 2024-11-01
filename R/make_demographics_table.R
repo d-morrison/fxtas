@@ -62,23 +62,22 @@ make_demographics_table = function(data)
     dplyr::select(all_of(vars), Gender) |>
     gtsummary::tbl_summary(by = Gender, missing_text = "Missing") |>
     gtsummary::add_p(
-      # test = `Age at visit` ~ "add_p_test_wilcox.test2",
-      test.args =
-        list(
-        `Age at visit` ~
-        list(method = "p-value for significance of
-             sex difference by Wilcoxon rank sum test"),
-        `Primary Race/Ethnicity` ~
-        list(method = "p-value for significance of
-             sex difference by fisher rank sum test")
-        # gtsummary::all_tests("fisher.test") ~
-        #   list(method = "p-value for significance of sex difference by Fisher's exact test")
-        ),
       pvalue_fun = function(x)
         gtsummary::style_number(x, digits = 3)
     ) |>
     gtsummary::modify_column_hide(columns = c(stat_1, stat_2)) |>
     gtsummary::separate_p_footnotes()
+
+  tbl_pval$table_styling$footnote =
+    tbl_pval$table_styling$footnote |>
+    mutate(footnote =
+             footnote |>
+             dplyr::case_match(
+               "Wilcoxon rank sum test" ~ "p-value for significance of sex difference by Wilcoxon rank sum test",
+               "Fisher's exact test" ~ "p-value for significance of sex difference by Fisher's exact test",
+               .default = footnote
+
+             ))
 
   to_return = list(tbl_stat, tbl_pval) |>
     gtsummary::tbl_merge(tab_spanner = FALSE) |>
