@@ -2,7 +2,6 @@
 #'
 #' @export
 #'
-
 plot_compact_pvd_est2 <- function(
     figs,
     tile_height = 1,
