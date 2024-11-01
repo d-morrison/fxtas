@@ -20,21 +20,34 @@ table_subtype_by_demographics = function(
     patient_data |>
     bind_cols(subtype_and_stage_table)
 
+  # simulated_fisher <- function(data, variable, by, ...){
+  #   data <- data[c(variable, by)]
+  #   stats::fisher.test(
+  #     data[[variable]], as.factor(data[[by]]), simulate.p.value = TRUE, B = 10000,
+  #     conf.level = 0.95
+  #   ) |>
+  #     broom::tidy()
+  # }
+
   patient_data2 |>
     filter(ml_subtype != "Type 0") |>
     droplevels() |>
-    dplyr::select(ml_subtype, `FX3*`, Gender, `Primary Race/Ethnicity`) |>
+    dplyr::select(ml_subtype, CGG, `FX3*`, Gender, `Primary Race/Ethnicity`) |>
     gtsummary::tbl_summary(
       by = ml_subtype,
-      percent = "row",
-      missing = "no" # do not show missing
-      # missing_text = "Missing"
+      percent = "column", # revert back to column percentages
+      statistic = list(
+        gtsummary::all_continuous() ~ "{mean} ({sd})"
+      ),
+      # missing = "no" # do not show missing
+      missing_text = "Missing"
     ) |>
 
     gtsummary::add_p(
       pvalue_fun = function(x) gtsummary::style_number(x, digits = 3),
-      test.args = c(`FX3*`, `Primary Race/Ethnicity`) ~ list(simulate.p.value = TRUE)
+      test = list(CGG = "oneway.test"),
+      test.args = c(`Primary Race/Ethnicity`) ~ list(simulate.p.value = TRUE)
     ) |>
     gtsummary::add_overall() |>
-    gtsummary::modify_footnote(gtsummary::all_stat_cols() ~ "n (row %)")
+    gtsummary::modify_footnote(gtsummary::all_stat_cols() ~ "n (column %)")
 }
