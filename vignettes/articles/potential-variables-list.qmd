@@ -37,7 +37,7 @@ library(pander)
 ```{r}
 
 biomarker_group_list = 
-  all_potential_biomarkers()
+  all_potential_biomarkers(gp34)
 
 biomarker_groups = 
   biomarker_group_list |> 
@@ -49,7 +49,7 @@ biomarker_groups =
 
 Notes: 
 
-- "Any Autoimmune" includes:
+- "any autoimmune disorder" includes:
   - "Lupus",
   - "Rheumatoid arthritis",
   - "Multiple Sclerosis: Workup",
@@ -58,7 +58,7 @@ Notes:
   - "Raynauds Syndrome",
   - "Pulmonary Fibrosis"
   
-- "Any tremor (excluding Head Tremor)" includes:
+- "Any tremor (excluding head)" includes:
   - "Intention tremor",
   - "Resting tremor",
   - "Postural tremor",

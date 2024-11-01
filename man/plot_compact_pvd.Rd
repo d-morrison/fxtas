@@ -10,8 +10,16 @@ plot_compact_pvd(
   y_text_size = 9,
   facet_label_prefix = names(figs),
   legend.position = "none",
-  scale_colors = c("red", "blue", "purple4", "darkgreen", "magenta")
+  scale_colors = c("red", "blue", "purple4", "darkgreen", "magenta"),
+  ...
 )
+}
+\arguments{
+\item{...}{
+  Arguments passed on to \code{\link[=compact_pvd_data_prep]{compact_pvd_data_prep}}
+  \describe{
+    \item{\code{}}{}
+  }}
 }
 \description{
 Plot compact PVD

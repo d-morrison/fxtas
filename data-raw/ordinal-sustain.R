@@ -25,15 +25,20 @@ reticulate::py_config()
 #|
 fit_models = TRUE
 # fit_models = FALSE
-run_CV =  TRUE
-# run_CV = FALSE
+run_cv =  TRUE
+# run_cv = FALSE
 
 N_startpoints = 10L
+use_parallel_startpoints = TRUE
+use_parallel_startpoints = FALSE
 N_S_max = 8L
 N_S_max_stratified = 2L
 N_CV_folds = 10L
 rerun = TRUE
 # rerun = FALSE
+plot_python = TRUE
+fig_size = c(20, 10)
+
 args = commandArgs(trailingOnly = TRUE)
 message("args = ", args |> paste(collapse = "; "))
 if(N_CV_folds == 0)
@@ -88,9 +93,7 @@ biomarker_events_table =
     biomarker_levels,
     biomarker_groups)
 
-## ----------------------------------------------------------------------------------------------------
-#| tbl-cap: "Biomarkers used in analysis"
-#| label: "tbl-biomarker-list"
+cli::cli_inform("Biomarkers used in analysis:")
 table_out =
   biomarker_events_table |>
   select(category = biomarker_group, biomarker, levels) |>
@@ -103,7 +106,7 @@ table_out =
 
 control_data =
   df |>
-  filter(`FX*` == "CGG < 55") |>
+  filter(`FX*` == "CGG <55") |>
   select(all_of(biomarker_varnames))
 
 patient_data =
@@ -143,8 +146,9 @@ sustain_output = run_and_save_OSA(
   N_iterations_MCMC = N_iterations_MCMC,
   output_folder = output_folder,
   dataset_name = dataset_name,
-  use_parallel_startpoints = FALSE,
-  plot = FALSE,
+  use_parallel_startpoints = use_parallel_startpoints,
+  plot = plot_python,
+  fig_size = fig_size,
   rerun = rerun,
   patient_data = patient_data,
   N_CV_folds = N_CV_folds,
@@ -165,8 +169,9 @@ sustain_output_males = run_and_save_OSA(
   output_folder = output_folder,
   dataset_name = "males",
   rerun = rerun,
-  use_parallel_startpoints = FALSE,
-  plot = FALSE)
+  use_parallel_startpoints = use_parallel_startpoints,
+  plot = plot_python,
+  fig_size = fig_size)
 
 
 
@@ -185,8 +190,9 @@ sustain_output_females = run_and_save_OSA(
   output_folder = output_folder,
   dataset_name = "females",
   rerun = rerun,
-  use_parallel_startpoints = FALSE,
-  plot = FALSE)
+  use_parallel_startpoints = use_parallel_startpoints,
+  plot = plot_python,
+  fig_size = fig_size)
 
 
 
@@ -205,8 +211,9 @@ sustain_output_cgg100plus = run_and_save_OSA(
   output_folder = output_folder,
   dataset_name = "over100",
   rerun = rerun,
-  use_parallel_startpoints = FALSE,
-  plot = FALSE)
+  use_parallel_startpoints = use_parallel_startpoints,
+  plot = plot_python,
+  fig_size = fig_size)
 
 
 
@@ -225,8 +232,9 @@ sustain_output_cgg100minus = run_and_save_OSA(
   output_folder = output_folder,
   dataset_name = "under100",
   rerun = rerun,
-  use_parallel_startpoints = FALSE,
-  plot = FALSE)
+  use_parallel_startpoints = use_parallel_startpoints,
+  plot = plot_python,
+  fig_size = fig_size)
 
 ## ----------------------------------------------------------------------------------------------------
 #| message: false
@@ -246,8 +254,9 @@ sustain_output_cgg100plus_males = run_and_save_OSA(
   output_folder = output_folder,
   dataset_name = "over100_Male",
   rerun = rerun,
-  use_parallel_startpoints = FALSE,
-  plot = FALSE)
+  use_parallel_startpoints = use_parallel_startpoints,
+  plot = plot_python,
+  fig_size = fig_size)
 
 
 
@@ -270,8 +279,9 @@ sustain_output_cgg100minus_males = run_and_save_OSA(
   output_folder = output_folder,
   dataset_name = "under100_Male",
   rerun = rerun,
-  use_parallel_startpoints = FALSE,
-  plot = FALSE)
+  use_parallel_startpoints = use_parallel_startpoints,
+  plot = plot_python,
+  fig_size = fig_size)
 
 ## ----------------------------------------------------------------------------------------------------
 #| message: false
@@ -292,8 +302,9 @@ sustain_output_cgg100plus_females = run_and_save_OSA(
   output_folder = output_folder,
   rerun = rerun,
   dataset_name = "over100_Female",
-  use_parallel_startpoints = FALSE,
-  plot = FALSE)
+  use_parallel_startpoints = use_parallel_startpoints,
+  plot = plot_python,
+  fig_size = fig_size)
 
 
 
@@ -314,7 +325,8 @@ sustain_output_cgg100minus_females = run_and_save_OSA(
   output_folder = output_folder,
   rerun = rerun,
   dataset_name = "under100_Female",
-  use_parallel_startpoints = FALSE,
-  plot = FALSE)
+  use_parallel_startpoints = use_parallel_startpoints,
+  plot = plot_python,
+  fig_size = fig_size)
 
 cli::cli_alert_info('\nEnding at: {Sys.time()}')

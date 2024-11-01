@@ -19,9 +19,9 @@ define_cases_and_controls = function(dataset)
     mutate(
       FX = `CGG` >= 55, # TRUE = cases
       `FX*` =
-        if_else(FX, "CGG >= 55", "CGG < 55") |>
+        if_else(FX, "CGG >= 55", "CGG <55") |>
         factor() |>
-        relevel(ref = "CGG < 55"),
+        relevel(ref = "CGG <55"),
 
       `FX**` =
         `FX*` |>
@@ -29,29 +29,29 @@ define_cases_and_controls = function(dataset)
 
       `FX3*` =
         case_when(
-          `CGG` < 55 ~ "CGG < 55",
+          `CGG` < 55 ~ "CGG <55",
           `CGG` |> between(55, 99) ~ "CGG 55-99",
           `CGG` |> between(100, 199) ~ "CGG 100-199",
           `CGG` >= 200 ~ "CGG >= 200",
           .ptype = factor(
             levels = c(
-              "CGG < 55",
+              "CGG <55",
               "CGG 55-99",
               "CGG 100-199",
               "CGG >= 200")
           )
-        ),
+        ) |> labelled::set_label_attribute("CGG repeat size"),
 
       `FX3**` =
         case_when(
-          `CGG` < 55 ~ "CGG < 55",
+          `CGG` < 55 ~ "CGG <55",
           `CGG` |> between(55, 99) ~ "CGG 55-99",
           `CGG` |> between(100, 199) ~ "CGG 100-199",
           `CGG` >= 200 ~ "CGG >= 200",
           is.na(`CGG`) ~ "CGG missing",
           .ptype = factor(
             levels = c(
-              "CGG < 55",
+              "CGG <55",
               "CGG 55-99",
               "CGG 100-199",
               "CGG >= 200",

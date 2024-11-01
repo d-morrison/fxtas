@@ -366,9 +366,9 @@ levels(dataset$mds_ne_pfmf)=c("No","Yes","No Response (999)","Question not asked
 levels(dataset$mds_ne_pfit)=c("No","Yes","No Response (999)","Question not asked at time of data entry; check records (777)")
 levels(dataset$mds_ne_pfprt)=c("No","Yes","No Response (999)","Question not asked at time of data entry; check records (777)")
 levels(dataset$mds_ne_pfsg)=c("No","Yes","No Response (999)","Question not asked at time of data entry; check records (777)")
-levels(dataset$scid_dxcode1)=c("Bipolar I Disorder (MD01)","Bipolar II Disorder (MD02)","Other Bipolar Disorder (MD03)","Major Depressive Disorder (MD04)","Dysthymic Disorder (MD05)","Depressive Disorder NOS (MD06)","Mood Disorder Due to GMC (MD07)","Substance-Induced Mood Disorder (MD08)","Primary Psychotic Symptom (PS01)","Alcohol (SUD17)","Sedative-Hypnotic-Anxioly (SUD18)","Cannabis (SUD19)","Stimulants (SUD20)","Opiod (SUD21)","Cocaine (SUD22)","Hallucinogenics/ PCP (SUD23)","Poly Drug (SUD24)","Substance Abuse Other (SUD25)","Panic Disorder (ANX26)","Agoraphobia without Panic (ANX27)","Social Phobia (ANX28)","Specific Phobia (ANX29)","Obsessive Compulsive (ANX30)","Posttraumatic Stress (ANX31)","Generalized Anxiety (ANX32)","Anxiety Due to GMC (ANX33)","Substance-Induced Anxiety (ANX34)","Anxiety Disorder NOS (ANX35)","Somatization Disorder (SOM36)","Pain Disorder (SOM37)","Undifferentiated Somatoform (SOM38)","Hypochondriasis (SOM39)","Body Dysmorphic (SOM40)","Adjustment Disorder (ADJ44)","Other Dx Not Listed (777)","Not Applicable (888)","None Listed or Incomplete Data (999)")
-levels(dataset$scid_dxcode2)=c("Bipolar I Disorder (MD01)","Bipolar II Disorder (MD02)","Other Bipolar Disorder (MD03)","Major Depressive Disorder (MD04)","Dysthymic Disorder (MD05)","Depressive Disorder NOS (MD06)","Mood Disorder Due to GMC (MD07)","Substance-Induced Mood Disorder (MD08)","Primary Psychotic Symptom (PS01)","Alcohol (SUD17)","Sedative-Hypnotic-Anxioly (SUD18)","Cannabis (SUD19)","Stimulants (SUD20)","Opiod (SUD21)","Cocaine (SUD22)","Hallucinogenics/ PCP (SUD23)","Poly Drug (SUD24)","Substance Abuse Other (SUD25)","Panic Disorder (ANX26)","Agoraphobia without Panic (ANX27)","Social Phobia (ANX28)","Specific Phobia (ANX29)","Obsessive Compulsive (ANX30)","Posttraumatic Stress (ANX31)","Generalized Anxiety (ANX32)","Anxiety Due to GMC (ANX33)","Substance-Induced Anxiety (ANX34)","Anxiety Disorder NOS (ANX35)","Somatization Disorder (SOM36)","Pain Disorder (SOM37)","Undifferentiated Somatoform (SOM38)","Hypochondriasis (SOM39)","Body Dysmorphic (SOM40)","Adjustment Disorder (ADJ44)","Other Dx Not Listed (777)","Not Applicable (888)","None Listed or Incomplete Data (999)")
-levels(dataset$scid_dxcode3)=c("Bipolar I Disorder (MD01)","Bipolar II Disorder (MD02)","Other Bipolar Disorder (MD03)","Major Depressive Disorder (MD04)","Dysthymic Disorder (MD05)","Depressive Disorder NOS (MD06)","Mood Disorder Due to GMC (MD07)","Substance-Induced Mood Disorder (MD08)","Primary Psychotic Symptom (PS01)","Alcohol (SUD17)","Sedative-Hypnotic-Anxioly (SUD18)","Cannabis (SUD19)","Stimulants (SUD20)","Opiod (SUD21)","Cocaine (SUD22)","Hallucinogenics/ PCP (SUD23)","Poly Drug (SUD24)","Substance Abuse Other (SUD25)","Panic Disorder (ANX26)","Agoraphobia without Panic (ANX27)","Social Phobia (ANX28)","Specific Phobia (ANX29)","Obsessive Compulsive (ANX30)","Posttraumatic Stress (ANX31)","Generalized Anxiety (ANX32)","Anxiety Due to GMC (ANX33)","Substance-Induced Anxiety (ANX34)","Anxiety Disorder NOS (ANX35)","Somatization Disorder (SOM36)","Pain Disorder (SOM37)","Undifferentiated Somatoform (SOM38)","Hypochondriasis (SOM39)","Body Dysmorphic (SOM40)","Adjustment Disorder (ADJ44)","Other Dx Not Listed (777)","Not Applicable (888)","None Listed or Incomplete Data (999)")
+levels(dataset$scid_dxcode1)=c("Bipolar I Disorder (MD01)","Bipolar II Disorder (MD02)","Other Bipolar Disorder (MD03)","Major Depressive Disorder (MD04)","Dysthymic Disorder (MD05), Lifetime","Depressive Disorder NOS (MD06)","Mood Disorder Due to GMC (MD07)","Substance-Induced Mood Disorder (MD08)","Primary Psychotic Symptom (PS01)","Alcohol (SUD17)","Sedative-Hypnotic-Anxioly (SUD18)","Cannabis (SUD19)","Stimulants (SUD20)","Opioid (SUD21)","Cocaine (SUD22)","Hallucinogenics/ PCP (SUD23)","Poly Drug (SUD24)","Substance Abuse Other (SUD25)","Panic Disorder (ANX26)","Agoraphobia without Panic (ANX27)","Social Phobia (ANX28)","Specific Phobia (ANX29)","Obsessive Compulsive (ANX30)","Posttraumatic Stress (ANX31)","Generalized Anxiety (ANX32)","Anxiety Due to GMC (ANX33)","Substance-Induced Anxiety (ANX34)","Anxiety Disorder NOS (ANX35)","Somatization Disorder (SOM36)","Pain Disorder (SOM37)","Undifferentiated Somatoform (SOM38)","Hypochondriasis (SOM39)","Body Dysmorphic (SOM40)","Adjustment Disorder (ADJ44)","Other Dx Not Listed (777)","Not Applicable (888)","None Listed or Incomplete Data (999)")
+levels(dataset$scid_dxcode2)=c("Bipolar I Disorder (MD01)","Bipolar II Disorder (MD02)","Other Bipolar Disorder (MD03)","Major Depressive Disorder (MD04)","Dysthymic Disorder (MD05), Lifetime","Depressive Disorder NOS (MD06)","Mood Disorder Due to GMC (MD07)","Substance-Induced Mood Disorder (MD08)","Primary Psychotic Symptom (PS01)","Alcohol (SUD17)","Sedative-Hypnotic-Anxioly (SUD18)","Cannabis (SUD19)","Stimulants (SUD20)","Opioid (SUD21)","Cocaine (SUD22)","Hallucinogenics/ PCP (SUD23)","Poly Drug (SUD24)","Substance Abuse Other (SUD25)","Panic Disorder (ANX26)","Agoraphobia without Panic (ANX27)","Social Phobia (ANX28)","Specific Phobia (ANX29)","Obsessive Compulsive (ANX30)","Posttraumatic Stress (ANX31)","Generalized Anxiety (ANX32)","Anxiety Due to GMC (ANX33)","Substance-Induced Anxiety (ANX34)","Anxiety Disorder NOS (ANX35)","Somatization Disorder (SOM36)","Pain Disorder (SOM37)","Undifferentiated Somatoform (SOM38)","Hypochondriasis (SOM39)","Body Dysmorphic (SOM40)","Adjustment Disorder (ADJ44)","Other Dx Not Listed (777)","Not Applicable (888)","None Listed or Incomplete Data (999)")
+levels(dataset$scid_dxcode3)=c("Bipolar I Disorder (MD01)","Bipolar II Disorder (MD02)","Other Bipolar Disorder (MD03)","Major Depressive Disorder (MD04)","Dysthymic Disorder (MD05), Lifetime","Depressive Disorder NOS (MD06)","Mood Disorder Due to GMC (MD07)","Substance-Induced Mood Disorder (MD08)","Primary Psychotic Symptom (PS01)","Alcohol (SUD17)","Sedative-Hypnotic-Anxioly (SUD18)","Cannabis (SUD19)","Stimulants (SUD20)","Opioid (SUD21)","Cocaine (SUD22)","Hallucinogenics/ PCP (SUD23)","Poly Drug (SUD24)","Substance Abuse Other (SUD25)","Panic Disorder (ANX26)","Agoraphobia without Panic (ANX27)","Social Phobia (ANX28)","Specific Phobia (ANX29)","Obsessive Compulsive (ANX30)","Posttraumatic Stress (ANX31)","Generalized Anxiety (ANX32)","Anxiety Due to GMC (ANX33)","Substance-Induced Anxiety (ANX34)","Anxiety Disorder NOS (ANX35)","Somatization Disorder (SOM36)","Pain Disorder (SOM37)","Undifferentiated Somatoform (SOM38)","Hypochondriasis (SOM39)","Body Dysmorphic (SOM40)","Adjustment Disorder (ADJ44)","Other Dx Not Listed (777)","Not Applicable (888)","None Listed or Incomplete Data (999)")
 levels(dataset$mds_med_lup)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
 levels(dataset$mds_med_ra)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
 levels(dataset$mds_med_mswk)=c("No","Yes","No Response (999)","NA (888)","Question not asked at time of data entry; check records (777)")
@@ -434,14 +434,14 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            mds_neu_atax_sev = "Ataxia: severity",
            # new_mds_ne_ga = "Ataxia",
            new_mds_med_park = "Parkinsons",
-           mds_ne_pf = "Parkinsonian features",
-           mds_ne_pfmf = "Parkinsonian features: Masked faces",
-           mds_ne_pfit = "Parkinsonian features: Increased tone",
-           mds_ne_pfprt = "Parkinsonian features: Pill rolling tremor",
-           mds_ne_pfsg = "Parkinsonian features: Stiff gait",
+           mds_ne_pf = "parkinsonian features",
+           mds_ne_pfmf = "Masked faces",
+           mds_ne_pfit = "Increased tone",
+           mds_ne_pfprt = "Pill-rolling tremor",
+           mds_ne_pfsg = "Stiff gait",
            mds_fxtas_stage = "FXTAS Stage (0-5)",
            bds2_score = "BDS-2 Total Score",
-           mmse_totalscore = "MMSE Total Score",
+           mmse_totalscore = "MMSE total score",
            scid_dxcode1 = "Interviewers Diagnosis 1,  by Code",
            scid_dx1age = "Interviewers Diagnosis 1, Age of Onset",
            scid_dxcode2 = "Interviewers Diagnosis 2,  by Code",
@@ -526,7 +526,7 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            scid_ps01cur = "Primary Psychotic Symptoms (PS01), Current",
            scid_ps01lif = "Primary Psychotic Symptoms (PS01), Lifetime",
            # 03-21-2024: add additional SCID variables
-           scid_md05lif = "Dysthymic Disorder (MD05)",
+           scid_md05lif = "Dysthymic Disorder (MD05), Lifetime",
            scid_md06lif = "Depressive Disorder NOS (MD06), Lifetime",
            scid_md06cur = "Depressive Disorder NOS (MD06) Current",
            scid_sud17lif = "Alcohol (SUD17), Lifetime",
@@ -537,9 +537,9 @@ labels = c(subj_id = "FXS ID", redcap_event_name = "Event Name", visit_age = "Ag
            scid_sud19cur = "Cannabis (SUD19),Current",
            scid_sud20lif = "Stimulants (SUD20), Lifetime",
            scid_sud20cur = "Stimulants (SUD20) Current",
-           scid_sud21lif = "Opiod (SUD21), Lifetime",
+           scid_sud21lif = "Opioid (SUD21), Lifetime",
            scid_sud22lif = "Cocaine (SUD22), Lifetime",
-           scid_sud21cur = "Opiod (SUD21), Current",
+           scid_sud21cur = "Opioid (SUD21), Current",
            scid_sud23lif = "Hallucinogenics/ PCP (SUD23), Lifetime",
            scid_sud22cur = "Cocaine (SUD22) Current",
            scid_sud23cur = "Hallucinogenics/ PCP (SUD23), Current",
@@ -614,11 +614,11 @@ if(FALSE)
   # label(dataset$mds_neu_atax_sev)="Ataxia: severity"
   # label(dataset$new_mds_ne_ga)="Ataxia"
   # label(dataset$new_mds_med_park)="Parkinsons"
-  # label(dataset$mds_ne_pf)="Parkinsonian features:"
-  # label(dataset$mds_ne_pfmf)="Parkinsonian features: Masked faces"
-  # label(dataset$mds_ne_pfit)="Parkinsonian features: Increased tone"
-  # label(dataset$mds_ne_pfprt)="Parkinsonian features: pill rolling tremor"
-  # label(dataset$mds_ne_pfsg)="Parkinsonian features: stiff gait"
+  # label(dataset$mds_ne_pf)="parkinsonian features:"
+  # label(dataset$mds_ne_pfmf)="Masked faces"
+  # label(dataset$mds_ne_pfit)="Increased tone"
+  # label(dataset$mds_ne_pfprt)="Pill-rolling tremor"
+  # label(dataset$mds_ne_pfsg)="Stiff gait"
   # label(dataset$mds_fxtas_stage)="FXTAS Stage (0-5)"
   # label(dataset$bds2_score)="BDS-2 Total Score"
   # label(dataset$mmse_totalscore)="Total Score"
@@ -685,4 +685,12 @@ if(FALSE)
 #Setting Units
 
 gp3 = tibble(dataset)
+test = waldo::compare(y = gp3,
+                      x = fxtas::gp3,
+                      ignore_attr = "problems") |> print()
+
+if (length(test) > 0) {
+  browser("are you sure you want to overwrite?")
+}
+
 usethis::use_data(gp3, overwrite = TRUE)

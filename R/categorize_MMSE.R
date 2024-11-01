@@ -2,15 +2,15 @@ categorize_MMSE = function(
     dataset,
     levels = c(
       "Normal (26-30)",
-      "Mild (20-25)",
-      "Moderate (10-19)",
-      "Severe (0-9)"
+      "Mild impairment (20-25)",
+      "Moderate impairment (10-19)",
+      "Severe impairment (0-9)"
     ))
 {
   dataset |>
     mutate(
-      `MMSE Total Score*` =
-        `MMSE Total Score` |>
+      `MMSE total score*` =
+        `MMSE total score` |>
         case_match(
           26:30 ~ levels[1],
           20:25   ~ levels[2],

@@ -11,6 +11,7 @@ extract_results_from_pickle(
   rda_filename = "data.RData",
   basename = paste0(dataset_name, "_subtype", n_s - 1),
   picklename = paste0(basename, ".pickle"),
+  format_results = TRUE,
   ...
 )
 }
@@ -25,6 +26,8 @@ extract_results_from_pickle(
 
 \item{picklename}{the name of the pickle file to open}
 
+\item{format_results}{whether to apply \code{\link[=format_results_list]{format_results_list()}} to results before returning}
+
 \item{...}{
   Arguments passed on to \code{\link[=format_results_list]{format_results_list}}
   \describe{
@@ -33,4 +36,7 @@ extract_results_from_pickle(
 }
 \description{
 Extract results from pickle file
+}
+\examples{
+results = extract_results_from_pickle(output_folder = "output/SuStaIn-simulated-data")
 }

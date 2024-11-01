@@ -46,7 +46,7 @@ vars = c(
   "Resting tremor",
   "Postural tremor",
   "Intermittent tremor"
-  # "Any tremor (excluding Head Tremor)"
+  # "Any tremor (excluding head)"
   # "Tremor: Age of onset"
   # if(show_missingness_reasons) "Tremor: Age of onset: missingness reasons"
 )
@@ -80,14 +80,15 @@ footnote_HT <- paste(
 )
 
 table1(
+  # footnote = footnote_HT,
   na.is.category = FALSE, 
   overall = FALSE,
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = v1_usable |> 
-    filter(!(Study %in% c("Trax Phase 1", "GP3"))),
-  footnote = footnote_HT)
+    filter(!(Study %in% c("Trax Phase 1", "GP3")))
+  )
 
 ```
 
@@ -152,7 +153,7 @@ table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
        stratified_formula(vars, column_var),
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-       footnote = "For categorical analysis, we merged 2.5 into 2, 3.5 into 4, and 4.5 into 5.",
+       # footnote = "For categorical analysis, we merged 2.5 into 2, 3.5 into 4, and 4.5 into 5.",
        data = v1_usable)
 
 # trax_gp34_all |> 
@@ -163,11 +164,11 @@ table1(na.is.category = FALSE, overall = FALSE,
 
 ```
 
-### Behavior Dimensions Scale - Second Edition (BDS-2) {.appendix}
+### Behavior Dyscontrol Scale - Second Edition (BDS-2) {.appendix}
 
 ```{r}
 #| label: tbl-bds2
-#| tbl-cap: "Behavior Dimensions Scale - Second Edition (BDS-2)"
+#| tbl-cap: "Behavior Dyscontrol Scale - Second Edition (BDS-2)"
 vars = c("BDS-2 Total Score", "BDS-2 Total Score*")
 
 
@@ -175,7 +176,7 @@ table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
        stratified_formula(vars, column_var),
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-       footnote = footnote1,
+       # footnote = footnote1,
        data = v1_usable)
 
 ```
@@ -186,20 +187,20 @@ table1(na.is.category = FALSE, overall = FALSE,
 #| label: tbl-mmse
 #| tbl-cap: "Mini-Mental State Examination (MMSE)"
 # vars = grep(
-#   "MMSE Total Score", 
+#   "MMSE total score", 
 #   value = TRUE, 
 #   names(trax_gp34_all), 
 #   fixed = TRUE)
 
 vars = c(
-  "MMSE Total Score", 
-  # "MMSE Total Score: missingness reasons", 
-  "MMSE Total Score*")
+  "MMSE total score", 
+  # "MMSE total score: missingness reasons", 
+  "MMSE total score*")
 
 table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
        stratified_formula(vars, column_var),
-       footnote = footnote1,
+       # footnote = footnote1,
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
        data = v1_usable)
 
@@ -226,7 +227,7 @@ table1(
 ### MRI  {.appendix}
 
 ```{r}
-#| label: tab-mri
+#| label: tbl-mri
 #| tbl-cap: "MRI variables by Sex and CGG level"
 vars = c(
   # "Cerebral Atrophy",
@@ -248,8 +249,9 @@ table1(
   na.is.category = FALSE, 
   overall = FALSE,
   NA.label = NA.label1,
-  stratified_formula(vars, column_var),
-  data = v1_usable)
+  # droplevels = FALSE,
+  x = stratified_formula(vars, column_var),
+  data = v1_usable_cases)
 
 ```
 
@@ -270,10 +272,10 @@ We used categorization cutoffs taken from [@talebi2020cambridge].
 cantab_vars = c(
   "SWM Between errors",
   "SWM Between errors*",
-  "SST Median correct RT on GO trials",
-  "RVP A signal detection",
-  "RVP A signal detection*",
-  "OTS Problems solved on first choice",
+  # "SST Median correct RT on GO trials",
+  # "RVP A signal detection",
+  # "RVP A signal detection*",
+  # "OTS Problems solved on first choice",
   "PAL Total errors (adjusted)",
   "PAL Total errors (adjusted)*",
   "RTI Five-choice movement time",
@@ -316,7 +318,7 @@ vars = c(
   # "Sjogrens Syndrome",
   # "Raynauds Syndrome",
   # "Pulmonary Fibrosis",
-  "Any Autoimmune"
+  "any autoimmune disorder"
 )
 
 table1(

@@ -22,7 +22,7 @@ graph_stage_by_age = function(data,
     # geom_line(
     #   aes(col = id, group = id),
     #   alpha = alpha) +
-    geom_smooth() +
+    geom_smooth(method = "loess", formula = y ~ x) +
     xlab("Age at visit (years)") +
     ylab("Estimated sequence stage") +
     ggplot2::theme_bw() +

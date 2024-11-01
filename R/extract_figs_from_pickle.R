@@ -3,6 +3,10 @@
 #' @inheritDotParams plot_positional_var
 #' @return
 #' @export
+#' @examples
+#' figs = extract_figs_from_pickle(
+#'   output_folder = "output/SuStaIn-simulated-data",
+#'   n = 3)
 #'
 extract_figs_from_pickle = function(
     n_s = 1,
@@ -13,17 +17,27 @@ extract_figs_from_pickle = function(
     ...)
 {
 
-  results00 =
-    fs::path(output_folder, "pickle_files", picklename) |>
-    py_load_object() |>
-    force()
+  results = extract_results_from_pickle(
+    n_s = n_s,
+    dataset_name = dataset_name,
+    output_folder = output_folder,
+    rda_filename = rda_filename,
+    picklename = picklename)
 
-  load(fs::path(output_folder, rda_filename)) # be careful; might mask `results`
+  biomarker_groups =
+    output_folder |>
+    fs::path("biomarker_groups.rds") |>
+    readr::read_rds()
 
-  figs = plot_positional_var(
-    results = results00,
-    biomarker_groups = biomarker_groups, # these come from the load() call
-    biomarker_levels = biomarker_levels, # these come from the load() call
+  biomarker_levels =
+    output_folder |>
+    fs::path("biomarker_levels.rds") |>
+    readr::read_rds()
+
+  plot_positional_var(
+    results = results,
+    biomarker_groups = biomarker_groups,
+    biomarker_levels = biomarker_levels,
     ...)
 
 }

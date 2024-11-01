@@ -1,0 +1,126 @@
+
+```{r}
+#| message: false
+#| label: "cgg_over_100"
+#| include: false
+#| eval: !expr fit_models
+
+sustain_output_cgg100plus = run_and_save_OSA(
+  biomarker_levels = biomarker_levels, 
+  prob_correct = prob_correct, 
+  patient_data = patient_data |> filter(`CGG` >= 100),
+  
+  SuStaInLabels = biomarker_varnames,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified, 
+  N_iterations_MCMC = N_iterations_MCMC, 
+  output_folder = output_folder, 
+  dataset_name = "over100", 
+  use_parallel_startpoints = use_parallel_startpoints,
+  seed = 1,
+  plot = plot_python,
+  fig_size = fig_size)
+
+```
+
+```{r}
+#| message: false
+#| label: "cgg_under_100"
+#| include: false
+#| eval: !expr fit_models
+
+sustain_output_cgg100minus = run_and_save_OSA(
+  biomarker_levels = biomarker_levels, 
+  prob_correct = prob_correct, 
+  patient_data = patient_data |> filter(`CGG` < 100),
+  SuStaInLabels = biomarker_varnames,
+  N_startpoints = N_startpoints,
+  N_S_max = N_S_max_stratified, 
+  N_iterations_MCMC = N_iterations_MCMC, 
+  output_folder = output_folder, 
+  dataset_name = "under100", 
+  use_parallel_startpoints = use_parallel_startpoints,
+  seed = 1,
+  plot = plot_python,   
+  fig_size = fig_size)
+
+```
+
+@fig-pvd-by-cgg shows the estimated sequences stratified by CGG repeat level.
+We did not find statistically significant evidence of a difference in event sequences
+between CGG < 100 and CGG ≥ 100 (p = `r pval_cgg_gp34_v1`),
+but some potential differences were noted
+(@fig-pvd-by-cgg-1 and [(b)](#fig-pvd-by-cgg-2)).
+SWM between errors occurred prior to Stage 1
+in participants with CGG repeats <100,
+whereas it occurred between stage 4 and 5 in those with CGG repeats ≥ 100
+(@fig-pvd-by-cgg-2).
+Postural, resting, head, and intermittent tremor occurred earlier
+in those with CGG repeats <100 compared to those with CGG repeats ≥100.
+Several psychiatric disorders (as measured by SCID) occurred
+later in the event sequence in participants with CGG repeats <100
+compared to those with CGG repeats ≥100.
+
+The finding of only minimal differences 
+between 55-99 vs 100-199 CGG repeats is surprising, 
+since several studies have found that the higher the CGG repeats,
+the earlier the onset and the faster the progression of FXTAS 
+[@greco2006neuropathology; @leehey2008fmr1; @tassone2023insight]. 
+Perhaps the cut off of 100 is too high for this distinction to be made.
+
+These differences were more evident among males than females
+(Supplementary Materials, @sec-cgg-strat-sex).
+When we fitted models for subgroup analyses by sex and CGG repeats level,
+the models for males showed the same patterns described above,
+except for head tremor
+(we found no difference in head tremor onset between CGG levels).
+([Supplementary Figure @fig-pvd-by-cgg-male])
+shows the corresponding stratified models and
+compares the estimates of the sequences for these two subgroups.
+
+
+We did not find statistically significant evidence of
+a difference between CGG <100 and CGG ≥100 among females
+(p = `r pval_female_cgg_gp34_v1`).
+([Supplementary Figure @fig-pvd-by-cgg-female])
+shows the estimated stratified models
+and compares the estimates.
+Females had later onset of SWM Between Errors for CGG repeats ≥100
+and later onset of intermittent tremors for CGG repeats <100,
+but did not show evidence of the other patterns observed for males and
+for the models without sex-stratification.
+Limited sample size was an issue;
+the available data included only `r n_over100_Female` females with CGG ≥100.
+
+{{< pagebreak >}}
+
+```{r}
+#| label: "fig-pvd-by-cgg"
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: !expr glue::glue("**Event sequences stratified by CGG repeats  (<100 vs 100+). (a)** {compact_fig_caption} **(b)** differences in event sequences between CGG repeat sizes.")
+#| layout-ncol: 1
+#| fig-subcap: 
+#|    - " "
+#|    - " "
+#| fig-cap-location: top
+
+
+list(
+    fig_under100,
+    fig_over100
+  ) |> 
+plot_compact_pvd(
+  facet_label_prefix = c("CGG &lt; 100 <br>", "CGG &ge; 100 <br>"),
+  y_text_size = 11
+)
+
+
+list(
+  "CGG &lt; 100" = fig_under100,
+  "CGG &ge; 100" = fig_over100) |>
+pvd_lineplot(y_text_size = 11)
+```
+
+{{< pagebreak >}}

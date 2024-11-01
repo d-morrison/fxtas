@@ -1,4 +1,5 @@
 
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # fxtas
@@ -7,9 +8,13 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/d-morrison/fxtas/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/d-morrison/fxtas/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of fxtas is to …
+The goal of `fxtas` is to apply the Ordinal SuStaIn algorithm (Young et
+al. (2021)) to study disease progression in Fragile X Syndrome,  
+as described in Morrison et al (not yet published), “Event sequences in
+Fragile X-associated tremor/ataxia syndrome”.
 
 ## Installation
 
@@ -21,38 +26,40 @@ You can install the development version of fxtas from
 devtools::install_github("d-morrison/fxtas")
 ```
 
-## Example
+## Running the analyses
 
-This is a basic example which shows you how to solve a common problem:
+The manuscript *Event sequences in Fragile X-associated tremor/ataxia
+syndrome* is implemented in the file `ordinal-sustain.qmd` in the
+`vignettes/articles` subfolder, which incorporates several subfiles in
+this repository. The `data-raw` folder contains numerous auxiliary
+scripts, including:
 
-``` r
-library(fxtas)
-## basic example code
-```
+- data preprocessing scripts:
+  - `gp3.r`
+  - `gp4.r`
+  - `gp34.R`
+  - `trax.R`
+- [SLURM](https://slurm.schedmd.com/documentation.html) batch scripts
+  and corresponding R scripts for pre-running the computation-heavy
+  sections of the analysis on an appropriately-preconfigured distributed
+  computing server.
+  - If the corresponding output files have not been pre-generated,
+    `ordinal-sustain.qmd` should produce them
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+# References
 
-``` r
-summary(cars)
-#>      speed           dist    
-#>  Min.   : 4.0   Min.   :  2  
-#>  1st Qu.:12.0   1st Qu.: 26  
-#>  Median :15.0   Median : 36  
-#>  Mean   :15.4   Mean   : 43  
-#>  3rd Qu.:19.0   3rd Qu.: 56  
-#>  Max.   :25.0   Max.   :120
-```
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/v1/examples>.
+<div id="ref-young2021ordinal" class="csl-entry">
 
-You can also embed plots, for example:
+Young, Alexandra L, Jacob W Vogel, Leon M Aksman, Peter A Wijeratne,
+Arman Eshaghi, Neil P Oxtoby, Steven CR Williams, Daniel C Alexander,
+and Alzheimer’s Disease Neuroimaging Initiative. 2021. “Ordinal SuStaIn:
+Subtype and Stage Inference for Clinical Scores, Visual Ratings, and
+Other Ordinal Data.” *Frontiers in Artificial Intelligence* 4: 613261.
+<https://doi.org/10.3389/frai.2021.613261>.
 
-<img src="man/figures/README-pressure-1.png" width="100%" />
+</div>
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+</div>

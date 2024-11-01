@@ -29,6 +29,6 @@ a \link[ggplot2:ggplot]{ggplot2::ggplot} object
 Barplot of CGG repeats
 }
 \examples{
-visit1 |> graph_CGG_repeats()
-visit1 |> graph_CGG_repeats(cols = vars(Gender))
+test_data_v1 |> graph_CGG_repeats()
+test_data_v1 |> graph_CGG_repeats(cols = vars(Gender))
 }

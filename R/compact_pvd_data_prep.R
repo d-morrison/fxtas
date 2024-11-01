@@ -2,8 +2,8 @@
 #'
 
 
-compact_pvd_data_prep <- function(figs){
-  if(length(figs) == 1){
+compact_pvd_data_prep <- function(figs, biomarker_order = NULL) {
+  if(length(figs) == 1) {
     # extract data from pvd fig object
     dataset <- dplyr::bind_rows(figs[[1]]$data, .id = "facet")
   } else {
@@ -38,13 +38,17 @@ compact_pvd_data_prep <- function(figs){
     dplyr::select(biomarker, `event order`) |>
     unique()
 
+  if(is.null(biomarker_order))
+  {
+    biomarker_order = levels(event_order$biomarker)
+  }
   # update biomarker levels in dataset
   plot_dataset <- dataset |>
     # convert biomarker to factor with event order levels
     mutate(
       biomarker = factor(
         biomarker,
-        levels = levels(event_order$biomarker)
+        levels = biomarker_order
       )
     ) |>
     # arrange by biomarker levels

@@ -8,7 +8,8 @@
 #' ## `python_version`
 #' `pySuStaIn` and its dependency `kde_ebm` currently (2024-02-14) do not appear to be  with python >= 3.10.
 #' ## `pip`
-#' `pip = TRUE` appears to be necessary, since `pySuStaIn` needs to be installed directly from github.com
+#' `pip = TRUE` appears to be necessary,
+#' since `pySuStaIn` needs to be installed directly from <github.com>
 #' @param ...
 #' @inheritParams reticulate::py_install
 #'

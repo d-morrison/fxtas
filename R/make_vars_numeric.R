@@ -9,7 +9,7 @@ make_vars_numeric = function(
         contains(regex, ignore.case = ignore.case),
         # c(
         #   `BDS-2 Total Score`,
-        #   `MMSE Total Score`),
+        #   `MMSE total score`),
         list(
           tmp = clean_numeric,
           `missingness reasons` = missingness_reasons.numeric),

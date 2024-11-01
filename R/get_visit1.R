@@ -20,5 +20,6 @@ get_visit1 = function(dataset)
       `Age at visit` = `Age at visit`
     ) |>
     mutate(`# visits` = factor(`# visits`, levels = 1:max(`# visits`))) |>
-    droplevels()
+    droplevels() |>
+    clean_gender()
 }

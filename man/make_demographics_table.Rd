@@ -12,3 +12,6 @@ make_demographics_table(data)
 \description{
 Make demographics table
 }
+\examples{
+test_data_v1 |> make_demographics_table()
+}

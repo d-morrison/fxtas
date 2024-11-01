@@ -11,6 +11,10 @@ library(tidyverse)
 library(pander)
 conflicted::conflict_prefer("filter", "dplyr")
 
+rerun = FALSE
+rerun = TRUE
+
+plot_python = TRUE
 ## ----------------------------------------------------------------------------------------------------
 # reticulate::use_condaenv(condaenv = "fxtas")
 
@@ -60,9 +64,7 @@ biomarker_events_table =
     biomarker_levels,
     biomarker_groups)
 
-## ----------------------------------------------------------------------------------------------------
-#| tbl-cap: "Biomarkers used in analysis"
-#| label: "tbl-biomarker-list"
+cli::cli_inform("Biomarkers used in analysis:")
 table_out =
   biomarker_events_table |>
   select(category = biomarker_group, biomarker, levels) |>
@@ -77,7 +79,7 @@ table_out |>
 
 control_data =
   df |>
-  filter(`FX*` == "CGG < 55") |>
+  filter(`FX*` == "CGG <55") |>
   select(all_of(biomarker_varnames))
 
 patient_data =
@@ -95,13 +97,14 @@ save.image(file = fs::path(output_folder, paste0(dataset_name, ".RData")))
 patient_data     |> saveRDS(file = fs::path(output_folder, "data.rds"))
 biomarker_levels |> saveRDS(file = fs::path(output_folder, "biomarker_levels.rds"))
 biomarker_groups |> saveRDS(file = fs::path(output_folder, "biomarker_groups.rds"))
-
+rda_filename = paste0(dataset_name, ".RData")
 
 ## ----"run OSA from R"--------------------------------------------------------------------------------
 #| message: false
 #| label: model-all-data
 #| include: false
-sustain_output = run_OSA(
+sustain_output = run_and_save_OSA(rerun = rerun,
+  rda_filename = rda_filename,
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   patient_data = patient_data,
@@ -114,7 +117,7 @@ sustain_output = run_OSA(
   dataset_name = dataset_name,
   use_parallel_startpoints = FALSE,
   seed = 1,
-  plot = FALSE,
+  plot = plot_python,
 
   N_CV_folds = N_CV_folds)
 
@@ -124,7 +127,8 @@ sustain_output = run_OSA(
 #| message: false
 #| label: model-males
 #| include: false
-sustain_output_males = run_OSA(
+sustain_output_males = run_and_save_OSA(rerun = rerun,
+  rda_filename = rda_filename,
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   patient_data = patient_data |>
@@ -138,7 +142,7 @@ sustain_output_males = run_OSA(
   dataset_name = "males",
   use_parallel_startpoints = FALSE,
   seed = 1,
-  plot = FALSE)
+  plot = plot_python)
 
 
 
@@ -146,7 +150,8 @@ sustain_output_males = run_OSA(
 #| message: false
 #| label: model-females
 #| include: false
-sustain_output_females = run_OSA(
+sustain_output_females = run_and_save_OSA(rerun = rerun,
+  rda_filename = rda_filename,
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   patient_data = patient_data |> filter(Gender == "Female"),
@@ -159,7 +164,7 @@ sustain_output_females = run_OSA(
   dataset_name = "females",
   use_parallel_startpoints = FALSE,
   seed = 1,
-  plot = FALSE)
+  plot = plot_python)
 
 
 
@@ -167,7 +172,8 @@ sustain_output_females = run_OSA(
 #| message: false
 #| label: "cgg_over_100"
 #| include: false
-sustain_output_cgg100plus = run_OSA(
+sustain_output_cgg100plus = run_and_save_OSA(rerun = rerun,
+  rda_filename = rda_filename,
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   patient_data = patient_data |>
@@ -181,7 +187,7 @@ sustain_output_cgg100plus = run_OSA(
   dataset_name = "over100",
   use_parallel_startpoints = FALSE,
   seed = 1,
-  plot = FALSE)
+  plot = plot_python)
 
 
 
@@ -189,7 +195,8 @@ sustain_output_cgg100plus = run_OSA(
 #| message: false
 #| label: "cgg_under_100"
 #| include: false
-sustain_output_cgg100minus = run_OSA(
+sustain_output_cgg100minus = run_and_save_OSA(rerun = rerun,
+  rda_filename = rda_filename,
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   patient_data = patient_data |>
@@ -203,5 +210,5 @@ sustain_output_cgg100minus = run_OSA(
   dataset_name = "under100",
   use_parallel_startpoints = FALSE,
   seed = 1,
-  plot = FALSE)
+  plot = plot_python)
 

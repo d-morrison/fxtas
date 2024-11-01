@@ -23,7 +23,7 @@ create_scid_domains <- function(
     "Substance-Induced Mood Dis. (MD08), Lifetime",
     "Primary Psychotic Symptoms (PS01), Current",
     "Primary Psychotic Symptoms (PS01), Lifetime",
-    "Dysthymic Disorder (MD05)",
+    "Dysthymic Disorder (MD05), Lifetime",
     "Depressive Disorder NOS (MD06), Lifetime",
     "Depressive Disorder NOS (MD06) Current",
     "Alcohol (SUD17), Lifetime",
@@ -34,9 +34,9 @@ create_scid_domains <- function(
     "Cannabis (SUD19),Current",
     "Stimulants (SUD20), Lifetime",
     "Stimulants (SUD20) Current",
-    "Opiod (SUD21), Lifetime",
+    "Opioid (SUD21), Lifetime",
     "Cocaine (SUD22), Lifetime",
-    "Opiod (SUD21), Current",
+    "Opioid (SUD21), Current",
     "Hallucinogenics/ PCP (SUD23), Lifetime",
     "Cocaine (SUD22) Current",
     "Hallucinogenics/ PCP (SUD23), Current",
@@ -117,9 +117,9 @@ create_scid_domains <- function(
       # no clearly most-idiomatic approach as of 2024-03-22
       # some discussion here: https://r4ds.hadley.nz/numbers.html#numeric-transformations
       `SCID: Mood Disorders` = pmax(!!!rlang::syms(scid_md_vars_lif), na.rm = TRUE),
-      `SCID: Substance Use` = pmax(!!!rlang::syms(scid_sud_vars_lif), na.rm = TRUE),
-      `SCID: Anxiety` = pmax(!!!rlang::syms(scid_anx_vars_lif), na.rm = TRUE),
-      `SCID: Somatization` = pmax(!!!rlang::syms(scid_somatic_vars_lif), na.rm = TRUE),
-      `SCID: Psychotic` = pmax(!!!rlang::syms(scid_psych_vars_lif), na.rm = TRUE)
+      `SCID: Substance Use Disorders` = pmax(!!!rlang::syms(scid_sud_vars_lif), na.rm = TRUE),
+      `SCID: Anxiety Disorders` = pmax(!!!rlang::syms(scid_anx_vars_lif), na.rm = TRUE),
+      `SCID: Somatoform Disorders` = pmax(!!!rlang::syms(scid_somatic_vars_lif), na.rm = TRUE),
+      `SCID: Psychotic Symptoms` = pmax(!!!rlang::syms(scid_psych_vars_lif), na.rm = TRUE)
     )
 }

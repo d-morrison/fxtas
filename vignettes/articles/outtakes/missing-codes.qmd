@@ -1,0 +1,4 @@
+
+### Missing codes {.appendix}
+
+The missing codes 777, 888, and 999 were converted to `NA` for all variables, unless noted otherwise below.

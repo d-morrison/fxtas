@@ -14,7 +14,7 @@ table1a(
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1_cgg_55_199 |>
-    filter(`Any tremor (excluding Head Tremor)` == "Some tremors recorded"))
+    filter(`Any tremor (excluding head)` == "Some tremors recorded"))
 ```
 
 

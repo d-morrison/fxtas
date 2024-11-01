@@ -38,3 +38,9 @@ extract_figs_from_pickle(
 \description{
 Extact PVDs from pickle file
 }
+\examples{
+figs = extract_figs_from_pickle(
+  output_folder = "output/SuStaIn-simulated-data",
+  n = 3)
+
+}

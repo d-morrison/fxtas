@@ -2,7 +2,7 @@
 % Please edit documentation in R/run_and_save_OSA.R
 \name{run_and_save_OSA}
 \alias{run_and_save_OSA}
-\title{Run the Ordinal SusTaIn algorithm (OSA) or load results from presaved .rds file if available}
+\title{Run the Ordinal SuStaIn algorithm (OSA) or load results from presaved .rds file if available}
 \usage{
 run_and_save_OSA(
   dataset_name,
@@ -22,6 +22,8 @@ run_and_save_OSA(
 \item{verbose}{\code{\link[=logical]{logical()}} indicating whether to print debugging information}
 
 \item{N_S_max}{maximum number of subtypes, should be 1 or more}
+
+\item{rerun}{whether to force a rerun of the python code}
 
 \item{...}{
   Arguments passed on to \code{\link[=run_OSA]{run_OSA}}
@@ -53,5 +55,5 @@ run_and_save_OSA(
 a \code{\link[=list]{list()}}
 }
 \description{
-Run the Ordinal SusTaIn algorithm (OSA) or load results from presaved .rds file if available
+Run the Ordinal SuStaIn algorithm (OSA) or load results from presaved .rds file if available
 }

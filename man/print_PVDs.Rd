@@ -2,13 +2,16 @@
 % Please edit documentation in R/print_PVDs.R
 \name{print_PVDs}
 \alias{print_PVDs}
-\title{Title}
+\title{Print a list of PVDs}
 \usage{
 print_PVDs(figs)
 }
 \arguments{
-\item{figs}{}
+\item{figs}{a \link{list} of \link[ggplot2:ggplot]{ggplot2::ggplot} objects}
+}
+\value{
+\code{figs}, invisibly
 }
 \description{
-Title
+Print a list of PVDs
 }

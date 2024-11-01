@@ -25,8 +25,8 @@ if(!reticulate::py_module_available("pySuStaIn"))
 #|
 fit_models = TRUE
 # fit_models = FALSE
-run_CV =  TRUE
-run_CV = FALSE
+run_cv =  TRUE
+run_cv = FALSE
 
 N_startpoints = 10L
 N_S_max = 2L
@@ -66,7 +66,7 @@ biomarker_events_table =
 
 control_data =
   df |>
-  filter(`FX*` == "CGG < 55") |>
+  filter(`FX*` == "CGG <55") |>
   select(all_of(biomarker_varnames))
 
 patient_data =
