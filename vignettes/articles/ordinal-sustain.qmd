@@ -108,9 +108,14 @@ output_folder =
 full_data = trax_gp34_v1
 n_missing_CGG = full_data$CGG |> is.na() |> sum()
 n_above_200 = sum(full_data$CGG >= 200, na.rm = TRUE)
-v1_usable = full_data |> filter(CGG < 200) |>
+v1_usable = 
+  full_data |> 
+  filter(CGG < 200) |>
   mutate(`FX3*` = `FX3*` |> forcats::fct_drop() |> 
-           labelled::set_label_attribute("CGG Repeat Level"))
+           labelled::set_label_attribute("CGG Repeat Level"),
+         `FXTAS Stage (0-5)*` = `FXTAS Stage (0-5)*` |> 
+           labelled::set_label_attribute("FXTAS Stage"))
+
 v1_usable_males = v1_usable |> filter(Gender == "Male")
 v1_usable_females = v1_usable |> filter(Gender == "Female")
 v1_usable_cases = v1_usable |> filter(CGG >= 55)
@@ -1057,7 +1062,7 @@ we categorized some `r outcomes_name`s
 that were originally measured as continuous values.
 In doing so, we likely sacrificed some granular information. 
 There are other variations of the SuStaIn algorithm, 
-such as z-score SuStaIn [@young2018uncovering] 
+such as z-score SuStaIn [@young2018uncovering], 
 which are designed to be used with only continuous measurements.
 Further development is warranted to combine Ordinal SuStaIn and z-score SuStaIn
 to fit an event-based model with both continuous and ordinal data. 
@@ -1124,9 +1129,7 @@ Supplementary material is available at Brain online.
 #|    `*`p-values represent tests for sex differences in distributions of 
 #|    characteristics, all CGG repeat levels combined.
 
-v1_usable |> 
-  make_demographics_table() |> 
-  format_demographics_table_as_flextable()
+v1_usable |> make_demographics_table()
 
 ```
 

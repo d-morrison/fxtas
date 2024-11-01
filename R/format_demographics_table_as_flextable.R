@@ -4,9 +4,9 @@
 #' @param ...
 #'
 #' @return
-#' @export
+#' @dev
 #'
-format_demographics_table_as_flextable = function(x,...)
+format_demographics_table_as_flextable = function(x, ...)
 {
   x |>
     gtsummary::as_flex_table() |>
@@ -15,7 +15,7 @@ format_demographics_table_as_flextable = function(x,...)
       part = "header",
       i = 1,
       j = "p.value_2",
-      value = flextable::as_paragraph("M vs. F")
+      value = flextable::as_paragraph("M vs. F (all CGG combined)")
     ) |>
     # update lower header label: 'p-value' to 'p-value*'
     flextable::compose(
