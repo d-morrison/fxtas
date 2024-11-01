@@ -78,7 +78,7 @@ clean_trax_data = function(dataset)
     # clean_ethnicity() |> # fixed upstream during data import
     create_race_ethnicity() |>
 
-    droplevels(
+    drop_levels(
       except = exceptions_to_droplevels
     ) |>
     clean_gender()
