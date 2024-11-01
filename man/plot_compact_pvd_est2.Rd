@@ -7,6 +7,7 @@
 plot_compact_pvd_est2(
   figs,
   tile_height = 1,
+  tile_width = 1,
   y_text_size = 9,
   legend.position = "none",
   scale_colors = c("red", "blue", "purple4", "darkgreen", "magenta")
