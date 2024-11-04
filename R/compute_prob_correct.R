@@ -10,15 +10,30 @@
 #' (easier than fixing all uses of this function)
 #' @export
 #' @examples
-#' control_data <-
-#'    test_data_v1 |>
-#'      filter(`FX*` == "CGG <55") |>
-#'      select(all_of(biomarker_varnames))
-#' prob_correct =
-#'   control_data |>
+#' full_data = test_data_v1
+#' v1_usable = full_data |> dplyr::filter(CGG < 200)
+#'
+#' biomarker_groups = compile_biomarker_groups_table()
+#'
+#' biomarker_varnames =
+#'   biomarker_groups |>
+#'   pull("biomarker")
+#'
+#' biomarker_levels =
+#'   v1_usable |>
+#'   dplyr::select(all_of(biomarker_varnames)) |>
+#'   lapply(F = levels)
+#'
+#' control_data =
+#'   v1_usable |>
+#'   dplyr::filter(`FX*` == "CGG <55") |>
+#'   select(all_of(biomarker_varnames))
+#'
+#' control_data |>
 #'   compute_prob_correct(
 #'     max_prob = .95,
-#'     biomarker_levels = biomarker_levels)
+#'     biomarker_levels = biomarker_levels) |>
+#'   attr("data")
 #'
 #'
 compute_prob_correct = function(dataset, biomarker_levels, max_prob = 1)
@@ -63,10 +78,10 @@ compute_prob_correct = function(dataset, biomarker_levels, max_prob = 1)
 
   to_return = results$prob_correct |>
     structure(
-    class = "prob_correct",
-    data = results
+      class = "prob_correct",
+      data = results
 
-  )
+    )
 
   return(to_return)
 }
@@ -83,17 +98,33 @@ compute_prob_correct = function(dataset, biomarker_levels, max_prob = 1)
 #' @export
 #'
 #' @examples
-#' control_data <-
-#'    test_data_v1 |>
-#'      filter(`FX*` == "CGG <55") |>
-#'      select(all_of(biomarker_varnames))
-#' prob_correct =
+#' full_data = test_data_v1
+#' v1_usable = full_data |> dplyr::filter(CGG < 200)
+#'
+#' biomarker_groups = compile_biomarker_groups_table()
+#'
+#' biomarker_varnames =
+#'   biomarker_groups |>
+#'   pull("biomarker")
+#'
+#' biomarker_levels =
+#'   v1_usable |>
+#'   dplyr::select(all_of(biomarker_varnames)) |>
+#'   lapply(F = levels)
+#'
+#' control_data =
+#'   v1_usable |>
+#'   dplyr::filter(`FX*` == "CGG <55") |>
+#'   select(all_of(biomarker_varnames))
+#'
 #' control_data |>
 #'   compute_prob_correct(
 #'     max_prob = .95,
-#'     biomarker_levels = biomarker_levels)
-#' prob_correct |> pander()
-
+#'     biomarker_levels = biomarker_levels) |>
+#'   attr("data") |>
+#'   pander()
+#'
+#'
 pander.prob_correct = function(x, ...)
 {
   x |>

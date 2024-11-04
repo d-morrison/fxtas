@@ -1,6 +1,6 @@
 test_that("compute_prob_correct() produces consistent results", {
 
-  full_data = trax_gp34_v1
+  full_data = test_data_v1
 
   v1_usable = full_data |> dplyr::filter(CGG < 200)
 
