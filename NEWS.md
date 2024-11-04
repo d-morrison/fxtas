@@ -10,6 +10,8 @@ for latent subtype clustering analysis
 
 ## Analysis
 
+* added info about displayed statistics to rows for `compute_prob_correct()` (#56)
+
 ## Graphics
 
 * added `biomarker_order` argument to `compact_pvd_data_prep()` 
