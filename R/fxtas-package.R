@@ -4,6 +4,7 @@
 ## usethis namespace: start
 #' @importFrom arsenal tableby
 #' @importFrom colorspace qualitative_hcl
+#' @importFrom dplyr all_of
 #' @importFrom dplyr arrange
 #' @importFrom dplyr as_tibble
 #' @importFrom dplyr between
