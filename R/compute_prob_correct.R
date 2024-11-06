@@ -64,7 +64,7 @@ compute_prob_correct <- function(dataset, biomarker_levels, max_prob = 1) {
       `# at baseline` = sum(x == levels(x)[1], na.rm = TRUE),
       `# elevated` = sum(x != levels(x)[1], na.rm = TRUE),
       `% at baseline` = mean(x == levels(x)[1], na.rm = TRUE),
-      prob_correct = `% at baseline` |>
+      prob_correct = .data$`% at baseline` |>
         pmin(max_prob, na.rm = TRUE) |>
         set_names(cur_biomarker)
     )
