@@ -21,17 +21,15 @@ knitr::opts_chunk$set(
 #| label: setup-demos-unstratified
 #| message: false
 library(fxtas)
-# devtools::load_all()
 library(pander)
 library(table1)
 library(dplyr)
 library(magrittr)
 
-# dealing with misssing values:
-NA.label1 = "Missing"
-show_missingness_reasons = FALSE
-footnote1 = 'Codes `777`, `888`, and `999` are counted as "Missing" (NA).'
-
+# dealing with missing values:
+na_label_1 <- "Missing"
+show_missingness_reasons <- FALSE
+footnote1 <- 'Codes `777`, `888`, and `999` are counted as "Missing" (NA).'
 ```
 
 
@@ -40,25 +38,23 @@ footnote1 = 'Codes `777`, `888`, and `999` are counted as "Missing" (NA).'
 ```{r}
 #| label: tbl-tremors
 #| tbl-cap: "Tremors"
-vars = c(
-  
+vars <- c(
   "Intention tremor",
   "Resting tremor",
   "Postural tremor",
   "Intermittent tremor"
-  # "Any tremor (excluding head)"
-  # "Tremor: Age of onset"
-  # if(show_missingness_reasons) "Tremor: Age of onset: missingness reasons"
 )
-table1(na.is.category = FALSE, overall = FALSE,
-       NA.label = NA.label1,
-       stratified_formula(vars, column_var),
-       render.continuous=c(
-         .="N", 
-         .="Mean (SD)", 
-         .="Median [Min, Max]"),
-       data = v1_usable)
-
+table1(
+  na.is.category = FALSE, overall = FALSE,
+  NA.label = na_label_1,
+  stratified_formula(vars, column_var),
+  render.continuous = c(
+    . = "N",
+    . = "Mean (SD)",
+    . = "Median [Min, Max]"
+  ),
+  data = v1_usable
+)
 ```
 
 <br>
@@ -68,28 +64,26 @@ table1(na.is.category = FALSE, overall = FALSE,
 ```{r}
 #| tbl-cap: "Head tremors"
 #| label: tbl-head-tremors
-vars = c(
+vars <- c(
   "Head tremor"
   # "Head Tremor: Age of onset"
-  
 )
 
-footnote_HT <- paste(
+footnote_ht <- paste(
   "Head tremor was not collected in GP3 or Trax Phase 1.",
   "Summaries provided are for GP4 + Trax Phase 2 only."
 )
 
 table1(
-  # footnote = footnote_HT,
-  na.is.category = FALSE, 
+  # footnote = footnote_ht,
+  na.is.category = FALSE,
   overall = FALSE,
-  NA.label = NA.label1,
+  NA.label = na_label_1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = v1_usable |> 
+  data = v1_usable |>
     filter(!(Study %in% c("Trax Phase 1", "GP3")))
-  )
-
+)
 ```
 
 <br>
@@ -100,7 +94,7 @@ table1(
 ```{r}
 #| label: tbl-ataxia-by-cgg
 #| tbl-cap: "Ataxia by CGG status"
-vars = c(
+vars <- c(
   "Ataxia",
   # "Ataxia: severity",
   "Ataxia: severity*"
@@ -108,12 +102,13 @@ vars = c(
   # "Ataxia: Age of onset: missingness reasons"
 )
 
-table1(na.is.category = FALSE, overall = FALSE,
-       NA.label = NA.label1,
-       stratified_formula(vars, column_var),
-       # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-       data = v1_usable)
-
+table1(
+  na.is.category = FALSE, overall = FALSE,
+  NA.label = na_label_1,
+  stratified_formula(vars, column_var),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  data = v1_usable
+)
 ```
 
 <br>
@@ -125,18 +120,18 @@ table1(na.is.category = FALSE, overall = FALSE,
 ```{r}
 #| label: tbl-parkinsons-by-cgg
 #| tbl-cap: "Parkinsons by CGG status"
-vars = grep("Parkinson", value = TRUE, names(trax_gp34_all))
+vars <- grep("Parkinson", value = TRUE, names(trax_gp34_all))
 
-if(!show_missingness_reasons) 
-{
-  vars = vars |> remove_missingness_reason_vars()
+if (!show_missingness_reasons) {
+  vars <- vars |> remove_missingness_reason_vars()
 }
 
-table1(na.is.category = FALSE, overall = FALSE,
-       NA.label = NA.label1,
-       stratified_formula(vars, column_var),
-       data = v1_usable)
-
+table1(
+  na.is.category = FALSE, overall = FALSE,
+  NA.label = na_label_1,
+  stratified_formula(vars, column_var),
+  data = v1_usable
+)
 ```
 
 ### FXTAS Stage {.appendix}
@@ -144,24 +139,25 @@ table1(na.is.category = FALSE, overall = FALSE,
 ```{r}
 #| label: tbl-fxtas-stage-by-cgg
 #| tbl-cap: "FXTAS Stage by CGG level"
-vars = c(
+vars <- c(
   "FXTAS Stage (0-5)*",
-  if(show_missingness_reasons) "FXTAS Stage (0-5)*: missingness reasons"
+  if (show_missingness_reasons) "FXTAS Stage (0-5)*: missingness reasons"
 )
 
-table1(na.is.category = FALSE, overall = FALSE,
-       NA.label = NA.label1,
-       stratified_formula(vars, column_var),
-       # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-       # footnote = "For categorical analysis, we merged 2.5 into 2, 3.5 into 4, and 4.5 into 5.",
-       data = v1_usable)
+table1(
+  na.is.category = FALSE, overall = FALSE,
+  NA.label = na_label_1,
+  stratified_formula(vars, column_var),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  data = v1_usable
+)
 
-# trax_gp34_all |> 
-#   filter(`FXTAS Stage (0-5)` %in% c(NA, "No Response (999)", "Missing (empty in RedCap)")) |> 
-#   select(`FXS ID`, `Event Name`, `Visit Date`) |> 
-#   arrange() |> 
-#   readr::write_csv("inst/extdata/missing_FXTAS_stage.csv")
-
+trax_gp34_all |>
+  filter(`FXTAS Stage (0-5)` %in%
+           c(NA, "No Response (999)", "Missing (empty in RedCap)")) |>
+  select(`FXS ID`, `Event Name`, `Visit Date`) |>
+  arrange() |>
+  readr::write_csv("inst/extdata/missing_FXTAS_stage.csv")
 ```
 
 ### Behavior Dyscontrol Scale - Second Edition (BDS-2) {.appendix}
@@ -169,16 +165,17 @@ table1(na.is.category = FALSE, overall = FALSE,
 ```{r}
 #| label: tbl-bds2
 #| tbl-cap: "Behavior Dyscontrol Scale - Second Edition (BDS-2)"
-vars = c("BDS-2 Total Score", "BDS-2 Total Score*")
+vars <- c("BDS-2 Total Score", "BDS-2 Total Score*")
 
 
-table1(na.is.category = FALSE, overall = FALSE,
-       NA.label = NA.label1,
-       stratified_formula(vars, column_var),
-       # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-       # footnote = footnote1,
-       data = v1_usable)
-
+table1(
+  na.is.category = FALSE, overall = FALSE,
+  NA.label = na_label_1,
+  stratified_formula(vars, column_var),
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  # footnote = footnote1,
+  data = v1_usable
+)
 ```
 
 ### Mini-Mental State Examination (MMSE)  {.appendix}
@@ -187,23 +184,25 @@ table1(na.is.category = FALSE, overall = FALSE,
 #| label: tbl-mmse
 #| tbl-cap: "Mini-Mental State Examination (MMSE)"
 # vars = grep(
-#   "MMSE total score", 
-#   value = TRUE, 
-#   names(trax_gp34_all), 
+#   "MMSE total score",
+#   value = TRUE,
+#   names(trax_gp34_all),
 #   fixed = TRUE)
 
-vars = c(
-  "MMSE total score", 
-  # "MMSE total score: missingness reasons", 
-  "MMSE total score*")
+vars <- c(
+  "MMSE total score",
+  # "MMSE total score: missingness reasons",
+  "MMSE total score*"
+)
 
-table1(na.is.category = FALSE, overall = FALSE,
-       NA.label = NA.label1,
-       stratified_formula(vars, column_var),
-       # footnote = footnote1,
-       # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-       data = v1_usable)
-
+table1(
+  na.is.category = FALSE, overall = FALSE,
+  NA.label = na_label_1,
+  stratified_formula(vars, column_var),
+  # footnote = footnote1,
+  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+  data = v1_usable
+)
 ```
 
 ### Structured Clinical Interview for DSM Disorders (SCID)  {.appendix}
@@ -211,15 +210,15 @@ table1(na.is.category = FALSE, overall = FALSE,
 ```{r}
 #| label: tbl-scid
 #| tbl-cap: "Structured Clinical Interview for DSM Disorders (SCID)"
-vars = scid_vars_for_table1()
+vars <- scid_vars_for_table1()
 
 table1(
   na.is.category = FALSE, overall = FALSE,
-  NA.label = NA.label1,
+  NA.label = na_label_1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = v1_usable)
-
+  data = v1_usable
+)
 ```
 
 
@@ -229,7 +228,7 @@ table1(
 ```{r}
 #| label: tbl-mri
 #| tbl-cap: "**MRI variables by Sex and CGG level**"
-vars = c(
+vars <- c(
   # "Cerebral Atrophy",
   # "Cerebellar Atrophy",
   # "Cerebral WM Hyperintensity",
@@ -246,13 +245,13 @@ vars = c(
 )
 
 table1(
-  na.is.category = FALSE, 
+  na.is.category = FALSE,
   overall = FALSE,
-  NA.label = NA.label1,
+  NA.label = na_label_1,
   droplevels = FALSE,
   x = stratified_formula(vars, column_var),
-  data = v1_usable)
-
+  data = v1_usable
+)
 ```
 
 ### Cambridge Neuropsychological Test Automated Battery (CANTAB)  {.appendix}
@@ -262,14 +261,14 @@ We used categorization cutoffs taken from [@talebi2020cambridge].
 ```{r}
 #| label: tbl-cantab
 #| tbl-cap: "Cambridge Neuropsychological Test Automated Battery (CANTAB)"
-#| 
+#|
 # table1(na.is.category = FALSE, overall = FALSE,
-#   NA.label = NA.label1,
+#   NA.label = na_label_1,
 #   stratified_formula("Drugs used", column_var),
 #   data = v1_usable)
 
 
-cantab_vars = c(
+cantab_vars <- c(
   "SWM Between errors",
   "SWM Between errors*",
   # "SST Median correct RT on GO trials",
@@ -279,17 +278,28 @@ cantab_vars = c(
   "PAL Total errors (adjusted)",
   "PAL Total errors (adjusted)*",
   "RTI Five-choice movement time",
-  "RTI Five-choice movement time*") 
-# > 
-#   sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(v1_usable))) |> 
-# as.vector()
+  "RTI Five-choice movement time*"
+)
+# >
+# sapply(
+#   F = function(x)
+#     grep(
+#       value =  TRUE,
+#       fixed = TRUE,
+#       pattern = x,
+#       x = names(v1_usable)
+#     )
+# ) |>
+#   as.vector()
 
 table1::t1flex(
-  table1(na.is.category = FALSE, overall = FALSE,
-       NA.label = "Missing (empty in RedCap)",
-       stratified_formula(cantab_vars, column_var),
-       # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-       data = v1_usable)
+  table1(
+    na.is.category = FALSE, overall = FALSE,
+    NA.label = "Missing (empty in RedCap)",
+    stratified_formula(cantab_vars, column_var),
+    # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
+    data = v1_usable
+  )
 ) |>
   flextable::width(
     width = 2
@@ -298,8 +308,6 @@ table1::t1flex(
     j = 2:7,
     width = 1.25
   )
-
-
 ```
 
 ### Thyroid and autoimmune diseases  {.appendix}
@@ -307,7 +315,7 @@ table1::t1flex(
 ```{r}
 #| label: tbl-autoimmune
 #| tbl-cap: "Thyroid and autoimmune diseases"
-vars = c(
+vars <- c(
   "Hypothyroid",
   "Hyperthyroid",
   # "Thyroid problems",
@@ -322,9 +330,10 @@ vars = c(
 )
 
 table1(
-  na.is.category = FALSE, 
+  na.is.category = FALSE,
   overall = FALSE,
-  NA.label = NA.label1,
+  NA.label = na_label_1,
   stratified_formula(vars, column_var),
-  data = v1_usable)
+  data = v1_usable
+)
 ```
