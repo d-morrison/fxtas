@@ -1,6 +1,6 @@
 Package: fxtas
 Title: FXTAS
-Version: 0.0.0.9004
+Version: 0.0.0.9005
 Authors@R: 
     person("Douglas Ezra", "Morrison", , "demorrison@ucdavis.edu", role = c("cre", "aut"))
 Description: PKG_DESC.
@@ -37,6 +37,7 @@ Imports:
     readr,
     readxl,
     reticulate,
+    rlang,
     shiny (>= 1.7.2),
     splitTools,
     ssdtools (>= 2.0.0),

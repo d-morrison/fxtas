@@ -47,7 +47,6 @@ Likert
 MCP
 MMSE
 MOCA
-ModelFitting
 Multivisit
 NICHD
 NINDS
@@ -61,12 +60,12 @@ OSA
 Opioid
 Oxtoby
 Oxtoby's
-Pandoc
 PDD
 PNS
 PVD
 PVD's
 PVDs
+Pandoc
 Parkinsonian
 Parkinsons
 Periventricular
@@ -94,6 +93,7 @@ Subtype
 Subtypes
 TRAX
 Trax
+UC
 VCI
 Vogel
 WAIS
@@ -110,11 +110,10 @@ backfilled
 biomarker
 biomarker's
 biomarkers
-callout
 callosum
+callout
 cgg
 codebase
-conda
 de
 decapitalized
 dichotomizes
@@ -130,6 +129,7 @@ ggplot
 github
 golem
 gp
+gtsummary
 https
 hyperintensity
 ij
@@ -154,7 +154,6 @@ neuropathy
 neuropsychological
 newpage
 nrow
-overfit
 pagebreak
 parallelize
 parkinsonian
