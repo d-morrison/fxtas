@@ -4,7 +4,7 @@ test_that("`table_subtype_by_demographics()` produces consistent results",
             table = test_subtype_and_stage_table
             set.seed(1)
             table_subtype_by_demographics(patient_data, table) |>
-              print(print_engine = "kable") |>
+              print(print_engine = "gt") |>
               expect_snapshot()
 
           })

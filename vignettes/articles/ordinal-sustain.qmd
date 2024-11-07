@@ -269,7 +269,7 @@ thus capturing heterogeneity in both disease subtype and disease stage.
 
 Ordinal SuStaIn [@young2021ordinal] is 
 a version of the SuStaIn modeling algorithm [@young2018uncovering],
-adapted for analyzing ordinal-valued data using a scored events model.
+adapted for analyzing ordinal-valued data.
 Ordinal SuStaIn uses a "scored events model", 
 which assumes that for each `r outcomes_name`,
 there is a discrete set of 
@@ -836,22 +836,6 @@ n_type_0 = results_cv_max$subtype_and_stage_table |>
 
 ```
 
-```{r}
-#| label: build-tbl-sg-demos
-set.seed(2)
-tbl_sg_demos = table_subtype_by_demographics(
-  patient_data,
-  subtype_and_stage_table =
-    results_cv_max$subtype_and_stage_table,
-  digits = list(
-    CGG = 1,
-    `FX3*` = c(0, 1),
-    Gender = c(0, 1),
-    `Primary Race/Ethnicity` = c(0, 1)
-  )
-)
-```
-
 @fig-pvd_chosen_subtypes shows the estimated sequential event orders
 for each of the subtype clusters 
 and differences in event sequences between subtypes. 
@@ -1150,6 +1134,22 @@ flex_biomarkers_table(biomarkers_table)
 :::
 
 ```{r}
+#| label: build-tbl-sg-demos
+set.seed(2)
+tbl_sg_demos = table_subtype_by_demographics(
+  patient_data,
+  subtype_and_stage_table =
+    results_cv_max$subtype_and_stage_table,
+  digits = list(
+    CGG = 1,
+    `FX3*` = c(0, 1),
+    Gender = c(0, 1),
+    `Primary Race/Ethnicity` = c(0, 1)
+  )
+)
+```
+
+```{r}
 #| tbl-cap: !expr 
 #|     glue::glue(
 #|        "**Demographics of {n_s_selected} latent subtype clusters 
@@ -1162,7 +1162,6 @@ flex_biomarkers_table(biomarkers_table)
 
 
 tbl_sg_demos |>
-  gtsummary::separate_p_footnotes() |>
   gtsummary::as_flex_table() |>
   flextable::width(width = 1.75) |>
   flextable::width(j = 2:6, width = 0.75) |>

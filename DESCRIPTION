@@ -11,6 +11,7 @@ Imports:
     and,
     arsenal,
     broman,
+    cardx (>= 0.2.1.9012),
     cli,
     colorspace,
     config (>= 0.3.1),
@@ -25,7 +26,7 @@ Imports:
     ggtext,
     glue,
     golem (>= 0.3.4),
-    gtsummary,
+    gtsummary (>= 2.0.3.9003),
     here,
     labelled,
     magrittr,
@@ -76,7 +77,9 @@ Config/reticulate/autoconfigure:
   )
 Config/build/copy-method: link
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
-Remotes: 
+Remotes:  
     bcgov/ssdtools,
-    moodymudskipper/devtag
+    moodymudskipper/devtag,
+    mponzini/gtsummary@dev,
+    insightsengineering/cardx
 Config/Needs/build: moodymudskipper/devtag
