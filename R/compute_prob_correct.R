@@ -125,15 +125,15 @@ pander.prob_correct <- function(x, ...) {
   x |>
     attr("data") |>
     mutate(
-      `% at baseline` = round(`% at baseline` * 100, 1) |> paste0("%"),
-      prob_correct = round(prob_correct * 100, 1) |> paste0("%")
+      `% at baseline` = round(.data$`% at baseline` * 100, 1) |> paste0("%"),
+      prob_correct = round(.data$prob_correct * 100, 1) |> paste0("%")
     ) |>
     select(
-      Biomarker = biomarker,
-      `# controls with data` = `# obs`,
-      `# at baseline`,
-      `% at baseline`,
-      "Est. Pr(correct)" = prob_correct
+      Biomarker = .data$biomarker,
+      `# controls with data` = .data$`# obs`,
+      .data$`# at baseline`,
+      .data$`% at baseline`,
+      "Est. Pr(correct)" = .data$prob_correct
     ) |>
     pander::pander()
 }
