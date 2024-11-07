@@ -62,6 +62,7 @@
 #' @importFrom reticulate import
 #' @importFrom reticulate iterate
 #' @importFrom reticulate py_load_object
+#' @importFrom rlang .data
 #' @importFrom splitTools create_folds
 #' @importFrom table1 table1
 #' @importFrom tibble column_to_rownames
