@@ -20,7 +20,10 @@ table_subtype_by_demographics = function(
 
   patient_data2 =
     patient_data |>
-    bind_cols(subtype_and_stage_table)
+    bind_cols(subtype_and_stage_table) |>
+    mutate("Male" = .data$Gender == "Male",
+           "CGG 100-199" = .data$`FX3*` == "CGG 100-199",
+           "CGG 55-99" = .data$`FX3*` == "CGG 55-99")
 
   # simulated_fisher <- function(data, variable, by, ...){
   #   data <- data[c(variable, by)]
@@ -31,14 +34,21 @@ table_subtype_by_demographics = function(
   #     broom::tidy()
   # }
 
+
+
   to_return =
     patient_data2 |>
     filter(ml_subtype != "Type 0") |>
     drop_levels() |>
-    dplyr::select(ml_subtype, CGG, `FX3*`, Gender, `Primary Race/Ethnicity`) |>
+    dplyr::select(
+      all_of(
+        c(
+      "ml_subtype", "CGG", "CGG 55-99", "Male", "Primary Race/Ethnicity"))) |>
     gtsummary::tbl_summary(
       by = ml_subtype,
       percent = "column", # revert back to column percentages
+      # type = list(Gender ~ "dichotomous"),
+      # value = list(Gender ~ "Female"),
       statistic = list(
         gtsummary::all_continuous() ~ "{mean} ({sd})"
       ),
@@ -55,13 +65,16 @@ table_subtype_by_demographics = function(
     gtsummary::add_stat_label(location = "row") |>
     gtsummary::add_overall() |>
     gtsummary::modify_footnote(
-      gtsummary::all_stat_cols() ~ "n (column %)")
-  # |>
-  #   gtsummary::separate_p_footnotes(
-  #     footnote_prefix = "Group comparison was done by"
-    # )
+      gtsummary::all_stat_cols() ~ "n (column %)") |>
+    gtsummary::separate_p_footnotes(
+      footnote_prefix = "Group comparison was done by"
+  )
 
-  # to_return$table_body[]
+  # to_return$table_body[1, "stat_1"] =
+  #   paste(to_return$table_body[1, "stat_1"], "#")
+  #
+  # to_return$table_body[1, "stat_1"] =
+  #   paste(to_return$table_body[1, "stat_1"], "#")
 
   # to_return = to_return
   return(to_return)
