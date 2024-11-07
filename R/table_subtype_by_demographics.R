@@ -31,7 +31,8 @@ table_subtype_by_demographics = function(
   #     broom::tidy()
   # }
 
-  patient_data2 |>
+  to_return =
+    patient_data2 |>
     filter(ml_subtype != "Type 0") |>
     drop_levels() |>
     dplyr::select(ml_subtype, CGG, `FX3*`, Gender, `Primary Race/Ethnicity`) |>
@@ -54,9 +55,15 @@ table_subtype_by_demographics = function(
     gtsummary::add_stat_label(location = "row") |>
     gtsummary::add_overall() |>
     gtsummary::modify_footnote(
-      gtsummary::all_stat_cols() ~ "n (column %)") |>
-    gtsummary::separate_p_footnotes(
-      footnote_prefix = "Group comparison was done by "
-    )
+      gtsummary::all_stat_cols() ~ "n (column %)")
+  # |>
+  #   gtsummary::separate_p_footnotes(
+  #     footnote_prefix = "Group comparison was done by"
+    # )
+
+  # to_return$table_body[]
+
+  # to_return = to_return
+  return(to_return)
 
 }
