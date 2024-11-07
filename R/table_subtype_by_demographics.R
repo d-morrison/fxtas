@@ -53,5 +53,10 @@ table_subtype_by_demographics = function(
     ) |>
     gtsummary::add_stat_label(location = "row") |>
     gtsummary::add_overall() |>
-    gtsummary::modify_footnote(gtsummary::all_stat_cols() ~ "n (column %)")
+    gtsummary::modify_footnote(
+      gtsummary::all_stat_cols() ~ "n (column %)") |>
+    gtsummary::separate_p_footnotes(
+      footnote_prefix = "Group comparison was done by "
+    )
+
 }
