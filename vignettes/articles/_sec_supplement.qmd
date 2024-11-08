@@ -64,7 +64,7 @@ indicates that the estimated models are plausible.
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
 #| label: fig-mcmc-loglik
-#| fig-cap: log-likelihoods of MCMC samples, by number of subtypes
+#| fig-cap: **log-likelihoods of MCMC samples, by number of subtypes**
 #| eval: !expr fit_models
 
 lliks = results_v1 |>
@@ -101,7 +101,7 @@ stages |>
 ::: landscape
 
 ```{r}
-#| fig-cap: "Selection criteria for number of latent subtypes"
+#| fig-cap: "**Selection criteria for number of latent subtypes**"
 #| fig-subcap:
 #|    - "Cross-validation information criterion"
 #|    - "Test set log-likelihood across folds"
@@ -132,13 +132,13 @@ temp$loglike_matrix |> plot_cv_loglik()
 #| layout-ncol: 1
 #| layout-nrow: 6
 #| fig-subcap: 
-#|    - "Positional variance diagrams by latent subtype."
-#|    - "Subtype 1 compared to Subtype 2"
-#|    - "Subtype 1 compared to Subtype 3"
-#|    - "Subtype 1 compared to Subtype 4"
-#|    - "Subtype 2 compared to Subtype 3"
-#|    - "Subtype 2 compared to Subtype 4"
-#|    - "Subtype 3 compared to Subtype 4"
+#|    - "**Positional variance diagrams by latent subtype.**"
+#|    - "**Subtype 1 compared to Subtype 2**"
+#|    - "**Subtype 1 compared to Subtype 3**"
+#|    - "**Subtype 1 compared to Subtype 4**"
+#|    - "**Subtype 2 compared to Subtype 3**"
+#|    - "**Subtype 2 compared to Subtype 4**"
+#|    - "**Subtype 3 compared to Subtype 4**"
 #| column: page
 #| 
 figs = extract_figs_from_pickle(

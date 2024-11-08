@@ -72,7 +72,10 @@ events_name = "symptomatic events"
 outcomes_name_sentence_start = stringr::str_to_sentence(outcomes_name)
 
 compact_fig_caption <- paste(
-  "Positional variance diagrams of estimated event sequences models and uncertainty.",
+  "Positional variance diagrams of",
+  "estimated event sequences models and uncertainty.",
+  "The different colors (red, blue, purple, green, magenta)",
+  "indicate the ordinal levels of symptom progression.",
   "Color intensity represents the likelihood of sequence position.",
   "The brighter the color, the more likely that the corresponding",
   outcomes_name,
@@ -81,7 +84,7 @@ compact_fig_caption <- paste(
 
 compact_fig_cap2 = glue::glue(
   "Red lines indicate {outcomes_name}s that moved to later positions ",
-  "between the left-hand subgroup and the right-hand subgroup.",
+  "between the left-hand subgroup and the right-hand subgroup. ",
   "Blue lines indicate ",
   "{outcomes_name}s that moved to earlier positions. ",
   "Line opacity levels indicate the number of positions changed ",
@@ -411,10 +414,12 @@ cannot be determined by the method we used for this analysis.
 The PVD's color scale indicates the Bayesian posterior probability that 
 a particular event (y-axis) 
 appears at a particular position along the progression sequence (x-axis). 
+The different colors (red, blue, purple, green, magenta)
+indicate the ordinal levels of symptom progression.
 Color intensity presents the likelihood of sequence position. 
 That is, a brighter color indicates a more probable sequence position, 
 and a paler color indicates a less probable position. 
-The colors indicate the ordinal levels of progression.
+
 
 ## Software
 
@@ -1223,7 +1228,9 @@ pvd_lineplot(y_text_size = 11)
 #| fig-cap: !expr 
 #|     glue::glue(
 #|     "**Event sequences for {n_s_selected} latent subtypes.**
-#|     Opacity shows certainty of positioning (more opaque = more certainty).")
+#|     Brightness shows certainty of positioning (brighter = more certainty).
+#|     The different colors (red, blue, purple, green, magenta)
+#|     indicate the ordinal levels of symptom progression.")
 #| fig-cap-location: top
 
 figs = extract_figs_from_pickle(
