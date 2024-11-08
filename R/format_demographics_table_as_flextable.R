@@ -1,11 +1,12 @@
-#' Title
+#' Format the demographics table as a flextable
 #'
-#' @param x
-#' @param ...
+#' @param x a [gtsummary::gtsummary] object
+#' @param ... not used
 #'
-#' @return
+#' @returns a [flextable::flextable]
 #' @dev
-#'
+#' test_data_v1 |> make_demographics_table() |>
+#' format_demographics_table_as_flextable()
 format_demographics_table_as_flextable = function(x, ...)
 {
   x |>
@@ -27,3 +28,4 @@ format_demographics_table_as_flextable = function(x, ...)
     # reset p-value header column to bold font
     flextable::bold(part = "header", j = 6)
 }
+

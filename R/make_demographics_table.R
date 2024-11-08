@@ -66,18 +66,8 @@ make_demographics_table = function(data)
         gtsummary::style_number(x, digits = 3)
     ) |>
     gtsummary::modify_column_hide(columns = c(stat_1, stat_2)) |>
-    gtsummary::separate_p_footnotes()
-
-  tbl_pval$table_styling$footnote =
-    tbl_pval$table_styling$footnote |>
-    mutate(footnote =
-             footnote |>
-             dplyr::case_match(
-               "Wilcoxon rank sum test" ~ "p-value for significance of sex difference by Wilcoxon rank sum test",
-               "Fisher's exact test" ~ "p-value for significance of sex difference by Fisher's exact test",
-               .default = footnote
-
-             ))
+    gtsummary::separate_p_footnotes(
+      footnote_prefix = "p-value for significance of sex difference by ")
 
   to_return = list(tbl_stat, tbl_pval) |>
     gtsummary::tbl_merge(tab_spanner = FALSE) |>
