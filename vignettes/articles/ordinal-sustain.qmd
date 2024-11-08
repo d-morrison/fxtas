@@ -165,7 +165,7 @@ nlevs =
 [Target journal: 
 [Brain (Original Articles)](https://academic.oup.com/brain/pages/general_instructions).
 Word limit for main text: 6000.
-Display items: 8.]{.mark}
+Figure + table limit: 8.]{.mark}
 
 {{< pagebreak >}}
 
