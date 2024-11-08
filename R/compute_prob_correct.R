@@ -73,7 +73,25 @@ compute_prob_correct <- function(dataset, biomarker_levels, max_prob = 1) {
       bind_rows(cur_results)
   }
 
-  to_return <- results$prob_correct |>
+  probs = results$prob_correct
+
+  results <-
+    results |>
+    mutate(
+      `% at baseline` = round(.data$`% at baseline` * 100, 1) |> paste0("%"),
+      prob_correct = round(.data$prob_correct * 100, 1) |> paste0("%")
+    ) |>
+    select(
+      all_of(
+        c(
+      Biomarker = "biomarker",
+      `# controls with data` = "# obs",
+      "# at baseline",
+      "% at baseline",
+      "Est. Pr(correct)" = "prob_correct"
+    )))
+
+  to_return <- probs |>
     structure(
       class = "prob_correct",
       data = results
@@ -124,16 +142,5 @@ compute_prob_correct <- function(dataset, biomarker_levels, max_prob = 1) {
 pander.prob_correct <- function(x, ...) {
   x |>
     attr("data") |>
-    mutate(
-      `% at baseline` = round(.data$`% at baseline` * 100, 1) |> paste0("%"),
-      prob_correct = round(.data$prob_correct * 100, 1) |> paste0("%")
-    ) |>
-    select(
-      Biomarker = .data$biomarker,
-      `# controls with data` = .data$`# obs`,
-      .data$`# at baseline`,
-      .data$`% at baseline`,
-      "Est. Pr(correct)" = .data$prob_correct
-    ) |>
     pander::pander()
 }
