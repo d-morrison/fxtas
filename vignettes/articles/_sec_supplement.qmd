@@ -5,20 +5,23 @@ estimated using the controls data.
 ```{r}
 #| label: tbl-prob-correct
 #| tbl-cap: |
-#|   **Proportions of controls at baseline levels, and 
-#|   corresponding estimates of probability of correct scoring.**
+#|   **Proportions of controls at baseline levels, 
+#|   and corresponding estimates of 
+#|   probability of correct scoring.**
+#|   All controls are assumed to be truly 
+#|   at the reference levels for each symptom, 
+#|   and the proportion of correctly scored individuals 
+#|   is thus estimated as 
+#|   the proportion of controls 
+#|   who were assessed as being 
+#|   at the reference level.
 
 library(flextable)
 prob_correct |>
-    attr("data") |>
-    mutate(
-      replace_
-      `Ataxia: severity*` = 
-       `Ataxia: severity*` |> labelled::set_label_attribute("Ataxia severity"),
-    )
-    flextable::as_flextable() |> 
+  attr("data") |>
+  flextable::flextable() |> 
   bold(part = "header") |> 
-  flextable::delete_part(part = "footer")
+  width(width = 1)
 ```
 
 
