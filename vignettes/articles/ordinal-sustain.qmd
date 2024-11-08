@@ -1174,6 +1174,8 @@ tbl_sg_demos |>
 
 ```
 
+{{< pagebreak >}}
+
 # Figures {.unnumbered}
 
 ```{r}
