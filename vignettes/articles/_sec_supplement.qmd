@@ -102,6 +102,90 @@ temp$loglike_matrix |> plot_cv_loglik()
 
 :::
 
+
+{{< pagebreak >}}
+
+```{r}
+#| label: fig-pvd_chosen_subtypes_linegraphs
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: !expr 
+#|     glue::glue(
+#|     "**Event sequences for {n_s_selected} latent subtypes.**
+#|     **(a)** {compact_fig_caption} 
+#|     **(b-d)** Differences in event sequences of subtypes 
+#|     2-{n_s_selected} compared to subtype 1.") 
+#| fig-cap-location: top
+#| layout-ncol: 1
+#| layout-nrow: 6
+#| fig-subcap: 
+#|    - "Positional variance diagrams by latent subtype."
+#|    - "Subtype 1 compared to Subtype 2"
+#|    - "Subtype 1 compared to Subtype 3"
+#|    - "Subtype 1 compared to Subtype 4"
+#|    - "Subtype 2 compared to Subtype 3"
+#|    - "Subtype 2 compared to Subtype 4"
+#|    - "Subtype 3 compared to Subtype 4"
+#| column: page
+#| 
+figs = extract_figs_from_pickle(
+  size.y = size.y,
+  n_s = n_s_selected,
+  dataset_name = dataset_name,
+  output_folder = output_folder)
+
+pvd_lineplot(
+  figs = list(
+    "Subtype 1" = figs[[1]],
+    "Subtype 2" = figs[[2]]
+  )
+)
+
+pvd_lineplot(
+  figs = list(
+    figs[[1]],
+    figs[[3]]
+  ),
+  facet_labels = c("Subtype 1", "Subtype 3")
+)
+
+pvd_lineplot(
+  figs = list(
+    figs[[1]],
+    figs[[4]]
+  ),
+  facet_labels = c("Subtype 1", "Subtype 4")
+)
+
+pvd_lineplot(
+  figs = list(
+    figs[[2]],
+    figs[[3]]
+  ),
+  facet_labels = c("Subtype 2", "Subtype 3")
+)
+
+pvd_lineplot(
+  figs = list(
+    figs[[2]],
+    figs[[4]]
+  ),
+  facet_labels = c("Subtype 2", "Subtype 4")
+)
+
+pvd_lineplot(
+  figs = list(
+    figs[[3]],
+    figs[[4]]
+  ),
+  facet_labels = c("Subtype 3", "Subtype 4")
+)
+
+```
+
+{{< pagebreak >}}
+
+
 ## Analyses stratified by CGG repeats {.appendix #sec-methods-strat-cgg}
 
 {{< include _results_by_cgg.qmd >}}
