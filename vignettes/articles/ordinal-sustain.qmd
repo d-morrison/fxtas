@@ -1230,9 +1230,7 @@ pvd_lineplot(y_text_size = 11)
 #| fig-cap: !expr 
 #|     glue::glue(
 #|     "**Event sequences for {n_s_selected} latent subtypes.**
-#|     Brightness shows certainty of positioning (brighter = more certainty).
-#|     The different colors (red, blue, purple, green, magenta)
-#|     indicate the ordinal levels of symptom progression.")
+#|     {compact_fig_caption}")
 #| fig-cap-location: top
 
 figs = extract_figs_from_pickle(
