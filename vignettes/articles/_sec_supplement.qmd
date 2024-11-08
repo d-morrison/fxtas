@@ -8,7 +8,17 @@ estimated using the controls data.
 #|   **Proportions of controls at baseline levels, and 
 #|   corresponding estimates of probability of correct scoring.**
 
-prob_correct |> pander::pander()
+library(flextable)
+prob_correct |>
+    attr("data") |>
+    mutate(
+      replace_
+      `Ataxia: severity*` = 
+       `Ataxia: severity*` |> labelled::set_label_attribute("Ataxia severity"),
+    )
+    flextable::as_flextable() |> 
+  bold(part = "header") |> 
+  flextable::delete_part(part = "footer")
 ```
 
 

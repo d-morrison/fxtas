@@ -79,7 +79,14 @@ compute_prob_correct <- function(dataset, biomarker_levels, max_prob = 1) {
     results |>
     mutate(
       `% at baseline` = round(.data$`% at baseline` * 100, 1) |> paste0("%"),
-      prob_correct = round(.data$prob_correct * 100, 1) |> paste0("%")
+      prob_correct = round(.data$prob_correct * 100, 1) |> paste0("%"),
+      biomarker = .data$biomarker |>
+        stringr::str_replace(
+        stringr::fixed("Ataxia: severity*"), "Ataxia: severity"
+      ) |>
+        stringr::str_replace(
+          stringr::fixed("FXTAS Stage (0-5)*"), "FXTAS Stage"
+        )
     ) |>
     select(
       all_of(
