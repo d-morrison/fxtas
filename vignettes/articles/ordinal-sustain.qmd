@@ -784,7 +784,7 @@ and CGG ≥100 among males (p = `r pval_male_cgg_gp34_v1`)
 SWM between errors occurred prior to Stage 1 in males with CGG repeats <100, 
 whereas it occurred between stage 3 and 4 
 in males with CGG repeats ≥ 100 
-(@fig-pvd-by-cgg-male-2). 
+([Supplementary Figure @fig-pvd-by-cgg-male-2]). 
 Postural, 
 resting, 
 and intermittent tremor 

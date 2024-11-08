@@ -74,6 +74,8 @@ lliks |>
 
 ```
 
+{{< pagebreak >}}
+
 ```{r}
 #| label: fig-stage-by-age
 #| fig-cap: |
