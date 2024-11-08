@@ -2,14 +2,18 @@
 % Please edit documentation in R/format_demographics_table_as_flextable.R
 \name{format_demographics_table_as_flextable}
 \alias{format_demographics_table_as_flextable}
-\title{Title}
+\title{Format the demographics table as a flextable}
 \usage{
 format_demographics_table_as_flextable(x, ...)
 }
 \arguments{
-\item{...}{}
+\item{x}{a \link[gtsummary:gtsummary-package]{gtsummary::gtsummary} object}
+
+\item{...}{not used}
+}
+\value{
+a \link[flextable:flextable]{flextable::flextable}
 }
 \description{
-Title
+Format the demographics table as a flextable
 }
-\keyword{internal}
