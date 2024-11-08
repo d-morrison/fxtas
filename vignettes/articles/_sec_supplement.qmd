@@ -64,7 +64,7 @@ indicates that the estimated models are plausible.
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
 #| label: fig-mcmc-loglik
-#| fig-cap: **log-likelihoods of MCMC samples, by number of subtypes**
+#| fig-cap: "**log-likelihoods of MCMC samples, by number of subtypes**"
 #| eval: !expr fit_models
 
 lliks = results_v1 |>
