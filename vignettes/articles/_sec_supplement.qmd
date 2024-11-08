@@ -5,10 +5,23 @@ estimated using the controls data.
 ```{r}
 #| label: tbl-prob-correct
 #| tbl-cap: |
-#|   **Proportions of controls at baseline levels, and 
-#|   corresponding estimates of probability of correct scoring.**
+#|   **Proportions of controls at baseline levels, 
+#|   and corresponding estimates of 
+#|   probability of correct scoring.**
+#|   All controls are assumed to be truly 
+#|   at the reference levels for each symptom, 
+#|   and the proportion of correctly scored individuals 
+#|   is thus estimated as 
+#|   the proportion of controls 
+#|   who were assessed as being 
+#|   at the reference level.
 
-prob_correct |> pander::pander()
+library(flextable)
+prob_correct |>
+  attr("data") |>
+  flextable::flextable() |> 
+  bold(part = "header") |> 
+  width(width = 1)
 ```
 
 
@@ -48,10 +61,8 @@ The upwards trend of progression stage with age
 indicates that the estimated models are plausible.
 
 ```{r}
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
 #| label: fig-mcmc-loglik
-#| fig-cap: log-likelihoods of MCMC samples, by number of subtypes
+#| fig-cap: "**log-likelihoods of MCMC samples, by number of subtypes**"
 #| eval: !expr fit_models
 
 lliks = results_v1 |>
@@ -63,14 +74,15 @@ lliks |>
 
 ```
 
+{{< pagebreak >}}
+
 ```{r}
 #| label: fig-stage-by-age
 #| fig-cap: |
 #|    **Estimated progression stage by age and latent subtype.**
 #|    The blue line is a Locally Estimated Scatterplot Smoothing (LOESS)
 #|    non-parametric regression curve.
-#|
-#| include: true
+
 
 stages =
   results_cv_max$subtype_and_stage_table |>
@@ -88,7 +100,7 @@ stages |>
 ::: landscape
 
 ```{r}
-#| fig-cap: "Selection criteria for number of latent subtypes"
+#| fig-cap: "**Selection criteria for number of latent subtypes**"
 #| fig-subcap:
 #|    - "Cross-validation information criterion"
 #|    - "Test set log-likelihood across folds"
@@ -101,6 +113,46 @@ temp$loglike_matrix |> plot_cv_loglik()
 ```
 
 :::
+
+```{r}
+#| label: fig-pvd_chosen_subtypes_linegraphs
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: !expr 
+#|     glue::glue(
+#|     "**Differences in event sequences between pairs of latent subtypes.**") 
+#| fig-cap-location: top
+#| layout-ncol: 1
+#| layout-nrow: 6
+#| fig-subcap: 
+#|    - "**Subtype 1 compared to Subtype 2**"
+#|    - "**Subtype 1 compared to Subtype 3**"
+#|    - "**Subtype 1 compared to Subtype 4**"
+#|    - "**Subtype 2 compared to Subtype 3**"
+#|    - "**Subtype 2 compared to Subtype 4**"
+#|    - "**Subtype 3 compared to Subtype 4**"
+#| column: page
+#| 
+
+figs = 
+  extract_figs_from_pickle(
+    size.y = size.y,
+    n_s = n_s_selected,
+    dataset_name = dataset_name,
+    output_folder = output_folder) |> 
+  rlang::set_names(paste("Subtype", 1:length(figs)))
+
+pvd_lineplot(figs = figs[c(1, 2)])
+pvd_lineplot(figs = figs[c(1, 3)])
+pvd_lineplot(figs = figs[c(1, 4)])
+pvd_lineplot(figs = figs[c(2, 3)])
+pvd_lineplot(figs = figs[c(2, 4)])
+pvd_lineplot(figs = figs[c(3, 4)])
+
+```
+
+{{< pagebreak >}}
+
 
 ## Analyses stratified by CGG repeats {.appendix #sec-methods-strat-cgg}
 

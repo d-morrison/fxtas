@@ -72,7 +72,10 @@ events_name = "symptomatic events"
 outcomes_name_sentence_start = stringr::str_to_sentence(outcomes_name)
 
 compact_fig_caption <- paste(
-  "Positional variance diagrams of estimated event sequences models and uncertainty.",
+  "Positional variance diagrams of",
+  "estimated event sequences models and uncertainty.",
+  "The different colors (red, blue, purple, green, magenta)",
+  "indicate the ordinal levels of symptom progression.",
   "Color intensity represents the likelihood of sequence position.",
   "The brighter the color, the more likely that the corresponding",
   outcomes_name,
@@ -81,7 +84,7 @@ compact_fig_caption <- paste(
 
 compact_fig_cap2 = glue::glue(
   "Red lines indicate {outcomes_name}s that moved to later positions ",
-  "between the left-hand subgroup and the right-hand subgroup.",
+  "between the left-hand subgroup and the right-hand subgroup. ",
   "Blue lines indicate ",
   "{outcomes_name}s that moved to earlier positions. ",
   "Line opacity levels indicate the number of positions changed ",
@@ -162,7 +165,7 @@ nlevs =
 [Target journal: 
 [Brain (Original Articles)](https://academic.oup.com/brain/pages/general_instructions).
 Word limit for main text: 6000.
-Display items: 8.]{.mark}
+Figure + table limit: 8.]{.mark}
 
 {{< pagebreak >}}
 
@@ -269,7 +272,7 @@ thus capturing heterogeneity in both disease subtype and disease stage.
 
 Ordinal SuStaIn [@young2021ordinal] is 
 a version of the SuStaIn modeling algorithm [@young2018uncovering],
-adapted for analyzing ordinal-valued data using a scored events model.
+adapted for analyzing ordinal-valued data.
 Ordinal SuStaIn uses a "scored events model", 
 which assumes that for each `r outcomes_name`,
 there is a discrete set of 
@@ -411,10 +414,12 @@ cannot be determined by the method we used for this analysis.
 The PVD's color scale indicates the Bayesian posterior probability that 
 a particular event (y-axis) 
 appears at a particular position along the progression sequence (x-axis). 
+The different colors (red, blue, purple, green, magenta)
+indicate the ordinal levels of symptom progression.
 Color intensity presents the likelihood of sequence position. 
 That is, a brighter color indicates a more probable sequence position, 
 and a paler color indicates a less probable position. 
-The colors indicate the ordinal levels of progression.
+
 
 ## Software
 
@@ -636,21 +641,21 @@ pval_sex_gp34_v1 = permutation_test(
 
 ```
 
-@fig-first-only shows 
+@fig-first-only-pvd shows 
 the estimated sequential orders
 of FXTAS `r outcomes_name`s 
-in males and females.
+in males and females, 
+and @fig-first-only-diffs shows differences in those orders.
 We found statistically significant evidence of a 
 difference in sequences of `r events_name`
-between males and females (p = `r pval_sex_gp34_v1`) 
-(@fig-first-only-1 and [(b)](#fig-first-only-2)). 
+between males and females (p = `r pval_sex_gp34_v1`). 
 It appears that 
 female premutation carriers developed 
 SCID Mood Disorder symptoms, 
 both sub-threshold-level and threshold-level,
 prior to FXTAS Stage 1 diagnosis,
 whereas male carriers delayed these symptoms 
-much later between FXTAS Stages 3 and 4 (@fig-first-only-2).
+much later between FXTAS Stages 3 and 4 (@fig-first-only-diffs).
 Cognitive decline, as measured by SWM and PAL,
 also occurred at earlier FXTAS stages for females.
 Ataxia occurred prior to Stage 1 for females 
@@ -779,7 +784,7 @@ and CGG ≥100 among males (p = `r pval_male_cgg_gp34_v1`)
 SWM between errors occurred prior to Stage 1 in males with CGG repeats <100, 
 whereas it occurred between stage 3 and 4 
 in males with CGG repeats ≥ 100 
-(@fig-pvd-by-cgg-male-2). 
+([Supplementary Figure @fig-pvd-by-cgg-male-2]). 
 Postural, 
 resting, 
 and intermittent tremor 
@@ -836,29 +841,13 @@ n_type_0 = results_cv_max$subtype_and_stage_table |>
 
 ```
 
-```{r}
-#| label: build-tbl-sg-demos
-set.seed(2)
-tbl_sg_demos = table_subtype_by_demographics(
-  patient_data,
-  subtype_and_stage_table =
-    results_cv_max$subtype_and_stage_table,
-  digits = list(
-    CGG = 1,
-    `FX3*` = c(0, 1),
-    Gender = c(0, 1),
-    `Primary Race/Ethnicity` = c(0, 1)
-  )
-)
-```
-
 @fig-pvd_chosen_subtypes shows the estimated sequential event orders
-for each of the subtype clusters 
-and differences in event sequences between subtypes. 
+for each of the subtype clusters.
+[Supplementary Figure @fig-pvd_chosen_subtypes_linegraphs] shows 
+differences in event sequences between subtypes. 
 @tbl-sg_demos shows the demographics of the patients clustered in each subtype. 
 `r n_type_0` patients had experienced too few events 
 to be accurately classified into a subtype and were excluded from @tbl-sg_demos.
-
 Subtype clustering analysis showed that 
 subtypes were mainly classified by sex and CGG repeat size, 
 supporting the results above. 
@@ -1150,6 +1139,22 @@ flex_biomarkers_table(biomarkers_table)
 :::
 
 ```{r}
+#| label: build-tbl-sg-demos
+set.seed(2)
+tbl_sg_demos = table_subtype_by_demographics(
+  patient_data,
+  subtype_and_stage_table =
+    results_cv_max$subtype_and_stage_table,
+  digits = list(
+    CGG = 1,
+    `FX3*` = c(0, 1),
+    Gender = c(0, 1),
+    `Primary Race/Ethnicity` = c(0, 1)
+  )
+)
+```
+
+```{r}
 #| tbl-cap: !expr 
 #|     glue::glue(
 #|        "**Demographics of {n_s_selected} latent subtype clusters 
@@ -1162,7 +1167,6 @@ flex_biomarkers_table(biomarkers_table)
 
 
 tbl_sg_demos |>
-  gtsummary::separate_p_footnotes() |>
   gtsummary::as_flex_table() |>
   flextable::width(width = 1.75) |>
   flextable::width(j = 2:6, width = 0.75) |>
@@ -1170,23 +1174,19 @@ tbl_sg_demos |>
 
 ```
 
+{{< pagebreak >}}
+
 # Figures {.unnumbered}
 
 ```{r}
-#| label: "fig-first-only"
+#| label: fig-first-only-pvd
 #| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
 #| fig-cap: !expr 
 #|    glue::glue(
 #|    "**Event sequence models stratified by sex.** 
-#|    **(a)** {compact_fig_caption} 
-#|    **(b)** Positional differences in estimated event sequence between sexes. 
-#|    {compact_fig_cap2}")
-#| layout-ncol: 1
-#| fig-subcap: 
-#|    - " "
-#|    - " "
+#|    {compact_fig_caption}")
 #| fig-cap-location: top
 
 
@@ -1198,6 +1198,20 @@ plot_compact_pvd(
   facet_label = c("Males <br>", "Females <br>"),
   y_text_size = 11
 )
+
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| label: fig-first-only-diffs
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: !expr 
+#|    glue::glue(
+#|    "**Positional differences in estimated event sequence between sexes.** 
+#|    {compact_fig_cap2}")
+#| fig-cap-location: top
 
 list(
     "Males" = fig_males_first,
@@ -1216,22 +1230,9 @@ pvd_lineplot(y_text_size = 11)
 #| fig-cap: !expr 
 #|     glue::glue(
 #|     "**Event sequences for {n_s_selected} latent subtypes.**
-#|     **(a)** {compact_fig_caption} 
-#|     **(b-d)** Differences in event sequences of subtypes 
-#|     2-{n_s_selected} compared to subtype 1.") 
+#|     {compact_fig_caption}")
 #| fig-cap-location: top
-#| layout-ncol: 1
-#| layout-nrow: 4
-#| fig-subcap: 
-#|    - "Positional variance diagrams by latent subtype."
-#|    - "Subtype 1 compared to Subtype 2"
-#|    - "Subtype 1 compared to Subtype 3"
-#|    - "Subtype 1 compared to Subtype 4"
-#|    - "Subtype 2 compared to Subtype 3"
-#|    - "Subtype 2 compared to Subtype 4"
-#|    - "Subtype 3 compared to Subtype 4"
-#| column: page
-#| 
+
 figs = extract_figs_from_pickle(
   size.y = size.y,
   n_s = n_s_selected,
@@ -1246,53 +1247,6 @@ plot_compact_pvd_est2(
   y_text_size = 8
 )
 
-
-pvd_lineplot(
-  figs = list(
-    "Subtype 1" = figs[[1]],
-    "Subtype 2" = figs[[2]]
-  )
-)
-
-pvd_lineplot(
-  figs = list(
-    figs[[1]],
-    figs[[3]]
-  ),
-  facet_labels = c("Subtype 1", "Subtype 3")
-)
-
-pvd_lineplot(
-  figs = list(
-    figs[[1]],
-    figs[[4]]
-  ),
-  facet_labels = c("Subtype 1", "Subtype 4")
-)
-
-pvd_lineplot(
-  figs = list(
-    figs[[2]],
-    figs[[3]]
-  ),
-  facet_labels = c("Subtype 2", "Subtype 3")
-)
-
-pvd_lineplot(
-  figs = list(
-    figs[[2]],
-    figs[[4]]
-  ),
-  facet_labels = c("Subtype 2", "Subtype 4")
-)
-
-pvd_lineplot(
-  figs = list(
-    figs[[3]],
-    figs[[4]]
-  ),
-  facet_labels = c("Subtype 3", "Subtype 4")
-)
 
 ```
 

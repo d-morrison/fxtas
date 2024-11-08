@@ -10,7 +10,7 @@ Here we compared the longitudinal models to the cross-sectional models (estimate
 
 We also rearranged these results by subset type:
 
-- first visits only (@fig-first-only)
+- first visits only (@fig-first-only-pvd, @fig-first-only-diffs)
 - all visits (@fig-all-visits)
 
 Note that clinical events which never occur in a dataset cannot be placed into the event sequence, 
