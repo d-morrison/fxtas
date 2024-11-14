@@ -145,3 +145,13 @@ execute:
 filters:
   - vignettes/docx-landscape.lua
   - authors-block
+  - at: post-quarto
+    path: vignettes/appendix_numbering.lua
+
+crossref:
+  appendix-title: "Supplemental Materials" # doesn't seem to work
+  custom:
+    - kind: float
+      key: suppfig
+      reference-prefix: Figure S
+      space-before-numbering: false
