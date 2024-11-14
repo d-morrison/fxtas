@@ -156,7 +156,7 @@ pvd_lineplot(figs = figs[c(3, 4)])
 
 ## Analyses stratified by CGG repeats {.appendix #sec-methods-strat-cgg}
 
-{{< include _results_by_cgg.qmd >}}
+{{< include _sec_results_by_cgg.qmd >}}
 
 ## Analyses stratified by sex and CGG repeats {.appendix}
 

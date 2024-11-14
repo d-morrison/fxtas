@@ -155,3 +155,7 @@ crossref:
       key: suppfig
       reference-prefix: Figure S
       space-before-numbering: false
+    - kind: float
+      key: supptbl
+      reference-prefix: Table S
+      space-before-numbering: false
