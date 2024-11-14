@@ -1025,7 +1025,7 @@ When we compared
 between 55-99 vs 100-199 CGG repeats in males and females combined, 
 no significant difference was found 
 (p = `r pval_cgg_gp34_v1`) 
-([Supplementary Figure @fig-pvd-by-cgg]). 
+([Supplementary Figure @suppfig-pvd-by-cgg]). 
 The finding of only minimal differences 
 between 55-99 vs 100-199 CGG repeats is surprising, 
 since several studies have found that the higher the CGG repeats,
