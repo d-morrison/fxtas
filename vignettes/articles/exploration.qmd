@@ -35,9 +35,9 @@ footnote1 <- 'Codes `777`, `888`, and `999` are counted as "Missing" (NA).'
 
 ### Tremors {.appendix}
 
+::: {#supptbl-tremors}
+
 ```{r}
-#| label: tbl-tremors
-#| tbl-cap: "Tremors"
 vars <- c(
   "Intention tremor",
   "Resting tremor",
@@ -56,6 +56,10 @@ table1(
   data = v1_usable
 )
 ```
+
+**Tremors by CGG level and sex**
+
+:::
 
 <br>
 
@@ -258,10 +262,9 @@ table1(
 
 We used categorization cutoffs taken from [@talebi2020cambridge].
 
+::: {#supptbl-cantab}
+
 ```{r}
-#| label: tbl-cantab
-#| tbl-cap: "Cambridge Neuropsychological Test Automated Battery (CANTAB)"
-#|
 # table1(na.is.category = FALSE, overall = FALSE,
 #   NA.label = na_label_1,
 #   stratified_formula("Drugs used", column_var),
@@ -310,11 +313,15 @@ table1::t1flex(
   )
 ```
 
+**Cambridge Neuropsychological Test Automated Battery (CANTAB)**
+
+:::
+
 ### Thyroid and autoimmune diseases  {.appendix}
 
+::: {#supptbl-autoimmune}
+
 ```{r}
-#| label: tbl-autoimmune
-#| tbl-cap: "Thyroid and autoimmune diseases"
 vars <- c(
   "Hypothyroid",
   "Hyperthyroid",
@@ -337,3 +344,7 @@ table1(
   data = v1_usable
 )
 ```
+
+**Thyroid and autoimmune diseases**
+
+:::
