@@ -46,15 +46,15 @@ sustain_output_cgg100minus = run_and_save_OSA(
 
 ```
 
-@fig-pvd-by-cgg shows the estimated sequences stratified by CGG repeat level.
+@suppfig-pvd-by-cgg shows the estimated sequences stratified by CGG repeat level.
 We did not find statistically significant evidence of a difference in event sequences
 between CGG < 100 and CGG ≥ 100 (p = `r pval_cgg_gp34_v1`),
 but some potential differences were noted
-(@fig-pvd-by-cgg-1 and [(b)](#fig-pvd-by-cgg-2)).
+(@suppfig-pvd-by-cgg and @suppfig-diff-by-cgg).
 SWM between errors occurred prior to Stage 1
 in participants with CGG repeats <100,
 whereas it occurred between stage 4 and 5 in those with CGG repeats ≥ 100
-(@fig-pvd-by-cgg-2).
+(@suppfig-diff-by-cgg).
 Postural, resting, head, and intermittent tremor occurred earlier
 in those with CGG repeats <100 compared to those with CGG repeats ≥100.
 Several psychiatric disorders (as measured by SCID) occurred
@@ -94,18 +94,11 @@ the available data included only `r n_over100_Female` females with CGG ≥100.
 
 {{< pagebreak >}}
 
+::: {#suppfig-pvd-by-cgg}
+
 ```{r}
-#| label: "fig-pvd-by-cgg"
-#| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("**Event sequences stratified by CGG repeats  (<100 vs 100+). (a)** {compact_fig_caption} **(b)** differences in event sequences between CGG repeat sizes.")
-#| layout-ncol: 1
-#| fig-subcap: 
-#|    - " "
-#|    - " "
-#| fig-cap-location: top
-
 
 list(
     fig_under100,
@@ -117,10 +110,26 @@ plot_compact_pvd(
 )
 
 
+```
+
+`r glue::glue("**Event sequences stratified by CGG repeats (<100 vs 100+).** {compact_fig_caption}")`
+:::
+
+::: {#suppfig-diff-by-cgg}
+
+```{r}
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+
+
 list(
   "CGG &lt; 100" = fig_under100,
   "CGG &ge; 100" = fig_over100) |>
 pvd_lineplot(y_text_size = 11)
 ```
+
+`r glue::glue("**Event sequences stratified by CGG repeats (<100 vs 100+).** Differences in event sequences between CGG repeat sizes.")`
+:::
+
 
 {{< pagebreak >}}
