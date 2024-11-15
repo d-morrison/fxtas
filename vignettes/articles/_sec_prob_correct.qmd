@@ -3,7 +3,7 @@ correctly scored individuals
 for each `r outcomes_name`, [@young2021ordinal]
 estimated using the controls data.
 
-:::{#supptbl-prob-correct}
+::: {#supptbl-prob-correct}
 
 ```{r}
 

@@ -1,7 +1,7 @@
 
 ::: landscape
 
-:::: {#suppfig-cvic, layout-ncol="2"}
+::: {#suppfig-cvic layout-ncol="2"}
 
 ```{r}
 #| label: fig-cvic-1
@@ -23,6 +23,6 @@ temp$loglike_matrix |> plot_cv_loglik()
 
 **Selection criteria for number of latent subtypes**
 
-::::
+:::
 
 :::

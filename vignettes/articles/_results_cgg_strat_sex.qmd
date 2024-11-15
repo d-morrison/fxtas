@@ -1,5 +1,5 @@
 
-:::{#suppfig-pvd-by-cgg-male}
+::: {#suppfig-pvd-by-cgg-male}
 
 ```{r}
 #| label: fig-pvd-by-cgg-male-1
