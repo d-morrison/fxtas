@@ -40,7 +40,7 @@ Similarly, we combined individual SCID disorders into composite variables,
 taking the highest level ("Absent", "Sub-Threshold", or "Threshold") 
 among the constituent individual disorders.
 
-- "SCID: Mood Disorders" combines:
+- "SCID: mood disorders" combines:
 Bipolar I Disorder (MD01), Lifetime,
 Bipolar II Disorder (MD02), Lifetime,
 Other Bipolar Disorder (MD03), Lifetime,
@@ -50,7 +50,7 @@ Depressive Disorder NOS (MD06), Lifetime,
 Mood Disorder Due to GMC (MD07), Lifetime,
 Substance-Induced Mood Dis. (MD08), Lifetime
 
-- "SCID: Substance Use Disorders" combines
+- "SCID: substance use disorders" combines
 Alcohol (SUD17), Lifetime,
 Sedative-Hypnotic-Anxiolytic (SUD18), Lifetime,
 Cannabis (SUD19), Lifetime,
@@ -61,7 +61,7 @@ Hallucinogenics/ PCP (SUD23), Lifetime,
 Poly Drug (SUD24), Lifetime,
 Other (SUD25), Lifetime
 
-- "SCID: Anxiety Disorders" combines
+- "SCID: anxiety disorders" combines
 Panic Disorder (ANX26), Lifetime,
 Agoraphobia without Panic (ANX27), Lifetime,
 Social Phobia (ANX28), Lifetime,
@@ -73,12 +73,12 @@ Anxiety Due to GMC (ANX33), Lifetime,
 Substance-Induced Anxiety (ANX34), Lifetime,
 Anxiety Disorder NOS (ANX35), Lifetime
 
-- "SCID: Somatoform Disorders" combines
+- "SCID: somatoform disorders" combines
 Somatization Disorder (SOM36),
 Pain Disorder (SOM37),
 Undifferentiated Somatoform (SOM38),
 Body Dysmorphic (SOM40),
 Hypochondriasis (SOM39)
 
-- "SCID: Psychotic Symptoms" consists of only only Primary Psychotic Symptoms (PS01), Lifetime.
+- "SCID: psychotic symptoms" consists of only Primary Psychotic Symptoms (PS01), Lifetime.
 

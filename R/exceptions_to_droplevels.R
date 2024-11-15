@@ -71,11 +71,11 @@ exceptions_to_droplevels =
     "Body Dysmorphic (SOM40)",
     "Hypochondriasis (SOM39)",
     # scid domains
-    "SCID: Mood Disorders",
-    "SCID: Anxiety Disorders",
-    "SCID: Substance Use Disorders",
-    "SCID: Somatoform Disorders",
-    "SCID: Psychotic Symptoms",
+    "SCID: mood disorders",
+    "SCID: anxiety disorders",
+    "SCID: substance use disorders",
+    "SCID: somatoform disorders",
+    "SCID: psychotic symptoms",
     # mri domains
     "MRI: Cerebral",
     "MRI: Cerebellar")
