@@ -20,10 +20,10 @@ Genu (CC)-WM Hyperintensity,1,1,100%,95%
 Corpus Callosum-Thickness,1,1,100%,95%
 MMSE total score*,7,7,100%,95%
 BDS-2 Total Score*,40,33,82.5%,82.5%
-SCID: Mood Disorders,35,20,57.1%,57.1%
-SCID: Substance Use Disorders,34,29,85.3%,85.3%
-SCID: Anxiety Disorders,35,12,34.3%,34.3%
-SCID: Somatoform Disorders,34,32,94.1%,94.1%
+SCID: mood disorders,35,20,57.1%,57.1%
+SCID: substance use disorders,34,29,85.3%,85.3%
+SCID: anxiety disorders,35,12,34.3%,34.3%
+SCID: somatoform disorders,34,32,94.1%,94.1%
 SWM Between errors*,25,14,56%,56%
 PAL Total errors (adjusted)*,25,9,36%,36%
 RTI Five-choice movement time*,25,25,100%,95%

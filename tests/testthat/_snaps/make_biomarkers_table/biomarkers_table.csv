@@ -15,10 +15,10 @@ Parkinsonian,Pill-rolling tremor,"No, Yes",4.8%,5.5%,1
 Parkinsonian,Stiff gait,"No, Yes",6.4%,9.3%,0.755499
 Parkinsonian,parkinsonian features,"No, Yes",14.3%,32.8%,0.0278102
 Parkinsons,Parkinsons,"No, Yes",21.1%,16.7%,0.719941
-SCID,SCID: Anxiety Disorders,"Absent, Sub-Threshold, Threshold",87.5%,61.5%,6.50078e-5
-SCID,SCID: Mood Disorders,"Absent, Sub-Threshold, Threshold",66.7%,40.6%,4.80516e-4
-SCID,SCID: Somatoform Disorders,"Absent, Sub-Threshold, Threshold",15.5%,2.1%,4.54447e-4
-SCID,SCID: Substance Use Disorders,"Absent, Sub-Threshold, Threshold",16.7%,28.2%,0.0664111
+SCID,SCID: anxiety disorders,"Absent, Sub-Threshold, Threshold",87.5%,61.5%,6.50078e-5
+SCID,SCID: mood disorders,"Absent, Sub-Threshold, Threshold",66.7%,40.6%,4.80516e-4
+SCID,SCID: somatoform disorders,"Absent, Sub-Threshold, Threshold",15.5%,2.1%,4.54447e-4
+SCID,SCID: substance use disorders,"Absent, Sub-Threshold, Threshold",16.7%,28.2%,0.0664111
 Scores,BDS-2 Total Score,">= 20, < 20",22.1%,31.5%,0.168623
 Scores,MMSE total score,"Normal (26-30), Mild impairment (20-25), Moderate impairment (10-19)",5.3%,20%,0.00963778
 Thyroid,Hyperthyroid,"No, Yes",2.9%,1.7%,0.632493
