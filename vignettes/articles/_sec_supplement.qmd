@@ -1,144 +1,12 @@
 {{< include _sec_prob_correct.qmd >}}
 
+## General data processing notes {.appendix}
+
 {{< include general-data-notes.qmd >}}
 
 ## Detecting latent subtypes {#sec-subtypes .appendix}
 
-In order to use the Ordinal SuStaIn modeling algorithm, we must specify how many latent subtypes to include in the model. There are several metrics for determining the optimal number of subtypes for a given data set, including the likelihood of the data for the fitted model while varying the number of subtypes used to fit the model
-and the Cross-Validation Information Criterion (CVIC)
-described in Young et al [-@young2018uncovering].
-We also evaluated the consistency of our cross-validation procedure
-by looking at the distribution of 
-out-of-fold log-likelihood ("OOFLL")
-across cross-validation folds
-(Young et al [-@young2018uncovering]).
-@fig-mcmc-loglik shows the distribution of log-likelihoods 
-from the MCMC samples for the full dataset 
-(not stratified by sex or CGG repeats).
-Adding up to 6 clusters substantially improves the log-likelihood.
-@fig-cvic-2 shows the distribution of the OOFLL statistic
-as a function of number of latent subgroups.
-@fig-stage-by-age shows estimated disease progression stage
-(that is, number of events experienced)
-by age at visit and estimated latent subtype,
-with a
-Locally Estimated Scatterplot Smoothing (LOESS)
-non-parametric regression curve superimposed [@cleveland1992local].
-This graph is a model diagnostic; if the model fits the data well,
-then older patients should on average be classified as being farther
-along in their disease progression, resulting in an upwards trend.
-Types 1, 3 and 4 appear to show such an upwards trend.
-Type 2 has a less clear trend, but does not show substantial evidence
-of lack of fit.
-In all four subtypes, patients whose visit occurred at a later age
-tend to be at a later estimated stage of disease progression.
-The upwards trend of progression stage with age
-indicates that the estimated models are plausible.
-
-```{r}
-#| label: fig-mcmc-loglik
-#| fig-cap: "**log-likelihoods of MCMC samples, by number of subtypes**"
-#| eval: !expr fit_models
-
-lliks = results_v1 |>
-  sapply(F = function(x) x$samples_likelihood)
-
-lliks |>
-  graph_likelihoods_v2(alpha = 0.5) |>
-  suppressWarnings()
-
-```
-
-{{< pagebreak >}}
-
-```{r}
-#| label: fig-stage-by-age
-#| fig-cap: |
-#|    **Estimated progression stage by age and latent subtype.**
-#|    The blue line is a Locally Estimated Scatterplot Smoothing (LOESS)
-#|    non-parametric regression curve.
-
-
-stages =
-  results_cv_max$subtype_and_stage_table |>
-  mutate(
-    age = patient_data$`Age at visit`,
-    id = patient_data$`FXS ID`
-  )
-
-library(ggplot2)
-stages |>
-  graph_stage_by_age()
-
-```
-
-::: landscape
-
-:::: {#suppfig-cvic, layout-ncol="2"}
-
-```{r}
-#| label: fig-cvic-1
-#| fig-width: 4
-#| fig-cap: Cross-validation information criterion
-#| eval: !expr fit_models
-
-temp$CVIC |> plot_CVIC()
-```
-
-```{r}
-#| label: fig-cvic-2
-#| fig-width: 4
-#| fig-cap: Test set log-likelihood across folds
-#| eval: !expr fit_models
-
-temp$loglike_matrix |> plot_cv_loglik()
-```
-
-**Selection criteria for number of latent subtypes**
-
-::::
-
-:::
-
-```{r}
-#| label: fig-pvd_chosen_subtypes_linegraphs
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
-#| fig-cap: !expr 
-#|     glue::glue(
-#|     "**Differences in event sequences between pairs of latent subtypes.**") 
-#| fig-cap-location: top
-#| layout-ncol: 1
-#| layout-nrow: 6
-#| fig-subcap: 
-#|    - "**Subtype 1 compared to Subtype 2**"
-#|    - "**Subtype 1 compared to Subtype 3**"
-#|    - "**Subtype 1 compared to Subtype 4**"
-#|    - "**Subtype 2 compared to Subtype 3**"
-#|    - "**Subtype 2 compared to Subtype 4**"
-#|    - "**Subtype 3 compared to Subtype 4**"
-#| column: page
-#| 
-
-figs = 
-  extract_figs_from_pickle(
-    size.y = size.y,
-    n_s = n_s_selected,
-    dataset_name = dataset_name,
-    output_folder = output_folder) |> 
-  rlang::set_names(paste("Subtype", 1:length(figs)))
-
-pvd_lineplot(figs = figs[c(1, 2)])
-pvd_lineplot(figs = figs[c(1, 3)])
-pvd_lineplot(figs = figs[c(1, 4)])
-pvd_lineplot(figs = figs[c(2, 3)])
-pvd_lineplot(figs = figs[c(2, 4)])
-pvd_lineplot(figs = figs[c(3, 4)])
-
-```
-
-{{< pagebreak >}}
-
+{{< include _sec_subtypes_appendix.qmd >}}
 
 ## Analyses stratified by CGG repeats {.appendix #sec-methods-strat-cgg}
 
@@ -162,12 +30,4 @@ pvd_lineplot(figs = figs[c(3, 4)])
 
 ## Additional data tables {.appendix}
 
-The following tables summarize the distributions of the `r outcomes_name`s
-that we analyzed in this paper, stratified by sex and CGG level.
-
-::: landscape
-
 {{< include exploration.qmd >}}
-
-:::
-
