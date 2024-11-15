@@ -1,0 +1,42 @@
+
+We analyzed measurements of 
+`r length(biomarker_levels)` ordinal `r outcomes_name`s
+with a total of `r sum(nlevs)` levels, 
+listed in @tbl-biomarker-list.
+Herein the term "`r outcomes_name`s" refers to 
+a broad range of medical signs 
+or indications of medical state 
+observed from patients.
+Each "clinically elevated" ordinal level 
+(above the first-listed, reference level) 
+constitutes an outcome event 
+in the disease progression modelling analysis 
+(@sec-Statistical-analysis).
+
+We created a composite variable "any autoimmune disorder" combining
+lupus, rheumatoid arthritis, 
+multiple sclerosis, ANA positivity, Sjogren's syndrome, Raynaud's syndrome, 
+and pulmonary fibrosis, 
+since these conditions were too rare to analyze separately
+(details in Supplementary Materials, @sec-any-autoimmune).
+We also created composite variables for 
+four domains of the Structured Clinical Interview for DSM-IV (SCID-IV):
+Mood Disorders, 
+Substance Use Disorders, 
+Anxiety Disorders, and 
+Somatoform Disorders;
+there were no participants with Psychotic Disorders in our data
+(more details in Supplementary Materials, @sec-scid-composites).
+We used the "Lifetime" variables from SCID-IV to construct these composites.
+We also created composite variables for 
+MRI variables for cerebral and cerebellar abnormalities detected via MRI;
+we did not combine the variables representing corpus callosum MRI abnormalities,
+since these variables were created using Likert scales that differed from each other
+(details in Supplementary Materials, @sec-mri-composites).
+
+[Supplementary Tables S -@supptbl-tremors] - [S -@supptbl-autoimmune] 
+summarize each of the `r outcomes_name`s that we included in the analysis models, 
+stratified by 
+CGG repeat size (`r levels(v1_usable$"FX3*")`) 
+and 
+Sex (`r unique(v1_usable$Gender)`).
