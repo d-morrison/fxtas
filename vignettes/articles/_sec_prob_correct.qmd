@@ -1,0 +1,25 @@
+@tbl-prob-correct shows the estimated proportion of correctly scored individuals
+for each `r outcomes_name`, [@young2021ordinal]
+estimated using the controls data.
+
+```{r}
+#| label: tbl-prob-correct
+#| tbl-cap: |
+#|   **Proportions of controls at baseline levels, 
+#|   and corresponding estimates of 
+#|   probability of correct scoring.**
+#|   All controls are assumed to be truly 
+#|   at the reference levels for each symptom, 
+#|   and the proportion of correctly scored individuals 
+#|   is thus estimated as 
+#|   the proportion of controls 
+#|   who were assessed as being 
+#|   at the reference level.
+
+library(flextable)
+prob_correct |>
+  attr("data") |>
+  flextable::flextable() |> 
+  bold(part = "header") |> 
+  width(width = 1)
+```
