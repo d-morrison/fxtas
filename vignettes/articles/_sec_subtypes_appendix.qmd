@@ -53,7 +53,7 @@ lliks |>
 ::: {#suppfig-stage-by-age}
 
 ```{r}
-
+#| fig-width: 6
 stages =
   results_cv_max$subtype_and_stage_table |>
   mutate(
@@ -78,20 +78,6 @@ non-parametric regression curve.
 ::: {#suppfig-pvd_chosen_subtypes_linegraphs}
 
 ```{r}
-
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
-#| layout-ncol: 1
-#| layout-nrow: 6
-#| fig-subcap: 
-#|    - "**Subtype 1 compared to Subtype 2**"
-#|    - "**Subtype 1 compared to Subtype 3**"
-#|    - "**Subtype 1 compared to Subtype 4**"
-#|    - "**Subtype 2 compared to Subtype 3**"
-#|    - "**Subtype 2 compared to Subtype 4**"
-#|    - "**Subtype 3 compared to Subtype 4**"
-#| 
-
 figs = 
   extract_figs_from_pickle(
     size.y = size.y,
@@ -99,12 +85,71 @@ figs =
     dataset_name = dataset_name,
     output_folder = output_folder) |> 
   rlang::set_names(paste("Subtype", 1:length(figs)))
+```
+
+```{r}
+#| label: fig-pvd_chosen_subtypes_linegraphs-1
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: 
+#|    - "**Subtype 1 compared to Subtype 2**"
 
 pvd_lineplot(figs = figs[c(1, 2)])
+
+```
+
+```{r}
+#| label: fig-pvd_chosen_subtypes_linegraphs-2
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: 
+#|    - "**Subtype 1 compared to Subtype 3**"
+
 pvd_lineplot(figs = figs[c(1, 3)])
+
+```
+
+```{r}
+#| label: fig-pvd_chosen_subtypes_linegraphs-3
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: 
+#|    - "**Subtype 1 compared to Subtype 4**"
+
 pvd_lineplot(figs = figs[c(1, 4)])
+
+```
+
+```{r}
+#| label: fig-pvd_chosen_subtypes_linegraphs-4
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: 
+#|    - "**Subtype 2 compared to Subtype 3**"
+
 pvd_lineplot(figs = figs[c(2, 3)])
+
+```
+
+
+```{r}
+#| label: fig-pvd_chosen_subtypes_linegraphs-5
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: 
+#|    - "**Subtype 2 compared to Subtype 4**"
+
 pvd_lineplot(figs = figs[c(2, 4)])
+
+```
+
+```{r}
+#| label: fig-pvd_chosen_subtypes_linegraphs-1
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: 
+#|    - "**Subtype 3 compared to Subtype 4**"
+
 pvd_lineplot(figs = figs[c(3, 4)])
 
 ```
