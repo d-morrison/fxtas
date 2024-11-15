@@ -1,8 +1,8 @@
----
-output: html_document
-editor_options: 
-  chunk_output_type: console
----
+The following tables summarize the distributions of the `r outcomes_name`s
+that we analyzed in this paper, stratified by sex and CGG level.
+
+:::::: landscape
+
 ```{r}
 #| label: exploration-setup
 #| include: false
@@ -348,3 +348,5 @@ table1(
 **Thyroid and autoimmune diseases**
 
 :::
+
+::::::

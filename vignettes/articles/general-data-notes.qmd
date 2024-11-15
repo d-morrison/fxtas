@@ -1,6 +1,4 @@
 
-## General data processing notes {.appendix}
-
 ### Composite variables {#sec-composites .appendix}
 
 #### Any autoimmune disorder {.appendix #sec-any-autoimmune}
