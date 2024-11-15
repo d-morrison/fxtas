@@ -1,12 +1,12 @@
 
 In order to use the Ordinal SuStaIn modeling algorithm, we must specify how many latent subtypes to include in the model. There are several metrics for determining the optimal number of subtypes for a given data set, including the likelihood of the data for the fitted model while varying the number of subtypes used to fit the model
 and the Cross-Validation Information Criterion (CVIC)
-described in Young et al [-@young2018uncovering].
+described in Young *et al.* [-@young2018uncovering].
 We also evaluated the consistency of our cross-validation procedure
 by looking at the distribution of 
 out-of-fold log-likelihood ("OOFLL")
 across cross-validation folds
-(Young et al [-@young2018uncovering]).
+(Young *et al.* [-@young2018uncovering]).
 @suppfig-mcmc-loglik shows the distribution of log-likelihoods 
 from the MCMC samples for the full dataset 
 (not stratified by sex or CGG repeats).
