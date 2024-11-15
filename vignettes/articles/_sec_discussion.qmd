@@ -1,40 +1,43 @@
 
-The present study attempted to arrange the eventual symptoms of FXTAS
+This study attempted to arrange the eventual symptoms of FXTAS
 in their possible appearing sequential orders
 and determine risk factors that impact on the
-sequential order of presentation among individuals.
+sequential order of presentation among patients.
 The main findings of this analysis were
 substantial differences in sequential order of eventual symptoms
 between males and females
 and in combination of sex and CGG repeat size.
 
-The proportions of
+The prevalence of
 lifetime anxiety disorders,
 mood disorders,
 and somatoform disorders in this study cohort
 is far more than
-[Clinicians: please provide a reference for comparison]{.comment-start author="Ezra Morrison"}
-usual population expectations for these illnesses
-[]{.comment-end}.
+usual population norms for these illnesses [@bourgeois2010lifetime].
 This study design did not fractionate specific lifetime psychiatric illnesses
-(e.g., major depressive disorder, panic disorder, and somatization disorder),
-but these overall lifetime prevalence figures are notable.
+(e.g., 
+major depressive disorder, 
+panic disorder, 
+somatization disorder),
+but these *overall* lifetime prevalence figures are notable.
 [Clinicians: please provide a reference]{.comment-start author="Ezra Morrison"}
 Prior studies of mood and anxiety disorders
 []{.comment-end}
-have demonstrated a higher than expected rate of these illnesses
+have demonstrated a higher-than-expected rate of these illnesses
 in premutation carriers.
-The same increase lifetime psychiatric illness burden
-[Clinicians: please provide a reference]{.comment-start author="Ezra Morrison"}
+The same increase in lifetime psychiatric illness burden
 is seen in other neurodegenerative illnesses
-(e.g., Parkinson’s disease, multiple sclerosis).
-[]{.comment-end}
-While many psychiatric illness have a strong genetic predisposition,
-the lifetime prevalences here persuasively suggest that
-the premutation carrier state itself increases the risk of psychiatric illness.
-As the SCID assesses lifetime illness risk,
+(e.g., Parkinson’s disease, multiple sclerosis) [@Rickardsi48].
+As many psychiatric illnesses have a strong genetic predisposition,
+the lifetime prevalences  of psychiatric illness in this study 
+persuasively suggest that
+the premutation carrier state *itself* increases 
+the risk of psychiatric illness.
+
+As the SCID assesses *lifetime* illness risk 
+(as well as current illness),
 it is probable that the index episode of psychiatric illness
-antedated the onset of
+*antedated* the onset of
 tremor,
 ataxia, and
 major neurocognitive disorder
@@ -43,56 +46,64 @@ As such, the high lifetime burden of psychiatric illness in this population
 cannot be plausible attributed solely (perhaps substantially) to
 an “emotional reaction”
 to the loss of function associated with these functional impairments,
-but rather should be understood as a component of the premutation carrier state itself.
+but rather should be understood 
+as a component of the premutation carrier state *itself*.
 It is likely that this intrinsic vulnerability to psychiatric illness
 is a significant component of the carrier state.
+
 Furthermore, as only a small proportion of the patients
 had MMSE scores in the impaired range,
 it is also unlikely that the high rates of
 depressive, anxiety (and other) psychiatric illness
-could be attributed to complications of FXTAS dementia,
-as the majority of subjects had normal MMSE scores,
+could be attributed *solely* to complications of FXTAS dementia,
+as most patients had normal MMSE scores,
 which would not be consistent with dementia.
 For example, depressive disorders
 are a common psychiatric complication of dementia,
-but few of the depressive disorders found here could be attributed to dementia.
+but few of the depressive disorders found here could be attributed to dementia,
+as they antedated any evidence of cognitive disorders.
 A common sequence of illnesses seen clinically in carriers is
-depressive and/or anxiety disorders with adult onset,
-then tremor and ataxia in the 40s,
+depressive and/or anxiety disorders 
+with young to middle age adult onset,
+then tremor and ataxia in the 40s or 50s,
 followed by FXTAS dementia in the 60s.
 Seen in this light, and knowing the ultimate CNS vulnerability of the carrier state,
 retrospectively the initial presentation of depressive and/or anxiety disorders
 could be regarded as a psychiatric prodrome of later full spectrum illness.
-This is analogous to the psychotic illness seen in SLE before rheumatologic findings
+This is analogous to the depressive or psychotic illness seen in SLE before rheumatologic findings
 and the depressive disorder that is commonly seen
-in the 5 years before the motor signs leading to a diagnosis of multiple sclerosis.
+in the five years before the motor signs leading to a diagnosis of multiple sclerosis.
 
 This data shows more significant involvement in males than females, as predicted,
-but a remarkable finding is the predominance of the psychiatric problems
+but a remarkable finding is the predominance of the psychiatric illnesses
 that occur early in females
 and often before the onset of tremor and ataxia compared to the males.
 These symptoms, particularly mood disorders,
 can often occur even before the diagnosis of FXTAS in the females,
 and the stress involved with mood disorders may be a precipitating feature
 for the onset of FXTAS.
-In addition, females may exerience early cognitive problems,
+In addition, females may exerience early cognitive impairment,
 particularly involving executive dysfunction and memory,
-as seen by the SWM and PAL scores that occur early on in the females.
+as seen by the SWM and PAL scores that occur early in the females.
 From a clinical perspective,
-we have seen significant psychiatric problems
+we have seen significant psychiatric illness
 leading into some cognitive deficits in memory and EF abilities,
 but these females may not meet the criteria of FXTAS diagnosis,
 because of the absence of significant tremor and/or ataxia.
-However, if white matter disease emerges on MRI particularly in the splenium
+However, if white matter disease emerges on MRI,
+particularly in the splenium of the corpus callosum
 or in the periventricular area,
 then this demonstrates the onset of the neuropathology of FXTAS,
 even if there is no tremor or ataxia yet.
+
 This suggests that the diagnostic criteria for FXTAS
-is different in females compared to males,
+could be different in females compared to males,
 particularly for early cases.
-The diagnostic criteria for FXTAS was determined with the study of males only
+The diagnostic criteria for FXTAS 
+were determined with the study of males only
 [@jacquemont2003fragile].
-Subsequent criteria for the diagnosis of FXTAS was modified [@hall2014emerging]
+Subsequent criteria for the diagnosis of FXTAS 
+were modified [@hall2014emerging]
 to include the involvement of the splenium,
 which is seen in the majority of females with FXTAS
 [@apartis2012fxtas; @schneider2020women].
@@ -100,15 +111,15 @@ Hall *et al.* [-@hall2014emerging] also added
 the feature of neuropathy,
 which occurs in the majority of FXTAS patients,
 but it is a common finding in the elderly with many causes,
-so it is just a minor criteria for FXTAS.
+so it is just a minor criterion for FXTAS.
 Although the diagnostic criteria have been modified somewhat for the females,
 there may be subsequent changes in the early stages of FXTAS
 as further follow-up studies are able to separate
-the psychiatric problems in females seen early on here
+the psychiatric illness in females seen earlier here
 from more significant neuropathology associated with
 extended features of FXTAS over time.
 As new treatments for FXTAS develop,
-the earlier the diagnosis,
+it is hoped that the earlier the diagnosis is established,
 the more likely the treatment will be effective.
 
 ```{r}
@@ -141,7 +152,7 @@ between 55-99 vs 100-199 CGG repeats is surprising,
 since several studies have found that the higher the CGG repeats,
 the earlier the onset and the faster the progression of FXTAS
 [@greco2006neuropathology; @leehey2008fmr1; @tassone2023insight].
-Perhaps the cut off of 100 is too high for this distinction to be made.
+Perhaps the cut-off of 100 is too high for this distinction to be made.
 
 This study has several limitations.
 In the subtype clustering analysis,
@@ -166,6 +177,7 @@ such as z-score SuStaIn [@young2018uncovering],
 which are designed to be used with only continuous measurements.
 Further development is warranted to combine Ordinal SuStaIn and z-score SuStaIn
 to fit an event-based model with both continuous and ordinal data.
+
 Our data come from the GP and Trax studies,
 which are longitudinal cohort studies
 with infrequent followup visits.
