@@ -489,11 +489,11 @@ difference in sequences of `r events_name`
 between males and females (p = `r pval_sex_gp34_v1`). 
 It appears that 
 female premutation carriers developed 
-SCID Mood Disorder symptoms, 
+SCID mood disorder symptoms, 
 both sub-threshold-level and threshold-level,
 prior to FXTAS Stage 1 diagnosis,
-whereas male carriers delayed these symptoms 
-much later between FXTAS Stages 3 and 4 (@fig-first-only-diffs).
+whereas male carriers experienced these symptoms 
+much later (between FXTAS Stages 3 and 4) (@fig-first-only-diffs).
 Cognitive decline, as measured by SWM and PAL,
 also occurred at earlier FXTAS stages for females.
 Ataxia occurred prior to Stage 1 for females 
@@ -554,7 +554,7 @@ we found statistically significant evidence of
 a difference between males and females
 among those with CGG < 100 (p = `r pval_under100_sex_gp34_v1`)
 (@suppfig-pvd-by-gender-cgg_under100).
-Several psychiatric disorders (as measured by SCID) 
+Several psychiatric disorders (as assessed by SCID) 
 occurred prior to FXTAS Stage 1
 among females with CGG < 100,
 but at later FXTAS stages for males with CGG < 100.
@@ -683,9 +683,12 @@ n_type_0 = results_cv_max$subtype_and_stage_table |>
 for each of the subtype clusters.
 @suppfig-pvd_chosen_subtypes_linegraphs shows 
 differences in event sequences between subtypes. 
-@tbl-sg_demos shows the demographics of the patients clustered in each subtype. 
-`r n_type_0` patients had experienced too few events 
-to be accurately classified into a subtype and were excluded from @tbl-sg_demos.
+@tbl-sg_demos shows 
+the demographics of the patients clustered in each subtype. 
+`r n_type_0 |> xfun::numbers_to_words() |> Hmisc::capitalize()` 
+patients had experienced too few events 
+to be accurately classified into a subtype 
+and were excluded from @tbl-sg_demos.
 Subtype clustering analysis showed that 
 subtypes were mainly classified by sex and CGG repeat size, 
 supporting the results above. 
@@ -713,11 +716,11 @@ early mood disorders (before FXTAS Stage 1),
 ataxia between Stages 2 and 3,
 head tremors between Stages 3 and 4,
 parkinsonian features between Stages 3 and 4,
-and white matter disease phenotypes between Stages 4 and 5.
+and white matter disease between Stages 4 and 5.
 Compared to Subtype 1, Subtype 2 appeared to experience 
 white matter disease phenotypes earlier (between Stages 2 and 4),
-memory issues (assessed by SWM) earlier (Stage 3-4 versus 4-5).
-and SCID disorders later (between Stages 3 and 5).
+memory impairment (assessed by SWM) earlier (Stage 3-4 versus 4-5).
+and psychiatric disorders later (between Stages 3 and 5).
 Subtype 2 might be described as "memory-first".
 Subtype 3 appeared to experience
 white matter disease phenotypes early (between Stages 1 and 3),
@@ -1007,12 +1010,11 @@ tbl_sg_demos = table_subtype_by_demographics(
 #| results: asis
 
 
-tbl_sg_demos
-# |>
-#   gtsummary::as_flex_table() |>
-#   flextable::width(width = 1.75) |>
-#   flextable::width(j = 2:6, width = 0.75) |>
-  # flextable::width(j = 7, width = 1)
+tbl_sg_demos |>
+  gtsummary::as_flex_table() |>
+  flextable::width(width = 1.75) |>
+  flextable::width(j = 2:6, width = 0.75) |>
+  flextable::width(j = 7, width = 1)
 
 ```
 
