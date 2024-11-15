@@ -81,5 +81,9 @@ clean_trax_data = function(dataset)
     drop_levels(
       except = exceptions_to_droplevels
     ) |>
-    clean_gender()
+    clean_gender() |>
+    mutate(`MMSE total score*` = NA) |>
+    add_labels()
+
+
 }

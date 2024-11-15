@@ -580,7 +580,8 @@ trax$`FXS ID` |> intersect(gp34$`FXS ID`)
 trax_gp34_all =
   trax |>
   bind_rows(gp34) |>
-  clean_gender() # re-add label
+  clean_gender() |> # re-add label
+  add_labels() # `bind_rows()` removes them
 
 visit1 = trax_gp34_v1 <- trax_gp34_all |>
   get_visit1()

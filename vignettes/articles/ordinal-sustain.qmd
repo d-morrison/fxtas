@@ -117,6 +117,8 @@ v1_usable =
   filter(CGG < 200) |>
   mutate(`FX3*` = `FX3*` |> forcats::fct_drop() |> 
            labelled::set_label_attribute("CGG Repeat Level"),
+         Parkinsons = Parkinsons |> 
+           labelled::set_label_attribute("Parkinson's disease"),
          `FXTAS Stage (0-5)*` = `FXTAS Stage (0-5)*` |> 
            labelled::set_label_attribute("FXTAS Stage"))
 
