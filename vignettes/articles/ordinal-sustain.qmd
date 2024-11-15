@@ -1091,7 +1091,7 @@ plot_compact_pvd_est2(
 
 {{< pagebreak >}}
 
-# Supplementary material {.appendix}
+# Supplementary Material for “Development and progression of Fragile X-associated tremor/ataxia syndrome revealed by Subtype and Stage Inference analysis" {.appendix}
 
 {{< include _sec_supplement.qmd >}}
 
