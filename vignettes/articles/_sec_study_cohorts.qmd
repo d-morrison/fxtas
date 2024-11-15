@@ -90,3 +90,18 @@ Stage 4 is significant ataxia needing a cane or walker;
 Stage 5 is needing a wheelchair;
 and Stage 6 is bedridden
 (no participants at Stage 6 were included in those studies).
+
+The primary sequence analysis of symptomatic events included baseline visit data 
+from `r nrow(v1_usable)` participant
+s from the GP and TRAX cohorts,
+consisting of 
+`r nrow(v1_usable_cases)` fragile X premutation carriers and 
+`r nrow(controls_v1)` controls. 
+@tbl-demographics provides demographic information about the study participants.
+The controls' data are used to estimate 
+the distribution of the analyzed `r outcomes_name`s among non-FXTAS individuals 
+as reference in SuStaIn modeling
+(more details in @sec-scored-events-model).
+Then, the cases' data are  used to estimate FXTAS event sequences,
+using the estimated control distributions to account for random variation
+in observed symptoms unrelated to the underlying event sequence.

@@ -1,0 +1,44 @@
+
+```{r}
+#| label: count-incomplete-data
+x1 = v1_usable_cases |> pull(`Ataxia: severity`)
+n_missing = sum(x1 |> is.na())
+# n_obs = sum(x1 |> is.na() |> not()) # not() is deprecated?
+n_obs = sum(!is.na(x1))
+n_total = length(x1)
+pct_missing = scales::percent(n_missing / n_total, accuracy = 0.1)
+pct_obs = scales::percent(n_obs / n_total, accuracy = 0.1)
+probs =
+  x1 |>
+  table() |>
+  proportions() |>
+  as.vector() |>
+  scales::percent(accuracy = 0.1)
+
+```
+
+We assumed that missing `r outcomes_name` data
+were missing at random (MAR)
+[@rubin1976inference, @little2019statistical].
+As the longitudinal cohorts have evolved over several funding cycles,
+new instruments were adopted and added;
+much of the missingness was due to
+adding additional measures in later cycles of the studies.
+The MAR assumption thus seems plausible.
+We substituted missing outcome event data
+by assigning a probability distribution across the
+possible values of the missing variable
+that matched the marginal distribution of observed data
+among the cases.
+For example,
+`r n_missing` of the `r length(x1)` cases (`r pct_missing`)
+had missing values for Ataxia Severity,
+and `r n_obs` (`r pct_obs`) had recorded values,
+distributed among Ataxia Severity levels 0-4
+(`r v1_usable_cases$"Ataxia: severity*" |> counts_and_pcts() |> and::and()`,
+respectively).
+For the `r n_missing` cases with missing values,
+we assigned probabilities of `r probs |> and::and()`
+to Ataxia Severity levels `r 0:4 |> and::and()`, respectively,
+and missing values were imputed under the marginal distribution
+of the observed data.

@@ -1,0 +1,56 @@
+
+We applied a discrete event-based disease progression model 
+[@fonteijn2011event; @fonteijn2012event; @oxtoby2023data] 
+to our data using the Ordinal Subtype and Stage Inference ("SuStaIn") algorithm 
+[@young2021ordinal] 
+to estimate event orderings and subtypes for FXTAS patients. 
+SuStaIn is a data-driven statistical modeling algorithm 
+that combines 
+event-based disease progression modelling 
+[@fonteijn2011event; @fonteijn2012event; @oxtoby2023data]
+and latent-cluster finite mixture modeling 
+[@pearson1894contributions; @lazarsfeld1950logical; @mclachlan2019finite] 
+to model event sequences 
+using cross-sectional samples of patient and control populations. 
+The algorithm simultaneously 
+clusters individuals into latent subtypes and 
+characterizes the event ordering that best defines each subtype, 
+thus capturing heterogeneity in both disease subtype and disease stage.
+
+Ordinal SuStaIn [@young2021ordinal] is 
+a version of the SuStaIn modeling algorithm [@young2018uncovering],
+adapted for analyzing ordinal-valued data.
+Ordinal SuStaIn uses a "scored events model", 
+which assumes that for each `r outcomes_name`,
+there is a discrete set of 
+underlying ordinal severity levels,
+but the measured versions of the `r outcomes_name`s may contain 
+some amount of random noise.
+For example, an individual who is really at Ataxia Severity level 2 may be 
+incorrectly assessed as being at Ataxia Severity level 1, depending on
+the patient's temporary disease status on the day of the exam or
+inter-rater differences.
+The first step in applying the Ordinal SuStaIn algorithm is to determine,
+for each `r outcomes_name`, the probability that an individual is 
+"correctly scored" at their "true underlying level" [@young2021ordinal].
+In this analysis, we assumed that all controls are truly at the reference levels
+for each `r outcomes_name`, 
+and we estimated the proportion of correctly scored individuals as
+the proportion of controls 
+who were assessed as being at the reference level
+(@supptbl-prob-correct).
+It is crucial to allow some possibility of incorrect scoring, 
+so we capped the estimated correct scoring probabilities at 
+`r max_prob_correct *100`%.
+Ordinal SuStaIn then uses 
+Markov Chain Monte Carlo (MCMC) sampling [@gelfand1990sampling]
+to estimate the Bayesian posterior probability of each possible event sequence 
+for each subtype given the training dataset, 
+assuming a uniform prior distribution 
+over the set of all possible orderings. 
+We conducted subgroup analyses by fitting models stratified by
+sex (@sec-methods-strat-sex), 
+CGG repeats (<100 vs ≥100) (Supplementary Materials, @sec-methods-strat-cgg),
+and combinations of sex and CGG repeats (<100 vs ≥100) 
+(Supplementary Materials, @sec-stratified-by-cgg-and-sex).
+In these subgroup analyses, we did not search for latent clusters.
