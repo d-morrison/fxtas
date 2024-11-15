@@ -74,7 +74,7 @@ compute_prob_correct <- function(dataset, biomarker_levels, max_prob = 1) {
   }
 
   mapping =
-    dataset[,biomarkers] |> sapply(F = get_label_attribute) |>
+    dataset[,biomarkers] |> sapply(F = labelled::get_label_attribute) |>
     unlist()
 
   mapping = c(names(mapping)) |> rlang::set_names(mapping)
