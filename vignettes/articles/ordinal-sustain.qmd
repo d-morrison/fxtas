@@ -235,9 +235,8 @@ the Cross-Validation Information Criterion (CVIC)
 and the Out-Of-Fold Log-Likelihood (OOFLL) criterion [@young2018uncovering];
 both criteria quantify how well models containing a given number of subtypes
 extend to new data not used in training.
-We performed `r N_CV_folds` - fold cross-validation on the unstratified data
+We performed `r N_CV_folds`-fold cross-validation on the unstratified data
 and calculated the CVIC and OOFLL for 1-`r N_S_max` latent subtypes. 
-More details are provided in the Supplementary Materials (@sec-subtypes).
 
 <!-- {{< include _methods_longitudinal.qmd >}} -->
 
@@ -450,7 +449,7 @@ We found no differences between males and females in
 age at baseline visit, 
 ethnicity/race, 
 FXTAS stage, or
-CGG repeat size.
+CGG repeat length.
 @tbl-biomarker-list lists the `r outcomes_name`s and their ordinal levels
 and reports proportions of clinically elevated levels at baseline visit, 
 stratified by sex.

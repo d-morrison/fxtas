@@ -1,0 +1,8 @@
+Stage | Symptoms
+----- | --------
+1     | represents subclinical or uncertain tremor
+2     | mild tremor without significant interference with activities of daily living (ADLs)
+3     | significant tremor that interferes with ADLs and significant ataxia;
+4     | significant ataxia needing a cane or walker
+5     | needing a wheelchair
+6     | bedridden
