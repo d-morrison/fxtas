@@ -1,29 +1,33 @@
 
+:::{#suppfig-pvd-by-cgg-male}
+
 ```{r}
-#| label: fig-pvd-by-cgg-male
-#| column: page
+#| label: fig-pvd-by-cgg-male-1
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
 #| fig-cap: !expr 
 #|     glue::glue(
-#|        "**Event sequences stratified by CGG repeats, among males.**
-#|        **(a)** Estimated event sequences,
+#|        "Estimated event sequences,
 #|        stratified by CGG repeats (<100 vs 100+).
-#|        {compact_fig_caption} 
-#|        **(b)** Positional differences in estimated event sequence 
-#|        between CGG repeat levels. {compact_fig_cap2}")
-#| layout-ncol: 1
-#| fig-subcap:
-#|    - ""
-#|    - ""
-#| fig-cap-location: top
+#|        {compact_fig_caption}")
 
 # compact pvd
-list(
+males_by_cgg = list(
     "Males, CGG &lt; 100 <br>" = fig_under100_males,
     "Males, CGG &ge; 100  <br>" = fig_over100_males
   ) |>
 plot_compact_pvd(y_text_size = 11)
+
+```
+
+```{r}
+#| label: fig-pvd-by-cgg-male-2
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: !expr 
+#|     glue::glue(
+#|        "Positional differences in estimated event sequence 
+#|        between CGG repeat levels. {compact_fig_cap2}")
 
 # lineplot of event sequences
 list(
@@ -33,26 +37,24 @@ list(
 pvd_lineplot(y_text_size = 11)
 ```
 
+**Event sequences stratified by CGG repeats, among males.**
+
+:::
+
 {{< pagebreak >}}
 
+::: {#suppfig-pvd-by-cgg-female}
+
 ```{r}
-#| label: fig-pvd-by-cgg-female
-#| column: page
+#| label: fig-pvd-by-cgg-female-1
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
 #| fig-cap: !expr
 #|    glue::glue(
-#|      "**Event sequences stratified by CGG repeats, among females.**
-#|      **(a)** Estimated event sequences,
-#|      stratified by CGG repeats (<100 vs 100+).
+#|      "**Estimated event sequences,
+#|      stratified by CGG repeats (<100 vs 100+).**
 #|      {compact_fig_caption}
-#|      **(b)** Positional differences in estimated event sequence
-#|      between CGG repeats. {compact_fig_cap2}")
-#| layout-ncol: 1
-#| fig-subcap:
-#|    - ""
-#|    - ""
-#| fig-cap-location: top
+#|      ")
 
 # compact pvd
 plot_compact_pvd(
@@ -64,6 +66,18 @@ plot_compact_pvd(
   y_text_size = 11
 )
 
+```
+
+```{r}
+#| label: fig-pvd-by-cgg-female-2
+#| column: page
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: !expr
+#|    glue::glue(
+#|      "**Positional differences in estimated event sequence
+#|      between CGG repeats.** {compact_fig_cap2}")
+
 # lineplot of event sequences
 pvd_lineplot(
   figs = list(
@@ -74,3 +88,7 @@ pvd_lineplot(
   y_text_size = 11
 )
 ```
+
+**Event sequences stratified by CGG repeats, among females.**
+
+:::

@@ -74,7 +74,7 @@ When we fitted models for subgroup analyses by sex and CGG repeats level,
 the models for males showed the same patterns described above,
 except for head tremor
 (we found no difference in head tremor onset between CGG levels).
-([Supplementary Figure @fig-pvd-by-cgg-male])
+(@suppfig-pvd-by-cgg-male)
 shows the corresponding stratified models and
 compares the estimates of the sequences for these two subgroups.
 
@@ -82,7 +82,7 @@ compares the estimates of the sequences for these two subgroups.
 We did not find statistically significant evidence of
 a difference between CGG <100 and CGG ≥100 among females
 (p = `r pval_female_cgg_gp34_v1`).
-([Supplementary Figure @fig-pvd-by-cgg-female])
+(@suppfig-pvd-by-cgg-female)
 shows the estimated stratified models
 and compares the estimates.
 Females had later onset of SWM Between Errors for CGG repeats ≥100
