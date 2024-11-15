@@ -154,8 +154,8 @@ crossref:
     - kind: float
       key: suppfig
       reference-prefix: Supplementary Figure
-      space-before-numbering: false
+      space-before-numbering: true
     - kind: float
       key: supptbl
       reference-prefix: Supplementary Table
-      space-before-numbering: false
+      space-before-numbering: true

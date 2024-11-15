@@ -309,7 +309,7 @@ for each `r outcomes_name`,
 and we estimated the proportion of correctly scored individuals as
 the proportion of controls 
 who were assessed as being at the reference level
-(@supptbl-prob-correct]).
+(@supptbl-prob-correct).
 It is crucial to allow some possibility of incorrect scoring, 
 so we capped the estimated correct scoring probabilities at 
 `r max_prob_correct *100`%.
@@ -733,7 +733,7 @@ When we conducted subgroup analyses by CGG repeat size,
 we found statistically significant evidence of 
 a difference between males and females
 among those with CGG < 100 (p = `r pval_under100_sex_gp34_v1`)
-([Supplementary Figure @fig-pvd-by-gender-cgg_under100]).
+(@suppfig-pvd-by-gender-cgg_under100).
 Several psychiatric disorders (as measured by SCID) 
 occurred prior to FXTAS Stage 1
 among females with CGG < 100,
@@ -742,7 +742,7 @@ MRI biomarkers appeared to occur at later stages in females compared to males.
 We did not find statistically significant evidence of 
 a difference between males and females
 among those with CGG ≥ 100 (p = `r pval_over100_sex_gp34_v1`) 
-([Supplementary Figure @fig-pvd-by-gender-cgg_over100]).
+(@suppfig-pvd-by-gender-cgg_over100).
 
 
 ```{r}
@@ -798,7 +798,7 @@ n_over100_Female =
 
 We found significant evidence of an overall difference between CGG <100
 and CGG ≥100 among males (p = `r pval_male_cgg_gp34_v1`) 
-([Supplementary Figure @fig-pvd-by-cgg-male]). 
+(@suppfig-pvd-by-cgg-male]). 
 SWM between errors occurred prior to Stage 1 in males with CGG repeats <100, 
 whereas it occurred between stage 3 and 4 
 in males with CGG repeats ≥ 100 
@@ -813,7 +813,7 @@ occurred later in the event sequence in participants with CGG repeats <100
 compared to those with CGG repeats ≥100.  
 However, we did not find a significant difference between CGG <100 and CGG ≥100 
 among females (p = `r pval_female_cgg_gp34_v1`) 
-([Supplementary Figure @fig-pvd-by-cgg-female]). 
+(@suppfig-pvd-by-cgg-female). 
 It should be noted that this comparison lacked statistical power 
 given the limited sample size of only `r n_over100_Female` females with CGG ≥100.
 
@@ -861,7 +861,7 @@ n_type_0 = results_cv_max$subtype_and_stage_table |>
 
 @fig-pvd_chosen_subtypes shows the estimated sequential event orders
 for each of the subtype clusters.
-[Supplementary Figure @fig-pvd_chosen_subtypes_linegraphs] shows 
+@suppfig-pvd_chosen_subtypes_linegraphs shows 
 differences in event sequences between subtypes. 
 @tbl-sg_demos shows the demographics of the patients clustered in each subtype. 
 `r n_type_0` patients had experienced too few events 
@@ -1043,7 +1043,7 @@ When we compared
 between 55-99 vs 100-199 CGG repeats in males and females combined, 
 no significant difference was found 
 (p = `r pval_cgg_gp34_v1`) 
-([Supplementary Figure S -@suppfig-pvd-by-cgg]). 
+(@suppfig-pvd-by-cgg). 
 The finding of only minimal differences 
 between 55-99 vs 100-199 CGG repeats is surprising, 
 since several studies have found that the higher the CGG repeats,

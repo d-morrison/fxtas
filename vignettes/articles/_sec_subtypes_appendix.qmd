@@ -30,9 +30,9 @@ tend to be at a later estimated stage of disease progression.
 The upwards trend of progression stage with age
 indicates that the estimated models are plausible.
 
+::: {#suppfig-mcmc-loglik}
+
 ```{r}
-#| label: suppfig-mcmc-loglik
-#| fig-cap: "**log-likelihoods of MCMC samples, by number of subtypes**"
 #| eval: !expr fit_models
 
 lliks = results_v1 |>
@@ -44,15 +44,15 @@ lliks |>
 
 ```
 
+**log-likelihoods of MCMC samples, by number of subtypes**
+
+:::
+
 {{< pagebreak >}}
 
-```{r}
-#| label: suppfig-stage-by-age
-#| fig-cap: |
-#|    **Estimated progression stage by age and latent subtype.**
-#|    The blue line is a Locally Estimated Scatterplot Smoothing (LOESS)
-#|    non-parametric regression curve.
+::: {#suppfig-stage-by-age}
 
+```{r}
 
 stages =
   results_cv_max$subtype_and_stage_table |>
@@ -67,33 +67,13 @@ stages |>
 
 ```
 
-::: landscape
-
-:::: {#suppfig-cvic, layout-ncol="2"}
-
-```{r}
-#| label: fig-cvic-1
-#| fig-width: 4
-#| fig-cap: Cross-validation information criterion
-#| eval: !expr fit_models
-
-temp$CVIC |> plot_CVIC()
-```
-
-```{r}
-#| label: fig-cvic-2
-#| fig-width: 4
-#| fig-cap: Test set log-likelihood across folds
-#| eval: !expr fit_models
-
-temp$loglike_matrix |> plot_cv_loglik()
-```
-
-**Selection criteria for number of latent subtypes**
-
-::::
+**Estimated progression stage by age and latent subtype.**
+The blue line is a Locally Estimated Scatterplot Smoothing (LOESS)
+non-parametric regression curve.
 
 :::
+
+{{< include _sec_cvic_graphs.qmd >}}
 
 ::: {#suppfig-pvd_chosen_subtypes_linegraphs}
 
@@ -110,7 +90,6 @@ temp$loglike_matrix |> plot_cv_loglik()
 #|    - "**Subtype 2 compared to Subtype 3**"
 #|    - "**Subtype 2 compared to Subtype 4**"
 #|    - "**Subtype 3 compared to Subtype 4**"
-#| column: page
 #| 
 
 figs = 
