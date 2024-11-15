@@ -1,9 +1,10 @@
-@tbl-prob-correct shows the estimated proportion of correctly scored individuals
+@supptbl-prob-correct shows the estimated proportion of 
+correctly scored individuals
 for each `r outcomes_name`, [@young2021ordinal]
 estimated using the controls data.
 
 ```{r}
-#| label: tbl-prob-correct
+#| label: supptbl-prob-correct
 #| tbl-cap: |
 #|   **Proportions of controls at baseline levels, 
 #|   and corresponding estimates of 

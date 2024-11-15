@@ -153,9 +153,9 @@ crossref:
   custom:
     - kind: float
       key: suppfig
-      reference-prefix: Figure S
+      reference-prefix: Supplementary Figure
       space-before-numbering: false
     - kind: float
       key: supptbl
-      reference-prefix: Table S
+      reference-prefix: Supplementary Table
       space-before-numbering: false
