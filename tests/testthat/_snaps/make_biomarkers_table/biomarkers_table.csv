@@ -1,9 +1,9 @@
 category,biomarker,levels,Female,Male,p-value
 Ataxia,Ataxia,"No, Yes",52.7%,43.2%,0.203186
 Ataxia,Ataxia: severity,"0, 1, 2, 3, 4",32.6%,32.2%,1
-CANTAB,PAL Total errors (adjusted),"<= 13, > 13",71.4%,65.9%,0.803004
-CANTAB,RTI Five-choice movement time,"<= 368.57, > 368.57",27.3%,32.3%,0.804633
-CANTAB,SWM Between errors,"<= 26, > 26",10%,38.2%,0.0200098
+CANTAB,PAL Total errors (adjusted),"≤ 13, > 13",71.4%,65.9%,0.803004
+CANTAB,RTI Five-choice movement time,"≤ 368.57, > 368.57",27.3%,32.3%,0.804633
+CANTAB,SWM Between errors,"≤ 26, > 26",10%,38.2%,0.0200098
 MRI,Corpus Callosum-Thickness,"Normal, Thin",23.1%,45.3%,0.0591595
 MRI,Genu (CC)-WM Hyperintensity,"No, Yes",41.7%,50%,0.629492
 MRI,MRI: Cerebellar,"None, Mild, Moderate, Severe",48.1%,64.8%,0.176848
