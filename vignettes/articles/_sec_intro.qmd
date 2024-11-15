@@ -47,29 +47,31 @@ one in 148 to 200 females and
 one in 290 to 855 males
 in the general population [@maenner2013fmr1; @hunter2014epidemiology].
 
-The symptoms of FXTAS appear and develop over years in adulthood, 
+The symptoms of FXTAS appear and develop over many years in adulthood, 
 usually after age 50. 
 The symptoms of FXTAS include 
-tremors, 
-gait ataxias, 
+tremor, 
+gait ataxia, 
 neuropathy, 
 cognitive decline, 
-mood instability, 
-and others
+and depressive and anxiety disorders
 [@hagerman2001intention].
-Both the type and severity of FXTAS symptoms vary among individuals. 
-Some patients with FXTAS have multiple symptoms that progress rapidly, 
-and others have few symptoms that remain mild over many years. 
-However, the sequence in which those symptoms appear is still understudied. 
+Both the type and severity of FXTAS symptoms vary among patients. 
+Some patients with FXTAS have multiple symptoms that 
+progress rapidly in severity, 
+while others have few symptoms that remain mild over many years. 
+However, the sequence in which those symptoms typically appear 
+is still understudied. 
 Therefore, the present study attempts to address the following questions:
-1) In what sequential order do FXTAS symptoms and brain changes typically appear;
-2) how does that sequence vary among participants;
+1) In what sequential order do 
+FXTAS symptoms and brain changes typically appear;
+2) how does that sequence vary among patients;
 and 3) do specific baseline characteristics predict the order of presentation?
 
 Here, we applied the ordinal-outcomes version of the
 Subtype and Stage Inference algorithm
 ("Ordinal SuStaIn") [@young2018uncovering; @young2021ordinal]
-to model sequential orders of apparent FXTAS symptoms
+to model sequential orders of clinically manifest FXTAS symptoms
 in a cohort of FXTAS patients.
 SuStaIn is a data-driven analytic approach
 which was originally developed to
@@ -91,5 +93,5 @@ chronic obstructive pulmonary disease (COPD) [@young2020disease],
 and knee osteoarthritis [@li2021identifying],
 but not previously for FXTAS.
 We here apply it to a cross-sectional data set of
-premutation carriers diagnosed with FXTAS of different stages
+premutation carriers diagnosed with FXTAS at different clinical stages
 to study the sequential ordering of FXTAS `r events_name`.
