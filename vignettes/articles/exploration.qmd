@@ -125,7 +125,7 @@ Ataxia by CGG status
 
 <br>
 
-### Parkinsons  {.appendix}
+### Parkinson's disease {.appendix}
 
 ::: {#supptbl-parkinsons-by-cgg}
 
@@ -144,7 +144,7 @@ table1(
 )
 ```
 
-Parkinsons by CGG status
+Parkinson's disease by CGG status
 
 :::
 

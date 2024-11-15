@@ -7,27 +7,32 @@ The main findings of this analysis were
 substantial differences in sequential order of eventual symptoms
 between males and females
 and in combination of sex and CGG repeat size.
-
-The prevalence of
+An important general conclusion of the study is that 
+there is substantial variation across premutation carriers 
+in the emergence of symptoms associated with FXTAS.
+ 
+The prevalences of
 lifetime anxiety disorders,
 mood disorders,
 and somatoform disorders in this study cohort
-is far more than
-usual population norms for these illnesses [@bourgeois2010lifetime].
+are higher than
+usual population norms for these illnesses
+as noted in previous studies
+[@bourgeois2010lifetime; @seritan2013psychiatric; @seritan2013ages; @schneider2020women].
 This study design did not fractionate specific lifetime psychiatric illnesses
 (e.g., 
 major depressive disorder, 
 panic disorder, 
 somatization disorder),
 but these *overall* lifetime prevalence figures are notable.
-[Clinicians: please provide a reference]{.comment-start author="Ezra Morrison"}
 Prior studies of mood and anxiety disorders
-[]{.comment-end}
 have demonstrated a higher-than-expected rate of these illnesses
-in premutation carriers.
+in premutation carriers [@hagerman2018; @roberts2009].
 The same increase in lifetime psychiatric illness burden
 is seen in other neurodegenerative illnesses
-(e.g., Parkinson’s disease, multiple sclerosis) [@Rickardsi48].
+(e.g., Parkinson’s disease, multiple sclerosis) 
+[@Rickardsi48; @Fusarpoli2013; @Benussi2022; @Noyce871; @Wijnands2019; 
+@GOVONI201641; @Silvagni2020; @MARRIE2024125; @sloan2024neuropsychiatric].
 As many psychiatric illnesses have a strong genetic predisposition,
 the lifetime prevalences  of psychiatric illness in this study 
 persuasively suggest that

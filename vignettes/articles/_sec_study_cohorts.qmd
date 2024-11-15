@@ -4,20 +4,20 @@ the Genotype-Phenotype Study in Fragile X Families
 ("GP"; funded by NICHD R01HD036071; PI Hagerman) and
 the Trajectories and Markers of Neurodegeneration
 in Fragile X Premutation Carriers study
-("TRAX"; funded by NINDS NS110100; PI Rivera).
-Written informed consent was obtained from all participants 
+("TRAX"; funded by NINDS NS110100; PIs Hessl and Rivera).
+A written informed consent form was obtained from all participants 
 according to the procedures approved by the 
 University of California, Davis Institutional Review Board.
 
-The GP Study is a longitudinal research effort 
+The GP Study was a longitudinal research effort 
 focused on adult male and female 
-carriers of the fragile X premutation, 
+carriers of the *FMR1* premutation, 
 aged 40-85 at entry, 
-who have fragile X-associated tremor/ataxia syndrome (FXTAS). 
-This study is conducted at the 
+who have FXTAS. 
+This study was conducted at the 
 University of California, Davis MIND Institute 
-and is supported by an NIH (NICHD) grant (#R01HD036071; PI Hagerman). 
-Most participants have been recruited 
+and was supported by an NIH (NICHD) grant (R01HD036071; PI Hagerman). 
+Most participants were recruited 
 through the Fragile X Research and Treatment Center 
 at the MIND Institute, 
 including 
@@ -26,31 +26,30 @@ already engaged with our clinical and research programs,
 and new families who contacted us for 
 clinical services 
 or information about our research.
-To be included in the study, 
-participants must fall into one of the following categories:
+Participants in the following categories were included:
 
 1.	Premutation carriers with intellectual disabilities (IQ < 80) 
 or a diagnosis of autism spectrum disorder (ASD)
 (Autism, PDD-NOS, or Asperger’s syndrome).
-2.	Premutation carriers without intellectual disabilities or ASD, 
-who have a normal IQ and no psychiatric illness.
-3.	Adult premutation carriers diagnosed with FXTAS.
+2.	Premutation carriers without intellectual disabilities or ASD.
+3.	Adult premutation carriers who have neurological symptoms or have been diagnosed with FXTAS.
 4.	Control individuals without the fragile X premutation.
 
-GP study participants are reassessed every two years
+GP study participants with neurological symptoms or FXTAS
+are reassessed every two years
 to document phenotypic progression over time.
 
 The TRAX study is also conducted at the University of California, 
 Davis MIND Institute. 
-Participants in the TRAX longitudinal study include
+Participants from the TRAX longitudinal study included
 67 male premutation carriers 
 ranging from 40-82 years (mean: 60.2 years) 
 and 32 male healthy controls 
 ages 40-75 (mean: 57.7 years) at baseline visit. 
 This study is also conducted at the 
 University of California, Davis MIND Institute. 
-An important goal of the recruitment process was 
-the inclusion of premutation carriers 
+An important goal of the recruitment process for the TRAX study
+was the inclusion of premutation carriers 
 who did not yet have a FXTAS diagnosis at enrollment. 
 During telephone screening, 
 detailed interviewing with potential participants 
@@ -75,7 +74,7 @@ each evaluation includes
 a detailed medical history, 
 neurological examination, 
 neuropsychological testing including the 
-Wechsler Adult Intelligence Scale (WAIS IV), 
+Wechsler Adult Intelligence Scale, Fourth Edition (WAIS IV), 
 Behavior Dyscontrol Scale (BDS-2), 
 Mini-Mental State Exam (MMSE) and 
 Cambridge Automated Neuropsychological Test Battery (CANTAB); 
@@ -90,22 +89,23 @@ and brain MRI
 @elias2024enlarged].
 After the clinical and MRI evaluation,
 each patient received a stage designation of FXTAS ranging from 0 to 6 
-according to stages identified by Bacalman *et al.* @bacalman2006psychiatric  
+according to stages identified by Bacalman *et al.* 2006 
+[@bacalman2006psychiatric] 
 based on tremor and ataxia severity. 
 Stage 1 represents subclinical or uncertain tremor; 
 Stage 2 is mild tremor without significant interference with 
 activities of daily living (ADLs); 
 Stage 3 is significant tremor that interferes with ADLs and significant ataxia; 
 Stage 4 is significant ataxia needing a cane or walker;
-Stage 5 is needing a wheelchair;
+Stage 5 is requiring a wheelchair;
 and Stage 6 is bedridden
-(no participants at Stage 6 were included in these studies).
+(no participants at Stage 6 were included in the study).
 
 The primary sequence analysis of symptomatic events 
 included baseline visit data 
 from `r nrow(v1_usable)` participants from the GP and TRAX cohorts,
 consisting of 
-`r nrow(v1_usable_cases)` fragile X premutation carriers and 
+`r nrow(v1_usable_cases)` carriers of a premutation and 
 `r nrow(controls_v1)` controls. 
 @tbl-demographics provides 
 demographic information about the study participants.

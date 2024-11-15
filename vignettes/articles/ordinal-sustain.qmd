@@ -506,7 +506,7 @@ than for females (between Stages 3-4).
 Advanced degrees of ataxia severity also occurred 
 earlier in the event sequence for males than females. 
 MRI biomarkers of decline and parkinsonian features 
-also appear to onset at earlier FXTAS stages for males than for females.
+also appear to begin at earlier FXTAS stages for males than for females.
 
 
 ```{r}
@@ -721,7 +721,7 @@ parkinsonian features between Stages 3 and 4,
 and white matter disease between Stages 4 and 5.
 Compared to Subtype 1, Subtype 2 appeared to experience 
 white matter disease phenotypes earlier (between Stages 2 and 4),
-memory impairment (assessed by SWM) earlier (Stage 3-4 versus 4-5).
+memory impairment (assessed by SWM) earlier (Stage 3-4 versus 4-5),
 and psychiatric disorders later (between Stages 3 and 5).
 Subtype 2 might be described as "memory-first".
 Subtype 3 appeared to experience
