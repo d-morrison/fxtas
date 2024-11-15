@@ -53,6 +53,7 @@ Imports:
 Suggests: 
     constructive,
     devtag (>= 0.0.0.9000),
+    doconv,
     knitr,
     rmarkdown,
     scales,
@@ -77,7 +78,7 @@ Config/reticulate/autoconfigure:
   )
 Config/build/copy-method: link
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
-Remotes:  
+Remotes: 
     bcgov/ssdtools,
     moodymudskipper/devtag,
     mponzini/gtsummary@dev,

@@ -1008,11 +1008,12 @@ tbl_sg_demos = table_subtype_by_demographics(
 #| results: asis
 
 
-tbl_sg_demos |>
-  gtsummary::as_flex_table() |>
-  flextable::width(width = 1.75) |>
-  flextable::width(j = 2:6, width = 0.75) |>
-  flextable::width(j = 7, width = 1)
+tbl_sg_demos
+# |>
+#   gtsummary::as_flex_table() |>
+#   flextable::width(width = 1.75) |>
+#   flextable::width(j = 2:6, width = 0.75) |>
+  # flextable::width(j = 7, width = 1)
 
 ```
 
