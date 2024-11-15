@@ -83,8 +83,9 @@ project:
   execute-dir: project
 format:
   docx:
+    notes-after-punctuation: true
     reference-doc: vignettes/Brain_template_2022.docx
-    csl: vignettes/brain.csl
+    csl: vignettes/american-medical-association.csl
     toc: false
     echo: false
     # fig-format: svg
@@ -107,6 +108,8 @@ format:
     documentclass: scrartcl
   html:
     toc: true
+    notes-after-punctuation: true
+    csl: vignettes/brain.csl
     # fig-format: svg
     toc-float: true
     toc-depth: 4

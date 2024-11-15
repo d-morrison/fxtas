@@ -826,7 +826,8 @@ Subsequent criteria for the diagnosis of FXTAS was modified [@hall2014emerging]
 to include the involvement of the splenium,
 which is seen in the majority of females with FXTAS 
 [@apartis2012fxtas; @schneider2020women].
-Hall et al [-@hall2014emerging] also added the feature of neuropathy, 
+Hall *et al.* [-@hall2014emerging] also added 
+the feature of neuropathy, 
 which occurs in the majority of FXTAS patients,
 but it is a common finding in the elderly with many causes,
 so it is just a minor criteria for FXTAS. 
@@ -874,9 +875,11 @@ Perhaps the cut off of 100 is too high for this distinction to be made.
 
 This study has several limitations. 
 In the subtype clustering analysis, 
-it was challenging to concisely summarize the differences between subtypes, 
+it was challenging to concisely summarize 
+the differences between subtypes, 
 especially given the relatively small sample sizes per subtype 
-and the correspondingly large amounts of uncertainty in their event orderings. 
+and the correspondingly large amounts of uncertainty 
+in their event orderings. 
 We had substantial amounts of missing data. 
 As described in the methods (@sec-incomplete-data),
 we used the marginal distribution of 
