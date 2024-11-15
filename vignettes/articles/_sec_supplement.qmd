@@ -1,29 +1,4 @@
-@tbl-prob-correct shows the estimated proportion of correctly scored individuals
-for each `r outcomes_name`, [@young2021ordinal]
-estimated using the controls data.
-
-```{r}
-#| label: tbl-prob-correct
-#| tbl-cap: |
-#|   **Proportions of controls at baseline levels, 
-#|   and corresponding estimates of 
-#|   probability of correct scoring.**
-#|   All controls are assumed to be truly 
-#|   at the reference levels for each symptom, 
-#|   and the proportion of correctly scored individuals 
-#|   is thus estimated as 
-#|   the proportion of controls 
-#|   who were assessed as being 
-#|   at the reference level.
-
-library(flextable)
-prob_correct |>
-  attr("data") |>
-  flextable::flextable() |> 
-  bold(part = "header") |> 
-  width(width = 1)
-```
-
+{{< include _sec_prob_correct.qmd >}}
 
 {{< include general-data-notes.qmd >}}
 
@@ -99,18 +74,29 @@ stages |>
 
 ::: landscape
 
+:::: {#suppfig-cvic, layout-ncol="2"}
+
 ```{r}
-#| fig-cap: "**Selection criteria for number of latent subtypes**"
-#| fig-subcap:
-#|    - "Cross-validation information criterion"
-#|    - "Test set log-likelihood across folds"
-#| label: fig-cvic
-#| layout-ncol: 2
+#| label: fig-cvic-1
+#| fig-width: 4
+#| fig-cap: Cross-validation information criterion
 #| eval: !expr fit_models
 
 temp$CVIC |> plot_CVIC()
+```
+
+```{r}
+#| label: fig-cvic-2
+#| fig-width: 4
+#| fig-cap: Test set log-likelihood across folds
+#| eval: !expr fit_models
+
 temp$loglike_matrix |> plot_cv_loglik()
 ```
+
+**Selection criteria for number of latent subtypes**
+
+::::
 
 :::
 
