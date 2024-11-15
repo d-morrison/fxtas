@@ -144,7 +144,7 @@ pvd_lineplot(figs = figs[c(2, 4)])
 ```
 
 ```{r}
-#| label: fig-pvd_chosen_subtypes_linegraphs-1
+#| label: fig-pvd_chosen_subtypes_linegraphs-6
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
 #| fig-cap: 

@@ -18,7 +18,7 @@ lupus, rheumatoid arthritis,
 multiple sclerosis, ANA positivity, Sjogren's syndrome, Raynaud's syndrome, 
 and pulmonary fibrosis, 
 since these conditions were too rare to analyze separately
-(details in Supplementary Materials, @sec-any-autoimmune).
+(details in Supplementary Materials, [@sec-any-autoimmune]).
 We also created composite variables for 
 four domains of the Structured Clinical Interview for DSM-IV (SCID-IV):
 Mood Disorders, 
@@ -34,7 +34,7 @@ we did not combine the variables representing corpus callosum MRI abnormalities,
 since these variables were created using Likert scales that differed from each other
 (details in Supplementary Materials, @sec-mri-composites).
 
-[Supplementary Tables S -@supptbl-tremors] - [S -@supptbl-autoimmune] 
+Supplementary Tables [-@supptbl-tremors] - [-@supptbl-autoimmune] 
 summarize each of the `r outcomes_name`s that we included in the analysis models, 
 stratified by 
 CGG repeat size (`r levels(v1_usable$"FX3*")`) 

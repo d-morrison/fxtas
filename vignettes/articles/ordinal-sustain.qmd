@@ -619,7 +619,7 @@ n_over100_Female =
 
 We found significant evidence of an overall difference between CGG <100
 and CGG ≥100 among males (p = `r pval_male_cgg_gp34_v1`) 
-(@suppfig-pvd-by-cgg-male]). 
+(@suppfig-pvd-by-cgg-male). 
 SWM between errors occurred prior to Stage 1 in males with CGG repeats <100, 
 whereas it occurred between stage 3 and 4 
 in males with CGG repeats ≥ 100 

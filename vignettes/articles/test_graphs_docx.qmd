@@ -53,7 +53,7 @@ fig_females_first |> print()
 
 {{< pagebreak >}}
 
-::::{#fig-v2 layout-ncol=2}
+:::: {#fig-v2 layout-ncol="2"}
 
 ::::: {#fig-v2-1}
 
@@ -84,7 +84,7 @@ Estimated event sequence models, stratified by sex, first visits only
 
 ::::
 
-::::{#fig-try-3 layout-ncol=2}
+:::: {#fig-try-3 layout-ncol=2}
 
 ```{r}
 #| fig-height: !expr pvd_height
