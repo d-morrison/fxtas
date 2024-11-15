@@ -9,7 +9,7 @@ scid_vars_for_table1 = function()
 {
   c(
     # "Was SCID completed?",
-    "SCID: Mood Disorders",
+    "SCID: mood disorders",
     # "Bipolar I Disorder (MD01), Lifetime",
     # "Bipolar I Disorder (MD01), Current",
     # "Bipolar II Disorder (MD02), Lifetime",
@@ -22,7 +22,7 @@ scid_vars_for_table1 = function()
     # "Mood Disorder Due to GMC (MD07), Current",
     # "Substance-Induced Mood Dis. (MD08), Lifetime",
     # "Substance-Induced Mood Dis. (MD08), Current",
-    "SCID: Substance Use Disorders",
+    "SCID: substance use disorders",
     # "Alcohol (SUD17), Lifetime",
     #   "Alcohol (SUD17) Current",
     #   "Sedative-Hypnotic-Anxiolytic (SUD18), Lifetime",
@@ -41,9 +41,9 @@ scid_vars_for_table1 = function()
     #   "Poly Drug (SUD24), Current",
     #   "Other (SUD25), Lifetime",
     #   "Other (SUD25), Current",
-    "SCID: Anxiety Disorders",
-    "SCID: Somatoform Disorders",
-    "SCID: Psychotic Symptoms"
+    "SCID: anxiety disorders",
+    "SCID: somatoform disorders",
+    "SCID: psychotic symptoms"
     # "Primary Psychotic Symptoms (PS01), Lifetime",
     # "Primary Psychotic Symptoms (PS01), Current"
   )
