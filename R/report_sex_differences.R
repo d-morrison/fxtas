@@ -1,7 +1,7 @@
 #' Report sex differences
 #'
 #' @param table output from [make_biomarkers_table()]
-#'
+#' @param cutoff [numeric()] p-value cutoff for significance
 #' @returns a [character()] string
 #' @export
 #' @examples
@@ -28,11 +28,11 @@
 #'
 #'   table |> report_sex_differences()
 #'
-report_sex_differences = function(table)
+report_sex_differences = function(table, cutoff = 0.05)
 {
 
   table |>
-    filter(`p-value` < 0.05) |>
+    filter(`p-value` < cutoff) |>
     mutate(
       biomarker = .data$biomarker |>
         stringr::str_replace(

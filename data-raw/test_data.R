@@ -12,7 +12,8 @@ test_data =
 # could have used https://github.com/EvgenyPetrovsky/scrambler here instead:
 for (i in colnames(test_data))
 {
-  test_data[,i] = test_data[,i] |> sample(replace = FALSE)
+  sample_rows = sample.int(nrow(test_data), replace = FALSE)
+  test_data[i] = test_data[sample_rows, i]
 }
 
 usethis::use_data(test_data, overwrite = TRUE)

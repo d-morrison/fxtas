@@ -3,7 +3,9 @@ test_that("compute_prob_correct() produces consistent results", {
 
   v1_usable <- full_data |> dplyr::filter(CGG < 200)
 
-  biomarker_groups <- compile_biomarker_groups_table()
+  biomarker_groups <- compile_biomarker_groups_table(
+    dataset = v1_usable
+  )
 
   biomarker_varnames <-
     biomarker_groups |>

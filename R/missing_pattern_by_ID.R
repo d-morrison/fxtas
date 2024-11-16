@@ -16,7 +16,7 @@ missing_pattern_by_ID = function(
     missing_values = c(NA, "Missing (empty in RedCap)"))
 {
   data |>
-    group_by(`FXS ID`) |>
+    group_by(.data$`FXS ID`) |>
     dplyr::summarize(
       across(
         .cols = variable,
