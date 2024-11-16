@@ -72,8 +72,8 @@ events_name = "symptomatic events"
 outcomes_name_sentence_start = stringr::str_to_sentence(outcomes_name)
 
 compact_fig_caption <- paste(
-  "Positional variance diagrams of",
-  "estimated event sequences models and uncertainty.",
+  "**Positional variance diagrams of",
+  "estimated event sequences models and uncertainty.**",
   "The different colors (red, blue, purple, green, magenta)",
   "indicate the ordinal levels of symptom progression.",
   "Color intensity represents the likelihood of sequence position.",
