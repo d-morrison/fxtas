@@ -29,7 +29,6 @@ plot_positional_var(
   label_rot = 0,
   cmap = "original",
   biomarker_colours = NULL,
-  figsize = NULL,
   subtype_titles = NULL,
   separate_subtypes = FALSE,
   save_path = NULL,
@@ -39,17 +38,63 @@ plot_positional_var(
 )
 }
 \arguments{
-\item{results}{pickle file contents}
+\item{results}{todo}
 
-\item{biomarker_labels}{biomarker labels}
+\item{samples_sequence}{todo}
+
+\item{samples_f}{todo}
+
+\item{n_samples}{todo}
+
+\item{score_vals}{todo}
+
+\item{biomarker_labels}{todo}
 
 \item{biomarker_groups}{biomarker groupings}
 
-\item{biomarker_levels}{biomarker levels}
+\item{biomarker_levels}{todo}
 
-\item{biomarker_events_table}{table of biomarker events (excluding base level)}
+\item{biomarker_events_table}{todo}
 
-\item{biomarker_event_names}{vector of biomarker event names}
+\item{biomarker_event_names}{todo}
+
+\item{biomarker_plot_order}{todo}
+
+\item{ml_f_EM}{todo}
+
+\item{cval}{todo}
+
+\item{subtype_order}{todo}
+
+\item{biomarker_order}{todo}
+
+\item{title_font_size}{todo}
+
+\item{stage_font_size}{todo}
+
+\item{stage_label}{todo}
+
+\item{stage_rot}{todo}
+
+\item{stage_interval}{todo}
+
+\item{label_font_size}{todo}
+
+\item{label_rot}{todo}
+
+\item{cmap}{a \link{character}}
+
+\item{biomarker_colours}{a \link{character} vector of colors}
+
+\item{subtype_titles}{todo}
+
+\item{separate_subtypes}{todo}
+
+\item{save_path}{todo}
+
+\item{save_kwargs}{todo}
+
+\item{synchronize_y_axes}{todo}
 
 \item{...}{
   Arguments passed on to \code{\link[=plot.PF]{plot.PF}}
@@ -58,6 +103,9 @@ plot_positional_var(
     \item{\code{size.y}}{size of biomarker event labels}
     \item{\code{color_label}}{label for legend color scale}
   }}
+}
+\value{
+a \verb{"PVD.list} (a \link{list} of \code{PVD} objects from \code{\link[=plot.PF]{plot.PF()}})
 }
 \description{
 Plot positional variance diagram

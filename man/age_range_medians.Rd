@@ -7,7 +7,10 @@
 age_range_medians(x)
 }
 \arguments{
-\item{x}{}
+\item{x}{a \link{character} vector}
+}
+\value{
+a \link{numeric} vector corresponding to \code{x}
 }
 \description{
 replace decade codes with medians of those decades

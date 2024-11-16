@@ -1,12 +1,10 @@
 #' graph stage by age
 #'
-#' @param data
-#' @param alpha
+#' @param data todo
+#' @param alpha todo
 #'
-#' @return
+#' @returns a [ggplot2::ggplot]
 #' @export
-#'
-#' @examples
 graph_stage_by_age = function(data,
                               alpha = .7)
 {

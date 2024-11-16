@@ -18,6 +18,10 @@ missingness_reasons.numeric(x, x.clean = clean_numeric(x, ...), ...)
     \item{\code{extra_codes}}{codes besides 777, 888, 999 to turn into NAs; has no effect if the \code{NA_codes} argument is changed from default by the user.}
   }}
 }
+\value{
+a \link{factor} \link{vector} corresponding to the elements of \code{x},
+indicating the reasons why \code{x} was missing.
+}
 \description{
 Title
 }

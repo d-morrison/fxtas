@@ -1,8 +1,8 @@
 #' Compile biomarker groups table
 #'
-#' @param biomarker_group_list
+#' @param biomarker_group_list todo
 #'
-#' @return
+#' @returns a [tibble::tbl_df]
 #' @export
 #'
 compile_biomarker_groups_table = function(

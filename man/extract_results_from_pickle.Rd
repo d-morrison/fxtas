@@ -34,6 +34,9 @@ extract_results_from_pickle(
     \item{\code{format_sst}}{should the subtype and stage table be formatted? (doesn't work for cross-validation fold pickle-files)}
   }}
 }
+\value{
+a \code{"SuStaIn-model"} object (extends \code{\link[=list]{list()}})
+}
 \description{
 Extract results from pickle file
 }

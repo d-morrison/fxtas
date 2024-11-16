@@ -1,9 +1,9 @@
 #' compute `confus_matrix` as in python version
 #'
-#' @param samples_sequence
-#' @param biomarker_event_order
+#' @param samples_sequence todo
+#' @param biomarker_event_order todo
 #'
-#' @return
+#' @return a [tibble:tbl_df]
 #' @export
 #'
 #' @examples

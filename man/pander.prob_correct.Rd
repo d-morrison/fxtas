@@ -11,6 +11,9 @@
 
 \item{...}{currently unused}
 }
+\value{
+By default this function outputs (see: \code{cat}) the result. If you would want to catch the result instead, then call the function ending in \code{.return}.
+}
 \description{
 This function is a method of the \code{\link[pander:pander]{pander::pander()}} function
 from the  \code{pander} package, for \code{prob_correct} objects

@@ -13,6 +13,9 @@ clean_numeric(x, NA_codes = c(777, 888, 999, extra_codes), extra_codes = NULL)
 
 \item{extra_codes}{codes besides 777, 888, 999 to turn into NAs; has no effect if the \code{NA_codes} argument is changed from default by the user.}
 }
+\value{
+a \link{numeric} vector corresponding to \code{x}
+}
 \description{
 Replace missing codes (e.g., 777, 888, 999) with NAs in a numeric variable
 }

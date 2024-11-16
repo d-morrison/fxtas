@@ -7,9 +7,16 @@
 compute_prob_dist2(ModelScores, DataScores, biomarkers, prob_correct)
 }
 \arguments{
+\item{ModelScores}{todo}
+
 \item{DataScores}{a list of possible scores}
 
-\item{prob_correct}{}
+\item{biomarkers}{todo}
+
+\item{prob_correct}{todo}
+}
+\value{
+a \link{list}
 }
 \description{
 Title

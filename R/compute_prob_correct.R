@@ -119,7 +119,7 @@ compute_prob_correct <- function(dataset, biomarker_levels, max_prob = 1) {
 #' @param x a `prob_correct` object (from [compute_prob_correct()])
 #' @param ... currently unused
 #'
-#' @return
+#' @inherit pander::pander return
 #' @export
 #'
 #' @examples

@@ -1,11 +1,11 @@
 #' Title
 #'
-#' @param ModelScores
+#' @param ModelScores todo
 #' @param DataScores a list of possible scores
-#' @param biomarkers
-#' @param prob_correct
+#' @param biomarkers todo
+#' @param prob_correct todo
 #'
-#' @return
+#' @returns a [list]
 #' @export
 #'
 compute_prob_dist2 = function(

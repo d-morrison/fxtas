@@ -11,6 +11,9 @@ plot_heatmap(heatmap_data, label = "Pr(marker in this position)")
 
 \item{label}{Label for color scale}
 }
+\value{
+a \link[ggplot2:ggplot]{ggplot2::ggplot}
+}
 \description{
 Title
 }

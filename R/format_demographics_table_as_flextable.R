@@ -5,6 +5,7 @@
 #'
 #' @returns a [flextable::flextable]
 #' @dev
+#' @examples
 #' test_data_v1 |> make_demographics_table() |>
 #' format_demographics_table_as_flextable()
 format_demographics_table_as_flextable = function(x, ...)

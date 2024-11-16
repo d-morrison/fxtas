@@ -18,7 +18,19 @@ pvd_lineplot(
 )
 }
 \arguments{
-\item{x_text_size}{}
+\item{figs}{a \link{list} of todo}
+
+\item{facet_labels}{todo}
+
+\item{text_size}{todo}
+
+\item{y_title_size}{todo}
+
+\item{y_text_size}{todo}
+
+\item{x_text_size}{todo}
+
+\item{alpha_nochange}{todo}
 }
 \description{
 Plot change in Stage ranking

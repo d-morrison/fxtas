@@ -10,10 +10,10 @@
 #' ## `pip`
 #' `pip = TRUE` appears to be necessary,
 #' since `pySuStaIn` needs to be installed directly from <github.com>
-#' @param ...
+#' @inheritDotParams reticulate::py_install
 #' @inheritParams reticulate::py_install
 #'
-#' @return
+#' @inherit reticulate::py_install return
 #' @export
 #'
 install_pySuStaIn <- function(

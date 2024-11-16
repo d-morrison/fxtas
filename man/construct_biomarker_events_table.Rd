@@ -7,7 +7,12 @@
 construct_biomarker_events_table(biomarker_levels, biomarker_groups)
 }
 \arguments{
-\item{biomarker_groups}{}
+\item{biomarker_levels}{todo}
+
+\item{biomarker_groups}{todo}
+}
+\value{
+a \link[tibble:tbl_df-class]{tibble::tbl_df}
 }
 \description{
 Title

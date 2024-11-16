@@ -7,7 +7,10 @@
 get_biomarker_events_table(biomarker_levels)
 }
 \arguments{
-\item{biomarker_levels}{}
+\item{biomarker_levels}{todo}
+}
+\value{
+a \link[ggplot2:ggplot]{ggplot2::ggplot}
 }
 \description{
 Title

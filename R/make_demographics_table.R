@@ -2,7 +2,7 @@
 #'
 #' @param data
 #'
-#' @return
+#' @inherit format_demographics_table_as_flextable return
 #' @export
 #'
 #' @examples

@@ -17,3 +17,8 @@ a \link[flextable:flextable]{flextable::flextable}
 \description{
 Format the demographics table as a flextable
 }
+\examples{
+test_data_v1 |> make_demographics_table() |>
+format_demographics_table_as_flextable()
+}
+\keyword{internal}

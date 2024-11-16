@@ -1,9 +1,9 @@
 #' Title
 #'
-#' @param biomarker_levels
-#' @param biomarker_groups
+#' @param biomarker_levels  todo
+#' @param biomarker_groups todo
 #'
-#' @return
+#' @returns a [tibble::tbl_df]
 #' @export
 #'
 construct_biomarker_events_table = function(
