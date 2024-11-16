@@ -27,8 +27,9 @@ Eosinophilic, tau-negative intranuclear inclusions are present
 in neurons and astrocytes throughout the CNS and
 in the peripheral nervous system (PNS) 
 [@greco2006neuropathology; @hunter2012capturing].
-FXTAS *usually* begins in the 60s,
-though some patients have an earlier onset.
+FXTAS is a late-onset disorder, usually occurring in the 60s
+though some patients have an earlier onset,
+and its signs and symptoms worsen with age.
 As premutation carriers age,
 the prevalence of FXTAS increases from approximately
 40% in males in their 60s to

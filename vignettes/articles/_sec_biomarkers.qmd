@@ -31,8 +31,6 @@ anxiety disorders, and
 somatoform disorders;
 there were no participants with psychotic disorders in our data
 (more details in Supplementary Materials, @sec-scid-composites).
-We used the "lifetime" variables from SCID-IV 
-to construct these composites.
 We also created composite variables for 
 MRI variables for cerebral and cerebellar abnormalities;
 we did not combine the variables representing 
