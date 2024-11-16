@@ -42,4 +42,4 @@ This finding suggests that the sequence of neuropsychiatric symptoms
 for FXTAS is different in females compared to males, 
 particularly for early symptoms in disease development and progression.
 This could lead to sex-specific modifications 
-of the FXTAS diagnostic stages.
+of the FXTAS diagnostic stages. {{< pagebreak >}}

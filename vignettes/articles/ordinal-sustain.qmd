@@ -195,8 +195,6 @@ Figure + table limit: 8.]{.mark}
 
 {{< include _sec_abstract.qmd >}}
 
-{{< pagebreak >}}
-
 # Introduction
 
 {{< include _sec_intro.qmd >}}
@@ -496,8 +494,6 @@ both sub-threshold-level and threshold-level,
 prior to FXTAS Stage 1 diagnosis,
 whereas male carriers experienced these symptoms 
 much later (between FXTAS Stages 3 and 4) (@fig-first-only-diffs).
-Cognitive decline, as measured by SWM and PAL,
-also occurred at earlier FXTAS stages for females.
 Ataxia occurred prior to Stage 1 for females 
 and after Stage 2 for males.
 However, ataxia severity level 1 occurred 

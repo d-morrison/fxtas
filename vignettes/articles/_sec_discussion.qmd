@@ -48,11 +48,12 @@ ataxia, and
 major neurocognitive disorder
 seen in more advanced premutation conditions like FXTAS.
 As such, the high lifetime burden of psychiatric illness in this population
-cannot be plausible attributed solely (perhaps substantially) to
+cannot be plausibly attributed solely (perhaps substantially) to
 an “emotional reaction”
 to the loss of function associated with these functional impairments,
-but rather should be understood 
-as a component of the premutation carrier state *itself*.
+but rather should be understood as 
+at least partially 
+a component of the premutation carrier state *itself*.
 It is likely that this intrinsic vulnerability to psychiatric illness
 is a significant component of the carrier state.
 
@@ -91,9 +92,7 @@ can often occur even before the diagnosis of FXTAS in the females,
 and the stress involved with mood disorders may be a precipitating feature
 for the onset of FXTAS.
 In addition, females may experience early cognitive impairment,
-particularly involving executive dysfunction and memory,
-as seen by the impaired SWM and PAL scores 
-that occur early in the females.
+particularly involving executive dysfunction and memory.
 From a clinical perspective,
 we have seen significant psychiatric illness
 leading into some cognitive deficits in memory and EF abilities,
