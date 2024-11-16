@@ -26,6 +26,7 @@ Imports:
     ggtext,
     glue,
     golem (>= 0.3.4),
+    grDevices,
     gtsummary (>= 2.0.3.9003),
     here,
     labelled,

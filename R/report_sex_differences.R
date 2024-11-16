@@ -34,7 +34,7 @@ report_sex_differences = function(table)
   table |>
     filter(`p-value` < 0.05) |>
     mutate(
-      biomarker = biomarker |>
+      biomarker = .data$biomarker |>
         stringr::str_replace(
           "Increased tone",
           "parkinsonian increased tone"
@@ -62,6 +62,6 @@ report_sex_differences = function(table)
 
       )
     ) |>
-    pull(comparison) |>
+    pull(.data$comparison) |>
     and::and()
 }
