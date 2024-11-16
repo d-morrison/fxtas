@@ -12,6 +12,7 @@
 #' @importFrom dplyr bind_cols
 #' @importFrom dplyr bind_rows
 #' @importFrom dplyr count
+#' @importFrom dplyr desc
 #' @importFrom dplyr distinct
 #' @importFrom dplyr filter
 #' @importFrom dplyr if_all

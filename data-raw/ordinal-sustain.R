@@ -65,14 +65,6 @@ output_folder =
 
 
 ## ----------------------------------------------------------------------------------------------------
-
-biomarker_groups = compile_biomarker_groups_table()
-
-SuStaInLabels =
-  biomarker_varnames =
-  biomarker_groups |>
-  pull("biomarker")
-
 # note: there are 231 records in `visit1` with CGG >= 55, but 4 have CGG >= 200
 # previously `nrow(v1_usable_cases)` was 221, which was based on incorrectly filtering on a version of CGG that hadn't been backfilled.
 
@@ -83,6 +75,13 @@ df =
     !is.na(`FX*`),
     # exclude patients with CGG > 200 (full mutation)
     CGG < 200)
+
+biomarker_groups = compile_biomarker_groups_table(dataset = df)
+
+SuStaInLabels =
+  biomarker_varnames =
+  biomarker_groups |>
+  pull("biomarker")
 
 
 biomarker_levels =

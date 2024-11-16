@@ -4,10 +4,12 @@
 \alias{report_sex_differences}
 \title{Report sex differences}
 \usage{
-report_sex_differences(table)
+report_sex_differences(table, cutoff = 0.05)
 }
 \arguments{
 \item{table}{output from \code{\link[=make_biomarkers_table]{make_biomarkers_table()}}}
+
+\item{cutoff}{\code{\link[=numeric]{numeric()}} p-value cutoff for significance}
 }
 \value{
 a \code{\link[=character]{character()}} string

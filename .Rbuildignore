@@ -28,4 +28,5 @@ $run_dev.*
 ^\.lintr$
 ^\.quarto$
 ^_extensions$
+^README\.qmd$
 ^man/format_demographics_table_as_flextable\.Rd$
