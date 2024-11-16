@@ -88,7 +88,7 @@ compact_fig_cap2 = glue::glue(
   "Blue lines indicate ",
   "{outcomes_name}s that moved to earlier positions. ",
   "Line opacity levels indicate the number of positions changed ",
-  "(more opaque = more change.)"
+  "(more opaque = more change)."
 )
 
 # column_var = "Recruited in study phase"
