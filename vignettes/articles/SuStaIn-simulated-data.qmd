@@ -47,8 +47,10 @@ biomarker_groups_list = list(
 # Set up data for new version of SuStaIn
 The objective here is two create to variables:
 
-* `p_NL` -- a subject x region matrix indicating the p that a region is normal for a subject.
-* `p_score` -- a subject x (region * score) matrix indicating p that a region is a given score.
+* `p_NL` -- a subject x region matrix indicating the probability
+that a region is normal for a subject.
+* `p_score` -- a subject x (region * score) matrix indicating 
+the probability that a region is a given score.
 
 Ps should be non-zero. 
 
@@ -340,7 +342,8 @@ for fig in figs:
 ## figs in R
 
 ```{r}
-
+#| label: fig-plot-compact-pvd
+#| fig-cap: "Compact PVD"
 figs = extract_figs_from_pickle(
   output_folder = output_folder,
   n_s = 3)

@@ -24,4 +24,6 @@ $run_dev.*
 ^cran-comments\.md$
 ^pkgdown$
 ^_pkgdown\.yml$
+^man/gp34\.Rd$
+^man/visit1\.Rd$
 ^man/format_demographics_table_as_flextable\.Rd$
