@@ -20,7 +20,7 @@ event_order_heatmap = function(
   b =
     samples |>
     sapply(X = _,
-           F = function(x)
+           FUN = function(x)
              c(
                (x$ordering + 1) |> setNames(positions),
                score = x$score)
