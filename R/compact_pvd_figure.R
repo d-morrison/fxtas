@@ -8,25 +8,29 @@ compact_pvd_figure <- function(
     facet_names,
     # facet_label_size,
     legend.position,
-    scale_colors
-    ){
+    scale_colors) {
   # set tile width
-  tile_width = 1
+  tile_width <- 1
 
-  nlevels <- plot_dataset |> pull(level) |> unique() |> length()
+  nlevels <- plot_dataset |>
+    pull(level) |>
+    unique() |>
+    length()
 
   # create level color scales
-  if(length(scale_colors) != nlevels){
-    stop("`scale_colors` must be the same length as the number of levels",
-         " (number of levels = ", nlevels, ")")
+  if (length(scale_colors) != nlevels) {
+    stop(
+      "`scale_colors` must be the same length as the number of levels",
+      " (number of levels = ", nlevels, ")"
+    )
   }
 
   ## update: add colors as arguments
-  level2=colorRampPalette(c("white", scale_colors[1])) # level 2
-  level3=colorRampPalette(c("white", scale_colors[2])) # level 3
-  level4=colorRampPalette(c("white", scale_colors[3])) # level 4
-  level5=colorRampPalette(c("white", scale_colors[4])) # level 5
-  level6=colorRampPalette(c("white", scale_colors[5])) # level 6
+  level2 <- colorRampPalette(c("white", scale_colors[1])) # level 2
+  level3 <- colorRampPalette(c("white", scale_colors[2])) # level 3
+  level4 <- colorRampPalette(c("white", scale_colors[3])) # level 4
+  level5 <- colorRampPalette(c("white", scale_colors[4])) # level 5
+  level6 <- colorRampPalette(c("white", scale_colors[5])) # level 6
 
   level2_scale <- level2(100)
   level3_scale <- level3(100)
@@ -37,7 +41,7 @@ compact_pvd_figure <- function(
   scale_limits <- c(0, 1)
 
   # facet labeller - currently throws updated API message
-  facet_labeller <- function(variable, value){
+  facet_labeller <- function(variable, value) {
     facet_names[value]
   }
 
@@ -164,7 +168,7 @@ compact_pvd_figure <- function(
       legend.position = legend.position, # add color scale info in figure caption,
       legend.title = ggtext::element_markdown(), # markdown for legends
       legend.byrow = TRUE,
-      legend.box = 'horizontal',
+      legend.box = "horizontal",
       legend.justification = ,
       legend.margin = ggplot2::margin(0, 0.15, 0, -0.45, "cm"),
       axis.title.y = ggplot2::element_blank(),
