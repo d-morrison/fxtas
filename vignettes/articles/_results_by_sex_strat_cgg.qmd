@@ -24,7 +24,7 @@ plot_compact_pvd(
 #| label: fig-pvd-by-gender-cgg_under100-2
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("**(b)** Differences in event sequences between sexes, for CGG repeats <100.")
+#| fig-cap: "Differences in event sequences between sexes, for CGG repeats <100."
 
 # lineplot of event sequences
 pvd_lineplot(
@@ -67,7 +67,7 @@ plot_compact_pvd(
 #| label: fig-pvd-by-gender-cgg_over100-2
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("**(b)** Differences in event sequences between sexes, for CGG repeats ≥100.")
+#| fig-cap: "Differences in event sequences between sexes, for CGG repeats ≥100."
 
 # lineplot of event sequences
 pvd_lineplot(

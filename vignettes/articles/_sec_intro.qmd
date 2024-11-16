@@ -25,7 +25,8 @@ sequestration of proteins important to neuronal function
 ].
 Eosinophilic, tau-negative intranuclear inclusions are present
 in neurons and astrocytes throughout the CNS and
-in the peripheral nervous system (PNS) [@greco2006neuropathology; @hunter2012capturing].
+in the peripheral nervous system (PNS) 
+[@greco2006neuropathology; @hunter2012capturing].
 FXTAS *usually* begins in the 60s,
 though some patients have an earlier onset.
 As premutation carriers age,
