@@ -13,9 +13,9 @@
 #'
 #' @export
 #' @examples
-#' test_data |> compile_biomarker_group_list()
+#' test_data |> compile_biomarker_group_list(dataset = test_data_v1)
 #'
-compile_biomarker_group_list = function(dataset = trax_gp34_v1)
+compile_biomarker_group_list = function(dataset)
 {
 
   tremors = c(

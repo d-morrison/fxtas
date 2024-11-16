@@ -28,6 +28,4 @@ $run_dev.*
 ^\.lintr$
 ^\.quarto$
 ^_extensions$
-^man/gp34\.Rd$
-^man/visit1\.Rd$
 ^man/format_demographics_table_as_flextable\.Rd$
