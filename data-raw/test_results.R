@@ -119,7 +119,7 @@ patient_data =
   # na.omit() |>
   filter(`FX*` == "CGG >= 55")
 
-message("`nrow(patient_data)` = ", nrow(patient_data))
+cli::cli_inform("`nrow(patient_data)` = {nrow(patient_data)}")
 
 prob_correct =
   control_data |>
@@ -129,16 +129,15 @@ prob_correct =
 
 if(length(args) == 0 || args[1] == 1)
 {
-  save.image(file = fs::path(output_folder, "data.RData"))
-  save.image(file = fs::path(output_folder, paste0(dataset_name, ".RData")))
+  cli::cli_inform("saving data")
   patient_data     |> readr::write_rds(file = fs::path(output_folder, "data.rds"))
   biomarker_levels |> readr::write_rds(file = fs::path(output_folder, "biomarker_levels.rds"))
   biomarker_groups |> readr::write_rds(file = fs::path(output_folder, "biomarker_groups.rds"))
 }
 
+cli::cli_inform('about to start')
 
-
-## ----"run OSA from R"--------------------------------------------------------------------------------
+## ----"run OSA from R"-------------------------------------------------------------------------------
 #| message: false
 #| label: model-all-data
 #| include: false
