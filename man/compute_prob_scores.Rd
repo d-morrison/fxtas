@@ -33,6 +33,9 @@ compute_prob_scores(
     \item{\code{prob_correct}}{the probability of correctly classifying the underlying biomarker level: p(obs = true)}
   }}
 }
+\value{
+an \link{array}
+}
 \description{
 Compute probabilities of true biomarker levels
 }

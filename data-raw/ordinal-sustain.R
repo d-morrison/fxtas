@@ -65,14 +65,6 @@ output_folder =
 
 
 ## ----------------------------------------------------------------------------------------------------
-
-biomarker_groups = compile_biomarker_groups_table()
-
-SuStaInLabels =
-  biomarker_varnames =
-  biomarker_groups |>
-  pull("biomarker")
-
 # note: there are 231 records in `visit1` with CGG >= 55, but 4 have CGG >= 200
 # previously `nrow(v1_usable_cases)` was 221, which was based on incorrectly filtering on a version of CGG that hadn't been backfilled.
 
@@ -83,6 +75,13 @@ df =
     !is.na(`FX*`),
     # exclude patients with CGG > 200 (full mutation)
     CGG < 200)
+
+biomarker_groups = compile_biomarker_groups_table(dataset = df)
+
+SuStaInLabels =
+  biomarker_varnames =
+  biomarker_groups |>
+  pull("biomarker")
 
 
 biomarker_levels =
@@ -126,9 +125,9 @@ if(length(args) == 0 || args[1] == 1)
 {
   save.image(file = fs::path(output_folder, "data.RData"))
   save.image(file = fs::path(output_folder, paste0(dataset_name, ".RData")))
-  patient_data     |> saveRDS(file = fs::path(output_folder, "data.rds"))
-  biomarker_levels |> saveRDS(file = fs::path(output_folder, "biomarker_levels.rds"))
-  biomarker_groups |> saveRDS(file = fs::path(output_folder, "biomarker_groups.rds"))
+  patient_data     |> readr::write_rds(file = fs::path(output_folder, "data.rds"))
+  biomarker_levels |> readr::write_rds(file = fs::path(output_folder, "biomarker_levels.rds"))
+  biomarker_groups |> readr::write_rds(file = fs::path(output_folder, "biomarker_groups.rds"))
 }
 
 

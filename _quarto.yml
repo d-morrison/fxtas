@@ -15,6 +15,7 @@ authors:
   - name: Hazel Maridith Barlahan Biag
     affiliations:
       - ref: ucdmind
+      - ref: ucdpeds
   - name: Glenda Espinal
     affiliations:
       - ref: ucdmind
@@ -82,8 +83,9 @@ project:
   execute-dir: project
 format:
   docx:
+    notes-after-punctuation: true
     reference-doc: vignettes/Brain_template_2022.docx
-    csl: vignettes/brain.csl
+    csl: vignettes/american-medical-association.csl
     toc: false
     echo: false
     # fig-format: svg
@@ -106,6 +108,8 @@ format:
     documentclass: scrartcl
   html:
     toc: true
+    notes-after-punctuation: true
+    csl: vignettes/brain.csl
     # fig-format: svg
     toc-float: true
     toc-depth: 4
@@ -145,3 +149,17 @@ execute:
 filters:
   - vignettes/docx-landscape.lua
   - authors-block
+  - at: post-quarto
+    path: vignettes/appendix_numbering.lua
+
+crossref:
+  appendix-title: "Supplemental Materials" # doesn't seem to work
+  custom:
+    - kind: float
+      key: suppfig
+      reference-prefix: Supplementary Figure
+      space-before-numbering: true
+    - kind: float
+      key: supptbl
+      reference-prefix: Supplementary Table
+      space-before-numbering: true

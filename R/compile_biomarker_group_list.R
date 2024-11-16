@@ -13,9 +13,9 @@
 #'
 #' @export
 #' @examples
-#' test_data |> compile_biomarker_group_list()
+#' test_data |> compile_biomarker_group_list(dataset = test_data_v1)
 #'
-compile_biomarker_group_list = function(dataset = trax_gp34_v1)
+compile_biomarker_group_list = function(dataset)
 {
 
   tremors = c(
@@ -75,10 +75,10 @@ compile_biomarker_group_list = function(dataset = trax_gp34_v1)
       # "Mood Disorder Due to GMC (MD07), Lifetime",
       # "Substance-Induced Mood Dis. (MD08), Lifetime", # no positives
       # "Primary Psychotic Symptoms (PS01), Lifetime"
-      "SCID: Mood Disorders",
-      "SCID: Substance Use Disorders",
-      "SCID: Anxiety Disorders",
-      "SCID: Somatoform Disorders"
+      "SCID: mood disorders",
+      "SCID: substance use disorders",
+      "SCID: anxiety disorders",
+      "SCID: somatoform disorders"
       # "SCID: Psychotic Symptoms" # exclude, only 2 at sub-threshold & 0 at threshold
     )
 

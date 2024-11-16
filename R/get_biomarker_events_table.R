@@ -1,8 +1,8 @@
 #' Title
 #'
-#' @param biomarker_levels
+#' @param biomarker_levels todo
 #'
-#' @return
+#' @returns a [ggplot2::ggplot]
 #' @export
 #'
 get_biomarker_events_table = function(biomarker_levels)

@@ -1,7 +1,7 @@
 #' Report sex differences
 #'
 #' @param table output from [make_biomarkers_table()]
-#'
+#' @param cutoff [numeric()] p-value cutoff for significance
 #' @returns a [character()] string
 #' @export
 #' @examples
@@ -12,7 +12,7 @@
 #'   pull("biomarker")
 #'
 #' biomarker_levels =
-#' trax_gp34_v1 |>
+#' test_data_v1 |>
 #'  dplyr::select(all_of(biomarker_varnames)) |>
 #'  lapply(F = levels)
 #'
@@ -21,20 +21,20 @@
 #'     biomarker_levels,
 #'     biomarker_groups = biomarker_groups)
 #'
-#' table = trax_gp34_v1 |> make_biomarkers_table(
+#' table = test_data_v1 |> make_biomarkers_table(
 #'   biomarker_events_table = biomarker_events_table,
 #'   biomarker_varnames = biomarker_varnames
 #'   )
 #'
 #'   table |> report_sex_differences()
 #'
-report_sex_differences = function(table)
+report_sex_differences = function(table, cutoff = 0.05)
 {
 
   table |>
-    filter(`p-value` < 0.05) |>
+    filter(`p-value` < cutoff) |>
     mutate(
-      biomarker = biomarker |>
+      biomarker = .data$biomarker |>
         stringr::str_replace(
           "Increased tone",
           "parkinsonian increased tone"
@@ -62,6 +62,6 @@ report_sex_differences = function(table)
 
       )
     ) |>
-    pull(comparison) |>
+    pull(.data$comparison) |>
     and::and()
 }

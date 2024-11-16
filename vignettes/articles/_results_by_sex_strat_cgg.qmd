@@ -1,17 +1,12 @@
 {{< pagebreak >}}
 
+::: {#suppfig-pvd-by-gender-cgg_under100}
+
 ```{r}
-#| label: fig-pvd-by-gender-cgg_under100
-#| column: page
+#| label: fig-pvd-by-gender-cgg_under100-1
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("**Event sequences stratified by sex, for CGG repeats <100.** **(a)** {compact_fig_caption} **(b)** Differences in event sequences between sexes, for CGG repeats <100.")
-#| layout-ncol: 1
-#| fig-subcap: 
-#|    - ""
-#|    - ""
-#| fig-cap-location: top
-
+#| fig-cap: ""
 
 # compact pvd
 plot_compact_pvd(
@@ -23,30 +18,39 @@ plot_compact_pvd(
   y_text_size = 11
 )
 
+```
+
+```{r}
+#| label: fig-pvd-by-gender-cgg_under100-2
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: ""
+
 # lineplot of event sequences
 pvd_lineplot(
   figs = list(
-    fig_under100_males,
-    fig_under100_females
+    "CGG &lt; 100, Males" = fig_under100_males,
+    "CGG &lt; 100, Females" = fig_under100_females
   ),
-  facet_label = c("CGG &lt; 100, Males", "CGG &lt; 100, Females"),
   y_text_size = 11
 )
 ```
 
+**Event sequences stratified by sex, for CGG repeats <100.**
+**(a)** `r glue::glue("{compact_fig_caption}")`
+**(b)** Differences in event sequences between sexes, for CGG repeats <100.
+
+:::
+
 {{< pagebreak >}}
 
+::: {#suppfig-pvd-by-gender-cgg_over100}
+
 ```{r}
-#| label: fig-pvd-by-gender-cgg_over100
-#| column: page
+#| label: fig-pvd-by-gender-cgg_over100-1
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr glue::glue("**Event sequences stratified by sex, for CGG repeats ≥100. (a)** {compact_fig_caption} **(b)** Differences in event sequences between sexes, for CGG repeats ≥100.")
-#| layout-ncol: 1
-#| fig-subcap: 
-#|    - ""
-#|    - ""
-#| fig-cap-location: top
+#| fig-cap: ""
 
 # compact pvd
 plot_compact_pvd(
@@ -57,6 +61,14 @@ plot_compact_pvd(
   facet_label = c("CGG &ge; 100, Males  <br>", "CGG &ge; 100, Females  <br>"),
   y_text_size = 11
 )
+
+```
+
+```{r}
+#| label: fig-pvd-by-gender-cgg_over100-2
+#| fig-height: !expr pvd_height
+#| fig-width: !expr pvd_width
+#| fig-cap: ""
 
 # lineplot of event sequences
 pvd_lineplot(
@@ -69,4 +81,9 @@ pvd_lineplot(
 )
 
 ```
+
+**Event sequences stratified by sex, for CGG repeats ≥100.**
+**(a)** `r glue::glue("{compact_fig_caption}")`
+**(b)** Differences in event sequences between sexes, for CGG repeats ≥100.
+:::
 

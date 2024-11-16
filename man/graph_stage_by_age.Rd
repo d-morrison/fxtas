@@ -7,7 +7,12 @@
 graph_stage_by_age(data, alpha = 0.7)
 }
 \arguments{
-\item{alpha}{}
+\item{data}{todo}
+
+\item{alpha}{todo}
+}
+\value{
+a \link[ggplot2:ggplot]{ggplot2::ggplot}
 }
 \description{
 graph stage by age

@@ -1,11 +1,11 @@
 #' Title
 #' @description possibly not needed; keeping because it has an example of using attributes that I want to propagate across the codebase
-#' @param df
-#' @param biomarker_varnames
-#' @param biomarker_levels
-#' @param nlevs
+#' @param df todo
+#' @param biomarker_varnames todo
+#' @param biomarker_levels todo
+#' @param nlevs todo
 #'
-#' @return
+#' @inherit build_score_vals return
 #' @export
 #'
 model_dists = function(

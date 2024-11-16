@@ -7,9 +7,9 @@ heatmap_table_to_plot = function(heatmap_table)
       y = biomarker,
       fill =
         rgb(
-          r = R,              #Specify Bands
-          g = G,
-          b = B,
+          red = R,              #Specify Bands
+          green = G,
+          blue = B,
           maxColorValue = 1),
     )) +
     scale_fill_identity() +

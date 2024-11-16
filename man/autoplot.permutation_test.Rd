@@ -7,7 +7,7 @@
 \method{autoplot}{permutation_test}(object, ...)
 }
 \arguments{
-\item{object}{an object of class \verb{"permutation_test}}
+\item{object}{an object of class \code{"permutation_test"}}
 
 \item{..., }{additional arguments (not used)}
 }

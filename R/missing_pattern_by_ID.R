@@ -1,22 +1,22 @@
 #' Title
 #'
-#' @param data
-#' @param variable
-#' @param missing_label
+#' @param data todo
+#' @param variable todo
+#' @param missing_label todo
 #'
-#' @return
+#' @return todo
 #' @export
 #'
 #' @examples
-#' missing_patterns = missing_pattern_by_ID()
+#' missing_patterns = missing_pattern_by_ID(data = test_data_v1)
 #' @importFrom magrittr not
 missing_pattern_by_ID = function(
-    data = gp34,
+    data,
     variable = "ApoE",
     missing_values = c(NA, "Missing (empty in RedCap)"))
 {
   data |>
-    group_by(`FXS ID`) |>
+    group_by(.data$`FXS ID`) |>
     dplyr::summarize(
       across(
         .cols = variable,

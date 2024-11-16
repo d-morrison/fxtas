@@ -1,0 +1,86 @@
+
+In order to use the Ordinal SuStaIn modeling algorithm, 
+we must specify how many latent subtypes to include in the model. 
+There are several metrics for determining 
+the optimal number of subtypes for a given data set, 
+including the likelihood of the data for the fitted model 
+while varying the number of subtypes used to fit the model
+and the Cross-Validation Information Criterion (CVIC)
+described in Young *et al.* [-@young2018uncovering].
+We also evaluated the consistency of our cross-validation procedure
+by looking at the distribution of 
+out-of-fold log-likelihood ("OOFLL")
+across cross-validation folds
+(Young *et al.* [-@young2018uncovering]).
+@suppfig-mcmc-loglik shows the distribution of log-likelihoods 
+from the MCMC samples for the full dataset 
+(not stratified by sex or CGG repeats).
+Adding up to 6 clusters substantially improves the log-likelihood.
+@fig-cvic-2 shows the distribution of the OOFLL statistic
+as a function of number of latent subgroups.
+@suppfig-stage-by-age shows estimated disease progression stage
+(that is, number of events experienced)
+by age at visit and estimated latent subtype,
+with a
+Locally Estimated Scatterplot Smoothing (LOESS)
+non-parametric regression curve superimposed [@cleveland1992local].
+This graph is a model diagnostic; if the model fits the data well,
+then older patients should on average be classified as being farther
+along in their disease progression, resulting in an upwards trend.
+Types 1, 3 and 4 appear to show such an upwards trend.
+Type 2 has a less clear trend, but does not show substantial evidence
+of lack of fit.
+In all four subtypes, patients whose visit occurred at a later age
+tend to be at a later estimated stage of disease progression.
+The upwards trend of progression stage with age
+indicates that the estimated models are plausible.
+
+::: {#suppfig-mcmc-loglik}
+
+```{r}
+#| eval: !expr fit_models
+
+lliks = results_v1 |>
+  sapply(F = function(x) x$samples_likelihood)
+
+lliks |>
+  graph_likelihoods_v2(alpha = 0.5) |>
+  suppressWarnings()
+
+```
+
+**log-likelihoods of MCMC samples, by number of subtypes**
+
+:::
+
+{{< pagebreak >}}
+
+::: {#suppfig-stage-by-age}
+
+```{r}
+#| fig-width: 6
+stages =
+  results_cv_max$subtype_and_stage_table |>
+  mutate(
+    age = patient_data$`Age at visit`,
+    id = patient_data$`FXS ID`
+  )
+
+library(ggplot2)
+stages |>
+  graph_stage_by_age()
+
+```
+
+**Estimated progression stage by age and latent subtype.**
+The blue line is a Locally Estimated Scatterplot Smoothing (LOESS)
+non-parametric regression curve.
+
+:::
+
+{{< include _sec_CVIC_graphs.qmd >}}
+
+{{< include _sec_subtypes_linegraphs.qmd >}}
+
+{{< pagebreak >}}
+

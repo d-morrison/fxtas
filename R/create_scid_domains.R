@@ -116,10 +116,10 @@ create_scid_domains <- function(
       # notes: could use `do.call()`, `invoke()`, `rowwise() & max()`;
       # no clearly most-idiomatic approach as of 2024-03-22
       # some discussion here: https://r4ds.hadley.nz/numbers.html#numeric-transformations
-      `SCID: Mood Disorders` = pmax(!!!rlang::syms(scid_md_vars_lif), na.rm = TRUE),
-      `SCID: Substance Use Disorders` = pmax(!!!rlang::syms(scid_sud_vars_lif), na.rm = TRUE),
-      `SCID: Anxiety Disorders` = pmax(!!!rlang::syms(scid_anx_vars_lif), na.rm = TRUE),
-      `SCID: Somatoform Disorders` = pmax(!!!rlang::syms(scid_somatic_vars_lif), na.rm = TRUE),
-      `SCID: Psychotic Symptoms` = pmax(!!!rlang::syms(scid_psych_vars_lif), na.rm = TRUE)
+      `SCID: mood disorders` = pmax(!!!rlang::syms(scid_md_vars_lif), na.rm = TRUE),
+      `SCID: substance use disorders` = pmax(!!!rlang::syms(scid_sud_vars_lif), na.rm = TRUE),
+      `SCID: anxiety disorders` = pmax(!!!rlang::syms(scid_anx_vars_lif), na.rm = TRUE),
+      `SCID: somatoform disorders` = pmax(!!!rlang::syms(scid_somatic_vars_lif), na.rm = TRUE),
+      `SCID: psychotic symptoms` = pmax(!!!rlang::syms(scid_psych_vars_lif), na.rm = TRUE)
     )
 }

@@ -1,0 +1,208 @@
+
+This study attempted to arrange the eventual symptoms of FXTAS
+in their possible appearing sequential orders
+and determine risk factors that impact on the
+sequential order of presentation among patients.
+The main findings of this analysis were
+substantial differences in sequential order of eventual symptoms
+between males and females
+and in combination of sex and CGG repeat size.
+An important general conclusion of the study is that 
+there is substantial variation across premutation carriers 
+in the emergence of symptoms associated with FXTAS.
+ 
+The prevalences of
+lifetime anxiety disorders,
+mood disorders,
+and somatoform disorders in this study cohort
+are higher than
+usual population norms for these illnesses
+as noted in previous studies
+[@bourgeois2010lifetime; @seritan2013psychiatric; @seritan2013ages; @schneider2020women].
+This study design did not fractionate specific lifetime psychiatric illnesses
+(e.g., 
+major depressive disorder, 
+panic disorder, 
+somatization disorder),
+but these *overall* lifetime prevalence figures are notable.
+Prior studies of mood and anxiety disorders
+have demonstrated a higher-than-expected rate of these illnesses
+in premutation carriers [@hagerman2018; @roberts2009].
+The same increase in lifetime psychiatric illness burden
+is seen in other neurodegenerative illnesses
+(e.g., Parkinson’s disease, multiple sclerosis) 
+[@Rickardsi48; @Fusarpoli2013; @Benussi2022; @Noyce871; @Wijnands2019; 
+@GOVONI201641; @Silvagni2020; @MARRIE2024125; @sloan2024neuropsychiatric].
+As many psychiatric illnesses have a strong genetic predisposition,
+the lifetime prevalences of psychiatric illness in this study 
+persuasively suggest that
+the premutation carrier state *itself* increases 
+the risk of psychiatric illness.
+
+As the SCID assesses *lifetime* illness risk 
+(as well as current illness),
+it is probable that the index episode of psychiatric illness
+*antedated* the onset of
+tremor,
+ataxia, and
+major neurocognitive disorder
+seen in more advanced premutation conditions like FXTAS.
+As such, the high lifetime burden of psychiatric illness in this population
+cannot be plausibly attributed solely (perhaps substantially) to
+an “emotional reaction”
+to the loss of function associated with these functional impairments,
+but rather should be understood as 
+at least partially 
+a component of the premutation carrier state *itself*.
+It is likely that this intrinsic vulnerability to psychiatric illness
+is a significant component of the carrier state.
+
+Furthermore, as only a small proportion of the patients
+had MMSE scores in the impaired range,
+it is also unlikely that the high rates of
+depressive, anxiety (and other) psychiatric illness
+could be attributed *solely* to complications of FXTAS dementia,
+as most patients had normal MMSE scores.
+For example, depressive disorders
+are a common psychiatric complication of dementia,
+but few of the depressive disorders found here could be attributed to dementia,
+as they antedated any evidence of cognitive disorders.
+A common sequence of illnesses seen clinically in carriers is
+depressive and/or anxiety disorders 
+with young to middle age adult onset,
+then tremor and ataxia in the 40s or 50s,
+followed by FXTAS dementia in the 60s.
+Seen in this light, 
+and knowing the ultimate CNS vulnerability of the carrier state,
+retrospectively the initial presentation of depressive and/or anxiety disorders
+could be regarded as a psychiatric prodrome of later full spectrum illness.
+This is analogous to the depressive or psychotic illness 
+seen in SLE before rheumatologic findings
+and the depressive disorder that is commonly seen
+in the five years before the motor signs 
+leading to a diagnosis of multiple sclerosis.
+
+This data shows more significant motor involvement 
+in males than females, as predicted,
+but a remarkable finding is the predominance of the psychiatric illnesses
+that occur early in females
+and often before the onset of tremor and ataxia compared to the males.
+These symptoms, particularly mood disorders,
+can often occur even before the diagnosis of FXTAS in the females,
+and the stress involved with mood disorders may be a precipitating feature
+for the onset of FXTAS.
+In addition, females may experience early cognitive impairment,
+particularly involving executive dysfunction and memory.
+From a clinical perspective,
+we have seen significant psychiatric illness
+leading into some cognitive deficits in memory and EF abilities,
+but these females may not meet the criteria of FXTAS diagnosis,
+because of the absence of significant tremor and/or ataxia.
+However, if white matter disease emerges on MRI,
+particularly in the splenium of the corpus callosum
+or in the periventricular area,
+then this demonstrates the onset of the neuropathology of FXTAS,
+even if there is no tremor or ataxia yet.
+
+This suggests that the diagnostic criteria for FXTAS
+may need to be somewhat altered in females compared to males,
+particularly for early cases.
+Indeed, the diagnostic criteria for FXTAS 
+were determined with the study of males only
+[@jacquemont2003fragile].
+Subsequent criteria for the diagnosis of FXTAS 
+were modified [@hall2014emerging]
+to include the involvement of the splenium,
+which is seen in the majority of females with FXTAS
+[@apartis2012fxtas; @schneider2020women].
+Hall *et al.* [-@hall2014emerging] also added
+the feature of neuropathy,
+which occurs in the majority of FXTAS patients,
+but it is a common finding in the elderly with many causes,
+so it is just a minor criterion for FXTAS.
+Although the diagnostic criteria have been modified somewhat for the females,
+there may be subsequent changes in the early stages of FXTAS
+as further follow-up studies are able to separate
+the psychiatric illness in females seen earlier here
+from more significant neuropathology associated with
+extended features of FXTAS over time.
+As new treatments for FXTAS develop,
+it is hoped that the earlier the diagnosis is established,
+the more likely the treatment will be effective.
+
+```{r}
+#| label: p-val-test-cgg
+output_folder = "output/output.fixed_CV/"
+
+permuted_test_stats = collect_permutation_test_stats(
+  output_folder = output_folder,
+  permuting_variables = "FX3")
+
+observed_test_stat = get_observed_permutation_test_stat(
+  output_folder,
+  dataset_names = c('under100', 'over100'))
+
+pval_cgg_gp34_v1 = permutation_test(
+  observed_test_stat = observed_test_stat,
+  permuted_test_stats = permuted_test_stats,
+  n_permutations = n_permutations
+)
+
+```
+
+When we compared
+between 55-99 vs 100-200 CGG repeats in males and females combined,
+no significant difference was found
+(p = `r pval_cgg_gp34_v1`)
+(@suppfig-pvd-by-cgg).
+The finding of only minimal differences
+between 55-99 vs 100-200 CGG repeats is surprising,
+since several studies have found that the higher the CGG repeats,
+the earlier the onset and the faster the progression of FXTAS
+[@greco2006neuropathology; @leehey2008fmr1; @tassone2023insight].
+Perhaps the cut-off of 100 is too high for this distinction to be made.
+
+This study has several limitations.
+In the subtype clustering analysis,
+it was challenging to concisely summarize
+the differences between subtypes,
+especially given the relatively small sample sizes per subtype
+and the correspondingly large amounts of uncertainty
+in their event orderings.
+We had substantial amounts of missing data.
+As described in the methods (@sec-incomplete-data),
+we used the marginal distribution of
+the observed data for each `r outcomes_name` among cases
+to impute the underlying values of these missing data.
+The missing data could contribute to uncertainty in the results.
+Our data contained both continuous and ordinal variables.
+In order to apply the Ordinal SuStaIn algorithm,
+we categorized some `r outcomes_name`s
+that were originally measured as continuous values.
+In doing so, we likely sacrificed some granular information.
+There are other variations of the SuStaIn algorithm,
+such as z-score SuStaIn [@young2018uncovering],
+which are designed to be used with only continuous measurements.
+Further development is warranted to combine Ordinal SuStaIn and z-score SuStaIn
+to fit an event-based model with both continuous and ordinal data.
+
+Our data come from the GP and TRAX studies,
+which are longitudinal cohort studies
+with infrequent follow-up visits.
+These studies do not collect precise information
+about timing of symptom onsets,
+so it is not feasible to use the longitudinal data
+to confirm the results from the Ordinal SuStaIn analysis.
+In our analysis approach,
+the event onsets are not modeled as a function of participant age;
+instead, each event's onset timing is only modeled relative to the other events.
+Therefore, the sequence differences between the subtypes
+are all in relative terms:
+if one event moves earlier in the sequence
+when comparing one subtype to another,
+other events are pushed later in the sequence,
+even if only one event timing
+changes relative to age.
+Additional research including longitudinal data
+collecting precise ages of onset
+would be needed to verify our findings.

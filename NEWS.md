@@ -19,6 +19,8 @@ for latent subtype clustering analysis
 
 ## Data processing
 
+* substituted ≤ instead of <= in dichotomized CANTAB variable value labels
+* renamed SCID composite vars without capitalization (on Dr. Bourgeois's recommendation)
 * added "label" attribute to `FX3*`
 * added "Disorder" suffix to SCID composite variables, 
 on Dr. Bourgeois's recommendation.

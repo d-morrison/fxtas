@@ -72,8 +72,8 @@ events_name = "symptomatic events"
 outcomes_name_sentence_start = stringr::str_to_sentence(outcomes_name)
 
 compact_fig_caption <- paste(
-  "Positional variance diagrams of",
-  "estimated event sequences models and uncertainty.",
+  "**Positional variance diagrams of",
+  "estimated event sequences models and uncertainty.**",
   "The different colors (red, blue, purple, green, magenta)",
   "indicate the ordinal levels of symptom progression.",
   "Color intensity represents the likelihood of sequence position.",
@@ -88,7 +88,7 @@ compact_fig_cap2 = glue::glue(
   "Blue lines indicate ",
   "{outcomes_name}s that moved to earlier positions. ",
   "Line opacity levels indicate the number of positions changed ",
-  "(more opaque = more change.)"
+  "(more opaque = more change)."
 )
 
 # column_var = "Recruited in study phase"
@@ -117,13 +117,33 @@ v1_usable =
   filter(CGG < 200) |>
   mutate(`FX3*` = `FX3*` |> forcats::fct_drop() |> 
            labelled::set_label_attribute("CGG Repeat Level"),
+         Parkinsons = Parkinsons |> 
+           labelled::set_label_attribute("Parkinson's disease"),
          `FXTAS Stage (0-5)*` = `FXTAS Stage (0-5)*` |> 
            labelled::set_label_attribute("FXTAS Stage"))
 
 v1_usable_males = v1_usable |> filter(Gender == "Male")
 v1_usable_females = v1_usable |> filter(Gender == "Female")
 v1_usable_cases = v1_usable |> filter(CGG >= 55)
+v1_usable_male_cases = 
+  v1_usable |> 
+  filter(Gender == "Male", 
+         CGG >= 55)
 
+v1_usable_female_cases = 
+  v1_usable |> 
+  filter(Gender == "Female", 
+         CGG >= 55)
+
+v1_usable_male_controls = 
+  v1_usable |> 
+  filter(Gender == "Male", 
+         CGG < 55)
+
+v1_usable_female_controls = 
+  v1_usable |> 
+  filter(Gender == "Female", 
+         CGG < 55)
 # note: there are 231 records in `visit1` with CGG >= 55, but 4 have CGG >= 200
 # previously `nrow(v1_usable_cases)` was 221, 
 # which was based on incorrectly filtering on a version of CGG 
@@ -175,8 +195,6 @@ Figure + table limit: 8.]{.mark}
 
 {{< include _sec_abstract.qmd >}}
 
-{{< pagebreak >}}
-
 # Introduction
 
 {{< include _sec_intro.qmd >}}
@@ -189,201 +207,23 @@ Figure + table limit: 8.]{.mark}
 
 {{< include _sec_study_cohorts.qmd >}}
 
-The primary sequence analysis of symptomatic evens included baseline visit data 
-from `r nrow(v1_usable)` participant
-s from the GP and TRAX cohorts,
-consisting of 
-`r nrow(v1_usable_cases)` fragile X premutation carriers and 
-`r nrow(controls_v1)` controls. 
-@tbl-demographics provides demographic information about the study participants.
-The controls' data are used to estimate 
-the distribution of the analyzed `r outcomes_name`s among non-FXTAS individuals 
-as reference in SuStaIn modeling
-(more details in @sec-scored-events-model).
-Then, the cases' data are  used to estimate FXTAS event sequences,
-using the estimated control distributions to account for random variation
-in observed symptoms unrelated to the underlying event sequence.
-
 ### `r outcomes_name_sentence_start`s of neurodegenerative events
 
-We analyzed measurements of 
-`r length(biomarker_levels)` ordinal `r outcomes_name`s
-with a total of `r sum(nlevs)` levels, 
-listed in @tbl-biomarker-list.
-Herein the term "`r outcomes_name`s" refers to 
-a broad range of medical signs 
-or indications of medical state 
-observed from patients.
-Each "clinically elevated" ordinal level 
-(above the first-listed, reference level) 
-constitutes an outcome event 
-in the disease progression modelling analysis 
-(@sec-Statistical-analysis).
-
-We created a composite variable "any autoimmune disorder" combining
-lupus, rheumatoid arthritis, 
-multiple sclerosis, ANA positivity, Sjogren's syndrome, Raynaud's syndrome, 
-and pulmonary fibrosis, 
-since these conditions were too rare to analyze separately
-(details in Supplementary Materials, @sec-any-autoimmune).
-We also created composite variables for 
-four domains of the Structured Clinical Interview for DSM-IV (SCID-IV):
-Mood Disorders, 
-Substance Use Disorders, 
-Anxiety Disorders, and 
-Somatoform Disorders;
-there were no participants with Psychotic Disorders in our data
-(more details in Supplementary Materials, @sec-scid-composites).
-We used the "Lifetime" variables from SCID-IV to construct these composites.
-We also created composite variables for 
-MRI variables for cerebral and cerebellar abnormalities detected via MRI;
-we did not combine the variables representing corpus callosum MRI abnormalities,
-since these variables were created using Likert scales that differed from each other
-(details in Supplementary Materials, @sec-mri-composites).
-
-[Supplemental Tables @tbl-tremors] - [-@tbl-autoimmune] 
-summarize each of the `r outcomes_name`s that we included in the analysis models, 
-stratified by 
-CGG repeat size (`r levels(v1_usable$"FX3*")`) 
-and 
-Sex (`r unique(v1_usable$Gender)`).
+{{< include _sec_biomarkers.qmd >}}
 
 ## Statistical analysis {#sec-Statistical-analysis}
 
 ### Ordinal SuStaIn model {#sec-scored-events-model}
 
-We applied a discrete event-based disease progression model 
-[@fonteijn2011event; @fonteijn2012event; @oxtoby2023data] 
-to our data using the Ordinal Subtype and Stage Inference ("SuStaIn") algorithm 
-[@young2021ordinal] 
-to estimate event orderings and subtypes for FXTAS patients. 
-SuStaIn is a data-driven statistical modeling algorithm 
-that combines 
-event-based disease progression modelling 
-[@fonteijn2011event; @fonteijn2012event; @oxtoby2023data]
-and latent-cluster finite mixture modeling 
-[@pearson1894contributions; @lazarsfeld1950logical; @mclachlan2019finite] 
-to model event sequences 
-using cross-sectional samples of patient and control populations. 
-The algorithm simultaneously 
-clusters individuals into latent subtypes and 
-characterizes the event ordering that best defines each subtype, 
-thus capturing heterogeneity in both disease subtype and disease stage.
-
-Ordinal SuStaIn [@young2021ordinal] is 
-a version of the SuStaIn modeling algorithm [@young2018uncovering],
-adapted for analyzing ordinal-valued data.
-Ordinal SuStaIn uses a "scored events model", 
-which assumes that for each `r outcomes_name`,
-there is a discrete set of 
-underlying ordinal severity levels,
-but the measured versions of the `r outcomes_name`s may contain 
-some amount of random noise.
-For example, an individual who is really at Ataxia Severity level 2 may be 
-incorrectly assessed as being at Ataxia Severity level 1, depending on
-the patient's temporary disease status on the day of the exam or
-inter-rater differences.
-The first step in applying the Ordinal SuStaIn algorithm is to determine,
-for each `r outcomes_name`, the probability that an individual is 
-"correctly scored" at their "true underlying level" [@young2021ordinal].
-In this analysis, we assumed that all controls are truly at the reference levels
-for each `r outcomes_name`, 
-and we estimated the proportion of correctly scored individuals as
-the proportion of controls 
-who were assessed as being at the reference level
-([Supplementary Table @tbl-prob-correct]).
-It is crucial to allow some possibility of incorrect scoring, 
-so we capped the estimated correct scoring probabilities at 
-`r max_prob_correct *100`%.
-Ordinal SuStaIn then uses 
-Markov Chain Monte Carlo (MCMC) sampling [@gelfand1990sampling]
-to estimate the Bayesian posterior probability of each possible event sequence 
-for each subtype given the training dataset, 
-assuming a uniform prior distribution 
-over the set of all possible orderings. 
-We conducted subgroup analyses by fitting models stratified by
-sex (@sec-methods-strat-sex), 
-CGG repeats (<100 vs ≥100) (Supplementary Materials, @sec-methods-strat-cgg),
-and combinations of sex and CGG repeats (<100 vs ≥100) 
-(Supplementary Materials, @sec-stratified-by-cgg-and-sex).
-In these subgroup analyses, we did not search for latent clusters.
+{{< include _sec_ordinal_sustain_model.qmd >}}
 
 ### Imputation of missing data {#sec-incomplete-data}
 
-```{r}
-#| label: count-incomplete-data
-x1 = v1_usable_cases |> pull(`Ataxia: severity`)
-n_missing = sum(x1 |> is.na())
-# n_obs = sum(x1 |> is.na() |> not()) # not() is deprecated?
-n_obs = sum(!is.na(x1)) 
-n_total = length(x1)
-pct_missing = scales::percent(n_missing / n_total, accuracy = 0.1)
-pct_obs = scales::percent(n_obs / n_total, accuracy = 0.1)
-probs = 
-  x1 |> 
-  table() |> 
-  proportions() |> 
-  as.vector() |> 
-  scales::percent(accuracy = 0.1)
-  
-```
-
-We assumed that missing `r outcomes_name` data 
-were missing at random (MAR) 
-[@rubin1976inference, @little2019statistical].
-As the longitudinal cohorts have evolved over several funding cycles,
-new instruments were adopted and added; 
-much of the missingness was due to 
-adding additional measures in later cycles of the studies. 
-The MAR assumption thus seems plausible.
-We substituted missing outcome event data 
-by assigning a probability distribution across the 
-possible values of the missing variable 
-that matched the marginal distribution of observed data 
-among the cases. 
-For example, 
-`r n_missing` of the `r length(x1)` cases (`r pct_missing`) 
-had missing values for Ataxia Severity, 
-and `r n_obs` (`r pct_obs`) had recorded values, 
-distributed among Ataxia Severity levels 0-4
-(`r v1_usable_cases$"Ataxia: severity*" |> counts_and_pcts() |> and::and()`,
-respectively).
-For the `r n_missing` cases with missing values, 
-we assigned probabilities of `r probs |> and::and()` 
-to Ataxia Severity levels `r 0:4 |> and::and()`, respectively, 
-and missing values were imputed under the marginal distribution
-of the observed data.
+{{< include _sec_incomplete_data.qmd >}}
 
 ### Statistical hypothesis tests
 
-To test for statistical significant evidence of differences 
-in event sequences
-between males and females
-and between lower (CGG <100) 
-and higher premutation levels (CGG 100-199),
-we implemented a permutation test [@welch1990construction]
-to calculate a p-value that is 
-the probability of observing a difference 
-at least as extreme as the test statistic 
-given that the null hypothesis of no difference is true.
-We first created `r n_permutations` permuted datasets 
-in which we randomly shuffled the variable being tested.
-We computed the mean log-likelihood of the data 
-for each permuted dataset 
-(averaging across MCMC samples and 
-summing across the strata being compared) 
-and compared 
-the distribution of permuted mean log-likelihoods 
-to the observed log-likelihood 
-calculated from the original (unpermuted) dataset.
-We computed the empirical p-value 
-by first computing the percentile of 
-the observed mean log-likelihood 
-relative to the empirical distribution of 
-the permuted mean log-likelihoods,
-subtracting that percentile from 1 if larger than 0.5,
-and then multiplying by two to calculate a two-sided test statistic.
-We declared significance if the p-value was less than or equal to 0.05.
+{{< include _sec_hypothesis_tests.qmd >}}
 
 ### Latent subtype clustering {#sec-methods-latent-subtypes}
 
@@ -395,9 +235,8 @@ the Cross-Validation Information Criterion (CVIC)
 and the Out-Of-Fold Log-Likelihood (OOFLL) criterion [@young2018uncovering];
 both criteria quantify how well models containing a given number of subtypes
 extend to new data not used in training.
-We performed `r N_CV_folds` - fold cross-validation on the unstratified data
+We performed `r N_CV_folds`-fold cross-validation on the unstratified data
 and calculated the CVIC and OOFLL for 1-`r N_S_max` latent subtypes. 
-More details are provided in the Supplementary Materials (@sec-subtypes).
 
 <!-- {{< include _methods_longitudinal.qmd >}} -->
 
@@ -419,7 +258,6 @@ indicate the ordinal levels of symptom progression.
 Color intensity presents the likelihood of sequence position. 
 That is, a brighter color indicates a more probable sequence position, 
 and a paler color indicates a less probable position. 
-
 
 ## Software
 
@@ -611,7 +449,7 @@ We found no differences between males and females in
 age at baseline visit, 
 ethnicity/race, 
 FXTAS stage, or
-CGG repeat size.
+CGG repeat length.
 @tbl-biomarker-list lists the `r outcomes_name`s and their ordinal levels
 and reports proportions of clinically elevated levels at baseline visit, 
 stratified by sex.
@@ -651,13 +489,11 @@ difference in sequences of `r events_name`
 between males and females (p = `r pval_sex_gp34_v1`). 
 It appears that 
 female premutation carriers developed 
-SCID Mood Disorder symptoms, 
+SCID mood disorder symptoms, 
 both sub-threshold-level and threshold-level,
 prior to FXTAS Stage 1 diagnosis,
-whereas male carriers delayed these symptoms 
-much later between FXTAS Stages 3 and 4 (@fig-first-only-diffs).
-Cognitive decline, as measured by SWM and PAL,
-also occurred at earlier FXTAS stages for females.
+whereas male carriers experienced these symptoms 
+much later (between FXTAS Stages 3 and 4) (@fig-first-only-diffs).
 Ataxia occurred prior to Stage 1 for females 
 and after Stage 2 for males.
 However, ataxia severity level 1 occurred 
@@ -666,7 +502,7 @@ than for females (between Stages 3-4).
 Advanced degrees of ataxia severity also occurred 
 earlier in the event sequence for males than females. 
 MRI biomarkers of decline and parkinsonian features 
-also appear to onset at earlier FXTAS stages for males than for females.
+also appear to begin at earlier FXTAS stages for males than for females.
 
 
 ```{r}
@@ -715,8 +551,8 @@ When we conducted subgroup analyses by CGG repeat size,
 we found statistically significant evidence of 
 a difference between males and females
 among those with CGG < 100 (p = `r pval_under100_sex_gp34_v1`)
-([Supplementary Figure @fig-pvd-by-gender-cgg_under100]).
-Several psychiatric disorders (as measured by SCID) 
+(@suppfig-pvd-by-gender-cgg_under100).
+Several psychiatric disorders (as assessed by SCID) 
 occurred prior to FXTAS Stage 1
 among females with CGG < 100,
 but at later FXTAS stages for males with CGG < 100.
@@ -724,7 +560,7 @@ MRI biomarkers appeared to occur at later stages in females compared to males.
 We did not find statistically significant evidence of 
 a difference between males and females
 among those with CGG ≥ 100 (p = `r pval_over100_sex_gp34_v1`) 
-([Supplementary Figure @fig-pvd-by-gender-cgg_over100]).
+(@suppfig-pvd-by-gender-cgg_over100).
 
 
 ```{r}
@@ -780,7 +616,7 @@ n_over100_Female =
 
 We found significant evidence of an overall difference between CGG <100
 and CGG ≥100 among males (p = `r pval_male_cgg_gp34_v1`) 
-([Supplementary Figure @fig-pvd-by-cgg-male]). 
+(@suppfig-pvd-by-cgg-male). 
 SWM between errors occurred prior to Stage 1 in males with CGG repeats <100, 
 whereas it occurred between stage 3 and 4 
 in males with CGG repeats ≥ 100 
@@ -795,7 +631,7 @@ occurred later in the event sequence in participants with CGG repeats <100
 compared to those with CGG repeats ≥100.  
 However, we did not find a significant difference between CGG <100 and CGG ≥100 
 among females (p = `r pval_female_cgg_gp34_v1`) 
-([Supplementary Figure @fig-pvd-by-cgg-female]). 
+(@suppfig-pvd-by-cgg-female). 
 It should be noted that this comparison lacked statistical power 
 given the limited sample size of only `r n_over100_Female` females with CGG ≥100.
 
@@ -843,11 +679,14 @@ n_type_0 = results_cv_max$subtype_and_stage_table |>
 
 @fig-pvd_chosen_subtypes shows the estimated sequential event orders
 for each of the subtype clusters.
-[Supplementary Figure @fig-pvd_chosen_subtypes_linegraphs] shows 
+@suppfig-pvd_chosen_subtypes_linegraphs shows 
 differences in event sequences between subtypes. 
-@tbl-sg_demos shows the demographics of the patients clustered in each subtype. 
-`r n_type_0` patients had experienced too few events 
-to be accurately classified into a subtype and were excluded from @tbl-sg_demos.
+@tbl-sg_demos shows 
+the demographics of the patients clustered in each subtype. 
+`r n_type_0 |> xfun::numbers_to_words() |> Hmisc::capitalize()` 
+patients had experienced too few events 
+to be accurately classified into a subtype 
+and were excluded from @tbl-sg_demos.
 Subtype clustering analysis showed that 
 subtypes were mainly classified by sex and CGG repeat size, 
 supporting the results above. 
@@ -875,11 +714,11 @@ early mood disorders (before FXTAS Stage 1),
 ataxia between Stages 2 and 3,
 head tremors between Stages 3 and 4,
 parkinsonian features between Stages 3 and 4,
-and white matter disease phenotypes between Stages 4 and 5.
+and white matter disease between Stages 4 and 5.
 Compared to Subtype 1, Subtype 2 appeared to experience 
 white matter disease phenotypes earlier (between Stages 2 and 4),
-memory issues (assessed by SWM) earlier (Stage 3-4 versus 4-5).
-and SCID disorders later (between Stages 3 and 5).
+memory impairment (assessed by SWM) earlier (Stage 3-4 versus 4-5),
+and psychiatric disorders later (between Stages 3 and 5).
 Subtype 2 might be described as "memory-first".
 Subtype 3 appeared to experience
 white matter disease phenotypes early (between Stages 1 and 3),
@@ -890,190 +729,7 @@ include outlier individuals with unusual event sequences.
 
 # Discussion
 
-The present study attempted to arrange the eventual symptoms of FXTAS 
-in their possible appearing sequential orders
-and determine risk factors that impact on the 
-sequential order of presentation among individuals. 
-The main findings of this analysis were 
-substantial differences in sequential order of eventual symptoms
-between males and females
-and in combination of sex and CGG repeat size.
-
-The proportions of 
-lifetime anxiety disorders, 
-mood disorders, 
-and somatoform disorders in this study cohort
-is far more than 
-[Clinicians: please provide a reference for comparison]{.comment-start author="Ezra Morrison"}
-usual population expectations for these illnesses 
-[]{.comment-end}. 
-This study design did not fractionate specific lifetime psychiatric illnesses
-(e.g., major depressive disorder, panic disorder, and somatization disorder),
-but these overall lifetime prevalence figures are notable.
-[Clinicians: please provide a reference]{.comment-start author="Ezra Morrison"}
-Prior studies of mood and anxiety disorders
-[]{.comment-end}
-have demonstrated a higher than expected rate of these illnesses 
-in premutation carriers. 
-The same increase lifetime psychiatric illness burden 
-[Clinicians: please provide a reference]{.comment-start author="Ezra Morrison"}
-is seen in other neurodegenerative illnesses 
-(e.g., Parkinson’s disease, multiple sclerosis).
-[]{.comment-end}
-While many psychiatric illness have a strong genetic predisposition, 
-the lifetime prevalences here persuasively suggest that 
-the premutation carrier state itself increases the risk of psychiatric illness. 
-As the SCID assesses lifetime illness risk, 
-it is probable that the index episode of psychiatric illness 
-antedated the onset of 
-tremor, 
-ataxia, and 
-major neurocognitive disorder 
-seen in more advanced premutation conditions like FXTAS. 
-As such, the high lifetime burden of psychiatric illness in this population 
-cannot be plausible attributed solely (perhaps substantially) to 
-an “emotional reaction” 
-to the loss of function associated with these functional impairments,
-but rather should be understood as a component of the premutation carrier state itself. 
-It is likely that this intrinsic vulnerability to psychiatric illness 
-is a significant component of the carrier state. 
-Furthermore, as only a small proportion of the patients 
-had MMSE scores in the impaired range, 
-it is also unlikely that the high rates of 
-depressive, anxiety (and other) psychiatric illness 
-could be attributed to complications of FXTAS dementia, 
-as the majority of subjects had normal MMSE scores, 
-which would not be consistent with dementia. 
-For example, depressive disorders 
-are a common psychiatric complication of dementia, 
-but few of the depressive disorders found here could be attributed to dementia. 
-A common sequence of illnesses seen clinically in carriers is 
-depressive and/or anxiety disorders with adult onset, 
-then tremor and ataxia in the 40s, 
-followed by FXTAS dementia in the 60s. 
-Seen in this light, and knowing the ultimate CNS vulnerability of the carrier state, 
-retrospectively the initial presentation of depressive and/or anxiety disorders 
-could be regarded as a psychiatric prodrome of later full spectrum illness. 
-This is analogous to the psychotic illness seen in SLE before rheumatologic findings 
-and the depressive disorder that is commonly seen 
-in the 5 years before the motor signs leading to a diagnosis of multiple sclerosis. 
-
-This data shows more significant involvement in males than females, as predicted,
-but a remarkable finding is the predominance of the psychiatric problems 
-that occur early in females 
-and often before the onset of tremor and ataxia compared to the males.
-These symptoms, particularly mood disorders, 
-can often occur even before the diagnosis of FXTAS in the females,
-and the stress involved with mood disorders may be a precipitating feature 
-for the onset of FXTAS.
-In addition, females may exerience early cognitive problems,
-particularly involving executive dysfunction and memory,
-as seen by the SWM and PAL scores that occur early on in the females.
-From a clinical perspective,
-we have seen significant psychiatric problems 
-leading into some cognitive deficits in memory and EF abilities, 
-but these females may not meet the criteria of FXTAS diagnosis, 
-because of the absence of significant tremor and/or ataxia. 
-However, if white matter disease emerges on MRI particularly in the splenium 
-or in the periventricular area,
-then this demonstrates the onset of the neuropathology of FXTAS, 
-even if there is no tremor or ataxia yet. 
-This suggests that the diagnostic criteria for FXTAS 
-is different in females compared to males,
-particularly for early cases.
-The diagnostic criteria for FXTAS was determined with the study of males only 
-[@jacquemont2003fragile]. 
-Subsequent criteria for the diagnosis of FXTAS was modified [@hall2014emerging]
-to include the involvement of the splenium,
-which is seen in the majority of females with FXTAS 
-[@apartis2012fxtas; @schneider2020women].
-Hall et al [-@hall2014emerging] also added the feature of neuropathy, 
-which occurs in the majority of FXTAS patients,
-but it is a common finding in the elderly with many causes,
-so it is just a minor criteria for FXTAS. 
-Although the diagnostic criteria have been modified somewhat for the females,
-there may be subsequent changes in the early stages of FXTAS 
-as further follow-up studies are able to separate 
-the psychiatric problems in females seen early on here 
-from more significant neuropathology associated with 
-extended features of FXTAS over time.
-As new treatments for FXTAS develop, 
-the earlier the diagnosis, 
-the more likely the treatment will be effective.
-
-```{r}
-#| label: p-val-test-cgg
-output_folder = "output/output.fixed_CV/"
-
-permuted_test_stats = collect_permutation_test_stats(
-  output_folder = output_folder,
-  permuting_variables = "FX3")
-
-observed_test_stat = get_observed_permutation_test_stat(
-  output_folder,
-  dataset_names = c('under100', 'over100'))
-
-pval_cgg_gp34_v1 = permutation_test(
-  observed_test_stat = observed_test_stat,
-  permuted_test_stats = permuted_test_stats,
-  n_permutations = n_permutations
-)
-
-```
-
-When we compared 
-between 55-99 vs 100-199 CGG repeats in males and females combined, 
-no significant difference was found 
-(p = `r pval_cgg_gp34_v1`) 
-([Supplementary Figure @fig-pvd-by-cgg]). 
-The finding of only minimal differences 
-between 55-99 vs 100-199 CGG repeats is surprising, 
-since several studies have found that the higher the CGG repeats,
-the earlier the onset and the faster the progression of FXTAS 
-[@greco2006neuropathology; @leehey2008fmr1; @tassone2023insight]. 
-Perhaps the cut off of 100 is too high for this distinction to be made.
-
-This study has several limitations. 
-In the subtype clustering analysis, 
-it was challenging to concisely summarize the differences between subtypes, 
-especially given the relatively small sample sizes per subtype 
-and the correspondingly large amounts of uncertainty in their event orderings. 
-We had substantial amounts of missing data. 
-As described in the methods (@sec-incomplete-data),
-we used the marginal distribution of 
-the observed data for each `r outcomes_name` among cases
-to impute the underlying values of these missing data. 
-The missing data could contribute to uncertainty in the results.
-Our data contained both continuous and ordinal variables.
-In order to apply the Ordinal SuStaIn algorithm, 
-we categorized some `r outcomes_name`s 
-that were originally measured as continuous values.
-In doing so, we likely sacrificed some granular information. 
-There are other variations of the SuStaIn algorithm, 
-such as z-score SuStaIn [@young2018uncovering], 
-which are designed to be used with only continuous measurements.
-Further development is warranted to combine Ordinal SuStaIn and z-score SuStaIn
-to fit an event-based model with both continuous and ordinal data. 
-Our data come from the GP and Trax studies, 
-which are longitudinal cohort studies
-with infrequent followup visits.
-These studies do not collect precise information 
-about timing of symptom onsets, 
-so it is not feasible to use the longitudinal data 
-to confirm the results from the Ordinal SuStaIn analysis.
-In our analysis approach,
-the event onsets are not modeled as a function of participant age;
-instead, each event's onset timing is only modeled relative to the other events.
-Therefore, the sequence differences between the subtypes
-are all in relative terms:
-if one event moves earlier in the sequence
-when comparing one subtype to another,
-other events are pushed later in the sequence,
-even if only one event timing
-changes relative to age.
-Additional research including longitudinal data 
-collecting precise ages of onset 
-would be needed to verify our findings.
+{{< include _sec_discussion.qmd >}}
 
 # Data availability {.unnumbered}
 
@@ -1252,7 +908,7 @@ plot_compact_pvd_est2(
 
 {{< pagebreak >}}
 
-# Supplementary material {.appendix}
+# Supplementary Material for “Development and progression of Fragile X-associated tremor/ataxia syndrome revealed by Subtype and Stage Inference analysis" {.appendix}
 
 {{< include _sec_supplement.qmd >}}
 

@@ -1,0 +1,28 @@
+
+::: landscape
+
+::: {#suppfig-cvic layout-ncol="2"}
+
+```{r}
+#| label: fig-cvic-1
+#| fig-width: 4
+#| fig-cap: Cross-validation information criterion
+#| eval: !expr fit_models
+
+temp$CVIC |> plot_CVIC()
+```
+
+```{r}
+#| label: fig-cvic-2
+#| fig-width: 4
+#| fig-cap: Test set log-likelihood across folds
+#| eval: !expr fit_models
+
+temp$loglike_matrix |> plot_cv_loglik()
+```
+
+**Selection criteria for number of latent subtypes**
+
+:::
+
+:::

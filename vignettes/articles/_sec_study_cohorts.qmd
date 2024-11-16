@@ -4,89 +4,73 @@ the Genotype-Phenotype Study in Fragile X Families
 ("GP"; funded by NICHD R01HD036071; PI Hagerman) and
 the Trajectories and Markers of Neurodegeneration
 in Fragile X Premutation Carriers study
-("TRAX"; funded by NINDS NS110100; PI Rivera).
-Written informed consent was obtained from all participants 
+("TRAX"; funded by NINDS NS110100; PIs Hessl and Rivera)
+conducted at the University of California, Davis MIND Institute.
+A written informed consent form was obtained from all participants 
 according to the procedures approved by the 
 University of California, Davis Institutional Review Board.
 
-The GP Study is a longitudinal research effort 
-focused on adult male and female carriers of the fragile X premutation, 
-aged 40-85 at entry, 
-who are affected by fragile X-associated tremor/ataxia syndrome (FXTAS). 
-This study is conducted at the University of California, Davis MIND Institute 
-and is supported by an NIH (NICHD) grant (#R01HD036071; PI Hagerman). 
-Most participants have been recruited 
-through the Fragile X Research and Treatment Center at the MIND Institute, 
-including 
-both family members already engaged with our clinical and research programs 
-and new families who contacted us for 
-clinical services 
-or information about our research.
-To be included in the study, 
-participants must fall into one of the following categories:
-
-1.	Premutation carriers with developmental challenges (IQ < 80) 
-or a diagnosis of ASD (Autism, PDD-NOS, or Asperger’s syndrome).
-2.	Premutation carriers without developmental issues or ASD, 
-who have a normal IQ and no psychiatric diagnosis.
-3.	Adult premutation carriers diagnosed with FXTAS.
-4.	Control individuals without the fragile X premutation.
-
-GP study participants are reassessed every 2 years
-to document phenotypic progression over time.
-
-Participants in the TRAX longitudinal study includes 
-67 Male premutation carriers ranging from 40-82 years (Mean: 60.2 years) 
-and 32 Male Healthy Controls ages 40-75 (Mean: 57.7 years) at baseline visit. 
-This study is also conducted at the 
-University of California, Davis MIND Institute. 
-An important goal of the recruitment process was 
-the inclusion of premutation carriers 
-who do not yet have a FXTAS diagnosis at enrollment. 
-During phone screening, detailed interviewing with potential participants 
-suggested than none of the enrolled premutation carriers had FXTAS 
-based upon criterion of evidence of either tremor or ataxia 
-with any degree of impairment in functioning. 
-Despite the screening, 
-11 of the 67 premutation carriers demonstrated 
-at least equivocal/intermittent tremor and/or ataxia and 
-functional interference (FXTAS Stage 2 or higher) at baseline visit
-after neurological examination. 
-Overall, 88 participants returned for 2-5 follow up visits 
-over a total duration of 1 to 9 years (Mean: 4.6 years) 
-with varying intervals averaging about 2.5 years apart.  
-Of the participants without evidence of FXTAS at baseline 
-who have follow-up visits to date, 
-28 developed FXTAS 
-(tremor and/or ataxia and functional interference).
+The GP longitudinal study is an ongoing effort 
+focused on adult male and female 
+carriers of the *FMR1* premutation
+who have neurological symptoms 
+or have been diagnosed with FXTAS 
+and healthy control individuals without the fragile X premutation,
+aged 40-85 at entry. 
+The TRAX longitudinal study is an ongoing effort studying 
+adult male premutation carriers 
+ranging from 40-82 years
+and male healthy controls 
+ages 40-75 at baseline visit. 
+The TRAX participants return for follow up visits 
+with varying intervals between visits averaging 2.5 years
+to assess phenotypic progression over time.
 
 In both studies, 
 each evaluation includes 
 a detailed medical history, 
 neurological examination, 
 neuropsychological testing including the 
-WAIS IV, 
-Behavior Dyscontrol Scale (BDS2), 
-Mini Mental State Exam (MMSE) and 
+Wechsler Adult Intelligence Scale, Fourth Edition (WAIS IV), 
+Behavior Dyscontrol Scale (BDS-2), 
+Mini-Mental State Exam (MMSE) and 
 Cambridge Automated Neuropsychological Test Battery (CANTAB); 
 Structured Clinical Interview for 
-DSM-[Is this correct?]{.comment-start author="Ezra Morrison"}IV[]{.comment-end} 
+DSM-IV
 Disorders 
-(SCID-IV), 
+(SCID-I/NP), 
 motor testing, 
-and MRI assessment 
+and brain MRI 
 [@johnson2022fxtas_by_sex; 
 @winarni2024apolipoproteine; 
 @elias2024enlarged].
 After the clinical and MRI evaluation,
 each patient received a stage designation of FXTAS ranging from 0 to 6 
-according to stages identified by @bacalman2006psychiatric  
-focused on tremor and ataxia severity. 
+according to stages identified by Bacalman *et al.* 2006 
+[@bacalman2006psychiatric] 
+based on tremor and ataxia severity. 
 Stage 1 represents subclinical or uncertain tremor; 
 Stage 2 is mild tremor without significant interference with 
 activities of daily living (ADLs); 
 Stage 3 is significant tremor that interferes with ADLs and significant ataxia; 
 Stage 4 is significant ataxia needing a cane or walker;
-Stage 5 is needing a wheelchair;
+Stage 5 is requiring a wheelchair;
 and Stage 6 is bedridden
-(no participants at Stage 6 were included in those studies).
+(no participants at Stage 6 were included in the study).
+
+The primary sequence analysis of symptomatic events 
+included baseline visit data 
+from `r nrow(v1_usable)` participants from the GP and TRAX cohorts,
+consisting of 
+`r nrow(v1_usable_cases)` carriers of a premutation and 
+`r nrow(controls_v1)` controls. 
+@tbl-demographics provides 
+demographic information about the study participants.
+The controls' data were used to estimate 
+the distribution of the analyzed `r outcomes_name`s 
+among non-FXTAS individuals 
+as reference in SuStaIn modeling
+(more details in @sec-scored-events-model).
+Then the cases' data were used to estimate FXTAS event sequences,
+using the estimated control distributions to account for random variation
+in observed symptoms unrelated to the underlying event sequence.

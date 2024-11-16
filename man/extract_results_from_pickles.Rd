@@ -28,6 +28,9 @@ extract_results_from_pickles(
 
 \item{format_results}{whether to apply \code{\link[=format_results_list]{format_results_list()}} to results before returning}
 }
+\value{
+a \link{list} of \code{"SuStaIn-model"} objects (extends \code{\link[=list]{list()}})
+}
 \description{
 Extract results from multiple pickle files
 }
