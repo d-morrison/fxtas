@@ -2,9 +2,9 @@ parse_CGG = function(x)
 {
   x |>
     strsplit(" *(\\)|-|,| ) *\\(?") |>
-    sapply(F = function(x) gsub(x = x, fixed = TRUE, "?*", "")) |>
-    sapply(F = function(x) gsub(x = x, fixed = TRUE, ">", "")) |>
-    sapply(F = as.numeric) |>
+    sapply(FUN = function(x) gsub(x = x, fixed = TRUE, "?*", "")) |>
+    sapply(FUN = function(x) gsub(x = x, fixed = TRUE, ">", "")) |>
+    sapply(FUN = as.numeric) |>
     suppressWarnings() |>
-    sapply(F = max)
+    sapply(FUN = max)
 }

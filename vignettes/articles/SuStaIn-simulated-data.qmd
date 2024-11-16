@@ -1,5 +1,13 @@
 ---
 title: "SuStaIn Model Fitting"
+authors:
+  - name: Alexandra Young
+  - name: Douglas Ezra Morrison
+    affiliations:
+      - ref: ucdphs
+    corresponding: true
+    email: demorrison@ucdavis.edu
+    address: One Shields Ave, Davis, CA 95616
 format:
   html:
     toc: true
@@ -232,7 +240,20 @@ In R, we can run the algorithm with `run_OSA()`:
 ```{r}
 #| label: run-osa-R
 
-osa_output = run_OSA(
+biomarker_group_list = list(
+  "group 1" = biomarkers[1:2],
+  "group 2" = biomarkers[3:4],
+  "group 5" = biomarkers[5]
+)
+biomarker_groups = compile_biomarker_groups_table(
+  biomarker_group_list = biomarker_group_list
+)
+patient_data     |> readr::write_rds(file = fs::path(output_folder, "data.rds"))
+biomarker_levels |> readr::write_rds(file = fs::path(output_folder, "biomarker_levels.rds"))
+biomarker_groups |> readr::write_rds(file = fs::path(output_folder, "biomarker_groups.rds"))
+  
+osa_output = run_and_save_OSA(
+  dataset_name = dataset_name,
   patient_data = patient_data,
   prob_correct = prob_correct,
   prob_score = prob_score0,
@@ -342,8 +363,29 @@ for fig in figs:
 ## figs in R
 
 ```{r}
-#| label: fig-plot-compact-pvd
-#| fig-cap: "Compact PVD"
+#| label: fig-plot-compact-pvd-n1
+#| fig-cap: "Compact PVD: 1 subgroup"
+#| fig-height: 3
+figs = extract_figs_from_pickle(
+  output_folder = output_folder,
+  n_s = 1)
+  
+figs = list(figs)
+
+plot_compact_pvd(
+  figs = figs,
+  tile_height = 1,
+  facet_label_prefix = "All data",
+  y_text_size = 8,
+  biomarker_order = biomarkers,
+  scale_colors = c("red", "magenta", "blue")
+)
+```
+
+```{r}
+#| label: fig-plot-compact-pvd-n3
+#| fig-cap: "Compact PVD: 3 subgroups"
+#| fig-height: 3
 figs = extract_figs_from_pickle(
   output_folder = output_folder,
   n_s = 3)
