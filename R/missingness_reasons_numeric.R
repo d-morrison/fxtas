@@ -5,7 +5,8 @@
 #' @param ...
 #'
 #' @inheritDotParams clean_numeric
-#' @return
+#' @returns a [factor] [vector] corresponding to the elements of `x`,
+#' indicating the reasons why `x` was missing.
 #' @export
 #'
 #' @importFrom forcats fct_relevel

@@ -30,8 +30,22 @@ available on Windows.}
 when Conda environments are used, as otherwise packages will be installed
 from the Conda repositories.}
 
-\item{...}{Additional arguments passed to \code{\link[reticulate:conda_install]{conda_install()}}
-or \code{\link[reticulate:virtualenv_install]{virtualenv_install()}}.}
+\item{...}{
+  Arguments passed on to \code{\link[reticulate:py_install]{reticulate::py_install}}
+  \describe{
+    \item{\code{packages}}{A vector of Python packages to install.}
+    \item{\code{conda}}{The path to a \code{conda} executable. Use \code{"auto"} to allow
+\code{reticulate} to automatically find an appropriate \code{conda} binary.
+See \strong{Finding Conda} and \code{\link[reticulate:conda_binary]{conda_binary()}} for more details.}
+    \item{\code{pip_ignore_installed,ignore_installed}}{Boolean; whether pip should
+ignore previously installed versions of the requested packages. Setting
+this to \code{TRUE} causes pip to install the latest versions of all
+dependencies into the requested environment. This ensure that no
+dependencies are satisfied by a package that exists either in the site
+library or was previously installed from a different--potentially
+incompatible--distribution channel. (\code{ignore_installed} is an alias for
+\code{pip_ignore_installed}, \code{pip_ignore_installed} takes precedence).}
+  }}
 }
 \description{
 This function is a wrapper for \link[reticulate:conda-tools]{reticulate::conda_install}.

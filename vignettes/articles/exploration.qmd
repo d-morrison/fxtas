@@ -1,8 +1,8 @@
----
-output: html_document
-editor_options: 
-  chunk_output_type: console
----
+The following tables summarize the distributions of the `r outcomes_name`s
+that we analyzed in this paper, stratified by sex and CGG level.
+
+:::::: landscape
+
 ```{r}
 #| label: exploration-setup
 #| include: false
@@ -35,9 +35,9 @@ footnote1 <- 'Codes `777`, `888`, and `999` are counted as "Missing" (NA).'
 
 ### Tremors {.appendix}
 
+::: {#supptbl-tremors}
+
 ```{r}
-#| label: tbl-tremors
-#| tbl-cap: "Tremors"
 vars <- c(
   "Intention tremor",
   "Resting tremor",
@@ -57,13 +57,17 @@ table1(
 )
 ```
 
+**Tremors by CGG level and sex**
+
+:::
+
 <br>
 
 ### Head tremors  {.appendix}
 
+::: {#supptbl-head-tremors}
+
 ```{r}
-#| tbl-cap: "Head tremors"
-#| label: tbl-head-tremors
 vars <- c(
   "Head tremor"
   # "Head Tremor: Age of onset"
@@ -86,14 +90,18 @@ table1(
 )
 ```
 
+**Head tremors**
+
+:::
+
 <br>
 
 
 ### Ataxia  {.appendix}
 
+::: {#supptbl-ataxia-by-cgg}
+
 ```{r}
-#| label: tbl-ataxia-by-cgg
-#| tbl-cap: "Ataxia by CGG status"
 vars <- c(
   "Ataxia",
   # "Ataxia: severity",
@@ -111,15 +119,17 @@ table1(
 )
 ```
 
+Ataxia by CGG status
+
+:::
+
 <br>
 
+### Parkinson's disease {.appendix}
 
-
-### Parkinsons  {.appendix}
+::: {#supptbl-parkinsons-by-cgg}
 
 ```{r}
-#| label: tbl-parkinsons-by-cgg
-#| tbl-cap: "Parkinsons by CGG status"
 vars <- grep("Parkinson", value = TRUE, names(trax_gp34_all))
 
 if (!show_missingness_reasons) {
@@ -134,11 +144,15 @@ table1(
 )
 ```
 
+Parkinson's disease by CGG status
+
+:::
+
 ### FXTAS Stage {.appendix}
 
+::: {#supptbl-fxtas-stage-by-cgg}
+
 ```{r}
-#| label: tbl-fxtas-stage-by-cgg
-#| tbl-cap: "FXTAS Stage by CGG level"
 vars <- c(
   "FXTAS Stage (0-5)*",
   if (show_missingness_reasons) "FXTAS Stage (0-5)*: missingness reasons"
@@ -160,13 +174,16 @@ trax_gp34_all |>
   readr::write_csv("inst/extdata/missing_FXTAS_stage.csv")
 ```
 
+FXTAS Stage by CGG level
+
+:::
+
 ### Behavior Dyscontrol Scale - Second Edition (BDS-2) {.appendix}
 
-```{r}
-#| label: tbl-bds2
-#| tbl-cap: "Behavior Dyscontrol Scale - Second Edition (BDS-2)"
-vars <- c("BDS-2 Total Score", "BDS-2 Total Score*")
+::: {#supptbl-bds2}
 
+```{r}
+vars <- c("BDS-2 Total Score", "BDS-2 Total Score*")
 
 table1(
   na.is.category = FALSE, overall = FALSE,
@@ -178,11 +195,15 @@ table1(
 )
 ```
 
+Behavior Dyscontrol Scale - Second Edition (BDS-2)
+
+:::
+
 ### Mini-Mental State Examination (MMSE)  {.appendix}
 
+::: {#supptbl-mmse}
+
 ```{r}
-#| label: tbl-mmse
-#| tbl-cap: "Mini-Mental State Examination (MMSE)"
 # vars = grep(
 #   "MMSE total score",
 #   value = TRUE,
@@ -205,11 +226,15 @@ table1(
 )
 ```
 
+Mini-Mental State Examination (MMSE)
+
+:::
+
 ### Structured Clinical Interview for DSM Disorders (SCID)  {.appendix}
 
+::: {#supptbl-scid}
+
 ```{r}
-#| label: tbl-scid
-#| tbl-cap: "Structured Clinical Interview for DSM Disorders (SCID)"
 vars <- scid_vars_for_table1()
 
 table1(
@@ -221,13 +246,15 @@ table1(
 )
 ```
 
+Structured Clinical Interview for DSM Disorders (SCID)
 
+:::
 
 ### MRI  {.appendix}
 
+::: {#supptbl-mri}
+
 ```{r}
-#| label: tbl-mri
-#| tbl-cap: "**MRI variables by Sex and CGG level**"
 vars <- c(
   # "Cerebral Atrophy",
   # "Cerebellar Atrophy",
@@ -254,14 +281,17 @@ table1(
 )
 ```
 
+**MRI variables by Sex and CGG level**
+
+:::
+
 ### Cambridge Neuropsychological Test Automated Battery (CANTAB)  {.appendix}
 
 We used categorization cutoffs taken from [@talebi2020cambridge].
 
+::: {#supptbl-cantab}
+
 ```{r}
-#| label: tbl-cantab
-#| tbl-cap: "Cambridge Neuropsychological Test Automated Battery (CANTAB)"
-#|
 # table1(na.is.category = FALSE, overall = FALSE,
 #   NA.label = na_label_1,
 #   stratified_formula("Drugs used", column_var),
@@ -310,11 +340,15 @@ table1::t1flex(
   )
 ```
 
+**Cambridge Neuropsychological Test Automated Battery (CANTAB)**
+
+:::
+
 ### Thyroid and autoimmune diseases  {.appendix}
 
+::: {#supptbl-autoimmune}
+
 ```{r}
-#| label: tbl-autoimmune
-#| tbl-cap: "Thyroid and autoimmune diseases"
 vars <- c(
   "Hypothyroid",
   "Hyperthyroid",
@@ -337,3 +371,9 @@ table1(
   data = v1_usable
 )
 ```
+
+**Thyroid and autoimmune diseases**
+
+:::
+
+::::::

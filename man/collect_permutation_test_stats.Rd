@@ -29,6 +29,9 @@ collect_permutation_test_stats(
 
 \item{by}{number of seeds per file}
 }
+\value{
+a \link{numeric} vector
+}
 \description{
 Collect permutation test statistics
 }

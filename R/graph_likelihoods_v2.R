@@ -1,9 +1,9 @@
 #' Title
 #'
-#' @param likelihoods
-#' @param alpha
+#' @param likelihoods todo
+#' @param alpha todo
 #'
-#' @return
+#' @returns a [ggplot2::ggplot]
 #' @export
 #'
 graph_likelihoods_v2 = function(

@@ -12,7 +12,16 @@ model_dists(
 )
 }
 \arguments{
-\item{nlevs}{}
+\item{df}{todo}
+
+\item{biomarker_varnames}{todo}
+
+\item{biomarker_levels}{todo}
+
+\item{nlevs}{todo}
+}
+\value{
+a \code{\link[=matrix]{matrix()}} indicating which levels each biomarker has
 }
 \description{
 possibly not needed; keeping because it has an example of using attributes that I want to propagate across the codebase

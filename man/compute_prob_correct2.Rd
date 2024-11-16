@@ -9,9 +9,14 @@ compute_prob_correct2(dataset, biomarkers, DataScores, max_prob = 1)
 \arguments{
 \item{dataset}{Should be just the control data?}
 
+\item{biomarkers}{todo}
+
 \item{DataScores}{a list of possible scores}
 
-\item{max_prob}{}
+\item{max_prob}{\link{numeric} between 0 and 1 specifying the probability}
+}
+\value{
+a \link{numeric} \link{vector}
 }
 \description{
 Title

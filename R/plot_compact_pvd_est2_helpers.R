@@ -5,28 +5,28 @@ tmp_data_prep <- function(x){
   tmp <- x$data
   # determine biomarker event order
   event_order <- tmp |>
-    dplyr::select(`row number and name`, `event name`, biomarker) |>
+    dplyr::select(.data$`row number and name`, .data$`event name`, .data$biomarker) |>
     mutate(
       Order = sub("\\D*(\\d+).*", "\\1", `row number and name`) |> as.numeric()
     ) |>
     mutate(
-      `event order` = min(Order),
-      .by = `biomarker`
+      `event order` = min(.data$Order),
+      .by = .data$`biomarker`
     ) |>
     # dplyr::select(
     #   biomarker, position
     # ) |>
-    arrange(`event order`) |>
+    arrange(.data$`event order`) |>
     mutate(
-      biomarker = forcats::fct_inorder(biomarker)
+      biomarker = forcats::fct_inorder(.data$biomarker)
     ) |>
-    dplyr::select(biomarker, `event order`) |>
+    dplyr::select(.data$biomarker, .data$`event order`) |>
     unique()
 
   event_order_facet <- tmp |>
-    dplyr::select(`row number and name`, `event name`, biomarker) |>
+    dplyr::select(.data$`row number and name`, .data$`event name`, .data$biomarker) |>
     dplyr::mutate(
-      Order = sub("\\D*(\\d+).*", "\\1", `row number and name`) |> as.numeric()
+      Order = sub("\\D*(\\d+).*", "\\1", .data$`row number and name`) |> as.numeric()
     ) |>
     unique()
 
@@ -36,17 +36,17 @@ tmp_data_prep <- function(x){
     by = c("row number and name", "event name", "biomarker")
   ) |>
     dplyr::filter(
-      position == Order
+      .data$position == .data$Order
     ) |>
     # convert biomarker to factor with event order levels
     mutate(
       biomarker = factor(
-        biomarker,
+        .data$biomarker,
         levels = levels(event_order$biomarker)
       )
     ) |>
     # arrange by biomarker levels
-    arrange(biomarker) |>
+    arrange(vbiomarker) |>
     # create biomarker labels for figure
     mutate(
       biomarker_label = glue::glue(
@@ -55,7 +55,7 @@ tmp_data_prep <- function(x){
         forcats::fct_inorder()
     ) |>
     dplyr::select(
-      biomarker, biomarker_label, position, proportion, level
+      .data$biomarker, .data$biomarker_label, .data$position, .data$proportion, .data$level
     )
 
   return(plot_dataset)

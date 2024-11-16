@@ -1,8 +1,8 @@
 #' replace decade codes with medians of those decades
 #'
-#' @param x
+#' @param x a [character] vector
 #'
-#' @return
+#' @returns a [numeric] vector corresponding to `x`
 #' @export
 #'
 age_range_medians = function(x)

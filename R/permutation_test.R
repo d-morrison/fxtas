@@ -30,13 +30,11 @@ permutation_test = function(
 
 #' Plot the distribution of a permuted test statistic
 #'
-#' @param object an object of class `"permutation_test`
+#' @param object an object of class `"permutation_test"`
 #' @param ..., additional arguments (not used)
 #'
 #' @returns a [ggplot2::ggplot] constructing a histogram of the test statistic
 #' @export
-#'
-#' @examples
 autoplot.permutation_test = function(object, ...)
 {
   plot_permutation_results(

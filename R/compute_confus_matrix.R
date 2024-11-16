@@ -1,9 +1,9 @@
 #' compute `confus_matrix` as in python version
 #'
-#' @param samples_sequence
-#' @param biomarker_event_order
+#' @param samples_sequence todo
+#' @param biomarker_event_order todo
 #'
-#' @return
+#' @return a [tibble:tbl_df]
 #' @export
 #'
 #' @examples
@@ -75,9 +75,9 @@ order_biomarkers = function(position_frequencies)
 
   order =
     position_frequencies |>
-    arrange(`event name`, desc(proportion), position) |>
-    slice_head(by = `event name`) |>
-    arrange(position, desc(proportion), `event name`) |>
+    arrange(.data$`event name`, desc(.data$proportion), .data$position) |>
+    slice_head(by = .data$`event name`) |>
+    arrange(.data$position, desc(.data$proportion), .data$`event name`) |>
     mutate(
       row_num = dplyr::row_number(),
       `row number and name` =

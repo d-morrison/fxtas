@@ -7,7 +7,7 @@
 #' @param rda_filename name of rda file containing environment used to run analyses
 #' @param format_results whether to apply [format_results_list()] to results before returning
 #' @inheritDotParams format_results_list format_sst
-#' @returns
+#' @inherit format_results_list return
 #' @export
 #' @examples
 #' results = extract_results_from_pickle(output_folder = "output/SuStaIn-simulated-data")
@@ -66,7 +66,7 @@ extract_results_from_pickle = function(
 #' Extract results from multiple pickle files
 #'
 #' @inheritParams extract_results_from_pickle
-#' @returns
+#' @returns a [list] of `"SuStaIn-model"` objects (extends [list()])
 #' @export
 #'
 extract_results_from_pickles =

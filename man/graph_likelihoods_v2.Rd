@@ -7,7 +7,12 @@
 graph_likelihoods_v2(likelihoods, alpha = 0.5)
 }
 \arguments{
-\item{alpha}{}
+\item{likelihoods}{todo}
+
+\item{alpha}{todo}
+}
+\value{
+a \link[ggplot2:ggplot]{ggplot2::ggplot}
 }
 \description{
 Title

@@ -4,10 +4,12 @@
 \alias{report_sex_differences}
 \title{Report sex differences}
 \usage{
-report_sex_differences(table)
+report_sex_differences(table, cutoff = 0.05)
 }
 \arguments{
 \item{table}{output from \code{\link[=make_biomarkers_table]{make_biomarkers_table()}}}
+
+\item{cutoff}{\code{\link[=numeric]{numeric()}} p-value cutoff for significance}
 }
 \value{
 a \code{\link[=character]{character()}} string
@@ -23,7 +25,7 @@ biomarker_varnames =
   pull("biomarker")
 
 biomarker_levels =
-trax_gp34_v1 |>
+test_data_v1 |>
  dplyr::select(all_of(biomarker_varnames)) |>
  lapply(F = levels)
 
@@ -32,7 +34,7 @@ biomarker_events_table =
     biomarker_levels,
     biomarker_groups = biomarker_groups)
 
-table = trax_gp34_v1 |> make_biomarkers_table(
+table = test_data_v1 |> make_biomarkers_table(
   biomarker_events_table = biomarker_events_table,
   biomarker_varnames = biomarker_varnames
   )

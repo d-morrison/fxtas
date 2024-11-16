@@ -73,20 +73,24 @@ compute_prob_correct <- function(dataset, biomarker_levels, max_prob = 1) {
       bind_rows(cur_results)
   }
 
+  mapping =
+    dataset[,biomarkers] |> sapply(F = labelled::get_label_attribute) |>
+    unlist()
+
+  mapping = c(names(mapping)) |> rlang::set_names(mapping)
+
+  results$biomarker =
+    results$biomarker |>
+    labelled::add_value_labels(mapping)
+
+
   probs = results$prob_correct
 
   results <-
     results |>
     mutate(
       `% at baseline` = round(.data$`% at baseline` * 100, 1) |> paste0("%"),
-      prob_correct = round(.data$prob_correct * 100, 1) |> paste0("%"),
-      biomarker = .data$biomarker |>
-        stringr::str_replace(
-        stringr::fixed("Ataxia: severity*"), "Ataxia: severity"
-      ) |>
-        stringr::str_replace(
-          stringr::fixed("FXTAS Stage (0-5)*"), "FXTAS Stage"
-        )
+      prob_correct = round(.data$prob_correct * 100, 1) |> paste0("%")
     ) |>
     select(
       all_of(
@@ -115,7 +119,7 @@ compute_prob_correct <- function(dataset, biomarker_levels, max_prob = 1) {
 #' @param x a `prob_correct` object (from [compute_prob_correct()])
 #' @param ... currently unused
 #'
-#' @return
+#' @inherit pander::pander return
 #' @export
 #'
 #' @examples

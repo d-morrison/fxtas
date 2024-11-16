@@ -1,7 +1,7 @@
 #' @title Extact PVDs from pickle file
 #' @inheritParams extract_results_from_pickle
 #' @inheritDotParams plot_positional_var
-#' @return
+#' @inherit plot_positional_var return
 #' @export
 #' @examples
 #' figs = extract_figs_from_pickle(

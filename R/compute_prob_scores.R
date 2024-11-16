@@ -6,7 +6,7 @@
 #' @param prob_dist a vector of probabilities of correctly classifying a biomarker level
 #' @inheritParams run_OSA
 #' @inheritDotParams compute_prob_dist
-#' @return
+#' @returns an [array]
 #' @export
 #'
 compute_prob_scores = function(

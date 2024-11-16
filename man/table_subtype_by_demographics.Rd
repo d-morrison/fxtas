@@ -4,12 +4,20 @@
 \alias{table_subtype_by_demographics}
 \title{Create table of demographics statistics by most-likely latent subtype}
 \usage{
-table_subtype_by_demographics(patient_data, subtype_and_stage_table, ...)
+table_subtype_by_demographics(
+  patient_data,
+  subtype_and_stage_table,
+  footnotes_as_letters = FALSE,
+  ...
+)
 }
 \arguments{
 \item{patient_data}{a \link{data.frame}}
 
 \item{subtype_and_stage_table}{a \link{data.frame}}
+
+\item{footnotes_as_letters}{\link{logical} whether to convert footnote
+symbols to letters (TRUE) instead of numbers (FALSE)}
 
 \item{...}{
   Arguments passed on to \code{\link[gtsummary:tbl_summary]{gtsummary::tbl_summary}}

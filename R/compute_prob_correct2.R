@@ -1,11 +1,11 @@
 #' Title
 #'
 #' @param dataset Should be just the control data?
-#' @param biomarkers
+#' @param biomarkers todo
 #' @param DataScores a list of possible scores
-#' @param max_prob
+#' @param max_prob [numeric] between 0 and 1 specifying the probability
 #'
-#' @return
+#' @returns a [numeric] [vector]
 #' @export
 #'
 compute_prob_correct2 = function(

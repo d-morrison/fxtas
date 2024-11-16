@@ -7,29 +7,30 @@
 #' @return a "PVD" object (extends [ggplot2::ggplot()])
 #' @export
 #'
-plot.PF = function(
+plot.PF <- function(
     PFs,
     size.y = 10,
-    color_label = "Pr(stage)")
-{
-  to_return =
+    color_label = "Pr(stage)") {
+  to_return <-
     PFs |>
     mutate(
       position = as.numeric(position)
     ) |>
     ggplot(
       aes(
-        x = position,
-        y = `event label`,
-        fill = proportion
-      )) +
+        x = .data$position,
+        y = .data$`event label`,
+        fill = .data$proportion
+      )
+    ) +
     ggplot2::geom_tile() +
     # scale_fill_identity() +
     ggplot2::scale_fill_gradient(
       low = "gray",
-      high = "red")+
+      high = "red"
+    ) +
     ggplot2::scale_y_discrete(limits = rev) +
-    ggplot2::xlab('Sequential order') +
+    ggplot2::xlab("Sequential order") +
     ggplot2::ylab(NULL) +
     ggplot2::theme_bw() +
     ggplot2::theme(
@@ -37,11 +38,11 @@ plot.PF = function(
       axis.text.y =
         ggtext::element_markdown(
           hjust = 0,
-          size = size.y)
+          size = size.y
+        )
     ) +
     ggplot2::labs(fill = color_label)
 
   to_return |>
     structure(class = c("PVD", class(to_return)))
 }
-

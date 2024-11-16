@@ -7,9 +7,15 @@
 clean_gender(data)
 }
 \arguments{
-\item{data}{}
+\item{data}{a \link{data.frame}}
+}
+\value{
+a modified version of \code{data}
 }
 \description{
 This function attempts to add the label "chromosomal sex",
 but lots of functions remove attributes, such as \code{\link[=droplevels]{droplevels()}}
+}
+\examples{
+test_data |> clean_gender()
 }

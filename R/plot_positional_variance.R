@@ -1,37 +1,36 @@
 #' Plot positional variance diagram
 #' @inheritParams format_results_list
-#' @param samples_sequence
-#' @param samples_f
-#' @param n_samples
-#' @param score_vals
-#' @param biomarker_labels
-#' @param ml_f_EM
-#' @param cval
-#' @param subtype_order
-#' @param biomarker_order
-#' @param title_font_size
-#' @param stage_font_size
-#' @param stage_label
-#' @param stage_rot
-#' @param stage_interval
-#' @param label_font_size
-#' @param label_rot
-#' @param cmap
-#' @param biomarker_colours
-#' @param figsize
-#' @param subtype_titles
-#' @param separate_subtypes
-#' @param save_path
-#' @param save_kwargs
-#' @param results
-#' @param biomarker_levels
+#' @param samples_sequence todo
+#' @param samples_f todo
+#' @param n_samples todo
+#' @param score_vals todo
+#' @param biomarker_labels todo
+#' @param ml_f_EM todo
+#' @param cval todo
+#' @param subtype_order todo
+#' @param biomarker_order todo
+#' @param title_font_size todo
+#' @param stage_font_size todo
+#' @param stage_label todo
+#' @param stage_rot todo
+#' @param stage_interval todo
+#' @param label_font_size todo
+#' @param label_rot todo
+#' @param cmap a [character]
+#' @param biomarker_colours a [character] vector of colors
+#' @param subtype_titles todo
+#' @param separate_subtypes todo
+#' @param save_path todo
+#' @param save_kwargs todo
+#' @param results todo
+#' @param biomarker_levels todo
 #' @param biomarker_groups biomarker groupings
-#' @param biomarker_events_table
-#' @param biomarker_event_names
-#' @param biomarker_plot_order
-#' @param synchronize_y_axes
+#' @param biomarker_events_table todo
+#' @param biomarker_event_names todo
+#' @param biomarker_plot_order todo
+#' @param synchronize_y_axes todo
 #' @inheritDotParams plot.PF
-#' @return
+#' @returns a `"PVD.list` (a [list] of `PVD` objects from [plot.PF()])
 #' @export
 #'
 plot_positional_var = function(
@@ -61,7 +60,6 @@ plot_positional_var = function(
     label_rot=0,
     cmap="original",
     biomarker_colours=NULL,
-    figsize=NULL,
     subtype_titles=NULL,
     separate_subtypes=FALSE,
     save_path=NULL,

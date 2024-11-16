@@ -1,6 +1,6 @@
 Package: fxtas
 Title: FXTAS
-Version: 0.0.0.9005
+Version: 0.0.0.9006
 Authors@R: 
     person("Douglas Ezra", "Morrison", , "demorrison@ucdavis.edu", role = c("cre", "aut"))
 Description: PKG_DESC.
@@ -10,6 +10,7 @@ BugReports: https://github.com/d-morrison/fxtas/issues
 Imports: 
     and,
     arsenal,
+    base,
     broman,
     cardx (>= 0.2.1.9012),
     cli,
@@ -26,6 +27,7 @@ Imports:
     ggtext,
     glue,
     golem (>= 0.3.4),
+    grDevices,
     gtsummary (>= 2.0.3.9003),
     here,
     labelled,
@@ -33,6 +35,7 @@ Imports:
     pander,
     plotly,
     purrr,
+    quarto,
     rcartocolor,
     RColorBrewer,
     readr,
@@ -42,17 +45,20 @@ Imports:
     shiny (>= 1.7.2),
     splitTools,
     ssdtools (>= 2.0.0),
+    stats,
     stringr,
     table1,
     tibble,
     tidyr,
     tidyselect,
+    utils,
     vdiffr,
     veccompare,
     viridis
 Suggests: 
     constructive,
     devtag (>= 0.0.0.9000),
+    doconv,
     knitr,
     rmarkdown,
     scales,
@@ -77,7 +83,7 @@ Config/reticulate/autoconfigure:
   )
 Config/build/copy-method: link
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
-Remotes:  
+Remotes: 
     bcgov/ssdtools,
     moodymudskipper/devtag,
     mponzini/gtsummary@dev,

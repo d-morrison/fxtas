@@ -5,7 +5,7 @@
 #' @param NA_codes numeric values that should be turned into to NAs
 #' @param extra_codes codes besides 777, 888, 999 to turn into NAs; has no effect if the `NA_codes` argument is changed from default by the user.
 #'
-#' @return
+#' @returns a [numeric] vector corresponding to `x`
 #' @export
 #'
 clean_numeric = function(
