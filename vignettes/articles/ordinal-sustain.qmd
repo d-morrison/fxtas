@@ -914,6 +914,7 @@ plot_compact_pvd_est2(
 
 ```{r}
 #| label: save-image
+#| eval: false
 fs::path_package("fxtas", "extdata") |> 
   fs::path("ordinal-sustain-results.rda") |> 
   save.image()
