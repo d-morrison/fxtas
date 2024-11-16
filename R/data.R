@@ -8,6 +8,7 @@
 #'  \item{col1}{col1name}
 #' }
 #' @source <url>
+#' @dev
 "gp34"
 
 #' Visit 1
@@ -20,6 +21,7 @@
 #'  \item{col1}{col1name}
 #' }
 #' @source <url>
+#' @dev
 "visit1"
 
 #' Test Data - Visit 1

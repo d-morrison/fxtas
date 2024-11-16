@@ -31,7 +31,7 @@ biomarker_varnames =
   pull("biomarker")
 
 biomarker_levels =
-trax_gp34_v1 |>
+test_data_v1 |>
  dplyr::select(all_of(biomarker_varnames)) |>
  lapply(F = levels)
 
@@ -40,7 +40,7 @@ biomarker_events_table =
     biomarker_levels,
     biomarker_groups = biomarker_groups)
 
-trax_gp34_v1 |> make_biomarkers_table(
+test_data_v1 |> make_biomarkers_table(
   biomarker_events_table = biomarker_events_table,
   biomarker_varnames = biomarker_varnames
   )
