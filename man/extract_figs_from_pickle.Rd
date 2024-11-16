@@ -27,13 +27,39 @@ extract_figs_from_pickle(
 \item{...}{
   Arguments passed on to \code{\link[=plot_positional_var]{plot_positional_var}}
   \describe{
+    \item{\code{samples_sequence}}{todo}
+    \item{\code{samples_f}}{todo}
+    \item{\code{n_samples}}{todo}
+    \item{\code{score_vals}}{todo}
+    \item{\code{biomarker_labels}}{todo}
+    \item{\code{ml_f_EM}}{todo}
+    \item{\code{cval}}{todo}
+    \item{\code{subtype_order}}{todo}
+    \item{\code{biomarker_order}}{todo}
+    \item{\code{title_font_size}}{todo}
+    \item{\code{stage_font_size}}{todo}
+    \item{\code{stage_label}}{todo}
+    \item{\code{stage_rot}}{todo}
+    \item{\code{stage_interval}}{todo}
+    \item{\code{label_font_size}}{todo}
+    \item{\code{label_rot}}{todo}
+    \item{\code{cmap}}{a \link{character}}
+    \item{\code{biomarker_colours}}{a \link{character} vector of colors}
+    \item{\code{subtype_titles}}{todo}
+    \item{\code{separate_subtypes}}{todo}
+    \item{\code{save_path}}{todo}
+    \item{\code{save_kwargs}}{todo}
+    \item{\code{results}}{todo}
+    \item{\code{biomarker_levels}}{todo}
     \item{\code{biomarker_groups}}{biomarker groupings}
-    \item{\code{results}}{pickle file contents}
-    \item{\code{biomarker_labels}}{biomarker labels}
-    \item{\code{biomarker_levels}}{biomarker levels}
-    \item{\code{biomarker_events_table}}{table of biomarker events (excluding base level)}
-    \item{\code{biomarker_event_names}}{vector of biomarker event names}
+    \item{\code{biomarker_events_table}}{todo}
+    \item{\code{biomarker_event_names}}{todo}
+    \item{\code{biomarker_plot_order}}{todo}
+    \item{\code{synchronize_y_axes}}{todo}
   }}
+}
+\value{
+a \verb{"PVD.list} (a \link{list} of \code{PVD} objects from \code{\link[=plot.PF]{plot.PF()}})
 }
 \description{
 Extact PVDs from pickle file

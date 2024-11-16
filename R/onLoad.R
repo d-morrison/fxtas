@@ -4,9 +4,9 @@ pySuStaIn = NULL
 #' @description
 #' based on https://rstudio.github.io/reticulate/articles/package.html#delay-loading-python-modules
 #'
-#' @param ...
+#' @param ... not used
 #'
-#' @return
+#' @returns [`NULL`], invisibly
 .onLoad <- function(...)
 {
   reticulate::use_virtualenv("r-pySuStaIn", required = FALSE)
@@ -18,4 +18,6 @@ pySuStaIn = NULL
   pySuStaIn <<- reticulate::import(
     module = "pySuStaIn",
     delay_load = TRUE)
+
+  invisible(NULL)
 }

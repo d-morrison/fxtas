@@ -9,6 +9,9 @@ make_demographics_table(data)
 \arguments{
 \item{data}{}
 }
+\value{
+a \link[flextable:flextable]{flextable::flextable}
+}
 \description{
 Make demographics table
 }

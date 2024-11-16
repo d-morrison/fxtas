@@ -7,8 +7,11 @@
 compute_score_levels(dataset)
 }
 \arguments{
-\item{dataset}{}
+\item{dataset}{a \link{data.frame}}
+}
+\value{
+a \link{character} \link{vector} of levels
 }
 \description{
-Title
+not sure if we need this anymore
 }

@@ -1,12 +1,12 @@
 #' Plot change in Stage ranking
 #'
-#' @param figs
-#' @param alpha_nochange
-#' @param facet_labels
-#' @param y_title_size
-#' @param text_size
-#' @param y_text_size
-#' @param x_text_size
+#' @param figs a [list] of todo
+#' @param alpha_nochange todo
+#' @param facet_labels todo
+#' @param y_title_size todo
+#' @param text_size todo
+#' @param y_text_size todo
+#' @param x_text_size todo
 #'
 #' @export
 

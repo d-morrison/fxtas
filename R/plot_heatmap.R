@@ -3,7 +3,7 @@
 #' @param heatmap_data tibble with columns "position", "name", and "value"
 #' @param label Label for color scale
 #'
-#' @return
+#' @returns a [ggplot2::ggplot]
 #' @export
 #'
 plot_heatmap = function(heatmap_data, label = "Pr(marker in this position)")

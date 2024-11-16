@@ -3,12 +3,13 @@
 #' This function attempts to add the label "chromosomal sex",
 #' but lots of functions remove attributes, such as [droplevels()]
 #'
-#' @param data
+#' @param data a [data.frame]
 #'
-#' @return
+#' @returns a modified version of `data`
 #' @export
 #'
 #' @examples
+#' test_data |> clean_gender()
 clean_gender = function(data)
 {
   data |>

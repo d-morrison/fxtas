@@ -6,7 +6,7 @@
 #' @param by number of seeds per file
 #' @param file_stem stem of test stat .rds files
 #'
-#' @return
+#' @returns a [numeric] vector
 #' @export
 #'
 #' @examples

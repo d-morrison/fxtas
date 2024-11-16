@@ -30,13 +30,13 @@ substance use disorders,
 anxiety disorders, and 
 somatoform disorders;
 there were no participants with psychotic disorders in our data
-(more details in Supplementary Materials, @sec-scid-composites).
+(more details in Supplementary Materials, @sec-SCID-composites).
 We also created composite variables for 
 MRI variables for cerebral and cerebellar abnormalities;
 we did not combine the variables representing 
 corpus callosum MRI abnormalities,
 since these variables were created using Likert scales that differed from each other
-(details in Supplementary Materials, @sec-mri-composites).
+(details in Supplementary Materials, @sec-MRI-composites).
 
 Supplementary Tables [-@supptbl-tremors] - [-@supptbl-autoimmune] 
 summarize each of the `r outcomes_name`s that we included in the analysis models, 

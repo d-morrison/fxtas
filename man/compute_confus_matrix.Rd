@@ -10,7 +10,12 @@ compute_confus_matrix(
 )
 }
 \arguments{
-\item{biomarker_event_order}{}
+\item{samples_sequence}{todo}
+
+\item{biomarker_event_order}{todo}
+}
+\value{
+a \link{tibble:tbl_df}
 }
 \description{
 compute \code{confus_matrix} as in python version

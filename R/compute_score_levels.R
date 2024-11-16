@@ -1,8 +1,8 @@
 #' Title
+#' @description not sure if we need this anymore
+#' @param dataset a [data.frame]
 #'
-#' @param dataset
-#'
-#' @return
+#' @returns a [character] [vector] of levels
 #' @export
 #'
 compute_score_levels = function(dataset)

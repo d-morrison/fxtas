@@ -11,7 +11,10 @@ compile_biomarker_groups_table(
 )
 }
 \arguments{
-\item{biomarker_group_list}{}
+\item{biomarker_group_list}{todo}
+}
+\value{
+a \link[tibble:tbl_df-class]{tibble::tbl_df}
 }
 \description{
 Compile biomarker groups table

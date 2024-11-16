@@ -5,17 +5,24 @@
 \title{Title}
 \usage{
 missing_pattern_by_ID(
-  data = gp34,
+  data,
   variable = "ApoE",
   missing_values = c(NA, "Missing (empty in RedCap)")
 )
 }
 \arguments{
-\item{missing_label}{}
+\item{data}{todo}
+
+\item{variable}{todo}
+
+\item{missing_label}{todo}
+}
+\value{
+todo
 }
 \description{
 Title
 }
 \examples{
-missing_patterns = missing_pattern_by_ID()
+missing_patterns = missing_pattern_by_ID(data = test_data_v1)
 }

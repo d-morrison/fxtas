@@ -7,7 +7,10 @@
 format_likelihoods(likelihoods)
 }
 \arguments{
-\item{likelihoods}{}
+\item{likelihoods}{todo}
+}
+\value{
+a \link[tibble:tbl_df-class]{tibble::tbl_df}
 }
 \description{
 Title

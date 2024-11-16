@@ -29,10 +29,9 @@ plot_compact_pvd(
 # lineplot of event sequences
 pvd_lineplot(
   figs = list(
-    fig_under100_males,
-    fig_under100_females
+    "CGG &lt; 100, Males" = fig_under100_males,
+    "CGG &lt; 100, Females" = fig_under100_females
   ),
-  facet_label = c("CGG &lt; 100, Males", "CGG &lt; 100, Females"),
   y_text_size = 11
 )
 ```
@@ -40,6 +39,7 @@ pvd_lineplot(
 **Event sequences stratified by sex, for CGG repeats <100.**
 **(a)** `r glue::glue("{compact_fig_caption}")`
 **(b)** Differences in event sequences between sexes, for CGG repeats <100.
+
 :::
 
 {{< pagebreak >}}

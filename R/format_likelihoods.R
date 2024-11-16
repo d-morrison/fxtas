@@ -1,8 +1,8 @@
 #' Title
 #'
-#' @param likelihoods
+#' @param likelihoods todo
 #'
-#' @return
+#' @returns a [tibble::tbl_df]
 #' @export
 #'
 

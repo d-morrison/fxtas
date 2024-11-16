@@ -1,5 +1,10 @@
 
-In order to use the Ordinal SuStaIn modeling algorithm, we must specify how many latent subtypes to include in the model. There are several metrics for determining the optimal number of subtypes for a given data set, including the likelihood of the data for the fitted model while varying the number of subtypes used to fit the model
+In order to use the Ordinal SuStaIn modeling algorithm, 
+we must specify how many latent subtypes to include in the model. 
+There are several metrics for determining 
+the optimal number of subtypes for a given data set, 
+including the likelihood of the data for the fitted model 
+while varying the number of subtypes used to fit the model
 and the Cross-Validation Information Criterion (CVIC)
 described in Young *et al.* [-@young2018uncovering].
 We also evaluated the consistency of our cross-validation procedure
@@ -73,7 +78,7 @@ non-parametric regression curve.
 
 :::
 
-{{< include _sec_cvic_graphs.qmd >}}
+{{< include _sec_CVIC_graphs.qmd >}}
 
 {{< include _sec_subtypes_linegraphs.qmd >}}
 
