@@ -33,6 +33,7 @@ Imports:
     pander,
     plotly,
     purrr,
+    quarto,
     rcartocolor,
     RColorBrewer,
     readr,
