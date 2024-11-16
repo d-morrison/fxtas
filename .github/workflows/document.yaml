@@ -14,9 +14,6 @@ jobs:
       - uses: actions/checkout@HEAD
 
       - uses: r-lib/actions/setup-r@HEAD
-        with:
-          use-public-rspm: true
-          r-version: '4.4.1'
 
       - name: Install dependencies
         uses: r-lib/actions/setup-r-dependencies@HEAD
