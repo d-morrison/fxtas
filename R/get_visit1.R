@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-#' gp34 |> get_visit1()
+#' test_data |> get_visit1()
 get_visit1 = function(dataset)
 {
   dataset |>

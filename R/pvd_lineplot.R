@@ -27,10 +27,15 @@ pvd_lineplot <- function(figs,
     # update list names
     names(figs) <- facet_labels
     # extract data from list of pvd fig object
-    dataset <- dplyr::bind_rows(lapply(figs,
-                                       function(x)
-                                         x$data),
-                                .id = "facet") |>
+    dataset <- dplyr::bind_rows(
+      lapply(
+        figs,
+        function(x) {
+          x$data
+        }
+      ),
+      .id = "facet"
+    ) |>
       mutate(facet = factor(facet, levels = names(figs)))
   }
 
@@ -42,8 +47,9 @@ pvd_lineplot <- function(figs,
         as.integer(),
       # right justify left facet, left justify right facet
       hjust = ifelse(facet == facet_labels[1],
-                     1,
-                     0),
+        1,
+        0
+      ),
       # made FXTAS Stage label bold
       `event label` = ifelse(
         biomarker == "FXTAS Stage (0-5)*",
@@ -51,15 +57,21 @@ pvd_lineplot <- function(figs,
         as.character(`event label`)
       )
     ) |>
-    dplyr::select(`event name`,
-                  facet,
-                  Order,
-                  biomarker,
-                  group_color,
-                  `event label`,
-                  hjust) |>
+    dplyr::select(
+      all_of(
+        c(
+          "event name",
+          "facet",
+          "Order",
+          "biomarker",
+          "group_color",
+          "event label",
+          "hjust"
+        )
+      )
+    ) |>
     unique() |>
-    arrange(`event name`, facet) |>
+    arrange(.data$`event name`, .data$facet) |>
     mutate(
       # logical: did sequence change
       Changed = n_distinct(Order) != 1,
@@ -69,10 +81,12 @@ pvd_lineplot <- function(figs,
     ) |>
     mutate(
       linesize = ifelse(biomarker == "FXTAS Stage (0-5)*",
-                        1.5,
-                        1),
-      facet_order = case_when(facet == facet_labels[1] ~ 1,
-                              facet == facet_labels[2] ~ 1.15
+        1.5,
+        1
+      ),
+      facet_order = case_when(
+        facet == facet_labels[1] ~ 1,
+        facet == facet_labels[2] ~ 1.15
       ),
       # colors of choice
       Change_color = dplyr::case_when(
@@ -102,12 +116,18 @@ pvd_lineplot <- function(figs,
   )
 
   # plot
-  ggplot(plot_dataset,
-         aes(x = facet_order,
-             y = Order |> factor())) +
+  ggplot(
+    plot_dataset,
+    aes(
+      x = facet_order,
+      y = Order |> factor()
+    )
+  ) +
     ggtext::geom_richtext(
-      aes(label = `event label`,
-          hjust = hjust),
+      aes(
+        label = `event label`,
+        hjust = hjust
+      ),
       fill = NA,
       label.color = NA,
       size = text_size
@@ -123,8 +143,8 @@ pvd_lineplot <- function(figs,
       breaks = c(1, 1.15),
       labels = facet_x_labels
     ) +
-    scale_color_manual(values = c("grey25", "#F8766D", "grey70","#00BFC4")) +
-    scale_y_discrete(limits = rev, breaks=NULL) +
+    scale_color_manual(values = c("grey25", "#F8766D", "grey70", "#00BFC4")) +
+    scale_y_discrete(limits = rev, breaks = NULL) +
     labs(y = y_lab) +
     theme_classic() +
     theme(
@@ -132,8 +152,9 @@ pvd_lineplot <- function(figs,
       axis.title.x = ggplot2::element_blank(),
       axis.title.y = ggtext::element_markdown(size = y_title_size),
       axis.text.y = ggtext::element_markdown(size = y_text_size),
-      axis.text.x = ggtext::element_markdown(size = x_text_size,
-                                             hjust = plot_dataset[["hjust"]])
+      axis.text.x = ggtext::element_markdown(
+        size = x_text_size,
+        hjust = plot_dataset[["hjust"]]
+      )
     )
-
 }

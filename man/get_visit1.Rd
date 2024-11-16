@@ -21,5 +21,5 @@ a \link[tibble:tbl_df-class]{tibble::tbl_df}
 Get each participant's first visit in dataset
 }
 \examples{
-gp34 |> get_visit1()
+test_data |> get_visit1()
 }

@@ -10,6 +10,7 @@ BugReports: https://github.com/d-morrison/fxtas/issues
 Imports: 
     and,
     arsenal,
+    base,
     broman,
     cardx (>= 0.2.1.9012),
     cli,
@@ -44,11 +45,13 @@ Imports:
     shiny (>= 1.7.2),
     splitTools,
     ssdtools (>= 2.0.0),
+    stats,
     stringr,
     table1,
     tibble,
     tidyr,
     tidyselect,
+    utils,
     vdiffr,
     veccompare,
     viridis
