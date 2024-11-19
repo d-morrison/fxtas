@@ -1,0 +1,10 @@
+We also fitted the model on the full dataset (not stratified by sex or CGG)
+for 2 - `r N_S_max` latent subtypes,
+each with their own ordering.
+We determined the optimal number of latent subtypes for this dataset using
+the Cross-Validation Information Criterion (CVIC)
+and the Out-Of-Fold Log-Likelihood (OOFLL) criterion [@young2018uncovering];
+both criteria quantify how well models containing a given number of subtypes
+extend to new data not used in training.
+We performed `r N_CV_folds`-fold cross-validation on the unstratified data
+and calculated the CVIC and OOFLL for 1-`r N_S_max` latent subtypes.

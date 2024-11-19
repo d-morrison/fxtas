@@ -1,0 +1,16 @@
+We visualized the results of Ordinal SuStaIn analysis
+using "positional variance diagrams" (PVDs).
+PVDs are heatmaps with `r events_name` on the y-axis
+and sequence positions of events on the x-axis.
+Each event is estimated to occur at some point in continuing time
+*relative to* other events in sequence.
+It should be noted that the exact onset time of each event
+cannot be determined by the method we used for this analysis.
+The PVD's color scale indicates the Bayesian posterior probability that
+a particular event (y-axis)
+appears at a particular position along the progression sequence (x-axis).
+The different colors (red, blue, purple, green, magenta)
+indicate the ordinal levels of symptom progression.
+Color intensity presents the likelihood of sequence position.
+That is, a brighter color indicates a more probable sequence position,
+and a paler color indicates a less probable position.
