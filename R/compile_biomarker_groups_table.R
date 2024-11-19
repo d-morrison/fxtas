@@ -1,5 +1,5 @@
 #' Compile biomarker groups table
-#'
+#' @param dataset passed to [compile_biomarker_group_list()]
 #' @param biomarker_group_list todo
 #'
 #' @returns a [tibble::tbl_df]
@@ -13,8 +13,9 @@
 #' biomarker_groups_list |> compile_biomarker_groups_table()
 #'
 compile_biomarker_groups_table = function(
+    dataset,
     biomarker_group_list =
-      compile_biomarker_group_list(...),
+      compile_biomarker_group_list(dataset = dataset, ...),
     colors =
       biomarker_group_list |>
       choose_biomarker_group_colors(),

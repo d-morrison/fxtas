@@ -165,7 +165,9 @@ patient_data = v1_usable_cases
 
 ```{r}
 #| label: "biomarker-events"
-biomarker_groups = compile_biomarker_groups_table()
+biomarker_groups = compile_biomarker_groups_table(
+  dataset = v1_usable
+)
 
 biomarker_varnames = 
   biomarker_groups |> 

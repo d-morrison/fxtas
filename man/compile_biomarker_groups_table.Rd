@@ -5,12 +5,15 @@
 \title{Compile biomarker groups table}
 \usage{
 compile_biomarker_groups_table(
-  biomarker_group_list = compile_biomarker_group_list(...),
+  dataset,
+  biomarker_group_list = compile_biomarker_group_list(dataset = dataset, ...),
   colors = choose_biomarker_group_colors(biomarker_group_list),
   ...
 )
 }
 \arguments{
+\item{dataset}{passed to \code{\link[=compile_biomarker_group_list]{compile_biomarker_group_list()}}}
+
 \item{biomarker_group_list}{todo}
 }
 \value{
