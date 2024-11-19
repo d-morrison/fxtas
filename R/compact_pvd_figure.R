@@ -13,7 +13,7 @@ compact_pvd_figure <- function(
   tile_width <- 1
 
   nlevels <- plot_dataset |>
-    pull(level) |>
+    pull("level") |>
     unique() |>
     length()
 

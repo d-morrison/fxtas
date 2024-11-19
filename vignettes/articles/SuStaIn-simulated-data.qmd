@@ -10,6 +10,7 @@ authors:
     address: One Shields Ave, Davis, CA 95616
 format:
   html:
+    echo: true
     toc: true
     number-sections: true
     html-math-method: mathjax
@@ -22,25 +23,19 @@ vignette: >
 
 ```{r}
 #| label: setup
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  echo = FALSE,
-  comment = "#>"
-)
 library(fxtas)
 library(tidyverse)
 library(reticulate)
 reticulate::use_condaenv("fxtas39", required = TRUE)
+use_rds = FALSE
 ```
-
 
 # Import data
 
 ```{r}
 #| label: import-data
-file_path = fs::path_package("extdata/synthetic_data.xlsx", package = "fxtas")
-library(readxl)
-df = file_path |> readxl::read_excel()
+
+df = sim_data
 
 SuStaInLabels = biomarkers = c('Biomarker 1', 'Biomarker 2', 'Biomarker 3',
                'Biomarker 4', 'Biomarker 5')
@@ -193,7 +188,8 @@ N_startpoints = 10L
 N_S_max = 3L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
-output_folder = "output/SuStaIn-simulated-data" |> fs::dir_create()
+output_folder = 
+  fs::path_package("extdata/sim_data", package = "fxtas")
 print(output_folder)
 ```
 
@@ -264,7 +260,8 @@ osa_output = run_and_save_OSA(
   N_startpoints = N_startpoints,
   N_iterations_MCMC = N_iterations_MCMC,
   plot = TRUE,
-  N_S_max = N_S_max
+  N_S_max = N_S_max,
+  rerun = TRUE
 )
 
 ```
@@ -368,6 +365,7 @@ for fig in figs:
 #| fig-height: 3
 figs = extract_figs_from_pickle(
   output_folder = output_folder,
+  use_rds = use_rds,
   n_s = 1)
   
 figs = list(figs)
@@ -383,15 +381,42 @@ plot_compact_pvd(
 ```
 
 ```{r}
+#| label: fig-plot-compact-pvd-n2
+#| fig-cap: "Compact PVD: 2 subgroups"
+#| fig-height: 3
+
+figs = extract_figs_from_pickle(
+  output_folder = output_folder,
+  use_rds = use_rds,
+  n_s = 2)
+  
+plot_compact_pvd(
+  figs = figs,
+  tile_height = 1,
+  y_text_size = 8,
+  biomarker_order = biomarkers,
+  scale_colors = c("red", "magenta", "blue")
+)
+```
+
+```{r}
 #| label: fig-plot-compact-pvd-n3
 #| fig-cap: "Compact PVD: 3 subgroups"
 #| fig-height: 3
-figs = extract_figs_from_pickle(
+
+results3 <- extract_results_from_pickle(
   output_folder = output_folder,
+  use_rds = use_rds,
+  n_s = 3)
+
+
+figs3 = extract_figs_from_pickle(
+  output_folder = output_folder,
+  use_rds = use_rds,
   n_s = 3)
 
 plot_compact_pvd(
-  figs = figs,
+  figs = figs3,
   tile_height = 1,
   facet_label_prefix = NULL,
   y_text_size = 8,

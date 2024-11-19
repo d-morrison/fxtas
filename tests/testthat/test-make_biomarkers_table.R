@@ -1,19 +1,23 @@
 test_that("`test_biomarkers_table()` produces consistent results", {
 
-  full_data = trax_gp34_v1
-  n_missing_CGG = full_data$CGG |> is.na() |> sum()
-  n_above_200 = sum(full_data$CGG >= 200, na.rm = TRUE)
-  v1_usable = full_data |> filter(CGG < 200) |>
-    mutate(`FX3*` = `FX3*` |> forcats::fct_drop())
+  biomarker_groups_list = list(
+    "group 1" = c("Biomarker 1", "Biomarker 2"),
+    "group 2" = c("Biomarker 3", "Biomarker 4"),
+    "group 3" = "Biomarker 5"
+  )
 
-  biomarker_groups = compile_biomarker_groups_table()
+  biomarker_groups =
+    biomarker_groups_list |>
+    compile_biomarker_groups_table()
 
-  biomarker_varnames =
+  SuStaInLabels = biomarkers = biomarker_varnames =
     biomarker_groups |>
     pull("biomarker")
 
+  df = sim_data
+
   biomarker_levels =
-    v1_usable |>
+    df |>
     dplyr::select(all_of(biomarker_varnames)) |>
     lapply(F = levels)
 
@@ -23,10 +27,11 @@ test_that("`test_biomarkers_table()` produces consistent results", {
       biomarker_groups = biomarker_groups)
 
   biomarkers_table =
-    v1_usable |>
+    df |>
     make_biomarkers_table(
       biomarker_varnames = biomarker_varnames,
-      biomarker_events_table = biomarker_events_table
+      biomarker_events_table = biomarker_events_table,
+      stratifying_var_names = "Sex"
     )
   biomarkers_table |>
   ssdtools:::expect_snapshot_data(name = "biomarkers_table")

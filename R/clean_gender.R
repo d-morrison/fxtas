@@ -13,5 +13,7 @@
 clean_gender = function(data)
 {
   data |>
-    mutate(Gender = Gender |> labelled::set_label_attribute("Sex"))
+    mutate(
+      Gender = .data$Gender |> labelled::set_label_attribute("Sex"),
+      "Male" = .data$Gender == "Male")
 }
