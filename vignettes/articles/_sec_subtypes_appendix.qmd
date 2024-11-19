@@ -35,50 +35,11 @@ tend to be at a later estimated stage of disease progression.
 The upwards trend of progression stage with age
 indicates that the estimated models are plausible.
 
-::: {#suppfig-mcmc-loglik}
-
-```{r}
-#| eval: !expr fit_models
-
-lliks = results_v1 |>
-  sapply(F = function(x) x$samples_likelihood)
-
-lliks |>
-  graph_likelihoods_v2(alpha = 0.5) |>
-  suppressWarnings()
-
-```
-
-**log-likelihoods of MCMC samples, by number of subtypes**
-
-:::
-
-{{< pagebreak >}}
-
-::: {#suppfig-stage-by-age}
-
-```{r}
-#| fig-width: 6
-stages =
-  results_cv_max$subtype_and_stage_table |>
-  mutate(
-    age = patient_data$`Age at visit`,
-    id = patient_data$`FXS ID`
-  )
-
-library(ggplot2)
-stages |>
-  graph_stage_by_age()
-
-```
-
-**Estimated progression stage by age and latent subtype.**
-The blue line is a Locally Estimated Scatterplot Smoothing (LOESS)
-non-parametric regression curve.
-
-:::
+{{< include _fig_loglik_mcmc.qmd >}}
 
 {{< include _sec_CVIC_graphs.qmd >}}
+
+{{< include _fig_stage_by_age_latent.qmd >}}
 
 {{< include _sec_subtypes_linegraphs.qmd >}}
 

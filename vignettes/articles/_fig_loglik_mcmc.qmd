@@ -1,0 +1,17 @@
+::: {#suppfig-mcmc-loglik}
+
+```{r}
+#| eval: !expr fit_models
+
+lliks = results_v1 |>
+  sapply(F = function(x) x$samples_likelihood)
+
+lliks |>
+  graph_likelihoods_v2(alpha = 0.5) |>
+  suppressWarnings()
+
+```
+
+**log-likelihoods of MCMC samples, by number of subtypes**
+
+:::
