@@ -16,7 +16,8 @@ across cross-validation folds
 from the MCMC samples for the full dataset 
 (not stratified by sex or CGG repeats).
 Adding up to 6 clusters substantially improves the log-likelihood.
-[Supplementary Figure @fig-cvic-2] shows the distribution of the OOFLL statistic
+[Supplementary Figure @fig-cvic-2] shows 
+the distribution of the OOFLL statistic
 as a function of number of latent subgroups.
 @suppfig-stage-by-age shows estimated disease progression stage
 (that is, number of events experienced)
