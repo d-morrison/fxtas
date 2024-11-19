@@ -2,7 +2,7 @@
 
 ## Manuscript
 
-* Incorporated coauthors' feedback from 2024/09/03 draft
+* Incorporated coauthors' feedback up to 2024/11/18 draft
 * Added additional line-graph comparison subfigures
 for latent subtype clustering analysis
 * Added more interpretation of subtype analysis results
