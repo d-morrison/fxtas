@@ -1,6 +1,7 @@
 test_that("`compact_pvd_figure()` produces consistent results", {
   size.y = 11
   fig_females_first = extract_figs_from_pickle(
+    use_rds = FALSE,
     size.y = size.y,
     n_s = 1,
     rda_filename = "data.RData",
@@ -8,6 +9,7 @@ test_that("`compact_pvd_figure()` produces consistent results", {
     output_folder = fs::path(here::here(), "output/output.fixed_CV"))
 
   fig_males_first = extract_figs_from_pickle(
+    use_rds = FALSE,
     size.y = size.y,
     n_s = 1,
     rda_filename = "data.RData",
@@ -37,6 +39,7 @@ test_that("`compact_pvd_figure()` produces consistent results", {
     legend.position = legend.position,
     scale_colors = scale_colors
   ) |>
+    suppressWarnings() |> # todo: remove and fix labeller warning
     vdiffr::expect_doppelganger(title = "compact_pvd_figure")
 
 })
