@@ -19,7 +19,7 @@ for latent subtype clustering analysis
 
 ## Data processing
 
-* added columns to preprocessed data:
+* added columns to pre-processed data:
    - `Male`
    - `CGG 100-199`
    - `CGG 55-99`
