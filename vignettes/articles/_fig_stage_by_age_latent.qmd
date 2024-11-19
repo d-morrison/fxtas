@@ -1,0 +1,23 @@
+
+::: {#suppfig-stage-by-age}
+
+```{r}
+#| fig-width: 6
+stages =
+  results_cv_max$subtype_and_stage_table |>
+  mutate(
+    age = patient_data$`Age at visit`,
+    id = patient_data$`FXS ID`
+  )
+
+library(ggplot2)
+stages |>
+  graph_stage_by_age()
+
+```
+
+**Estimated progression stage by age and latent subtype.**
+The blue line is a Locally Estimated Scatterplot Smoothing (LOESS)
+non-parametric regression curve.
+
+:::
