@@ -194,9 +194,7 @@ nlevs =
 [Target journal: 
 [Brain (Original Articles)](https://academic.oup.com/brain/pages/general_instructions).
 Word limit for main text: 6000.
-Figure + table limit: 8.]{.mark}
-
-{{< pagebreak >}}
+Figure + table limit: 8.]{.mark}{{< pagebreak >}}
 
 # Abstract {.unnumbered}
 
@@ -641,6 +639,7 @@ and Subtype 4 was biased towards females (60% of males)
 and lower CGG repeat (82.7 ± 17.3). 
 
 ```{r}
+#| label: get-n-events
 n_events = nrow(biomarker_events_table)
 ```
 
