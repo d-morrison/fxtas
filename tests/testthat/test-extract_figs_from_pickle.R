@@ -1,6 +1,6 @@
 test_that("`extract_figs_from_pickle()` produces stable results", {
   here::here() |>
-    fs::path("output/output.fixed_CV") |>
+    fs::path("output/SuStaIn-simulated-data/") |>
     extract_figs_from_pickle(output_folder = _) |>
     ggplot2::ggsave(
       filename = tempfile(),

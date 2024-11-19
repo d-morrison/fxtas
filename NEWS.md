@@ -19,6 +19,10 @@ for latent subtype clustering analysis
 
 ## Data processing
 
+* added columns to preprocessed data:
+   - `Male`
+   - `CGG 100-199`
+   - `CGG 55-99`
 * substituted ≤ instead of <= in dichotomized CANTAB variable value labels
 * renamed SCID composite vars without capitalization (on Dr. Bourgeois's recommendation)
 * added "label" attribute to `FX3*`
