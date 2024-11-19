@@ -10,6 +10,7 @@ authors:
     address: One Shields Ave, Davis, CA 95616
 format:
   html:
+    echo: true
     toc: true
     number-sections: true
     html-math-method: mathjax
@@ -22,11 +23,6 @@ vignette: >
 
 ```{r}
 #| label: setup
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  echo = FALSE,
-  comment = "#>"
-)
 library(fxtas)
 library(tidyverse)
 library(reticulate)
@@ -385,12 +381,18 @@ plot_compact_pvd(
 #| label: fig-plot-compact-pvd-n3
 #| fig-cap: "Compact PVD: 3 subgroups"
 #| fig-height: 3
-figs = extract_figs_from_pickle(
+
+results3 <- extract_results_from_pickle(
+  output_folder = output_folder,
+  n_s = 3)
+
+
+figs3 = extract_figs_from_pickle(
   output_folder = output_folder,
   n_s = 3)
 
 plot_compact_pvd(
-  figs = figs,
+  figs = figs3,
   tile_height = 1,
   facet_label_prefix = NULL,
   y_text_size = 8,
