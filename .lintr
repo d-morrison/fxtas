@@ -1,4 +1,5 @@
 linters: lintr::linters_with_defaults( # see vignette("lintr")
-   assignment_linter = NULL
+   assignment_linter = NULL,
+   return_linter = NULL
    )
 encoding: "UTF-8"
