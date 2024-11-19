@@ -9,7 +9,7 @@
 #' @export
 #' @examples
 #' patient_data = sim_data
-#' table = test_subtype_and_stage_table
+#' table = sim_subtype_and_stage_table
 #' table_subtype_by_demographics(patient_data, table,
 #'   demographic_vars = "Sex")
 #' @inheritDotParams gtsummary::tbl_summary
@@ -61,7 +61,7 @@ table_subtype_by_demographics = function(
     gtsummary::add_p(
       pvalue_fun = function(x) gtsummary::style_number(x, digits = 3),
       test = list(CGG = "oneway.test"),
-      test.args = c(`Primary Race/Ethnicity`) ~ list(simulate.p.value = TRUE)
+      # test.args = c(`Primary Race/Ethnicity`) ~ list(simulate.p.value = TRUE)
     ) |>
     gtsummary::add_stat_label(location = "row") |>
     gtsummary::add_overall() |>

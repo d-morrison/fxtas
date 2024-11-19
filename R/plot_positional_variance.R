@@ -176,13 +176,14 @@ plot_positional_var = function(
       title_i = subtype_titles[i]
     } else
     {
-      title_i = get_title_i(
-        samples_f,
-        subtype_order,
-        n_samples,
-        cval,
-        i
+      title_i = get_title_i_2(
+        subtype_and_stage_table =
+          results$subtype_and_stage_table,
+          cval = cval,
+          i = i
       )
+
+
     }
 
     # heatmap_table =

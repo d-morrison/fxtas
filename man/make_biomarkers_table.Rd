@@ -7,15 +7,18 @@
 make_biomarkers_table(
   data,
   biomarker_varnames = pull(compile_biomarker_groups_table(), "biomarker"),
-  biomarker_events_table
+  biomarker_events_table,
+  stratifying_var_names = "Gender"
 )
 }
 \arguments{
-\item{data}{a \code{\link[=data.frame]{data.frame()}} containing the columns specified by \code{biomarker_varnames} as well as \code{"Gender"}}
+\item{data}{a \code{\link[=data.frame]{data.frame()}} containing the columns specified by \code{biomarker_varnames} as well as \code{stratifying_var_names}}
 
 \item{biomarker_varnames}{a \link{character} vector matching a subset of the column names in \code{data}}
 
 \item{biomarker_events_table}{\link{data.frame} from \code{\link[=construct_biomarker_events_table]{construct_biomarker_events_table()}}}
+
+\item{stratifying_var_names}{a \link{character} vector specifying variables to stratify by}
 }
 \value{
 a \code{\link[flextable:flextable]{flextable::flextable()}}

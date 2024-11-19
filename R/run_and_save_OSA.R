@@ -1,4 +1,5 @@
-#' @title Run the Ordinal SuStaIn algorithm (OSA) or load results from presaved .rds file if available
+#' @title Run the Ordinal SuStaIn algorithm (OSA)
+#' or load results from presaved .rds file if available
 #' @param rerun whether to force a rerun of the python code
 #' @inheritParams run_OSA
 #' @inheritDotParams run_OSA
@@ -6,7 +7,7 @@
 #' @returns a [list()]
 #' @export
 #'
-run_and_save_OSA = function(
+run_and_save_OSA <- function(
     dataset_name,
     output_folder,
     verbose = TRUE,
@@ -19,9 +20,16 @@ run_and_save_OSA = function(
   rds_filebase = glue::glue("{dataset_name}_1-{N_S_max}")
   rds_path = build_rds_path(rds_filebase, output_folder)
 
-  if(file.exists(rds_path) && !rerun)
+  if (file.exists(rds_path) && !rerun)
   {
-    if(verbose) cli::cli_alert_info("Found RDS file for {rds_filebase}; loading...")
+    if (verbose)
+      {
+      cli::cli_alert_info(
+        c(
+          "Found RDS file for {rds_filebase} in {output_folder};",
+          "loading..."
+          ))
+    }
     osa_output = readr::read_rds(rds_path)
     testthat::expect_equal(dim(osa_output$samples_sequence)[1], N_S_max)
   } else
