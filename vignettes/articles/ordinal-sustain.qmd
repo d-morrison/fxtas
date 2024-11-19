@@ -52,10 +52,12 @@ fit_models <- TRUE
 run_cv <- TRUE
 
 rerun  <- TRUE
-rerun <- FALSE
+# rerun <- FALSE
 
+use_rds <- TRUE
+use_rds <- FALSE
 plot_python <- TRUE
-fig_size = c(20, 10)
+fig_size <- c(20, 10)
 
 pvd_height = 10
 pvd_width = 8
@@ -314,66 +316,20 @@ sustain_output = run_and_save_OSA(
 
 ```
 
-```{r}
-#| message: false
-#| label: model-males-v1
-#| include: false
-#| eval: !expr fit_models
-
-sustain_output_males = run_and_save_OSA(
-  patient_data = patient_data |> filter(Gender == "Male"),
-  prob_correct = prob_correct,
-  biomarker_levels = biomarker_levels,
-  SuStaInLabels = biomarker_varnames,
-  N_startpoints = N_startpoints,
-  N_S_max = N_S_max_stratified,
-  N_iterations_MCMC = N_iterations_MCMC,
-  output_folder = output_folder,
-  dataset_name = "males",
-  use_parallel_startpoints = use_parallel_startpoints,
-  seed = 1,
-  plot = plot_python,
-  rerun = rerun,
-  fig_size = fig_size)
-
-```
-
-
-```{r}
-#| message: false
-#| label: model-females
-#| include: false
-#| eval: !expr fit_models
-
-sustain_output_females = run_and_save_OSA(
-  biomarker_levels = biomarker_levels, 
-  prob_correct = prob_correct, 
-  patient_data = patient_data |> filter(Gender == "Female"),
-  
-  SuStaInLabels = biomarker_varnames,
-  N_startpoints = N_startpoints,
-  N_S_max = N_S_max_stratified, 
-  N_iterations_MCMC = N_iterations_MCMC, 
-  output_folder = output_folder, 
-  dataset_name = "females", 
-  use_parallel_startpoints = use_parallel_startpoints,
-  seed = 1,
-  plot = plot_python,
-  rerun = rerun,
-  fig_size = fig_size)
-
-```
+{{< include _sec_run_stratified_models.qmd >}}
 
 ```{r}
 #| label: extract-figs
 
 results_v1 = extract_results_from_pickles(
+  use_rds = use_rds,
   n_s = 1:N_S_max,
   rda_filename = "data.RData",
   dataset_name = "sample_data",
   output_folder = "output/output.fixed_CV")
 
 fig_females_first = extract_figs_from_pickle(
+  use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   rda_filename = "data.RData",
@@ -381,6 +337,7 @@ fig_females_first = extract_figs_from_pickle(
   output_folder = "output/output.fixed_CV")
 
 fig_males_first = extract_figs_from_pickle(
+  use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   rda_filename = "data.RData",
@@ -388,6 +345,7 @@ fig_males_first = extract_figs_from_pickle(
   output_folder = "output/output.fixed_CV")
 
 fig_both_first = extract_figs_from_pickle(
+  use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   rda_filename = "data.RData",
@@ -395,24 +353,28 @@ fig_both_first = extract_figs_from_pickle(
   output_folder = "output/output.fixed_CV")
 
 fig_under100 = extract_figs_from_pickle(
+  use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   dataset_name = "under100",
   output_folder = output_folder)
 
 fig_over100 = extract_figs_from_pickle(
+  use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   dataset_name = "over100",
   output_folder = output_folder)
 
 fig_under100_males = extract_figs_from_pickle(
+  use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   dataset_name = "under100_Male",
   output_folder = output_folder)
 
 fig_over100_males = extract_figs_from_pickle(
+  use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   dataset_name = "over100_Male",
@@ -420,12 +382,14 @@ fig_over100_males = extract_figs_from_pickle(
 
 
 fig_under100_females = extract_figs_from_pickle(
+  use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   dataset_name = "under100_Female",
   output_folder = output_folder)
 
 fig_over100_females = extract_figs_from_pickle(
+  use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   dataset_name = "over100_Female",
@@ -918,15 +882,3 @@ plot_compact_pvd_est2(
 
 {{< include _sec_supplement.qmd >}}
 
-```{r}
-#| label: save-image
-#| eval: false
-fs::path_package("fxtas", "extdata") |> 
-  fs::path("ordinal-sustain-results.rda") |> 
-  save.image()
-
-# fs::path_package("fxtas", "extdata") |>
-#   fs::path("ordinal-sustain-results.rda") |>
-#   load()
-
-```
