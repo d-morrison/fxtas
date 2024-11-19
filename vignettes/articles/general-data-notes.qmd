@@ -68,7 +68,8 @@ Social Phobia (ANX28), Lifetime,
 Specific Phobia (ANX29), Lifetime,
 Obsessive Compulsive (ANX30), Lifetime,
 Posttraumatic Stress (ANX31), Lifetime,
-Generalized Anxiety (ANX32), Current Only,
+Generalized Anxiety (ANX32), Current Only 
+(the corresponding lifetime variable is not in our database),
 Anxiety Due to GMC (ANX33), Lifetime,
 Substance-Induced Anxiety (ANX34), Lifetime,
 Anxiety Disorder NOS (ANX35), Lifetime
