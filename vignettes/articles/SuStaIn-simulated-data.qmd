@@ -27,6 +27,7 @@ library(fxtas)
 library(tidyverse)
 library(reticulate)
 reticulate::use_condaenv("fxtas39", required = TRUE)
+use_rds = FALSE
 ```
 
 # Import data
@@ -259,7 +260,8 @@ osa_output = run_and_save_OSA(
   N_startpoints = N_startpoints,
   N_iterations_MCMC = N_iterations_MCMC,
   plot = TRUE,
-  N_S_max = N_S_max
+  N_S_max = N_S_max,
+  rerun = TRUE
 )
 
 ```
@@ -363,6 +365,7 @@ for fig in figs:
 #| fig-height: 3
 figs = extract_figs_from_pickle(
   output_folder = output_folder,
+  use_rds = use_rds,
   n_s = 1)
   
 figs = list(figs)
@@ -378,17 +381,38 @@ plot_compact_pvd(
 ```
 
 ```{r}
+#| label: fig-plot-compact-pvd-n2
+#| fig-cap: "Compact PVD: 2 subgroups"
+#| fig-height: 3
+
+figs = extract_figs_from_pickle(
+  output_folder = output_folder,
+  use_rds = use_rds,
+  n_s = 2)
+  
+plot_compact_pvd(
+  figs = figs,
+  tile_height = 1,
+  y_text_size = 8,
+  biomarker_order = biomarkers,
+  scale_colors = c("red", "magenta", "blue")
+)
+```
+
+```{r}
 #| label: fig-plot-compact-pvd-n3
 #| fig-cap: "Compact PVD: 3 subgroups"
 #| fig-height: 3
 
 results3 <- extract_results_from_pickle(
   output_folder = output_folder,
+  use_rds = use_rds,
   n_s = 3)
 
 
 figs3 = extract_figs_from_pickle(
   output_folder = output_folder,
+  use_rds = use_rds,
   n_s = 3)
 
 plot_compact_pvd(
