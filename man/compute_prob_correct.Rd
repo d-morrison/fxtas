@@ -23,17 +23,16 @@ but also contains a \link[tibble:tbl_df-class]{tibble::tbl_df} as attribute \cod
 Compute each biomarker's probability of being recorded at its baseline level
 }
 \examples{
-full_data <- test_data_v1
-v1_usable <- full_data |> dplyr::filter(CGG < 200)
+full_data <- sim_data
 
-biomarker_groups <- compile_biomarker_groups_table()
+biomarker_groups <- compile_biomarker_groups_table(dataset = full_data)
 
 biomarker_varnames <-
   biomarker_groups |>
   pull("biomarker")
 
 biomarker_levels <-
-  v1_usable |>
+  full_data |>
   dplyr::select(all_of(biomarker_varnames)) |>
   lapply(F = levels)
 
