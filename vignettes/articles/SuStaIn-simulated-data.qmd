@@ -33,14 +33,12 @@ library(reticulate)
 reticulate::use_condaenv("fxtas39", required = TRUE)
 ```
 
-
 # Import data
 
 ```{r}
 #| label: import-data
-file_path = fs::path_package("extdata/synthetic_data.xlsx", package = "fxtas")
-library(readxl)
-df = file_path |> readxl::read_excel()
+
+df = sim_data
 
 SuStaInLabels = biomarkers = c('Biomarker 1', 'Biomarker 2', 'Biomarker 3',
                'Biomarker 4', 'Biomarker 5')
@@ -193,7 +191,8 @@ N_startpoints = 10L
 N_S_max = 3L
 N_iterations_MCMC = 1e5L
 dataset_name = 'sample_data'
-output_folder = "output/SuStaIn-simulated-data" |> fs::dir_create()
+output_folder = 
+  fs::path_package("extdata/sim_data", package = "fxtas")
 print(output_folder)
 ```
 

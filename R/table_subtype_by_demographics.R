@@ -3,29 +3,29 @@
 #' @param patient_data a [data.frame]
 #' @param subtype_and_stage_table a [data.frame]
 #' @param footnotes_as_letters [logical] whether to convert footnote
+#' @param demographic_vars [character] varnames to compute statistics for
 #' symbols to letters (TRUE) instead of numbers (FALSE)
 #' @returns A [gtsummary::tbl_summary]
 #' @export
 #' @examples
-#' patient_data = test_data_v1 |> filter(CGG >= 55, CGG < 200)
+#' patient_data = sim_data
 #' table = test_subtype_and_stage_table
-#' table_subtype_by_demographics(patient_data, table)
+#' table_subtype_by_demographics(patient_data, table,
+#'   demographic_vars = "Sex")
 #' @inheritDotParams gtsummary::tbl_summary
 
 table_subtype_by_demographics = function(
     patient_data,
     subtype_and_stage_table,
     footnotes_as_letters = FALSE,
+    demographic_vars = c("CGG", "CGG 55-99", "Male", "Primary Race/Ethnicity"),
     ...
 )
 {
 
   patient_data2 =
     patient_data |>
-    bind_cols(subtype_and_stage_table) |>
-    mutate("Male" = .data$Gender == "Male",
-           "CGG 100-199" = .data$`FX3*` == "CGG 100-199",
-           "CGG 55-99" = .data$`FX3*` == "CGG 55-99")
+    bind_cols(subtype_and_stage_table)
 
   # simulated_fisher <- function(data, variable, by, ...){
   #   data <- data[c(variable, by)]
@@ -43,7 +43,8 @@ table_subtype_by_demographics = function(
     dplyr::select(
       all_of(
         c(
-          "ml_subtype", "CGG", "CGG 55-99", "Male", "Primary Race/Ethnicity"))) |>
+          "ml_subtype",
+          demographic_vars))) |>
     gtsummary::tbl_summary(
       by = ml_subtype,
       percent = "column", # revert back to column percentages

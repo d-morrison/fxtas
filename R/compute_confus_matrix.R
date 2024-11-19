@@ -19,96 +19,25 @@
 #`        0,1,2,3,4,5,6,7,8,9)))
 #' compute_confus_matrix(samples_sequence)
 #'
-compute_confus_matrix = function(
-    samples_sequence,
-    biomarker_event_order =
+compute_confus_matrix <-
+  function(samples_sequence,
+           biomarker_event_order =
+             attr(samples_sequence, "biomarker_event_names")) {
+    output =
       samples_sequence |>
-      attr("biomarker_event_names"))
-{
-  output =
-    samples_sequence |>
-    compute_position_frequencies() |>
-    arrange_position_frequencies(
-      biomarker_order = biomarker_event_order) |>
-    pivot_wider(
-      id_cols = "event name",
-      values_from = proportion,
-      names_from = position,
-      values_fill = 0) |>
-    column_to_rownames("event name") |>
-    select(colnames(samples_sequence)) |>
-    as.matrix()
+      compute_position_frequencies() |>
+      arrange_position_frequencies(biomarker_order = biomarker_event_order) |>
+      pivot_wider(
+        id_cols = "event name",
+        values_from = all_of("proportion"),
+        names_from = all_of("position"),
+        values_fill = 0
+      ) |>
+      column_to_rownames("event name") |>
+      select(colnames(samples_sequence)) |>
+      as.matrix()
 
-  names(dimnames(output)) = c("event name", "position")
+    names(dimnames(output)) = c("event name", "position")
 
-  return(output)
-}
-
-compute_position_frequencies = function(samples_sequence)
-{
-  position_names = dimnames(samples_sequence)[[2]]
-  if(is.null(position_names))
-  {
-    position_names = 1:ncol(samples_sequence)
+    return(output)
   }
-  results =
-    samples_sequence |>
-    as_tibble() |>
-    pivot_longer(
-      names_to = "position",
-      values_to = "event name",
-      col = everything()) |>
-    count(`event name`, position) |>
-    mutate(
-      position = position |> factor(levels = position_names),
-      proportion = n / nrow(samples_sequence)) |>
-    select(-n)
-
-  class(results) =
-    c("PF", class(results))
-
-  return(results)
-}
-
-order_biomarkers = function(position_frequencies)
-{
-
-  order =
-    position_frequencies |>
-    arrange(.data$`event name`, desc(.data$proportion), .data$position) |>
-    slice_head(by = .data$`event name`) |>
-    arrange(.data$position, desc(.data$proportion), .data$`event name`) |>
-    mutate(
-      row_num = dplyr::row_number(),
-      `row number and name` =
-        paste(.data$row_num, .data$`event name`, sep = ": "))
-
-}
-
-arrange_position_frequencies = function(
-    position_frequencies,
-    biomarker_order = NULL)
-{
-  if(biomarker_order |> is.null())
-  {
-    biomarker_order =
-      position_frequencies |>
-      order_biomarkers() |> pull("event name")
-  }
-
-  position_frequencies |>
-    mutate(
-      "event name" =
-        .data$`event name`|>
-        factor(
-          levels = biomarker_order),
-      "row number and name" =
-        paste(
-          as.numeric(.data$`event name`),
-          .data$`event name`, sep = ") ")
-    ) |>
-    arrange(`event name`) |>
-    relocate(
-      "row number and name",
-      .before = "event name")
-}

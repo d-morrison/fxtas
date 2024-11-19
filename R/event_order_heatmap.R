@@ -12,10 +12,11 @@ event_order_heatmap = function(
     biomarker_order = NULL,
     verbose = FALSE)
 {
-  if(verbose) cli::cli_alert("starting `event_order_heatmap()`")
+  if (verbose) cli::cli_alert("starting `event_order_heatmap()`")
   positions = paste0("P", 1:length(biomarkers))
 
-  if(inherits(samples[[1]]$ordering, "symbol")) browser()
+  if (inherits(samples[[1]]$ordering, "symbol"))
+    browser(cli::cli_inform("not sure why `inherits(samples[[1]]$ordering, 'symbol)`"))
 
   b =
     samples |>

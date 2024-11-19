@@ -202,7 +202,7 @@ plot_positional_var = function(
     #   heatmap_table_to_plot() +
     #   ggtitle(title_i)
 
-    PFs =
+    PFs <-
       samples_sequence[subtype_order[i],,] |>
       t() |>
       compute_position_frequencies() |>
