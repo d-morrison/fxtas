@@ -1,6 +1,0 @@
-category,biomarker,levels,Male,Female,p-value
-group 1,Biomarker 1,"0, 1, 2",76.9%,75%,1
-group 1,Biomarker 2,"0, 1, 2",69.2%,83.3%,0.64472
-group 2,Biomarker 3,"0, 1",15.4%,25%,0.64472
-group 2,Biomarker 4,"0, 1, 2, 3",76.9%,75%,1
-group 3,Biomarker 5,"0, 1, 2, 3",76.9%,75%,1

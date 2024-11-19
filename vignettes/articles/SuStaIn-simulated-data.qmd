@@ -40,7 +40,7 @@ df = sim_data
 SuStaInLabels = biomarkers = c('Biomarker 1', 'Biomarker 2', 'Biomarker 3',
                'Biomarker 4', 'Biomarker 5')
 
-biomarker_groups_list = list(
+biomarker_group_list = list(
   "group 1" = c("Biomarker 1", "Biomarker 2"),
   "group 2" = c("Biomarker 3", "Biomarker 4"),
   "group 5" = "Biomarker 5"
@@ -435,7 +435,7 @@ readr::write_rds(
 )
 
 biomarker_groups_table = compile_biomarker_groups_table(
- biomarker_groups_list
+ biomarker_group_list
 )
 
 readr::write_rds(
