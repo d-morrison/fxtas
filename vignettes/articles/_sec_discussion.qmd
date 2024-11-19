@@ -71,7 +71,8 @@ A common sequence of illnesses seen clinically in carriers is
 depressive and/or anxiety disorders 
 with young to middle age adult onset,
 then tremor and ataxia in the 40s or 50s,
-followed by FXTAS dementia in the 60s.
+followed by FXTAS dementia in the 60s or later
+[@cordeiro2015anxiety; @roberts2009].
 Seen in this light, 
 and knowing the ultimate CNS vulnerability of the carrier state,
 retrospectively the initial presentation of depressive and/or anxiety disorders
@@ -125,7 +126,8 @@ there may be subsequent changes in the early stages of FXTAS
 as further follow-up studies are able to separate
 the psychiatric illness in females seen earlier here
 from more significant neuropathology associated with
-extended features of FXTAS over time.
+extended features of FXTAS over time
+[@johnson2022increased; @loesch2021differential].
 As new treatments for FXTAS develop,
 it is hoped that the earlier the diagnosis is established,
 the more likely the treatment will be effective.
