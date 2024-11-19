@@ -19,3 +19,12 @@ a \link[tibble:tbl_df-class]{tibble::tbl_df}
 \description{
 Compile biomarker groups table
 }
+\examples{
+biomarker_groups_list = list(
+  "group 1" = c("Biomarker 1", "Biomarker 2"),
+  "group 2" = c("Biomarker 3", "Biomarker 4"),
+  "group 3" = "Biomarker 5")
+
+biomarker_groups_list |> compile_biomarker_groups_table()
+
+}

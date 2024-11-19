@@ -30,3 +30,4 @@ $run_dev.*
 ^_extensions$
 ^README\.qmd$
 ^man/format_demographics_table_as_flextable\.Rd$
+^man/get_title_i_2\.Rd$

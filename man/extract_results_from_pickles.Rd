@@ -12,6 +12,7 @@ extract_results_from_pickles(
   basename = paste0(dataset_name, "_subtype", n_s - 1),
   picklename = paste0(basename, ".pickle"),
   format_results = TRUE,
+  use_rds = TRUE,
   ...
 )
 }

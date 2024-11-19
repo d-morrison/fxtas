@@ -1,9 +1,12 @@
 test_that("`table_subtype_by_demographics()` produces consistent results",
           {
-            patient_data = test_data_v1 |> filter(CGG >= 55, CGG < 200)
-            table = test_subtype_and_stage_table
+            library(dplyr)
+            patient_data = sim_data |> filter(Category == "Patient")
+            table = sim_subtype_and_stage_table
             set.seed(1)
-            ft = table_subtype_by_demographics(patient_data, table,
+            ft = table_subtype_by_demographics(patient_data,
+                                               table,
+                                               demographic_vars = "Sex",
                                                footnotes_as_letters = FALSE)
 
             html_file <- tempfile(fileext = ".html")

@@ -57,7 +57,10 @@ define_cases_and_controls = function(dataset)
               "CGG >= 200",
               "CGG missing")
           )
-        )
+        ),
+
+      "CGG 100-199" = .data$`FX3*` == "CGG 100-199",
+      "CGG 55-99" = .data$`FX3*` == "CGG 55-99"
 
     )
 

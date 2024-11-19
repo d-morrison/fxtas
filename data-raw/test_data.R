@@ -16,6 +16,19 @@ for (i in colnames(test_data))
   test_data[i] = test_data[sample_rows, i]
 }
 
+# every time we run this, test_data will change,
+# because we didn't set the RNG seed:
+
+# test =
+#   waldo::compare(y = test_data,
+#                  x = fxtas::test_data,
+#                  ignore_attr = "problems") |>
+#   print()
+#
+# if (length(test) > 0) {
+#   browser("are you sure you want to overwrite?")
+# }
+
 usethis::use_data(test_data, overwrite = TRUE)
 
 devtools::load_all()

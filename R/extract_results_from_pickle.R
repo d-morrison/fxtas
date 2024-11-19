@@ -19,13 +19,14 @@ extract_results_from_pickle = function(
     basename = paste0(dataset_name, "_subtype", n_s - 1),
     picklename = paste0(basename, ".pickle"),
     format_results = TRUE,
+    use_rds = TRUE,
     ...)
 {
   rds_path = build_rds_path(
     dataset_name = basename,
     output_folder = output_folder)
 
-  if(file.exists(rds_path))
+  if(use_rds && file.exists(rds_path))
   {
     cli::cli_inform("\nloading {basename} results from RDS file:\n{rds_path}\n")
     results = readr::read_rds(rds_path)

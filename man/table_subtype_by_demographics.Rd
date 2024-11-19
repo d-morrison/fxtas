@@ -8,6 +8,7 @@ table_subtype_by_demographics(
   patient_data,
   subtype_and_stage_table,
   footnotes_as_letters = FALSE,
+  demographic_vars = c("CGG", "CGG 55-99", "Male", "Primary Race/Ethnicity"),
   ...
 )
 }
@@ -16,7 +17,9 @@ table_subtype_by_demographics(
 
 \item{subtype_and_stage_table}{a \link{data.frame}}
 
-\item{footnotes_as_letters}{\link{logical} whether to convert footnote
+\item{footnotes_as_letters}{\link{logical} whether to convert footnote}
+
+\item{demographic_vars}{\link{character} varnames to compute statistics for
 symbols to letters (TRUE) instead of numbers (FALSE)}
 
 \item{...}{
@@ -72,7 +75,8 @@ A \link[gtsummary:tbl_summary]{gtsummary::tbl_summary}
 Create table of demographics statistics by most-likely latent subtype
 }
 \examples{
-patient_data = test_data_v1 |> filter(CGG >= 55, CGG < 200)
-table = test_subtype_and_stage_table
-table_subtype_by_demographics(patient_data, table)
+patient_data = sim_data
+table = sim_subtype_and_stage_table
+table_subtype_by_demographics(patient_data, table,
+  demographic_vars = "Sex")
 }

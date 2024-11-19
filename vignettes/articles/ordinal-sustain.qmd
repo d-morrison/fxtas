@@ -2,6 +2,10 @@
 title: "Development and progression of 
 Fragile X-associated tremor/ataxia syndrome 
 revealed by Subtype and Stage Inference analysis"
+format:
+  html:
+    echo: false
+  docx: default
 reference-doc: ../Brain_template_2022.docx
 ---
 
@@ -914,6 +918,7 @@ plot_compact_pvd_est2(
 
 ```{r}
 #| label: save-image
+#| eval: false
 fs::path_package("fxtas", "extdata") |> 
   fs::path("ordinal-sustain-results.rda") |> 
   save.image()
