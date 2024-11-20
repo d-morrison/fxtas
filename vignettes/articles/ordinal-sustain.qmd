@@ -95,7 +95,7 @@ compact_fig_cap2 = glue::glue(
   "Blue lines indicate ",
   "{outcomes_name}s that moved to earlier positions. ",
   "Line opacity levels indicate the number of positions changed ",
-  "(more opaque = more change)."
+  "(higher opacity represents more positions changed)."
 )
 
 # column_var = "Recruited in study phase"
@@ -126,7 +126,7 @@ v1_usable =
            labelled::set_label_attribute("CGG Repeat Level"),
          Parkinsons = Parkinsons |> 
            labelled::set_label_attribute("Parkinson's disease"),
-         `FXTAS Stage (0-5)*` = `FXTAS Stage (0-5)*` |> 
+         `FXTAS Stage` = `FXTAS Stage` |> 
            labelled::set_label_attribute("FXTAS Stage"))
 
 v1_usable_males = v1_usable |> filter(Gender == "Male")
@@ -373,7 +373,7 @@ fig_over100_females = extract_figs_from_pickle(
 
 ```{r}
 #| label: basic-summary-stats
-stages = v1_usable_cases |> select(`FXTAS Stage (0-5)*`) |> table()
+stages = v1_usable_cases |> select(`FXTAS Stage`) |> table()
 biomarkers_table = 
   v1_usable |> 
   make_biomarkers_table(

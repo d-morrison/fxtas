@@ -22,6 +22,7 @@ for latent subtype clustering analysis
 
 ## Data processing
 
+* renamed `FXTAS Stage (0-5)*` to `FXTAS Stage`
 * added columns to pre-processed data:
    - `Male`
    - `CGG 100-199`

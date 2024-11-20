@@ -4,7 +4,7 @@ fix_FXTAS_stage = function(dataset)
   output =
     dataset |>
     mutate(
-      `FXTAS Stage (0-5)*` =
+      `FXTAS Stage` =
         `FXTAS Stage (0-5)` |>
         case_match(
           0.5 ~ 0,
@@ -19,9 +19,6 @@ fix_FXTAS_stage = function(dataset)
       # created both to avoid missing variable in other scripts
       `FXTAS Stage (0-5): missingness reasons` =
         missingness_reasons.numeric(`FXTAS Stage (0-5)`),
-
-      `FXTAS Stage (0-5)*: missingness reasons` =
-        missingness_reasons.factor(`FXTAS Stage (0-5)*`),
 
       `FXTAS Stage (0-5)` = `FXTAS Stage (0-5)` |> clean_numeric()
 

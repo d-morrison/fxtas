@@ -5,7 +5,7 @@ add_labels = function(data)
              labelled::set_label_attribute("CGG repeat level"),
            Parkinsons = Parkinsons |>
              labelled::set_label_attribute("Parkinson's disease"),
-           `FXTAS Stage (0-5)*` = `FXTAS Stage (0-5)*` |>
+           `FXTAS Stage` = `FXTAS Stage` |>
              labelled::set_label_attribute("FXTAS Stage"),
            `Ataxia: severity*` = `Ataxia: severity*` |>
              labelled::set_label_attribute("Ataxia severity"),

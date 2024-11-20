@@ -582,8 +582,8 @@ For categorical analysis, we merged 2.5 into 2, 3.5 into 4, and 4.5 into 5.
 ```{r}
 
 vars = c(
-  "FXTAS Stage (0-5)*",
-  "FXTAS Stage (0-5)*: missingness reasons")
+  "FXTAS Stage",
+  "FXTAS Stage: missingness reasons")
 
 table1(na.is.category = FALSE, 
   NA.label = NA.label1,

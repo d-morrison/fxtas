@@ -145,8 +145,8 @@ Parkinson's disease by CGG status
 
 ```{r}
 vars <- c(
-  "FXTAS Stage (0-5)*",
-  if (show_missingness_reasons) "FXTAS Stage (0-5)*: missingness reasons"
+  "FXTAS Stage",
+  if (show_missingness_reasons) "FXTAS Stage: missingness reasons"
 )
 
 table1(
