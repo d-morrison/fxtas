@@ -172,7 +172,7 @@ especially given the relatively small sample sizes per subtype
 and the correspondingly large amounts of uncertainty
 in their event orderings.
 We had substantial amounts of missing data.
-As described in the methods (@sec-incomplete-data),
+As described in the methods ([Imputation of missing data](#sec-incomplete-data)),
 we used the marginal distribution of
 the observed data for each `r outcomes_name` among cases
 to impute the underlying values of these missing data.
