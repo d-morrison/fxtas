@@ -751,6 +751,8 @@ tbl_sg_demos = table_subtype_by_demographics(
 )
 ```
 
+{{< pagebreak >}}
+
 ```{r}
 #| tbl-cap: !expr 
 #|     glue::glue(
