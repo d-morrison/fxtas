@@ -2,6 +2,9 @@ test_that(
   "`Tremor: Age of onset: missingness reasons` matches `Tremor: Age of onset`",
 
   {
+
+    skip_if_not(exists("gp34"))
+
     inconsistent =
       gp34 |>
       filter(

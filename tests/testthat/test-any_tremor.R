@@ -10,7 +10,7 @@ test_that(
     )
 
     inconsistent =
-      gp34 |>
+      test_data |>
       dplyr::filter(`Any tremor (excluding head)` %in%
                       "No tremors recorded",
                     if_all(all_of(tremor_types), is.na)) |>
