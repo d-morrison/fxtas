@@ -5,6 +5,7 @@
 #' @importFrom arsenal tableby
 #' @importFrom colorspace qualitative_hcl
 #' @importFrom dplyr across
+#' @importFrom dplyr add_count
 #' @importFrom dplyr all_of
 #' @importFrom dplyr arrange
 #' @importFrom dplyr as_tibble
