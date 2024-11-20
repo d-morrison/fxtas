@@ -8,7 +8,7 @@ reference-doc: ../Brain_template_2022.docx
 reference here [@hagerman2001intention].
 
 the CVIC criterion 
-(@young2018uncovering; summarized in Supplementary Materials @sec-cvic) 
+(@young2018uncovering; summarized in Supplementary material, @sec-cvic) 
 
 # references {.unnumbered}
 

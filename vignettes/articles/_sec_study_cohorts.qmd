@@ -70,7 +70,7 @@ The controls' data were used to estimate
 the distribution of the analyzed `r outcomes_name`s 
 among non-FXTAS individuals 
 as reference in SuStaIn modeling
-(more details in @sec-scored-events-model).
+(more details in section [Ordinal SuStaIn model](#sec-scored-events-model)).
 Then the cases' data were used to estimate FXTAS event sequences,
 using the estimated control distributions to account for random variation
 in observed symptoms unrelated to the underlying event sequence.

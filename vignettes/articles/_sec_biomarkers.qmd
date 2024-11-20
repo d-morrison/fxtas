@@ -11,7 +11,7 @@ Each "clinically elevated" ordinal level
 (above the first-listed, reference level) 
 constitutes an outcome event 
 in the disease progression modelling analysis 
-(@sec-Statistical-analysis).
+(see [Statistical analysis](#sec-Statistical-analysis)).
 
 We created a composite variable named "any autoimmune disorder" combining
 systemic lupus erythematosus, 
@@ -22,7 +22,7 @@ Sjogren's syndrome,
 Raynaud's syndrome, 
 and pulmonary fibrosis, 
 since these conditions were too rare to analyze separately
-(details in Supplementary material, [@sec-any-autoimmune]).
+(details in Supplementary material, [Any autoimmune disorder](#sec-any-autoimmune)).
 We also created composite variables for four domains of 
 the Structured Clinical Interview for DSM-IV (SCID-IV):
 mood disorders, 
@@ -30,13 +30,13 @@ substance use disorders,
 anxiety disorders, and 
 somatoform disorders;
 there were no participants with psychotic disorders in our data
-(more details in Supplementary material, @sec-SCID-composites).
+(more details in Supplementary material, [SCID composite variables](#sec-SCID-composites)).
 We also created composite variables for 
 MRI variables for cerebral and cerebellar abnormalities;
 we did not combine the variables representing 
 corpus callosum MRI abnormalities,
 since these variables were created using Likert scales that differed from each other
-(details in Supplementary material, @sec-MRI-composites).
+(details in Supplementary material, [MRI variables](#sec-MRI-composites)).
 
 Supplementary Tables [-@supptbl-tremors] - [-@supptbl-autoimmune] 
 summarize each of the `r outcomes_name`s that we included in the analysis models, 

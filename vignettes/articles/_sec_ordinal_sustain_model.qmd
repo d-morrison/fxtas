@@ -51,8 +51,8 @@ for each subtype given the training dataset,
 assuming a uniform prior distribution 
 over the set of all possible orderings. 
 We conducted subgroup analyses by fitting models stratified by
-sex (@sec-methods-strat-sex), 
-CGG repeats (<100 vs ≥100) (Supplementary material, @sec-methods-strat-cgg),
+sex ([Sex differences in sequential order](#sec-methods-strat-sex)), 
+CGG repeats (<100 vs ≥100) (Supplementary material, [Analyses stratified by CGG repeats](#sec-methods-strat-cgg)),
 and combinations of sex and CGG repeats (<100 vs ≥100) 
-(Supplementary material, @sec-stratified-by-cgg-and-sex).
+(Supplementary material, [Comparing sexes stratified by CGG level](#sec-stratified-by-cgg-and-sex)).
 In these subgroup analyses, we did not search for latent clusters.

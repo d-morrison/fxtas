@@ -2,6 +2,7 @@
 
 ## Manuscript
 
+* Removed numbers from headings.
 * Incorporated coauthors' feedback up to 2024/11/18 draft
 * Added additional line-graph comparison subfigures
 for latent subtype clustering analysis

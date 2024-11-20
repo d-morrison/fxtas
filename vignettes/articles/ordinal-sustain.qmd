@@ -564,7 +564,7 @@ and CGG ≥100 among males (p = `r pval_male_cgg_gp34_v1`)
 SWM between errors occurred prior to Stage 1 in males with CGG repeats <100, 
 whereas it occurred between stage 3 and 4 
 in males with CGG repeats ≥ 100 
-([Supplementary Figure @fig-pvd-by-cgg-male-2]). 
+([Supplementary Fig. @fig-pvd-by-cgg-male-2]). 
 Postural, 
 resting, 
 and intermittent tremor 
@@ -597,13 +597,13 @@ We conducted latent subtype classification analysis to cluster participants
 that are relatively homogeneous within the same cluster 
 and heterogeneous from other clusters 
 based on similarities and difference in sequential patterns. 
-Based on the CVIC criterion (Supplementary material, @sec-subtypes), 
+Based on the CVIC criterion (Supplementary material, [Detecting latent subtypes](#sec-subtypes)), 
 `r n_s_min_CVIC` subtypes were suggested to be the optimal number for the full, 
 unstratified dataset 
-([Supplementary Figure @fig-cvic-1]). 
-The out-of-fold log-likelihood ("OOFLL") (Supplementary material, @sec-subtypes) 
+([Supplementary Fig. @fig-cvic-1]). 
+The out-of-fold log-likelihood ("OOFLL") (Supplementary material, [Detecting latent subtypes](#sec-subtypes)) 
 showed substantial fold-to-fold variation 
-([Supplementary Figure @fig-cvic-2]).
+([Supplementary Fig. @fig-cvic-2]).
 Between `r broman::spell_out(n_s_selected)` and `r broman::spell_out(N_S_max)` 
 latent subgroups, 
 the distribution of OOFLL appears to be
