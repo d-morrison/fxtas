@@ -4,12 +4,10 @@
 \alias{make_demographics_table}
 \title{Make demographics table}
 \usage{
-make_demographics_table(data, strata_vars = "Gender")
+make_demographics_table(data)
 }
 \arguments{
-\item{data}{todo}
-
-\item{strata_vars}{todo}
+\item{data}{}
 }
 \value{
 a \link[flextable:flextable]{flextable::flextable}
