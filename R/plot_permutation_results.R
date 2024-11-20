@@ -6,7 +6,7 @@
 #' @returns an object of class `"permutation-test-results"`, which extends [ggplot2::ggplot()] by adding a `p-value` attribute.
 #' @export
 #'
-plot_permutation_results = function(
+plot_permutation_results <- function(
     permuted_test_stats,
     observed_test_stat)
 {

@@ -33,7 +33,7 @@
 #' @returns a `"PVD.list` (a [list] of `PVD` objects from [plot.PF()])
 #' @export
 #'
-plot_positional_var = function(
+plot_positional_var <- function(
     results,
     samples_sequence = results$samples_sequence,
     samples_f = results$samples_f,

@@ -13,7 +13,7 @@
 #' \dontrun{
 #' test_stats = collect_permutation_test_stats("output/output.fixed_CV")
 #' }
-collect_permutation_test_stats = function(
+collect_permutation_test_stats <- function(
     permuting_variables,
     stratifying_levels = "",
     output_folder =

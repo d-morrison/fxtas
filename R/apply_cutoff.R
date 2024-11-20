@@ -1,4 +1,4 @@
-apply_cutoff = function(var, cutoff)
+apply_cutoff <- function(var, cutoff)
 {
   if_else(
     var > cutoff,

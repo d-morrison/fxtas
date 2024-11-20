@@ -5,7 +5,7 @@
 #' @returns a [list]
 #' @export
 #'
-all_potential_biomarkers = function(dataset) {
+all_potential_biomarkers <- function(dataset) {
 
   missingness_vars = grep("missingness", names(dataset), value = TRUE)
   tremors = c(
@@ -127,6 +127,6 @@ all_potential_biomarkers = function(dataset) {
 
   biomarker_group_list =
     biomarker_group_list |>
-    lapply(F = function(x) setdiff(x, missingness_vars))
+    lapply(F <- function(x) setdiff(x, missingness_vars))
 
 }

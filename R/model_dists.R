@@ -8,7 +8,7 @@
 #' @inherit build_score_vals return
 #' @export
 #'
-model_dists = function(
+model_dists <- function(
     df,
     biomarker_varnames = attr(df, "biomarker_varnames"),
     biomarker_levels =

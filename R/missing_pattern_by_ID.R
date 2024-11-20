@@ -10,7 +10,7 @@
 #' @examples
 #' missing_patterns = missing_pattern_by_ID(data = test_data_v1)
 #' @importFrom magrittr not
-missing_pattern_by_ID = function(
+missing_pattern_by_ID <- function(
     data,
     variable = "ApoE",
     missing_values = c(NA, "Missing (empty in RedCap)"))

@@ -1,4 +1,4 @@
-check_biomarker_colours = function(
+check_biomarker_colours <- function(
     biomarker_colours, biomarker_labels)
 {
   if(!is.null(names(biomarker_colours)))

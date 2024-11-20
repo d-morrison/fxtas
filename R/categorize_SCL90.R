@@ -1,4 +1,4 @@
-categorize_SCL90 = function(
+categorize_SCL90 <- function(
     dataset)
 {
 
@@ -8,7 +8,7 @@ categorize_SCL90 = function(
       across(
         contains("SCL", ignore.case = FALSE) &
           !contains("missing"),
-        .fn = function(x)
+        .fn <- function(x)
           if_else(
             x >= 60,
             "60+",

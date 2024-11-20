@@ -1,4 +1,4 @@
-fix_FXTAS_stage = function(dataset)
+fix_FXTAS_stage <- function(dataset)
 {
 
   output =

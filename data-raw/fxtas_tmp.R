@@ -310,7 +310,7 @@ subtype_table <- function(
     ) |>
 
     gtsummary::add_p(
-      pvalue_fun = function(x) gtsummary::style_number(x, digits = 3),
+      pvalue_fun <- function(x) gtsummary::style_number(x, digits = 3),
       test = list(CGG = "oneway.test"),
       test.args = c(`Primary Race/Ethnicity`) ~ list(simulate.p.value = TRUE)
     ) |>

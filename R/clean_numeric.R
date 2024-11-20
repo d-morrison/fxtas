@@ -8,7 +8,7 @@
 #' @returns a [numeric] vector corresponding to `x`
 #' @export
 #'
-clean_numeric = function(
+clean_numeric <- function(
     x,
     NA_codes = c(777, 888, 999, extra_codes),
     extra_codes = NULL)

@@ -6,7 +6,7 @@
 #' @returns a [numeric()]
 #' @export
 #'
-permutation_test = function(
+permutation_test <- function(
     permuted_test_stats,
     observed_test_stat,
     n_permutations = Inf)
@@ -35,7 +35,7 @@ permutation_test = function(
 #'
 #' @returns a [ggplot2::ggplot] constructing a histogram of the test statistic
 #' @export
-autoplot.permutation_test = function(object, ...)
+autoplot.permutation_test <- function(object, ...)
 {
   plot_permutation_results(
     observed_test_stat = attr(object, "observed_test_stat"),
@@ -49,7 +49,7 @@ autoplot.permutation_test = function(object, ...)
 #' @export
 #' @return `x`, invisibly
 #'
-print.permutation_test = function(x, ...)
+print.permutation_test <- function(x, ...)
 {
   x |> scales::pvalue() |> print()
   invisible(x)

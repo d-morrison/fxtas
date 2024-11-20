@@ -1,4 +1,4 @@
-compute_heatmap = function(
+compute_heatmap <- function(
     samples_sequence,
     biomarker_labels,
     colour_mat,

@@ -5,7 +5,7 @@
 #' @returns a [flextable::flextable()]
 #' @export
 #'
-flex_biomarkers_table = function(x)
+flex_biomarkers_table <- function(x)
 {
   x |>
     mutate(

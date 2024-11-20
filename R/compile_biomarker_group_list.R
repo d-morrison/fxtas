@@ -15,7 +15,7 @@
 #' @examples
 #' test_data |> compile_biomarker_group_list(dataset = test_data_v1)
 #'
-compile_biomarker_group_list = function(dataset)
+compile_biomarker_group_list <- function(dataset)
 {
 
   tremors = c(
@@ -148,7 +148,7 @@ kinesia_vars = c(
 
   biomarker_group_list =
     biomarker_group_list |>
-    lapply(F = function(x) setdiff(x, missingness_vars)) |>
+    lapply(F <- function(x) setdiff(x, missingness_vars)) |>
     structure(class = c("biomarker.groups.list", "list"))
 
 }

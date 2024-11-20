@@ -8,7 +8,7 @@
 #' @returns [NULL], invisibly (.pickle and .rds files are generated to save the output)
 #' @export
 #'
-run_OSA_permuted = function(
+run_OSA_permuted <- function(
     permutation_seeds = 1:100,
     permuting_variables = "Gender",
     patient_data,

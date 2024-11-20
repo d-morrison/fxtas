@@ -1,4 +1,4 @@
-compute_ModelScores = function(biomarker_levels)
+compute_ModelScores <- function(biomarker_levels)
 {
   max_levels = biomarker_levels |> sapply(F = length) |> max()
   ModelScores = (1:max_levels) - 1

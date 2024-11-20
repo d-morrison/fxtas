@@ -9,7 +9,7 @@
 #' x <- test_data$`Ataxia: severity*`
 #' x |> counts_and_pcts()
 #'
-counts_and_pcts = function(x)
+counts_and_pcts <- function(x)
 {
   counts = x |> table()
   pcts = proportions(counts) * 100

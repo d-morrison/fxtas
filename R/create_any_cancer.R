@@ -1,4 +1,4 @@
-create_any_cancer = function(
+create_any_cancer <- function(
     dataset,
     cancer_types = c(
       "Thyroid Cancer",

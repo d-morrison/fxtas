@@ -1,4 +1,4 @@
-simplify_biomarker_names = function(dataset, cols = "event name")
+simplify_biomarker_names <- function(dataset, cols = "event name")
 {
   dataset |>
     mutate(across(
@@ -10,7 +10,7 @@ simplify_biomarker_names = function(dataset, cols = "event name")
     ))
 }
 
-simplify_pf_names = function(names)
+simplify_pf_names <- function(names)
 {
   names |>
     stringr::str_replace(
@@ -19,20 +19,20 @@ simplify_pf_names = function(names)
   )
 }
 
-update_any_autoimmune_name = function(names)
+update_any_autoimmune_name <- function(names)
 {
   names |>
     stringr::str_replace(pattern = "Any Autoimmune", replacement = "Any autoimmune disorder") |>
     stringr::str_replace(pattern = ": Some autoimmune recorded", replacement = "")
 }
 
-remove_CC = function(names)
+remove_CC <- function(names)
 {
   names |>
     stringr::str_replace(pattern = "(CC)-", replacement = "")
 }
 
-numeric_five = function(names)
+numeric_five <- function(names)
 {
   names |>
     stringr::str_replace(pattern = "Five-choice", replacement = "5-choice")

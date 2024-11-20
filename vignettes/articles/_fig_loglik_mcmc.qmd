@@ -4,7 +4,7 @@
 #| eval: !expr fit_models
 
 lliks = results_v1 |>
-  sapply(F = function(x) x$samples_likelihood)
+  sapply(F <- function(x) x$samples_likelihood)
 
 lliks |>
   graph_likelihoods_v2(alpha = 0.5) |>

@@ -8,7 +8,7 @@
 #'
 #' @examples
 #' stratified_formula(c("Sepal.Length" ,"Sepal.Width"), "Species")
-stratified_formula = function(vars, strata)
+stratified_formula <- function(vars, strata)
 {
   paste(
     "~",

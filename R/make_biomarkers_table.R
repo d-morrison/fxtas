@@ -29,7 +29,7 @@
 #'   biomarker_varnames = biomarker_varnames
 #'   )
 #'
-make_biomarkers_table = function(
+make_biomarkers_table <- function(
     data,
     biomarker_varnames =
       compile_biomarker_groups_table() |>

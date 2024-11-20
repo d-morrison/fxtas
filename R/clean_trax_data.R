@@ -1,4 +1,4 @@
-clean_trax_data = function(dataset)
+clean_trax_data <- function(dataset)
 {
   dataset |>
     # fix date before arranging

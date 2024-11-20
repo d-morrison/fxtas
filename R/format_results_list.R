@@ -9,7 +9,7 @@
 #'
 #' @returns a `"SuStaIn-model"` object (extends [list()])
 #'
-format_results_list = function(
+format_results_list <- function(
     results,
     biomarker_labels = names(biomarker_levels),
     biomarker_levels = NULL,
