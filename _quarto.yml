@@ -96,7 +96,7 @@ format:
     fig-cap-location: top
     appendix-title: "Sup."
     tbl-cap-location: top
-    number-sections: true
+    number-sections: false
     number-depth: 3
     link-citations: true
     date: last-modified
