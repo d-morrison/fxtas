@@ -279,7 +279,7 @@ ggplot() +
   geom_line(
     alpha = alpha,
     aes(
-    x = 1:nrow(likelihoods), 
+    x = seq_len(nrow(likelihoods)), 
     y = likelihoods[[1]],
     col = "One subtype"
     )
@@ -287,7 +287,7 @@ ggplot() +
   geom_line(
     alpha = alpha,
     aes(
-    x = 1:nrow(likelihoods), 
+    x = seq_len(nrow(likelihoods)), 
     y = likelihoods[[2]],
     col = "Two subtypes"
     )
@@ -295,7 +295,7 @@ ggplot() +
   geom_line(
     alpha = alpha,
     aes(
-    x = 1:nrow(likelihoods), 
+    x = seq_len(nrow(likelihoods)), 
     y = likelihoods[[3]],
     col = "Three subtypes"
     )
