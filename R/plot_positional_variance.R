@@ -263,6 +263,7 @@ plot_positional_var = function(
     figs = figs[[1]]
   } else
   {
+    names(figs) = paste("Group", seq_len(length(figs)))
     class(figs) = c("PVD.list", class(figs))
   }
 

@@ -1,13 +1,13 @@
 ---
-title: "Development and progression of 
-Fragile X-associated tremor/ataxia syndrome 
-revealed by Subtype and Stage Inference analysis"
+title: "Progression of Fragile X-associated tremor/ataxia syndrome revealed by Subtype and Stage Inference"
 format:
   html:
     echo: false
   docx: default
 reference-doc: ../Brain_template_2022.docx
 ---
+
+Running title: FXTAS progression revealed by SuStaIn
 
 ```{=html}
 <style>
@@ -707,8 +707,6 @@ Supplementary material is available at Brain online.
 ::: {#refs}
 :::
 
-::: landscape
-
 # Tables {.unnumbered}
 
 ```{r}
@@ -736,8 +734,6 @@ v1_usable |> make_demographics_table()
 
 flex_biomarkers_table(biomarkers_table)
 ```
-
-:::
 
 ```{r}
 #| label: build-tbl-sg-demos
@@ -853,7 +849,7 @@ plot_compact_pvd_est2(
 
 {{< pagebreak >}}
 
-# Supplementary Material for “Development and progression of Fragile X-associated tremor/ataxia syndrome revealed by Subtype and Stage Inference analysis" {.appendix}
+# Supplementary material
 
 {{< include _sec_supplement.qmd >}}
 
