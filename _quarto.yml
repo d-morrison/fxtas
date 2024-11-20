@@ -152,7 +152,7 @@ filters:
     path: vignettes/appendix_numbering.lua
 
 crossref:
-  appendix-title: "Supplemental Materials" # doesn't seem to work
+  appendix-title: "Supplementary material" # doesn't seem to work
   custom:
     - kind: float
       key: suppfig

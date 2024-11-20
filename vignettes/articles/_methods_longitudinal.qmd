@@ -3,7 +3,7 @@
 We also fitted the Ordinal SuStaIn model, stratified by sex,
 including all longitudinal repeated measurements
 of the same participants over time
-([Supplementary Section @sec-longitudinal-results]).
+([Supplementary material, @sec-longitudinal-results]).
 Including later observations
 might help the model clarify the later stages of the event sequence.
 However,
