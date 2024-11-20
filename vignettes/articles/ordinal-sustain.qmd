@@ -319,6 +319,13 @@ fig_both_first = extract_figs_from_pickle(
   dataset_name = "sample_data",
   output_folder = "output/output.fixed_CV")
 
+fig_both_first2 <-  
+  list("all" = fig_both_first) |> 
+  plot_compact_pvd()
+
+ggsave(fig_both_first2,
+       filename = "output/thumbnail.jpeg")
+
 fig_under100 = extract_figs_from_pickle(
   use_rds = use_rds,
   size.y = size.y,
