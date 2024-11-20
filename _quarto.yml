@@ -147,7 +147,6 @@ execute:
   cache: false
   freeze: false  # re-render only when source changes
 filters:
-  - vignettes/docx-landscape.lua
   - authors-block
   - at: post-quarto
     path: vignettes/appendix_numbering.lua
@@ -157,7 +156,7 @@ crossref:
   custom:
     - kind: float
       key: suppfig
-      reference-prefix: Supplementary Figure
+      reference-prefix: Supplementary Fig.
       space-before-numbering: true
     - kind: float
       key: supptbl
