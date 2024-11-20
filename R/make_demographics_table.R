@@ -16,7 +16,7 @@ make_demographics_table = function(data)
     "Primary Race/Ethnicity",
     # "Primary Ethnicity",
     # "Primary Race",
-    "FXTAS Stage (0-5)*",
+    "FXTAS Stage",
     "CGG"
     # "ApoE")
   )

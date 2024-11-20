@@ -131,7 +131,7 @@ kinesia_vars = c(
     list(
       Tremors = tremors,
       Ataxia = ataxia,
-      Stage = "FXTAS Stage (0-5)*",
+      Stage = "FXTAS Stage",
       Parkinsonian = parkinsonian_vars,
       Parkinsons = "Parkinsons",
       # cancer = cancer_vars,
