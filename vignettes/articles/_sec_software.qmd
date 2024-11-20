@@ -2,7 +2,8 @@ The Ordinal Sustain analysis was performed using
 the Python programming language, version 3.9 [@python3]
 with the `pySuStaIn` package [@aksman2021pysustain].
 Data pre-processing and results post-processing were performed in
-R 4.4.0 [@rcore] using the `tidyverse` packages [@tidyverse].
+`r R.version.string` [@rcore] using the `tidyverse` packages 
+[@tidyverse].
 The `reticulate` package [@reticulate] was used to create
 an application programming interface between Python and R.
 The code used to perform this analysis is available at
