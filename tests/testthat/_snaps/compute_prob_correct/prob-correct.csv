@@ -1,32 +1,32 @@
 Biomarker,# controls with data,# at baseline,% at baseline,Est. Pr(correct)
-Head tremor,21,16,76.2%,76.2%
-Intention tremor,48,20,41.7%,41.7%
-Resting tremor,50,40,80%,80%
-Postural tremor,51,36,70.6%,70.6%
-Intermittent tremor,39,31,79.5%,79.5%
-Ataxia,47,26,55.3%,55.3%
-Ataxia: severity*,54,38,70.4%,70.4%
-FXTAS Stage (0-5)*,61,20,32.8%,32.8%
-parkinsonian features,17,15,88.2%,88.2%
-Masked faces,38,36,94.7%,94.7%
-Increased tone,28,24,85.7%,85.7%
-Pill-rolling tremor,35,34,97.1%,95%
-Stiff gait,35,34,97.1%,95%
-Parkinsons,14,13,92.9%,92.9%
-MRI: Cerebellar,25,8,32%,32%
-MRI: Cerebral,15,2,13.3%,13.3%
-Splenium (CC)-WM Hyperintensity,15,4,26.7%,26.7%
-Genu (CC)-WM Hyperintensity,18,11,61.1%,61.1%
-Corpus Callosum-Thickness,16,14,87.5%,87.5%
-MMSE total score*,23,20,87%,87%
-BDS-2 Total Score*,53,42,79.2%,79.2%
-SCID: mood disorders,25,11,44%,44%
-SCID: substance use disorders,29,19,65.5%,65.5%
-SCID: anxiety disorders,31,9,29%,29%
-SCID: somatoform disorders,32,30,93.8%,93.8%
-SWM Between errors*,37,20,54.1%,54.1%
-PAL Total errors (adjusted)*,39,8,20.5%,20.5%
-RTI Five-choice movement time*,36,25,69.4%,69.4%
-Hypothyroid,45,42,93.3%,93.3%
-Hyperthyroid,36,34,94.4%,94.4%
-any autoimmune disorder,49,45,91.8%,91.8%
+Head tremor,16,14,87.5%,87.5%
+Intention tremor,44,24,54.5%,54.5%
+Resting tremor,46,38,82.6%,82.6%
+Postural tremor,42,32,76.2%,76.2%
+Intermittent tremor,42,29,69%,69%
+Ataxia,51,34,66.7%,66.7%
+Ataxia: severity*,52,37,71.2%,71.2%
+FXTAS Stage,52,21,40.4%,40.4%
+parkinsonian features,28,22,78.6%,78.6%
+Masked faces,47,46,97.9%,95%
+Increased tone,27,23,85.2%,85.2%
+Pill-rolling tremor,38,38,100%,95%
+Stiff gait,28,28,100%,95%
+Parkinsons,15,13,86.7%,86.7%
+MRI: Cerebellar,19,9,47.4%,47.4%
+MRI: Cerebral,22,2,9.1%,9.1%
+Splenium (CC)-WM Hyperintensity,15,3,20%,20%
+Genu (CC)-WM Hyperintensity,17,10,58.8%,58.8%
+Corpus Callosum-Thickness,24,14,58.3%,58.3%
+MMSE total score*,22,19,86.4%,86.4%
+BDS-2 Total Score*,52,37,71.2%,71.2%
+SCID: mood disorders,26,13,50%,50%
+SCID: substance use disorders,27,20,74.1%,74.1%
+SCID: anxiety disorders,30,8,26.7%,26.7%
+SCID: somatoform disorders,30,29,96.7%,95%
+SWM Between errors*,33,21,63.6%,63.6%
+PAL Total errors (adjusted)*,29,12,41.4%,41.4%
+RTI Five-choice movement time*,39,30,76.9%,76.9%
+Hypothyroid,39,29,74.4%,74.4%
+Hyperthyroid,37,36,97.3%,95%
+any autoimmune disorder,46,40,87%,87%
