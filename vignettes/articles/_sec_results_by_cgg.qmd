@@ -21,7 +21,7 @@ the earlier the onset and the faster the progression of FXTAS
 Perhaps the cut off of 100 is too high for this distinction to be made.
 
 These differences were more evident among males than females
-(Supplementary Materials, @sec-cgg-strat-sex).
+(Supplementary material, @sec-cgg-strat-sex).
 When we fitted models for subgroup analyses by sex and CGG repeats level,
 the models for males showed the same patterns described above,
 except for head tremor

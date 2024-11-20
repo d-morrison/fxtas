@@ -597,11 +597,11 @@ We conducted latent subtype classification analysis to cluster participants
 that are relatively homogeneous within the same cluster 
 and heterogeneous from other clusters 
 based on similarities and difference in sequential patterns. 
-Based on the CVIC criterion (Supplementary Materials, @sec-subtypes), 
+Based on the CVIC criterion (Supplementary material, @sec-subtypes), 
 `r n_s_min_CVIC` subtypes were suggested to be the optimal number for the full, 
 unstratified dataset 
 ([Supplementary Figure @fig-cvic-1]). 
-The out-of-fold log-likelihood ("OOFLL") (Supplementary Materials, @sec-subtypes) 
+The out-of-fold log-likelihood ("OOFLL") (Supplementary material, @sec-subtypes) 
 showed substantial fold-to-fold variation 
 ([Supplementary Figure @fig-cvic-2]).
 Between `r broman::spell_out(n_s_selected)` and `r broman::spell_out(N_S_max)` 
