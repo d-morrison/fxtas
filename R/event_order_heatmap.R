@@ -1,7 +1,9 @@
 #' Event order heatmap
 #'
 #' @param samples a list of orderings
-#' @param biomarkers)
+#' @param biomarkers todo
+#' @param biomarker_order todo
+#' @param verbose whether to print messages
 #'
 #' @return a ggplot object that constructs a heatmap
 #' @export
