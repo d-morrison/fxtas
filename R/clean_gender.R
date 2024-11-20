@@ -10,7 +10,7 @@
 #'
 #' @examples
 #' test_data |> clean_gender()
-clean_gender = function(data)
+clean_gender <- function(data)
 {
   data |>
     mutate(

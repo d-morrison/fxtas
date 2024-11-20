@@ -6,7 +6,7 @@
 #' @return a factor vector similar to `x`, but with 99, 777, 888, 999, etc replaced with `NA`s
 #' @export
 #'
-replace_missing_codes_with_NAs = function(
+replace_missing_codes_with_NAs <- function(
     x,
     missing_codes =
       c(

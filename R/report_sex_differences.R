@@ -28,7 +28,7 @@
 #'
 #'   table |> report_sex_differences()
 #'
-report_sex_differences = function(table, cutoff = 0.05)
+report_sex_differences <- function(table, cutoff = 0.05)
 {
 
   table |>

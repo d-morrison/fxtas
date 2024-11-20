@@ -1,4 +1,4 @@
-fix_onset_age_vars = function(dataset)
+fix_onset_age_vars <- function(dataset)
 {
   dataset |>
     mutate(

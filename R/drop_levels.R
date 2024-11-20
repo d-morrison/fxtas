@@ -1,4 +1,4 @@
-drop_levels = function(x, except = NULL)
+drop_levels <- function(x, except = NULL)
 {
   x |>
   mutate(

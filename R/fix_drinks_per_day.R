@@ -1,4 +1,4 @@
-fix_drinks_per_day = function(dataset)
+fix_drinks_per_day <- function(dataset)
 {
 
   dataset |>

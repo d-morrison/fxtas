@@ -13,7 +13,7 @@
 
 #' @export
 #'
-define_cases_and_controls = function(dataset)
+define_cases_and_controls <- function(dataset)
 {
   dataset |>
     mutate(

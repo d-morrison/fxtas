@@ -12,7 +12,7 @@
 #'
 #' compile_biomarker_groups_table(biomarker_group_list = biomarker_group_list)
 #'
-compile_biomarker_groups_table = function(
+compile_biomarker_groups_table <- function(
     dataset,
     biomarker_group_list =
       compile_biomarker_group_list(dataset = dataset, ...),

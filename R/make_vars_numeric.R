@@ -1,4 +1,4 @@
-make_vars_numeric = function(
+make_vars_numeric <- function(
     dataset,
     regex = "score",
     ignore.case = FALSE)

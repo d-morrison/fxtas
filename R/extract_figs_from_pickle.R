@@ -8,7 +8,7 @@
 #'   output_folder = "output/SuStaIn-simulated-data",
 #'   n = 3)
 #'
-extract_figs_from_pickle = function(
+extract_figs_from_pickle <- function(
     n_s = 1,
     dataset_name = 'sample_data',
     output_folder = "output",

@@ -1,4 +1,4 @@
-create_any_autoimmune = function(
+create_any_autoimmune <- function(
     dataset,
     autoimmune_dz = c(
       "Lupus",

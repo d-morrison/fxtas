@@ -401,7 +401,7 @@ vars = c(
   
   "Full Scale: IQ Score",
   "Full Scale: Composite Score (FSIQ)"
-) |> sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> as.vector()
+) |> sapply(F <- function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> as.vector()
 
 table1(na.is.category = FALSE, 
   NA.label = NA.label1,
@@ -433,7 +433,7 @@ cantab_vars = c(
   "PAL Total errors (adjusted)",
   "RTI Five-choice movement time") 
 # |> 
-#   sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> 
+#   sapply(F <- function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> 
 # as.vector()
 
 table1(na.is.category = FALSE, 

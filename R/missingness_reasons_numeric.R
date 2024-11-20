@@ -11,7 +11,7 @@
 #'
 #' @importFrom forcats fct_relevel
 #' @importFrom tidyr replace_na
-missingness_reasons.numeric = function(
+missingness_reasons.numeric <- function(
     x,
     x.clean = x |> clean_numeric(...),
     ...)

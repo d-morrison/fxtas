@@ -5,7 +5,7 @@
 #' @returns a [ggplot2::ggplot]
 #' @export
 #'
-get_biomarker_events_table = function(biomarker_levels)
+get_biomarker_events_table <- function(biomarker_levels)
 {
   biomarker_levels |>
     stack() |>
@@ -33,7 +33,7 @@ get_biomarker_events_table = function(biomarker_levels)
 
 }
 
-get_biomarker_event_names = function(
+get_biomarker_event_names <- function(
     biomarker_levels,
     biomarker_events_table = get_biomarker_events_table(biomarker_levels))
 {

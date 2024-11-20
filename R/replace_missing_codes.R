@@ -13,7 +13,7 @@
 #' @examples
 #' x = iris$Species |> unique()
 #' x |> replace_missing_codes(missing_codes = "virginica", replacement = "versicolor")
-replace_missing_codes = function(
+replace_missing_codes <- function(
     x,
     missing_codes = c(
       "99",

@@ -5,7 +5,7 @@
 #' @returns a [numeric] vector corresponding to `x`
 #' @export
 #'
-age_range_medians = function(x)
+age_range_medians <- function(x)
 {
   case_when(
     # lifelong:
@@ -27,7 +27,7 @@ age_range_medians = function(x)
       x == "900" ~ 95, # 90s,
       x %in% c(99, 777, 888, 999) ~ NA_real_,
       # x |> grepl(pattern = "\\d+\\-\\d+") ~
-      #   x |> strsplit("-") |> sapply(F = function(x) median(as.numeric(x))),
+      #   x |> strsplit("-") |> sapply(F <- function(x) median(as.numeric(x))),
       TRUE ~ x |> as.numeric() |> suppressWarnings()
     )
 }

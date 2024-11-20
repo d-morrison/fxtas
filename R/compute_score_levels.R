@@ -5,7 +5,7 @@
 #' @returns a [character] [vector] of levels
 #' @export
 #'
-compute_score_levels = function(dataset)
+compute_score_levels <- function(dataset)
 {
   # unique(df[,biomarkers], na.rm = TRUE) |> as.character()
   levels =

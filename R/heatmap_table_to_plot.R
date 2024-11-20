@@ -1,4 +1,4 @@
-heatmap_table_to_plot = function(heatmap_table)
+heatmap_table_to_plot <- function(heatmap_table)
 {
   heatmap_table |>
   ggplot(

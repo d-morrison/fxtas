@@ -293,7 +293,7 @@ cantab_vars <- c(
 )
 # >
 # sapply(
-#   F = function(x)
+#   F <- function(x)
 #     grep(
 #       value =  TRUE,
 #       fixed = TRUE,

@@ -6,7 +6,7 @@
 #' @returns a [tibble::tbl_df]
 #' @export
 #'
-construct_biomarker_events_table = function(
+construct_biomarker_events_table <- function(
     biomarker_levels,
     biomarker_groups
     )

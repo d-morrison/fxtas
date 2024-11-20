@@ -9,7 +9,7 @@
 #' @returns an [array]
 #' @export
 #'
-compute_prob_scores = function(
+compute_prob_scores <- function(
     dataset,
     biomarker_levels,
     biomarker_varnames = names(biomarker_levels),

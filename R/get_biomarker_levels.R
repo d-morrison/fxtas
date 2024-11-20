@@ -8,7 +8,7 @@
 #'
 #' @examples
 #' get_levels(iris, "Species")
-get_levels = function(data, varnames)
+get_levels <- function(data, varnames)
 {
   data |>
     select(all_of(varnames)) |>

@@ -15,7 +15,7 @@
 #'                               use_rds = FALSE)
 #'  sustain_table = sim_results_3s$subtype_and_stage_table
 #'  get_title_i_2(sustain_table, cval = FALSE, i = 1)
-get_title_i_2 = function(
+get_title_i_2 <- function(
     subtype_and_stage_table,
     cval = FALSE,
     i)

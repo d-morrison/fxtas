@@ -1,4 +1,4 @@
-clean_trax_ataxia = function(data)
+clean_trax_ataxia <- function(data)
 {
   data |>
     mutate(

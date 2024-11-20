@@ -1,4 +1,4 @@
-get_title_i = function(
+get_title_i <- function(
     samples_f,
     subtype_order,
     n_samples,

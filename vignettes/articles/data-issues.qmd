@@ -34,7 +34,7 @@ knitr::opts_chunk$set(
 )
 
 # update 'asis' chunk to allow inline code
-knitr::knit_engines$set(asis = function(options) {
+knitr::knit_engines$set(asis <- function(options) {
   if (options$echo && options$eval) knitr::knit_child(text = options$code)
 })
 ```
@@ -758,7 +758,7 @@ vars = c(
   
   # "Full Scale: IQ Score",
   "Full Scale: Composite Score (FSIQ)"
-) |> sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> as.vector()
+) |> sapply(F <- function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> as.vector()
 
 table1(na.is.category = FALSE, 
   NA.label = NA.label1,
@@ -792,7 +792,7 @@ cantab_vars = c(
   "RTI Five-choice movement time",
   "RTI Five-choice movement time*") 
 # |> 
-#   sapply(F = function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> 
+#   sapply(F <- function(x) grep(value =  TRUE, fixed = TRUE, pattern = x, x = names(visit1))) |> 
 # as.vector()
 
 table1(na.is.category = FALSE, 

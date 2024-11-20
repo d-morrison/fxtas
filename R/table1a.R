@@ -5,7 +5,7 @@
 #' @returns an object of class `"table1"`
 #' @export
 #'
-table1a = function(...)
+table1a <- function(...)
 {
   table1::table1(
     na.is.category = FALSE,

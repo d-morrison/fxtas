@@ -7,7 +7,7 @@
 #'
 #' @examples
 #' test_data_v1 |> make_demographics_table()
-make_demographics_table = function(data)
+make_demographics_table <- function(data)
 {
   vars = c(# "Study",
     "Age at visit",
@@ -25,7 +25,7 @@ make_demographics_table = function(data)
     dplyr::select(all_of(vars), Gender, `FX*`)
   # create table using gtsummary with p-value for sex difference
 
-  table_function = function(data) {
+  table_function <- function(data) {
     data |>
       gtsummary::tbl_summary(
         by = `FX*`,
@@ -62,7 +62,7 @@ make_demographics_table = function(data)
     dplyr::select(all_of(vars), Gender) |>
     gtsummary::tbl_summary(by = Gender, missing_text = "Missing") |>
     gtsummary::add_p(
-      pvalue_fun = function(x)
+      pvalue_fun <- function(x)
         gtsummary::style_number(x, digits = 3)
     ) |>
     gtsummary::modify_column_hide(columns = c(stat_1, stat_2)) |>

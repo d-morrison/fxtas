@@ -1,4 +1,4 @@
-clean_MRI_vars = function(
+clean_MRI_vars <- function(
     dataset,
     MRI_vars = c(
       "Cerebral Atrophy",
@@ -22,7 +22,7 @@ clean_MRI_vars = function(
     mutate(
       across(
         .cols = all_of(MRI_vars),
-        .fn = function(x)
+        .fn <- function(x)
         {
           if_else(
             x %in% missing_codes,

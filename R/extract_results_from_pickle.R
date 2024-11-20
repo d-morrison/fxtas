@@ -11,7 +11,7 @@
 #' @export
 #' @examples
 #' results = extract_results_from_pickle(output_folder = "output/SuStaIn-simulated-data")
-extract_results_from_pickle = function(
+extract_results_from_pickle <- function(
     n_s = 1,
     dataset_name = 'sample_data',
     output_folder = "output",

@@ -1,5 +1,5 @@
 
-arrange_position_frequencies = function(position_frequencies, biomarker_order = NULL) {
+arrange_position_frequencies <- function(position_frequencies, biomarker_order = NULL) {
   if (biomarker_order |> is.null()) {
     biomarker_order =
       position_frequencies |>

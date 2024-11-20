@@ -1,4 +1,4 @@
-format_samples_sequence = function(
+format_samples_sequence <- function(
     samples_sequence = results$samples_sequence,
     biomarker_event_names =
       biomarker_levels |>

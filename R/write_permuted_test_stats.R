@@ -7,7 +7,7 @@
 #' @returns NULL
 #' @export
 #'
-write_permuted_test_stats = function(
+write_permuted_test_stats <- function(
     permuted_test_stats,
     permutations = names(permuted_test_stats),
     output_folder,

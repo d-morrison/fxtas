@@ -8,7 +8,7 @@
 #' @returns a [list()] of confusion [matrix()] objects
 #' @export
 #'
-compute_prob_dist = function(
+compute_prob_dist <- function(
   biomarker_levels,
   prob_correct)
 {

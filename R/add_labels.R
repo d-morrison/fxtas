@@ -1,4 +1,4 @@
-add_labels = function(data)
+add_labels <- function(data)
 {
   data |>
     mutate(`FX3*` = `FX3*` |>

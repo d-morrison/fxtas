@@ -1,4 +1,4 @@
-fix_tremor_onsets = function(dataset)
+fix_tremor_onsets <- function(dataset)
 {
   dataset |>
     mutate(
