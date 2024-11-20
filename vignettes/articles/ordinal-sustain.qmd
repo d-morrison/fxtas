@@ -7,7 +7,7 @@ format:
 reference-doc: ../Brain_template_2022.docx
 ---
 
-Running title: FXTAS progression revealed by SuStaIn
+**Running title:** FXTAS progression revealed by SuStaIn
 
 ```{=html}
 <style>
@@ -201,6 +201,13 @@ Figure + table limit: 8.]{.mark}{{< pagebreak >}}
 [Abstract word limit: 400]{.mark}
 
 {{< include _sec_abstract.qmd >}}
+
+**Keywords:** 
+Fragile X-associated tremor/ataxia syndrome;
+Subtype and Stage Inference;
+sex differences;
+statistical clustering;
+latent subgroups
 
 # Introduction
 

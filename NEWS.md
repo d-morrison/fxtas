@@ -2,6 +2,7 @@
 
 ## Manuscript
 
+* added keywords
 * reduced title to under 100 characters, including spaces
 * Removed numbers from headings.
 * Incorporated coauthors' feedback up to 2024/11/18 draft
