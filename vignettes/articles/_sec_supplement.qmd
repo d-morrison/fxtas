@@ -1,3 +1,9 @@
+## Summary data tables {.appendix}
+
+{{< include exploration.qmd >}}
+
+## Estimates of event scoring accuracy {.appendix}
+
 {{< include _sec_prob_correct.qmd >}}
 
 ## General data processing notes {.appendix}
@@ -26,6 +32,3 @@
 
 <!-- {{< include longitudinal-results.qmd >}} -->
 
-## Additional data tables {.appendix}
-
-{{< include exploration.qmd >}}
