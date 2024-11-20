@@ -16,6 +16,7 @@
 #' @importFrom dplyr distinct
 #' @importFrom dplyr everything
 #' @importFrom dplyr filter
+#' @importFrom dplyr group_by
 #' @importFrom dplyr if_all
 #' @importFrom dplyr if_any
 #' @importFrom dplyr if_else
