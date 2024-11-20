@@ -22,7 +22,7 @@ Sjogren's syndrome,
 Raynaud's syndrome, 
 and pulmonary fibrosis, 
 since these conditions were too rare to analyze separately
-(details in Supplementary Materials, [@sec-any-autoimmune]).
+(details in Supplementary material, [@sec-any-autoimmune]).
 We also created composite variables for four domains of 
 the Structured Clinical Interview for DSM-IV (SCID-IV):
 mood disorders, 
@@ -30,13 +30,13 @@ substance use disorders,
 anxiety disorders, and 
 somatoform disorders;
 there were no participants with psychotic disorders in our data
-(more details in Supplementary Materials, @sec-SCID-composites).
+(more details in Supplementary material, @sec-SCID-composites).
 We also created composite variables for 
 MRI variables for cerebral and cerebellar abnormalities;
 we did not combine the variables representing 
 corpus callosum MRI abnormalities,
 since these variables were created using Likert scales that differed from each other
-(details in Supplementary Materials, @sec-MRI-composites).
+(details in Supplementary material, @sec-MRI-composites).
 
 Supplementary Tables [-@supptbl-tremors] - [-@supptbl-autoimmune] 
 summarize each of the `r outcomes_name`s that we included in the analysis models, 

@@ -33,11 +33,10 @@ footnote1 <- 'Codes `777`, `888`, and `999` are counted as "Missing" (NA).'
 ```
 
 
-### Tremors {.appendix}
-
 ::: {#supptbl-tremors}
 
 ```{r}
+#| label: tab-tremors
 vars <- c(
   "Intention tremor",
   "Resting tremor",
@@ -62,8 +61,6 @@ table1(
 :::
 
 <br>
-
-### Head tremors  {.appendix}
 
 ::: {#supptbl-head-tremors}
 
@@ -97,8 +94,6 @@ table1(
 <br>
 
 
-### Ataxia  {.appendix}
-
 ::: {#supptbl-ataxia-by-cgg}
 
 ```{r}
@@ -125,8 +120,6 @@ Ataxia by CGG status
 
 <br>
 
-### Parkinson's disease {.appendix}
-
 ::: {#supptbl-parkinsons-by-cgg}
 
 ```{r}
@@ -147,8 +140,6 @@ table1(
 Parkinson's disease by CGG status
 
 :::
-
-### FXTAS Stage {.appendix}
 
 ::: {#supptbl-fxtas-stage-by-cgg}
 
@@ -178,8 +169,6 @@ FXTAS Stage by CGG level
 
 :::
 
-### Behavior Dyscontrol Scale - Second Edition (BDS-2) {.appendix}
-
 ::: {#supptbl-bds2}
 
 ```{r}
@@ -198,8 +187,6 @@ table1(
 Behavior Dyscontrol Scale - Second Edition (BDS-2)
 
 :::
-
-### Mini-Mental State Examination (MMSE)  {.appendix}
 
 ::: {#supptbl-mmse}
 
@@ -230,8 +217,6 @@ Mini-Mental State Examination (MMSE)
 
 :::
 
-### Structured Clinical Interview for DSM Disorders (SCID)  {.appendix}
-
 ::: {#supptbl-scid}
 
 ```{r}
@@ -249,8 +234,6 @@ table1(
 Structured Clinical Interview for DSM Disorders (SCID)
 
 :::
-
-### MRI  {.appendix}
 
 ::: {#supptbl-mri}
 
@@ -284,8 +267,6 @@ table1(
 **MRI variables by Sex and CGG level**
 
 :::
-
-### Cambridge Neuropsychological Test Automated Battery (CANTAB)  {.appendix}
 
 We used categorization cutoffs taken from [@talebi2020cambridge].
 
@@ -343,8 +324,6 @@ table1::t1flex(
 **Cambridge Neuropsychological Test Automated Battery (CANTAB)**
 
 :::
-
-### Thyroid and autoimmune diseases  {.appendix}
 
 ::: {#supptbl-autoimmune}
 
