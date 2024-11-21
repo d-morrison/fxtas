@@ -303,15 +303,16 @@ cantab_vars <- c(
 # ) |>
 #   as.vector()
 
-table1::t1flex(
+
   table1(
     na.is.category = FALSE, overall = FALSE,
     NA.label = "Missing (empty in RedCap)",
     stratified_formula(cantab_vars, column_var),
     # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
     data = v1_usable
-  )
-) |>
+  ) |> 
+table1::t1flex() |>
+    flextable::fontsize(size = 8, part = "all") |> 
   flextable::width(
     width = 2
   ) |>
