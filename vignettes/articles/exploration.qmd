@@ -311,15 +311,11 @@ cantab_vars <- c(
     # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
     data = v1_usable
   ) |> 
-table1::t1flex() |>
+    table1::t1flex() |>
     flextable::fontsize(size = 8, part = "all") |> 
-  flextable::width(
-    width = 2
-  ) |>
-  flextable::width(
-    j = 2:7,
-    width = 1.25
-  )
+    flextable::font(fontname = "Gill sans MT", part = 'all') |> 
+    flextable::width(width = 2) |>
+    flextable::width(j = 2:7, width = 1.25)
 ```
 
 **Cambridge Neuropsychological Test Automated Battery (CANTAB)**

@@ -36,6 +36,7 @@ table1(
   ) |> 
 table1::t1flex() |>
   flextable::fontsize(size = 8, part = "all") |> 
+  flextable::font(fontname = "Gill sans MT", part = 'all') |> 
   flextable::width(
     width = 2
   ) |>
@@ -76,6 +77,7 @@ table1(na.is.category = FALSE, overall = FALSE,
        data = v1_usable) |> 
   table1::t1flex() |>
   flextable::fontsize(size = 8, part = "all") |> 
+  flextable::font(fontname = "Gill sans MT", part = 'all') |> 
   flextable::width(
     width = 2
   ) |>
@@ -104,8 +106,9 @@ purdue_vars = c(
        stratified_formula(purdue_vars, column_var),
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
        data = v1_usable) |> 
-table1::t1flex() |>
+  table1::t1flex() |>
   flextable::fontsize(size = 8, part = "all") |> 
+  flextable::font(fontname = "Gill sans MT", part = 'all') |> 
   flextable::width(
     width = 2
   ) |>

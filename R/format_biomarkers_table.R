@@ -14,6 +14,7 @@ flex_biomarkers_table <- function(x)
     ) |>
     flextable::flextable() |>
     flextable::fontsize(size = 8, part = "all") |>
+    flextable::font(fontname = "Gill sans MT", part = 'all') |>
     flextable::set_header_labels(
       values = c(
         "Category",
