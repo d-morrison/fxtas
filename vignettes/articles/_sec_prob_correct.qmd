@@ -11,6 +11,7 @@ library(flextable)
 prob_correct |>
   attr("data") |>
   flextable::flextable() |> 
+  flextable::fontsize(size = 8, part = "all") |> 
   bold(part = "header") |> 
   width(width = 1)
 ```

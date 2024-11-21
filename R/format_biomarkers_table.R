@@ -13,6 +13,7 @@ flex_biomarkers_table <- function(x)
       "p-value" = `p-value` |> scales::label_pvalue()()
     ) |>
     flextable::flextable() |>
+    flextable::fontsize(size = 8, part = "all") |>
     flextable::set_header_labels(
       values = c(
         "Category",

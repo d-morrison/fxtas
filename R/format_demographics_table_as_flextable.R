@@ -13,6 +13,7 @@ format_demographics_table_as_flextable <- function(x, ...)
   x |>
     gtsummary::as_flex_table() |>
     # update upper header label: '' to 'M vs. F'
+    flextable::fontsize(size = 8, part = "all") |>
     flextable::compose(
       part = "header",
       i = 1,

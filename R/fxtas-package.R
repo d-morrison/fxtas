@@ -37,6 +37,7 @@
 #' @importFrom dplyr summarize
 #' @importFrom dplyr tibble
 #' @importFrom flextable as_flextable
+#' @importFrom flextable fontsize
 #' @importFrom forcats fct_na_level_to_value
 #' @importFrom forcats fct_other
 #' @importFrom fs path

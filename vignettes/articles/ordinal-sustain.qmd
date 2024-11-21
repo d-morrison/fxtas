@@ -774,6 +774,7 @@ tbl_sg_demos = table_subtype_by_demographics(
 
 tbl_sg_demos |>
   gtsummary::as_flex_table() |>
+    flextable::fontsize(size = 8, part = "all") |> 
   flextable::width(width = 1.75) |>
   flextable::width(j = 2:6, width = 0.75) |>
   flextable::width(j = 7, width = 1)
