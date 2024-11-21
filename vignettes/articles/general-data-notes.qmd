@@ -48,7 +48,7 @@ Major Depressive Disorder (MD04), Lifetime,
 Dysthymic Disorder (MD05), Lifetime,
 Depressive Disorder NOS (MD06), Lifetime,
 Mood Disorder Due to GMC (MD07), Lifetime,
-Substance-Induced Mood Dis. (MD08), Lifetime
+Substance-Induced Mood Dis. (MD08), Lifetime.
 
 - "SCID: substance use disorders" combines
 Alcohol (SUD17), Lifetime,
@@ -59,7 +59,7 @@ Opioid (SUD21), Lifetime,
 Cocaine (SUD22), Lifetime,
 Hallucinogenics/ PCP (SUD23), Lifetime,
 Poly Drug (SUD24), Lifetime,
-Other (SUD25), Lifetime
+Other (SUD25), Lifetime.
 
 - "SCID: anxiety disorders" combines
 Panic Disorder (ANX26), Lifetime,
@@ -68,18 +68,19 @@ Social Phobia (ANX28), Lifetime,
 Specific Phobia (ANX29), Lifetime,
 Obsessive Compulsive (ANX30), Lifetime,
 Posttraumatic Stress (ANX31), Lifetime,
-Generalized Anxiety (ANX32), Current Only 
-(the corresponding lifetime variable is not in our database),
+Generalized Anxiety (ANX32), Current Only,
 Anxiety Due to GMC (ANX33), Lifetime,
 Substance-Induced Anxiety (ANX34), Lifetime,
-Anxiety Disorder NOS (ANX35), Lifetime
+Anxiety Disorder NOS (ANX35), Lifetime.
+Note that in the SCID-I/NP for DSM-IV, for generalized anxiety, 
+only the current, not lifetime prevalence, is included.
 
 - "SCID: somatoform disorders" combines
 Somatization Disorder (SOM36),
 Pain Disorder (SOM37),
 Undifferentiated Somatoform (SOM38),
 Body Dysmorphic (SOM40),
-Hypochondriasis (SOM39)
+Hypochondriasis (SOM39).
 
 - "SCID: psychotic symptoms" consists of only Primary Psychotic Symptoms (PS01), Lifetime.
 
