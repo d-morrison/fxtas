@@ -7,7 +7,7 @@ format:
 reference-doc: ../Brain_template_2022.docx
 ---
 
-**Running title:** FXTAS progression revealed by SuStaIn
+**Running title:** FXTAS progression revealed by SuStaIn{{< pagebreak >}}
 
 ```{=html}
 <style>
@@ -191,14 +191,14 @@ nlevs =
 max_levels = nlevs |> max()
 ```
 
-[Target journal: 
-[Brain (Original Articles)](https://academic.oup.com/brain/pages/general_instructions).
-Word limit for main text: 6000.
-Figure + table limit: 8.]{.mark}{{< pagebreak >}}
+<!-- [Target journal:  -->
+<!-- [Brain (Original Articles)](https://academic.oup.com/brain/pages/general_instructions). -->
+<!-- Word limit for main text: 6000. -->
+<!-- Figure + table limit: 8.]{.mark} -->
 
 # Abstract {.unnumbered}
 
-[Abstract word limit: 400]{.mark}
+<!-- [Abstract word limit: 400]{.mark} -->
 
 {{< include _sec_abstract.qmd >}}
 

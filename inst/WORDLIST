@@ -17,6 +17,7 @@ CMD
 COPD
 CVIC
 Callosum
+Codecov
 Conda
 DESC
 DSM
@@ -52,7 +53,6 @@ NINDS
 Neurodegeneration
 Neuroimaging
 Neuropsychological
-Nullus
 OOFLL
 OSA
 Opioid
@@ -125,6 +125,7 @@ flextable
 fractionate
 frontotemporal
 ge
+generalizable
 ggplot
 github
 golem
