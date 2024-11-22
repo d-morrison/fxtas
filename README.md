@@ -8,7 +8,7 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![R-CMD-check](https://github.com/d-morrison/fxtas/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/d-morrison/fxtas/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/UCD-IDDRC/fxtas/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/UCD-IDDRC/fxtas/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of `fxtas` is to apply the Ordinal SuStaIn algorithm (Young et
@@ -23,7 +23,7 @@ You can install the development version of fxtas from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("d-morrison/fxtas")
+devtools::install_github("UCD-IDDRC/fxtas")
 ```
 
 ## Running the analyses
@@ -34,7 +34,9 @@ syndrome* is implemented in the file `ordinal-sustain.qmd` in the
 this repository. The `data-raw` folder contains numerous auxiliary
 scripts, including:
 
-- data preprocessing scripts:
+- data preprocessing scripts, which be run in the following order (after
+  extracting the necessary files from the GP, GP4, and Trax research
+  databases):
   - `gp3.r`
   - `gp4.r`
   - `gp34.R`
