@@ -42,5 +42,7 @@ a \code{"SuStaIn-model"} object (extends \code{\link[=list]{list()}})
 Extract results from pickle file
 }
 \examples{
-results = extract_results_from_pickle(output_folder = "output/SuStaIn-simulated-data")
+output_path =
+  fs::path_package("extdata/sim_data", package = "fxtas")
+results = extract_results_from_pickle(output_folder = output_path)
 }
