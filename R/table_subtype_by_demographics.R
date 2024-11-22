@@ -57,6 +57,7 @@ table_subtype_by_demographics <- function(
       missing_text = "Missing",
       ...
     ) |>
+    gtsummary::bold_labels() |>
 
     gtsummary::add_p(
       pvalue_fun <- function(x) gtsummary::style_number(x, digits = 3),

@@ -71,6 +71,7 @@ make_demographics_table <- function(data)
 
   to_return = list(tbl_stat, tbl_pval) |>
     gtsummary::tbl_merge(tab_spanner = FALSE) |>
+    gtsummary::bold_labels() |>
     format_demographics_table_as_flextable()
 
   return(to_return)
