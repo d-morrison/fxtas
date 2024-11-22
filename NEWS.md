@@ -2,14 +2,14 @@
 
 ## Manuscript
 
-* added keywords
-* reduced title to under 100 characters, including spaces
+* Added keywords
+* Reduced title to under 100 characters, including spaces
 * Removed numbers from headings.
 * Incorporated coauthors' feedback up to 2024/11/18 draft
 * Added additional line-graph comparison subfigures
 for latent subtype clustering analysis
 * Added more interpretation of subtype analysis results
-* removed repeated measures analysis
+* Removed repeated measures analysis
 
 
 ## Analysis
