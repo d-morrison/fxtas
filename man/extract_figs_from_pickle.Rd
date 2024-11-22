@@ -66,10 +66,14 @@ a \verb{"PVD.list} (a \link{list} of \code{PVD} objects from \code{\link[=plot.P
 Extact PVDs from pickle file
 }
 \examples{
+
+test_path = "output/SuStaIn-simulated-data/pickle_files/sample_data_subtype2.pickle"
+if(file.exists(test_path))
+{
 figs = extract_figs_from_pickle(
   output_folder = "output/SuStaIn-simulated-data",
   n = 3)
 
  figs
-
+}
 }
