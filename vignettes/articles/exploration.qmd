@@ -60,7 +60,7 @@ table1(
 
 :::
 
-<br>
+{{< pagebreak >}}
 
 ::: {#supptbl-head-tremors}
 
@@ -91,8 +91,7 @@ table1(
 
 :::
 
-<br>
-
+{{< pagebreak >}}
 
 ::: {#supptbl-ataxia-by-cgg}
 
@@ -118,7 +117,7 @@ Ataxia by CGG status
 
 :::
 
-<br>
+{{< pagebreak >}}
 
 ::: {#supptbl-parkinsons-by-cgg}
 
@@ -140,6 +139,8 @@ table1(
 Parkinson's disease by CGG status
 
 :::
+
+{{< pagebreak >}}
 
 ::: {#supptbl-fxtas-stage-by-cgg}
 
@@ -169,6 +170,8 @@ FXTAS Stage by CGG level
 
 :::
 
+{{< pagebreak >}}
+
 ::: {#supptbl-bds2}
 
 ```{r}
@@ -187,6 +190,8 @@ table1(
 Behavior Dyscontrol Scale - Second Edition (BDS-2)
 
 :::
+
+{{< pagebreak >}}
 
 ::: {#supptbl-mmse}
 
@@ -217,6 +222,8 @@ Mini-Mental State Examination (MMSE)
 
 :::
 
+{{< pagebreak >}}
+
 ::: {#supptbl-scid}
 
 ```{r}
@@ -234,6 +241,8 @@ table1(
 Structured Clinical Interview for DSM Disorders (SCID)
 
 :::
+
+{{< pagebreak >}}
 
 ::: {#supptbl-mri}
 
@@ -269,6 +278,8 @@ table1(
 :::
 
 We used categorization cutoffs taken from [@talebi2020cambridge].
+
+{{< pagebreak >}}
 
 ::: {#supptbl-cantab}
 
@@ -312,8 +323,7 @@ cantab_vars <- c(
     data = v1_usable
   ) |> 
     table1::t1flex() |>
-    flextable::fontsize(size = 8, part = "all") |> 
-    flextable::font(fontname = "Gill sans MT", part = 'all') |> 
+    shared_flextable_settings() |>
     flextable::width(width = 2) |>
     flextable::width(j = 2:7, width = 1.25)
 ```
@@ -321,6 +331,8 @@ cantab_vars <- c(
 **Cambridge Neuropsychological Test Automated Battery (CANTAB)**
 
 :::
+
+{{< pagebreak >}}
 
 ::: {#supptbl-autoimmune}
 
