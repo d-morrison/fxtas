@@ -19,7 +19,7 @@ if(show_missingness_reasons)
 {
   vars = vars |> 
     sapply(
-      F <- function(x) 
+      F = function(x) 
         grep(
           value =  TRUE, 
           fixed = TRUE, 

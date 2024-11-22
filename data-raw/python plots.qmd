@@ -69,7 +69,7 @@ df =
 
 nlevs = sapply(
   X = df[,biomarker_varnames], 
-  F <- function(x) length(levels(x)))
+  F = function(x) length(levels(x)))
 
 df = df |>
   mutate(
@@ -124,7 +124,7 @@ prob_score = prob_score0[,,-1, drop = FALSE]
 
 ```{r "score_vals"}
 
-# sapply(X = biomarker_varnames, F <- function(x) 1:nlevs[x])
+# sapply(X = biomarker_varnames, F = function(x) 1:nlevs[x])
 
 score_vals = build_score_vals(biomarker_levels)
 

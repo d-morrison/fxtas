@@ -127,6 +127,6 @@ all_potential_biomarkers <- function(dataset) {
 
   biomarker_group_list =
     biomarker_group_list |>
-    lapply(F <- function(x) setdiff(x, missingness_vars))
+    lapply(F = function(x) setdiff(x, missingness_vars))
 
 }

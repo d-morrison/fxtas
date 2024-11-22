@@ -108,7 +108,7 @@ run_OSA <- function(
 
     splits =
       reticulate::iterate(cv_it) |>
-      lapply(F <- function(x) x[[2]] |> as.integer())
+      lapply(F = function(x) x[[2]] |> as.integer())
 
     # R version of random partitioning
     # (haven't figured out stratification yet, although it's not needed currently)

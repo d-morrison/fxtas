@@ -43,4 +43,14 @@ Additional research including longitudinal data
 collecting precise ages of onset
 would be needed to verify our findings.
 
-The gen
+The data used in this analysis came from patients and controls in
+the catchment area of the UC Davis MIND Institute, 
+and may not be directly generalizable to other populations.
+For example, the participants predominantly reported
+their primary race/ethnicity as "white",
+and we did not have data from enough patients with other
+racial/ethnic identities to accurately estimate
+stratified models by race/ethnicity.
+A larger study including multiple research sites and catchment areas
+could produce a more diverse set of participants and support
+analyses with increased external validity.
