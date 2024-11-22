@@ -6,7 +6,7 @@ test_that("`compact_pvd_figure()` produces consistent results", {
     n_s = 3,
     rda_filename = "data.RData",
     dataset_name = "sample_data",
-    output_folder = fs::path(here::here(), "output/SuStaIn-simulated-data")
+    output_folder = fs::path_package("extdata/sim_data", package = "fxtas")
   )
 
   y_text_size = 11
