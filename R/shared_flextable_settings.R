@@ -13,7 +13,8 @@ shared_flextable_settings = function(x)
                        part = "all") |>
     flextable::fontsize(size = 8, part = "all") |>
     flextable::font(fontname = "Gill sans MT", part = 'all') |>
-    flextable::height_all(height = 0.45, part = "all", unit = "cm")
+    flextable::height_all(height = 0.45, part = "all", unit = "cm") |>
+    flextable::bold(part = "header")
 
 
 }
