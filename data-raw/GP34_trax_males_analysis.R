@@ -72,7 +72,7 @@ control_data =
 patient_data =
   df |>
   # na.omit() |>
-  filter(`FX*` == "CGG >= 55")
+  filter(`FX*` == "CGG \u2265 55")
 
 prob_correct =
   control_data |>
