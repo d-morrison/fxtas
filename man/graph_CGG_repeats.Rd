@@ -30,5 +30,5 @@ Barplot of CGG repeats
 }
 \examples{
 test_data_v1 |> graph_CGG_repeats()
-test_data_v1 |> graph_CGG_repeats(cols = vars(Gender))
+test_data_v1 |> graph_CGG_repeats(cols = ggplot2::vars(Gender))
 }
