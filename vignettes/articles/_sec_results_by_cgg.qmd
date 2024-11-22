@@ -1,4 +1,5 @@
-@suppfig-pvd-by-cgg shows the estimated sequences stratified by CGG repeat level.
+@suppfig-pvd-by-cgg shows the estimated sequences 
+stratified by CGG repeat level.
 We did not find statistically significant evidence of a difference in event sequences
 between CGG < 100 and CGG ≥ 100 (p = `r pval_cgg_gp34_v1`),
 but some potential differences were noted

@@ -12,6 +12,8 @@ shared_flextable_settings = function(x)
                        padding.bottom = 0,
                        part = "all") |>
     flextable::fontsize(size = 8, part = "all") |>
-    flextable::font(fontname = "Gill sans MT", part = 'all')
+    flextable::font(fontname = "Gill sans MT", part = 'all') |>
+    flextable::height_all(height = 0.45, part = "all", unit = "cm")
+
 
 }
