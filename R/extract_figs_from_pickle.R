@@ -5,11 +5,13 @@
 #' @export
 #' @examples
 #'
-#' test_path = "output/SuStaIn-simulated-data/pickle_files/sample_data_subtype2.pickle"
-#' if(file.exists(test_path))
+#' output_path =
+#'   fs::path_package("extdata/sim_data", package = "fxtas")
+#'
+#' if(dir.exists(output_path))
 #' {
 #' figs = extract_figs_from_pickle(
-#'   output_folder = "output/SuStaIn-simulated-data",
+#'   output_folder = output_path,
 #'   n = 3)
 #'
 #'  figs
