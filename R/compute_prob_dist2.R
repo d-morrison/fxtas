@@ -16,7 +16,7 @@ compute_prob_dist2 <- function(
 {
   lapply(
     X = biomarkers,
-    F <- function(x)
+    F = function(x)
     {
       compute_prob_dist0(
         levels = DataScores[[x]],
