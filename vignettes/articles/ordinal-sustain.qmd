@@ -188,7 +188,7 @@ biomarker_events_table =
 
 nlevs = 
   biomarker_levels |> sapply(length)
-
+max_levels = nlevs |> max()
 ```
 
 [Target journal: 
