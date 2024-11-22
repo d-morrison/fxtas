@@ -4,12 +4,16 @@
 #' @inherit plot_positional_var return
 #' @export
 #' @examples
+#'
+#' test_path = "output/SuStaIn-simulated-data/pickle_files/sample_data_subtype2.pickle"
+#' if(file.exists(test_path))
+#' {
 #' figs = extract_figs_from_pickle(
 #'   output_folder = "output/SuStaIn-simulated-data",
 #'   n = 3)
 #'
 #'  figs
-#'
+#' }
 extract_figs_from_pickle <- function(
     n_s = 1,
     dataset_name = 'sample_data',
