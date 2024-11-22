@@ -32,7 +32,7 @@ test_that("compute_prob_correct() produces consistent results", {
   ft = prob_correct |>
     attr("data") |>
     flextable::flextable() |>
-    bold(part = "header") |>
+    shared_flextable_settings() |>
     width(width = 1)
 
   html_file <- tempfile(fileext = ".html")
