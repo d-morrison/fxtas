@@ -34,9 +34,8 @@ table1(
     # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min, Max]"),
     data = v1_usable
   ) |> 
-table1::t1flex() |>
-  flextable::fontsize(size = 8, part = "all") |> 
-  flextable::font(fontname = "Gill sans MT", part = 'all') |> 
+  table1::t1flex() |>
+  shared_flextable_settings() |>
   flextable::width(
     width = 2
   ) |>
@@ -76,8 +75,7 @@ table1(na.is.category = FALSE, overall = FALSE,
        stratified_formula(kinesia_vars, column_var),
        data = v1_usable) |> 
   table1::t1flex() |>
-  flextable::fontsize(size = 8, part = "all") |> 
-  flextable::font(fontname = "Gill sans MT", part = 'all') |> 
+  shared_flextable_settings() |>
   flextable::width(
     width = 2
   ) |>
@@ -107,8 +105,7 @@ purdue_vars = c(
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
        data = v1_usable) |> 
   table1::t1flex() |>
-  flextable::fontsize(size = 8, part = "all") |> 
-  flextable::font(fontname = "Gill sans MT", part = 'all') |> 
+  shared_flextable_settings() |>
   flextable::width(
     width = 2
   ) |>
