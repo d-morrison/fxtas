@@ -5,7 +5,8 @@
 #' @returns a [character()] string
 #' @export
 #' @examples
-#' biomarker_groups = compile_biomarker_groups_table()
+#' biomarker_groups = compile_biomarker_groups_table(
+#'    dataset = test_data_v1)
 #'
 #' biomarker_varnames =
 #'   biomarker_groups |>
@@ -26,7 +27,7 @@
 #'   biomarker_varnames = biomarker_varnames
 #'   )
 #'
-#'   table |> report_sex_differences()
+#'   table |> report_sex_differences(cutoff = 0.5)
 #'
 report_sex_differences <- function(table, cutoff = 0.05)
 {

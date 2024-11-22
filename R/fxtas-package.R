@@ -43,6 +43,7 @@
 #' @importFrom fs path
 #' @importFrom ggplot2 aes
 #' @importFrom ggplot2 element_text
+#' @importFrom ggplot2 expand_limits
 #' @importFrom ggplot2 expansion
 #' @importFrom ggplot2 facet_grid
 #' @importFrom ggplot2 geom_bar

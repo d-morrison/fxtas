@@ -75,7 +75,8 @@ A \link[gtsummary:tbl_summary]{gtsummary::tbl_summary}
 Create table of demographics statistics by most-likely latent subtype
 }
 \examples{
-patient_data = sim_data
+patient_data = sim_data |>
+  dplyr::filter(.data$Category == "Patient")
 table = sim_subtype_and_stage_table
 table_subtype_by_demographics(patient_data, table,
   demographic_vars = "Sex")

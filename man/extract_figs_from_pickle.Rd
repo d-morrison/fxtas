@@ -70,4 +70,6 @@ figs = extract_figs_from_pickle(
   output_folder = "output/SuStaIn-simulated-data",
   n = 3)
 
+ figs
+
 }
