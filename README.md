@@ -9,6 +9,7 @@
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/UCD-IDDRC/fxtas/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/UCD-IDDRC/fxtas/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/UCD-IDDRC/fxtas/graph/badge.svg)](https://app.codecov.io/gh/UCD-IDDRC/fxtas)
 <!-- badges: end -->
 
 The goal of `fxtas` is to apply the Ordinal SuStaIn algorithm (Young et
