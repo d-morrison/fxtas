@@ -20,6 +20,7 @@ for latent subtype clustering analysis
 
 * added `biomarker_order` argument to `compact_pvd_data_prep()` 
 (default behavior should be unchanged)
+* added `shared_flextable_settings()` function to apply font, font size, and line spacing to all tables
 
 ## Data processing
 
