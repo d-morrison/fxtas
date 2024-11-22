@@ -28,6 +28,8 @@ biomarker_group_list = list(
   "group 2" = c("Biomarker 3", "Biomarker 4"),
   "group 3" = "Biomarker 5")
 
-compile_biomarker_groups_table(biomarker_group_list = biomarker_group_list)
+compile_biomarker_groups_table(
+   dataset = sim_data,
+   biomarker_group_list = biomarker_group_list)
 
 }

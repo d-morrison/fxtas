@@ -24,11 +24,12 @@ It prints \code{prob_correct} objects as Pandoc markdown tables.
 full_data <- test_data_v1
 v1_usable <- full_data |> dplyr::filter(CGG < 200)
 
-biomarker_groups <- compile_biomarker_groups_table()
+biomarker_groups <- compile_biomarker_groups_table(
+   dataset = v1_usable)
 
 biomarker_varnames <-
   biomarker_groups |>
-  pull("biomarker")
+  dplyr::pull("biomarker")
 
 biomarker_levels <-
   v1_usable |>
@@ -46,6 +47,6 @@ control_data |>
     biomarker_levels = biomarker_levels
   ) |>
   attr("data") |>
-  pander()
+  pander::pander()
 
 }

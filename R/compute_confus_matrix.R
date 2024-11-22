@@ -8,15 +8,15 @@
 #'
 #' @examples
 #' samples_sequence = matrix(
-#`    nrow = 2,
-#`    byrow = TRUE,
-#`    dimnames = list(
-#`      iteration = NULL,
-#`      position = paste("Event #", 1:10)),
-#`    data = paste(
-#`      "biomarker",
-#`      c(0,2,4,6,8,9,7,5,3,1,
-#`        0,1,2,3,4,5,6,7,8,9)))
+#'    nrow = 2,
+#'    byrow = TRUE,
+#'    dimnames = list(
+#'      iteration = NULL,
+#'      position = paste("Event #", 1:10)),
+#'    data = paste(
+#'      "biomarker",
+#'      c(0,2,4,6,8,9,7,5,3,1,
+#'        0,1,2,3,4,5,6,7,8,9)))
 #' compute_confus_matrix(samples_sequence)
 #'
 compute_confus_matrix <-

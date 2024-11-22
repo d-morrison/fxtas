@@ -18,7 +18,8 @@ a \code{\link[=character]{character()}} string
 Report sex differences
 }
 \examples{
-biomarker_groups = compile_biomarker_groups_table()
+biomarker_groups = compile_biomarker_groups_table(
+   dataset = test_data_v1)
 
 biomarker_varnames =
   biomarker_groups |>
@@ -39,6 +40,6 @@ table = test_data_v1 |> make_biomarkers_table(
   biomarker_varnames = biomarker_varnames
   )
 
-  table |> report_sex_differences()
+  table |> report_sex_differences(cutoff = 0.5)
 
 }

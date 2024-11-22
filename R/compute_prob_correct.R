@@ -10,13 +10,20 @@
 #' (easier than fixing all uses of this function)
 #' @export
 #' @examples
+#' require(dplyr)
 #' full_data <- sim_data
-#'
-#' biomarker_groups <- compile_biomarker_groups_table(dataset = full_data)
+#' biomarker_group_list = list(
+#'     "group 1" = c("Biomarker 1", "Biomarker 2"),
+#'    "group 2" = c("Biomarker 3", "Biomarker 4"),
+#'   "group 3" = "Biomarker 5"
+#'   )
+#' biomarker_groups <- compile_biomarker_groups_table(
+#' dataset = full_data,
+#' biomarker_group_list = biomarker_group_list)
 #'
 #' biomarker_varnames <-
 #'   biomarker_groups |>
-#'   pull("biomarker")
+#'   dplyr::pull("biomarker")
 #'
 #' biomarker_levels <-
 #'   full_data |>
@@ -24,9 +31,9 @@
 #'   lapply(F = levels)
 #'
 #' control_data <-
-#'   v1_usable |>
-#'   dplyr::filter(`FX*` == "CGG <55") |>
-#'   select(all_of(biomarker_varnames))
+#'   full_data |>
+#'   dplyr::filter(Category == "Patient") |>
+#'   dplyr::select(all_of(biomarker_varnames))
 #'
 #' control_data |>
 #'   compute_prob_correct(
@@ -56,8 +63,8 @@ compute_prob_correct <- function(dataset, biomarker_levels, max_prob = 1) {
   results <- tibble()
 
   for (cur_biomarker in biomarkers) {
-    x <- dataset |> pull(cur_biomarker)
-    cur_results <- tibble(
+    x <- dataset |> dplyr::pull(cur_biomarker)
+    cur_results <- tibble::tibble(
       biomarker = cur_biomarker,
       `# obs` = sum(!is.na(x)),
       `# at baseline` = sum(x == levels(x)[1], na.rm = TRUE),
@@ -76,12 +83,16 @@ compute_prob_correct <- function(dataset, biomarker_levels, max_prob = 1) {
     dataset[,biomarkers] |> sapply(F = labelled::get_label_attribute) |>
     unlist()
 
-  mapping = c(names(mapping)) |> rlang::set_names(mapping)
+  if(!is.null(mapping))
+  {
 
-  results$biomarker =
-    results$biomarker |>
-    labelled::add_value_labels(mapping)
+    mapping = c(names(mapping)) |> rlang::set_names(mapping)
 
+    results$biomarker =
+      results$biomarker |>
+      labelled::add_value_labels(mapping)
+
+  }
 
   probs = results$prob_correct
 
@@ -94,12 +105,12 @@ compute_prob_correct <- function(dataset, biomarker_levels, max_prob = 1) {
     select(
       all_of(
         c(
-      Biomarker = "biomarker",
-      `# controls with data` = "# obs",
-      "# at baseline",
-      "% at baseline",
-      "Est. Pr(correct)" = "prob_correct"
-    )))
+          Biomarker = "biomarker",
+          `# controls with data` = "# obs",
+          "# at baseline",
+          "% at baseline",
+          "Est. Pr(correct)" = "prob_correct"
+        )))
 
   to_return <- probs |>
     structure(
@@ -125,11 +136,12 @@ compute_prob_correct <- function(dataset, biomarker_levels, max_prob = 1) {
 #' full_data <- test_data_v1
 #' v1_usable <- full_data |> dplyr::filter(CGG < 200)
 #'
-#' biomarker_groups <- compile_biomarker_groups_table()
+#' biomarker_groups <- compile_biomarker_groups_table(
+#'    dataset = v1_usable)
 #'
 #' biomarker_varnames <-
 #'   biomarker_groups |>
-#'   pull("biomarker")
+#'   dplyr::pull("biomarker")
 #'
 #' biomarker_levels <-
 #'   v1_usable |>
@@ -147,7 +159,7 @@ compute_prob_correct <- function(dataset, biomarker_levels, max_prob = 1) {
 #'     biomarker_levels = biomarker_levels
 #'   ) |>
 #'   attr("data") |>
-#'   pander()
+#'   pander::pander()
 #'
 pander.prob_correct <- function(x, ...) {
   x |>
