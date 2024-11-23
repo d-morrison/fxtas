@@ -84,7 +84,7 @@ list(
     "Males, First Visit Only" = fig_males_first,
     "Males, All Visits" = fig_males_all
   ) |> 
-pvd_lineplot(y_text_size = y_text_size)
+pvd_lineplot(text_size = lineplot_text_size)
 ```
 
 ### Females {.appendix}
@@ -118,7 +118,7 @@ list(
     "Females, First Visit Only" = fig_females_first,
     "Females, All Visits" = fig_females_all
   ) |> 
-pvd_lineplot(y_text_size = y_text_size)
+pvd_lineplot(text_size = lineplot_text_size)
 ```
 
 ### All patients, all visits  {.appendix}
@@ -161,7 +161,7 @@ list(
     "Males" = fig_males_all,
     "Females" = fig_females_all
   ) |> 
-pvd_lineplot(y_text_size = y_text_size)
+pvd_lineplot(text_size = lineplot_text_size)
 ```
 
 {{< pagebreak >}}

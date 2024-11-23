@@ -9,7 +9,6 @@
 #' @param x_text_size todo
 #'
 #' @export
-
 pvd_lineplot <- function(figs,
                          min_alpha = 0.25,
                          max_alpha = 1,
