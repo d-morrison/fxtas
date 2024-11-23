@@ -78,7 +78,7 @@ plot_compact_pvd(
 list(
   "CGG &lt; 100" = fig_under100,
   "CGG &ge; 100" = fig_over100) |>
-pvd_lineplot(y_text_size = y_text_size)
+pvd_lineplot(text_size = lineplot_text_size)
 ```
 
 **Event sequences stratified by CGG repeats (<100 vs 100+).** 

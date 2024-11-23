@@ -27,7 +27,8 @@ list(
 list(
     "CGG &lt; 100, Males" = fig_under100_males,
     "CGG &lt; 100, Females" = fig_under100_females
-  ) |> pvd_lineplot(y_text_size = y_text_size)
+  ) |> 
+  pvd_lineplot(text_size = lineplot_text_size)
 ```
 
 **Event sequences stratified by sex, for CGG repeats <100.**
@@ -66,7 +67,7 @@ list(
     "CGG &ge; 100, Males" = fig_over100_males,
     "CGG &ge; 100, Females" = fig_over100_females
   ) |> 
-  pvd_lineplot(y_text_size = y_text_size)
+  pvd_lineplot(text_size = lineplot_text_size)
 
 ```
 
