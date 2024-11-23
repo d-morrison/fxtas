@@ -8,7 +8,8 @@ plot_compact_pvd_est2 <- function(
     tile_width = 1,
     y_text_size = 9,
     legend.position = "none",
-    scale_colors = c("red", "blue", "purple4", "darkgreen", "magenta")
+    scale_colors = c("red", "blue", "purple4", "darkgreen", "magenta"),
+    ...
 ){
   # prepare data from figure list
   #   unlike the other functions, the data will remain in a list, not combined
@@ -39,7 +40,8 @@ plot_compact_pvd_est2 <- function(
       y_text_size = y_text_size,
       legend.position = legend.position,
       tile_height = tile_height,
-      tile_width = tile_width
+      tile_width = tile_width,
+      ...
     )
   )
 

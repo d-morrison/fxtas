@@ -61,11 +61,12 @@ tmp_data_prep <- function(x) {
 tmp_func <- function(plot_dataset,
                      y_position,
                      panel_title,
-                     scale_colors = scale_colors,
-                     tile_height = tile_height,
-                     tile_width = tile_width,
-                     y_text_size = y_text_size,
-                     legend.position) {
+                     scale_colors,
+                     tile_height,
+                     tile_width,
+                     y_text_size,
+                     legend.position,
+                     title_size = y_text_size) {
   # process color scales
   level2 = colorRampPalette(c("white", scale_colors[1])) # level 2
   level3 = colorRampPalette(c("white", scale_colors[2])) # level 3
@@ -203,18 +204,19 @@ tmp_func <- function(plot_dataset,
     ggplot2::theme(
       legend.position = legend.position,
       # add color scale info in figure caption,
-      legend.title = element_markdown(size = y_text_size),
+      legend.title = element_markdown(size = title_size),
       # markdown for legends
       legend.byrow = TRUE,
       legend.box = "horizontal",
       legend.justification = ,
       legend.margin = ggplot2::margin(0, 0.15, 0, -0.45, "cm"),
       axis.title.y = ggplot2::element_blank(),
+      axis.title.x = ggtext::element_markdown(size = title_size),
       axis.text.y = ggtext::element_markdown(size = y_text_size),
       # allow markdown for coloring
       # strip.text = ggtext::element_markdown(size = facet_label_size) # allow markdown for labels
       # strip.text = ggtext::element_markdown() # allow markdown for labels
-      plot.title = ggtext::element_markdown(hjust = 0.5)
+      plot.title = ggtext::element_markdown(hjust = 0.5, size = title_size)
     )
 
   return(fig)
