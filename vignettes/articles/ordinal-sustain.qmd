@@ -715,6 +715,8 @@ Supplementary material is available at Brain online.
 ::: {#refs}
 :::
 
+{{< pagebreak >}}
+
 # Tables {.unnumbered}
 
 ```{r}
