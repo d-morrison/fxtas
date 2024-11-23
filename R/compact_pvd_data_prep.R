@@ -6,9 +6,12 @@ compact_pvd_data_prep <- function(figs, biomarker_order = NULL) {
     dataset <- dplyr::bind_rows(figs[[1]]$data, .id = "facet")
   } else {
     # extract data from list of pvd fig object
-    dataset <- dplyr::bind_rows(lapply(seq_along(figs), function(x) {
-      figs[[x]]$data
-    }), .id = "facet")
+    dataset <-
+      seq_along(figs) |>
+      lapply(function(x) {
+        figs[[x]]$data
+      }) |>
+      dplyr::bind_rows(.id = "facet")
   }
 
   # determine biomarker event order
@@ -17,18 +20,21 @@ compact_pvd_data_prep <- function(figs, biomarker_order = NULL) {
     dplyr::select(all_of(c(
       "row number and name", "event name", "biomarker"
     ))) |>
-    mutate(Order =
-             sub("\\D*(\\d+).*", "\\1", .data$`row number and name`) |>
-             as.numeric()) |>
-
-    mutate(`event order` = min(.data$Order),
-           .by = "biomarker") |>
+    mutate(
+      Order =
+        sub("\\D*(\\d+).*", "\\1", .data$`row number and name`) |>
+          as.numeric()
+    ) |>
+    mutate(
+      `event order` = min(.data$Order),
+      .by = "biomarker"
+    ) |>
     # dplyr::select(
     #   biomarker, position
     # ) |>
     arrange(`event order`) |>
     mutate(biomarker = forcats::fct_inorder(.data$biomarker)) |>
-    dplyr::select(biomarker, `event order`) |>
+    dplyr::select(all_of(c("biomarker", "event order"))) |>
     unique()
 
   if (is.null(biomarker_order)) {
@@ -45,12 +51,16 @@ compact_pvd_data_prep <- function(figs, biomarker_order = NULL) {
       biomarker_label = glue::glue("<i style='color:{group_color}'>{biomarker}</i>") |>
         forcats::fct_inorder()
     ) |>
-    dplyr::select(facet,
-                  biomarker,
-                  biomarker_label,
-                  position,
-                  proportion,
-                  level)
+    dplyr::select(all_of(
+      c(
+        "facet",
+        "biomarker",
+        "biomarker_label",
+        "position",
+        "proportion",
+        "level"
+      )
+    ))
 
   return(plot_dataset)
 }
