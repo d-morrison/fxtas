@@ -1,31 +1,35 @@
 #' Make demographics table
 #'
-#' @param data
-#'
+#' @param data a [data.frame] containing the variables specified by
+#' `strata` and `vars`
+#' @param strata names of column variable, specified as [character]
+#' @param vars names of row variables, specified as [character]
 #' @inherit format_demographics_table_as_flextable return
 #' @export
 #'
 #' @examples
 #' test_data_v1 |> make_demographics_table()
-make_demographics_table = function(data)
+make_demographics_table <- function(data,
+                                    strata = "Gender",
+                                    vars = c(# "Study",
+                                      "Age at visit",
+                                      # "# visits",
+                                      # column_var,
+                                      "Primary Race/Ethnicity",
+                                      # "Primary Ethnicity",
+                                      # "Primary Race",
+                                      "FXTAS Stage",
+                                      "CGG"
+                                      # "ApoE")
+                                    ))
 {
-  vars = c(# "Study",
-    "Age at visit",
-    # "# visits",
-    # column_var,
-    "Primary Race/Ethnicity",
-    # "Primary Ethnicity",
-    # "Primary Race",
-    "FXTAS Stage (0-5)*",
-    "CGG"
-    # "ApoE")
-  )
+
 
   data_to_use = data |>
     dplyr::select(all_of(vars), Gender, `FX*`)
   # create table using gtsummary with p-value for sex difference
 
-  table_function = function(data) {
+  table_function <- function(data) {
     data |>
       gtsummary::tbl_summary(
         by = `FX*`,
@@ -43,8 +47,8 @@ make_demographics_table = function(data)
   tbl_stat <-
     gtsummary::tbl_strata(
       data = data_to_use,
-      strata = c("Gender"),
-      .tbl_fun = ~ .x %>%
+      strata = all_of(strata),
+      .tbl_fun = ~ .x |>
         gtsummary::tbl_summary(
           by = `FX*`,
           type = gtsummary::all_continuous() ~ "continuous2",
@@ -71,6 +75,7 @@ make_demographics_table = function(data)
 
   to_return = list(tbl_stat, tbl_pval) |>
     gtsummary::tbl_merge(tab_spanner = FALSE) |>
+    gtsummary::bold_labels() |>
     format_demographics_table_as_flextable()
 
   return(to_return)

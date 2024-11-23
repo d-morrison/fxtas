@@ -1,0 +1,56 @@
+This study has several limitations.
+In the subtype clustering analysis,
+it was challenging to concisely summarize
+the differences between subtypes,
+especially given the relatively small sample sizes per subtype
+and the correspondingly large amounts of uncertainty
+in their event orderings.
+We had substantial amounts of missing data.
+As described in the methods ([Imputation of missing data](#sec-incomplete-data)),
+we used the marginal distribution of
+the observed data for each `r outcomes_name` among cases
+to impute the underlying values of these missing data.
+The missing data could contribute to uncertainty in the results.
+Our data contained both continuous and ordinal variables.
+In order to apply the Ordinal SuStaIn algorithm,
+we categorized some `r outcomes_name`s
+that were originally measured as continuous values.
+In doing so, we likely sacrificed some granular information.
+There are other variations of the SuStaIn algorithm,
+such as z-score SuStaIn [@young2018uncovering],
+which are designed to be used with only continuous measurements.
+Further development is warranted to combine Ordinal SuStaIn and z-score SuStaIn
+to fit an event-based model with both continuous and ordinal data.
+
+Our data come from the GP and TRAX studies,
+which are longitudinal cohort studies
+with infrequent follow-up visits.
+These studies do not collect precise information
+about timing of symptom onsets,
+so it is not feasible to use the longitudinal data
+to confirm the results from the Ordinal SuStaIn analysis.
+In our analysis approach,
+the event onsets are not modeled as a function of participant age;
+instead, each event's onset timing is only modeled relative to the other events.
+Therefore, the sequence differences between the subtypes
+are all in relative terms:
+if one event moves earlier in the sequence
+when comparing one subtype to another,
+other events are pushed later in the sequence,
+even if only one event timing
+changes relative to age.
+Additional research including longitudinal data
+collecting precise ages of onset
+would be needed to verify our findings.
+
+The data used in this analysis came from patients and controls in
+the catchment area of the UC Davis MIND Institute
+and may not be directly generalizable to other populations.
+For example, the participants predominantly reported
+their primary race/ethnicity as "White",
+and we did not have data from enough patients with other
+racial/ethnic identities to accurately estimate
+stratified models by race/ethnicity.
+A larger study including multiple research sites and catchment areas
+could produce a more diverse set of participants and support
+analyses with increased external validity.

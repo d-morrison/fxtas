@@ -9,7 +9,7 @@
 #' @returns a named [numeric()] vector of log-likelihoods from permuted data
 #' @export
 #'
-extract_permuted_likelihoods = function(
+extract_permuted_likelihoods <- function(
     permuting_variables = "Gender",
     n_permutations = 1000,
     permutations = 1:n_permutations,

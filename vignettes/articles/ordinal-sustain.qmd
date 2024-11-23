@@ -1,13 +1,13 @@
 ---
-title: "Development and progression of 
-Fragile X-associated tremor/ataxia syndrome 
-revealed by Subtype and Stage Inference analysis"
+title: "Progression of Fragile X-associated tremor/ataxia syndrome revealed by Subtype and Stage Inference"
 format:
   html:
     echo: false
   docx: default
 reference-doc: ../Brain_template_2022.docx
 ---
+
+**Running title:** FXTAS progression revealed by SuStaIn{{< pagebreak >}}
 
 ```{=html}
 <style>
@@ -54,12 +54,15 @@ run_cv <- TRUE
 rerun  <- TRUE
 rerun <- FALSE
 
-plot_python <- TRUE
-fig_size = c(20, 10)
+use_rds <- TRUE
+# use_rds <- FALSE
 
-pvd_height = 10
+plot_python <- TRUE
+fig_size <- c(20, 10)
+
+pvd_height = 9
 pvd_width = 8
-pvd_line_height = 10
+pvd_line_height = 9
 pvd_line_width = 8
 size.y = 11
 N_startpoints = 10L
@@ -92,7 +95,7 @@ compact_fig_cap2 = glue::glue(
   "Blue lines indicate ",
   "{outcomes_name}s that moved to earlier positions. ",
   "Line opacity levels indicate the number of positions changed ",
-  "(more opaque = more change)."
+  "(higher opacity represents more positions changed)."
 )
 
 # column_var = "Recruited in study phase"
@@ -113,7 +116,9 @@ output_folder =
 ```{r}
 #| label: subset-data
 
-full_data = trax_gp34_v1
+full_data = 
+  trax_gp34_v1 |> 
+  add_labels()
 n_missing_CGG = full_data$CGG |> is.na() |> sum()
 n_above_200 = sum(full_data$CGG >= 200, na.rm = TRUE)
 v1_usable = 
@@ -123,7 +128,7 @@ v1_usable =
            labelled::set_label_attribute("CGG Repeat Level"),
          Parkinsons = Parkinsons |> 
            labelled::set_label_attribute("Parkinson's disease"),
-         `FXTAS Stage (0-5)*` = `FXTAS Stage (0-5)*` |> 
+         `FXTAS Stage` = `FXTAS Stage` |> 
            labelled::set_label_attribute("FXTAS Stage"))
 
 v1_usable_males = v1_usable |> filter(Gender == "Male")
@@ -165,7 +170,9 @@ patient_data = v1_usable_cases
 
 ```{r}
 #| label: "biomarker-events"
-biomarker_groups = compile_biomarker_groups_table()
+biomarker_groups = compile_biomarker_groups_table(
+  dataset = v1_usable
+)
 
 biomarker_varnames = 
   biomarker_groups |> 
@@ -173,8 +180,7 @@ biomarker_varnames =
 
 biomarker_levels = 
   v1_usable |> 
-  dplyr::select(all_of(biomarker_varnames)) |> 
-  lapply(F = levels)
+  get_levels(biomarker_varnames)
 
 biomarker_events_table =
   construct_biomarker_events_table(
@@ -183,21 +189,26 @@ biomarker_events_table =
 
 nlevs = 
   biomarker_levels |> sapply(length)
-
+max_levels = nlevs |> max()
 ```
 
-[Target journal: 
-[Brain (Original Articles)](https://academic.oup.com/brain/pages/general_instructions).
-Word limit for main text: 6000.
-Figure + table limit: 8.]{.mark}
-
-{{< pagebreak >}}
+<!-- [Target journal:  -->
+<!-- [Brain (Original Articles)](https://academic.oup.com/brain/pages/general_instructions). -->
+<!-- Word limit for main text: 6000. -->
+<!-- Figure + table limit: 8.]{.mark} -->
 
 # Abstract {.unnumbered}
 
-[Abstract word limit: 400]{.mark}
+<!-- [Abstract word limit: 400]{.mark} -->
 
 {{< include _sec_abstract.qmd >}}
+
+**Keywords:** 
+Fragile X-associated tremor/ataxia syndrome;
+Subtype and Stage Inference;
+sex differences;
+statistical clustering;
+latent subgroups
 
 # Introduction
 
@@ -231,49 +242,17 @@ Figure + table limit: 8.]{.mark}
 
 ### Latent subtype clustering {#sec-methods-latent-subtypes}
 
-We also fitted the model on the full dataset (not stratified by sex or CGG) 
-for 2 - `r N_S_max` latent subtypes, 
-each with their own ordering. 
-We determined the optimal number of latent subtypes for this dataset using 
-the Cross-Validation Information Criterion (CVIC)
-and the Out-Of-Fold Log-Likelihood (OOFLL) criterion [@young2018uncovering];
-both criteria quantify how well models containing a given number of subtypes
-extend to new data not used in training.
-We performed `r N_CV_folds`-fold cross-validation on the unstratified data
-and calculated the CVIC and OOFLL for 1-`r N_S_max` latent subtypes. 
+{{< include _sec_methods_clustering.qmd >}}
 
 <!-- {{< include _methods_longitudinal.qmd >}} -->
 
 ### Visualizing modeling results
 
-We visualized the results of Ordinal SuStaIn analysis 
-using "positional variance diagrams" (PVDs).
-PVDs are heatmaps with `r events_name` on the y-axis 
-and sequence positions of events on the x-axis.
-Each event is estimated to occur at some point in continuing time 
-*relative to* other events in sequence.
-It should be noted that the exact onset time of each event
-cannot be determined by the method we used for this analysis.
-The PVD's color scale indicates the Bayesian posterior probability that 
-a particular event (y-axis) 
-appears at a particular position along the progression sequence (x-axis). 
-The different colors (red, blue, purple, green, magenta)
-indicate the ordinal levels of symptom progression.
-Color intensity presents the likelihood of sequence position. 
-That is, a brighter color indicates a more probable sequence position, 
-and a paler color indicates a less probable position. 
+{{< include _sec_pvd_description.qmd >}}
 
 ## Software
 
-The Ordinal Sustain analysis was performed using 
-the Python programming language, version 3.9 [@python3] 
-with the `pySuStaIn` package [@aksman2021pysustain].
-Data pre-processing and results post-processing were performed in 
-R 4.4.0 [@rcore] using the `tidyverse` packages [@tidyverse].
-The `reticulate` package [@reticulate] was used to create 
-an application programming interface between Python and R.
-The code used to perform this analysis is available at 
-<https://github.com/d-morrison/fxtas>.
+{{< include _sec_software.qmd >}}
 
 # Results
 
@@ -312,66 +291,20 @@ sustain_output = run_and_save_OSA(
 
 ```
 
-```{r}
-#| message: false
-#| label: model-males-v1
-#| include: false
-#| eval: !expr fit_models
-
-sustain_output_males = run_and_save_OSA(
-  patient_data = patient_data |> filter(Gender == "Male"),
-  prob_correct = prob_correct,
-  biomarker_levels = biomarker_levels,
-  SuStaInLabels = biomarker_varnames,
-  N_startpoints = N_startpoints,
-  N_S_max = N_S_max_stratified,
-  N_iterations_MCMC = N_iterations_MCMC,
-  output_folder = output_folder,
-  dataset_name = "males",
-  use_parallel_startpoints = use_parallel_startpoints,
-  seed = 1,
-  plot = plot_python,
-  rerun = rerun,
-  fig_size = fig_size)
-
-```
-
-
-```{r}
-#| message: false
-#| label: model-females
-#| include: false
-#| eval: !expr fit_models
-
-sustain_output_females = run_and_save_OSA(
-  biomarker_levels = biomarker_levels, 
-  prob_correct = prob_correct, 
-  patient_data = patient_data |> filter(Gender == "Female"),
-  
-  SuStaInLabels = biomarker_varnames,
-  N_startpoints = N_startpoints,
-  N_S_max = N_S_max_stratified, 
-  N_iterations_MCMC = N_iterations_MCMC, 
-  output_folder = output_folder, 
-  dataset_name = "females", 
-  use_parallel_startpoints = use_parallel_startpoints,
-  seed = 1,
-  plot = plot_python,
-  rerun = rerun,
-  fig_size = fig_size)
-
-```
+{{< include _sec_run_stratified_models.qmd >}}
 
 ```{r}
 #| label: extract-figs
 
 results_v1 = extract_results_from_pickles(
+  use_rds = use_rds,
   n_s = 1:N_S_max,
   rda_filename = "data.RData",
   dataset_name = "sample_data",
   output_folder = "output/output.fixed_CV")
 
 fig_females_first = extract_figs_from_pickle(
+  use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   rda_filename = "data.RData",
@@ -379,6 +312,7 @@ fig_females_first = extract_figs_from_pickle(
   output_folder = "output/output.fixed_CV")
 
 fig_males_first = extract_figs_from_pickle(
+  use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   rda_filename = "data.RData",
@@ -386,31 +320,43 @@ fig_males_first = extract_figs_from_pickle(
   output_folder = "output/output.fixed_CV")
 
 fig_both_first = extract_figs_from_pickle(
+  use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "sample_data",
   output_folder = "output/output.fixed_CV")
 
+fig_both_first2 <-  
+  list("all" = fig_both_first) |> 
+  plot_compact_pvd()
+
+ggsave(fig_both_first2,
+       filename = "output/thumbnail.jpeg")
+
 fig_under100 = extract_figs_from_pickle(
+  use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   dataset_name = "under100",
   output_folder = output_folder)
 
 fig_over100 = extract_figs_from_pickle(
+  use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   dataset_name = "over100",
   output_folder = output_folder)
 
 fig_under100_males = extract_figs_from_pickle(
+  use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   dataset_name = "under100_Male",
   output_folder = output_folder)
 
 fig_over100_males = extract_figs_from_pickle(
+  use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   dataset_name = "over100_Male",
@@ -418,12 +364,14 @@ fig_over100_males = extract_figs_from_pickle(
 
 
 fig_under100_females = extract_figs_from_pickle(
+  use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   dataset_name = "under100_Female",
   output_folder = output_folder)
 
 fig_over100_females = extract_figs_from_pickle(
+  use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   dataset_name = "over100_Female",
@@ -433,7 +381,7 @@ fig_over100_females = extract_figs_from_pickle(
 
 ```{r}
 #| label: basic-summary-stats
-stages = v1_usable_cases |> select(`FXTAS Stage (0-5)*`) |> table()
+stages = v1_usable_cases |> select(`FXTAS Stage`) |> table()
 biomarkers_table = 
   v1_usable |> 
   make_biomarkers_table(
@@ -624,7 +572,7 @@ and CGG ≥100 among males (p = `r pval_male_cgg_gp34_v1`)
 SWM between errors occurred prior to Stage 1 in males with CGG repeats <100, 
 whereas it occurred between stage 3 and 4 
 in males with CGG repeats ≥ 100 
-([Supplementary Figure @fig-pvd-by-cgg-male-2]). 
+([Supplementary Fig. @fig-pvd-by-cgg-male-2]). 
 Postural, 
 resting, 
 and intermittent tremor 
@@ -657,13 +605,13 @@ We conducted latent subtype classification analysis to cluster participants
 that are relatively homogeneous within the same cluster 
 and heterogeneous from other clusters 
 based on similarities and difference in sequential patterns. 
-Based on the CVIC criterion (Supplementary Materials, @sec-subtypes), 
+Based on the CVIC criterion (Supplementary material, [Detecting latent subtypes](#sec-subtypes)), 
 `r n_s_min_CVIC` subtypes were suggested to be the optimal number for the full, 
 unstratified dataset 
-([Supplementary Figure @fig-cvic-1]). 
-The out-of-fold log-likelihood ("OOFLL") (Supplementary Materials, @sec-subtypes) 
+([Supplementary Fig. @fig-cvic-1]). 
+The out-of-fold log-likelihood ("OOFLL") (Supplementary material, [Detecting latent subtypes](#sec-subtypes)) 
 showed substantial fold-to-fold variation 
-([Supplementary Figure @fig-cvic-2]).
+([Supplementary Fig. @fig-cvic-2]).
 Between `r broman::spell_out(n_s_selected)` and `r broman::spell_out(N_S_max)` 
 latent subgroups, 
 the distribution of OOFLL appears to be
@@ -706,6 +654,7 @@ and Subtype 4 was biased towards females (60% of males)
 and lower CGG repeat (82.7 ± 17.3). 
 
 ```{r}
+#| label: get-n-events
 n_events = nrow(biomarker_events_table)
 ```
 
@@ -766,7 +715,7 @@ Supplementary material is available at Brain online.
 ::: {#refs}
 :::
 
-::: landscape
+{{< pagebreak >}}
 
 # Tables {.unnumbered}
 
@@ -796,23 +745,7 @@ v1_usable |> make_demographics_table()
 flex_biomarkers_table(biomarkers_table)
 ```
 
-:::
-
-```{r}
-#| label: build-tbl-sg-demos
-set.seed(2)
-tbl_sg_demos = table_subtype_by_demographics(
-  patient_data,
-  subtype_and_stage_table =
-    results_cv_max$subtype_and_stage_table,
-  digits = list(
-    CGG = 1,
-    `FX3*` = c(0, 1),
-    Gender = c(0, 1),
-    `Primary Race/Ethnicity` = c(0, 1)
-  )
-)
-```
+{{< pagebreak >}}
 
 ```{r}
 #| tbl-cap: !expr 
@@ -825,9 +758,22 @@ tbl_sg_demos = table_subtype_by_demographics(
 #| label: tbl-sg_demos
 #| results: asis
 
+set.seed(2)
+tbl_sg_demos = table_subtype_by_demographics(
+  patient_data,
+  subtype_and_stage_table =
+    results_cv_max$subtype_and_stage_table,
+  digits = list(
+    CGG = 1,
+    `FX3*` = c(0, 1),
+    Gender = c(0, 1),
+    `Primary Race/Ethnicity` = c(0, 1)
+  )
+)
 
 tbl_sg_demos |>
   gtsummary::as_flex_table() |>
+  shared_flextable_settings() |>
   flextable::width(width = 1.75) |>
   flextable::width(j = 2:6, width = 0.75) |>
   flextable::width(j = 7, width = 1)
@@ -899,32 +845,17 @@ figs = extract_figs_from_pickle(
   dataset_name = dataset_name,
   output_folder = output_folder)
 
-library(ggplot2)
-
 plot_compact_pvd_est2(
   figs = figs,
   tile_height = 1,
   y_text_size = 8
 )
 
-
 ```
 
 {{< pagebreak >}}
 
-# Supplementary Material for “Development and progression of Fragile X-associated tremor/ataxia syndrome revealed by Subtype and Stage Inference analysis" {.appendix}
+# Supplementary material
 
 {{< include _sec_supplement.qmd >}}
 
-```{r}
-#| label: save-image
-#| eval: false
-fs::path_package("fxtas", "extdata") |> 
-  fs::path("ordinal-sustain-results.rda") |> 
-  save.image()
-
-# fs::path_package("fxtas", "extdata") |>
-#   fs::path("ordinal-sustain-results.rda") |>
-#   load()
-
-```

@@ -4,11 +4,19 @@
 #' @inherit plot_positional_var return
 #' @export
 #' @examples
+#'
+#' output_path =
+#'   fs::path_package("extdata/sim_data", package = "fxtas")
+#'
+#' if(dir.exists(output_path))
+#' {
 #' figs = extract_figs_from_pickle(
-#'   output_folder = "output/SuStaIn-simulated-data",
+#'   output_folder = output_path,
 #'   n = 3)
 #'
-extract_figs_from_pickle = function(
+#'  figs
+#' }
+extract_figs_from_pickle <- function(
     n_s = 1,
     dataset_name = 'sample_data',
     output_folder = "output",
@@ -35,6 +43,7 @@ extract_figs_from_pickle = function(
     output_folder |>
     fs::path("biomarker_levels.rds") |>
     readr::read_rds()
+
 
   plot_positional_var(
     results = results,

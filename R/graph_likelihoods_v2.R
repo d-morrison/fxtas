@@ -6,7 +6,7 @@
 #' @returns a [ggplot2::ggplot]
 #' @export
 #'
-graph_likelihoods_v2 = function(
+graph_likelihoods_v2 <- function(
     likelihoods,
     alpha = 0.5)
 {

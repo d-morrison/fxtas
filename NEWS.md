@@ -2,11 +2,16 @@
 
 ## Manuscript
 
-* Incorporated coauthors' feedback from 2024/09/03 draft
+* Added `gtsummary::bold_labels()` to `gtsummary` tables
+* Added keywords
+* Reduced title to under 100 characters, including spaces
+* Removed numbers from headings.
+* Incorporated coauthors' feedback up to 2024/11/18 draft
 * Added additional line-graph comparison subfigures
 for latent subtype clustering analysis
 * Added more interpretation of subtype analysis results
-* removed repeated measures analysis
+* Removed repeated measures analysis
+
 
 ## Analysis
 
@@ -16,9 +21,11 @@ for latent subtype clustering analysis
 
 * added `biomarker_order` argument to `compact_pvd_data_prep()` 
 (default behavior should be unchanged)
+* added `shared_flextable_settings()` function to apply font, font size, and line spacing to all tables
 
 ## Data processing
 
+* renamed `FXTAS Stage (0-5)*` to `FXTAS Stage`
 * added columns to pre-processed data:
    - `Male`
    - `CGG 100-199`

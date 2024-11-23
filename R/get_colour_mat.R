@@ -1,4 +1,4 @@
-get_colour_mat = function(
+get_colour_mat <- function(
     cmap,
     N_z
 )

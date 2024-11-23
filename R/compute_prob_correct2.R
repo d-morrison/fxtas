@@ -8,7 +8,7 @@
 #' @returns a [numeric] [vector]
 #' @export
 #'
-compute_prob_correct2 = function(
+compute_prob_correct2 <- function(
     dataset,
     biomarkers,
     DataScores,

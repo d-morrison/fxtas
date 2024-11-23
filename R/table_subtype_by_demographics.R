@@ -8,13 +8,14 @@
 #' @returns A [gtsummary::tbl_summary]
 #' @export
 #' @examples
-#' patient_data = sim_data
+#' patient_data = sim_data |>
+#'   dplyr::filter(.data$Category == "Patient")
 #' table = sim_subtype_and_stage_table
 #' table_subtype_by_demographics(patient_data, table,
 #'   demographic_vars = "Sex")
 #' @inheritDotParams gtsummary::tbl_summary
 
-table_subtype_by_demographics = function(
+table_subtype_by_demographics <- function(
     patient_data,
     subtype_and_stage_table,
     footnotes_as_letters = FALSE,
@@ -57,9 +58,10 @@ table_subtype_by_demographics = function(
       missing_text = "Missing",
       ...
     ) |>
+    gtsummary::bold_labels() |>
 
     gtsummary::add_p(
-      pvalue_fun = function(x) gtsummary::style_number(x, digits = 3),
+      pvalue_fun <- function(x) gtsummary::style_number(x, digits = 3),
       test = list(CGG = "oneway.test"),
       # test.args = c(`Primary Race/Ethnicity`) ~ list(simulate.p.value = TRUE)
     ) |>

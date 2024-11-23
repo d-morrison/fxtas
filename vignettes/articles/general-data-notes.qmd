@@ -1,40 +1,37 @@
-
-### Composite variables {#sec-composites .appendix}
-
-#### Any autoimmune disorder {.appendix #sec-any-autoimmune}
+### Any autoimmune disorder {.appendix #sec-any-autoimmune}
 
 Due to the rare nature of individual autoimmune diseases, a composite 
 variable (`"any autoimmune disorder"`) was created for analysis: 
-`"Yes"` if a patient had any of Lupus, Rheumatoid arthritis, 
-Multiple Sclerosis, ANA positive, Sjogren's Syndrome, Raynaud's Syndrome, 
-or Pulmonary Fibrosis; otherwise, 
+`"Yes"` if a patient had any of lupus, rheumatoid arthritis, 
+multiple sclerosis, ANA (anti-nuclear antibody) positive, Sjogren's Syndrome, Raynaud's Syndrome, 
+or pulmonary fibrosis; otherwise, 
 `"No"` for no autoimmune diseases recorded.
 
-#### MRI variables {.appendix #sec-MRI-composites}
+### MRI variables {.appendix #sec-MRI-composites}
 
 The MRI variables are combined into composite variables 
 taking the most severe score within a brain region.
 
 - "MRI Cerebellar" was composited as the most severe score of 
 Cerebellar atrophy, 
-Cerebellar WM hyperintensity, and 
-MCP-WM hyperintensity.
+Cerebellar white matter (WM) hyperintensity, and 
+Middle cerebellar peduncle (MCP) WM hyperintensity.
 
 - "MRI Cerebral" was composited as the most severe score of 
 Cerebral atrophy, 
 Cerebral WM hyperintensity,
-Pons-WM hyperintensity, 
+Pons WM hyperintensity, 
 Sub-insular WM hyperintensity, and
 Periventricular WM hyperintensity.  
 
-- Splenium-WM hyperintensity,
-Genu-WM hyperintensity, and 
-Corpus Callosum-Thickness 
-remain as separate fields,
+- Splenium WM hyperintensity,
+Genu WM hyperintensity, and 
+Corpus Callosum thickness 
+remained as separate fields,
 because they had been coded using
 incompatible Likert scales.
 
-#### SCID composite variables {.appendix #sec-SCID-composites}
+### SCID composite variables {.appendix #sec-SCID-composites}
 
 Similarly, we combined individual SCID disorders into composite variables,
 taking the highest level ("Absent", "Sub-Threshold", or "Threshold") 
@@ -48,7 +45,7 @@ Major Depressive Disorder (MD04), Lifetime,
 Dysthymic Disorder (MD05), Lifetime,
 Depressive Disorder NOS (MD06), Lifetime,
 Mood Disorder Due to GMC (MD07), Lifetime,
-Substance-Induced Mood Dis. (MD08), Lifetime
+Substance-Induced Mood Dis. (MD08), Lifetime.
 
 - "SCID: substance use disorders" combines
 Alcohol (SUD17), Lifetime,
@@ -59,7 +56,7 @@ Opioid (SUD21), Lifetime,
 Cocaine (SUD22), Lifetime,
 Hallucinogenics/ PCP (SUD23), Lifetime,
 Poly Drug (SUD24), Lifetime,
-Other (SUD25), Lifetime
+Other (SUD25), Lifetime.
 
 - "SCID: anxiety disorders" combines
 Panic Disorder (ANX26), Lifetime,
@@ -71,14 +68,16 @@ Posttraumatic Stress (ANX31), Lifetime,
 Generalized Anxiety (ANX32), Current Only,
 Anxiety Due to GMC (ANX33), Lifetime,
 Substance-Induced Anxiety (ANX34), Lifetime,
-Anxiety Disorder NOS (ANX35), Lifetime
+Anxiety Disorder NOS (ANX35), Lifetime.
+Note that in the SCID-I/NP for DSM-IV, for generalized anxiety, 
+only the current, not lifetime prevalence, is included.
 
 - "SCID: somatoform disorders" combines
 Somatization Disorder (SOM36),
 Pain Disorder (SOM37),
 Undifferentiated Somatoform (SOM38),
 Body Dysmorphic (SOM40),
-Hypochondriasis (SOM39)
+Hypochondriasis (SOM39).
 
 - "SCID: psychotic symptoms" consists of only Primary Psychotic Symptoms (PS01), Lifetime.
 

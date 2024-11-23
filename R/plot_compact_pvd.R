@@ -1,8 +1,8 @@
 #' Plot compact PVD
+#' tmp function using list of extract_figs_from_pickle
 #' @inheritDotParams compact_pvd_data_prep
 #' @export
-
-# tmp function using list of extract_figs_from_pickle
+#
 plot_compact_pvd <- function(
     figs,
     tile_height = 1,

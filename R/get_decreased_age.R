@@ -1,4 +1,4 @@
-get_decreased_age = function(dataset)
+get_decreased_age <- function(dataset)
 {
   dataset |>
     arrange(`FXS ID`, `Event Name`) |> # not sure about this one; added later to clarify difference from below
@@ -11,7 +11,7 @@ get_decreased_age = function(dataset)
     select(`FXS ID`, `Event Name`, `Visit Date`, `Age at visit`, `diff age`, `decreased age`)
 }
 
-get_decreased_age2 = function(dataset)
+get_decreased_age2 <- function(dataset)
 {
   dataset |>
     arrange(`FXS ID`, `Visit Date`) |>

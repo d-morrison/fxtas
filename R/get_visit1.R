@@ -10,7 +10,7 @@
 #'
 #' @examples
 #' test_data |> get_visit1()
-get_visit1 = function(dataset)
+get_visit1 <- function(dataset)
 {
   dataset |>
     arrange(`FXS ID`, `Visit Date`, `Event Name`) |>

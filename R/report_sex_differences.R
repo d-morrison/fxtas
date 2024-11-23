@@ -5,7 +5,8 @@
 #' @returns a [character()] string
 #' @export
 #' @examples
-#' biomarker_groups = compile_biomarker_groups_table()
+#' biomarker_groups = compile_biomarker_groups_table(
+#'    dataset = test_data_v1)
 #'
 #' biomarker_varnames =
 #'   biomarker_groups |>
@@ -13,8 +14,7 @@
 #'
 #' biomarker_levels =
 #' test_data_v1 |>
-#'  dplyr::select(all_of(biomarker_varnames)) |>
-#'  lapply(F = levels)
+#'   get_levels(biomarker_varnames)
 #'
 #' biomarker_events_table =
 #'   construct_biomarker_events_table(
@@ -26,9 +26,9 @@
 #'   biomarker_varnames = biomarker_varnames
 #'   )
 #'
-#'   table |> report_sex_differences()
+#'   table |> report_sex_differences(cutoff = 0.5)
 #'
-report_sex_differences = function(table, cutoff = 0.05)
+report_sex_differences <- function(table, cutoff = 0.05)
 {
 
   table |>

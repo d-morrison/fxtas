@@ -8,8 +8,8 @@
 #'
 #' @examples
 #' test_data_v1 |> graph_CGG_repeats()
-#' test_data_v1 |> graph_CGG_repeats(cols = vars(Gender))
-graph_CGG_repeats = function(
+#' test_data_v1 |> graph_CGG_repeats(cols = ggplot2::vars(Gender))
+graph_CGG_repeats <- function(
     data,
     rows = NULL,
     cols = NULL,

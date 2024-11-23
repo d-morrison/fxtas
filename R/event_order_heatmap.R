@@ -1,12 +1,14 @@
 #' Event order heatmap
 #'
 #' @param samples a list of orderings
-#' @param biomarkers)
+#' @param biomarkers todo
+#' @param biomarker_order todo
+#' @param verbose whether to print messages
 #'
 #' @return a ggplot object that constructs a heatmap
 #' @export
 #'
-event_order_heatmap = function(
+event_order_heatmap <- function(
     samples,
     biomarkers = attr(samples, "biomarker labels"),
     biomarker_order = NULL,
@@ -21,7 +23,7 @@ event_order_heatmap = function(
   b =
     samples |>
     sapply(X = _,
-           FUN = function(x)
+           FUN <- function(x)
              c(
                (x$ordering + 1) |> setNames(positions),
                score = x$score)

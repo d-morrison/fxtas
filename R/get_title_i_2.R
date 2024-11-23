@@ -6,16 +6,7 @@
 #'
 #' @returns a [character] string
 #' @dev
-#'
-#' @examples
-#' sim_results_3s =
-#'  fs::path_package("extdata/sim_data/", package = "fxtas") |>
-#'   extract_results_from_pickle(n_s = 3,
-#'                               output_folder = _,
-#'                               use_rds = FALSE)
-#'  sustain_table = sim_results_3s$subtype_and_stage_table
-#'  get_title_i_2(sustain_table, cval = FALSE, i = 1)
-get_title_i_2 = function(
+get_title_i_2 <- function(
     subtype_and_stage_table,
     cval = FALSE,
     i)

@@ -1,6 +1,12 @@
+## Summary data tables {.appendix}
+
+{{< include exploration.qmd >}}
+
+## Estimates of event scoring accuracy {.appendix}
+
 {{< include _sec_prob_correct.qmd >}}
 
-## General data processing notes {.appendix}
+## Composite variables {#sec-composites .appendix}
 
 {{< include general-data-notes.qmd >}}
 
@@ -14,8 +20,6 @@
 
 ## Analyses stratified by sex and CGG repeats {.appendix}
 
-{{< include _results_by_sex_and_cgg.qmd >}}
-
 ### Comparing sexes stratified by CGG level {.appendix #sec-stratified-by-cgg-and-sex}
 
 {{< include _results_by_sex_strat_cgg.qmd >}}
@@ -28,6 +32,3 @@
 
 <!-- {{< include longitudinal-results.qmd >}} -->
 
-## Additional data tables {.appendix}
-
-{{< include exploration.qmd >}}

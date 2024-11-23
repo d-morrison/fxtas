@@ -26,17 +26,16 @@ if(show_missingness_reasons)
           pattern = x, 
           x = names(v1_usable))) |> as.vector()
 }
-
-table1::t1flex(
-  table1(
+table1(
     na.is.category = FALSE, 
     overall = FALSE,
     NA.label = NA.label1,
     stratified_formula(vars, column_var),
     # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min, Max]"),
     data = v1_usable
-  )
-) |>
+  ) |> 
+  table1::t1flex() |>
+  shared_flextable_settings() |>
   flextable::width(
     width = 2
   ) |>
@@ -70,12 +69,13 @@ kinesia_vars =
     paste0(kinesia_vars, "*")) |> 
   sort()
 
-table1::t1flex(
-  table1(na.is.category = FALSE, overall = FALSE,
+
+table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
        stratified_formula(kinesia_vars, column_var),
-       data = v1_usable)
-) |>
+       data = v1_usable) |> 
+  table1::t1flex() |>
+  shared_flextable_settings() |>
   flextable::width(
     width = 2
   ) |>
@@ -98,13 +98,14 @@ purdue_vars = c(
   "Purdue pegboard 1st Trial Total, R+L+B",
   if(show_missingness_reasons) "Purdue pegboard 1st Trial Total, R+L+B: missingness reasons"
 )
-table1::t1flex(
+
   table1(na.is.category = FALSE, overall = FALSE,
        NA.label = NA.label1,
        stratified_formula(purdue_vars, column_var),
        # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-       data = v1_usable)
-) |>
+       data = v1_usable) |> 
+  table1::t1flex() |>
+  shared_flextable_settings() |>
   flextable::width(
     width = 2
   ) |>

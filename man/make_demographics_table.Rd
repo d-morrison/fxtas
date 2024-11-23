@@ -4,10 +4,19 @@
 \alias{make_demographics_table}
 \title{Make demographics table}
 \usage{
-make_demographics_table(data)
+make_demographics_table(
+  data,
+  strata = "Gender",
+  vars = c("Age at visit", "Primary Race/Ethnicity", "FXTAS Stage", "CGG")
+)
 }
 \arguments{
-\item{data}{}
+\item{data}{a \link{data.frame} containing the variables specified by
+\code{strata} and \code{vars}}
+
+\item{strata}{names of column variable, specified as \link{character}}
+
+\item{vars}{names of row variables, specified as \link{character}}
 }
 \value{
 a \link[flextable:flextable]{flextable::flextable}

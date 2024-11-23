@@ -5,7 +5,7 @@
 #'
 #' @examples
 #' scid_vars_for_table1()
-scid_vars_for_table1 = function()
+scid_vars_for_table1 <- function()
 {
   c(
     # "Was SCID completed?",

@@ -52,7 +52,7 @@ pvd_lineplot <- function(figs,
       ),
       # made FXTAS Stage label bold
       `event label` = ifelse(
-        biomarker == "FXTAS Stage (0-5)*",
+        biomarker == "FXTAS Stage",
         paste0("<b>", `event label`, "</b>"),
         as.character(`event label`)
       )
@@ -80,7 +80,7 @@ pvd_lineplot <- function(figs,
       .by = `event name`
     ) |>
     mutate(
-      linesize = ifelse(biomarker == "FXTAS Stage (0-5)*",
+      linesize = ifelse(biomarker == "FXTAS Stage",
         1.5,
         1
       ),
@@ -90,7 +90,7 @@ pvd_lineplot <- function(figs,
       ),
       # colors of choice
       Change_color = dplyr::case_when(
-        `biomarker` == "FXTAS Stage (0-5)*" ~ -2,
+        `biomarker` == "FXTAS Stage" ~ -2,
         Change < 0 ~ -1,
         Change > 0 ~ 1,
         Change == 0 ~ 0
@@ -105,7 +105,7 @@ pvd_lineplot <- function(figs,
   plot_dataset <- plot_dataset |>
     dplyr::mutate(
       alpha = dplyr::case_when(
-        biomarker == "FXTAS Stage (0-5)*" ~ stage_alpha,
+        biomarker == "FXTAS Stage" ~ stage_alpha,
         .default = (abs(Change) * alpha_mult) + min_alpha
       )
     )

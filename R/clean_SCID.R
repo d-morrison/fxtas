@@ -1,4 +1,4 @@
-clean_SCID = function(
+clean_SCID <- function(
     dataset,
     scid_vars = c(
       "Bipolar I Disorder (MD01), Lifetime",

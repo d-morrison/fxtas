@@ -40,10 +40,10 @@ df = sim_data
 SuStaInLabels = biomarkers = c('Biomarker 1', 'Biomarker 2', 'Biomarker 3',
                'Biomarker 4', 'Biomarker 5')
 
-biomarker_groups_list = list(
+biomarker_group_list = list(
   "group 1" = c("Biomarker 1", "Biomarker 2"),
   "group 2" = c("Biomarker 3", "Biomarker 4"),
-  "group 5" = "Biomarker 5"
+  "group 3" = "Biomarker 5"
 )
 ```
 
@@ -239,8 +239,9 @@ In R, we can run the algorithm with `run_OSA()`:
 biomarker_group_list = list(
   "group 1" = biomarkers[1:2],
   "group 2" = biomarkers[3:4],
-  "group 5" = biomarkers[5]
+  "group 3" = biomarkers[5]
 )
+
 biomarker_groups = compile_biomarker_groups_table(
   biomarker_group_list = biomarker_group_list
 )
@@ -279,7 +280,7 @@ ggplot() +
   geom_line(
     alpha = alpha,
     aes(
-    x = 1:nrow(likelihoods), 
+    x = seq_len(nrow(likelihoods)), 
     y = likelihoods[[1]],
     col = "One subtype"
     )
@@ -287,7 +288,7 @@ ggplot() +
   geom_line(
     alpha = alpha,
     aes(
-    x = 1:nrow(likelihoods), 
+    x = seq_len(nrow(likelihoods)), 
     y = likelihoods[[2]],
     col = "Two subtypes"
     )
@@ -295,7 +296,7 @@ ggplot() +
   geom_line(
     alpha = alpha,
     aes(
-    x = 1:nrow(likelihoods), 
+    x = seq_len(nrow(likelihoods)), 
     y = likelihoods[[3]],
     col = "Three subtypes"
     )
@@ -435,7 +436,7 @@ readr::write_rds(
 )
 
 biomarker_groups_table = compile_biomarker_groups_table(
- biomarker_groups_list
+ biomarker_group_list
 )
 
 readr::write_rds(

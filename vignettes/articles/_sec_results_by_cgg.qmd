@@ -1,52 +1,5 @@
-
-```{r}
-#| message: false
-#| label: "cgg_over_100"
-#| include: false
-#| eval: !expr fit_models
-
-sustain_output_cgg100plus = run_and_save_OSA(
-  biomarker_levels = biomarker_levels, 
-  prob_correct = prob_correct, 
-  patient_data = patient_data |> filter(`CGG` >= 100),
-  
-  SuStaInLabels = biomarker_varnames,
-  N_startpoints = N_startpoints,
-  N_S_max = N_S_max_stratified, 
-  N_iterations_MCMC = N_iterations_MCMC, 
-  output_folder = output_folder, 
-  dataset_name = "over100", 
-  use_parallel_startpoints = use_parallel_startpoints,
-  seed = 1,
-  plot = plot_python,
-  fig_size = fig_size)
-
-```
-
-```{r}
-#| message: false
-#| label: "cgg_under_100"
-#| include: false
-#| eval: !expr fit_models
-
-sustain_output_cgg100minus = run_and_save_OSA(
-  biomarker_levels = biomarker_levels, 
-  prob_correct = prob_correct, 
-  patient_data = patient_data |> filter(`CGG` < 100),
-  SuStaInLabels = biomarker_varnames,
-  N_startpoints = N_startpoints,
-  N_S_max = N_S_max_stratified, 
-  N_iterations_MCMC = N_iterations_MCMC, 
-  output_folder = output_folder, 
-  dataset_name = "under100", 
-  use_parallel_startpoints = use_parallel_startpoints,
-  seed = 1,
-  plot = plot_python,   
-  fig_size = fig_size)
-
-```
-
-@suppfig-pvd-by-cgg shows the estimated sequences stratified by CGG repeat level.
+@suppfig-pvd-by-cgg shows the estimated sequences 
+stratified by CGG repeat level.
 We did not find statistically significant evidence of a difference in event sequences
 between CGG < 100 and CGG ≥ 100 (p = `r pval_cgg_gp34_v1`),
 but some potential differences were noted
@@ -69,12 +22,12 @@ the earlier the onset and the faster the progression of FXTAS
 Perhaps the cut off of 100 is too high for this distinction to be made.
 
 These differences were more evident among males than females
-(Supplementary Materials, @sec-cgg-strat-sex).
+(Supplementary material, [Comparing CGG levels stratified by sex](#sec-cgg-strat-sex)).
 When we fitted models for subgroup analyses by sex and CGG repeats level,
 the models for males showed the same patterns described above,
 except for head tremor
 (we found no difference in head tremor onset between CGG levels).
-(@suppfig-pvd-by-cgg-male)
+@suppfig-pvd-by-cgg-male
 shows the corresponding stratified models and
 compares the estimates of the sequences for these two subgroups.
 
@@ -82,14 +35,15 @@ compares the estimates of the sequences for these two subgroups.
 We did not find statistically significant evidence of
 a difference between CGG <100 and CGG ≥100 among females
 (p = `r pval_female_cgg_gp34_v1`).
-(@suppfig-pvd-by-cgg-female)
+@suppfig-pvd-by-cgg-female
 shows the estimated stratified models
 and compares the estimates.
 Females had later onset of SWM Between Errors for CGG repeats ≥100
 and later onset of intermittent tremors for CGG repeats <100,
 but did not show evidence of the other patterns observed for males and
 for the models without sex-stratification.
-Limited sample size was an issue;
+Limited sample size in females for subgroup analyses 
+was likely an issue;
 the available data included only `r n_over100_Female` females with CGG ≥100.
 
 {{< pagebreak >}}

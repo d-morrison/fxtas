@@ -5,7 +5,7 @@
 #' @returns a [list]
 #' @export
 #'
-all_potential_biomarkers = function(dataset) {
+all_potential_biomarkers <- function(dataset) {
 
   missingness_vars = grep("missingness", names(dataset), value = TRUE)
   tremors = c(
@@ -112,7 +112,7 @@ all_potential_biomarkers = function(dataset) {
     list(
       tremors = tremors,
       ataxia = ataxia,
-      stage = "FXTAS Stage (0-5)*",
+      stage = "FXTAS Stage",
       Parkinsonian = parkinsonian_vars,
       Parkinsons = "Parkinsons",
       cancer = cancer_vars,

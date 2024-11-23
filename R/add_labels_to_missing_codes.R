@@ -1,4 +1,4 @@
-add_labels_to_missing_codes = function(x)
+add_labels_to_missing_codes <- function(x)
 {
   x |>
     forcats::fct_recode(

@@ -1,8 +1,6 @@
 The following tables summarize the distributions of the `r outcomes_name`s
 that we analyzed in this paper, stratified by sex and CGG level.
 
-:::::: landscape
-
 ```{r}
 #| label: exploration-setup
 #| include: false
@@ -33,11 +31,10 @@ footnote1 <- 'Codes `777`, `888`, and `999` are counted as "Missing" (NA).'
 ```
 
 
-### Tremors {.appendix}
-
 ::: {#supptbl-tremors}
 
 ```{r}
+#| label: tab-tremors
 vars <- c(
   "Intention tremor",
   "Resting tremor",
@@ -54,16 +51,14 @@ table1(
     . = "Median [Min, Max]"
   ),
   data = v1_usable
-)
+) |> 
+  table1::t1flex() |>
+  shared_flextable_settings()
 ```
 
 **Tremors by CGG level and sex**
 
 :::
-
-<br>
-
-### Head tremors  {.appendix}
 
 ::: {#supptbl-head-tremors}
 
@@ -87,17 +82,14 @@ table1(
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = v1_usable |>
     filter(!(Study %in% c("Trax Phase 1", "GP3")))
-)
+) |> 
+  table1::t1flex() |>
+  shared_flextable_settings()
 ```
 
 **Head tremors**
 
 :::
-
-<br>
-
-
-### Ataxia  {.appendix}
 
 ::: {#supptbl-ataxia-by-cgg}
 
@@ -116,16 +108,14 @@ table1(
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = v1_usable
-)
+) |> 
+  table1::t1flex() |>
+  shared_flextable_settings()
 ```
 
 Ataxia by CGG status
 
 :::
-
-<br>
-
-### Parkinson's disease {.appendix}
 
 ::: {#supptbl-parkinsons-by-cgg}
 
@@ -141,44 +131,37 @@ table1(
   NA.label = na_label_1,
   stratified_formula(vars, column_var),
   data = v1_usable
-)
+) |> 
+  table1::t1flex() |>
+  shared_flextable_settings()
 ```
 
 Parkinson's disease by CGG status
 
 :::
 
-### FXTAS Stage {.appendix}
-
 ::: {#supptbl-fxtas-stage-by-cgg}
 
 ```{r}
 vars <- c(
-  "FXTAS Stage (0-5)*",
-  if (show_missingness_reasons) "FXTAS Stage (0-5)*: missingness reasons"
+  "FXTAS Stage",
+  if (show_missingness_reasons) "FXTAS Stage: missingness reasons"
 )
 
 table1(
   na.is.category = FALSE, overall = FALSE,
   NA.label = na_label_1,
   stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = v1_usable
-)
+) |> 
+  table1::t1flex() |>
+  shared_flextable_settings()
 
-trax_gp34_all |>
-  filter(`FXTAS Stage (0-5)` %in%
-           c(NA, "No Response (999)", "Missing (empty in RedCap)")) |>
-  select(`FXS ID`, `Event Name`, `Visit Date`) |>
-  arrange() |>
-  readr::write_csv("inst/extdata/missing_FXTAS_stage.csv")
 ```
 
 FXTAS Stage by CGG level
 
 :::
-
-### Behavior Dyscontrol Scale - Second Edition (BDS-2) {.appendix}
 
 ::: {#supptbl-bds2}
 
@@ -192,14 +175,14 @@ table1(
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   # footnote = footnote1,
   data = v1_usable
-)
+) |> 
+  table1::t1flex() |>
+  shared_flextable_settings()
 ```
 
 Behavior Dyscontrol Scale - Second Edition (BDS-2)
 
 :::
-
-### Mini-Mental State Examination (MMSE)  {.appendix}
 
 ::: {#supptbl-mmse}
 
@@ -223,14 +206,14 @@ table1(
   # footnote = footnote1,
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = v1_usable
-)
+) |> 
+  table1::t1flex() |>
+  shared_flextable_settings()
 ```
 
 Mini-Mental State Examination (MMSE)
 
 :::
-
-### Structured Clinical Interview for DSM Disorders (SCID)  {.appendix}
 
 ::: {#supptbl-scid}
 
@@ -243,14 +226,14 @@ table1(
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = v1_usable
-)
+) |> 
+  table1::t1flex() |>
+  shared_flextable_settings()
 ```
 
 Structured Clinical Interview for DSM Disorders (SCID)
 
 :::
-
-### MRI  {.appendix}
 
 ::: {#supptbl-mri}
 
@@ -278,14 +261,14 @@ table1(
   droplevels = FALSE,
   x = stratified_formula(vars, column_var),
   data = v1_usable
-)
+) |> 
+  table1::t1flex() |>
+  shared_flextable_settings()
 ```
 
 **MRI variables by Sex and CGG level**
 
 :::
-
-### Cambridge Neuropsychological Test Automated Battery (CANTAB)  {.appendix}
 
 We used categorization cutoffs taken from [@talebi2020cambridge].
 
@@ -322,29 +305,23 @@ cantab_vars <- c(
 # ) |>
 #   as.vector()
 
-table1::t1flex(
+
   table1(
     na.is.category = FALSE, overall = FALSE,
     NA.label = "Missing (empty in RedCap)",
     stratified_formula(cantab_vars, column_var),
     # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
     data = v1_usable
-  )
-) |>
-  flextable::width(
-    width = 2
-  ) |>
-  flextable::width(
-    j = 2:7,
-    width = 1.25
-  )
+  ) |> 
+    table1::t1flex() |>
+    shared_flextable_settings() |>
+    flextable::width(width = 2) |>
+    flextable::width(j = 2:7, width = 1.25)
 ```
 
 **Cambridge Neuropsychological Test Automated Battery (CANTAB)**
 
 :::
-
-### Thyroid and autoimmune diseases  {.appendix}
 
 ::: {#supptbl-autoimmune}
 
@@ -369,11 +346,13 @@ table1(
   NA.label = na_label_1,
   stratified_formula(vars, column_var),
   data = v1_usable
-)
+) |> 
+  table1::t1flex() |>
+  shared_flextable_settings()
 ```
 
 **Thyroid and autoimmune diseases**
 
 :::
 
-::::::
+

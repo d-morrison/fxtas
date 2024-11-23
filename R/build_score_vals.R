@@ -5,7 +5,7 @@
 #' @returns a [matrix()] indicating which levels each biomarker has
 #' @export
 #'
-build_score_vals = function(
+build_score_vals <- function(
     biomarker_levels
 )
 {

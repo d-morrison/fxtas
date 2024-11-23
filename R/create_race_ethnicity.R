@@ -30,7 +30,7 @@ create_race_ethnicity <- function(dataset){
     )
 }
 
-order_by_frequency = function(x)
+order_by_frequency <- function(x)
 {
   levels = x |>
     table() |>

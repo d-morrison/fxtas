@@ -1,4 +1,4 @@
-fix_CGG = function(dataset)
+fix_CGG <- function(dataset)
 {
   missingCGG = readxl::read_excel(
     "inst/extdata/Missing CGG repeat import_24Mar23.xlsx",

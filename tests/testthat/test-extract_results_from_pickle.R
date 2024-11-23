@@ -1,8 +1,11 @@
 test_that("`extract_results_from_pickle()` produces stable results", {
 
-  results = here::here() |>
-    fs::path("output/SuStaIn-simulated-data/") |>
-    extract_results_from_pickle(output_folder = _)
+  output_path =
+    fs::path_package("extdata/sim_data", package = "fxtas")
+
+  results =
+    extract_results_from_pickle(output_folder = output_path,
+                                use_rds = FALSE)
 
   results$samples_sequence = NULL
   results$samples_f = NULL

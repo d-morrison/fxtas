@@ -1,4 +1,4 @@
-extract_subtype_and_stage_table = function(results)
+extract_subtype_and_stage_table <- function(results)
 {
 
   n_s = get_n_subtypes(results)

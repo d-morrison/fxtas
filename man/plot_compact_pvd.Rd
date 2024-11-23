@@ -2,7 +2,8 @@
 % Please edit documentation in R/plot_compact_pvd.R
 \name{plot_compact_pvd}
 \alias{plot_compact_pvd}
-\title{Plot compact PVD}
+\title{Plot compact PVD
+tmp function using list of extract_figs_from_pickle}
 \usage{
 plot_compact_pvd(
   figs,
@@ -23,4 +24,5 @@ plot_compact_pvd(
 }
 \description{
 Plot compact PVD
+tmp function using list of extract_figs_from_pickle
 }
