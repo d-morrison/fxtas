@@ -16,7 +16,7 @@ males_by_cgg = list(
     "Males, CGG &lt; 100 <br>" = fig_under100_males,
     "Males, CGG &ge; 100  <br>" = fig_over100_males
   ) |>
-plot_compact_pvd(y_text_size = 11)
+plot_compact_pvd(y_text_size = y_text_size)
 
 ```
 
@@ -34,7 +34,7 @@ list(
     "Males, CGG &lt; 100" = fig_under100_males,
     "Males, CGG &ge; 100" = fig_over100_males
   ) |>
-pvd_lineplot(y_text_size = 11)
+pvd_lineplot(y_text_size = y_text_size)
 ```
 
 **Event sequences stratified by CGG repeats, among males.**
@@ -63,7 +63,7 @@ plot_compact_pvd(
     fig_over100_females
   ),
   facet_label = c("Females, CGG &lt; 100  <br>", "Females, CGG &ge; 100  <br>"),
-  y_text_size = 11
+  y_text_size = y_text_size
 )
 
 ```
@@ -85,7 +85,7 @@ pvd_lineplot(
     fig_over100_females
   ),
   facet_label = c("Females, CGG &lt; 100", "Females, CGG &ge; 100"),
-  y_text_size = 11
+  y_text_size = y_text_size
 )
 ```
 

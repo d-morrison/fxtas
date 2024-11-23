@@ -15,7 +15,7 @@ plot_compact_pvd(
     fig_under100_females
   ),
   facet_label = c("CGG &lt; 100, Males  <br>", "CGG &lt; 100, Females  <br>"),
-  y_text_size = 11
+  y_text_size = y_text_size
 )
 
 ```
@@ -32,7 +32,7 @@ pvd_lineplot(
     "CGG &lt; 100, Males" = fig_under100_males,
     "CGG &lt; 100, Females" = fig_under100_females
   ),
-  y_text_size = 11
+  y_text_size = y_text_size
 )
 ```
 
@@ -59,7 +59,7 @@ plot_compact_pvd(
     fig_over100_females
   ),
   facet_label = c("CGG &ge; 100, Males  <br>", "CGG &ge; 100, Females  <br>"),
-  y_text_size = 11
+  y_text_size = y_text_size
 )
 
 ```
@@ -77,7 +77,7 @@ pvd_lineplot(
     fig_over100_females
   ),
   facet_label = c("CGG &ge; 100, Males", "CGG &ge; 100, Females"),
-  y_text_size = 11
+  y_text_size = y_text_size
 )
 
 ```

@@ -4,10 +4,12 @@
 \alias{plot_cv_loglik}
 \title{Plot cross-validated per-fold log-likelihood distributions}
 \usage{
-plot_cv_loglik(cv_loglik)
+plot_cv_loglik(cv_loglik, y_text_size = 8)
 }
 \arguments{
 \item{cv_loglik}{\code{\link[=matrix]{matrix()}} with rows corresponding to cross-validation folds and columns corresponding to number of latent subgroups}
+
+\item{y_text_size}{\link{integer}}
 }
 \value{
 a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}

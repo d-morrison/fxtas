@@ -60,11 +60,12 @@ use_rds <- TRUE
 plot_python <- TRUE
 fig_size <- c(20, 10)
 
-pvd_height = 8
-pvd_width = 7
-pvd_line_height = 8
-pvd_line_width = 7
+pvd_height = 5.5
+pvd_width = 6
+pvd_line_height = 7
+pvd_line_width = 6
 size.y = 8
+y_text_size = 8
 N_startpoints = 10L
 # use_parallel_startpoints = TRUE
 use_parallel_startpoints = FALSE # couldn't get parallel to work, 2024/06/15
@@ -717,8 +718,6 @@ Supplementary material is available at Brain online.
 
 {{< pagebreak >}}
 
-# Tables {.unnumbered}
-
 ```{r}
 #| label: "tbl-demographics"
 #| tbl-cap: |
@@ -782,8 +781,6 @@ tbl_sg_demos |>
 
 {{< pagebreak >}}
 
-# Figures {.unnumbered}
-
 ```{r}
 #| label: fig-first-only-pvd
 #| column: page
@@ -802,7 +799,7 @@ plot_compact_pvd(
     fig_females_first
   ),
   facet_label = c("Males <br>", "Females <br>"),
-  y_text_size = 11
+  y_text_size = y_text_size
 )
 
 ```
@@ -823,7 +820,7 @@ list(
     "Males" = fig_males_first,
     "Females" = fig_females_first
   ) |> 
-pvd_lineplot(y_text_size = 11)
+pvd_lineplot(y_text_size = y_text_size)
 
 ```
 
@@ -831,7 +828,7 @@ pvd_lineplot(y_text_size = 11)
 
 ```{r}
 #| label: fig-pvd_chosen_subtypes
-#| fig-height: !expr pvd_height
+#| fig-height: 7
 #| fig-width: !expr pvd_width
 #| fig-cap: !expr 
 #|     glue::glue(

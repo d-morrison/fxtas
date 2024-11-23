@@ -60,7 +60,7 @@ list(
   ) |> 
 plot_compact_pvd(
   facet_label_prefix = c("CGG &lt; 100 <br>", "CGG &ge; 100 <br>"),
-  y_text_size = 11
+  y_text_size = y_text_size
 )
 
 
@@ -79,10 +79,13 @@ plot_compact_pvd(
 list(
   "CGG &lt; 100" = fig_under100,
   "CGG &ge; 100" = fig_over100) |>
-pvd_lineplot(y_text_size = 11)
+pvd_lineplot(y_text_size = y_text_size)
 ```
 
-`r glue::glue("**Event sequences stratified by CGG repeats (<100 vs 100+).** Differences in event sequences between CGG repeat sizes.")`
+**Event sequences stratified by CGG repeats (<100 vs 100+).** 
+Differences in event sequences between CGG repeat sizes.
+`r compact_fig_cap2`
+
 :::
 
 
