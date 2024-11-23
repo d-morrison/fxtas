@@ -791,7 +791,7 @@ tbl_sg_demos |>
 #|    {compact_fig_caption}")
 #| fig-cap-location: top
 
-figs = list(
+list(
     "Males <br>" = fig_males_first,
     "Females <br>" = fig_females_first
   ) |> 
