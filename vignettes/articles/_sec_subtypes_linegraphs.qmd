@@ -2,6 +2,7 @@
 ::: {#suppfig-pvd_chosen_subtypes_linegraphs}
 
 ```{r}
+#| label: extract-figs-from-pickle-n-s-selected
 figs =
   extract_figs_from_pickle(
     size.y = size.y,
@@ -18,7 +19,7 @@ figs =
 #| fig-cap:
 #|    - "**Subtype 1 compared to Subtype 2**"
 
-pvd_lineplot(y_text_size = y_text_size, figs = figs[c(1, 2)])
+figs[c(1, 2)] |> pvd_lineplot(y_text_size = y_text_size)
 
 ```
 
@@ -31,7 +32,7 @@ pvd_lineplot(y_text_size = y_text_size, figs = figs[c(1, 2)])
 #| fig-cap:
 #|    - "**Subtype 1 compared to Subtype 3**"
 
-pvd_lineplot(y_text_size = y_text_size, figs = figs[c(1, 3)])
+figs[c(1, 3)] |> pvd_lineplot(y_text_size = y_text_size)
 
 ```
 
@@ -44,7 +45,7 @@ pvd_lineplot(y_text_size = y_text_size, figs = figs[c(1, 3)])
 #| fig-cap:
 #|    - "**Subtype 1 compared to Subtype 4**"
 
-pvd_lineplot(y_text_size = y_text_size, figs = figs[c(1, 4)])
+figs[c(1, 4)] |> pvd_lineplot(y_text_size = y_text_size)
 
 ```
 
@@ -57,7 +58,7 @@ pvd_lineplot(y_text_size = y_text_size, figs = figs[c(1, 4)])
 #| fig-cap:
 #|    - "**Subtype 2 compared to Subtype 3**"
 
-pvd_lineplot(y_text_size = y_text_size, figs = figs[c(2, 3)])
+figs[c(2, 3)] |> pvd_lineplot(y_text_size = y_text_size)
 
 ```
 
@@ -70,7 +71,7 @@ pvd_lineplot(y_text_size = y_text_size, figs = figs[c(2, 3)])
 #| fig-cap:
 #|    - "**Subtype 2 compared to Subtype 4**"
 
-pvd_lineplot(y_text_size = y_text_size, figs = figs[c(2, 4)])
+figs[c(2, 4)] |> pvd_lineplot(y_text_size = y_text_size)
 
 ```
 
@@ -83,7 +84,7 @@ pvd_lineplot(y_text_size = y_text_size, figs = figs[c(2, 4)])
 #| fig-cap:
 #|    - "**Subtype 3 compared to Subtype 4**"
 
-pvd_lineplot(y_text_size = y_text_size, figs = figs[c(3, 4)])
+figs[c(3, 4)] |> pvd_lineplot(y_text_size = y_text_size)
 
 ```
 

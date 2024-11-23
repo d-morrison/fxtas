@@ -793,14 +793,11 @@ tbl_sg_demos |>
 #| fig-cap-location: top
 
 
-plot_compact_pvd(
-  figs = list(
-    fig_males_first,
-    fig_females_first
-  ),
-  facet_label = c("Males <br>", "Females <br>"),
-  y_text_size = y_text_size
-)
+figs = list(
+    "Males <br>" = fig_males_first,
+    "Females <br>" = fig_females_first
+  ) |> 
+plot_compact_pvd(y_text_size = y_text_size)
 
 ```
 
