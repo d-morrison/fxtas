@@ -15,8 +15,7 @@ test_that("`report_sex_differences()` produces stable results", {
 
   biomarker_levels =
     v1_usable |>
-    dplyr::select(all_of(biomarker_varnames)) |>
-    lapply(F = levels)
+    get_levels(biomarker_varnames)
 
   biomarker_events_table =
     construct_biomarker_events_table(

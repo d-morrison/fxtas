@@ -27,8 +27,7 @@
 #'
 #' biomarker_levels <-
 #'   full_data |>
-#'   dplyr::select(all_of(biomarker_varnames)) |>
-#'   lapply(F = levels)
+#'   get_levels(biomarker_varnames)
 #'
 #' control_data <-
 #'   full_data |>
@@ -145,8 +144,7 @@ compute_prob_correct <- function(dataset, biomarker_levels, max_prob = 1) {
 #'
 #' biomarker_levels <-
 #'   v1_usable |>
-#'   dplyr::select(all_of(biomarker_varnames)) |>
-#'   lapply(F = levels)
+#'   get_levels(biomarker_varnames)
 #'
 #' control_data <-
 #'   v1_usable |>
