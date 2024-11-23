@@ -1,5 +1,8 @@
 test_that("`test_biomarkers_table()` produces consistent results", {
 
+
+  df = sim_data
+
   biomarker_group_list = list(
     "group 1" = c("Biomarker 1", "Biomarker 2"),
     "group 2" = c("Biomarker 3", "Biomarker 4"),
@@ -7,18 +10,17 @@ test_that("`test_biomarkers_table()` produces consistent results", {
   )
 
   biomarker_groups =
-    compile_biomarker_groups_table(biomarker_group_list = biomarker_group_list)
+    compile_biomarker_groups_table(
+      dataset = df,
+      biomarker_group_list = biomarker_group_list)
 
   SuStaInLabels = biomarkers = biomarker_varnames =
     biomarker_groups |>
     pull("biomarker")
 
-  df = sim_data
-
   biomarker_levels =
     df |>
-    dplyr::select(all_of(biomarker_varnames)) |>
-    lapply(F = levels)
+    get_levels(biomarker_varnames)
 
   biomarker_events_table =
     construct_biomarker_events_table(

@@ -11,8 +11,11 @@ construct_biomarker_events_table <- function(
     biomarker_groups
     )
 {
-  biomarker_levels |>
-    get_biomarker_events_table() |>
+  biomarker_events_table =
+    biomarker_levels |>
+    get_biomarker_events_table()
+
+  biomarker_events_table |>
     left_join(
       biomarker_groups,
       by = "biomarker"

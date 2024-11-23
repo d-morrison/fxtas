@@ -23,7 +23,8 @@ compile_biomarker_groups_table <- function(
       choose_biomarker_group_colors(),
     ...)
 {
-  biomarker_group_list |>
+  to_return =
+    biomarker_group_list |>
     stack() |>
     as_tibble() |>
     dplyr::rename(
@@ -38,4 +39,20 @@ compile_biomarker_groups_table <- function(
       by = "biomarker_group"
     )
 
+  labels1 <-
+    dataset |>
+    select(all_of(to_return$biomarker)) |>
+    labelled::get_variable_labels() |>
+    unlist()
+
+  labels2 = swap_names_and_values(labels1)
+
+  if(!is.null(labels2))
+  {
+    to_return =
+      to_return |>
+      labelled::add_value_labels(biomarker = labels2)
+  }
+
+  to_return
 }
