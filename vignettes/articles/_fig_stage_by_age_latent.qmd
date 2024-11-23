@@ -2,6 +2,7 @@
 ::: {#suppfig-stage-by-age}
 
 ```{r}
+#| label: graph_stage_by_age
 #| fig-width: 6
 stages =
   results_cv_max$subtype_and_stage_table |>

@@ -57,14 +57,11 @@ pvd_lineplot(y_text_size = y_text_size)
 #|      ")
 
 # compact pvd
-plot_compact_pvd(
-  figs = list(
-    fig_under100_females,
-    fig_over100_females
-  ),
-  facet_label = c("Females, CGG &lt; 100  <br>", "Females, CGG &ge; 100  <br>"),
-  y_text_size = y_text_size
-)
+list(
+    "Females, CGG &lt; 100  <br>" = fig_under100_females,
+    "Females, CGG &ge; 100  <br>" = fig_over100_females
+  ) |> 
+  plot_compact_pvd(y_text_size = y_text_size)
 
 ```
 
@@ -79,14 +76,13 @@ plot_compact_pvd(
 #|      between CGG repeats.** {compact_fig_cap2}")
 
 # lineplot of event sequences
-pvd_lineplot(y_text_size = y_text_size, 
-  figs = list(
-    fig_under100_females,
-    fig_over100_females
-  ),
-  facet_label = c("Females, CGG &lt; 100", "Females, CGG &ge; 100"),
-  y_text_size = y_text_size
-)
+
+list(
+  "Females, CGG &lt; 100" = fig_under100_females,
+  "Females, CGG &ge; 100" = fig_over100_females
+) |> 
+  pvd_lineplot(y_text_size = y_text_size)
+  
 ```
 
 **Event sequences stratified by CGG repeats, among females.**
