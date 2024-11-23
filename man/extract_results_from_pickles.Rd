@@ -13,6 +13,7 @@ extract_results_from_pickles(
   picklename = paste0(basename, ".pickle"),
   format_results = TRUE,
   use_rds = TRUE,
+  verbose = FALSE,
   ...
 )
 }
@@ -28,6 +29,8 @@ extract_results_from_pickles(
 \item{picklename}{the name of the pickle file to open}
 
 \item{format_results}{whether to apply \code{\link[=format_results_list]{format_results_list()}} to results before returning}
+
+\item{verbose}{whether to print messages}
 }
 \value{
 a \link{list} of \code{"SuStaIn-model"} objects (extends \code{\link[=list]{list()}})

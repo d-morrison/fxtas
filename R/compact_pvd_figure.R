@@ -43,7 +43,8 @@ compact_pvd_figure <- function(
 
   plot_dataset <-
     plot_dataset |>
-    mutate(facet = facet_names[as.numeric(.data$facet)])
+    mutate(facet = facet_names[as.numeric(.data$facet)] |>
+             factor(levels = facet_names))
 
   nlevels <- plot_dataset |>
     pull("level") |>

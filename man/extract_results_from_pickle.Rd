@@ -13,6 +13,7 @@ extract_results_from_pickle(
   picklename = paste0(basename, ".pickle"),
   format_results = TRUE,
   use_rds = TRUE,
+  verbose = FALSE,
   ...
 )
 }
@@ -28,6 +29,8 @@ extract_results_from_pickle(
 \item{picklename}{the name of the pickle file to open}
 
 \item{format_results}{whether to apply \code{\link[=format_results_list]{format_results_list()}} to results before returning}
+
+\item{verbose}{whether to print messages}
 
 \item{...}{
   Arguments passed on to \code{\link[=format_results_list]{format_results_list}}
