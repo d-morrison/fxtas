@@ -5,7 +5,7 @@
 #' @return a [ggplot2::ggplot()]
 #' @export
 #'
-plot_cv_loglik = function(cv_loglik)
+plot_cv_loglik <- function(cv_loglik)
 {
   colnames(cv_loglik) = 1:ncol(cv_loglik)
   cv_loglik |>

@@ -1,4 +1,4 @@
-apply_cutoffs = function(
+apply_cutoffs <- function(
     dataset,
     cutoffs)
 {

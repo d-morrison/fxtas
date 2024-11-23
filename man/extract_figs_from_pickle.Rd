@@ -51,7 +51,7 @@ extract_figs_from_pickle(
     \item{\code{save_path}}{todo}
     \item{\code{save_kwargs}}{todo}
     \item{\code{results}}{todo}
-    \item{\code{biomarker_levels}}{todo}
+    \item{\code{biomarker_levels}}{doesn't do much right now}
     \item{\code{biomarker_groups}}{biomarker groupings}
     \item{\code{biomarker_events_table}}{todo}
     \item{\code{biomarker_event_names}}{todo}
@@ -66,8 +66,16 @@ a \verb{"PVD.list} (a \link{list} of \code{PVD} objects from \code{\link[=plot.P
 Extact PVDs from pickle file
 }
 \examples{
+
+output_path =
+  fs::path_package("extdata/sim_data", package = "fxtas")
+
+if(dir.exists(output_path))
+{
 figs = extract_figs_from_pickle(
-  output_folder = "output/SuStaIn-simulated-data",
+  output_folder = output_path,
   n = 3)
 
+ figs
+}
 }

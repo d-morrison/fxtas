@@ -1,0 +1,84 @@
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+name: test-coverage.yaml
+
+permissions: read-all
+
+jobs:
+  test-coverage:
+    runs-on: macos-13
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@HEAD
+
+      - uses: actions/setup-python@HEAD
+        with:
+          python-version: '3.9'
+
+      - uses: r-lib/actions/setup-r@HEAD
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@HEAD
+        with:
+          extra-packages: any::covr, any::xml2
+          needs: coverage
+
+      - name: setup r-reticulate venv
+        shell: Rscript {0}
+        run: |
+
+          library(reticulate)
+
+          path_to_venv <- virtualenv_create(
+            envname = "fxtas39",
+            python = Sys.which("python"), # placed on PATH by the setup-python action
+            packages = c(
+              "git+https://github.com/d-morrison/pySuStaIn"
+            )
+          )
+
+          writeLines(
+            paste0("RETICULATE_PYTHON=", virtualenv_python(path_to_venv)),
+            Sys.getenv("GITHUB_ENV"))
+
+
+      - name: Test coverage
+        run: |
+          cov <- covr::package_coverage(
+            quiet = FALSE,
+            clean = FALSE,
+            install_path = file.path(normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/"), "package")
+          )
+          covr::to_cobertura(cov)
+        shell: Rscript {0}
+
+      - uses: codecov/codecov-action@HEAD
+        with:
+          # Fail if error if not on PR, or if on PR and token is given
+          fail_ci_if_error: ${{ github.event_name != 'pull_request' || secrets.CODECOV_TOKEN }}
+          file: ./cobertura.xml
+          plugin: noop
+          disable_search: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Show testthat output
+        if: always()
+        run: |
+          ## --------------------------------------------------------------------
+          find '${{ runner.temp }}/package' -name 'testthat.Rout*' -exec cat '{}' \; || true
+        shell: bash
+
+      - name: Upload test results
+        if: failure()
+        uses: actions/upload-artifact@HEAD
+        with:
+          name: coverage-test-failures
+          path: ${{ runner.temp }}/package

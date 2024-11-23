@@ -1,4 +1,4 @@
-order_biomarkers = function(position_frequencies) {
+order_biomarkers <- function(position_frequencies) {
   order =
     position_frequencies |>
     arrange(pick("event name"), desc(pick("proportion")), pick("position")) |>

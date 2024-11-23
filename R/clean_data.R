@@ -1,4 +1,4 @@
-clean_data = function(dataset)
+clean_data <- function(dataset)
 {
   dataset |>
     arrange(`FXS ID`, `Visit Date`, `Event Name`) |>

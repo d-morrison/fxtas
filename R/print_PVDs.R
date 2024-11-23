@@ -5,7 +5,7 @@
 #' @returns `figs`, invisibly
 #' @export
 #'
-print_PVDs = function(figs)
+print_PVDs <- function(figs)
 {
 
   print(figs[[1]])

@@ -1,4 +1,4 @@
-fix_drugs_used = function(dataset)
+fix_drugs_used <- function(dataset)
 {
   dataset |>
     mutate(

@@ -6,7 +6,7 @@
 #' @returns the observed test statistic (a [numeric()] scalar)
 #' @export
 #'
-get_observed_permutation_test_stat = function(
+get_observed_permutation_test_stat <- function(
     output_folder,
     dataset_names)
 {

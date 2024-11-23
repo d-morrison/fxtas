@@ -1,4 +1,4 @@
-clean_kinesia = function(
+clean_kinesia <- function(
     data,
     kinesia_vars = c(
       "Kinesia Left Rest Tremor",

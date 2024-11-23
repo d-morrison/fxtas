@@ -1,4 +1,4 @@
-choose_biomarker_group_colors = function(
+choose_biomarker_group_colors <- function(
     biomarker_groups,
     biomarker_group_names =
       biomarker_groups |>

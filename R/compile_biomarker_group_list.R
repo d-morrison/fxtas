@@ -13,9 +13,9 @@
 #'
 #' @export
 #' @examples
-#' test_data |> compile_biomarker_group_list(dataset = test_data_v1)
+#' compile_biomarker_group_list(dataset = test_data_v1)
 #'
-compile_biomarker_group_list = function(dataset)
+compile_biomarker_group_list <- function(dataset)
 {
 
   tremors = c(
@@ -131,7 +131,7 @@ kinesia_vars = c(
     list(
       Tremors = tremors,
       Ataxia = ataxia,
-      Stage = "FXTAS Stage (0-5)*",
+      Stage = "FXTAS Stage",
       Parkinsonian = parkinsonian_vars,
       Parkinsons = "Parkinsons",
       # cancer = cancer_vars,

@@ -1,4 +1,4 @@
-remove_unneeded_records = function(dataset)
+remove_unneeded_records <- function(dataset)
 {
   dataset |>
     filter(

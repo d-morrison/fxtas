@@ -78,6 +78,7 @@ pvd_lineplot(figs = figs[c(3, 4)])
 
 ```
 
-`r glue::glue("**Differences in event sequences between pairs of latent subtypes.**")`
+**Differences in event sequences between pairs of latent subtypes.**
+`r compact_fig_cap2`
 
 :::

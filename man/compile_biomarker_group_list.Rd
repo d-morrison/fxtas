@@ -18,6 +18,6 @@ Some of the categories are hard-coded, while others are extracted from the
 column names of the input \link{data.frame} \code{dataset} using regular expressions (see \link[base:regex]{base::regex} and \code{\link[base:grep]{base::grep()}}).
 }
 \examples{
-test_data |> compile_biomarker_group_list(dataset = test_data_v1)
+compile_biomarker_group_list(dataset = test_data_v1)
 
 }

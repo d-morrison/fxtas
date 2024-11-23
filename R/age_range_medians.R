@@ -5,7 +5,7 @@
 #' @returns a [numeric] vector corresponding to `x`
 #' @export
 #'
-age_range_medians = function(x)
+age_range_medians <- function(x)
 {
   case_when(
     # lifelong:

@@ -6,7 +6,7 @@
 #' @export
 #'
 
-format_likelihoods = function(likelihoods)
+format_likelihoods <- function(likelihoods)
 {
   colnames = 1:ncol(likelihoods) |>
     paste0(" subtype", if_else(1:ncol(likelihoods) == 1, "", "s"))

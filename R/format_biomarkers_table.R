@@ -5,7 +5,7 @@
 #' @returns a [flextable::flextable()]
 #' @export
 #'
-flex_biomarkers_table = function(x)
+flex_biomarkers_table <- function(x)
 {
   x |>
     mutate(
@@ -42,5 +42,7 @@ flex_biomarkers_table = function(x)
         flextable::as_paragraph(),
       ref_symbols = 'b',
       part = "header"
-    )
+    ) |>
+    shared_flextable_settings()
+
 }

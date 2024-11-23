@@ -1,10 +1,10 @@
 authors:
-  - name: Douglas Ezra Morrison
+  - name: Douglas E. Morrison
     affiliations:
       - ref: ucdphs
     corresponding: true
     email: demorrison@ucdavis.edu
-    address: One Shields Ave, Davis, CA 95616
+    address: "Medical Sciences 1C #113, One Shields Ave, Davis, CA 95616"
 
   - name: Matthew Ponzini
     affiliations:
@@ -23,7 +23,7 @@ authors:
     affiliations:
       - ref: ucdmind
       - ref: ucdbiochem
-  - name: Susan Rivera
+  - name: Susan M. Rivera
     affiliations:
       - ref: umdpsychology
   - name: David Hessl
@@ -96,7 +96,7 @@ format:
     fig-cap-location: top
     appendix-title: "Sup."
     tbl-cap-location: top
-    number-sections: true
+    number-sections: false
     number-depth: 3
     link-citations: true
     date: last-modified
@@ -147,17 +147,16 @@ execute:
   cache: false
   freeze: false  # re-render only when source changes
 filters:
-  - vignettes/docx-landscape.lua
   - authors-block
   - at: post-quarto
     path: vignettes/appendix_numbering.lua
 
 crossref:
-  appendix-title: "Supplemental Materials" # doesn't seem to work
+  appendix-title: "Supplementary material" # doesn't seem to work
   custom:
     - kind: float
       key: suppfig
-      reference-prefix: Supplementary Figure
+      reference-prefix: Supplementary Fig.
       space-before-numbering: true
     - kind: float
       key: supptbl

@@ -117,7 +117,7 @@ control_data =
 patient_data =
   df |>
   # na.omit() |>
-  filter(`FX*` == "CGG >= 55")
+  filter(`FX*` == "CGG \u2265 55")
 
 cli::cli_inform("`nrow(patient_data)` = {nrow(patient_data)}")
 

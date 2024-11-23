@@ -10,7 +10,7 @@
 #' "parkinsonian features",
 #' "parkinsonian features: missingness reasons")
 #' vars |> remove_missingness_reason_vars()
-remove_missingness_reason_vars = function(vars)
+remove_missingness_reason_vars <- function(vars)
 {
   vars |>
     grep(

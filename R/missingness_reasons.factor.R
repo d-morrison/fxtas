@@ -8,7 +8,7 @@
 #'
 #' @importFrom forcats fct_relevel
 #' @importFrom tidyr replace_na
-missingness_reasons.factor = function(
+missingness_reasons.factor <- function(
     x,
     x.clean = x |> replace_missing_codes_with_NAs())
 {

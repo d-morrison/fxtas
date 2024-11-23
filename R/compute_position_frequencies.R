@@ -1,5 +1,5 @@
 
-compute_position_frequencies = function(samples_sequence) {
+compute_position_frequencies <- function(samples_sequence) {
   position_names = dimnames(samples_sequence)[[2]]
   if (is.null(position_names)) {
     position_names = seq_along(samples_sequence)

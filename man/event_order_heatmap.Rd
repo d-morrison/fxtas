@@ -14,7 +14,11 @@ event_order_heatmap(
 \arguments{
 \item{samples}{a list of orderings}
 
-\item{biomarkers)}{}
+\item{biomarkers}{todo}
+
+\item{biomarker_order}{todo}
+
+\item{verbose}{whether to print messages}
 }
 \value{
 a ggplot object that constructs a heatmap

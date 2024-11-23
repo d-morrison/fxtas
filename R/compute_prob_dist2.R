@@ -8,7 +8,7 @@
 #' @returns a [list]
 #' @export
 #'
-compute_prob_dist2 = function(
+compute_prob_dist2 <- function(
     ModelScores,
     DataScores,
     biomarkers,
@@ -25,7 +25,7 @@ compute_prob_dist2 = function(
   )
 }
 
-compute_prob_dist0 = function(
+compute_prob_dist0 <- function(
     levels,
     prob_correct)
 {

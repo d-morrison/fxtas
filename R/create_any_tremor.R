@@ -1,4 +1,4 @@
-create_any_tremor = function(
+create_any_tremor <- function(
     dataset,
     tremor_types = c(
       "Intention tremor",

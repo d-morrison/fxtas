@@ -23,7 +23,7 @@ were missing at random (MAR)
 As the longitudinal cohorts evolved over time,
 new instruments were adopted and added;
 much of the missingness was due to
-adding additional measures in later time.
+adding additional measures to the study protocols in later time.
 The MAR assumption thus seems plausible.
 We substituted missing outcome event data
 by assigning a probability distribution across the

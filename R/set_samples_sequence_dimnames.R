@@ -1,4 +1,4 @@
-set_samples_sequence_dimnames = function(
+set_samples_sequence_dimnames <- function(
     samples_sequence,
     biomarker_levels)
 {

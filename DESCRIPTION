@@ -1,6 +1,6 @@
 Package: fxtas
 Title: FXTAS
-Version: 0.0.0.9007
+Version: 0.0.0.9008
 Authors@R: 
     person("Douglas Ezra", "Morrison", , "demorrison@ucdavis.edu", role = c("cre", "aut"))
 Description: PKG_DESC.
@@ -63,9 +63,11 @@ Suggests:
     rmarkdown,
     scales,
     spelling,
+    svglite,
     testthat (>= 3.0.0),
     tidyverse,
     VennDiagram,
+    webshot2,
     writexl
 Config/testthat/edition: 3
 Encoding: UTF-8

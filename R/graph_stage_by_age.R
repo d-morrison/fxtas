@@ -5,7 +5,7 @@
 #'
 #' @returns a [ggplot2::ggplot]
 #' @export
-graph_stage_by_age = function(data,
+graph_stage_by_age <- function(data,
                               alpha = .7)
 {
   graph = data |>

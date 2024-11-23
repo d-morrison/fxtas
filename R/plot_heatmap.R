@@ -6,7 +6,7 @@
 #' @returns a [ggplot2::ggplot]
 #' @export
 #'
-plot_heatmap = function(heatmap_data, label = "Pr(marker in this position)")
+plot_heatmap <- function(heatmap_data, label = "Pr(marker in this position)")
 {
   heatmap_data |>
     ggplot2::ggplot(ggplot2::aes(x = x, y = y, fill = heat)) +

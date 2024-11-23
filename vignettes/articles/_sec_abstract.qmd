@@ -8,13 +8,16 @@ FXTAS symptoms typically appear,
 and how does that sequence vary
 among patients and
 between males and females?
+
 We applied the
 ordinal-outcomes version of the
 Subtype and Stage Inference algorithm ("Ordinal SuStaIn") to
 identify the sequential events of
 clinical and brain MRI changes
-in observed data
-collected in FXTAS patients at stages 0-5.
+in cross-sectional data
+collected during baseline visits from 
+a longitudinal cohort study of
+FXTAS patients at stages 0-5.
 We included `r length(biomarker_varnames)` neurodegenerative symptoms 
 collected from `r nrow(v1_usable_cases)` premutation carriers 
 (`r nrow(v1_usable_female_cases)` females 
@@ -27,6 +30,7 @@ aged `r min(v1_usable$"Age at visit")`
 years old at entry,
 who participated in two longitudinal studies,
 with entry dates between `r min_year` - `r max_year`.
+
 We found
 substantial differences in order of events
 depending on sex,
@@ -38,8 +42,9 @@ that occur early in females
 Females appear to experience early cognitive problems 
 involving executive dysfunction and memory 
 in comparison to males. 
-This finding suggests that the sequence of neuropsychiatric symptoms
+
+These findings suggest that the sequence of neuropsychiatric symptoms
 for FXTAS is different in females compared to males, 
 particularly for early symptoms in disease development and progression.
 This could lead to sex-specific modifications 
-of the FXTAS diagnostic stages. {{< pagebreak >}}
+of the FXTAS diagnostic stages.

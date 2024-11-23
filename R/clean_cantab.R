@@ -1,4 +1,4 @@
-clean_cantab = function(
+clean_cantab <- function(
     dataset,
     cutoffs = c(
       `SWM Between errors` = 26,

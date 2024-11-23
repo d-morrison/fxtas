@@ -1,4 +1,4 @@
-categorize_MMSE = function(
+categorize_MMSE <- function(
     dataset,
     levels = c(
       "Normal (26-30)",

@@ -24,7 +24,7 @@
 #' @returns a [list()]
 #' @export
 #'
-run_OSA = function(
+run_OSA <- function(
     patient_data,
     prob_correct,
     prob_score = compute_prob_scores(

@@ -1,4 +1,4 @@
-unravel_stage_score = function(score_vals)
+unravel_stage_score <- function(score_vals)
 {
   stage_score = score_vals |> as.vector()
   IX_select = which(stage_score != 0)
