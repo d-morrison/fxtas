@@ -203,7 +203,7 @@ tmp_func <- function(plot_dataset,
     ggplot2::theme(
       legend.position = legend.position,
       # add color scale info in figure caption,
-      legend.title = element_markdown(),
+      legend.title = element_markdown(size = y_text_size),
       # markdown for legends
       legend.byrow = TRUE,
       legend.box = "horizontal",

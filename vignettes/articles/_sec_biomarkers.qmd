@@ -37,6 +37,9 @@ we did not combine the variables representing
 corpus callosum MRI abnormalities,
 since these variables were created using Likert scales that differed from each other
 (details in Supplementary material, [MRI variables](#sec-MRI-composites)).
+For the Cambridge Neuropsychological Test Automated Battery (CANTAB) 
+variables, we used categorization cutoffs taken from Talebi et al 2020
+[@talebi2020cambridge].
 
 Supplementary Tables [-@supptbl-tremors] - [-@supptbl-autoimmune] 
 summarize each of the `r outcomes_name`s that we included in the analysis models, 

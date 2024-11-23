@@ -42,6 +42,8 @@ indicates that the estimated models are plausible.
 
 {{< include _fig_stage_by_age_latent.qmd >}}
 
+{{< pagebreak >}}
+
 {{< include _sec_subtypes_linegraphs.qmd >}}
 
 {{< pagebreak >}}

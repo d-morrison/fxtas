@@ -270,8 +270,6 @@ table1(
 
 :::
 
-We used categorization cutoffs taken from [@talebi2020cambridge].
-
 ::: {#supptbl-cantab}
 
 ```{r}
@@ -322,6 +320,9 @@ cantab_vars <- c(
 **Cambridge Neuropsychological Test Automated Battery (CANTAB)**
 
 :::
+
+We used categorization cutoffs taken from Talebi et al 2020 [@talebi2020cambridge].
+
 
 ::: {#supptbl-autoimmune}
 

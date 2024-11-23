@@ -7,40 +7,52 @@ authors:
     address: "Medical Sciences 1C #113, One Shields Ave, Davis, CA 95616"
 
   - name: Matthew Ponzini
+    email: mdponzini@ucdavis.edu
     affiliations:
       - ref: ucdphs
+
   - name: Ellery R. Santos
+    email: ersantos@ucdavis.edu
     affiliations:
       - ref: ucdmind
   - name: Hazel Maridith Barlahan Biag
+    email: hbbiag@ucdavis.edu
     affiliations:
       - ref: ucdmind
       - ref: ucdpeds
   - name: Glenda Espinal
+    email: gmespinal@ucdavis.edu
     affiliations:
       - ref: ucdmind
   - name: Flora Tassone
+    email: ftassone@ucdavis.edu
     affiliations:
       - ref: ucdmind
       - ref: ucdbiochem
   - name: Susan M. Rivera
+    email: smrivera@umd.edu
     affiliations:
       - ref: umdpsychology
   - name: David Hessl
+    email: drhessl@ucdavis.edu
     affiliations:
       - ref: ucdmind
       - ref: ucdpsych
   - name: Andrea Schneider
+    email: anschneider@ucdavis.edu
     affiliation:
       - ref: ucdmind
   - name: James A. Bourgeois
+    email: jbourgeois@ucdavis.edu
     affiliation:
       - ref: ucdpsych
   - name: Randi Hagerman
+    email: rjhagerman@ucdavis.edu
     affiliation:
       - ref: ucdmind
       - ref: ucdpeds
   - name: Kyoungmi Kim
+    email: kmkim@ucdavis.edu
     affiliation:
       - ref: ucdphs
 
