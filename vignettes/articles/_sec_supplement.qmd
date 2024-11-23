@@ -6,7 +6,7 @@
 
 {{< include _sec_prob_correct.qmd >}}
 
-## General data processing notes {.appendix}
+## Composite variables {#sec-composites .appendix}
 
 {{< include general-data-notes.qmd >}}
 

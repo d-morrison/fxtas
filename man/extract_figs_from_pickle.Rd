@@ -51,7 +51,7 @@ extract_figs_from_pickle(
     \item{\code{save_path}}{todo}
     \item{\code{save_kwargs}}{todo}
     \item{\code{results}}{todo}
-    \item{\code{biomarker_levels}}{todo}
+    \item{\code{biomarker_levels}}{doesn't do much right now}
     \item{\code{biomarker_groups}}{biomarker groupings}
     \item{\code{biomarker_events_table}}{todo}
     \item{\code{biomarker_event_names}}{todo}
