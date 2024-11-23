@@ -231,7 +231,7 @@ table1(
   shared_flextable_settings()
 ```
 
-Structured Clinical Interview for DSM Disorders (SCID)
+**Structured Clinical Interview for DSM Disorders (SCID)**
 
 :::
 

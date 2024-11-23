@@ -60,11 +60,11 @@ use_rds <- TRUE
 plot_python <- TRUE
 fig_size <- c(20, 10)
 
-pvd_height = 9
-pvd_width = 8
-pvd_line_height = 9
-pvd_line_width = 8
-size.y = 11
+pvd_height = 8
+pvd_width = 7
+pvd_line_height = 8
+pvd_line_width = 7
+size.y = 8
 N_startpoints = 10L
 # use_parallel_startpoints = TRUE
 use_parallel_startpoints = FALSE # couldn't get parallel to work, 2024/06/15

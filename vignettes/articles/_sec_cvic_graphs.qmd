@@ -6,6 +6,7 @@
 ```{r}
 #| label: fig-cvic-1
 #| fig-width: 4
+#| fig-height: 4
 #| fig-cap: ""
 #| eval: !expr fit_models
 
@@ -15,6 +16,7 @@ temp$CVIC |> plot_CVIC()
 ```{r}
 #| label: fig-cvic-2
 #| fig-width: 4
+#| fig-height: 4
 #| fig-cap: ""
 #| eval: !expr fit_models
 
