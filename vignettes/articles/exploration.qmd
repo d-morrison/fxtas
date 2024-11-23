@@ -1,8 +1,6 @@
 The following tables summarize the distributions of the `r outcomes_name`s
 that we analyzed in this paper, stratified by sex and CGG level.
 
-:::::: landscape
-
 ```{r}
 #| label: exploration-setup
 #| include: false
@@ -62,8 +60,6 @@ table1(
 
 :::
 
-{{< pagebreak >}}
-
 ::: {#supptbl-head-tremors}
 
 ```{r}
@@ -95,8 +91,6 @@ table1(
 
 :::
 
-{{< pagebreak >}}
-
 ::: {#supptbl-ataxia-by-cgg}
 
 ```{r}
@@ -123,8 +117,6 @@ Ataxia by CGG status
 
 :::
 
-{{< pagebreak >}}
-
 ::: {#supptbl-parkinsons-by-cgg}
 
 ```{r}
@@ -147,8 +139,6 @@ table1(
 Parkinson's disease by CGG status
 
 :::
-
-{{< pagebreak >}}
 
 ::: {#supptbl-fxtas-stage-by-cgg}
 
@@ -173,8 +163,6 @@ FXTAS Stage by CGG level
 
 :::
 
-{{< pagebreak >}}
-
 ::: {#supptbl-bds2}
 
 ```{r}
@@ -195,8 +183,6 @@ table1(
 Behavior Dyscontrol Scale - Second Edition (BDS-2)
 
 :::
-
-{{< pagebreak >}}
 
 ::: {#supptbl-mmse}
 
@@ -229,8 +215,6 @@ Mini-Mental State Examination (MMSE)
 
 :::
 
-{{< pagebreak >}}
-
 ::: {#supptbl-scid}
 
 ```{r}
@@ -250,8 +234,6 @@ table1(
 Structured Clinical Interview for DSM Disorders (SCID)
 
 :::
-
-{{< pagebreak >}}
 
 ::: {#supptbl-mri}
 
@@ -289,8 +271,6 @@ table1(
 :::
 
 We used categorization cutoffs taken from [@talebi2020cambridge].
-
-{{< pagebreak >}}
 
 ::: {#supptbl-cantab}
 
@@ -343,8 +323,6 @@ cantab_vars <- c(
 
 :::
 
-{{< pagebreak >}}
-
 ::: {#supptbl-autoimmune}
 
 ```{r}
@@ -377,4 +355,4 @@ table1(
 
 :::
 
-::::::
+

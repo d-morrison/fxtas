@@ -6,6 +6,7 @@
 #' @param picklename the name of the pickle file to open
 #' @param rda_filename name of rda file containing environment used to run analyses
 #' @param format_results whether to apply [format_results_list()] to results before returning
+#' @param verbose whether to print messages
 #' @inheritDotParams format_results_list format_sst
 #' @inherit format_results_list return
 #' @export
@@ -22,6 +23,7 @@ extract_results_from_pickle <- function(
     picklename = paste0(basename, ".pickle"),
     format_results = TRUE,
     use_rds = TRUE,
+    verbose = FALSE,
     ...)
 {
   rds_path = build_rds_path(
@@ -30,11 +32,14 @@ extract_results_from_pickle <- function(
 
   if(use_rds && file.exists(rds_path))
   {
+    if(verbose)
     cli::cli_inform("\nloading {basename} results from RDS file:\n{rds_path}\n")
     results = readr::read_rds(rds_path)
   } else
   {
+    if(verbose)
     cli::cli_inform("\nloading {basename} results from pickle file:\n{picklename}\n")
+
     results00 =
       fs::path(output_folder, "pickle_files", picklename) |>
       py_load_object() |>

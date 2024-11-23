@@ -1,7 +1,6 @@
 test_that("`compact_pvd_figure()` produces consistent results", {
   size.y = 11
   figs = extract_figs_from_pickle(
-    use_rds = FALSE,
     size.y = size.y,
     n_s = 3,
     rda_filename = "data.RData",
@@ -28,7 +27,6 @@ test_that("`compact_pvd_figure()` produces consistent results", {
     legend.position = legend.position,
     scale_colors = scale_colors
   ) |>
-    suppressWarnings() |> # todo: remove and fix labeller warning
     vdiffr::expect_doppelganger(title = "compact_pvd_figure")
 
 })

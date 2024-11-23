@@ -1,6 +1,35 @@
 #' plot compact pvd: figure
+#' @examples
+#' size.y = 11
+#' figs = extract_figs_from_pickle(
+#'   size.y = size.y,
+#'   n_s = 3,
+#'   rda_filename = "data.RData",
+#'   dataset_name = "sample_data",
+#'   output_folder = fs::path_package("extdata/sim_data", package = "fxtas")
+#' )
 #'
-
+#' y_text_size = 11
+#' tile_height = 1
+#' # facet_label_size = 8
+#' facet_label_prefix = names(figs)
+#' legend.position = "none"
+#' scale_colors = c("red", "blue", "purple4")
+#' plot_dataset <- compact_pvd_data_prep(figs = figs)
+#' # facet labels
+#' facet_names <- compact_pvd_facet_labels(figs = figs,
+#' facet_label_prefix = facet_label_prefix)
+#' # generate figure
+#' compact_pvd_figure(
+#'   plot_dataset,
+#'   tile_height = tile_height,
+#'   y_text_size = y_text_size,
+#'   facet_names = facet_names,
+#'   # facet_label_size = facet_label_size,
+#'   legend.position = legend.position,
+#'   scale_colors = scale_colors
+#' )
+#'
 compact_pvd_figure <- function(
     plot_dataset,
     tile_height,
@@ -11,6 +40,10 @@ compact_pvd_figure <- function(
     scale_colors) {
   # set tile width
   tile_width <- 1
+
+  plot_dataset <-
+    plot_dataset |>
+    mutate(facet = facet_names[as.numeric(.data$facet)])
 
   nlevels <- plot_dataset |>
     pull("level") |>
@@ -127,7 +160,8 @@ compact_pvd_figure <- function(
       high = level5_scale[100],
       limits = scale_limits,
       breaks = c(0, 0.5, 1),
-      guide = ggplot2::guide_colorbar(title = "Pr(Stage)<sub>5</sub>", order = 4)
+      guide = ggplot2::guide_colorbar(title = "Pr(Stage)<sub>5</sub>",
+                                      order = 4)
     ) +
     # guides(fill = guide_legend(title = "Pr(Stage)<sub>5</sub>")) +
     ggnewscale::new_scale_fill() +
@@ -156,11 +190,12 @@ compact_pvd_figure <- function(
     # frame x axis
     ggplot2::scale_x_continuous(expand = ggplot2::expansion(add = c(0.5, 2))) +
     # update axis labels
-    ggplot2::labs(x = "Sequential order") +
+    ggplot2::labs(x = "Sequential order")
+
+  fig <- fig +
     # wrap over facet levels
     ggplot2::facet_wrap(
-      ~facet,
-      labeller = facet_labeller # update facet labels
+      ~facet # update facet labels
     ) +
     # plot theme
     ggplot2::theme_bw() +

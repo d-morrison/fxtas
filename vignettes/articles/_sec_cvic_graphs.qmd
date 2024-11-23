@@ -6,7 +6,7 @@
 ```{r}
 #| label: fig-cvic-1
 #| fig-width: 4
-#| fig-cap: Cross-validation information criterion
+#| fig-cap: ""
 #| eval: !expr fit_models
 
 temp$CVIC |> plot_CVIC()
@@ -15,13 +15,15 @@ temp$CVIC |> plot_CVIC()
 ```{r}
 #| label: fig-cvic-2
 #| fig-width: 4
-#| fig-cap: Test set log-likelihood across folds
+#| fig-cap: ""
 #| eval: !expr fit_models
 
 temp$loglike_matrix |> plot_cv_loglik()
 ```
 
 **Selection criteria for number of latent subtypes**
+**(a)** Cross-validation information criterion
+**(b)** Test set log-likelihood across folds
 
 :::
 
