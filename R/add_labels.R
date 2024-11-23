@@ -1,3 +1,11 @@
+#' Add labels to biomarkers
+#'
+#' @param data a [data.frame] containing the relevant columns
+#'
+#' @returns a modified version of `data` with var labels added
+#' @export
+#'
+#' @examples test_data |> add_labels()
 add_labels <- function(data)
 {
   data |>
@@ -12,6 +20,8 @@ add_labels <- function(data)
            `MMSE total score*` = `MMSE total score*` |>
              labelled::set_label_attribute("MMSE total score"),
            `BDS-2 Total Score*` = `BDS-2 Total Score*` |>
+             labelled::set_label_attribute("BDS-2 total score"),
+           `BDS-2 Total Score` = `BDS-2 Total Score` |>
              labelled::set_label_attribute("BDS-2 total score"),
            `PAL Total errors (adjusted)*` = `PAL Total errors (adjusted)*` |>
              labelled::set_label_attribute("PAL total errors"),
