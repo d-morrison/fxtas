@@ -17,9 +17,9 @@ pvd_lineplot <- function(figs,
                          facet_labels = names(figs),
                          text_size = 3.4,
                          y_lab = "Sequential order",
-                         y_title_size = 12,
-                         y_text_size = 10,
-                         x_text_size = 12) {
+                         y_title_size = 9,
+                         y_text_size = 8,
+                         x_text_size = 8) {
   if (length(figs) == 1) {
     # extract data from pvd fig object
     dataset <- dplyr::bind_rows(figs[[1]]$data, .id = "facet")

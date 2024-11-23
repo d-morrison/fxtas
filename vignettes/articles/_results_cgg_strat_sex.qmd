@@ -22,8 +22,8 @@ plot_compact_pvd(y_text_size = y_text_size)
 
 ```{r}
 #| label: fig-pvd-by-cgg-male-2
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
+#| fig-height: !expr pvd_line_height
+#| fig-width: !expr pvd_line_width
 #| fig-cap: !expr 
 #|     glue::glue(
 #|        "Positional differences in estimated event sequence 
@@ -71,15 +71,15 @@ plot_compact_pvd(
 ```{r}
 #| label: fig-pvd-by-cgg-female-2
 #| column: page
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
+#| fig-height: !expr pvd_line_height
+#| fig-width: !expr pvd_line_width
 #| fig-cap: !expr
 #|    glue::glue(
 #|      "**Positional differences in estimated event sequence
 #|      between CGG repeats.** {compact_fig_cap2}")
 
 # lineplot of event sequences
-pvd_lineplot(
+pvd_lineplot(y_text_size = y_text_size, 
   figs = list(
     fig_under100_females,
     fig_over100_females
