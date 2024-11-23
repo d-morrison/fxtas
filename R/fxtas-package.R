@@ -76,6 +76,7 @@
 #' @importFrom grDevices colors
 #' @importFrom grDevices rgb
 #' @importFrom labelled set_label_attribute
+#' @importFrom lubridate date
 #' @importFrom magrittr set_names
 #' @importFrom pander pander
 #' @importFrom plotly ggplotly

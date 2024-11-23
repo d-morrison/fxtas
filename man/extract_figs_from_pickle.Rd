@@ -60,7 +60,7 @@ extract_figs_from_pickle(
   }}
 }
 \value{
-a \verb{"PVD.list} (a \link{list} of \code{PVD} objects from \code{\link[=plot.PF]{plot.PF()}})
+a \verb{"PVD.list} (a \link{list} of \code{PVD} objects from \code{\link[=autoplot.PF]{autoplot.PF()}})
 }
 \description{
 Extact PVDs from pickle file
