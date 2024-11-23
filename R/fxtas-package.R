@@ -87,6 +87,7 @@
 #' @importFrom stats formula
 #' @importFrom stats relevel
 #' @importFrom stats setNames
+#' @importFrom stringr fixed
 #' @importFrom table1 table1
 #' @importFrom tibble column_to_rownames
 #' @importFrom tidyr pivot_longer
