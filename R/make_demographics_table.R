@@ -48,7 +48,7 @@ make_demographics_table <- function(data,
     gtsummary::tbl_strata(
       data = data_to_use,
       strata = all_of(strata),
-      .tbl_fun = ~ .x %>%
+      .tbl_fun = ~ .x |>
         gtsummary::tbl_summary(
           by = `FX*`,
           type = gtsummary::all_continuous() ~ "continuous2",
