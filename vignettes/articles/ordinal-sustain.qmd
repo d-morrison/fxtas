@@ -783,7 +783,6 @@ tbl_sg_demos |>
 
 ```{r}
 #| label: fig-first-only-pvd
-#| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
 #| fig-cap: !expr 
@@ -791,7 +790,6 @@ tbl_sg_demos |>
 #|    "**Event sequence models stratified by sex.** 
 #|    {compact_fig_caption}")
 #| fig-cap-location: top
-
 
 figs = list(
     "Males <br>" = fig_males_first,
