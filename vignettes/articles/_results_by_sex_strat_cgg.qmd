@@ -22,12 +22,13 @@ plot_compact_pvd(
 
 ```{r}
 #| label: fig-pvd-by-gender-cgg_under100-2
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
+#| fig-height: !expr pvd_line_height
+#| fig-width: !expr pvd_line_width
 #| fig-cap: ""
 
 # lineplot of event sequences
 pvd_lineplot(
+  y_text_size = y_text_size, 
   figs = list(
     "CGG &lt; 100, Males" = fig_under100_males,
     "CGG &lt; 100, Females" = fig_under100_females
@@ -66,12 +67,12 @@ plot_compact_pvd(
 
 ```{r}
 #| label: fig-pvd-by-gender-cgg_over100-2
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
+#| fig-height: !expr pvd_line_height
+#| fig-width: !expr pvd_line_width
 #| fig-cap: ""
 
 # lineplot of event sequences
-pvd_lineplot(
+pvd_lineplot(y_text_size = y_text_size, 
   figs = list(
     fig_over100_males,
     fig_over100_females

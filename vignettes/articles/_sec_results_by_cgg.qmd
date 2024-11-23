@@ -72,9 +72,8 @@ plot_compact_pvd(
 ::: {#suppfig-diff-by-cgg}
 
 ```{r}
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
-
+#| fig-height: !expr pvd_line_height
+#| fig-width: !expr pvd_line_width
 
 list(
   "CGG &lt; 100" = fig_under100,

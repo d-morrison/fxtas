@@ -65,8 +65,8 @@ fig_both_mv_only = extract_figs_from_pickle(size.y = size.y,
 ```{r}
 #| label: fig-males
 #| column: page
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
+#| fig-height: !expr pvd_line_height
+#| fig-width: !expr pvd_line_width
 #| fig-cap: !expr glue::glue("**Event sequences models for males, by data subset. (a)** {compact_fig_caption} **(b)** Change in estimated event sequences for males by data subset.")
 #| fig-cap-location: top
 #| layout-ncol: 1

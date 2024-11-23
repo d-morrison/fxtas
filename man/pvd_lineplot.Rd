@@ -12,9 +12,9 @@ pvd_lineplot(
   facet_labels = names(figs),
   text_size = 3.4,
   y_lab = "Sequential order",
-  y_title_size = 12,
-  y_text_size = 10,
-  x_text_size = 12
+  y_title_size = 9,
+  y_text_size = 8,
+  x_text_size = 8
 )
 }
 \arguments{
