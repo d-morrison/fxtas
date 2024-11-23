@@ -29,8 +29,8 @@
 #' @param biomarker_event_names todo
 #' @param biomarker_plot_order todo
 #' @param synchronize_y_axes todo
-#' @inheritDotParams plot.PF
-#' @returns a `"PVD.list` (a [list] of `PVD` objects from [plot.PF()])
+#' @inheritDotParams autoplot.PF
+#' @returns a `"PVD.list` (a [list] of `PVD` objects from [autoplot.PF()])
 #' @export
 #'
 plot_positional_var <- function(
@@ -236,7 +236,7 @@ plot_positional_var <- function(
 
     PF.plot <-
       PFs |>
-      plot.PF(...) +
+      autoplot.PF(...) +
       ggplot2::ggtitle(title_i)
 
 

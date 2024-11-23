@@ -97,15 +97,15 @@ plot_positional_var(
 \item{synchronize_y_axes}{todo}
 
 \item{...}{
-  Arguments passed on to \code{\link[=plot.PF]{plot.PF}}
+  Arguments passed on to \code{\link[=autoplot.PF]{autoplot.PF}}
   \describe{
-    \item{\code{PFs}}{a "PF" object (created by \code{compute_position_frequencies()})}
+    \item{\code{object}}{a "PF" object (created by \code{compute_position_frequencies()})}
     \item{\code{size.y}}{size of biomarker event labels}
     \item{\code{color_label}}{label for legend color scale}
   }}
 }
 \value{
-a \verb{"PVD.list} (a \link{list} of \code{PVD} objects from \code{\link[=plot.PF]{plot.PF()}})
+a \verb{"PVD.list} (a \link{list} of \code{PVD} objects from \code{\link[=autoplot.PF]{autoplot.PF()}})
 }
 \description{
 Plot positional variance diagram
