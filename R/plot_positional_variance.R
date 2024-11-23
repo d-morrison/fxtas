@@ -23,7 +23,7 @@
 #' @param save_path todo
 #' @param save_kwargs todo
 #' @param results todo
-#' @param biomarker_levels todo
+#' @param biomarker_levels doesn't do much right now
 #' @param biomarker_groups biomarker groupings
 #' @param biomarker_events_table todo
 #' @param biomarker_event_names todo

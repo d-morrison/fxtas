@@ -41,8 +41,7 @@ biomarker_varnames <-
 
 biomarker_levels =
 sim_data |>
- dplyr::select(all_of(biomarker_varnames)) |>
- lapply(F = levels)
+  get_levels(biomarker_varnames)
 
 biomarker_events_table =
   construct_biomarker_events_table(

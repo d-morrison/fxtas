@@ -33,8 +33,7 @@ biomarker_varnames <-
 
 biomarker_levels <-
   v1_usable |>
-  dplyr::select(all_of(biomarker_varnames)) |>
-  lapply(F = levels)
+  get_levels(biomarker_varnames)
 
 control_data <-
   v1_usable |>

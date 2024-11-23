@@ -6,7 +6,10 @@ simplify_biomarker_names <- function(dataset, cols = "event name")
       .fns = ~ .x |>
         simplify_pf_names() |>
         update_any_autoimmune_name() |>
-        remove_CC()
+        remove_CC() |>
+        numeric_five() |>
+        stringr::str_replace(stringr::fixed("*"), "") |>
+        stringr::str_replace(stringr::fixed(" (0-5)"), "")
     ))
 }
 
@@ -29,11 +32,11 @@ update_any_autoimmune_name <- function(names)
 remove_CC <- function(names)
 {
   names |>
-    stringr::str_replace(pattern = "(CC)-", replacement = "")
+    stringr::str_replace(pattern = fixed("(CC)-"), replacement = "")
 }
 
 numeric_five <- function(names)
 {
   names |>
-    stringr::str_replace(pattern = "Five-choice", replacement = "5-choice")
+    stringr::str_replace(pattern = fixed("Five-choice"), replacement = "5-choice")
 }

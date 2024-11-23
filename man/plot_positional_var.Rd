@@ -52,7 +52,7 @@ plot_positional_var(
 
 \item{biomarker_groups}{biomarker groupings}
 
-\item{biomarker_levels}{todo}
+\item{biomarker_levels}{doesn't do much right now}
 
 \item{biomarker_events_table}{todo}
 
