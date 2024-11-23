@@ -53,7 +53,9 @@ table1(
     . = "Median [Min, Max]"
   ),
   data = v1_usable
-)
+) |> 
+  table1::t1flex() |>
+  shared_flextable_settings()
 ```
 
 **Tremors by CGG level and sex**
@@ -84,7 +86,9 @@ table1(
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = v1_usable |>
     filter(!(Study %in% c("Trax Phase 1", "GP3")))
-)
+) |> 
+  table1::t1flex() |>
+  shared_flextable_settings()
 ```
 
 **Head tremors**
@@ -110,7 +114,9 @@ table1(
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = v1_usable
-)
+) |> 
+  table1::t1flex() |>
+  shared_flextable_settings()
 ```
 
 Ataxia by CGG status
@@ -133,7 +139,9 @@ table1(
   NA.label = na_label_1,
   stratified_formula(vars, column_var),
   data = v1_usable
-)
+) |> 
+  table1::t1flex() |>
+  shared_flextable_settings()
 ```
 
 Parkinson's disease by CGG status
@@ -154,16 +162,11 @@ table1(
   na.is.category = FALSE, overall = FALSE,
   NA.label = na_label_1,
   stratified_formula(vars, column_var),
-  # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = v1_usable
-)
+) |> 
+  table1::t1flex() |>
+  shared_flextable_settings()
 
-trax_gp34_all |>
-  filter(`FXTAS Stage (0-5)` %in%
-           c(NA, "No Response (999)", "Missing (empty in RedCap)")) |>
-  select(`FXS ID`, `Event Name`, `Visit Date`) |>
-  arrange() |>
-  readr::write_csv("inst/extdata/missing_FXTAS_stage.csv")
 ```
 
 FXTAS Stage by CGG level
@@ -184,7 +187,9 @@ table1(
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   # footnote = footnote1,
   data = v1_usable
-)
+) |> 
+  table1::t1flex() |>
+  shared_flextable_settings()
 ```
 
 Behavior Dyscontrol Scale - Second Edition (BDS-2)
@@ -215,7 +220,9 @@ table1(
   # footnote = footnote1,
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = v1_usable
-)
+) |> 
+  table1::t1flex() |>
+  shared_flextable_settings()
 ```
 
 Mini-Mental State Examination (MMSE)
@@ -235,7 +242,9 @@ table1(
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = v1_usable
-)
+) |> 
+  table1::t1flex() |>
+  shared_flextable_settings()
 ```
 
 Structured Clinical Interview for DSM Disorders (SCID)
@@ -270,7 +279,9 @@ table1(
   droplevels = FALSE,
   x = stratified_formula(vars, column_var),
   data = v1_usable
-)
+) |> 
+  table1::t1flex() |>
+  shared_flextable_settings()
 ```
 
 **MRI variables by Sex and CGG level**
@@ -357,7 +368,9 @@ table1(
   NA.label = na_label_1,
   stratified_formula(vars, column_var),
   data = v1_usable
-)
+) |> 
+  table1::t1flex() |>
+  shared_flextable_settings()
 ```
 
 **Thyroid and autoimmune diseases**

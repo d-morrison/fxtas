@@ -116,7 +116,9 @@ output_folder =
 ```{r}
 #| label: subset-data
 
-full_data = trax_gp34_v1
+full_data = 
+  trax_gp34_v1 |> 
+  add_labels()
 n_missing_CGG = full_data$CGG |> is.na() |> sum()
 n_above_200 = sum(full_data$CGG >= 200, na.rm = TRUE)
 v1_usable = 
@@ -737,6 +739,7 @@ v1_usable |> make_demographics_table()
 #|    and subsequent levels are considered "clinically elevated levels".
 #|    Columns "Female" and "Male" list proportions of clinically elevated levels 
 #|    at baseline visit, stratified by sex.
+
 #| label: tbl-biomarker-list
 
 flex_biomarkers_table(biomarkers_table)
