@@ -38,7 +38,7 @@ biomarker_levels <-
 control_data <-
   v1_usable |>
   dplyr::filter(`FX*` == "CGG <55") |>
-  select(all_of(biomarker_varnames))
+  dplyr::select(all_of(biomarker_varnames))
 
 control_data |>
   compute_prob_correct(

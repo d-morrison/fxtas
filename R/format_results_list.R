@@ -16,7 +16,7 @@ format_results_list <- function(
     biomarker_events_table =
       biomarker_levels |> get_biomarker_events_table(),
     biomarker_event_names =
-      biomarker_events_table |> pull(biomarker_level),
+      biomarker_events_table |> dplyr::pull(biomarker_level),
     format_sst = TRUE)
 {
 

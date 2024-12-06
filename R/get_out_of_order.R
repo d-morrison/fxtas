@@ -1,10 +1,10 @@
 get_out_of_order <- function(dataset)
 {
   dataset |>
-    select(`FXS ID`, `Visit Date`, `Event Name`) |>
+    dplyr::select(`FXS ID`, `Visit Date`, `Event Name`) |>
     group_by(`FXS ID`) |>
-    filter(is.unsorted(`Event Name`)) |>
-    # filter(any(`decreased age`, na.rm = TRUE)) |>
+    dplyr::filter(is.unsorted(`Event Name`)) |>
+    # dplyr::filter(any(`decreased age`, na.rm = TRUE)) |>
     # ungroup() |>
     group_split()
 }

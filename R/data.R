@@ -7,7 +7,6 @@
 #' \describe{
 #'  \item{col1}{col1name}
 #' }
-#' @source <url>
 "test_data_v1"
 
 
@@ -20,7 +19,6 @@
 #' \describe{
 #'  \item{col1}{col1name}
 #' }
-#' @source <url>
 "test_data"
 
 #' Simulated data
@@ -32,7 +30,6 @@
 #' \describe{
 #'  \item{col1}{col1name}
 #' }
-#' @source <url>
 "sim_data"
 
 #' Simulated subtype-and-stage table

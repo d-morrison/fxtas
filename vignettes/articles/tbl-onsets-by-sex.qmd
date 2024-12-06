@@ -14,7 +14,7 @@ table1a(
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1_cgg_55_199 |>
-    filter(`Any tremor (excluding head)` == "Some tremors recorded"))
+    dplyr::filter(`Any tremor (excluding head)` == "Some tremors recorded"))
 ```
 
 
@@ -33,7 +33,7 @@ table1a(
   
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1_cgg_55_199 |> filter(`Head tremor` == "Yes"))
+  data = visit1_cgg_55_199 |> dplyr::filter(`Head tremor` == "Yes"))
 
 ```
 
@@ -55,5 +55,5 @@ table1a(
   
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1_cgg_55_199 |> filter(Ataxia == "Yes"))
+  data = visit1_cgg_55_199 |> dplyr::filter(Ataxia == "Yes"))
 ```

@@ -164,7 +164,7 @@ Age of onset missingness reasons where any of the four above tremor types = "Yes
 table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula("Tremor: Age of onset: missingness reasons", "Recruited in study phase"),
-  data = visit1 |> filter(`Any tremor` == "Some Tremors Recorded"))
+  data = visit1 |> dplyr::filter(`Any tremor` == "Some Tremors Recorded"))
 
 ```
 
@@ -192,7 +192,7 @@ Age of onset missingness reasons where "Head tremor" = "Yes":
 table1(na.is.category = FALSE, 
   NA.label = NA.label1,
   stratified_formula("Head Tremor: Age of onset: missingness reasons", "Recruited in study phase"),
-  data = visit1 |> filter(`Head tremor` == "Yes"))
+  data = visit1 |> dplyr::filter(`Head tremor` == "Yes"))
 
 ```
 
@@ -250,8 +250,8 @@ table1(na.is.category = FALSE,
   data = visit1)
 
 # gp34 |> 
-#   filter(`FXTAS Stage (0-5)` %in% c(NA, "No Response (999)", "Missing (empty in RedCap)")) |> 
-#   select(`FXS ID`, `Event Name`, `Visit Date`) |> 
+#   dplyr::filter(`FXTAS Stage (0-5)` %in% c(NA, "No Response (999)", "Missing (empty in RedCap)")) |> 
+#   dplyr::select(`FXS ID`, `Event Name`, `Visit Date`) |> 
 #   arrange() |> 
 #   readr::write_csv("inst/extdata/missing_FXTAS_stage.csv")
 
@@ -519,8 +519,8 @@ We also started looking at the longitudinal data, and had some questions about t
 
 ```{r}
 
-tab = gp34 |> filter(is.na(`Visit Date`)) |> 
-  select(Study:`Visit Date`)
+tab = gp34 |> dplyr::filter(is.na(`Visit Date`)) |> 
+  dplyr::select(Study:`Visit Date`)
 
 ```
 
@@ -540,8 +540,8 @@ pander(tab)
 
 tab = gp34 |> 
   group_by(`FXS ID`, `Visit Date`) |> 
-  filter(n() > 1, !is.na(`Visit Date`[1])) |> 
-  select(Study:`Visit Date`) |> 
+  dplyr::filter(n() > 1, !is.na(`Visit Date`[1])) |> 
+  dplyr::select(Study:`Visit Date`) |> 
   split(~`FXS ID`)
 
 ```
@@ -560,10 +560,10 @@ pander(tab)
 
 ```{r}
 ooo = gp34 |>
-  select(`FXS ID`, `Visit Date`, `Event Name`) |>
+  dplyr::select(`FXS ID`, `Visit Date`, `Event Name`) |>
   group_by(`FXS ID`) |>
-  filter(is.unsorted(`Event Name`[`Event Name` != "GP4 - Single Visit"])) |>
-  # filter(any(`decreased age`, na.rm = TRUE)) |>
+  dplyr::filter(is.unsorted(`Event Name`[`Event Name` != "GP4 - Single Visit"])) |>
+  # dplyr::filter(any(`decreased age`, na.rm = TRUE)) |>
   # ungroup() |>
   split(~`FXS ID`)
 ```

@@ -6,7 +6,7 @@ choose_biomarker_group_colors <- function(
 {
   tibble(
     biomarker_group = biomarker_group_names) |>
-    mutate(
+    dplyr::mutate(
     # group_color = rainbow()
     group_color =
     # RColorBrewer::brewer.pal(n = n(), name = "Paired")

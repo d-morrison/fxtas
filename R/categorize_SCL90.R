@@ -1,7 +1,7 @@
 categorize_SCL90 <- function(dataset) {
   to_return <-
     dataset |>
-    mutate(across(
+    dplyr::mutate(across(
       contains("SCL", ignore.case = FALSE) &
         !contains("missing"),
       .fn = function(x) {

@@ -1,6 +1,9 @@
 #' Compile biomarker groups table
+#'
 #' @param dataset passed to [compile_biomarker_group_list()]
 #' @param biomarker_group_list todo
+#' @param colors which colors to use
+#' @inheritDotParams compile_biomarker_group_list
 #'
 #' @returns a [tibble::tbl_df]
 #' @export
@@ -30,7 +33,7 @@ compile_biomarker_groups_table <- function(
     dplyr::rename(
       biomarker  = values,
       biomarker_group = ind)  |>
-    mutate(
+    dplyr::mutate(
       biomarker_group =
         biomarker_group |>
         factor(levels = names(biomarker_group_list))) |>
@@ -41,7 +44,7 @@ compile_biomarker_groups_table <- function(
 
   labels1 <-
     dataset |>
-    select(all_of(to_return$biomarker)) |>
+    dplyr::select(all_of(to_return$biomarker)) |>
     labelled::get_variable_labels() |>
     unlist()
 

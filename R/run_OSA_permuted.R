@@ -19,7 +19,7 @@ run_OSA_permuted <- function(
     set.seed(cur_seed)
     permuted_data =
       patient_data |>
-      mutate(
+      dplyr::mutate(
         across(
           all_of(permuting_variables),
           ~sample(.x, size = nrow(patient_data), replace = FALSE)))

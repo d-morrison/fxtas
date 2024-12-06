@@ -26,9 +26,13 @@ extract_results_from_pickle(
 
 \item{rda_filename}{name of rda file containing environment used to run analyses}
 
+\item{basename}{base of pickle file name (without \code{.pickle} suffix)}
+
 \item{picklename}{the name of the pickle file to open}
 
 \item{format_results}{whether to apply \code{\link[=format_results_list]{format_results_list()}} to results before returning}
+
+\item{use_rds}{\link{logical} whether to use previously cached results}
 
 \item{verbose}{whether to print messages}
 

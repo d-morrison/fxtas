@@ -113,15 +113,15 @@ table1(na.is.category = FALSE,
   data = visit1)
 ```
 
-`r apoe.n |> filter(first_missing) |> pull(any_nonmissing) |> sum()` of these individuals have later visits with non-missing ApoE results; for example:
+`r apoe.n |> dplyr::filter(first_missing) |> dplyr::pull(any_nonmissing) |> sum()` of these individuals have later visits with non-missing ApoE results; for example:
 
 ```{r}
 
-gp34 |> filter(
+gp34 |> dplyr::filter(
   # `FXS ID` == "500011-122"
-  `FXS ID` == apoe.n |> filter(first_missing, any_nonmissing) |> head(1) |> pull(`FXS ID`)
+  `FXS ID` == apoe.n |> dplyr::filter(first_missing, any_nonmissing) |> head(1) |> dplyr::pull(`FXS ID`)
 ) |> 
-  select(`FXS ID`, `Event Name`, `Visit Date`, ApoE) |> 
+  dplyr::select(`FXS ID`, `Event Name`, `Visit Date`, ApoE) |> 
   pander()
 
 ```
@@ -133,8 +133,8 @@ If they are missing, it is reasonable to use the next available result. The issu
 ```{r, "multiple ApoE values", results = "asis"}
 
 gp34 |> 
-  semi_join(apoe.n |> filter(n_vals > 1), by = "FXS ID") |> 
-  select(`FXS ID`, `Visit Date`, `Event Name`, ApoE) |> 
+  semi_join(apoe.n |> dplyr::filter(n_vals > 1), by = "FXS ID") |> 
+  dplyr::select(`FXS ID`, `Visit Date`, `Event Name`, ApoE) |> 
   arrange(`FXS ID`, `Visit Date`) |> 
   split(~`FXS ID`) |> 
   pander()
@@ -163,18 +163,18 @@ table1(na.is.category = FALSE,
   data = visit1)
 ```
 
-`r cgg.n |> filter(first_missing) |> pull(any_nonmissing) |> sum()` of these participants have later records with non-missing CGG values:
+`r cgg.n |> dplyr::filter(first_missing) |> dplyr::pull(any_nonmissing) |> sum()` of these participants have later records with non-missing CGG values:
 
 ```{r}
 
 gp34 |> 
   semi_join(
     cgg.n |> 
-      filter(
+      dplyr::filter(
         first_missing,
         any_nonmissing), 
     by = "FXS ID") |> 
-  select(`FXS ID`, `Visit Date`, `Event Name` , CGG) |> 
+  dplyr::select(`FXS ID`, `Visit Date`, `Event Name` , CGG) |> 
   arrange(`FXS ID`, `Visit Date`) |> 
   split(~`FXS ID`) |> 
   pander()
@@ -187,10 +187,10 @@ Some participants have multiple CGG values:
 gp34 |> 
   semi_join(
     cgg.n |> 
-      filter(
+      dplyr::filter(
         n_vals > 1), 
     by = "FXS ID") |> 
-  select(`FXS ID`, `Visit Date`, `Event Name` , CGG) |> 
+  dplyr::select(`FXS ID`, `Visit Date`, `Event Name` , CGG) |> 
   arrange(`FXS ID`, `Visit Date`) |> 
   split(~`FXS ID`) |> 
   pander()
@@ -202,8 +202,8 @@ We decided to use the most recent CGG value.
 ```{r, include = TRUE}
 # check fxtas stage where CGG is missing
 gp34 |> 
-  filter(is.na(`FXTAS Stage (0-5)`)) |> 
-  select(`FXS ID`, `Event Name`, CGG, `FXTAS Stage (0-5)`) |> 
+  dplyr::filter(is.na(`FXTAS Stage (0-5)`)) |> 
+  dplyr::select(`FXS ID`, `Event Name`, CGG, `FXTAS Stage (0-5)`) |> 
   pander()
 
 ```
@@ -356,7 +356,7 @@ table1(na.is.category = FALSE,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1 |> 
-    filter(`Any tremor (excluding head)` == "Some tremors recorded"),
+    dplyr::filter(`Any tremor (excluding head)` == "Some tremors recorded"),
   footnote = footnote)
 ```
 
@@ -378,7 +378,7 @@ table1(na.is.category = FALSE,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1 |> 
-    filter(`Any tremor (excluding head)` == "No tremors recorded" |
+    dplyr::filter(`Any tremor (excluding head)` == "No tremors recorded" |
              is.na(`Any tremor (excluding head)`)),
   footnote = footnote)
 ```
@@ -386,7 +386,7 @@ table1(na.is.category = FALSE,
 ```{r}
 # store number
 n_age_NoTremor <- visit1 |> 
-  filter((is.na(`Any tremor (excluding head)`) | 
+  dplyr::filter((is.na(`Any tremor (excluding head)`) | 
             `Any tremor (excluding head)` == "No tremors recorded") & 
            !is.na(`Tremor: Age of onset`)) |> 
   nrow()
@@ -396,7 +396,7 @@ The `r n_age_NoTremor` patients with Age of Onset without having any tremor reco
 
 ```{r}
 gp34 |> 
-  filter((is.na(`Any tremor (excluding head)`) | 
+  dplyr::filter((is.na(`Any tremor (excluding head)`) | 
             `Any tremor (excluding head)` == "No tremors recorded") &
            !is.na(`Tremor: Age of onset`)) |> 
   dplyr::select(`FXS ID`, `Event Name`, `Any tremor (excluding head)`, 
@@ -425,7 +425,7 @@ table1(na.is.category = FALSE,
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> filter(Study == "GP4"),
+  data = visit1 |> dplyr::filter(Study == "GP4"),
   footnote = footnote)
 
 ```
@@ -449,7 +449,7 @@ table1(na.is.category = FALSE,
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> filter(Study == "GP4" & `Head tremor` == "Yes"),
+  data = visit1 |> dplyr::filter(Study == "GP4" & `Head tremor` == "Yes"),
   footnote = footnote)
 
 ```
@@ -457,7 +457,7 @@ table1(na.is.category = FALSE,
 ```{r}
 # store n for text
 n_age_NoHeadTremor <- visit1 |> 
-    filter((`Head tremor` == "No" |
+    dplyr::filter((`Head tremor` == "No" |
              is.na(`Head tremor`)) & 
              Study == "GP4" &
              !is.na(`Head Tremor: Age of onset`)) |>
@@ -482,7 +482,7 @@ table1(na.is.category = FALSE,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = visit1 |> 
-    filter((`Head tremor` == "No" |
+    dplyr::filter((`Head tremor` == "No" |
              is.na(`Head tremor`)) & 
              Study == "GP4"),
   footnote = footnote)
@@ -529,7 +529,7 @@ table1(na.is.category = FALSE,
   NA.label = NA.label1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = visit1 |> filter(Ataxia == "Yes"))
+  data = visit1 |> dplyr::filter(Ataxia == "Yes"))
 ```
 
 <br>
@@ -537,7 +537,7 @@ table1(na.is.category = FALSE,
 ```{r}
 # store n for text
 n_age_NoAtaxia <- visit1 |> 
-    filter((Ataxia == "No" |
+    dplyr::filter((Ataxia == "No" |
              is.na(Ataxia)) & 
              !is.na(`Ataxia: Age of onset`)) |>
   nrow()
@@ -563,7 +563,7 @@ table1(na.is.category = FALSE,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   footnote = footnote,
-  data = visit1 |> filter(Ataxia == "No" | is.na(Ataxia))
+  data = visit1 |> dplyr::filter(Ataxia == "No" | is.na(Ataxia))
 )
 ```
 
@@ -571,7 +571,7 @@ There are `r n_age_NoAtaxia` patients with age of onset without having Ataxia. T
 
 ```{r}
 gp34 |> 
-  filter((Ataxia == "No" |
+  dplyr::filter((Ataxia == "No" |
              is.na(Ataxia)) & 
              !is.na(`Ataxia: Age of onset`)) |> 
   dplyr::select(`FXS ID`, `Event Name`, Ataxia, 
@@ -619,8 +619,8 @@ table1(na.is.category = FALSE,
   data = visit1)
 
 # gp34 |> 
-#   filter(`FXTAS Stage (0-5)` %in% c(NA, "No Response (999)", "Missing (empty in RedCap)")) |> 
-#   select(`FXS ID`, `Event Name`, `Visit Date`) |> 
+#   dplyr::filter(`FXTAS Stage (0-5)` %in% c(NA, "No Response (999)", "Missing (empty in RedCap)")) |> 
+#   dplyr::select(`FXS ID`, `Event Name`, `Visit Date`) |> 
 #   arrange() |> 
 #   readr::write_csv("inst/extdata/missing_FXTAS_stage.csv")
 
@@ -889,8 +889,8 @@ We also started looking at the longitudinal data, and had some questions about t
 
 ```{r}
 
-tab = gp34 |> filter(is.na(`Visit Date`)) |> 
-  select(Study:`Visit Date`)
+tab = gp34 |> dplyr::filter(is.na(`Visit Date`)) |> 
+  dplyr::select(Study:`Visit Date`)
 
 ```
 
@@ -910,8 +910,8 @@ pander(tab)
 
 tab = gp34 |> 
   group_by(`FXS ID`, `Visit Date`) |> 
-  filter(n() > 1, !is.na(`Visit Date`[1])) |> 
-  select(Study:`Visit Date`) |> 
+  dplyr::filter(n() > 1, !is.na(`Visit Date`[1])) |> 
+  dplyr::select(Study:`Visit Date`) |> 
   split(~`FXS ID`)
 
 ```
@@ -930,10 +930,10 @@ pander(tab)
 
 ```{r}
 ooo = gp34 |>
-  select(`FXS ID`, `Visit Date`, `Event Name`) |>
+  dplyr::select(`FXS ID`, `Visit Date`, `Event Name`) |>
   group_by(`FXS ID`) |>
-  filter(is.unsorted(`Event Name`[`Event Name` != "GP4 - Single Visit"])) |>
-  # filter(any(`decreased age`, na.rm = TRUE)) |>
+  dplyr::filter(is.unsorted(`Event Name`[`Event Name` != "GP4 - Single Visit"])) |>
+  # dplyr::filter(any(`decreased age`, na.rm = TRUE)) |>
   # ungroup() |>
   split(~`FXS ID`)
 ```

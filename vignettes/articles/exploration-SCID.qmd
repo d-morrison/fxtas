@@ -124,16 +124,16 @@ scid_lifetime_long <- scid_dat |>
     names_to = "Variable",
     values_to = "Lifetime"
   ) |>
-  mutate(
+  dplyr::mutate(
     Variable = gsub("Lifetime", "", Variable)
   ) |>
-  mutate(
+  dplyr::mutate(
     Variable = gsub("\\,", "", Variable)
   ) |>
-  mutate(
+  dplyr::mutate(
     Variable = trimws(Variable)
   ) |>
-  mutate(
+  dplyr::mutate(
     Lifetime = factor(Lifetime, levels = c("Absent", "Sub-Threshold", "Threshold"))
   )
   
@@ -145,16 +145,16 @@ scid_current_long <- scid_dat |>
     names_to = "Variable",
     values_to = "Current"
   ) |>
-  mutate(
+  dplyr::mutate(
     Variable = gsub("Current", "", Variable)
   ) |>
-  mutate(
+  dplyr::mutate(
     Variable = gsub("\\,", "", Variable)
   ) |>
-  mutate(
+  dplyr::mutate(
     Variable = trimws(Variable)
   ) |>
-  mutate(
+  dplyr::mutate(
     Current = factor(Current, levels = c("Absent", "Present"))
   )
 
@@ -180,7 +180,7 @@ scid_long_vars <- c(
 
 scid_long <- merge(scid_current_long, scid_lifetime_long, 
                    by = c("FXS ID", "Event Name", "Variable"), sort = FALSE) |>
-  mutate(
+  dplyr::mutate(
     Variable = factor(
       Variable, levels = scid_long_vars
     )
@@ -212,7 +212,7 @@ summary(
 Occasionally, current = "Present" and lifetime = "Absent":
 
 ```{r}
-scid_long |> filter(Current == "Present", Lifetime %in% c("Absent", NA))
+scid_long |> dplyr::filter(Current == "Present", Lifetime %in% c("Absent", NA))
 
 ```
 
@@ -220,8 +220,8 @@ double-checking the first case:
 
 ```{R}
 gp34 |> 
-  filter(`FXS ID` == "104279-100") |> 
-  select(`Event Name`, 
+  dplyr::filter(`FXS ID` == "104279-100") |> 
+  dplyr::select(`Event Name`, 
          `Anxiety Disorder NOS (ANX35), Lifetime`, 
          `Anxiety Disorder NOS (ANX35), Current`)
 ```
@@ -229,7 +229,7 @@ gp34 |>
 Missingness issues:
 
 ```{r}
-scid_long |> filter(!is.na(Current), is.na(Lifetime))
+scid_long |> dplyr::filter(!is.na(Current), is.na(Lifetime))
 ```
 
 

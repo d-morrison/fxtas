@@ -45,7 +45,7 @@ biomarker_groups = compile_biomarker_groups_table()
 SuStaInLabels =
   biomarker_varnames =
   biomarker_groups |>
-  pull("biomarker")
+  dplyr::pull("biomarker")
 
 
 df =
@@ -67,7 +67,7 @@ biomarker_events_table =
 cli::cli_inform("Biomarkers used in analysis:")
 table_out =
   biomarker_events_table |>
-  select(category = biomarker_group, biomarker, levels) |>
+  dplyr::select(category = biomarker_group, biomarker, levels) |>
   slice_head(by = biomarker)
 
 table_out |>
@@ -79,13 +79,13 @@ table_out |>
 
 control_data =
   df |>
-  filter(`FX*` == "CGG <55") |>
-  select(all_of(biomarker_varnames))
+  dplyr::filter(`FX*` == "CGG <55") |>
+  dplyr::select(all_of(biomarker_varnames))
 
 patient_data =
   df |>
   # na.omit() |>
-  filter(`FX*` == "CGG \u2265 55")
+  dplyr::filter(`FX*` == "CGG \u2265 55")
 
 prob_correct =
   control_data |>
@@ -132,7 +132,7 @@ sustain_output_males = run_and_save_OSA(rerun = rerun,
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   patient_data = patient_data |>
-    filter(Gender %in% "Male"),
+    dplyr::filter(Gender %in% "Male"),
 
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
@@ -154,7 +154,7 @@ sustain_output_females = run_and_save_OSA(rerun = rerun,
   rda_filename = rda_filename,
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
-  patient_data = patient_data |> filter(Gender == "Female"),
+  patient_data = patient_data |> dplyr::filter(Gender == "Female"),
 
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
@@ -177,7 +177,7 @@ sustain_output_cgg100plus = run_and_save_OSA(rerun = rerun,
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   patient_data = patient_data |>
-    filter(`CGG` >= 100),
+    dplyr::filter(`CGG` >= 100),
 
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
@@ -200,7 +200,7 @@ sustain_output_cgg100minus = run_and_save_OSA(rerun = rerun,
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   patient_data = patient_data |>
-    filter(`CGG` < 100),
+    dplyr::filter(`CGG` < 100),
 
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,

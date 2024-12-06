@@ -7,6 +7,8 @@
 #' @param seeds seeds to find
 #' @param by number of seeds per file
 #' @param file_stem stem of test stat .rds files
+#' @param permuting_variables which variables to permute
+#' @param stratifying_levels which variables to stratify by
 #'
 #' @returns a [numeric] vector
 #' @export
@@ -30,10 +32,13 @@ collect_permutation_test_stats <- function(
         "test_stats"),
     file_stem = "permuted_test_stats",
     seeds = 1:1000,
-    by = 20,
-    first_seeds = seq(min(seeds), max(seeds), by = by),
-    last_seeds = first_seeds + by - 1)
+    by = 20)
 {
+
+# ---------------------------------------------------------------
+
+  first_seeds = seq(min(seeds), max(seeds), by = by)
+  last_seeds = first_seeds + by - 1
 
   test_stats = c()
   files = fs::path(

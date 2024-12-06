@@ -1,7 +1,7 @@
 clean_ataxia <- function(data)
 {
   data |>
-    mutate(
+    dplyr::mutate(
 
       `Ataxia severity: missingness reasons` =
         missingness_reasons.numeric(`Ataxia: severity`),

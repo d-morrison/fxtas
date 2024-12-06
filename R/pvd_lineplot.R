@@ -1,12 +1,15 @@
 #' Plot change in Stage ranking
 #'
 #' @param figs a [list] of todo
-#' @param alpha_nochange todo
 #' @param facet_labels todo
 #' @param y_title_size todo
 #' @param text_size todo
 #' @param y_text_size todo
 #' @param x_text_size todo
+#' @param min_alpha todo
+#' @param max_alpha todo
+#' @param stage_alpha todo
+#' @param y_lab todo
 #'
 #' @export
 pvd_lineplot <- function(figs,
@@ -35,12 +38,18 @@ pvd_lineplot <- function(figs,
       ),
       .id = "facet"
     ) |>
-      mutate(facet = factor(facet, levels = names(figs)))
+      dplyr::mutate(facet = factor(facet, levels = names(figs)))
   }
+
+# ---------------------------------------------------------------
+
+
+# ---------------------------------------------------------------
+
 
   # additional processing
   plot_dataset <- dataset |>
-    mutate(
+    dplyr::mutate(
       # extract order number
       Order = stringi::stri_extract_first_regex(`row number and name`, "[0-9]+") |>
         as.integer(),
@@ -71,14 +80,14 @@ pvd_lineplot <- function(figs,
     ) |>
     unique() |>
     arrange(.data$`event name`, .data$facet) |>
-    mutate(
+    dplyr::mutate(
       # logical: did sequence change
       Changed = n_distinct(Order) != 1,
       # magnitude of sequence change
       Change = -diff(Order),
       .by = `event name`
     ) |>
-    mutate(
+    dplyr::mutate(
       linesize = ifelse(biomarker == "FXTAS Stage",
         1.5,
         1

@@ -14,6 +14,21 @@ plot_compact_pvd_est2(
   ...
 )
 }
+\arguments{
+\item{figs}{todo}
+
+\item{tile_height}{todo}
+
+\item{tile_width}{todo}
+
+\item{y_text_size}{todo}
+
+\item{legend.position}{todo}
+
+\item{scale_colors}{todo}
+
+\item{...}{arguments passed to \code{tmp_func()}}
+}
 \description{
 Plot SuStaIn Sequential Estimate
 }

@@ -45,7 +45,7 @@ plot_positional_var <- function(
     biomarker_events_table =
       biomarker_levels |> get_biomarker_events_table(),
     biomarker_event_names =
-      biomarker_events_table |> pull(biomarker_level),
+      biomarker_events_table |> dplyr::pull(biomarker_level),
     biomarker_plot_order = NULL,
     ml_f_EM = NULL,
     cval = FALSE,
@@ -216,7 +216,7 @@ plot_positional_var <- function(
       arrange_position_frequencies(
         biomarker_order = biomarker_plot_order
       ) |>
-      mutate(
+      dplyr::mutate(
         `event label` =
           glue("<i style='color:{group_color}'>{`row number and name`}</i>"),
         `event label` = if_else(

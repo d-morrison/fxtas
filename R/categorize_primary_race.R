@@ -8,7 +8,7 @@ categorize_primary_race <- function(
     )
 ){
   dataset |>
-    mutate(
+    dplyr::mutate(
       `Primary Race` =
         `Primary Race` |>
         forcats::fct_recode("Black" = "Black or African American") |>

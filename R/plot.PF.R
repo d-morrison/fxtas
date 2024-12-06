@@ -14,7 +14,7 @@ autoplot.PF <- function(
     ...) {
   to_return <-
     object |>
-    mutate(
+    dplyr::mutate(
       position = as.numeric(position)
     ) |>
     ggplot(

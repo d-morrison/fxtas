@@ -173,7 +173,7 @@ pvd_lineplot(text_size = lineplot_text_size)
 
 patient_data1 = 
   trax_gp34_all |>
-  filter(
+  dplyr::filter(
     CGG < 200, 
     CGG >= 55)
 
@@ -185,7 +185,7 @@ results_both_all = extract_results_from_pickle(
 
 stages = 
   results_both_all$subtype_and_stage_table |> 
-  mutate(
+  dplyr::mutate(
     age = patient_data1$`Age at visit`,
     id = patient_data1$`FXS ID`
   ) |> 

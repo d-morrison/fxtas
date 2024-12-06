@@ -1,6 +1,6 @@
 #' Print method for `biomarkers_table`
 #'
-#' @param x a "biomarkers_table" object from [make_biomarkers_table(0)]
+#' @param x a "biomarkers_table" object from `make_biomarkers_table()`
 #'
 #' @returns a [flextable::flextable()]
 #' @export
@@ -8,7 +8,7 @@
 flex_biomarkers_table <- function(x)
 {
   x |>
-    mutate(
+    dplyr::mutate(
       biomarker = Hmisc::capitalize(biomarker),
       "p-value" = `p-value` |> scales::label_pvalue()()
     ) |>

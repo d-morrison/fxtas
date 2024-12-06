@@ -100,7 +100,7 @@ create_scid_domains <- function(
 
   dataset |>
     # convert scid_vars to ordered factors
-    mutate(
+    dplyr::mutate(
       across(
         .cols = all_of(lifetime_vars),
         ~ factor(.x, levels = c("Absent", "Sub-Threshold", "Threshold"),
@@ -112,7 +112,7 @@ create_scid_domains <- function(
       )
     ) |>
     # create domain variables using max level
-    mutate(
+    dplyr::mutate(
       # notes: could use `do.call()`, `invoke()`, `rowwise() & max()`;
       # no clearly most-idiomatic approach as of 2024-03-22
       # some discussion here: https://r4ds.hadley.nz/numbers.html#numeric-transformations

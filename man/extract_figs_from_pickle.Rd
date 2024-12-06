@@ -25,6 +25,8 @@ extract_figs_from_pickle(
 
 \item{picklename}{the name of the pickle file to open}
 
+\item{use_rds}{\link{logical} whether to use previously cached results}
+
 \item{...}{
   Arguments passed on to \code{\link[=plot_positional_var]{plot_positional_var}}
   \describe{

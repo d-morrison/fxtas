@@ -3,7 +3,7 @@ apply_cutoffs <- function(
     cutoffs)
 {
   dataset |>
-    mutate(
+    dplyr::mutate(
       across(
         all_of(names(cutoffs)),
         .fns =

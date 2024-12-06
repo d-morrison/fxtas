@@ -16,7 +16,7 @@ test_that("`test_biomarkers_table()` produces consistent results", {
 
   SuStaInLabels = biomarkers = biomarker_varnames =
     biomarker_groups |>
-    pull("biomarker")
+    dplyr::pull("biomarker")
 
   biomarker_levels =
     df |>

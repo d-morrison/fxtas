@@ -9,7 +9,7 @@
 #' biomarker_groups = compile_biomarker_groups_table(dataset = df)
 #' biomarker_varnames =
 #'   biomarker_groups |>
-#'   pull("biomarker")
+#'   dplyr::pull("biomarker")
 #'
 #' biomarker_levels =
 #'   df |>
@@ -26,7 +26,7 @@ get_biomarker_events_table <- function(biomarker_levels)
       biomarker = name,
       level = value) |>
     dplyr::relocate(biomarker, .before = everything()) |>
-    mutate(
+    dplyr::mutate(
       # biomarker = factor(biomarker, levels = names(biomarker_levels)),
       # level = level |> str_replace("Yes", "Present"), # this might cause issues
       biomarker_level =
@@ -35,13 +35,13 @@ get_biomarker_events_table <- function(biomarker_levels)
           biomarker,
           paste(biomarker, level, sep = ": "))
     ) |>
-    mutate(
+    dplyr::mutate(
       .by = biomarker,
       levels = paste(level, collapse = ", "),
       level = dplyr::row_number()) |>
-    filter(level > 1) |>
+    dplyr::filter(level > 1) |>
     arrange(level, biomarker) # |>
-    # mutate(biomarker_level = factor(biomarker_level, levels = biomarker_level))
+    # dplyr::mutate(biomarker_level = factor(biomarker_level, levels = biomarker_level))
   to_return
 }
 
@@ -49,5 +49,5 @@ get_biomarker_event_names <- function(
     biomarker_levels,
     biomarker_events_table = get_biomarker_events_table(biomarker_levels))
 {
-  biomarker_events_table |>  pull(biomarker_level)
+  biomarker_events_table |>  dplyr::pull(biomarker_level)
 }

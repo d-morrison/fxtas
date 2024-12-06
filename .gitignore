@@ -28,3 +28,5 @@ _freeze
 .httr-oauth
 .DS_Store
 .quarto
+/doc/
+/Meta/

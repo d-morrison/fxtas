@@ -23,7 +23,7 @@ compute_prob_scores <- function(
 {
   prob_score_dims =
     list(
-      ID = dataset |> pull(`FXS ID`),
+      ID = dataset |> dplyr::pull(`FXS ID`),
       Biomarker = biomarker_varnames,
       model = ModelScores
     )

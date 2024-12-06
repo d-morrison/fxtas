@@ -9,7 +9,7 @@ extract_subtype_and_stage_table <- function(results)
     prob_ml_subtype = results$prob_ml_subtype[,1],
     prob_ml_stage = results$prob_ml_stage[,1]
   ) |>
-    mutate(
+    dplyr::mutate(
       ml_subtype = if_else(
         ml_stage == 0,
         0,

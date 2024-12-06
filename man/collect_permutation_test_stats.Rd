@@ -13,12 +13,14 @@ collect_permutation_test_stats(
     paste(fs::path_sanitize(permuting_variables), collapse = "-"), "test_stats"),
   file_stem = "permuted_test_stats",
   seeds = 1:1000,
-  by = 20,
-  first_seeds = seq(min(seeds), max(seeds), by = by),
-  last_seeds = first_seeds + by - 1
+  by = 20
 )
 }
 \arguments{
+\item{permuting_variables}{which variables to permute}
+
+\item{stratifying_levels}{which variables to stratify by}
+
 \item{output_folder}{where to find the \code{permutations/test_stats}
 subfolder}
 

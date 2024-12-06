@@ -29,7 +29,8 @@ $run_dev.*
 ^\.quarto$
 ^_extensions$
 ^README\.qmd$
-^man/compact_pvd_data_prep\.Rd$
+^doc$
+^Meta$
 ^man/compact_pvd_figure\.Rd$
 ^man/format_demographics_table_as_flextable\.Rd$
 ^man/get_title_i_2\.Rd$

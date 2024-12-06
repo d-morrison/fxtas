@@ -23,7 +23,7 @@ biomarker_groups = compile_biomarker_groups_table(
 
 biomarker_varnames =
   biomarker_groups |>
-  pull("biomarker")
+  dplyr::pull("biomarker")
 
 biomarker_levels =
 test_data_v1 |>

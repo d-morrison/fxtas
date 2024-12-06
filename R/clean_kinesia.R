@@ -10,7 +10,7 @@ clean_kinesia <- function(
     ))
 {
   data |>
-    mutate(
+    dplyr::mutate(
     across(
       all_of(kinesia_vars),
       .fns =

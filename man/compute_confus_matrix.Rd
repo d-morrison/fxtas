@@ -15,7 +15,7 @@ compute_confus_matrix(
 \item{biomarker_event_order}{todo}
 }
 \value{
-a \link{tibble:tbl_df}
+a \link[tibble:tbl_df-class]{tibble::tbl_df}
 }
 \description{
 compute \code{confus_matrix} as in python version

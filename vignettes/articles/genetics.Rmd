@@ -45,7 +45,7 @@ visit1 =
     gp34 |> count(`FXS ID`, name = "# visits"),
     by = "FXS ID"
   ) |> 
-  mutate(`# visits` = factor(`# visits`, levels = 1:6))
+  dplyr::mutate(`# visits` = factor(`# visits`, levels = 1:6))
 
 
 ```
@@ -60,8 +60,8 @@ apoe.n = gp34 |> missing_pattern_by_ID(variable = "ApoE")
 ```{r, "multiple ApoE values", results = "asis"}
 
 gp34 |> 
-  semi_join(apoe.n |> filter(n_vals > 1), by = "FXS ID") |> 
-  select(`FXS ID`, `Visit Date`, `Event Name` ,ApoE) |> 
+  semi_join(apoe.n |> dplyr::filter(n_vals > 1), by = "FXS ID") |> 
+  dplyr::select(`FXS ID`, `Visit Date`, `Event Name` ,ApoE) |> 
   arrange(`FXS ID`, `Visit Date`) |> 
   split(~`FXS ID`) |> 
   pander()
@@ -77,9 +77,9 @@ cgg.n = gp34 |> missing_pattern_by_ID(variable = "CGG")
 ```{r, "multiple CGG values", include = TRUE, results = "asis"}
 
 gp34 |> 
-  semi_join(cgg.n |> filter(n_vals > 1), by = "FXS ID") |> 
-  filter(!is.na(CGG)) |> 
-  select(`FXS ID`, `Visit Date`, `Event Name` , CGG) |> 
+  semi_join(cgg.n |> dplyr::filter(n_vals > 1), by = "FXS ID") |> 
+  dplyr::filter(!is.na(CGG)) |> 
+  dplyr::select(`FXS ID`, `Visit Date`, `Event Name` , CGG) |> 
   arrange(`FXS ID`, `Visit Date`) |> 
   split(~`FXS ID`) |> 
   pander()
@@ -91,7 +91,7 @@ gp34 |>
 ```{r, results = "asis"}
 
 visit1 |> 
-  mutate(
+  dplyr::mutate(
     across(
       c(
         ApoE,
@@ -99,11 +99,11 @@ visit1 |>
       ~na_if(.x, "Missing (empty in RedCap)")
     )
   ) |> 
-  filter(
+  dplyr::filter(
     # is.na(ApoE) | 
     is.na(`CGG`) 
   ) |> 
-  select(`FXS ID`, `Event Name`, 
+  dplyr::select(`FXS ID`, `Event Name`, 
          # ApoE,
          CGG, 
          # `Floras Non-Sortable Allele Size (CGG) Results`,
