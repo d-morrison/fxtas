@@ -20,7 +20,7 @@ df = test_data_v1
 biomarker_groups = compile_biomarker_groups_table(dataset = df)
 biomarker_varnames =
   biomarker_groups |>
-  pull("biomarker")
+  dplyr::pull("biomarker")
 
 biomarker_levels =
   df |>

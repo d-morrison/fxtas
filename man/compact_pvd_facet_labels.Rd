@@ -6,6 +6,11 @@
 \usage{
 compact_pvd_facet_labels(figs, facet_label_prefix)
 }
+\arguments{
+\item{figs}{a \link{list} of PVDs}
+
+\item{facet_label_prefix}{a \link{character} string (length 1)}
+}
 \description{
 Create facet labels
 }

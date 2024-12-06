@@ -9,7 +9,7 @@ format_results_list(
   biomarker_labels = names(biomarker_levels),
   biomarker_levels = NULL,
   biomarker_events_table = get_biomarker_events_table(biomarker_levels),
-  biomarker_event_names = pull(biomarker_events_table, biomarker_level),
+  biomarker_event_names = dplyr::pull(biomarker_events_table, biomarker_level),
   format_sst = TRUE
 )
 }

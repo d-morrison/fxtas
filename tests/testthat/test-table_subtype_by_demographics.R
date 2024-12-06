@@ -1,7 +1,7 @@
 test_that("`table_subtype_by_demographics()` produces consistent results",
           {
             library(dplyr)
-            patient_data = sim_data |> filter(Category == "Patient")
+            patient_data = sim_data |> dplyr::filter(Category == "Patient")
             table = sim_subtype_and_stage_table
             set.seed(1)
             ft = table_subtype_by_demographics(patient_data,

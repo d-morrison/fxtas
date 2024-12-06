@@ -4,11 +4,11 @@ arrange_position_frequencies <- function(position_frequencies, biomarker_order =
     biomarker_order =
       position_frequencies |>
       order_biomarkers() |>
-      pull("event name")
+      dplyr::pull("event name")
   }
 
   position_frequencies |>
-    mutate(
+    dplyr::mutate(
       "event name" =
         .data$`event name` |>
         factor(levels = biomarker_order),

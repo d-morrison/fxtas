@@ -16,9 +16,9 @@ clean_MRI_vars <- function(dataset,
                                              "999",
                                              "Missing/Refused")) {
   dataset |>
-    mutate(across(
+    dplyr::mutate(across(
       .cols = all_of(MRI_vars),
-      .fn = function(x) {
+      .fns = function(x) {
         if_else(x %in% missing_codes, NA, x) |>
           droplevels()
       }

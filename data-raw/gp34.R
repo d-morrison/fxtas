@@ -30,12 +30,13 @@ gp34 =
 
 
 trans =
-  gp34 |> group_by(`FXS ID`) |> filter(n_distinct(Gender |> setdiff(NA)) > 1)
+  gp34 |> group_by(`FXS ID`) |> dplyr::filter(n_distinct(Gender |> setdiff(NA)) > 1)
 
 if (nrow(trans) != 0)
   browser(message('some values of Gender are inconsistent; valid?'))
 
-gp34 |>  filter(if_any(where(is.character), .fn = ~ . == "NA (888)"))
+gp34 |>  dplyr::filter(if_any(where(is.character),
+                              .fn = ~ . == "NA (888)"))
 # couldn't find any of these; there might be some in factors
 
 decreased_age =
@@ -74,7 +75,7 @@ usethis::use_data(gp34_v1, overwrite = TRUE)
 
 gp34_multivisit_only =
   gp34 |>
-  filter(!is.na(`FXS ID`)) |>
-  filter(.by = `FXS ID`, n() > 1)
+  dplyr::filter(!is.na(`FXS ID`)) |>
+  dplyr::filter(.by = `FXS ID`, n() > 1)
 
 usethis::use_data(gp34_multivisit_only, overwrite = TRUE)

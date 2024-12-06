@@ -16,11 +16,27 @@ plot_compact_pvd(
 )
 }
 \arguments{
+\item{figs}{todo}
+
+\item{tile_height}{todo}
+
+\item{y_text_size}{todo}
+
+\item{facet_label_prefix}{todo}
+
+\item{legend.position}{todo}
+
+\item{scale_colors}{todo}
+
 \item{...}{
   Arguments passed on to \code{\link[=compact_pvd_data_prep]{compact_pvd_data_prep}}
   \describe{
-    \item{\code{}}{}
+    \item{\code{biomarker_order}}{a \link{character} vector specifying the
+order of biomarkers to use}
   }}
+}
+\value{
+a \link[ggplot2:ggplot]{ggplot2::ggplot}
 }
 \description{
 Plot compact PVD

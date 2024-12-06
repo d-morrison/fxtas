@@ -18,7 +18,7 @@ clean_SCID <- function(
     ))
 {
   dataset |>
-    mutate(
+    dplyr::mutate(
       across(
         .cols = all_of(scid_vars),
         .fns =

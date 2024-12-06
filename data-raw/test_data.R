@@ -1,8 +1,8 @@
 load_all()
 test_data =
   trax_gp34_all |>
-  select(-`Study ID Number`) |>
-  mutate(
+  dplyr::select(-`Study ID Number`) |>
+  dplyr::mutate(
     `FXS ID` =
       `FXS ID` |>
       as.factor() |>

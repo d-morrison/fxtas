@@ -21,7 +21,7 @@ table1(
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = v1_usable |> 
-    filter(
+    dplyr::filter(
       !(Study %in% c("Trax Phase 1", "GP3")),
       `Head tremor` == "Yes"))
 

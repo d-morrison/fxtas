@@ -16,7 +16,7 @@
 define_cases_and_controls <- function(dataset)
 {
   dataset |>
-    mutate(
+    dplyr::mutate(
       FX = `CGG` >= 55, # TRUE = cases
       `FX*` =
         if_else(FX, "CGG \u2265 55", "CGG <55") |>

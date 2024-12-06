@@ -2,6 +2,7 @@
 
 ## Manuscript
 
+* Tons of polishing (#63, etc)
 * Added `gtsummary::bold_labels()` to `gtsummary` tables
 * Added keywords
 * Reduced title to under 100 characters, including spaces

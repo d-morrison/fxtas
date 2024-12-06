@@ -6,6 +6,16 @@
 \usage{
 compact_pvd_data_prep(figs, biomarker_order = NULL)
 }
+\arguments{
+\item{figs}{a \link{list} of \code{PVD} objects}
+
+\item{biomarker_order}{a \link{character} vector specifying the
+order of biomarkers to use}
+}
+\value{
+a \link[tibble:tbl_df-class]{tibble::tbl_df}
+}
 \description{
 plot_compact_pvd: data prep
 }
+\keyword{internal}

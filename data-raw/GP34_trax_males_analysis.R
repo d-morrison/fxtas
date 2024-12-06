@@ -44,20 +44,20 @@ biomarker_groups = compile_biomarker_groups_table()
 SuStaInLabels =
   biomarker_varnames =
   biomarker_groups |>
-  pull("biomarker")
+  dplyr::pull("biomarker")
 
 
 
 df =
   males_gp34_trax_v1 |>
-  filter(
+  dplyr::filter(
     !is.na(`FX*`),
     CGG < 200
     # exclude patients with CGG > 200 (full mutation)
     )
 
 biomarker_levels =
-  lapply(df[,biomarker_varnames], F = levels)
+  lapply(df[,biomarker_varnames], FUN = levels)
 
 biomarker_events_table =
   construct_biomarker_events_table(
@@ -66,13 +66,13 @@ biomarker_events_table =
 
 control_data =
   df |>
-  filter(`FX*` == "CGG <55") |>
-  select(all_of(biomarker_varnames))
+  dplyr::filter(`FX*` == "CGG <55") |>
+  dplyr::select(all_of(biomarker_varnames))
 
 patient_data =
   df |>
   # na.omit() |>
-  filter(`FX*` == "CGG \u2265 55")
+  dplyr::filter(`FX*` == "CGG \u2265 55")
 
 prob_correct =
   control_data |>

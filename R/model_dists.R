@@ -12,7 +12,7 @@ model_dists <- function(
     df,
     biomarker_varnames = attr(df, "biomarker_varnames"),
     biomarker_levels =
-      lapply(df[,biomarker_varnames], F = levels),
+      lapply(df[,biomarker_varnames], FUN = levels),
     nlevs =
       biomarker_levels |> sapply(length)
 )

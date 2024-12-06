@@ -71,12 +71,12 @@ biomarker_groups =
 
 library(dplyr)
 biomarker_groups = biomarker_groups |>
-  filter(biomarker_group %in% c("Tremors", "Stage", "Ataxia", "Parkinsonian", "MRI"))
+  dplyr::filter(biomarker_group %in% c("Tremors", "Stage", "Ataxia", "Parkinsonian", "MRI"))
 
 SuStaInLabels =
   biomarker_varnames =
   biomarker_groups |>
-  pull("biomarker")
+  dplyr::pull("biomarker")
 
 # note: there are 231 records in `visit1` with CGG >= 55, but 4 have CGG >= 200
 # previously `nrow(v1_usable_cases)` was 221, which was based on incorrectly filtering on a version of CGG that hadn't been backfilled.
@@ -84,7 +84,7 @@ SuStaInLabels =
 # March 2024, main analysis now uses Trax/GP34 Visit 1 data replacing previous version using only GP34
 df =
   test_data_v1 |>
-  filter(
+  dplyr::filter(
     !is.na(`FX*`),
     # exclude patients with CGG > 200 (full mutation)
     CGG < 200)
@@ -101,7 +101,7 @@ biomarker_events_table =
 cli::cli_inform("Biomarkers used in analysis:")
 table_out =
   biomarker_events_table |>
-  select(category = biomarker_group, biomarker, levels) |>
+  dplyr::select(category = biomarker_group, biomarker, levels) |>
   slice_head(by = biomarker) |>
   pander()
 
@@ -111,13 +111,13 @@ table_out =
 
 control_data =
   df |>
-  filter(`FX*` == "CGG <55") |>
-  select(all_of(biomarker_varnames))
+  dplyr::filter(`FX*` == "CGG <55") |>
+  dplyr::select(all_of(biomarker_varnames))
 
 patient_data =
   df |>
   # na.omit() |>
-  filter(`FX*` == "CGG \u2265 55")
+  dplyr::filter(`FX*` == "CGG \u2265 55")
 
 cli::cli_inform("`nrow(patient_data)` = {nrow(patient_data)}")
 

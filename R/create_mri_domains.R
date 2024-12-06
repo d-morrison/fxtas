@@ -29,7 +29,7 @@ create_mri_domains <- function(
 
   dataset |>
     # convert to ordered factors
-    mutate(
+    dplyr::mutate(
       across(
         .cols = c(all_of(cerebellum_vars), all_of(cerebral_vars)),
         ~ factor(.x, levels = c("None", "Mild", "Moderate", "Severe"),
@@ -37,7 +37,7 @@ create_mri_domains <- function(
       )
     ) |>
     # create Cerebral and Cerebellum domains
-    mutate(
+    dplyr::mutate(
       `MRI: Cerebral` = pmax(!!!rlang::syms(cerebral_vars), na.rm = TRUE),
       `MRI: Cerebellar` = pmax(!!!rlang::syms(cerebellum_vars), na.rm = TRUE),
     )

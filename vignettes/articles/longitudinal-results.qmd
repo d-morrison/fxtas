@@ -65,8 +65,8 @@ fig_both_mv_only = extract_figs_from_pickle(size.y = size.y,
 ```{r}
 #| label: fig-males
 #| column: page
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
+#| fig-height: !expr pvd_line_height
+#| fig-width: !expr pvd_line_width
 #| fig-cap: !expr glue::glue("**Event sequences models for males, by data subset. (a)** {compact_fig_caption} **(b)** Change in estimated event sequences for males by data subset.")
 #| fig-cap-location: top
 #| layout-ncol: 1
@@ -78,13 +78,13 @@ list(
     "Males, First Visit Only" = fig_males_first,
     "Males, All Visits" = fig_males_all
   ) |> 
-plot_compact_pvd(y_text_size = 11)
+plot_compact_pvd(y_text_size = y_text_size)
 
 list(
     "Males, First Visit Only" = fig_males_first,
     "Males, All Visits" = fig_males_all
   ) |> 
-pvd_lineplot(y_text_size = 11)
+pvd_lineplot(text_size = lineplot_text_size)
 ```
 
 ### Females {.appendix}
@@ -101,7 +101,7 @@ list(
     "Females, First Visit Only" = fig_females_first,
     "Females, All Visits" = fig_females_all
   ) |> 
-plot_compact_pvd(y_text_size = 11)
+plot_compact_pvd(y_text_size = y_text_size)
 ```
 
 {{< pagebreak >}}
@@ -118,7 +118,7 @@ list(
     "Females, First Visit Only" = fig_females_first,
     "Females, All Visits" = fig_females_all
   ) |> 
-pvd_lineplot(y_text_size = 11)
+pvd_lineplot(text_size = lineplot_text_size)
 ```
 
 ### All patients, all visits  {.appendix}
@@ -144,7 +144,7 @@ list(
     "Males" = fig_males_all,
     "Females" = fig_females_all
   ) |> 
-plot_compact_pvd(y_text_size = 11)
+plot_compact_pvd(y_text_size = y_text_size)
 ```
 
 {{< pagebreak >}}
@@ -161,7 +161,7 @@ list(
     "Males" = fig_males_all,
     "Females" = fig_females_all
   ) |> 
-pvd_lineplot(y_text_size = 11)
+pvd_lineplot(text_size = lineplot_text_size)
 ```
 
 {{< pagebreak >}}
@@ -173,7 +173,7 @@ pvd_lineplot(y_text_size = 11)
 
 patient_data1 = 
   trax_gp34_all |>
-  filter(
+  dplyr::filter(
     CGG < 200, 
     CGG >= 55)
 
@@ -185,7 +185,7 @@ results_both_all = extract_results_from_pickle(
 
 stages = 
   results_both_all$subtype_and_stage_table |> 
-  mutate(
+  dplyr::mutate(
     age = patient_data1$`Age at visit`,
     id = patient_data1$`FXS ID`
   ) |> 

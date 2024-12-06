@@ -23,11 +23,11 @@ parkinsonian_vars =
       "Pill-rolling tremor",
       "Stiff gait")
 parkinsonian_data = 
-  trax_gp34_all |> select(all_of(parkinsonian_vars))
+  trax_gp34_all |> dplyr::select(all_of(parkinsonian_vars))
 parkinsonian_data |> summary()
-parkinsonian_data |> filter(`parkinsonian features` == "Yes") |> 
-  select(-`parkinsonian features`) |> ftable(row.vars = 1:2)
+parkinsonian_data |> dplyr::filter(`parkinsonian features` == "Yes") |> 
+  dplyr::select(-`parkinsonian features`) |> ftable(row.vars = 1:2)
 
-parkinsonian_data |> filter(`parkinsonian features` == "No")
+parkinsonian_data |> dplyr::filter(`parkinsonian features` == "No")
 ```
 

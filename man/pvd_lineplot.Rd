@@ -12,25 +12,31 @@ pvd_lineplot(
   facet_labels = names(figs),
   text_size = 3.4,
   y_lab = "Sequential order",
-  y_title_size = 12,
-  y_text_size = 10,
-  x_text_size = 12
+  y_title_size = 9,
+  y_text_size = 8,
+  x_text_size = 8
 )
 }
 \arguments{
 \item{figs}{a \link{list} of todo}
 
+\item{min_alpha}{todo}
+
+\item{max_alpha}{todo}
+
+\item{stage_alpha}{todo}
+
 \item{facet_labels}{todo}
 
 \item{text_size}{todo}
+
+\item{y_lab}{todo}
 
 \item{y_title_size}{todo}
 
 \item{y_text_size}{todo}
 
 \item{x_text_size}{todo}
-
-\item{alpha_nochange}{todo}
 }
 \description{
 Plot change in Stage ranking

@@ -13,15 +13,19 @@ collect_permutation_test_stats(
     paste(fs::path_sanitize(permuting_variables), collapse = "-"), "test_stats"),
   file_stem = "permuted_test_stats",
   seeds = 1:1000,
-  by = 20,
-  first_seeds = seq(min(seeds), max(seeds), by = by),
-  last_seeds = first_seeds + by - 1
+  by = 20
 )
 }
 \arguments{
-\item{output_folder}{where to find the \code{permutations/test_stats} subfolder}
+\item{permuting_variables}{which variables to permute}
 
-\item{permutation_results_folder_path}{path to folder containing \code{.rds} files with permuted test statistics}
+\item{stratifying_levels}{which variables to stratify by}
+
+\item{output_folder}{where to find the \code{permutations/test_stats}
+subfolder}
+
+\item{permutation_results_folder_path}{path to folder
+containing \code{.rds} files with permuted test statistics}
 
 \item{file_stem}{stem of test stat .rds files}
 

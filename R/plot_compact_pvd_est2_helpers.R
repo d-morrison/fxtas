@@ -7,16 +7,16 @@ tmp_data_prep <- function(x) {
     dplyr::select(.data$`row number and name`,
                   .data$`event name`,
                   .data$biomarker) |>
-    mutate(Order = .data$`row number and name` |>
+    dplyr::mutate(Order = .data$`row number and name` |>
              sub("\\D*(\\d+).*", "\\1", x = _) |>
              as.numeric()) |>
-    mutate(`event order` = min(.data$Order),
+    dplyr::mutate(`event order` = min(.data$Order),
            .by = .data$`biomarker`) |>
     # dplyr::select(
     #   biomarker, position
     # ) |>
     arrange(.data$`event order`) |>
-    mutate(biomarker = forcats::fct_inorder(.data$biomarker)) |>
+    dplyr::mutate(biomarker = forcats::fct_inorder(.data$biomarker)) |>
     dplyr::select(.data$biomarker, .data$`event order`) |>
     unique()
 
@@ -36,13 +36,13 @@ tmp_data_prep <- function(x) {
                                "biomarker")) |>
     dplyr::filter(.data$position == .data$Order) |>
     # convert biomarker to factor with event order levels
-    mutate(biomarker =
+    dplyr::mutate(biomarker =
              .data$biomarker |>
              factor(levels = levels(event_order$biomarker))) |>
     # arrange by biomarker levels
     arrange(pick("biomarker")) |>
     # create biomarker labels for figure
-    mutate(
+    dplyr::mutate(
       biomarker_label = glue::glue("<i style='color:{group_color}'>{biomarker}</i>") |>
         forcats::fct_inorder()
     ) |>
@@ -61,11 +61,12 @@ tmp_data_prep <- function(x) {
 tmp_func <- function(plot_dataset,
                      y_position,
                      panel_title,
-                     scale_colors = scale_colors,
-                     tile_height = tile_height,
-                     tile_width = tile_width,
-                     y_text_size = y_text_size,
-                     legend.position) {
+                     scale_colors,
+                     tile_height,
+                     tile_width,
+                     y_text_size,
+                     legend.position,
+                     title_size = y_text_size) {
   # process color scales
   level2 = colorRampPalette(c("white", scale_colors[1])) # level 2
   level3 = colorRampPalette(c("white", scale_colors[2])) # level 3
@@ -85,7 +86,7 @@ tmp_func <- function(plot_dataset,
   fig <- ggplot() +
     # layer for biomarker level 2
     ggplot2::geom_tile(
-      data = plot_dataset |> filter(.data$level == 2),
+      data = plot_dataset |> dplyr::filter(.data$level == 2),
       aes(
         x = .data$position,
         y = forcats::fct_inorder(.data$biomarker_label),
@@ -106,7 +107,7 @@ tmp_func <- function(plot_dataset,
     ggnewscale::new_scale_fill() +
     # layer for biomarker level 3
     ggplot2::geom_tile(
-      data = plot_dataset |> filter(.data$level == 3),
+      data = plot_dataset |> dplyr::filter(.data$level == 3),
       aes(
         x = .data$position,
         y = forcats::fct_inorder(.data$biomarker_label),
@@ -127,7 +128,7 @@ tmp_func <- function(plot_dataset,
     ggnewscale::new_scale_fill() +
     # layer for biomarker level 4
     ggplot2::geom_tile(
-      data = plot_dataset |> filter(.data$level == 4),
+      data = plot_dataset |> dplyr::filter(.data$level == 4),
       aes(
         x = .data$position,
         y = forcats::fct_inorder(.data$biomarker_label),
@@ -148,7 +149,7 @@ tmp_func <- function(plot_dataset,
     ggnewscale::new_scale_fill() +
     # layer for biomarker level 5
     ggplot2::geom_tile(
-      data = plot_dataset |> filter(.data$level == 5),
+      data = plot_dataset |> dplyr::filter(.data$level == 5),
       aes(
         x = .data$position,
         y = forcats::fct_inorder(.data$biomarker_label),
@@ -169,7 +170,7 @@ tmp_func <- function(plot_dataset,
     ggnewscale::new_scale_fill() +
     # layer for biomarker level 6
     ggplot2::geom_tile(
-      data = plot_dataset |> filter(.data$level == 6),
+      data = plot_dataset |> dplyr::filter(.data$level == 6),
       aes(
         x = .data$position,
         y = forcats::fct_inorder(.data$biomarker_label),
@@ -203,18 +204,19 @@ tmp_func <- function(plot_dataset,
     ggplot2::theme(
       legend.position = legend.position,
       # add color scale info in figure caption,
-      legend.title = element_markdown(),
+      legend.title = element_markdown(size = title_size),
       # markdown for legends
       legend.byrow = TRUE,
       legend.box = "horizontal",
       legend.justification = ,
       legend.margin = ggplot2::margin(0, 0.15, 0, -0.45, "cm"),
       axis.title.y = ggplot2::element_blank(),
+      axis.title.x = ggtext::element_markdown(size = title_size),
       axis.text.y = ggtext::element_markdown(size = y_text_size),
       # allow markdown for coloring
       # strip.text = ggtext::element_markdown(size = facet_label_size) # allow markdown for labels
       # strip.text = ggtext::element_markdown() # allow markdown for labels
-      plot.title = ggtext::element_markdown(hjust = 0.5)
+      plot.title = ggtext::element_markdown(hjust = 0.5, size = title_size)
     )
 
   return(fig)

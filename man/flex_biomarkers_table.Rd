@@ -7,7 +7,7 @@
 flex_biomarkers_table(x)
 }
 \arguments{
-\item{x}{a "biomarkers_table" object from \link{make_biomarkers_table(0)}}
+\item{x}{a "biomarkers_table" object from \code{make_biomarkers_table()}}
 }
 \value{
 a \code{\link[flextable:flextable]{flextable::flextable()}}

@@ -1,5 +1,6 @@
-#'  @title Plot compact PVD with point estimates only
-#'  @export
+#' @title Plot compact PVD with point estimates only
+#' @inheritParams plot_compact_pvd
+#' @export
 #'
 
 plot_compact_pvd_est <- function(

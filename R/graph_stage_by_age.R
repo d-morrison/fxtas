@@ -9,7 +9,7 @@ graph_stage_by_age <- function(data,
                               alpha = .7)
 {
   graph = data |>
-    filter(ml_subtype != "Type 0") |>
+    dplyr::filter(ml_subtype != "Type 0") |>
     ggplot(
       aes(x = age,
           y = ml_stage)
@@ -27,8 +27,8 @@ graph_stage_by_age <- function(data,
     theme(legend.position = "none")
 
   n_subtypes = data |>
-    filter(ml_subtype != "Type 0") |>
-    pull(ml_subtype) |>
+    dplyr::filter(ml_subtype != "Type 0") |>
+    dplyr::pull(ml_subtype) |>
     dplyr::n_distinct()
 
   if(n_subtypes > 1)

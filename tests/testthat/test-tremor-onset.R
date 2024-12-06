@@ -7,10 +7,10 @@ test_that(
 
     inconsistent =
       gp34 |>
-      filter(
+      dplyr::filter(
         is.na(`Tremor: Age of onset`),
         `Tremor: Age of onset: missingness reasons` == "[Valid data recorded]") |>
-      select(
+      dplyr::select(
         `Tremor: Age of onset`,
         `Tremor: Age of onset: missingness reasons`)
 

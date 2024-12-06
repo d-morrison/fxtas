@@ -7,7 +7,7 @@
 model_dists(
   df,
   biomarker_varnames = attr(df, "biomarker_varnames"),
-  biomarker_levels = lapply(df[, biomarker_varnames], F = levels),
+  biomarker_levels = lapply(df[, biomarker_varnames], FUN = levels),
   nlevs = sapply(biomarker_levels, length)
 )
 }

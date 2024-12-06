@@ -1,6 +1,6 @@
 Package: fxtas
 Title: FXTAS
-Version: 0.0.0.9008
+Version: 0.0.0.9009
 Authors@R: 
     person("Douglas Ezra", "Morrison", , "demorrison@ucdavis.edu", role = c("cre", "aut"))
 Description: PKG_DESC.
@@ -16,6 +16,7 @@ Imports:
     cli,
     colorspace,
     config (>= 0.3.1),
+    cowplot,
     dplyr,
     flextable,
     forcats,
@@ -28,9 +29,12 @@ Imports:
     glue,
     golem (>= 0.3.4),
     grDevices,
+    gt,
     gtsummary (>= 2.0.3.9003),
     here,
+    Hmisc,
     labelled,
+    lubridate,
     magrittr,
     pander,
     plotly,
@@ -46,11 +50,13 @@ Imports:
     splitTools,
     ssdtools (>= 2.0.0),
     stats,
+    stringi,
     stringr,
     table1,
     tibble,
     tidyr,
     tidyselect,
+    units,
     utils,
     vdiffr,
     veccompare,
@@ -75,8 +81,8 @@ Language: en-US
 LazyData: true
 RoxygenNote: 7.3.2
 Depends: 
-    R (>= 2.10)
-VignetteBuilder: quarto
+    R (>= 4.1.0)
+VignetteBuilder: knitr
 Config/reticulate/autoconfigure:
   list(
     packages = list(

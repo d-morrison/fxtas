@@ -7,6 +7,8 @@
 #' @param rda_filename name of rda file containing environment used to run analyses
 #' @param format_results whether to apply [format_results_list()] to results before returning
 #' @param verbose whether to print messages
+#' @param basename base of pickle file name (without `.pickle` suffix)
+#' @param use_rds [logical] whether to use previously cached results
 #' @inheritDotParams format_results_list format_sst
 #' @inherit format_results_list return
 #' @export
@@ -74,6 +76,7 @@ extract_results_from_pickle <- function(
 #' Extract results from multiple pickle files
 #'
 #' @inheritParams extract_results_from_pickle
+#' @inheritDotParams format_results_list format_sst
 #' @returns a [list] of `"SuStaIn-model"` objects (extends [list()])
 #' @export
 #'

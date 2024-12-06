@@ -29,8 +29,8 @@
 #' @param biomarker_event_names todo
 #' @param biomarker_plot_order todo
 #' @param synchronize_y_axes todo
-#' @inheritDotParams plot.PF
-#' @returns a `"PVD.list` (a [list] of `PVD` objects from [plot.PF()])
+#' @inheritDotParams autoplot.PF
+#' @returns a `"PVD.list` (a [list] of `PVD` objects from [autoplot.PF()])
 #' @export
 #'
 plot_positional_var <- function(
@@ -45,7 +45,7 @@ plot_positional_var <- function(
     biomarker_events_table =
       biomarker_levels |> get_biomarker_events_table(),
     biomarker_event_names =
-      biomarker_events_table |> pull(biomarker_level),
+      biomarker_events_table |> dplyr::pull(biomarker_level),
     biomarker_plot_order = NULL,
     ml_f_EM = NULL,
     cval = FALSE,
@@ -79,13 +79,13 @@ plot_positional_var <- function(
   if (is.null(subtype_order)) {
     # Determine order if info given
     if (!is.null(ml_f_EM)) {
-      subtype_order <- ml_f_EM |> order(decreasing = TRUE)
+      subtype_order <- ml_f_EM |> base::order(decreasing = TRUE)
 
       # Otherwise determine order from samples_f
     } else {
       subtype_order <- samples_f |>
         rowMeans() |>
-        order(decreasing = TRUE)
+        base::order(decreasing = TRUE)
       # np.argsort(np.mean(samples_f, 1))[::-1]
     }
   }
@@ -216,7 +216,7 @@ plot_positional_var <- function(
       arrange_position_frequencies(
         biomarker_order = biomarker_plot_order
       ) |>
-      mutate(
+      dplyr::mutate(
         `event label` =
           glue("<i style='color:{group_color}'>{`row number and name`}</i>"),
         `event label` = if_else(
@@ -236,7 +236,7 @@ plot_positional_var <- function(
 
     PF.plot <-
       PFs |>
-      plot.PF(...) +
+      autoplot.PF(...) +
       ggplot2::ggtitle(title_i)
 
 

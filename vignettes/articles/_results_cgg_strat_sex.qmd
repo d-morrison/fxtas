@@ -16,14 +16,14 @@ males_by_cgg = list(
     "Males, CGG &lt; 100 <br>" = fig_under100_males,
     "Males, CGG &ge; 100  <br>" = fig_over100_males
   ) |>
-plot_compact_pvd(y_text_size = 11)
+plot_compact_pvd(y_text_size = y_text_size)
 
 ```
 
 ```{r}
 #| label: fig-pvd-by-cgg-male-2
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
+#| fig-height: !expr pvd_line_height
+#| fig-width: !expr pvd_line_width
 #| fig-cap: !expr 
 #|     glue::glue(
 #|        "Positional differences in estimated event sequence 
@@ -34,7 +34,7 @@ list(
     "Males, CGG &lt; 100" = fig_under100_males,
     "Males, CGG &ge; 100" = fig_over100_males
   ) |>
-pvd_lineplot(y_text_size = 11)
+pvd_lineplot(text_size = lineplot_text_size)
 ```
 
 **Event sequences stratified by CGG repeats, among males.**
@@ -49,46 +49,38 @@ pvd_lineplot(y_text_size = 11)
 #| label: fig-pvd-by-cgg-female-1
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr
-#|    glue::glue(
-#|      "**Estimated event sequences,
-#|      stratified by CGG repeats (<100 vs 100+).**
-#|      {compact_fig_caption}
-#|      ")
+#| fig-cap: ""
 
 # compact pvd
-plot_compact_pvd(
-  figs = list(
-    fig_under100_females,
-    fig_over100_females
-  ),
-  facet_label = c("Females, CGG &lt; 100  <br>", "Females, CGG &ge; 100  <br>"),
-  y_text_size = 11
-)
+list(
+    "Females, CGG &lt; 100  <br>" = fig_under100_females,
+    "Females, CGG &ge; 100  <br>" = fig_over100_females
+  ) |> 
+  plot_compact_pvd(y_text_size = y_text_size)
 
 ```
 
 ```{r}
 #| label: fig-pvd-by-cgg-female-2
 #| column: page
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
-#| fig-cap: !expr
-#|    glue::glue(
-#|      "**Positional differences in estimated event sequence
-#|      between CGG repeats.** {compact_fig_cap2}")
+#| fig-height: !expr pvd_line_height
+#| fig-width: !expr pvd_line_width
+#| fig-cap: ""
 
 # lineplot of event sequences
-pvd_lineplot(
-  figs = list(
-    fig_under100_females,
-    fig_over100_females
-  ),
-  facet_label = c("Females, CGG &lt; 100", "Females, CGG &ge; 100"),
-  y_text_size = 11
-)
+
+list(
+  "Females, CGG &lt; 100" = fig_under100_females,
+  "Females, CGG &ge; 100" = fig_over100_females
+) |> 
+  pvd_lineplot(text_size = lineplot_text_size)
+  
 ```
 
 **Event sequences stratified by CGG repeats, among females.**
+**(a)** Estimated event sequences, stratified by CGG repeats 
+(<100 vs 100+). `r compact_fig_caption`
+**(b)** Positional differences in estimated event sequence
+between CGG repeats. `r compact_fig_cap2`
 
 :::

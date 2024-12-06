@@ -40,7 +40,7 @@ data("visit1")
 
 v1_usable = 
   visit1 |> 
-  filter(
+  dplyr::filter(
     CGG < 200,
     !is.na(`FX*`)
     )

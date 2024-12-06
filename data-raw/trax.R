@@ -592,8 +592,8 @@ visit1 <- trax_gp34_v1 <- trax_gp34_all |>
 
 trax_gp34_multivisit_only <-
   trax_gp34_all |>
-  filter(!is.na(`FXS ID`)) |>
-  filter(
+  dplyr::filter(!is.na(`FXS ID`)) |>
+  dplyr::filter(
     .by = `FXS ID`,
     n() > 1
   )
@@ -604,7 +604,7 @@ use_data(trax_gp34_v1, overwrite = TRUE)
 
 males_gp34_trax <-
   trax_gp34_all |>
-  filter(Gender == "Male")
+  dplyr::filter(Gender == "Male")
 
 use_data(males_gp34_trax, overwrite = TRUE)
 
@@ -618,7 +618,7 @@ trax_ids <- trax$`FXS ID`
 
 males_gp34_trax_v1 <-
   males_gp34_trax_v1 |>
-  mutate(
+  dplyr::mutate(
     "GP3" = ifelse(`FXS ID` %in% gp3_ids, "GP3", NA_character_),
     "GP4" = ifelse(`FXS ID` %in% gp4_ids, "GP4", NA_character_),
     "TRAX" = ifelse(`FXS ID` %in% trax_ids, "TRAX", NA_character_)

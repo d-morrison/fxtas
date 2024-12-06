@@ -45,7 +45,7 @@ event_order_heatmap <- function(
     values_to = "y"
   ) |>
     count(x,y, wt = n) |>
-    mutate(
+    dplyr::mutate(
       x = x |> factor(levels = positions),
       y =
         biomarkers[y] |>
@@ -55,15 +55,15 @@ event_order_heatmap <- function(
 
 
 
-  # b2 = b |> apply(M = 1, F = table) |> bind_rows() |> as.matrix()
+  # b2 = b |> apply(M = 1, FUN = table) |> bind_rows() |> as.matrix()
   # b2[is.na(b2)] = 0
   # b3 = sweep(b2, MARGIN = 2, FUN = "/", STATS = colSums(b2))
   # colnames(b3) = biomarkers[as.numeric(colnames(b3))]
-  # b4 = b3 |> as_tibble() |> mutate(x = 1:nrow(b3) |> factor())
+  # b4 = b3 |> as_tibble() |> dplyr::mutate(x = 1:nrow(b3) |> factor())
   # b5 = b4 |>
   #   tidyr::pivot_longer(cols = biomarkers,
   #                       names_to = "y",
   #                       values_to = "heat") |>
-  #   mutate(y = factor(y, levels = rev(colnames(b3))))
+  #   dplyr::mutate(y = factor(y, levels = rev(colnames(b3))))
 
 }

@@ -4,7 +4,7 @@ make_vars_numeric <- function(
     ignore.case = FALSE)
 {
   dataset |>
-    mutate(
+    dplyr::mutate(
       across(
         contains(regex, ignore.case = ignore.case),
         # c(
