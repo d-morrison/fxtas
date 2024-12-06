@@ -65,9 +65,9 @@ is still understudied,
 but it could help us to understand the disease process and its variability across patients.
 Therefore, the present study attempts to address the following questions:
 1) In what sequential order do 
-FXTAS symptoms and brain changes typically appear;
-2) how does that sequence vary among patients;
-and 3) do specific baseline characteristics predict the order of presentation?
+FXTAS symptoms and brain changes typically appear?
+2) How does that sequence vary among patients?
+and 3) Do specific baseline characteristics predict the order of presentation?
 
 Here, we applied the ordinal-outcomes version of the
 Subtype and Stage Inference algorithm

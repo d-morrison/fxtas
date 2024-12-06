@@ -16,7 +16,8 @@ carriers of the *FMR1* premutation
 who have neurological symptoms 
 or have been diagnosed with FXTAS 
 and healthy control individuals without the fragile X premutation,
-aged 40-85 at entry. 
+aged 40-85 at entry,
+with follow-up visits approximately every two years.
 The TRAX longitudinal study is an ongoing effort studying 
 adult male premutation carriers 
 ranging from 40-82 years
@@ -62,7 +63,7 @@ The primary sequence analysis of symptomatic events
 included baseline visit data 
 from `r nrow(v1_usable)` participants from the GP and TRAX cohorts,
 consisting of 
-`r nrow(v1_usable_cases)` carriers of a premutation and 
+`r nrow(v1_usable_cases)` premutation carriers and 
 `r nrow(controls_v1)` controls. 
 @tbl-demographics provides 
 demographic information about the study participants.

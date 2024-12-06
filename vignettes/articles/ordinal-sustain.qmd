@@ -7,7 +7,7 @@ format:
 reference-doc: ../Brain_template_2022.docx
 ---
 
-**Running title:** FXTAS progression revealed by SuStaIn{{< pagebreak >}}
+**Running title:** Progression of FXTAS symptoms{{< pagebreak >}}
 
 ```{=html}
 <style>
@@ -81,11 +81,9 @@ events_name = "symptomatic events"
 outcomes_name_sentence_start = stringr::str_to_sentence(outcomes_name)
 
 compact_fig_caption <- paste(
-  "**Positional variance diagrams of",
-  "estimated event sequences models and uncertainty.**",
   "The different colors (red, blue, purple, green, magenta)",
   "indicate the ordinal levels of symptom progression.",
-  "Color intensity represents the likelihood of sequence position.",
+  "Color gradient intensity represents the likelihood of sequence position.",
   "The brighter the color, the more likely that the corresponding",
   outcomes_name,
   "event occurs in that position in the sequence."
@@ -208,8 +206,9 @@ max_levels = nlevs |> max()
 **Keywords:** 
 Fragile X-associated tremor/ataxia syndrome;
 Subtype and Stage Inference;
+sequential events; 
+disease development and progression;
 sex differences;
-statistical clustering;
 latent subgroups
 
 # Introduction
@@ -446,8 +445,8 @@ female premutation carriers developed
 SCID mood disorder symptoms, 
 both sub-threshold-level and threshold-level,
 prior to FXTAS Stage 1 diagnosis,
-whereas male carriers experienced these symptoms 
-much later (between FXTAS Stages 3 and 4) (@fig-first-only-diffs).
+whereas male carriers experienced these symptoms much later 
+(often between FXTAS Stages 3 and 4) (@fig-first-only-diffs).
 Ataxia occurred prior to Stage 1 for females 
 and after Stage 2 for males.
 However, ataxia severity level 1 occurred 
@@ -722,9 +721,8 @@ Supplementary material is available at Brain online.
 ```{r}
 #| label: "tbl-demographics"
 #| tbl-cap: |
-#|    **Descriptive statistics of patient characteristics by CGG repeat level.**
-#|    `*`p-values represent tests for sex differences in distributions of 
-#|    characteristics, all CGG repeat levels combined.
+#|    **Descriptive statistics of patient characteristics 
+#|    by Sex and CGG repeat level.**
 
 v1_usable |> make_demographics_table()
 
@@ -735,10 +733,13 @@ v1_usable |> make_demographics_table()
 ```{r}
 #| tbl-cap: |
 #|    **Symptoms included in analysis.** 
-#|    The first level listed in each row of column "Defined Ordered Levels" 
+#|    The first level listed in each row of column 
+#|    "Defined Ordered Levels" 
 #|    is the "reference level" for the corresponding symptom,
-#|    and subsequent levels are considered "clinically elevated levels".
-#|    Columns "Female" and "Male" list proportions of clinically elevated levels 
+#|    and subsequent levels are considered 
+#|    "clinically elevated levels".
+#|    Columns "Female" and "Male" list percentages of 
+#|    clinically elevated levels 
 #|    at baseline visit, stratified by sex.
 #| label: tbl-biomarker-list
 
@@ -788,7 +789,7 @@ tbl_sg_demos |>
 #| fig-width: !expr pvd_width
 #| fig-cap: !expr 
 #|    glue::glue(
-#|    "**Event sequence models stratified by sex.** 
+#|    "**Event sequences of FXTAS symptoms stratified by sex.** 
 #|    {compact_fig_caption}")
 #| fig-cap-location: top
 
@@ -808,7 +809,8 @@ plot_compact_pvd(y_text_size = y_text_size)
 #| fig-width: !expr pvd_line_width
 #| fig-cap: !expr 
 #|    glue::glue(
-#|    "**Positional differences in estimated event sequence between sexes.** 
+#|    "**Positional differences in estimated event sequence between 
+#|    males and females.** 
 #|    {compact_fig_cap2}")
 #| fig-cap-location: top
 
