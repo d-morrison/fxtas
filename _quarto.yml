@@ -95,6 +95,7 @@ project:
   execute-dir: project
 format:
   docx:
+    keep-md: false
     notes-after-punctuation: true
     reference-doc: vignettes/Brain_template_2022.docx
     csl: vignettes/american-medical-association.csl

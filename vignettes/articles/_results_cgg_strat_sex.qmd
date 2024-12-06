@@ -48,7 +48,7 @@ pvd_lineplot(text_size = lineplot_text_size)
 ```{r}
 #| label: fig-pvd-by-cgg-female-1
 #| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
+#| fig-width: !expr pvd_subfig_width
 #| fig-cap: ""
 
 # compact pvd
@@ -64,7 +64,7 @@ list(
 #| label: fig-pvd-by-cgg-female-2
 #| column: page
 #| fig-height: !expr pvd_line_height
-#| fig-width: !expr pvd_line_width
+#| fig-width: !expr pvd_line_subfig_width
 #| fig-cap: ""
 
 # lineplot of event sequences
