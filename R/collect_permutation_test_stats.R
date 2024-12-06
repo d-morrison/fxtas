@@ -47,7 +47,7 @@ collect_permutation_test_stats <- function(
 
   missing_files =
     files |>
-    setdiff(dir(permutation_results_folder_path, full = TRUE))
+    setdiff(dir(permutation_results_folder_path, full.names = TRUE))
 
   if(length(missing_files) > 0)
   {

@@ -54,7 +54,7 @@ SuStaInLabels =
 biomarker_levels =
   df |>
   dplyr::select(all_of(biomarker_varnames)) |>
-  lapply(F = levels)
+  lapply(FUN = levels)
 
 biomarker_events_table =
   construct_biomarker_events_table(

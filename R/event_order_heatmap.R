@@ -55,7 +55,7 @@ event_order_heatmap <- function(
 
 
 
-  # b2 = b |> apply(M = 1, F = table) |> bind_rows() |> as.matrix()
+  # b2 = b |> apply(M = 1, FUN = table) |> bind_rows() |> as.matrix()
   # b2[is.na(b2)] = 0
   # b3 = sweep(b2, MARGIN = 2, FUN = "/", STATS = colSums(b2))
   # colnames(b3) = biomarkers[as.numeric(colnames(b3))]

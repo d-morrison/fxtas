@@ -12,13 +12,17 @@ make_biomarkers_table(
 )
 }
 \arguments{
-\item{data}{a \code{\link[=data.frame]{data.frame()}} containing the columns specified by \code{biomarker_varnames} as well as \code{stratifying_var_names}}
+\item{data}{a \code{\link[=data.frame]{data.frame()}} containing the columns specified by
+\code{biomarker_varnames} as well as \code{stratifying_var_names}}
 
-\item{biomarker_varnames}{a \link{character} vector matching a subset of the column names in \code{data}}
+\item{biomarker_varnames}{a \link{character} vector matching a subset of
+the column names in \code{data}}
 
-\item{biomarker_events_table}{\link{data.frame} from \code{\link[=construct_biomarker_events_table]{construct_biomarker_events_table()}}}
+\item{biomarker_events_table}{\link{data.frame} from
+\code{\link[=construct_biomarker_events_table]{construct_biomarker_events_table()}}}
 
-\item{stratifying_var_names}{a \link{character} vector specifying variables to stratify by}
+\item{stratifying_var_names}{a \link{character} vector specifying
+variables to stratify by}
 }
 \value{
 a \code{\link[flextable:flextable]{flextable::flextable()}}
@@ -30,28 +34,31 @@ Make biomarkers table
 biomarker_group_list <- list(
   "group 1" = c("Biomarker 1", "Biomarker 2"),
   "group 2" = c("Biomarker 3", "Biomarker 4"),
-  "group 3" = "Biomarker 5")
+  "group 3" = "Biomarker 5"
+)
 biomarker_groups <- compile_biomarker_groups_table(
-   dataset = sim_data,
-   biomarker_group_list = biomarker_group_list)
+  dataset = sim_data,
+  biomarker_group_list = biomarker_group_list
+)
 
 biomarker_varnames <-
   biomarker_groups |>
   dplyr::pull("biomarker")
 
-biomarker_levels =
-sim_data |>
+biomarker_levels <-
+  sim_data |>
   get_levels(biomarker_varnames)
 
-biomarker_events_table =
+biomarker_events_table <-
   construct_biomarker_events_table(
     biomarker_levels,
-    biomarker_groups = biomarker_groups)
+    biomarker_groups = biomarker_groups
+  )
 
 sim_data |> make_biomarkers_table(
   biomarker_events_table = biomarker_events_table,
   biomarker_varnames = biomarker_varnames,
   stratifying_var_names = "Sex"
-  )
+)
 
 }

@@ -35,7 +35,8 @@ trans =
 if (nrow(trans) != 0)
   browser(message('some values of Gender are inconsistent; valid?'))
 
-gp34 |>  dplyr::filter(if_any(where(is.character), .fn = ~ . == "NA (888)"))
+gp34 |>  dplyr::filter(if_any(where(is.character),
+                              .fn = ~ . == "NA (888)"))
 # couldn't find any of these; there might be some in factors
 
 decreased_age =

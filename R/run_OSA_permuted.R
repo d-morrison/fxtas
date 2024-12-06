@@ -40,7 +40,7 @@ run_OSA_permuted <- function(
 
       cur_dataset_name =
         permuted_variable_combinations[cur_level,] |>
-        sapply(F = as.character) |>
+        sapply(FUN = as.character) |>
         paste(collapse = " - ") |>
         paste(cur_seed, sep = "_p")
 

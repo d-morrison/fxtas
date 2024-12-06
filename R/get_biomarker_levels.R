@@ -16,7 +16,7 @@ get_levels <- function(data, varnames = names(data), keep_labels = FALSE)
 
   to_return =
     vars |>
-    lapply(F = levels)
+    lapply(FUN = levels)
 
 
   if(keep_labels)
