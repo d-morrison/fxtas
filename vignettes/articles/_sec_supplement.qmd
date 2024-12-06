@@ -18,13 +18,11 @@
 
 {{< include _sec_results_by_cgg.qmd >}}
 
-## Analyses stratified by sex and CGG repeats {.appendix}
-
-### Comparing sexes stratified by CGG level {.appendix #sec-stratified-by-cgg-and-sex}
+## Comparing sexes stratified by CGG level {.appendix #sec-stratified-by-cgg-and-sex}
 
 {{< include _results_by_sex_strat_cgg.qmd >}}
 
-### Comparing CGG levels stratified by sex {.appendix #sec-cgg-strat-sex}
+## Comparing CGG levels stratified by sex {.appendix #sec-cgg-strat-sex}
 
 {{< include _results_cgg_strat_sex.qmd >}}
 
