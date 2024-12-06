@@ -419,7 +419,7 @@ biomarkers_table <-
 @tbl-demographics describes summary statistics of patient characteristics 
 included in the analysis. 
 Our data included: 
-`r nrow(v1_usable_cases)` Fragile X premutation carriers and 
+`r nrow(v1_usable_cases)` fragile X premutation carriers and 
 `r nrow(controls_v1)` controls;
 `r nrow(v1_usable_males)` males and `r nrow(v1_usable_females)` females;
 and `r and::and(stages)` carriers at 
