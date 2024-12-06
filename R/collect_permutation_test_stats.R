@@ -1,7 +1,9 @@
 #' Collect permutation test statistics
 #'
-#' @param output_folder where to find the `permutations/test_stats` subfolder
-#' @param permutation_results_folder_path path to folder containing `.rds` files with permuted test statistics
+#' @param output_folder where to find the `permutations/test_stats`
+#' subfolder
+#' @param permutation_results_folder_path path to folder
+#' containing `.rds` files with permuted test statistics
 #' @param seeds seeds to find
 #' @param by number of seeds per file
 #' @param file_stem stem of test stat .rds files

@@ -1,5 +1,5 @@
 #' plot_compact_pvd: data prep
-#'
+#' @dev
 compact_pvd_data_prep <- function(figs, biomarker_order = NULL) {
   if (length(figs) == 1) {
     # extract data from pvd fig object
