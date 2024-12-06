@@ -2,7 +2,7 @@ fix_drinks_per_day <- function(dataset)
 {
 
   dataset |>
-    mutate(
+    dplyr::mutate(
 
       `# of drinks per day now` =
         if_else(

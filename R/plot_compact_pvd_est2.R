@@ -1,5 +1,7 @@
 #' @title Plot SuStaIn Sequential Estimate
-#'
+#' @inheritParams plot_compact_pvd_est
+#' @param tile_width todo
+#' @param ... arguments passed to `tmp_func()`
 #' @export
 #'
 plot_compact_pvd_est2 <- function(

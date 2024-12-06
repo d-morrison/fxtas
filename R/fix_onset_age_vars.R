@@ -1,7 +1,7 @@
 fix_onset_age_vars <- function(dataset)
 {
   dataset |>
-    mutate(
+    dplyr::mutate(
       across(
         .cols = ends_with("Age of onset"),
         .fns = list(

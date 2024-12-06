@@ -10,7 +10,7 @@ create_any_cancer <- function(
 )
 {
   dataset |>
-    mutate(
+    dplyr::mutate(
       "Any Cancer" = case_when(
         dplyr::if_any(
           .cols = all_of(cancer_types),

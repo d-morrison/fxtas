@@ -7,7 +7,7 @@ sustain_output_cgg100minus_males = run_and_save_OSA(
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   patient_data = patient_data |>
-    filter(
+    dplyr::filter(
       `CGG` < 100,
       Gender == "Male"),
 
@@ -31,7 +31,7 @@ sustain_output_cgg100plus_males = run_and_save_OSA(
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   patient_data = patient_data |>
-    filter(
+    dplyr::filter(
       `CGG` >= 100,
       Gender == "Male"),
   SuStaInLabels = biomarker_varnames,
@@ -55,7 +55,7 @@ sustain_output_cgg100minus_females = run_and_save_OSA(
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   patient_data = patient_data |>
-    filter(`CGG` < 100,
+    dplyr::filter(`CGG` < 100,
            Gender == "Female"),
   SuStaInLabels = biomarker_varnames,
   N_startpoints = N_startpoints,
@@ -77,7 +77,7 @@ sustain_output_cgg100plus_females = run_and_save_OSA(
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   patient_data = patient_data |>
-    filter(
+    dplyr::filter(
       `CGG` >= 100,
       Gender == "Female"),
 

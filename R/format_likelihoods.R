@@ -14,6 +14,6 @@ format_likelihoods <- function(likelihoods)
   likelihoods |>
     as_tibble() |>
     setNames(colnames) |>
-    mutate(Iteration = dplyr::row_number()) |>
+    dplyr::mutate(Iteration = dplyr::row_number()) |>
     tidyr::pivot_longer(cols = colnames)
 }

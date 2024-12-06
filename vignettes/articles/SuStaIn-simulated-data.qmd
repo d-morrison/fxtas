@@ -61,13 +61,13 @@ Ps should be non-zero.
 #| label: prob-dist
 ModelScores = DataScores = as.character(0:3)
 
-control_data = df |> filter(Category == "Control") |> select(all_of(biomarkers))
-patient_data = df |> filter(Category == "Patient") |> select(all_of(biomarkers))
+control_data = df |> dplyr::filter(Category == "Control") |> dplyr::select(all_of(biomarkers))
+patient_data = df |> dplyr::filter(Category == "Patient") |> dplyr::select(all_of(biomarkers))
 
 # prob_correct = (control_data == 0) |> colMeans()
 prob_correct = 
   df |> 
-  filter(Category == "Control") |> 
+  dplyr::filter(Category == "Control") |> 
   summarize(
     across(
       .cols = all_of(biomarkers), 
@@ -113,7 +113,7 @@ prob_score_dist = prob_dist[-1, , ]
 #| label: prob-score
 prob_score_dims = 
   list(
-  ID = df |> filter(Category == "Patient") |> pull(Index),
+  ID = df |> dplyr::filter(Category == "Patient") |> dplyr::pull(Index),
   Biomarker = biomarkers,
   model = ModelScores
 )
@@ -273,7 +273,7 @@ likelihoods = py$samples_likelihood |>
   magrittr::set_colnames(
     paste(1:ncol(py$samples_likelihood), "subtype(s)")) |> 
   as_tibble() |> 
-  mutate(Iteration = dplyr::row_number())
+  dplyr::mutate(Iteration = dplyr::row_number())
 
 alpha = 0.5
 ggplot() +

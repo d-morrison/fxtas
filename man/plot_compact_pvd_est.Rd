@@ -2,8 +2,7 @@
 % Please edit documentation in R/plot_compact_pvd_est.R
 \name{plot_compact_pvd_est}
 \alias{plot_compact_pvd_est}
-\title{@title Plot compact PVD with point estimates only
-@export}
+\title{Plot compact PVD with point estimates only}
 \usage{
 plot_compact_pvd_est(
   figs,
@@ -14,7 +13,19 @@ plot_compact_pvd_est(
   scale_colors = c("red", "blue", "purple4", "darkgreen", "magenta")
 )
 }
+\arguments{
+\item{figs}{todo}
+
+\item{tile_height}{todo}
+
+\item{y_text_size}{todo}
+
+\item{facet_label_prefix}{todo}
+
+\item{legend.position}{todo}
+
+\item{scale_colors}{todo}
+}
 \description{
-@title Plot compact PVD with point estimates only
-@export
+Plot compact PVD with point estimates only
 }

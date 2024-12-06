@@ -27,7 +27,7 @@ get_title_i_2 <- function(
   {
     subtype_and_stage_table =
       subtype_and_stage_table |>
-      filter(ml_subtype != "Type 0")
+      dplyr::filter(ml_subtype != "Type 0")
 
     n_samples = nrow(subtype_and_stage_table)
     n_i = sum(

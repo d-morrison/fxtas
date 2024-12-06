@@ -1,7 +1,7 @@
 categorize_BDS <- function(dataset)
 {
   dataset |>
-    mutate(
+    dplyr::mutate(
       `BDS-2 Total Score*` =
         if_else(
           `BDS-2 Total Score` < 20,

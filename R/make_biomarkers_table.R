@@ -39,7 +39,7 @@ make_biomarkers_table <- function(
     data,
     biomarker_varnames =
       compile_biomarker_groups_table() |>
-      pull("biomarker"),
+      dplyr::pull("biomarker"),
     biomarker_events_table,
     stratifying_var_names = "Gender"
 )
@@ -52,9 +52,9 @@ make_biomarkers_table <- function(
   {
     pvals[cur] =
       data |>
-      mutate(
+      dplyr::mutate(
         above_baseline = .data[[cur]] != levels(.data[[cur]])[1]) |>
-      select(all_of(c("above_baseline", stratifying_var_names))) |>
+      dplyr::select(all_of(c("above_baseline", stratifying_var_names))) |>
       table() |>
       fisher.test()  |>
       magrittr::use_series("p.value")
@@ -80,7 +80,7 @@ make_biomarkers_table <- function(
 
   probs_above_baseline_by_gender =
     probs_above_baseline_by_gender |>
-    mutate(
+    dplyr::mutate(
       # probably want to apply formatting here (after pivoting)
       # rather than during the summarize step,
       # so that accuracy is applied per-column:
@@ -94,24 +94,24 @@ make_biomarkers_table <- function(
       id_cols = "biomarker",
       names_from = all_of(stratifying_var_names),
       values_from = all_of("Pr(above_baseline)")) |>
-    mutate(
+    dplyr::mutate(
       "p-value" = pvals[biomarker]
     )
 
   table_out =
     biomarker_events_table |>
-    select(
+    dplyr::select(
       category = biomarker_group,
       biomarker,
       levels) |>
     slice_head(by = biomarker) |>
-    filter(category != "Stage") |>
+    dplyr::filter(category != "Stage") |>
     left_join(
       probs_above_baseline_by_gender,
       by = "biomarker",
       relationship = "one-to-one"
     ) |>
-    mutate(
+    dplyr::mutate(
       biomarker =
         biomarker |>
         sub(

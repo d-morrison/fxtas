@@ -13,11 +13,6 @@ A data frame with nrow rows and ncol columns:
 }
 }
 }
-\source{
-\if{html}{\out{
-<url>
-}}
-}
 \usage{
 test_data_v1
 }

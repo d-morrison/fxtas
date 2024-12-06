@@ -10,7 +10,7 @@ plot_cv_loglik <- function(cv_loglik, y_text_size = 8)
   colnames(cv_loglik) = 1:ncol(cv_loglik)
   cv_loglik |>
     as_tibble() |>
-    mutate(fold = 1:n() |> as.character()) |>
+    dplyr::mutate(fold = 1:n() |> as.character()) |>
     tidyr::pivot_longer(
       cols = 1:ncol(cv_loglik) |> as.character(),
       values_to = "loglik",

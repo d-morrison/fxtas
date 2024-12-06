@@ -88,12 +88,12 @@ biomarker_groups = compile_biomarker_groups_table()
 
 biomarker_varnames =
   biomarker_groups |>
-  pull("biomarker")
+  dplyr::pull("biomarker")
 
 # April 2024, main analysis now uses Trax/GP34 Visit 1 data replacing previous version using only GP34
 df =
   trax_gp34_v1 |>
-  filter(
+  dplyr::filter(
     !is.na(`FX*`),
     # exclude patients with CGG > 200 (full mutation)
     CGG < 200)
@@ -103,7 +103,7 @@ biomarker_levels = df |> get_levels(biomarker_varnames)
 control_data =
   df |>
   dplyr::filter(CGG <55) |>
-  select(all_of(biomarker_varnames))
+  dplyr::select(all_of(biomarker_varnames))
 
 patient_data =
   df |>

@@ -43,11 +43,11 @@ compact_pvd_figure <- function(
 
   plot_dataset <-
     plot_dataset |>
-    mutate(facet = facet_names[as.numeric(.data$facet)] |>
+    dplyr::mutate(facet = facet_names[as.numeric(.data$facet)] |>
              factor(levels = facet_names))
 
   nlevels <- plot_dataset |>
-    pull("level") |>
+    dplyr::pull("level") |>
     unique() |>
     length()
 
@@ -83,7 +83,7 @@ compact_pvd_figure <- function(
   fig <- ggplot() +
     # layer for biomarker level 2
     ggplot2::geom_tile(
-      data = plot_dataset |> filter(level == 2),
+      data = plot_dataset |> dplyr::filter(level == 2),
       aes(
         x = position,
         y = forcats::fct_inorder(biomarker_label),
@@ -104,7 +104,7 @@ compact_pvd_figure <- function(
     ggnewscale::new_scale_fill() +
     # layer for biomarker level 3
     ggplot2::geom_tile(
-      data = plot_dataset |> filter(level == 3),
+      data = plot_dataset |> dplyr::filter(level == 3),
       aes(
         x = position,
         y = forcats::fct_inorder(biomarker_label),
@@ -125,7 +125,7 @@ compact_pvd_figure <- function(
     ggnewscale::new_scale_fill() +
     # layer for biomarker level 4
     ggplot2::geom_tile(
-      data = plot_dataset |> filter(level == 4),
+      data = plot_dataset |> dplyr::filter(level == 4),
       aes(
         x = position,
         y = forcats::fct_inorder(biomarker_label),
@@ -146,7 +146,7 @@ compact_pvd_figure <- function(
     ggnewscale::new_scale_fill() +
     # layer for biomarker level 5
     ggplot2::geom_tile(
-      data = plot_dataset |> filter(level == 5),
+      data = plot_dataset |> dplyr::filter(level == 5),
       aes(
         x = position,
         y = forcats::fct_inorder(biomarker_label),
@@ -168,7 +168,7 @@ compact_pvd_figure <- function(
     ggnewscale::new_scale_fill() +
     # layer for biomarker level 6
     ggplot2::geom_tile(
-      data = plot_dataset |> filter(level == 6),
+      data = plot_dataset |> dplyr::filter(level == 6),
       aes(
         x = position,
         y = forcats::fct_inorder(biomarker_label),

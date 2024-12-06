@@ -15,7 +15,7 @@ missing_pattern_by_ID(
 
 \item{variable}{todo}
 
-\item{missing_label}{todo}
+\item{missing_values}{todo}
 }
 \value{
 todo

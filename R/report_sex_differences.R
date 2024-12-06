@@ -10,7 +10,7 @@
 #'
 #' biomarker_varnames =
 #'   biomarker_groups |>
-#'   pull("biomarker")
+#'   dplyr::pull("biomarker")
 #'
 #' biomarker_levels =
 #' test_data_v1 |>
@@ -32,8 +32,8 @@ report_sex_differences <- function(table, cutoff = 0.05)
 {
 
   table |>
-    filter(`p-value` < cutoff) |>
-    mutate(
+    dplyr::filter(`p-value` < cutoff) |>
+    dplyr::mutate(
       biomarker = .data$biomarker |>
         stringr::str_replace(
           "Increased tone",
@@ -62,6 +62,6 @@ report_sex_differences <- function(table, cutoff = 0.05)
 
       )
     ) |>
-    pull(.data$comparison) |>
+    dplyr::pull(.data$comparison) |>
     and::and()
 }

@@ -81,7 +81,7 @@ table1(
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = v1_usable |>
-    filter(!(Study %in% c("Trax Phase 1", "GP3")))
+    dplyr::filter(!(Study %in% c("Trax Phase 1", "GP3")))
 ) |> 
   table1::t1flex() |>
   shared_flextable_settings()

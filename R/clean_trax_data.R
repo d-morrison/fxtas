@@ -82,7 +82,7 @@ clean_trax_data <- function(dataset)
       except = exceptions_to_droplevels
     ) |>
     clean_gender() |>
-    mutate(`MMSE total score*` = NA) |>
+    dplyr::mutate(`MMSE total score*` = NA) |>
     add_labels()
 
 

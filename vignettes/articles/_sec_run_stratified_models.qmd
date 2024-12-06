@@ -6,7 +6,7 @@
 #| eval: !expr fit_models
 
 sustain_output_males = run_and_save_OSA(
-  patient_data = patient_data |> filter(Gender == "Male"),
+  patient_data = patient_data |> dplyr::filter(Gender == "Male"),
   prob_correct = prob_correct,
   biomarker_levels = biomarker_levels,
   SuStaInLabels = biomarker_varnames,
@@ -32,7 +32,7 @@ sustain_output_males = run_and_save_OSA(
 sustain_output_females = run_and_save_OSA(
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
-  patient_data = patient_data |> filter(Gender == "Female"),
+  patient_data = patient_data |> dplyr::filter(Gender == "Female"),
 
   SuStaInLabels = biomarker_varnames,
   N_startpoints = N_startpoints,
@@ -57,7 +57,7 @@ sustain_output_females = run_and_save_OSA(
 sustain_output_cgg100plus = run_and_save_OSA(
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
-  patient_data = patient_data |> filter(`CGG` >= 100),
+  patient_data = patient_data |> dplyr::filter(`CGG` >= 100),
 
   SuStaInLabels = biomarker_varnames,
   N_startpoints = N_startpoints,
@@ -81,7 +81,7 @@ sustain_output_cgg100plus = run_and_save_OSA(
 sustain_output_cgg100minus = run_and_save_OSA(
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
-  patient_data = patient_data |> filter(`CGG` < 100),
+  patient_data = patient_data |> dplyr::filter(`CGG` < 100),
   SuStaInLabels = biomarker_varnames,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max_stratified,

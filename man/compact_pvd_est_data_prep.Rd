@@ -6,6 +6,9 @@
 \usage{
 compact_pvd_est_data_prep(figs)
 }
+\arguments{
+\item{figs}{a \link{list} of PVDs}
+}
 \description{
 plot_compact_pvd_est: data prep
 }

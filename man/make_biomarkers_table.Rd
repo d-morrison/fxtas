@@ -6,7 +6,7 @@
 \usage{
 make_biomarkers_table(
   data,
-  biomarker_varnames = pull(compile_biomarker_groups_table(), "biomarker"),
+  biomarker_varnames = dplyr::pull(compile_biomarker_groups_table(), "biomarker"),
   biomarker_events_table,
   stratifying_var_names = "Gender"
 )

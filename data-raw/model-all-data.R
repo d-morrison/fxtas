@@ -46,12 +46,12 @@ biomarker_groups = compile_biomarker_groups_table()
 SuStaInLabels =
   biomarker_varnames =
   biomarker_groups |>
-  pull("biomarker")
+  dplyr::pull("biomarker")
 
 
 df =
   trax_gp34_all |>
-  filter(
+  dplyr::filter(
     !is.na(`FX*`),
     # exclude patients with CGG > 200 (full mutation)
     CGG < 200)
@@ -66,13 +66,13 @@ biomarker_events_table =
 
 control_data =
   df |>
-  filter(`FX*` == "CGG <55") |>
-  select(all_of(biomarker_varnames))
+  dplyr::filter(`FX*` == "CGG <55") |>
+  dplyr::select(all_of(biomarker_varnames))
 
 patient_data =
   df |>
   # na.omit() |>
-  filter(`FX*` == "CGG \u2265 55")
+  dplyr::filter(`FX*` == "CGG \u2265 55")
 
 prob_correct =
   control_data |>
@@ -117,7 +117,7 @@ sustain_output_males = run_and_save_OSA(
   rda_filename = rda_filename,
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
-  patient_data = patient_data |> filter(Gender == "Male"),
+  patient_data = patient_data |> dplyr::filter(Gender == "Male"),
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max_stratified,
@@ -140,7 +140,7 @@ sustain_output_females = run_and_save_OSA(
   prob_correct = prob_correct,
   patient_data =
     patient_data |>
-    filter(Gender == "Female"),
+    dplyr::filter(Gender == "Female"),
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
   N_S_max = N_S_max_stratified,
@@ -162,7 +162,7 @@ sustain_output_cgg100plus = run_and_save_OSA(
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   patient_data = patient_data |>
-    filter(`CGG` >= 100),
+    dplyr::filter(`CGG` >= 100),
 
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,
@@ -185,7 +185,7 @@ sustain_output_cgg100minus = run_and_save_OSA(
   biomarker_levels = biomarker_levels,
   prob_correct = prob_correct,
   patient_data = patient_data |>
-    filter(`CGG` < 100),
+    dplyr::filter(`CGG` < 100),
 
   SuStaInLabels = SuStaInLabels,
   N_startpoints = N_startpoints,

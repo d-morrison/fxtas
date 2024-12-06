@@ -6,7 +6,7 @@
 #| fig-width: 6
 stages =
   results_cv_max$subtype_and_stage_table |>
-  mutate(
+  dplyr::mutate(
     age = patient_data$`Age at visit`,
     id = patient_data$`FXS ID`
   )

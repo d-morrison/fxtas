@@ -78,7 +78,7 @@ Notes:
 #| label: "tbl-biomarker-list"
 table_out =
   biomarker_groups |> 
-  select(category = biomarker_group, biomarker) |> 
+  dplyr::select(category = biomarker_group, biomarker) |> 
   slice_head(by = biomarker)
 
 table_out |> 

@@ -3,7 +3,7 @@ fix_FXTAS_stage <- function(dataset)
 
   output =
     dataset |>
-    mutate(
+    dplyr::mutate(
       `FXTAS Stage` =
         `FXTAS Stage (0-5)` |>
         case_match(

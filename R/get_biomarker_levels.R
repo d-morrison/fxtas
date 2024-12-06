@@ -12,7 +12,7 @@ get_levels <- function(data, varnames = names(data), keep_labels = FALSE)
 {
 
   vars = data |>
-    select(all_of(varnames))
+    dplyr::select(all_of(varnames))
 
   to_return =
     vars |>

@@ -3,7 +3,7 @@ fix_iq <- function(dataset){
     # combine WAIS-3/WAIS-4/WASI-2 IQ scores.
     # should a record have WAIS and WASI score, use WAIS
     # order of score preference: WAIS-4 > WAIS-3 > WASI-2
-    mutate(
+    dplyr::mutate(
       # Full scale IQ
       `Full Scale IQ` = case_when(
         !is.na(`WAIS IV Full Scale Composite Score (FSIQ)`) ~

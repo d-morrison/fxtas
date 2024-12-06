@@ -15,7 +15,7 @@ test_that(
       dplyr::filter(`Any tremor (excluding head)` %in%
                       "No tremors recorded",
                     if_all(all_of(tremor_types), is.na)) |>
-      select(any_of(c(
+      dplyr::select(any_of(c(
         "FXS ID",
         "Event Name",
         "Visit Date",

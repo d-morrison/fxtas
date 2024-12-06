@@ -27,7 +27,7 @@ library(plotly)
 library(dplyr)
 gp34 |> 
   nest_by(Study) |> 
-  mutate(
+  dplyr::mutate(
     p = 
       plot_ly(data,
               type = "scatter",
@@ -43,7 +43,7 @@ gp34 |>
       ) |> 
       list()
   ) |> 
-  pull(p) |> 
+  dplyr::pull(p) |> 
   plotly::subplot(
     nrows = 1, shareX = TRUE, shareY = TRUE)
 
