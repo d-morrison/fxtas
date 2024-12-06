@@ -9,13 +9,14 @@
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/UCD-IDDRC/fxtas/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/UCD-IDDRC/fxtas/actions/workflows/R-CMD-check.yaml)
-[![Codecov test coverage](https://codecov.io/gh/UCD-IDDRC/fxtas/graph/badge.svg)](https://app.codecov.io/gh/UCD-IDDRC/fxtas)
 <!-- badges: end -->
 
 The goal of `fxtas` is to apply the Ordinal SuStaIn algorithm (Young et
-al. (2021)) to study disease progression in Fragile X Syndrome,  
-as described in Morrison et al (not yet published), “Event sequences in
-Fragile X-associated tremor/ataxia syndrome”.
+al. (2021)) to study disease progression in fragile X-associated
+tremor/ataxia syndrome,  
+as described in Morrison et al (not yet published), “Progression of
+fragile X-associated tremor/ataxia syndrome revealed by subtype and
+stage inference”.
 
 ## Installation
 
@@ -29,8 +30,7 @@ devtools::install_github("UCD-IDDRC/fxtas")
 
 ## Running the analyses
 
-The manuscript *Event sequences in Fragile X-associated tremor/ataxia
-syndrome* is implemented in the file `ordinal-sustain.qmd` in the
+The manuscript is implemented in the file `ordinal-sustain.qmd` in the
 `vignettes/articles` subfolder, which incorporates several subfiles in
 this repository. The `data-raw` folder contains numerous auxiliary
 scripts, including:
