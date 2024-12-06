@@ -57,7 +57,7 @@ df =
     )
 
 biomarker_levels =
-  lapply(df[,biomarker_varnames], F = levels)
+  lapply(df[,biomarker_varnames], FUN = levels)
 
 biomarker_events_table =
   construct_biomarker_events_table(

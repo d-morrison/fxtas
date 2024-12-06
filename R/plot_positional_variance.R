@@ -79,13 +79,13 @@ plot_positional_var <- function(
   if (is.null(subtype_order)) {
     # Determine order if info given
     if (!is.null(ml_f_EM)) {
-      subtype_order <- ml_f_EM |> order(decreasing = TRUE)
+      subtype_order <- ml_f_EM |> base::order(decreasing = TRUE)
 
       # Otherwise determine order from samples_f
     } else {
       subtype_order <- samples_f |>
         rowMeans() |>
-        order(decreasing = TRUE)
+        base::order(decreasing = TRUE)
       # np.argsort(np.mean(samples_f, 1))[::-1]
     }
   }

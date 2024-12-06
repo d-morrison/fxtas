@@ -71,7 +71,7 @@ prob_correct =
   summarize(
     across(
       .cols = all_of(biomarkers), 
-      .fn = ~ mean(.x == 0))
+      .fns = ~ mean(.x == 0))
   ) |> 
   unlist()
 
@@ -148,7 +148,7 @@ prob_score = prob_score0[,,-1]
 biomarker_levels = 
   df |> 
   dplyr::select(all_of(biomarkers)) |> 
-  lapply(F = \(x) x |> unique() |> sort())
+  lapply(FUN = \(x) x |> unique() |> sort())
 score_vals = build_score_vals(biomarker_levels)
 
 score_vals

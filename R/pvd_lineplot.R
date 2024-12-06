@@ -84,7 +84,7 @@ pvd_lineplot <- function(figs,
       # logical: did sequence change
       Changed = n_distinct(Order) != 1,
       # magnitude of sequence change
-      Change = -diff(Order),
+      Change = -base::diff(Order),
       .by = `event name`
     ) |>
     dplyr::mutate(

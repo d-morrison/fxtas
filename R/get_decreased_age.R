@@ -4,7 +4,7 @@ get_decreased_age <- function(dataset)
     arrange(`FXS ID`, `Event Name`) |> # not sure about this one; added later to clarify difference from below
     group_by(`FXS ID`) |>
     dplyr::mutate(
-      `diff age` = c(NA, diff(`Age at visit`)),
+      `diff age` = c(NA, base::diff(`Age at visit`)),
       `decreased age` = `diff age` < 0) |>
     dplyr::filter(any(`decreased age`, na.rm = TRUE)) |>
     ungroup() |>
@@ -17,7 +17,7 @@ get_decreased_age2 <- function(dataset)
     arrange(`FXS ID`, `Visit Date`) |>
     group_by(`FXS ID`) |>
     dplyr::mutate(
-      `diff age` = c(NA, diff(`Age at visit`)),
+      `diff age` = c(NA, base::diff(`Age at visit`)),
       `decreased age` = `diff age` < 0) |>
     dplyr::filter(any(`decreased age`, na.rm = TRUE)) |>
     ungroup() |>

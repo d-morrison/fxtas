@@ -47,7 +47,7 @@ compute_prob_correct <- function(dataset, biomarker_levels, max_prob = 1) {
   is_factor <-
     dataset |>
     dplyr::select(all_of(names(biomarker_levels))) |>
-    sapply(F = is.factor)
+    sapply(FUN = is.factor)
 
   if (any(!is_factor)) {
     cli::cli_abort(
@@ -79,7 +79,8 @@ compute_prob_correct <- function(dataset, biomarker_levels, max_prob = 1) {
   }
 
   mapping =
-    dataset[,biomarkers] |> sapply(F = labelled::get_label_attribute) |>
+    dataset[,biomarkers] |>
+    sapply(FUN = labelled::get_label_attribute) |>
     unlist()
 
   if(!is.null(mapping))

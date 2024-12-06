@@ -9,7 +9,7 @@ compute_position_frequencies <- function(samples_sequence) {
     as_tibble() |>
     pivot_longer(names_to = "position",
                  values_to = "event name",
-                 col = everything()) |>
+                 cols = everything()) |>
     count(across(c("event name", "position"))) |>
     dplyr::mutate(
       position = .data$position |> factor(levels = position_names),

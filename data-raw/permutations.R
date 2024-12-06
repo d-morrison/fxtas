@@ -152,7 +152,7 @@ for (cur_stratum in 1:nrow(strata))
 
     cur_stratum_string =
       strata[cur_stratum,] |>
-      sapply(F = as.character) |>
+      sapply(FUN = as.character) |>
       paste(collapse = "/")
   }
 

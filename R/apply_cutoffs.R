@@ -7,7 +7,7 @@ apply_cutoffs <- function(
       across(
         all_of(names(cutoffs)),
         .fns =
-          ~ apply_cutoff(.x, cutoffs[cur_column()]),
+          function(x) apply_cutoff(x, cutoffs[cur_column()]),
         .names = "{.col}*"
       )
     )
