@@ -46,4 +46,4 @@ summarize each of the `r outcomes_name`s that we included in the analysis models
 stratified by 
 CGG repeat size (`r levels(v1_usable$"FX3*")`) 
 and 
-Sex (`r unique(v1_usable$Gender)`).
+sex.

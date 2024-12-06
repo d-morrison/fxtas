@@ -2,7 +2,7 @@
 
 ```{r}
 #| eval: !expr fit_models
-
+#| fig-width: !expr pvd_width
 lliks = results_v1 |>
   sapply(FUN = function(x) x$samples_likelihood)
 
