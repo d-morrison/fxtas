@@ -19,9 +19,11 @@ collect_permutation_test_stats(
 )
 }
 \arguments{
-\item{output_folder}{where to find the \code{permutations/test_stats} subfolder}
+\item{output_folder}{where to find the \code{permutations/test_stats}
+subfolder}
 
-\item{permutation_results_folder_path}{path to folder containing \code{.rds} files with permuted test statistics}
+\item{permutation_results_folder_path}{path to folder
+containing \code{.rds} files with permuted test statistics}
 
 \item{file_stem}{stem of test stat .rds files}
 
