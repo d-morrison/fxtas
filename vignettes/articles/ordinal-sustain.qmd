@@ -1,5 +1,7 @@
 ---
-title: "Progression of Fragile X-associated tremor/ataxia syndrome revealed by Subtype and Stage Inference"
+title: |
+       Progression of fragile X-associated tremor/ataxia syndrome 
+       revealed by subtype and stage inference"
 format:
   html:
     echo: false
@@ -60,7 +62,7 @@ fig_size <- c(20, 10)
 
 pvd_height <- 5.5
 pvd_width <- 6
-pvd_subfig_width <- pvd_width
+pvd_subfig_width <- pvd_width - 0.5
 pvd_line_height <- 7
 pvd_line_width <- 8
 pvd_line_subfig_width <- pvd_line_width
@@ -428,10 +430,11 @@ ethnicity/race,
 FXTAS stage, or
 CGG repeat length.
 @tbl-biomarker-list lists the `r outcomes_name`s and their ordinal levels
-and reports proportions of clinically elevated levels at baseline visit, 
+and reports percentages of clinically elevated levels at baseline visit, 
 stratified by sex.
 We found significant sex differences in 
-proportions of clinically elevated (non-reference) `r outcomes_name` levels 
+percentages of clinically elevated (non-reference) 
+`r outcomes_name` levels 
 at baseline visit for `r report_sex_differences(biomarkers_table)`.
 
 ## Sex differences in sequential orders {#sec-methods-strat-sex}
