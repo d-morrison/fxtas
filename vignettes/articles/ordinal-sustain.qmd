@@ -62,8 +62,10 @@ fig_size <- c(20, 10)
 
 pvd_height = 5.5
 pvd_width = 6
+pvd_subfig_width = pvd_width
 pvd_line_height = 7
 pvd_line_width = 8
+pvd_line_subfig_width = pvd_line_width
 lineplot_text_size = 3.4
 size.y = 8
 y_text_size = 6
