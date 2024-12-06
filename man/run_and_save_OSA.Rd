@@ -26,6 +26,8 @@ run_and_save_OSA(
 
 \item{rerun}{whether to force a rerun of the python code}
 
+\item{rda_filename}{name of rda file containing environment used to run analyses}
+
 \item{...}{
   Arguments passed on to \code{\link[=run_OSA]{run_OSA}}
   \describe{

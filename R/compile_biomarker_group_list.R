@@ -148,7 +148,7 @@ kinesia_vars = c(
 
   biomarker_group_list =
     biomarker_group_list |>
-    lapply(F = function(x) setdiff(x, missingness_vars)) |>
+    lapply(FUN = function(x) setdiff(x, missingness_vars)) |>
     structure(class = c("biomarker.groups.list", "list"))
 
 }

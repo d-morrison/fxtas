@@ -16,11 +16,11 @@ library(fxtas)
 ```{r}
 library(dplyr)
 temp = trax_gp34_all |> 
-  select(Study, `Visit Date`, `FXS ID`) |>
+  dplyr::select(Study, `Visit Date`, `FXS ID`) |>
   arrange(`FXS ID`, `Visit Date`) |> 
-  mutate(.by = `FXS ID`, 
+  dplyr::mutate(.by = `FXS ID`, 
          difftime = `Visit Date` - dplyr::lag(`Visit Date`)) |> 
-  filter(difftime > 7)
+  dplyr::filter(difftime > 7)
 
 ```
 

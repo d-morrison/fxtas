@@ -46,8 +46,8 @@ compute_prob_correct <- function(dataset, biomarker_levels, max_prob = 1) {
 
   is_factor <-
     dataset |>
-    select(all_of(names(biomarker_levels))) |>
-    sapply(F = is.factor)
+    dplyr::select(all_of(names(biomarker_levels))) |>
+    sapply(FUN = is.factor)
 
   if (any(!is_factor)) {
     cli::cli_abort(
@@ -79,7 +79,8 @@ compute_prob_correct <- function(dataset, biomarker_levels, max_prob = 1) {
   }
 
   mapping =
-    dataset[,biomarkers] |> sapply(F = labelled::get_label_attribute) |>
+    dataset[,biomarkers] |>
+    sapply(FUN = labelled::get_label_attribute) |>
     unlist()
 
   if(!is.null(mapping))
@@ -97,11 +98,11 @@ compute_prob_correct <- function(dataset, biomarker_levels, max_prob = 1) {
 
   results <-
     results |>
-    mutate(
+    dplyr::mutate(
       `% at baseline` = round(.data$`% at baseline` * 100, 1) |> paste0("%"),
       prob_correct = round(.data$prob_correct * 100, 1) |> paste0("%")
     ) |>
-    select(
+    dplyr::select(
       all_of(
         c(
           Biomarker = "biomarker",
@@ -149,7 +150,7 @@ compute_prob_correct <- function(dataset, biomarker_levels, max_prob = 1) {
 #' control_data <-
 #'   v1_usable |>
 #'   dplyr::filter(`FX*` == "CGG <55") |>
-#'   select(all_of(biomarker_varnames))
+#'   dplyr::select(all_of(biomarker_varnames))
 #'
 #' control_data |>
 #'   compute_prob_correct(

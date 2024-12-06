@@ -19,7 +19,7 @@ run_OSA_permuted <- function(
     set.seed(cur_seed)
     permuted_data =
       patient_data |>
-      mutate(
+      dplyr::mutate(
         across(
           all_of(permuting_variables),
           ~sample(.x, size = nrow(patient_data), replace = FALSE)))
@@ -40,7 +40,7 @@ run_OSA_permuted <- function(
 
       cur_dataset_name =
         permuted_variable_combinations[cur_level,] |>
-        sapply(F = as.character) |>
+        sapply(FUN = as.character) |>
         paste(collapse = " - ") |>
         paste(cur_seed, sep = "_p")
 

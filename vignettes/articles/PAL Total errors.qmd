@@ -21,14 +21,14 @@ library(dplyr)
 #| label: fig-PAL-trax-gp34-males
 #| fig-cap: "PAL Total errors, by age at visit and CGG repeats level, for males in GP, GP4, and Trax"
 # males_gp34_trax_v1 |> 
-#   select(Study, `PAL Total errors (adjusted)`) |> 
+#   dplyr::select(Study, `PAL Total errors (adjusted)`) |> 
 #   table(useNA = 'ifany')
 
 library(ggplot2)
 pd <- position_dodge(2)
 plot1 = 
   males_gp34_trax |> 
-  mutate(
+  dplyr::mutate(
     Study2 = if_else(
       Study %in% c("GP", "GP4"),
       "GP3+GP4",
@@ -37,7 +37,7 @@ plot1 =
   ) |> 
   arrange(`FXS ID`, `Visit Date`) |> 
   
-  filter(
+  dplyr::filter(
     # `FXS ID` == "500011-138", # most frequently observed
     !is.na(`PAL Total errors (adjusted)`),
     !is.na(`FX*`)
@@ -66,8 +66,8 @@ ggplotly(plot1)
 
 library(table1)
 males_gp34_trax |> 
-  filter(!is.na(`FX*`)) |>  
-  mutate(
+  dplyr::filter(!is.na(`FX*`)) |>  
+  dplyr::mutate(
     Study2 = if_else(
       Study %in% c("GP", "GP4"),
       "GP3+GP4",

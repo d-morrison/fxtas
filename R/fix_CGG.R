@@ -10,7 +10,7 @@ fix_CGG <- function(dataset)
   updatedCGG = readxl::read_xlsx(
     "inst/extdata/GP3 & GP4 - Missing CGG Data Samples Table - 10-9-2023-mdp.xlsx"
   ) |>
-    mutate(
+    dplyr::mutate(
       Study = substr(`Event Name`, start = 1, stop = 3),
       # remove second FXS ID from "500011-608/108094-100" for now
       `FXS ID` = substr(`FXS ID`, start = 1, stop = 10),
@@ -39,7 +39,7 @@ fix_CGG <- function(dataset)
     # add count
     add_count(`FXS ID`) |>
     # if count == 2, remove obs with missing CGG
-    filter(
+    dplyr::filter(
       !(n == 2 & is.na(`CGG (recovered)`))
     ) |>
     # remove count variable
@@ -47,18 +47,18 @@ fix_CGG <- function(dataset)
 
 
 
-  duplicates = newCGG |> count(`FXS ID`) |> filter(n != 1)
+  duplicates = newCGG |> count(`FXS ID`) |> dplyr::filter(n != 1)
 
   if(nrow(duplicates) != 0) browser(message("why are there duplicates?"))
 
   dataset =
     dataset |>
     left_join(
-      newCGG |> select(-Study),
+      newCGG |> dplyr::select(-Study),
       by = "FXS ID",
       relationship = "many-to-one"
     ) |>
-    mutate(
+    dplyr::mutate(
       `Floras Non-Sortable Allele Size (CGG) Results` =
         if_else(
           is.na(`Floras Non-Sortable Allele Size (CGG) Results`),
@@ -85,7 +85,7 @@ fix_CGG <- function(dataset)
       `CGG (backfilled)`,
       .direction = "downup") |>
     ungroup()  |>
-    mutate(
+    dplyr::mutate(
       .by = `FXS ID`,
       `CGG (backfilled)` = `CGG (backfilled)` |> last() # more recent assays may be more accurate
     ) |>
@@ -93,7 +93,7 @@ fix_CGG <- function(dataset)
       `CGG (before backfill)` = CGG,
       CGG = `CGG (backfilled)`
     ) |>
-    mutate(
+    dplyr::mutate(
       CGG = CGG |> structure(label = "CGG repeats")
     )
 

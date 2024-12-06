@@ -3,7 +3,7 @@ library(readxl)
 sim_data =
   file_path |>
   readxl::read_excel() |>
-  mutate(Male = (.data$Sex == "Male"),
+  dplyr::mutate(Male = (.data$Sex == "Male"),
          across(
            .cols = starts_with("Biomarker"),
            .fns = as.factor))

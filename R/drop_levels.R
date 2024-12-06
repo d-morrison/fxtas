@@ -1,7 +1,7 @@
 drop_levels <- function(x, except = NULL)
 {
   x |>
-  mutate(
+  dplyr::mutate(
     across(
       .cols = where(is.factor) & !all_of(except),
       .fns = forcats::fct_drop)

@@ -32,12 +32,12 @@ tile_height = 1
 facet_label_prefix = names(figs)
 legend.position = "none"
 scale_colors = c("red", "blue", "purple4")
-plot_dataset <- compact_pvd_data_prep(figs = figs)
+plot_dataset <- fxtas:::compact_pvd_data_prep(figs = figs)
 # facet labels
-facet_names <- compact_pvd_facet_labels(figs = figs,
+facet_names <- fxtas:::compact_pvd_facet_labels(figs = figs,
 facet_label_prefix = facet_label_prefix)
 # generate figure
-compact_pvd_figure(
+fxtas:::compact_pvd_figure(
   plot_dataset,
   tile_height = tile_height,
   y_text_size = y_text_size,
@@ -46,5 +46,5 @@ compact_pvd_figure(
   legend.position = legend.position,
   scale_colors = scale_colors
 )
-
 }
+\keyword{internal}

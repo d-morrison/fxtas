@@ -9,7 +9,7 @@ test_that("compute_prob_correct() produces consistent results", {
 
   biomarker_varnames <-
     biomarker_groups |>
-    pull("biomarker")
+    dplyr::pull("biomarker")
 
   biomarker_levels <-
     v1_usable |>
@@ -18,7 +18,7 @@ test_that("compute_prob_correct() produces consistent results", {
   control_data <-
     v1_usable |>
     dplyr::filter(`FX*` == "CGG <55") |>
-    select(all_of(biomarker_varnames))
+    dplyr::select(all_of(biomarker_varnames))
 
   prob_correct = control_data |>
     compute_prob_correct(max_prob = .95, biomarker_levels = biomarker_levels)

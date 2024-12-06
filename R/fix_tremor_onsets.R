@@ -1,7 +1,7 @@
 fix_tremor_onsets <- function(dataset)
 {
   dataset |>
-    mutate(
+    dplyr::mutate(
       `Tremor: Age of onset` =
 
       # after discussion with Kyoungmi and Matt, 2023/08/01:

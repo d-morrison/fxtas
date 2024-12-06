@@ -1,7 +1,7 @@
 fix_factors <- function(dataset)
 {
   dataset |>
-    mutate(
+    dplyr::mutate(
       across(
         where(is.factor) &
           !contains(": missingness reasons") &

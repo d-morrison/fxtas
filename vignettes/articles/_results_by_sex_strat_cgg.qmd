@@ -9,31 +9,26 @@
 #| fig-cap: ""
 
 # compact pvd
-plot_compact_pvd(
-  figs = list(
-    fig_under100_males,
-    fig_under100_females
-  ),
-  facet_label = c("CGG &lt; 100, Males  <br>", "CGG &lt; 100, Females  <br>"),
-  y_text_size = 11
-)
+list(
+    "CGG &lt; 100, Males  <br>" = fig_under100_males,
+    "CGG &lt; 100, Females  <br>" = fig_under100_females
+  ) |> 
+  plot_compact_pvd(y_text_size = y_text_size)
 
 ```
 
 ```{r}
 #| label: fig-pvd-by-gender-cgg_under100-2
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
+#| fig-height: !expr pvd_line_height
+#| fig-width: !expr pvd_line_width
 #| fig-cap: ""
 
 # lineplot of event sequences
-pvd_lineplot(
-  figs = list(
+list(
     "CGG &lt; 100, Males" = fig_under100_males,
     "CGG &lt; 100, Females" = fig_under100_females
-  ),
-  y_text_size = 11
-)
+  ) |> 
+  pvd_lineplot(text_size = lineplot_text_size)
 ```
 
 **Event sequences stratified by sex, for CGG repeats <100.**
@@ -53,32 +48,26 @@ pvd_lineplot(
 #| fig-cap: ""
 
 # compact pvd
-plot_compact_pvd(
-  figs = list(
-    fig_over100_males,
-    fig_over100_females
-  ),
-  facet_label = c("CGG &ge; 100, Males  <br>", "CGG &ge; 100, Females  <br>"),
-  y_text_size = 11
-)
-
+list(
+    "CGG &ge; 100, Males  <br>" = fig_over100_males,
+    "CGG &ge; 100, Females  <br>" = fig_over100_females
+  ) |> 
+  plot_compact_pvd(y_text_size = y_text_size)
 ```
 
 ```{r}
 #| label: fig-pvd-by-gender-cgg_over100-2
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
+#| fig-height: !expr pvd_line_height
+#| fig-width: !expr pvd_line_width
 #| fig-cap: ""
 
 # lineplot of event sequences
-pvd_lineplot(
-  figs = list(
-    fig_over100_males,
-    fig_over100_females
-  ),
-  facet_label = c("CGG &ge; 100, Males", "CGG &ge; 100, Females"),
-  y_text_size = 11
-)
+
+list(
+    "CGG &ge; 100, Males" = fig_over100_males,
+    "CGG &ge; 100, Females" = fig_over100_females
+  ) |> 
+  pvd_lineplot(text_size = lineplot_text_size)
 
 ```
 

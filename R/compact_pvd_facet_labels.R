@@ -1,5 +1,7 @@
 #' Create facet labels
 #'
+#' @param figs a [list] of PVDs
+#' @param facet_label_prefix a [character] string (length 1)
 
 compact_pvd_facet_labels <- function(
   figs,

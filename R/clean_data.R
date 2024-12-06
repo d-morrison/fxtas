@@ -1,7 +1,9 @@
 clean_data <- function(dataset)
 {
   dataset |>
-    arrange(`FXS ID`, `Visit Date`, `Event Name`) |>
+    dplyr::arrange(across(all_of(c(
+      "FXS ID", "Visit Date", "Event Name"
+    )))) |>
     remove_unneeded_records() |>
     dplyr::relocate(`Visit Date`, .after = `Event Name`) |>
     clean_head_tremor_onset() |>

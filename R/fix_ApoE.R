@@ -1,7 +1,7 @@
 fix_ApoE <- function(dataset)
 {
   dataset |>
-    mutate(
+    dplyr::mutate(
       ApoE =
         ApoE |>
         strsplit(", ") |>
@@ -21,7 +21,7 @@ fix_ApoE <- function(dataset)
       `ApoE`,
       .direction = "downup") |>
     ungroup() |>
-    mutate(
+    dplyr::mutate(
       .by = `FXS ID`,
       `ApoE` = `ApoE` |> last() # more recent assays may be more accurate
     )

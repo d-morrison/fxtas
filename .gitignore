@@ -20,6 +20,7 @@ miniconda
 /.quarto/
 data-raw/logs
 data-raw/out
+*_files/
 _freeze
 *~$*
 *.docx
@@ -27,3 +28,5 @@ _freeze
 .httr-oauth
 .DS_Store
 .quarto
+/doc/
+/Meta/

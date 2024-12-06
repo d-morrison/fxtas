@@ -1,7 +1,7 @@
 ### create race/ethnicity variable ###
 create_race_ethnicity <- function(dataset){
   # dataset |>
-  #   mutate(
+  #   dplyr::mutate(
   #     tmp.race = forcats::fct_recode(
   #       `Primary Race`,
   #       # incorporate Asian into Other
@@ -17,7 +17,7 @@ create_race_ethnicity <- function(dataset){
   #     na.rm = TRUE
   #   )
   dataset |>
-    mutate(
+    dplyr::mutate(
       `Primary Race/Ethnicity` =
         case_when(
           `Primary Ethnicity` == "Hispanic or Latino" ~ "Hispanic",

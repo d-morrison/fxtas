@@ -60,11 +60,13 @@ use_rds <- TRUE
 plot_python <- TRUE
 fig_size <- c(20, 10)
 
-pvd_height = 9
-pvd_width = 8
-pvd_line_height = 9
+pvd_height = 5.5
+pvd_width = 6
+pvd_line_height = 7
 pvd_line_width = 8
-size.y = 11
+lineplot_text_size = 3.4
+size.y = 8
+y_text_size = 6
 N_startpoints = 10L
 # use_parallel_startpoints = TRUE
 use_parallel_startpoints = FALSE # couldn't get parallel to work, 2024/06/15
@@ -123,35 +125,35 @@ n_missing_CGG = full_data$CGG |> is.na() |> sum()
 n_above_200 = sum(full_data$CGG >= 200, na.rm = TRUE)
 v1_usable = 
   full_data |> 
-  filter(CGG < 200) |>
-  mutate(`FX3*` = `FX3*` |> forcats::fct_drop() |> 
+  dplyr::filter(CGG < 200) |>
+  dplyr::mutate(`FX3*` = `FX3*` |> forcats::fct_drop() |> 
            labelled::set_label_attribute("CGG Repeat Level"),
          Parkinsons = Parkinsons |> 
            labelled::set_label_attribute("Parkinson's disease"),
          `FXTAS Stage` = `FXTAS Stage` |> 
            labelled::set_label_attribute("FXTAS Stage"))
 
-v1_usable_males = v1_usable |> filter(Gender == "Male")
-v1_usable_females = v1_usable |> filter(Gender == "Female")
-v1_usable_cases = v1_usable |> filter(CGG >= 55)
+v1_usable_males = v1_usable |> dplyr::filter(Gender == "Male")
+v1_usable_females = v1_usable |> dplyr::filter(Gender == "Female")
+v1_usable_cases = v1_usable |> dplyr::filter(CGG >= 55)
 v1_usable_male_cases = 
   v1_usable |> 
-  filter(Gender == "Male", 
+  dplyr::filter(Gender == "Male", 
          CGG >= 55)
 
 v1_usable_female_cases = 
   v1_usable |> 
-  filter(Gender == "Female", 
+  dplyr::filter(Gender == "Female", 
          CGG >= 55)
 
 v1_usable_male_controls = 
   v1_usable |> 
-  filter(Gender == "Male", 
+  dplyr::filter(Gender == "Male", 
          CGG < 55)
 
 v1_usable_female_controls = 
   v1_usable |> 
-  filter(Gender == "Female", 
+  dplyr::filter(Gender == "Female", 
          CGG < 55)
 # note: there are 231 records in `visit1` with CGG >= 55, but 4 have CGG >= 200
 # previously `nrow(v1_usable_cases)` was 221, 
@@ -176,7 +178,7 @@ biomarker_groups = compile_biomarker_groups_table(
 
 biomarker_varnames = 
   biomarker_groups |> 
-  pull("biomarker")
+  dplyr::pull("biomarker")
 
 biomarker_levels = 
   v1_usable |> 
@@ -381,7 +383,7 @@ fig_over100_females = extract_figs_from_pickle(
 
 ```{r}
 #| label: basic-summary-stats
-stages = v1_usable_cases |> select(`FXTAS Stage`) |> table()
+stages = v1_usable_cases |> dplyr::select(`FXTAS Stage`) |> table()
 biomarkers_table = 
   v1_usable |> 
   make_biomarkers_table(
@@ -558,7 +560,7 @@ pval_female_cgg_gp34_v1 = permutation_test(
 
 n_over100_Female =
   v1_usable |>
-  filter(
+  dplyr::filter(
    Gender == "Female",
    CGG >= 100
   ) |>
@@ -624,7 +626,7 @@ The subtypes are numbered 1-4 in order of estimated relative frequency
 ```{r}
 #| label: compute-n-in-subtype-0
 n_type_0 = results_cv_max$subtype_and_stage_table |> 
-  filter(ml_subtype == "Type 0") |> 
+  dplyr::filter(ml_subtype == "Type 0") |> 
   nrow()
 
 ```
@@ -717,8 +719,6 @@ Supplementary material is available at Brain online.
 
 {{< pagebreak >}}
 
-# Tables {.unnumbered}
-
 ```{r}
 #| label: "tbl-demographics"
 #| tbl-cap: |
@@ -782,11 +782,8 @@ tbl_sg_demos |>
 
 {{< pagebreak >}}
 
-# Figures {.unnumbered}
-
 ```{r}
 #| label: fig-first-only-pvd
-#| column: page
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
 #| fig-cap: !expr 
@@ -795,15 +792,11 @@ tbl_sg_demos |>
 #|    {compact_fig_caption}")
 #| fig-cap-location: top
 
-
-plot_compact_pvd(
-  figs = list(
-    fig_males_first,
-    fig_females_first
-  ),
-  facet_label = c("Males <br>", "Females <br>"),
-  y_text_size = 11
-)
+list(
+    "Males <br>" = fig_males_first,
+    "Females <br>" = fig_females_first
+  ) |> 
+plot_compact_pvd(y_text_size = y_text_size)
 
 ```
 
@@ -811,8 +804,8 @@ plot_compact_pvd(
 
 ```{r}
 #| label: fig-first-only-diffs
-#| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
+#| fig-height: !expr pvd_line_height
+#| fig-width: !expr pvd_line_width
 #| fig-cap: !expr 
 #|    glue::glue(
 #|    "**Positional differences in estimated event sequence between sexes.** 
@@ -823,7 +816,7 @@ list(
     "Males" = fig_males_first,
     "Females" = fig_females_first
   ) |> 
-pvd_lineplot(y_text_size = 11)
+pvd_lineplot(text_size = lineplot_text_size)
 
 ```
 
@@ -831,7 +824,7 @@ pvd_lineplot(y_text_size = 11)
 
 ```{r}
 #| label: fig-pvd_chosen_subtypes
-#| fig-height: !expr pvd_height
+#| fig-height: 7
 #| fig-width: !expr pvd_width
 #| fig-cap: !expr 
 #|     glue::glue(
@@ -848,7 +841,8 @@ figs = extract_figs_from_pickle(
 plot_compact_pvd_est2(
   figs = figs,
   tile_height = 1,
-  y_text_size = 8
+  y_text_size = 6,
+  title_size = 8
 )
 
 ```

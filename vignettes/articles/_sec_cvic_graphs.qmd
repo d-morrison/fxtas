@@ -1,11 +1,10 @@
 
-::: landscape
-
 ::: {#suppfig-cvic layout-ncol="2"}
 
 ```{r}
 #| label: fig-cvic-1
-#| fig-width: 4
+#| fig-width: 3
+#| fig-height: 3
 #| fig-cap: ""
 #| eval: !expr fit_models
 
@@ -14,17 +13,16 @@ temp$CVIC |> plot_CVIC()
 
 ```{r}
 #| label: fig-cvic-2
-#| fig-width: 4
+#| fig-width: 3
+#| fig-height: 3
 #| fig-cap: ""
 #| eval: !expr fit_models
 
-temp$loglike_matrix |> plot_cv_loglik()
+temp$loglike_matrix |> plot_cv_loglik(y_text_size = y_text_size)
 ```
 
 **Selection criteria for number of latent subtypes**
 **(a)** Cross-validation information criterion
 **(b)** Test set log-likelihood across folds
-
-:::
 
 :::

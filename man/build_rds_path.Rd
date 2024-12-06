@@ -18,5 +18,5 @@ a \code{\link[=character]{character()}} variable
 Find path to RDS file with output
 }
 \examples{
-build_rds_path("sample_data", "output.fixed_CV")
+build_rds_path("sample_data", "output/output.fixed_CV")
 }

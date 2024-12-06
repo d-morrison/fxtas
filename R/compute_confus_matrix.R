@@ -3,7 +3,7 @@
 #' @param samples_sequence todo
 #' @param biomarker_event_order todo
 #'
-#' @return a [tibble:tbl_df]
+#' @return a [tibble::tbl_df]
 #' @export
 #'
 #' @examples
@@ -34,7 +34,7 @@ compute_confus_matrix <-
         values_fill = 0
       ) |>
       column_to_rownames("event name") |>
-      select(colnames(samples_sequence)) |>
+      dplyr::select(colnames(samples_sequence)) |>
       as.matrix()
 
     names(dimnames(output)) = c("event name", "position")

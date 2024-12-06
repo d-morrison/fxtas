@@ -106,14 +106,14 @@ biomarkers = names(biomarker_directions)
 
 cur_data = 
   visit1 |> 
-  select(
+  dplyr::select(
     all_of(biomarkers),
     FX,
     `FX*`,
     `FXS ID`,
     `Age at visit`
   ) |> 
-  filter(!is.na(FX))
+  dplyr::filter(!is.na(FX))
 
 ### Mann-Whitney tests
 # ```{r, "Mann-Whitney tests"}
@@ -130,19 +130,19 @@ cur_data =
 
 X = 
   cur_data |> 
-  select(all_of(biomarkers)) |> 
-  mutate(
+  dplyr::select(all_of(biomarkers)) |> 
+  dplyr::mutate(
     across(where(is.factor), as.numeric)
   ) |> 
   as.matrix()
 
 X_cases = 
   cur_data |> 
-  filter(FX) |> 
-  select(all_of(biomarkers)) |> 
+  dplyr::filter(FX) |> 
+  dplyr::select(all_of(biomarkers)) |> 
   as.matrix()
 
-y = cur_data |> pull(FX) |> as.integer() |> as.matrix()
+y = cur_data |> dplyr::pull(FX) |> as.integer() |> as.matrix()
 
 ```
 
@@ -357,8 +357,8 @@ print(plot1)
 
 ```{r}
 cur_data |> 
-  filter(!FX) |> 
-  select(stages_ML, `FXS ID`, `Age at visit`) |> 
+  dplyr::filter(!FX) |> 
+  dplyr::select(stages_ML, `FXS ID`, `Age at visit`) |> 
   arrange(stages_ML) %$% 
   plot(stages_ML  ~ `Age at visit`)
 ```

@@ -6,9 +6,8 @@
 #' @export
 #'
 all_potential_biomarkers <- function(dataset) {
-
-  missingness_vars = grep("missingness", names(dataset), value = TRUE)
-  tremors = c(
+  missingness_vars <- grep("missingness", names(dataset), value = TRUE)
+  tremors <- c(
     "Head tremor",
     "Intention tremor",
     "Resting tremor",
@@ -17,15 +16,16 @@ all_potential_biomarkers <- function(dataset) {
     "Any tremor (excluding head)"
   )
 
-  parkinsonian_vars =
+  parkinsonian_vars <-
     c(
       "parkinsonian features",
       "Masked faces",
       "Increased tone",
       "Pill-rolling tremor",
-      "Stiff gait")
+      "Stiff gait"
+    )
 
-  mri_vars = c(
+  mri_vars <- c(
     "Cerebral Atrophy",
     "Cerebellar Atrophy",
     "Cerebral WM Hyperintensity",
@@ -39,7 +39,7 @@ all_potential_biomarkers <- function(dataset) {
     "Corpus Callosum-Thickness"
   )
 
-  cancer_vars =  c(
+  cancer_vars <- c(
     "Any Cancer",
     "Thyroid Cancer",
     "Skin Cancer",
@@ -48,13 +48,13 @@ all_potential_biomarkers <- function(dataset) {
     "Other Cancer"
   )
 
-  ataxia = c(
+  ataxia <- c(
     "Ataxia",
     "Ataxia: severity*"
   )
 
-  scid_vars =
-    vars = c(
+  scid_vars <-
+    vars <- c(
       "Bipolar I Disorder (MD01), Lifetime",
       "Bipolar II Disorder (MD02), Lifetime",
       "Other Bipolar Disorder (MD03), Lifetime",
@@ -64,27 +64,30 @@ all_potential_biomarkers <- function(dataset) {
       "Primary Psychotic Symptoms (PS01), Lifetime"
     )
 
-  cantab_vars = c(
+  cantab_vars <- c(
     "SWM Between errors*",
     "SST Median correct RT on GO trials",
     "RVP A signal detection*", # all one way
     "OTS Problems solved on first choice",
     "PAL Total errors (adjusted)*",
-    "RTI Five-choice movement time*")
+    "RTI Five-choice movement time*"
+  )
 
-  scores =
+  scores <-
     c(
       "MMSE total score*",
-      "BDS-2 Total Score*")
+      "BDS-2 Total Score*"
+    )
 
-  scl90_vars =
+  scl90_vars <-
     grep(
       value = TRUE,
       names(dataset),
-      pattern = "^SCL90.*\\*$") |>
+      pattern = "^SCL90.*\\*$"
+    ) |>
     sort()
 
-  thyroid_vars = c(
+  thyroid_vars <- c(
     "Hypothyroid", # removed after call 2023-09-13
     "Hyperthyroid", # removed after call 2023-09-13
     "Thyroid problems",
@@ -99,7 +102,7 @@ all_potential_biomarkers <- function(dataset) {
     # "Immunological Notes"
   )
 
-  kinesia_vars = c(
+  kinesia_vars <- c(
     "Kinesia Left Rest Tremor*",
     "Kinesia Left Postural Tremor*",
     "Kinesia Left Kinetic Tremor*",
@@ -108,7 +111,7 @@ all_potential_biomarkers <- function(dataset) {
     "Kinesia Right Kinetic Tremor*"
   )
 
-  biomarker_group_list =
+  biomarker_group_list <-
     list(
       tremors = tremors,
       ataxia = ataxia,
@@ -125,8 +128,7 @@ all_potential_biomarkers <- function(dataset) {
       kinesia = kinesia_vars
     )
 
-  biomarker_group_list =
+  biomarker_group_list <-
     biomarker_group_list |>
-    lapply(F = function(x) setdiff(x, missingness_vars))
-
+    lapply(FUN = function(x) setdiff(x, missingness_vars))
 }

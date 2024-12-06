@@ -1,8 +1,14 @@
 #' Plot compact PVD
 #' tmp function using list of extract_figs_from_pickle
 #' @inheritDotParams compact_pvd_data_prep
+#' @param figs todo
+#' @param tile_height todo
+#' @param y_text_size todo
+#' @param facet_label_prefix todo
+#' @param legend.position todo
+#' @param scale_colors todo
 #' @export
-#
+#' @returns a [ggplot2::ggplot]
 plot_compact_pvd <- function(
     figs,
     tile_height = 1,
@@ -48,10 +54,10 @@ plot_compact_pvd <- function(
 #     # determine biomarker event order
 #     event_order <- dataset |>
 #       dplyr::select(`row number and name`, `event name`, biomarker) |>
-#       mutate(
+#       dplyr::mutate(
 #         Order = sub("\\D*(\\d+).*", "\\1", `row number and name`) |> as.numeric()
 #       ) |>
-#       mutate(
+#       dplyr::mutate(
 #         `event order` = min(Order),
 #         .by = `biomarker`
 #       ) |>
@@ -59,7 +65,7 @@ plot_compact_pvd <- function(
 #       #   biomarker, position
 #       # ) |>
 #       arrange(`event order`) |>
-#       mutate(
+#       dplyr::mutate(
 #         biomarker = forcats::fct_inorder(biomarker)
 #       ) |>
 #       dplyr::select(biomarker, `event order`) |>
@@ -68,7 +74,7 @@ plot_compact_pvd <- function(
 #     # update biomarker levels in dataset
 #     plot_dataset <- dataset |>
 #       # convert biomarker to factor with event order levels
-#       mutate(
+#       dplyr::mutate(
 #         biomarker = factor(
 #           biomarker,
 #           levels = levels(event_order$biomarker)
@@ -77,7 +83,7 @@ plot_compact_pvd <- function(
 #       # arrange by biomarker levels
 #       arrange(biomarker) |>
 #       # create biomarker labels for figure
-#       mutate(
+#       dplyr::mutate(
 #         biomarker_label = glue::glue(
 #           "<i style='color:{group_color}'>{biomarker}</i>"
 #         ) |>
@@ -114,7 +120,7 @@ plot_compact_pvd <- function(
 #     fig <- ggplot() +
 #       # layer for biomarker level 2
 #       geom_tile(
-#         data = plot_dataset |> filter(level == 2),
+#         data = plot_dataset |> dplyr::filter(level == 2),
 #         aes(
 #           x = position,
 #           y = forcats::fct_inorder(biomarker_label),
@@ -132,7 +138,7 @@ plot_compact_pvd <- function(
 #       ggnewscale::new_scale_fill() +
 #       # layer for biomarker level 3
 #       geom_tile(
-#         data = plot_dataset |> filter(level == 3),
+#         data = plot_dataset |> dplyr::filter(level == 3),
 #         aes(
 #           x = position,
 #           y = forcats::fct_inorder(biomarker_label),
@@ -150,7 +156,7 @@ plot_compact_pvd <- function(
 #       ggnewscale::new_scale_fill() +
 #       # layer for biomarker level 4
 #       geom_tile(
-#         data = plot_dataset |> filter(level == 4),
+#         data = plot_dataset |> dplyr::filter(level == 4),
 #         aes(
 #           x = position,
 #           y = forcats::fct_inorder(biomarker_label),
@@ -168,7 +174,7 @@ plot_compact_pvd <- function(
 #       ggnewscale::new_scale_fill() +
 #       # layer for biomarker level 5
 #       geom_tile(
-#         data = plot_dataset |> filter(level == 5),
+#         data = plot_dataset |> dplyr::filter(level == 5),
 #         aes(
 #           x = position,
 #           y = forcats::fct_inorder(biomarker_label),
@@ -186,7 +192,7 @@ plot_compact_pvd <- function(
 #       ggnewscale::new_scale_fill() +
 #       # layer for biomarker level 6
 #       geom_tile(
-#         data = plot_dataset |> filter(level == 6),
+#         data = plot_dataset |> dplyr::filter(level == 6),
 #         aes(
 #           x = position,
 #           y = forcats::fct_inorder(biomarker_label),
@@ -234,10 +240,10 @@ plot_compact_pvd <- function(
 #     # determine biomarker event order
 #     event_order <- dataset |>
 #       dplyr::select(`row number and name`, `event name`, biomarker) |>
-#       mutate(
+#       dplyr::mutate(
 #         Order = sub("\\D*(\\d+).*", "\\1", `row number and name`) |> as.numeric()
 #       ) |>
-#       mutate(
+#       dplyr::mutate(
 #         `event order` = min(Order),
 #         .by = `biomarker`
 #       ) |>
@@ -245,7 +251,7 @@ plot_compact_pvd <- function(
 #       #   biomarker, position
 #       # ) |>
 #       arrange(`event order`) |>
-#       mutate(
+#       dplyr::mutate(
 #         biomarker = forcats::fct_inorder(biomarker)
 #       ) |>
 #       dplyr::select(biomarker, `event order`) |>
@@ -254,7 +260,7 @@ plot_compact_pvd <- function(
 #     # update biomarker levels in dataset
 #     plot_dataset <- dataset |>
 #       # convert biomarker to factor with event order levels
-#       mutate(
+#       dplyr::mutate(
 #         biomarker = factor(
 #           biomarker,
 #           levels = levels(event_order$biomarker)
@@ -263,7 +269,7 @@ plot_compact_pvd <- function(
 #       # arrange by biomarker levels
 #       arrange(biomarker) |>
 #       # create biomarker labels for figure
-#       mutate(
+#       dplyr::mutate(
 #         biomarker_label = glue::glue(
 #           "<i style='color:{group_color}'>{biomarker}</i>"
 #         ) |>
@@ -303,7 +309,7 @@ plot_compact_pvd <- function(
 #     fig <- ggplot() +
 #       # layer for biomarker level 2
 #       geom_tile(
-#         data = plot_dataset |> filter(level == 2),
+#         data = plot_dataset |> dplyr::filter(level == 2),
 #         aes(
 #           x = position,
 #           y = forcats::fct_inorder(biomarker_label),
@@ -321,7 +327,7 @@ plot_compact_pvd <- function(
 #       ggnewscale::new_scale_fill() +
 #       # layer for biomarker level 3
 #       geom_tile(
-#         data = plot_dataset |> filter(level == 3),
+#         data = plot_dataset |> dplyr::filter(level == 3),
 #         aes(
 #           x = position,
 #           y = forcats::fct_inorder(biomarker_label),
@@ -339,7 +345,7 @@ plot_compact_pvd <- function(
 #       ggnewscale::new_scale_fill() +
 #       # layer for biomarker level 4
 #       geom_tile(
-#         data = plot_dataset |> filter(level == 4),
+#         data = plot_dataset |> dplyr::filter(level == 4),
 #         aes(
 #           x = position,
 #           y = forcats::fct_inorder(biomarker_label),
@@ -357,7 +363,7 @@ plot_compact_pvd <- function(
 #       ggnewscale::new_scale_fill() +
 #       # layer for biomarker level 5
 #       geom_tile(
-#         data = plot_dataset |> filter(level == 5),
+#         data = plot_dataset |> dplyr::filter(level == 5),
 #         aes(
 #           x = position,
 #           y = forcats::fct_inorder(biomarker_label),
@@ -375,7 +381,7 @@ plot_compact_pvd <- function(
 #       ggnewscale::new_scale_fill() +
 #       # layer for biomarker level 6
 #       geom_tile(
-#         data = plot_dataset |> filter(level == 6),
+#         data = plot_dataset |> dplyr::filter(level == 6),
 #         aes(
 #           x = position,
 #           y = forcats::fct_inorder(biomarker_label),

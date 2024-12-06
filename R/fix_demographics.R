@@ -1,7 +1,7 @@
 fix_demographics <- function(dataset)
 {
   dataset |>
-    mutate(
+    dplyr::mutate(
 
       `Birth Date` =
         (`Visit Date` - days(round(`Age at visit` * 365.25))) |>
@@ -17,7 +17,7 @@ fix_demographics <- function(dataset)
       `Primary Ethnicity`,
       Gender,
       .direction = "downup") |>
-    mutate(
+    dplyr::mutate(
       `Recruited in study phase` = first(Study)
     ) |>
     ungroup()

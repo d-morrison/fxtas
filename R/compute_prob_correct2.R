@@ -28,7 +28,7 @@ compute_prob_correct2 <- function(
   #   summarize(
   #     across(
   #       .cols = all_of(biomarkers),
-  #       .fn = ~ min(
+  #       .fns = ~ min(
   #         max_prob,
   #         mean(.x == DataScores[1], na.rm = TRUE)))
   #   ) |>

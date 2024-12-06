@@ -2,6 +2,7 @@
 #' or load results from presaved .rds file if available
 #' @param rerun whether to force a rerun of the python code
 #' @inheritParams run_OSA
+#' @inheritParams extract_results_from_pickles
 #' @inheritDotParams run_OSA
 #'
 #' @returns a [list()]

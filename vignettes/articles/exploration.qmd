@@ -81,7 +81,7 @@ table1(
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
   data = v1_usable |>
-    filter(!(Study %in% c("Trax Phase 1", "GP3")))
+    dplyr::filter(!(Study %in% c("Trax Phase 1", "GP3")))
 ) |> 
   table1::t1flex() |>
   shared_flextable_settings()
@@ -231,7 +231,7 @@ table1(
   shared_flextable_settings()
 ```
 
-Structured Clinical Interview for DSM Disorders (SCID)
+**Structured Clinical Interview for DSM Disorders (SCID)**
 
 :::
 
@@ -269,8 +269,6 @@ table1(
 **MRI variables by Sex and CGG level**
 
 :::
-
-We used categorization cutoffs taken from [@talebi2020cambridge].
 
 ::: {#supptbl-cantab}
 
@@ -322,6 +320,9 @@ cantab_vars <- c(
 **Cambridge Neuropsychological Test Automated Battery (CANTAB)**
 
 :::
+
+We used categorization cutoffs taken from Talebi et al 2020 [@talebi2020cambridge].
+
 
 ::: {#supptbl-autoimmune}
 

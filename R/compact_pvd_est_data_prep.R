@@ -1,5 +1,6 @@
 #' plot_compact_pvd_est: data prep
 #'
+#' @param figs a [list] of PVDs
 
 
 compact_pvd_est_data_prep <- function(figs){
@@ -19,12 +20,12 @@ compact_pvd_est_data_prep <- function(figs){
 
   # determine biomarker event order
   event_order <- dataset |>
-    filter(facet == 1) |>
+    dplyr::filter(facet == 1) |>
     dplyr::select(`row number and name`, `event name`, biomarker) |>
-    mutate(
+    dplyr::mutate(
       Order = sub("\\D*(\\d+).*", "\\1", `row number and name`) |> as.numeric()
     ) |>
-    mutate(
+    dplyr::mutate(
       `event order` = min(Order),
       .by = `biomarker`
     ) |>
@@ -32,7 +33,7 @@ compact_pvd_est_data_prep <- function(figs){
     #   biomarker, position
     # ) |>
     arrange(`event order`) |>
-    mutate(
+    dplyr::mutate(
       biomarker = forcats::fct_inorder(biomarker)
     ) |>
     dplyr::select(biomarker, `event order`) |>
@@ -54,7 +55,7 @@ compact_pvd_est_data_prep <- function(figs){
       position == Order
     ) |>
     # convert biomarker to factor with event order levels
-    mutate(
+    dplyr::mutate(
       biomarker = factor(
         biomarker,
         levels = levels(event_order$biomarker)
@@ -63,7 +64,7 @@ compact_pvd_est_data_prep <- function(figs){
     # arrange by biomarker levels
     arrange(biomarker) |>
     # create biomarker labels for figure
-    mutate(
+    dplyr::mutate(
       biomarker_label = glue::glue(
         "<i style='color:{group_color}'>{biomarker}</i>"
       ) |>

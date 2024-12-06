@@ -10,8 +10,24 @@ plot_compact_pvd_est2(
   tile_width = 1,
   y_text_size = 9,
   legend.position = "none",
-  scale_colors = c("red", "blue", "purple4", "darkgreen", "magenta")
+  scale_colors = c("red", "blue", "purple4", "darkgreen", "magenta"),
+  ...
 )
+}
+\arguments{
+\item{figs}{todo}
+
+\item{tile_height}{todo}
+
+\item{tile_width}{todo}
+
+\item{y_text_size}{todo}
+
+\item{legend.position}{todo}
+
+\item{scale_colors}{todo}
+
+\item{...}{arguments passed to \code{tmp_func()}}
 }
 \description{
 Plot SuStaIn Sequential Estimate

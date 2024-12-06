@@ -15,6 +15,14 @@ compile_biomarker_groups_table(
 \item{dataset}{passed to \code{\link[=compile_biomarker_group_list]{compile_biomarker_group_list()}}}
 
 \item{biomarker_group_list}{todo}
+
+\item{colors}{which colors to use}
+
+\item{...}{
+  Arguments passed on to \code{\link[=compile_biomarker_group_list]{compile_biomarker_group_list}}
+  \describe{
+    \item{\code{}}{}
+  }}
 }
 \value{
 a \link[tibble:tbl_df-class]{tibble::tbl_df}

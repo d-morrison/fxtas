@@ -29,6 +29,32 @@ $run_dev.*
 ^\.quarto$
 ^_extensions$
 ^README\.qmd$
+^doc$
+^Meta$
+^GP3 & GP4 - Missing CGG Data Samples Table - 10-9-2023-mdp\.xlsx$
+^Missing CGG repeat import_24Mar23\.xlsx$
+^inconsistent ataxia\.csv$
+^output\.fixed_CV$
+^inst/extdata/GP3 & GP4 - Missing CGG Data Samples Table - 10-9-2023-mdp\.xlsx$
+^extdata/Missing CGG repeat import_24Mar23\.xlsx$
+^extdata/GP3 & GP4 - Missing CGG Data Samples Table - 10-9-2023-mdp\.xlsx$
+^extdata/inconsistent ataxia\.csv$
+^gp3$
+^gp34$
+^gp34_multivisit_only$
+^gp34_v1$
+^gp4$
+^males_gp34_trax\.rda$
+^males_gp34_trax_v1\.rda$
+^trax\.rda$
+^trax_visit1\.rda$
+^visit1\.rda$
+^vignettes/\.quarto$
+^_quarto\.yml$
+^man/compact_pvd_figure\.Rd$
 ^man/format_demographics_table_as_flextable\.Rd$
 ^man/get_title_i_2\.Rd$
 ^man/tmp_data_prep\.Rd$
+^data/visit1\.rda$
+^data/gp34\.rda$
+^output\.rda$
