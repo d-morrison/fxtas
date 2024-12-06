@@ -76,6 +76,10 @@ make_demographics_table <- function(data,
   to_return = list(tbl_stat, tbl_pval) |>
     gtsummary::tbl_merge(tab_spanner = FALSE) |>
     gtsummary::bold_labels() |>
+    gtsummary::modify_footnote(
+      "p.value_2" = paste(
+        "p-values represent tests for sex differences in",
+        "distributions of characteristics, all CGG repeat levels.")) |>
     format_demographics_table_as_flextable()
 
   return(to_return)

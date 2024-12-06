@@ -27,7 +27,7 @@ which are longitudinal cohort studies
 with infrequent follow-up visits.
 These studies do not collect precise information
 about timing of symptom onsets,
-so it is not feasible to use the longitudinal data
+so it is not feasible to use the time-to-event data
 to confirm the results from the Ordinal SuStaIn analysis.
 In our analysis approach,
 the event onsets are not modeled as a function of participant age;
@@ -43,14 +43,14 @@ Additional research including longitudinal data
 collecting precise ages of onset
 would be needed to verify our findings.
 
-The data used in this analysis came from patients and controls in
-the catchment area of the UC Davis MIND Institute
-and may not be directly generalizable to other populations.
-For example, the participants predominantly reported
+The data used in this analysis came from patients and controls 
+who participated in longitudinal studies at 
+the UC Davis MIND Institute
+and may not be directly generalizable to other diverse populations.
+The participants predominantly reported
 their primary race/ethnicity as "White",
 and we did not have data from enough patients with other
-racial/ethnic identities to accurately estimate
+diverse racial/ethnic identities to accurately estimate
 stratified models by race/ethnicity.
-A larger study including multiple research sites and catchment areas
-could produce a more diverse set of participants and support
-analyses with increased external validity.
+A larger study including a more diverse set of participants 
+is warranted to support analyses with increased external validity.

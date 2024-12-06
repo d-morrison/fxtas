@@ -1,4 +1,6 @@
-The following tables summarize the distributions of the `r outcomes_name`s
+The following supplementary tables 
+[-@supptbl-tremors] - [-@supptbl-autoimmune] 
+summarize the distributions of the `r outcomes_name`s
 that we analyzed in this paper, stratified by sex and CGG level.
 
 ```{r}

@@ -16,7 +16,7 @@ identify the sequential events of
 clinical and brain MRI changes
 in cross-sectional data
 collected during baseline visits from 
-a longitudinal cohort study of
+a longitudinal cohort of
 FXTAS patients at stages 0-5.
 We included `r length(biomarker_varnames)` neurodegenerative symptoms 
 collected from `r nrow(v1_usable_cases)` premutation carriers 
