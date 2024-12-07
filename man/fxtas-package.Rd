@@ -11,8 +11,9 @@ PKG_DESC.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/d-morrison/fxtas}
-  \item Report bugs at \url{https://github.com/d-morrison/fxtas/issues}
+  \item \url{https://github.com/ucd-iddrc/fxtas}
+  \item \url{https://ucd-iddrc.github.io/fxtas/}
+  \item Report bugs at \url{https://github.com/ucd-iddrc/fxtas/issues}
 }
 
 }

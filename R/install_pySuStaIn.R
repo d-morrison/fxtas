@@ -24,7 +24,7 @@ install_pySuStaIn <- function(
     ...)
 {
   reticulate::py_install(
-    packages = "git+https://github.com/d-morrison/pySuStaIn",
+    packages = "git+https://github.com/ucd-iddrc/pySuStaIn",
     envname = envname,
     pip = pip,
     python_version = python_version,
