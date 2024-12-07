@@ -54,7 +54,8 @@ make_biomarkers_table <- function(data,
   for (cur in biomarker_varnames) {
     pvals[cur] <-
       data |>
-      dplyr::mutate(above_baseline = .data[[cur]] != levels(.data[[cur]])[1]) |>
+      dplyr::mutate(
+        above_baseline = .data[[cur]] != levels(.data[[cur]])[1]) |>
       dplyr::select(all_of(c(
         "above_baseline", stratifying_var_names
       ))) |>
@@ -111,6 +112,10 @@ make_biomarkers_table <- function(data,
                       pattern = "*",
                       replacement = "",
                       fixed = TRUE
+                    ) |>
+                    stringr::str_replace(
+                      stringr::fixed("SCID: "),
+                      ""
                     ))
 
   table_out |>

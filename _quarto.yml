@@ -2,7 +2,6 @@ authors:
   - name: Douglas E. Morrison
     affiliations:
       - ref: ucdphs
-    corresponding: true
     email: demorrison@ucdavis.edu
     address: "Medical Sciences 1C #113, One Shields Ave, Davis, CA 95616"
 
@@ -112,8 +111,8 @@ format:
     number-sections: false
     number-depth: 3
     link-citations: true
-    date: last-modified
-    date-format: "[Last modified:] YYYY-MM-DD: H:mm:ss (A)"
+    # date: last-modified
+    # date-format: "[Last modified:] YYYY-MM-DD: H:mm:ss (A)"
     embed-resources: true
     appendix-style: plain
     mainfont: serif
