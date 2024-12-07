@@ -54,6 +54,7 @@ $run_dev.*
 ^data/visit1\.rda$
 ^data/gp34\.rda$
 ^output\.rda$
+^docs$
 ^man/compact_pvd_figure\.Rd$
 ^man/format_demographics_table_as_flextable\.Rd$
 ^man/get_title_i_2\.Rd$
