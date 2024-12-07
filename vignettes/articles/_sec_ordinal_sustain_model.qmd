@@ -44,7 +44,7 @@ In this analysis,
 we assumed that all controls are truly at the reference levels
 for each `r outcomes_name`, 
 and we estimated the percentage of correctly scored individuals as
-the percentae of controls 
+the percentage of controls 
 who were assessed as being at the reference level
 (@supptbl-prob-correct).
 It is crucial to allow some possibility of incorrect scoring, 
