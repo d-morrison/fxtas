@@ -9,7 +9,7 @@ between males and females
 and in combination of sex and CGG repeat size.
 An important general conclusion of the study is that 
 there is substantial variation across premutation carriers 
-in the emergence of symptoms associated with FXTAS.
+in the sequence of emergence of symptoms associated with FXTAS.
  
 The prevalences of
 lifetime anxiety disorders,
@@ -95,8 +95,8 @@ for the onset of FXTAS.
 In addition, females may experience early cognitive impairment,
 particularly involving executive dysfunction and memory.
 From a clinical perspective,
-we have seen significant psychiatric illness
-leading into some cognitive deficits in memory and EF abilities,
+we have seen significant psychiatric illness comorbid with
+some cognitive deficits in memory and EF abilities,
 but these females may not meet the criteria of FXTAS diagnosis,
 because of the absence of significant tremor and/or ataxia.
 However, if white matter disease emerges on MRI,

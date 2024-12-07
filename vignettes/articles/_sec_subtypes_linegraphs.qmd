@@ -23,7 +23,6 @@ figs[c(1, 2)] |> pvd_lineplot(text_size = lineplot_text_size)
 
 ```
 
-{{< pagebreak >}}
 
 ```{r}
 #| label: fig-pvd_chosen_subtypes_linegraphs-2
@@ -36,7 +35,6 @@ figs[c(1, 3)] |> pvd_lineplot(text_size = lineplot_text_size)
 
 ```
 
-{{< pagebreak >}}
 
 ```{r}
 #| label: fig-pvd_chosen_subtypes_linegraphs-3
@@ -49,8 +47,6 @@ figs[c(1, 4)] |> pvd_lineplot(text_size = lineplot_text_size)
 
 ```
 
-{{< pagebreak >}}
-
 ```{r}
 #| label: fig-pvd_chosen_subtypes_linegraphs-4
 #| fig-height: !expr pvd_line_height
@@ -62,7 +58,6 @@ figs[c(2, 3)] |> pvd_lineplot(text_size = lineplot_text_size)
 
 ```
 
-{{< pagebreak >}}
 
 ```{r}
 #| label: fig-pvd_chosen_subtypes_linegraphs-5
@@ -74,8 +69,6 @@ figs[c(2, 3)] |> pvd_lineplot(text_size = lineplot_text_size)
 figs[c(2, 4)] |> pvd_lineplot(text_size = lineplot_text_size)
 
 ```
-
-{{< pagebreak >}}
 
 ```{r}
 #| label: fig-pvd_chosen_subtypes_linegraphs-6

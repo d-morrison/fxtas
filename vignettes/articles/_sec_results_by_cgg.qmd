@@ -44,7 +44,7 @@ but did not show evidence of the other patterns observed for males and
 for the models without sex-stratification.
 Limited sample size in females for subgroup analyses 
 was likely an issue;
-the available data included only `r n_over100_Female` females with CGG ≥100.
+the available data included only `r n_over_100_female` females with CGG ≥100.
 
 {{< pagebreak >}}
 

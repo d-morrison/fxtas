@@ -1,4 +1,6 @@
-The following tables summarize the distributions of the `r outcomes_name`s
+The following supplementary tables 
+[-@supptbl-tremors] - [-@supptbl-autoimmune] 
+summarize the distributions of the `r outcomes_name`s
 that we analyzed in this paper, stratified by sex and CGG level.
 
 ```{r}
@@ -72,7 +74,8 @@ footnote_ht <- paste(
   "Head tremor was not collected in GP3 or Trax Phase 1.",
   "Summaries provided are for GP4 + Trax Phase 2 only."
 )
-
+v1_usable |>
+    # dplyr::filter(!(Study %in% c("Trax Phase 1", "GP3"))) |> 
 table1(
   # footnote = footnote_ht,
   na.is.category = FALSE,
@@ -80,8 +83,7 @@ table1(
   NA.label = na_label_1,
   stratified_formula(vars, column_var),
   # render.continuous = c(.="N", .="Mean (SD)", .="Median [Min,  Max]"),
-  data = v1_usable |>
-    dplyr::filter(!(Study %in% c("Trax Phase 1", "GP3")))
+  data = _
 ) |> 
   table1::t1flex() |>
   shared_flextable_settings()

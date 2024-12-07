@@ -51,10 +51,10 @@ $run_dev.*
 ^visit1\.rda$
 ^vignettes/\.quarto$
 ^_quarto\.yml$
+^data/visit1\.rda$
+^data/gp34\.rda$
+^output\.rda$
 ^man/compact_pvd_figure\.Rd$
 ^man/format_demographics_table_as_flextable\.Rd$
 ^man/get_title_i_2\.Rd$
 ^man/tmp_data_prep\.Rd$
-^data/visit1\.rda$
-^data/gp34\.rda$
-^output\.rda$

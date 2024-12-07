@@ -1,5 +1,7 @@
 ---
-title: "Progression of Fragile X-associated tremor/ataxia syndrome revealed by Subtype and Stage Inference"
+title: |
+       Progression of fragile X-associated tremor/ataxia syndrome 
+       revealed by subtype and stage inference
 format:
   html:
     echo: false
@@ -7,7 +9,21 @@ format:
 reference-doc: ../Brain_template_2022.docx
 ---
 
-**Running title:** FXTAS progression revealed by SuStaIn{{< pagebreak >}}
+Correspondence to: Douglas Ezra Morrison
+Medical Sciences 1C #113
+One Shields Ave
+Davis, CA 95616
+<demorrison@ucdavis.edu>
+
+**Running title:** Progression of FXTAS symptoms{{< pagebreak >}}
+
+**Keywords:** 
+fragile X-associated tremor/ataxia syndrome; 
+subtype and stage inference; 
+sequential events; 
+disease development and progression; 
+sex differences; 
+latent subgroups
 
 ```{=html}
 <style>
@@ -46,52 +62,49 @@ library(knitr)
 ```{r}
 #| label: "set run parameters"
 
-max_prob_correct = .95
+max_prob_correct <- .95
 
 fit_models <- TRUE
 run_cv <- TRUE
 
-rerun  <- TRUE
 rerun <- FALSE
 
 use_rds <- TRUE
-# use_rds <- FALSE
 
 plot_python <- TRUE
 fig_size <- c(20, 10)
 
-pvd_height = 5.5
-pvd_width = 6
-pvd_line_height = 7
-pvd_line_width = 8
-lineplot_text_size = 3.4
-size.y = 8
-y_text_size = 6
-N_startpoints = 10L
-# use_parallel_startpoints = TRUE
-use_parallel_startpoints = FALSE # couldn't get parallel to work, 2024/06/15
-N_S_max = 8L
-N_S_max_stratified = 2L
-N_CV_folds = 10L
+pvd_height <- 5.5
+pvd_width <- 6
+pvd_subfig_width <- pvd_width - 1
+pvd_line_height <- 7
+pvd_line_width <- 8
+pvd_line_subfig_width <- pvd_line_width
+lineplot_text_size <- 3.4
+size.y <- 8 # nolint: object_name_linter
+y_text_size <- 6
+N_startpoints <- 10L # nolint: object_name_linter
+use_parallel_startpoints <- FALSE # couldn't get parallel to work, 2024/06/15
+N_S_max <- 8L # nolint: object_name_linter
+N_S_max_stratified <- 2L # nolint: object_name_linter
+N_CV_folds <- 10L # nolint: object_name_linter
 
-n_permutations = 1000
+n_permutations <- 1000
 
-outcomes_name = "symptom"
-events_name = "symptomatic events"
-outcomes_name_sentence_start = stringr::str_to_sentence(outcomes_name)
+outcomes_name <- "symptom"
+events_name <- "symptomatic events"
+outcomes_name_sentence_start <- stringr::str_to_sentence(outcomes_name)
 
 compact_fig_caption <- paste(
-  "**Positional variance diagrams of",
-  "estimated event sequences models and uncertainty.**",
   "The different colors (red, blue, purple, green, magenta)",
   "indicate the ordinal levels of symptom progression.",
-  "Color intensity represents the likelihood of sequence position.",
+  "Color gradient intensity represents the likelihood of sequence position.",
   "The brighter the color, the more likely that the corresponding",
   outcomes_name,
   "event occurs in that position in the sequence."
 )
 
-compact_fig_cap2 = glue::glue(
+compact_fig_cap2 <- glue::glue(
   "Red lines indicate {outcomes_name}s that moved to later positions ",
   "between the left-hand subgroup and the right-hand subgroup. ",
   "Blue lines indicate ",
@@ -100,98 +113,110 @@ compact_fig_cap2 = glue::glue(
   "(higher opacity represents more positions changed)."
 )
 
-# column_var = "Recruited in study phase"
-# column_var = "FX3*"
-column_var = c("Gender", "FX3*")
+column_var <- c("Gender", "FX3*")
 
-N_iterations_MCMC = 1e5L
-dataset_name = 'sample_data'
-root_dir = here::here()
+N_iterations_MCMC <- 1e5L # nolint: object_name_linter
+dataset_name <- "sample_data"
+root_dir <- here::here()
 setwd(root_dir)
-output_folder =
+output_folder <-
   "output/output.fixed_CV/" |>
   fs::dir_create()
-
-
 ```
 
 ```{r}
 #| label: subset-data
 
-full_data = 
-  trax_gp34_v1 |> 
+full_data <-
+  trax_gp34_v1 |>
   add_labels()
-n_missing_CGG = full_data$CGG |> is.na() |> sum()
-n_above_200 = sum(full_data$CGG >= 200, na.rm = TRUE)
-v1_usable = 
-  full_data |> 
+n_missing_CGG <- # nolint: object_name_linter
+  full_data$CGG |>
+  is.na() |>
+  sum()
+n_above_200 <- sum(full_data$CGG >= 200, na.rm = TRUE)
+v1_usable <-
+  full_data |>
   dplyr::filter(CGG < 200) |>
-  dplyr::mutate(`FX3*` = `FX3*` |> forcats::fct_drop() |> 
-           labelled::set_label_attribute("CGG Repeat Level"),
-         Parkinsons = Parkinsons |> 
-           labelled::set_label_attribute("Parkinson's disease"),
-         `FXTAS Stage` = `FXTAS Stage` |> 
-           labelled::set_label_attribute("FXTAS Stage"))
+  dplyr::mutate(
+    `FX3*` = .data$`FX3*` |>
+      forcats::fct_drop() |>
+      labelled::set_label_attribute("CGG Repeat Level"),
+    Parkinsons = Parkinsons |>
+      labelled::set_label_attribute("Parkinson's disease"),
+    `FXTAS Stage` = `FXTAS Stage` |>
+      labelled::set_label_attribute("FXTAS Stage")
+  )
 
-v1_usable_males = v1_usable |> dplyr::filter(Gender == "Male")
-v1_usable_females = v1_usable |> dplyr::filter(Gender == "Female")
-v1_usable_cases = v1_usable |> dplyr::filter(CGG >= 55)
-v1_usable_male_cases = 
-  v1_usable |> 
-  dplyr::filter(Gender == "Male", 
-         CGG >= 55)
+v1_usable_males <- v1_usable |> dplyr::filter(Gender == "Male")
+v1_usable_females <- v1_usable |> dplyr::filter(Gender == "Female")
+v1_usable_cases <- v1_usable |> dplyr::filter(CGG >= 55)
+v1_usable_male_cases <-
+  v1_usable |>
+  dplyr::filter(
+    Gender == "Male",
+    CGG >= 55
+  )
 
-v1_usable_female_cases = 
-  v1_usable |> 
-  dplyr::filter(Gender == "Female", 
-         CGG >= 55)
+v1_usable_female_cases <-
+  v1_usable |>
+  dplyr::filter(
+    Gender == "Female",
+    CGG >= 55
+  )
 
-v1_usable_male_controls = 
-  v1_usable |> 
-  dplyr::filter(Gender == "Male", 
-         CGG < 55)
+v1_usable_male_controls <-
+  v1_usable |>
+  dplyr::filter(
+    Gender == "Male",
+    CGG < 55
+  )
 
-v1_usable_female_controls = 
-  v1_usable |> 
-  dplyr::filter(Gender == "Female", 
-         CGG < 55)
+v1_usable_female_controls <-
+  v1_usable |>
+  dplyr::filter(
+    Gender == "Female",
+    CGG < 55
+  )
 # note: there are 231 records in `visit1` with CGG >= 55, but 4 have CGG >= 200
-# previously `nrow(v1_usable_cases)` was 221, 
-# which was based on incorrectly filtering on a version of CGG 
+# previously `nrow(v1_usable_cases)` was 221,
+# which was based on incorrectly filtering on a version of CGG
 # that hadn't been backfilled.
 
-controls_v1 =  v1_usable |> dplyr::filter(CGG < 55)
-year_range = v1_usable$`Visit Date` |> year() |> range()
-min_year = min(year_range)
-max_year = max(year_range)
+controls_v1 <- v1_usable |> dplyr::filter(CGG < 55)
+year_range <- v1_usable$`Visit Date` |>
+  year() |>
+  range()
+min_year <- min(year_range)
+max_year <- max(year_range)
 
-control_data = controls_v1
-patient_data = v1_usable_cases
-
+control_data <- controls_v1
+patient_data <- v1_usable_cases
 ```
 
 ```{r}
 #| label: "biomarker-events"
-biomarker_groups = compile_biomarker_groups_table(
+biomarker_groups <- compile_biomarker_groups_table(
   dataset = v1_usable
 )
 
-biomarker_varnames = 
-  biomarker_groups |> 
+biomarker_varnames <-
+  biomarker_groups |>
   dplyr::pull("biomarker")
 
-biomarker_levels = 
-  v1_usable |> 
+biomarker_levels <-
+  v1_usable |>
   get_levels(biomarker_varnames)
 
-biomarker_events_table =
+biomarker_events_table <-
   construct_biomarker_events_table(
     biomarker_levels,
-    biomarker_groups = biomarker_groups)
+    biomarker_groups = biomarker_groups
+  )
 
-nlevs = 
+nlevs <-
   biomarker_levels |> sapply(length)
-max_levels = nlevs |> max()
+max_levels <- nlevs |> max()
 ```
 
 <!-- [Target journal:  -->
@@ -208,9 +233,12 @@ max_levels = nlevs |> max()
 **Keywords:** 
 Fragile X-associated tremor/ataxia syndrome;
 Subtype and Stage Inference;
+sequential events; 
+disease development and progression;
 sex differences;
-statistical clustering;
 latent subgroups
+
+{{< pagebreak >}}
 
 # Introduction
 
@@ -261,12 +289,12 @@ latent subgroups
 ```{r}
 #| label: get-control-dists
 
-prob_correct = 
-  control_data |> 
+prob_correct <-
+  control_data |>
   compute_prob_correct(
     max_prob = max_prob_correct,
-    biomarker_levels = biomarker_levels)
-
+    biomarker_levels = biomarker_levels
+  )
 ```
 
 ```{r}
@@ -275,22 +303,22 @@ prob_correct =
 #| include: false
 #| eval: !expr fit_models
 
-sustain_output = run_and_save_OSA(
-  biomarker_levels = biomarker_levels, 
-  prob_correct = prob_correct, 
+sustain_output <- run_and_save_OSA(
+  biomarker_levels = biomarker_levels,
+  prob_correct = prob_correct,
   SuStaInLabels = biomarker_varnames,
   N_startpoints = N_startpoints,
-  N_S_max = N_S_max, 
-  N_iterations_MCMC = N_iterations_MCMC, 
-  output_folder = output_folder, 
-  dataset_name = dataset_name, 
+  N_S_max = N_S_max,
+  N_iterations_MCMC = N_iterations_MCMC,
+  output_folder = output_folder,
+  dataset_name = dataset_name,
   use_parallel_startpoints = use_parallel_startpoints,
   seed = 1,
   plot = plot_python,
   rerun = rerun,
   patient_data = patient_data,
-  N_CV_folds = N_CV_folds)
-
+  N_CV_folds = N_CV_folds
+)
 ```
 
 {{< include _sec_run_stratified_models.qmd >}}
@@ -298,103 +326,116 @@ sustain_output = run_and_save_OSA(
 ```{r}
 #| label: extract-figs
 
-results_v1 = extract_results_from_pickles(
+results_v1 <- extract_results_from_pickles(
   use_rds = use_rds,
   n_s = 1:N_S_max,
   rda_filename = "data.RData",
   dataset_name = "sample_data",
-  output_folder = "output/output.fixed_CV")
+  output_folder = "output/output.fixed_CV"
+)
 
-fig_females_first = extract_figs_from_pickle(
+fig_females_first <- extract_figs_from_pickle(
   use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "females",
-  output_folder = "output/output.fixed_CV")
+  output_folder = "output/output.fixed_CV"
+)
 
-fig_males_first = extract_figs_from_pickle(
+fig_males_first <- extract_figs_from_pickle(
   use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "males",
-  output_folder = "output/output.fixed_CV")
+  output_folder = "output/output.fixed_CV"
+)
 
-fig_both_first = extract_figs_from_pickle(
+fig_both_first <- extract_figs_from_pickle(
   use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   rda_filename = "data.RData",
   dataset_name = "sample_data",
-  output_folder = "output/output.fixed_CV")
+  output_folder = "output/output.fixed_CV"
+)
 
-fig_both_first2 <-  
-  list("all" = fig_both_first) |> 
+fig_both_first2 <-
+  list("all" = fig_both_first) |>
   plot_compact_pvd()
 
 ggsave(fig_both_first2,
-       filename = "output/thumbnail.jpeg")
+  filename = "output/thumbnail.jpeg"
+)
 
-fig_under100 = extract_figs_from_pickle(
+fig_under100 <- extract_figs_from_pickle(
   use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   dataset_name = "under100",
-  output_folder = output_folder)
+  output_folder = output_folder
+)
 
-fig_over100 = extract_figs_from_pickle(
+fig_over100 <- extract_figs_from_pickle(
   use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   dataset_name = "over100",
-  output_folder = output_folder)
+  output_folder = output_folder
+)
 
-fig_under100_males = extract_figs_from_pickle(
+fig_under100_males <- extract_figs_from_pickle(
   use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   dataset_name = "under100_Male",
-  output_folder = output_folder)
+  output_folder = output_folder
+)
 
-fig_over100_males = extract_figs_from_pickle(
+fig_over100_males <- extract_figs_from_pickle(
   use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   dataset_name = "over100_Male",
-  output_folder = output_folder)
+  output_folder = output_folder
+)
 
 
-fig_under100_females = extract_figs_from_pickle(
+fig_under100_females <- extract_figs_from_pickle(
   use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   dataset_name = "under100_Female",
-  output_folder = output_folder)
+  output_folder = output_folder
+)
 
-fig_over100_females = extract_figs_from_pickle(
+fig_over100_females <- extract_figs_from_pickle(
   use_rds = use_rds,
   size.y = size.y,
   n_s = 1,
   dataset_name = "over100_Female",
-  output_folder = output_folder)
-
+  output_folder = output_folder
+)
 ```
 
 ```{r}
 #| label: basic-summary-stats
-stages = v1_usable_cases |> dplyr::select(`FXTAS Stage`) |> table()
-biomarkers_table = 
-  v1_usable |> 
+stages <- v1_usable_cases |>
+  dplyr::select(`FXTAS Stage`) |>
+  table()
+biomarkers_table <-
+  v1_usable |>
   make_biomarkers_table(
     biomarker_varnames = biomarker_varnames,
-    biomarker_events_table = biomarker_events_table)
+    biomarker_events_table = biomarker_events_table
+  )
 ```
 
 @tbl-demographics describes summary statistics of patient characteristics 
 included in the analysis. 
 Our data included: 
-`r nrow(v1_usable_cases)` Fragile X premutation carriers and 
+`r nrow(v1_usable_cases)` fragile X premutation carriers and 
 `r nrow(controls_v1)` controls;
 `r nrow(v1_usable_males)` males and `r nrow(v1_usable_females)` females;
 and `r and::and(stages)` carriers at 
@@ -405,32 +446,34 @@ ethnicity/race,
 FXTAS stage, or
 CGG repeat length.
 @tbl-biomarker-list lists the `r outcomes_name`s and their ordinal levels
-and reports proportions of clinically elevated levels at baseline visit, 
+and reports percentages of clinically elevated levels at baseline visit, 
 stratified by sex.
 We found significant sex differences in 
-proportions of clinically elevated (non-reference) `r outcomes_name` levels 
+percentages of clinically elevated (non-reference) 
+`r outcomes_name` levels 
 at baseline visit for `r report_sex_differences(biomarkers_table)`.
 
 ## Sex differences in sequential orders {#sec-methods-strat-sex}
 
 ```{r}
 #| label: p-val-test-sex
-output_folder = "output/output.fixed_CV/"
+output_folder <- "output/output.fixed_CV/"
 
-permuted_test_stats = collect_permutation_test_stats(
+permuted_test_stats <- collect_permutation_test_stats(
   output_folder = output_folder,
-  permuting_variables = "Gender")
+  permuting_variables = "Gender"
+)
 
-observed_test_stat = get_observed_permutation_test_stat(
+observed_test_stat <- get_observed_permutation_test_stat(
   output_folder,
-  dataset_names = c('females', 'males'))
+  dataset_names = c("females", "males")
+)
 
-pval_sex_gp34_v1 = permutation_test(
+pval_sex_gp34_v1 <- permutation_test(
   observed_test_stat = observed_test_stat,
   permuted_test_stats = permuted_test_stats,
   n_permutations = n_permutations
 )
-
 ```
 
 @fig-first-only-pvd shows 
@@ -446,8 +489,8 @@ female premutation carriers developed
 SCID mood disorder symptoms, 
 both sub-threshold-level and threshold-level,
 prior to FXTAS Stage 1 diagnosis,
-whereas male carriers experienced these symptoms 
-much later (between FXTAS Stages 3 and 4) (@fig-first-only-diffs).
+whereas male carriers experienced these symptoms much later 
+(often between FXTAS Stages 3 and 4) (@fig-first-only-diffs).
 Ataxia occurred prior to Stage 1 for females 
 and after Stage 2 for males.
 However, ataxia severity level 1 occurred 
@@ -461,44 +504,46 @@ also appear to begin at earlier FXTAS stages for males than for females.
 
 ```{r}
 #| label: p-val-test-sex-under100
-output_folder = "output/output.fixed_CV/"
+output_folder <- "output/output.fixed_CV/"
 
-permuted_test_stats = collect_permutation_test_stats(
+permuted_test_stats <- collect_permutation_test_stats(
   output_folder = output_folder,
   stratifying_levels = "CGG 55-99",
-  permuting_variables = "Gender")
+  permuting_variables = "Gender"
+)
 
-observed_test_stat = get_observed_permutation_test_stat(
+observed_test_stat <- get_observed_permutation_test_stat(
   output_folder,
-  dataset_names = c('under100_Female', 'under100_Male'))
+  dataset_names = c("under100_Female", "under100_Male")
+)
 
-pval_under100_sex_gp34_v1 = permutation_test(
+pval_under100_sex_gp34_v1 <- permutation_test(
   observed_test_stat = observed_test_stat,
   permuted_test_stats = permuted_test_stats,
   n_permutations = n_permutations
 )
-
 ```
 
 ```{r}
 #| label: p-val-test-sex-over100
-output_folder = "output/output.fixed_CV/"
+output_folder <- "output/output.fixed_CV/"
 
-permuted_test_stats = collect_permutation_test_stats(
+permuted_test_stats <- collect_permutation_test_stats(
   output_folder = output_folder,
   stratifying_levels = "CGG 100-199",
-  permuting_variables = "Gender")
+  permuting_variables = "Gender"
+)
 
-observed_test_stat = get_observed_permutation_test_stat(
+observed_test_stat <- get_observed_permutation_test_stat(
   output_folder,
-  dataset_names = c('over100_Female', 'over100_Male'))
+  dataset_names = c("over100_Female", "over100_Male")
+)
 
-pval_over100_sex_gp34_v1 = permutation_test(
+pval_over100_sex_gp34_v1 <- permutation_test(
   observed_test_stat = observed_test_stat,
   permuted_test_stats = permuted_test_stats,
   n_permutations = n_permutations
 )
-
 ```
 
 When we conducted subgroup analyses by CGG repeat size,
@@ -519,53 +564,55 @@ among those with CGG ≥ 100 (p = `r pval_over100_sex_gp34_v1`)
 
 ```{r}
 #| label: p-val-test-cgg-male
-output_folder = "output/output.fixed_CV/"
+output_folder <- "output/output.fixed_CV/"
 
-permuted_test_stats = collect_permutation_test_stats(
+permuted_test_stats <- collect_permutation_test_stats(
   output_folder = output_folder,
   stratifying_levels = "Male",
-  permuting_variables = "FX3")
+  permuting_variables = "FX3"
+)
 
-observed_test_stat = get_observed_permutation_test_stat(
+observed_test_stat <- get_observed_permutation_test_stat(
   output_folder,
-  dataset_names = c('under100_Male', 'over100_Male'))
+  dataset_names = c("under100_Male", "over100_Male")
+)
 
-pval_male_cgg_gp34_v1 = permutation_test(
+pval_male_cgg_gp34_v1 <- permutation_test(
   observed_test_stat = observed_test_stat,
   permuted_test_stats = permuted_test_stats,
   n_permutations = n_permutations
 )
-
 ```
 
 
 ```{r}
 #| label: p-val-test-cgg-female
-output_folder = "output/output.fixed_CV/"
+output_folder <- "output/output.fixed_CV/"
 
-permuted_test_stats = collect_permutation_test_stats(
+permuted_test_stats <- collect_permutation_test_stats(
   output_folder = output_folder,
   stratifying_levels = "Female",
-  permuting_variables = "FX3")
+  permuting_variables = "FX3"
+)
 
-observed_test_stat = get_observed_permutation_test_stat(
+observed_test_stat <- get_observed_permutation_test_stat(
   output_folder,
-  dataset_names = c('under100_Female', 'over100_Female'))
+  dataset_names = c("under100_Female", "over100_Female")
+)
 
-pval_female_cgg_gp34_v1 = permutation_test(
+pval_female_cgg_gp34_v1 <- permutation_test(
   observed_test_stat = observed_test_stat,
   permuted_test_stats = permuted_test_stats,
   n_permutations = n_permutations
 )
 
-n_over100_Female =
+n_over_100_female <-
   v1_usable |>
   dplyr::filter(
-   Gender == "Female",
-   CGG >= 100
+    Gender == "Female",
+    CGG >= 100
   ) |>
   nrow()
-
 ```
 
 We found significant evidence of an overall difference between CGG <100
@@ -587,20 +634,21 @@ However, we did not find a significant difference between CGG <100 and CGG ≥10
 among females (p = `r pval_female_cgg_gp34_v1`) 
 (@suppfig-pvd-by-cgg-female). 
 It should be noted that this comparison lacked statistical power 
-given the limited sample size of only `r n_over100_Female` females with CGG ≥100.
+given the limited sample size of only `r n_over_100_female` females with CGG ≥100.
 
 ## Subtype clustering
 
 ```{r}
 #| label: set-optimal-subtypes
-temp = sustain_output |> attr("CV")
-n_s_min_CVIC = which.min(temp$CVIC)
-n_s_selected = 4
+temp <- sustain_output |> attr("CV")
+n_s_min_CVIC <- which.min(temp$CVIC) # nolint: object_name_linter
+n_s_selected <- 4
 
-results_cv_max = extract_results_from_pickle(
+results_cv_max <- extract_results_from_pickle(
   n_s = n_s_selected,
   dataset_name = dataset_name,
-  output_folder = output_folder)
+  output_folder = output_folder
+)
 ```
 
 We conducted latent subtype classification analysis to cluster participants 
@@ -625,10 +673,9 @@ The subtypes are numbered 1-4 in order of estimated relative frequency
 
 ```{r}
 #| label: compute-n-in-subtype-0
-n_type_0 = results_cv_max$subtype_and_stage_table |> 
-  dplyr::filter(ml_subtype == "Type 0") |> 
+n_type_0 <- results_cv_max$subtype_and_stage_table |>
+  dplyr::filter(ml_subtype == "Type 0") |>
   nrow()
-
 ```
 
 @fig-pvd_chosen_subtypes shows the estimated sequential event orders
@@ -657,7 +704,7 @@ and lower CGG repeat (82.7 ± 17.3).
 
 ```{r}
 #| label: get-n-events
-n_events = nrow(biomarker_events_table)
+n_events <- nrow(biomarker_events_table)
 ```
 
 Using the FXTAS Stage transitions as reference points,
@@ -722,23 +769,24 @@ Supplementary material is available at Brain online.
 ```{r}
 #| label: "tbl-demographics"
 #| tbl-cap: |
-#|    **Descriptive statistics of patient characteristics by CGG repeat level.**
-#|    `*`p-values represent tests for sex differences in distributions of 
-#|    characteristics, all CGG repeat levels combined.
+#|    **Descriptive statistics of patient characteristics
+#|    by Sex and CGG repeat level.**
 
 v1_usable |> make_demographics_table()
-
 ```
 
 {{< pagebreak >}}
 
 ```{r}
 #| tbl-cap: |
-#|    **Symptoms included in analysis.** 
-#|    The first level listed in each row of column "Defined Ordered Levels" 
+#|    **Symptoms included in analysis.**
+#|    The first level listed in each row of column
+#|    "Defined Ordered Levels"
 #|    is the "reference level" for the corresponding symptom,
-#|    and subsequent levels are considered "clinically elevated levels".
-#|    Columns "Female" and "Male" list proportions of clinically elevated levels 
+#|    and subsequent levels are considered
+#|    "clinically elevated levels".
+#|    Columns "Female" and "Male" list percentages of
+#|    clinically elevated levels
 #|    at baseline visit, stratified by sex.
 #| label: tbl-biomarker-list
 
@@ -748,18 +796,18 @@ flex_biomarkers_table(biomarkers_table)
 {{< pagebreak >}}
 
 ```{r}
-#| tbl-cap: !expr 
+#| tbl-cap: !expr
 #|     glue::glue(
-#|        "**Demographics of {n_s_selected} latent subtype clusters 
-#|        identified by Ordinal SuStaIn.** 
-#|        {n_type_0} patients had experienced too few events 
-#|        to be accurately classified into a subtype 
+#|        "**Demographics of {n_s_selected} latent subtype clusters
+#|        identified by Ordinal SuStaIn.**
+#|        {n_type_0} patients had experienced too few events
+#|        to be accurately classified into a subtype
 #|        and were excluded from this table.")
 #| label: tbl-sg_demos
 #| results: asis
 
 set.seed(2)
-tbl_sg_demos = table_subtype_by_demographics(
+tbl_sg_demos <- table_subtype_by_demographics(
   patient_data,
   subtype_and_stage_table =
     results_cv_max$subtype_and_stage_table,
@@ -777,7 +825,6 @@ tbl_sg_demos |>
   flextable::width(width = 1.75) |>
   flextable::width(j = 2:6, width = 0.75) |>
   flextable::width(j = 7, width = 1)
-
 ```
 
 {{< pagebreak >}}
@@ -786,18 +833,17 @@ tbl_sg_demos |>
 #| label: fig-first-only-pvd
 #| fig-height: !expr pvd_height
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr 
+#| fig-cap: !expr
 #|    glue::glue(
-#|    "**Event sequence models stratified by sex.** 
+#|    "**Event sequences of FXTAS symptoms stratified by sex.**
 #|    {compact_fig_caption}")
 #| fig-cap-location: top
 
 list(
-    "Males <br>" = fig_males_first,
-    "Females <br>" = fig_females_first
-  ) |> 
-plot_compact_pvd(y_text_size = y_text_size)
-
+  "Males <br>" = fig_males_first,
+  "Females <br>" = fig_females_first
+) |>
+  plot_compact_pvd(y_text_size = y_text_size)
 ```
 
 {{< pagebreak >}}
@@ -806,18 +852,18 @@ plot_compact_pvd(y_text_size = y_text_size)
 #| label: fig-first-only-diffs
 #| fig-height: !expr pvd_line_height
 #| fig-width: !expr pvd_line_width
-#| fig-cap: !expr 
+#| fig-cap: !expr
 #|    glue::glue(
-#|    "**Positional differences in estimated event sequence between sexes.** 
+#|    "**Positional differences in estimated event sequence between
+#|    males and females.**
 #|    {compact_fig_cap2}")
 #| fig-cap-location: top
 
 list(
-    "Males" = fig_males_first,
-    "Females" = fig_females_first
-  ) |> 
-pvd_lineplot(text_size = lineplot_text_size)
-
+  "Males" = fig_males_first,
+  "Females" = fig_females_first
+) |>
+  pvd_lineplot(text_size = lineplot_text_size)
 ```
 
 {{< pagebreak >}}
@@ -826,17 +872,18 @@ pvd_lineplot(text_size = lineplot_text_size)
 #| label: fig-pvd_chosen_subtypes
 #| fig-height: 7
 #| fig-width: !expr pvd_width
-#| fig-cap: !expr 
+#| fig-cap: !expr
 #|     glue::glue(
 #|     "**Event sequences for {n_s_selected} latent subtypes.**
 #|     {compact_fig_caption}")
 #| fig-cap-location: top
 
-figs = extract_figs_from_pickle(
+figs <- extract_figs_from_pickle(
   size.y = size.y,
   n_s = n_s_selected,
   dataset_name = dataset_name,
-  output_folder = output_folder)
+  output_folder = output_folder
+)
 
 plot_compact_pvd_est2(
   figs = figs,
@@ -844,7 +891,6 @@ plot_compact_pvd_est2(
   y_text_size = 6,
   title_size = 8
 )
-
 ```
 
 {{< pagebreak >}}
@@ -852,4 +898,3 @@ plot_compact_pvd_est2(
 # Supplementary material
 
 {{< include _sec_supplement.qmd >}}
-

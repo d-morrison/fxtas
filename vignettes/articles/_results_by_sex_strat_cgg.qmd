@@ -1,11 +1,9 @@
-{{< pagebreak >}}
-
 ::: {#suppfig-pvd-by-gender-cgg_under100}
 
 ```{r}
 #| label: fig-pvd-by-gender-cgg_under100-1
 #| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
+#| fig-width: !expr pvd_subfig_width
 #| fig-cap: ""
 
 # compact pvd
@@ -20,7 +18,7 @@ list(
 ```{r}
 #| label: fig-pvd-by-gender-cgg_under100-2
 #| fig-height: !expr pvd_line_height
-#| fig-width: !expr pvd_line_width
+#| fig-width: !expr pvd_line_subfig_width
 #| fig-cap: ""
 
 # lineplot of event sequences
@@ -33,7 +31,7 @@ list(
 
 **Event sequences stratified by sex, for CGG repeats <100.**
 **(a)** `r glue::glue("{compact_fig_caption}")`
-**(b)** Differences in event sequences between sexes, for CGG repeats <100.
+**(b)** Differences in event sequences by sex, for CGG repeats <100.
 
 :::
 
@@ -44,7 +42,7 @@ list(
 ```{r}
 #| label: fig-pvd-by-gender-cgg_over100-1
 #| fig-height: !expr pvd_height
-#| fig-width: !expr pvd_width
+#| fig-width: !expr pvd_subfig_width
 #| fig-cap: ""
 
 # compact pvd
@@ -58,7 +56,7 @@ list(
 ```{r}
 #| label: fig-pvd-by-gender-cgg_over100-2
 #| fig-height: !expr pvd_line_height
-#| fig-width: !expr pvd_line_width
+#| fig-width: !expr pvd_line_subfig_width
 #| fig-cap: ""
 
 # lineplot of event sequences
@@ -73,6 +71,6 @@ list(
 
 **Event sequences stratified by sex, for CGG repeats ≥100.**
 **(a)** `r glue::glue("{compact_fig_caption}")`
-**(b)** Differences in event sequences between sexes, for CGG repeats ≥100.
+**(b)** Differences in event sequences by sex, for CGG repeats ≥100.
 :::
 

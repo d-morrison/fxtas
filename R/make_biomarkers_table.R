@@ -54,7 +54,8 @@ make_biomarkers_table <- function(data,
   for (cur in biomarker_varnames) {
     pvals[cur] <-
       data |>
-      dplyr::mutate(above_baseline = .data[[cur]] != levels(.data[[cur]])[1]) |>
+      dplyr::mutate(
+        above_baseline = .data[[cur]] != levels(.data[[cur]])[1]) |>
       dplyr::select(all_of(c(
         "above_baseline", stratifying_var_names
       ))) |>
@@ -72,11 +73,9 @@ make_biomarkers_table <- function(data,
 
   probs_above_baseline_by_gender <-
     probs_above_baseline_by_gender |>
-    pivot_longer(
-      cols = -all_of(c(stratifying_var_names)),
-      names_to = "biomarker",
-      values_to = "Pr(above_baseline)"
-    )
+    pivot_longer(cols = -all_of(c(stratifying_var_names)),
+                 names_to = "biomarker",
+                 values_to = "Pr(above_baseline)")
 
   probs_above_baseline_by_gender <-
     probs_above_baseline_by_gender |>
@@ -100,25 +99,24 @@ make_biomarkers_table <- function(data,
 
   table_out <-
     biomarker_events_table |>
-    dplyr::select(category = .data$biomarker_group,
-                  .data$biomarker,
-                  .data$levels) |>
-    slice_head(by = .data$biomarker) |>
+    dplyr::select(all_of(c("category" = "biomarker_group",
+                           "biomarker", "levels"))) |>
+    slice_head(by = "biomarker") |>
     dplyr::filter(.data$category != "Stage") |>
-    left_join(
-      y = probs_above_baseline_by_gender,
-      by = "biomarker",
-      relationship = "one-to-one"
-    ) |>
-    dplyr::mutate(
-      biomarker =
-        .data$biomarker |>
-        sub(
-          pattern = "*",
-          replacement = "",
-          fixed = TRUE
-        )
-    )
+    left_join(y = probs_above_baseline_by_gender,
+              by = "biomarker",
+              relationship = "one-to-one") |>
+    dplyr::mutate(biomarker =
+                    .data$biomarker |>
+                    sub(
+                      pattern = "*",
+                      replacement = "",
+                      fixed = TRUE
+                    ) |>
+                    stringr::str_replace(
+                      stringr::fixed("SCID: "),
+                      ""
+                    ))
 
   table_out |>
     structure(class = union("biomarkers_table", class(table_out)))
