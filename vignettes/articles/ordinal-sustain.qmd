@@ -1,7 +1,7 @@
 ---
 title: |
        Progression of fragile X-associated tremor/ataxia syndrome 
-       revealed by subtype and stage inference"
+       revealed by subtype and stage inference
 format:
   html:
     echo: false
@@ -9,7 +9,21 @@ format:
 reference-doc: ../Brain_template_2022.docx
 ---
 
+Correspondence to: Douglas Ezra Morrison
+Medical Sciences 1C #113
+One Shields Ave
+Davis, CA 95616
+<demorrison@ucdavis.edu>
+
 **Running title:** Progression of FXTAS symptoms{{< pagebreak >}}
+
+**Keywords:** 
+fragile X-associated tremor/ataxia syndrome; 
+subtype and stage inference; 
+sequential events; 
+disease development and progression; 
+sex differences; 
+latent subgroups
 
 ```{=html}
 <style>
@@ -62,7 +76,7 @@ fig_size <- c(20, 10)
 
 pvd_height <- 5.5
 pvd_width <- 6
-pvd_subfig_width <- pvd_width - 0.5
+pvd_subfig_width <- pvd_width - 1
 pvd_line_height <- 7
 pvd_line_width <- 8
 pvd_line_subfig_width <- pvd_line_width
@@ -223,6 +237,8 @@ sequential events;
 disease development and progression;
 sex differences;
 latent subgroups
+
+{{< pagebreak >}}
 
 # Introduction
 

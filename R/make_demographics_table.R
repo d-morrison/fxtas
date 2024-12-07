@@ -71,7 +71,7 @@ make_demographics_table <- function(data,
     ) |>
     gtsummary::modify_column_hide(columns = c(stat_1, stat_2)) |>
     gtsummary::separate_p_footnotes(
-      footnote_prefix = "p-value for significance of sex difference by ")
+      footnote_prefix = "p-value for significance of sex difference by")
 
   to_return = list(tbl_stat, tbl_pval) |>
     gtsummary::tbl_merge(tab_spanner = FALSE) |>

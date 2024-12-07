@@ -188,7 +188,7 @@ local function create_affiliations_blocks(affiliations)
   local affil_lines = List:new(affiliations):map(
     function (affil, i)
       local num_inlines = List:new{
-        pandoc.Superscript{pandoc.Str(affil.number)},
+        pandoc.Str(affil.number),
         pandoc.Space()
       }
       return num_inlines .. affil.name
