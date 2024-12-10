@@ -1,12 +1,12 @@
 Package: fxtas
 Title: FXTAS
-Version: 0.0.0.9010
+Version: 0.0.0.9011
 Authors@R: 
     person("Douglas Ezra", "Morrison", , "demorrison@ucdavis.edu", role = c("cre", "aut"))
 Description: PKG_DESC.
 License: MIT + file LICENSE
-URL: https://github.com/d-morrison/fxtas
-BugReports: https://github.com/d-morrison/fxtas/issues
+URL: https://github.com/ucd-iddrc/fxtas, https://ucd-iddrc.github.io/fxtas/
+BugReports: https://github.com/ucd-iddrc/fxtas/issues
 Imports: 
     and,
     arsenal,
