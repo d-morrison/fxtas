@@ -95,6 +95,6 @@ Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag
 Remotes: 
     bcgov/ssdtools,
     moodymudskipper/devtag,
-    mponzini/gtsummary@dev,
+    d-morrison/gtsummary@dev,
     insightsengineering/cardx
 Config/Needs/build: moodymudskipper/devtag
