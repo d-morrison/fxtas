@@ -26,6 +26,7 @@ for latent subtype clustering analysis
 
 ## Data processing
 
+* added tools for finding journals to submit to (#66)
 * renamed `FXTAS Stage (0-5)*` to `FXTAS Stage`
 * added columns to pre-processed data:
    - `Male`
